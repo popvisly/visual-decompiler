@@ -23,7 +23,7 @@ export default async function DashboardPage({
                     </div>
                     <div className="flex items-center gap-3">
                         <a
-                            href="/api/export?key=282d6db35abc92e0cfe13481e2e132ef8bebff5808fafe808b4d51cd2471506c"
+                            href="/api/export"
                             className="text-xs font-semibold text-slate-500 hover:text-slate-900 border border-slate-200 hover:border-slate-400 rounded-lg px-3 py-2 transition-colors"
                             download
                         >

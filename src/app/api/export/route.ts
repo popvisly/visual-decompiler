@@ -96,12 +96,14 @@ const CSV_HEADER = Object.keys({
 // Route handler
 // ---------------------------------------------------------------------------
 export async function GET(req: Request) {
-    // Soft token guard — set EXPORT_TOKEN in Vercel env vars
+    // Auth: check httpOnly cookie set by /api/export/unlock
+    // If EXPORT_TOKEN is not set in env, the route is open (dev convenience)
     const exportToken = process.env.EXPORT_TOKEN;
     if (exportToken) {
-        const { searchParams } = new URL(req.url);
-        if (searchParams.get('key') !== exportToken) {
-            return new Response('Unauthorized', { status: 401 });
+        const cookieHeader = req.headers.get('cookie') || '';
+        const hasExportCookie = cookieHeader.split(';').some(c => c.trim() === 'export_ok=1');
+        if (!hasExportCookie) {
+            return new Response('Unauthorized. Visit /api/export/unlock?key=<token> first.', { status: 401 });
         }
     }
 
