@@ -34,7 +34,12 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                 return (
                     <div key={ad.id} className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-slate-300 transition-all flex flex-col">
                         <div className="aspect-[4/5] bg-slate-100 relative overflow-hidden flex items-center justify-center">
-                            {ad.media_kind === 'video' ? (
+                            {ad.status === 'queued' || ad.status === 'processing' ? (
+                                <div className="flex flex-col items-center gap-3">
+                                    <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin" />
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{ad.status}...</span>
+                                </div>
+                            ) : ad.media_kind === 'video' ? (
                                 <video
                                     src={ad.media_url}
                                     className="w-full h-full object-cover"
@@ -45,14 +50,16 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                             ) : (
                                 <img
                                     src={ad.media_url}
-                                    alt={digest.meta.brand_guess || 'Ad media'}
+                                    alt={digest?.meta?.brand_guess || 'Ad media'}
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
                             )}
                             <div className="absolute top-3 left-3 flex flex-wrap gap-2">
-                                <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-sm border border-slate-200 text-slate-900`}>
-                                    {digest.classification.trigger_mechanic}
-                                </span>
+                                {ad.status !== 'queued' && ad.status !== 'processing' && (
+                                    <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-sm border border-slate-200 text-slate-900`}>
+                                        {digest?.classification?.trigger_mechanic || 'Analyzing...'}
+                                    </span>
+                                )}
                                 {ad.media_kind === 'video' && (
                                     <span className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-indigo-600 text-white shadow-sm border border-indigo-500">
                                         Video
@@ -63,22 +70,30 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                         <div className="p-5 flex-1">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] shrink-0">
-                                    {digest.meta.brand_guess || 'Unknown Brand'}
+                                    {digest?.meta?.brand_guess || 'Queued Brand'}
                                 </span>
                                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">
                                     {new Date(ad.created_at).toLocaleDateString()}
                                 </span>
                             </div>
                             <h3 className="text-sm font-bold text-slate-900 mb-2 line-clamp-2 leading-snug">
-                                {digest.extraction.on_screen_copy.primary_headline || 'No Headline'}
+                                {digest?.extraction?.on_screen_copy?.primary_headline || 'Intelligence Pending...'}
                             </h3>
                             <div className="flex flex-wrap gap-1.5 mt-auto">
-                                <span className="px-2 py-0.5 rounded-md bg-slate-50 text-slate-600 text-[9px] font-bold border border-slate-100">
-                                    {digest.classification.claim_type}
-                                </span>
-                                <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[9px] font-bold border border-indigo-100">
-                                    {digest.classification.offer_type}
-                                </span>
+                                {ad.status === 'processed' || ad.status === 'needs_review' ? (
+                                    <>
+                                        <span className="px-2 py-0.5 rounded-md bg-slate-50 text-slate-600 text-[9px] font-bold border border-slate-100">
+                                            {digest?.classification?.claim_type}
+                                        </span>
+                                        <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[9px] font-bold border border-indigo-100">
+                                            {digest?.classification?.offer_type}
+                                        </span>
+                                    </>
+                                ) : (
+                                    <span className="px-2 py-0.5 rounded-md bg-slate-50 text-slate-400 text-[9px] font-bold border border-slate-100 animate-pulse">
+                                        Harvesting Strategic Insights...
+                                    </span>
+                                )}
                             </div>
                         </div>
                     </div>

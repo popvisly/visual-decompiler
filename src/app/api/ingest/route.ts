@@ -61,44 +61,10 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: info.reason }, { status: 400 });
         }
 
-        const promptVersion = 'V1'; // Ideally get this from artifacts name or config
+        const promptVersion = 'V1';
 
-        // 1. Prepare Vision Inputs
-        let visionInputs: VisionInput[] = [];
-        let keyframeMeta: any[] = [];
-
-        if (info.type === 'video') {
-            // Extract 3 keyframes for MVP: 10%, 50%, 90%
-            // In a real app we'd get duration first, for MVP we'll just try [1s, 5s, 10s] or similar
-            // or better: use ffmpeg to get duration first.
-            const extraction = await extractKeyframes(mediaUrl, [
-                { t_ms: 1000, label: 'start' },
-                { t_ms: 5000, label: 'mid' },
-                { t_ms: 10000, label: 'end' }
-            ]);
-            tempDir = extraction.tempDir;
-
-            for (const result of extraction.results) {
-                const base64 = fs.readFileSync(result.path, { encoding: 'base64' });
-                visionInputs.push({
-                    type: 'base64',
-                    data: base64,
-                    mimeType: 'image/jpeg'
-                });
-                keyframeMeta.push({
-                    t_ms: result.t_ms,
-                    label: result.label,
-                    image_url: null, // We aren't hosting these yet in MVP
-                    notes: null
-                });
-            }
-        } else {
-            // Direct image
-            visionInputs.push({ type: 'url', url: mediaUrl });
-        }
-
-        if (visionInputs.length === 0) {
-            return NextResponse.json({ error: 'Could not process media as image or video' }, { status: 400 });
+        if (info.type === null) {
+            return NextResponse.json({ error: 'Could not detect media type. Please ensure the URL ends in a common image or video extension.' }, { status: 400 });
         }
 
         // 5. Insert 'queued' record into Supabase
