@@ -30,7 +30,7 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
             const command = `"${ffmpegPath}" -hide_banner -loglevel error -rw_timeout 15000000 -probesize 20000000 -analyzeduration 20000000 -ss ${timestampSeconds} -i "${videoUrl}" -frames:v 1 -q:v 2 "${outputPath}" -y`;
 
             try {
-                await execPromise(command);
+                const { stderr } = await execPromise(command);
                 if (fs.existsSync(outputPath)) {
                     results.push({
                         t_ms: req.t_ms,
@@ -38,10 +38,12 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
                         path: outputPath
                     });
                 } else {
-                    console.warn(`[Video] Frame extraction failed for ${req.t_ms}ms (Command success but no file produced)`);
+                    console.warn(`[Video] Frame extraction failed for ${req.t_ms}ms (Command success but no file produced). Stderr: ${stderr}`);
                 }
             } catch (cmdErr: any) {
-                console.warn(`[Video] Frame extraction command failed for ${req.t_ms}ms: ${cmdErr.message || 'Unknown error'}`);
+                console.warn(`[Video] Frame extraction command failed for ${req.t_ms}ms: ${cmdErr.message || 'Unknown error'}. Stderr: ${cmdErr.stderr || 'none'}`);
+                // Re-throw with more detail so it lands in the digest
+                throw new Error(`ffmpeg failed: ${cmdErr.message}. Stderr: ${cmdErr.stderr || 'none'}`);
             }
         }
 
