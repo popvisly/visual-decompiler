@@ -1,5 +1,6 @@
 import { supabaseAdmin } from '@/lib/supabase';
 import { AdDigest } from '@/types/digest';
+import BrandTag from '@/components/BrandTag';
 
 export default async function AdList({ filters }: { filters: Record<string, string | undefined> }) {
     let query = supabaseAdmin
@@ -11,7 +12,11 @@ export default async function AdList({ filters }: { filters: Record<string, stri
     if (filters.trigger_mechanic) query = query.eq('trigger_mechanic', filters.trigger_mechanic);
     if (filters.claim_type) query = query.eq('claim_type', filters.claim_type);
     if (filters.offer_type) query = query.eq('offer_type', filters.offer_type);
-    if (filters.brand_guess) query = query.ilike('brand_guess', `%${filters.brand_guess}%`);
+
+    // Brand filter: check user-confirmed brand first, fall back to AI guess
+    if (filters.brand) {
+        query = query.or(`brand.ilike.%${filters.brand}%,brand_guess.ilike.%${filters.brand}%`);
+    }
 
     const { data: ads, error } = await query;
 
@@ -50,7 +55,7 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                             ) : (
                                 <img
                                     src={ad.media_url}
-                                    alt={digest?.meta?.brand_guess || 'Ad media'}
+                                    alt={ad.brand || digest?.meta?.brand_guess || 'Ad media'}
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
                             )}
@@ -69,9 +74,11 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                         </div>
                         <div className="p-5 flex-1">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] shrink-0">
-                                    {digest?.meta?.brand_guess || 'Queued Brand'}
-                                </span>
+                                <BrandTag
+                                    adId={ad.id}
+                                    brand={ad.brand ?? null}
+                                    brandGuess={digest?.meta?.brand_guess ?? null}
+                                />
                                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">
                                     {new Date(ad.created_at).toLocaleDateString()}
                                 </span>
