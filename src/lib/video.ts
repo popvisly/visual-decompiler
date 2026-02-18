@@ -23,17 +23,40 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
 
             // ffmpeg -ss [seconds] -i [url] -frames:v 1 [output]
             // -ss before -i is faster for remote URLs as it seeks before downloading much
-            const command = `ffmpeg -ss ${timestampSeconds} -i "${videoUrl}" -frames:v 1 -q:v 2 "${outputPath}" -y`;
+            const command = [
+                'ffmpeg',
+                '-hide_banner',
+                '-loglevel', 'error',
+                // help for remote URLs / slow headers
+                '-rw_timeout', '15000000',
+                '-probesize', '20000000',
+                '-analyzeduration', '20000000',
+                // seek early (faster)
+                '-ss', String(timestampSeconds),
+                '-i', JSON.stringify(videoUrl),
+                '-frames:v', '1',
+                '-q:v', '2',
+                JSON.stringify(outputPath),
+                '-y',
+            ].join(' ');
 
-            await execPromise(command);
-
-            if (fs.existsSync(outputPath)) {
-                results.push({
-                    t_ms: req.t_ms,
-                    label: req.label,
-                    path: outputPath
-                });
+            try {
+                await execPromise(command);
+                if (fs.existsSync(outputPath)) {
+                    results.push({
+                        t_ms: req.t_ms,
+                        label: req.label,
+                        path: outputPath,
+                    });
+                }
+            } catch {
+                // If a single keyframe fails (short clip / remote issues), continue.
+                // We'll fail the whole extraction only if we end up with zero frames.
             }
+        }
+
+        if (results.length === 0) {
+            throw new Error('Failed to extract keyframes (no frames produced). Try a different video URL.');
         }
 
         return {
