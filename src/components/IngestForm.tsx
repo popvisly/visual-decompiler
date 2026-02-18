@@ -45,7 +45,7 @@ export default function IngestForm() {
             <form onSubmit={handleSubmit} className="flex gap-2">
                 <input
                     type="url"
-                    placeholder="Paste a direct image URL (png/jpg/webp/gif)…"
+                    placeholder="Paste a direct image/video URL (png/jpg/webp/gif/mp4/mov)…"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     className="w-72 px-4 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-900 transition-all bg-slate-50"

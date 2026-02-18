@@ -34,11 +34,21 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                 return (
                     <div key={ad.id} className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-slate-300 transition-all flex flex-col">
                         <div className="aspect-[4/5] bg-slate-100 relative overflow-hidden flex items-center justify-center">
-                            <img
-                                src={ad.media_url}
-                                alt={digest.meta.brand_guess || 'Ad media'}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
+                            {ad.media_kind === 'video' ? (
+                                <video
+                                    src={ad.media_url}
+                                    className="w-full h-full object-cover"
+                                    muted
+                                    playsInline
+                                    preload="metadata"
+                                />
+                            ) : (
+                                <img
+                                    src={ad.media_url}
+                                    alt={digest.meta.brand_guess || 'Ad media'}
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                />
+                            )}
                             <div className="absolute top-3 left-3 flex flex-wrap gap-2">
                                 <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-sm border border-slate-200 text-slate-900`}>
                                     {digest.classification.trigger_mechanic}
