@@ -3,6 +3,7 @@ import util from 'util';
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
+import ffmpegPath from 'ffmpeg-static';
 
 const execPromise = util.promisify(exec);
 
@@ -21,8 +22,12 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
             const outputPath = path.join(tempDir, fileName);
             const timestampSeconds = req.t_ms / 1000;
 
+            if (!ffmpegPath) {
+                throw new Error('ffmpeg binary not available in this environment.');
+            }
+
             // ffmpeg parameters for remote resilient extraction
-            const command = `ffmpeg -hide_banner -loglevel error -rw_timeout 15000000 -probesize 20000000 -analyzeduration 20000000 -ss ${timestampSeconds} -i "${videoUrl}" -frames:v 1 -q:v 2 "${outputPath}" -y`;
+            const command = `"${ffmpegPath}" -hide_banner -loglevel error -rw_timeout 15000000 -probesize 20000000 -analyzeduration 20000000 -ss ${timestampSeconds} -i "${videoUrl}" -frames:v 1 -q:v 2 "${outputPath}" -y`;
 
             try {
                 await execPromise(command);
