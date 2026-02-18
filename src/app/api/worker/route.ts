@@ -6,39 +6,38 @@ import { AdDigestSchema } from '@/types/digest';
 import fs from 'fs';
 
 export async function POST(req: Request) {
-    // 1. Authorization Check
+    // 1. Authorization Check (Vercel Cron OR Bearer Token)
     const authHeader = req.headers.get('Authorization');
+    const vercelCronHeader = req.headers.get('x-vercel-cron');
     const expectedToken = process.env.WORKER_SECRET_TOKEN;
 
-    if (!expectedToken || authHeader !== `Bearer ${expectedToken}`) {
+    const isAuthorized =
+        (expectedToken && authHeader === `Bearer ${expectedToken}`) ||
+        (process.env.NODE_ENV === 'production' && vercelCronHeader === 'true') || // Vercel native cron
+        (process.env.NODE_ENV === 'development'); // Allow local dev testing without hassle
+
+    if (!isAuthorized) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     try {
-        // 2. Fetch Queued Jobs (Atomic selection)
-        // We'll fetch the oldest jobs first. Using limit 3 for safety on serverless timeouts.
-        const { data: jobs, error: fetchError } = await supabaseAdmin
-            .from('ad_digests')
-            .select('*')
-            .eq('status', 'queued')
-            .order('created_at', { ascending: true })
-            .limit(3);
+        // 2. Atomic Claim via Postgres RPC
+        const { data: jobs, error: claimError } = await supabaseAdmin
+            .rpc('claim_queued_jobs', { batch_size: 3 });
 
-        if (fetchError) throw fetchError;
+        if (claimError) throw claimError;
         if (!jobs || jobs.length === 0) {
             return NextResponse.json({ message: 'No jobs queued.' });
         }
 
-        console.log(`[Worker] Processing ${jobs.length} jobs...`);
+        console.log(`[Worker] Atomically claimed ${jobs.length} jobs.`);
 
         const results = [];
 
         for (const job of jobs) {
             let tempDir: string | null = null;
             try {
-                // 3. Mark as Processing
-                await supabaseAdmin.from('ad_digests').update({ status: 'processing' }).eq('id', job.id);
-
+                // Job is already 'processing' thanks to the RPC
                 let visionInputs: VisionInput[] = [];
                 let keyframeMeta: any[] = [];
 
