@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import Link from 'next/link';
 import AdList from '@/components/AdList';
 import IngestForm from '@/components/IngestForm';
 import Filters from '@/components/Filters';
@@ -22,6 +23,12 @@ export default async function DashboardPage({
                         <p className="text-xs text-slate-500 font-medium">Advertising Intelligence Dashboard</p>
                     </div>
                     <div className="flex items-center gap-3">
+                        <Link
+                            href="/dashboard/analytics"
+                            className="text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors"
+                        >
+                            Analytics
+                        </Link>
                         <a
                             href="/api/export"
                             className="text-xs font-semibold text-slate-500 hover:text-slate-900 border border-slate-200 hover:border-slate-400 rounded-lg px-3 py-2 transition-colors"
