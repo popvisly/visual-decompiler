@@ -5,7 +5,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { extractKeyframes, cleanupFrames } from '@/lib/video';
 import fs from 'fs';
 
-async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: string; type: 'image' | 'video' | null; contentType?: string | null }> {
+async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: string; type: 'image' | 'video' | null; contentType?: string | null; sizeMB?: number }> {
     if (!/^https?:\/\//i.test(mediaUrl)) {
         return { ok: false, reason: 'Please paste a full http(s) URL.', type: null };
     }
@@ -22,16 +22,19 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
         clearTimeout(timeout);
 
         const ct = res.headers.get('content-type');
-        if (ct?.startsWith('image/')) return { ok: true, type: 'image', contentType: ct };
-        if (ct?.startsWith('video/') || ct?.includes('mp4') || ct?.includes('mpeg')) return { ok: true, type: 'video', contentType: ct };
+        const cl = res.headers.get('content-length');
+        const sizeMB = cl ? parseInt(cl) / (1024 * 1024) : undefined;
+
+        if (ct?.startsWith('image/')) return { ok: true, type: 'image', contentType: ct, sizeMB };
+        if (ct?.startsWith('video/') || ct?.includes('mp4') || ct?.includes('mpeg')) return { ok: true, type: 'video', contentType: ct, sizeMB };
 
         // Fallback to extension check if content-type is missing or ambiguous
         const urlWithoutQuery = mediaUrl.split('?')[0];
         const ext = urlWithoutQuery.split('.').pop()?.toLowerCase() || '';
-        if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: `image/${ext}` };
-        if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: `video/${ext}` };
+        if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: `image/${ext}`, sizeMB };
+        if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: `video/${ext}`, sizeMB };
 
-        return { ok: true, type: null, contentType: ct };
+        return { ok: true, type: null, contentType: ct, sizeMB };
     } catch (err: any) {
         // Fallback to extension even on network failure
         const urlWithoutQuery = mediaUrl.split('?')[0];
@@ -73,6 +76,13 @@ export async function POST(req: Request) {
         const info = await getMediaInfo(mediaUrl);
         if (!info.ok) {
             return NextResponse.json({ error: info.reason }, { status: 400 });
+        }
+
+        // Production Guardrail: Max 50MB for videos
+        if (info.type === 'video' && info.sizeMB && info.sizeMB > 50) {
+            return NextResponse.json({
+                error: `Video file too large (${info.sizeMB.toFixed(1)}MB). Please use a file under 50MB for stable extraction.`
+            }, { status: 400 });
         }
 
         const promptVersion = 'V1';

@@ -42,11 +42,9 @@ export async function POST(req: Request) {
                 let keyframeMeta: any[] = [];
 
                 if (job.media_kind === 'video') {
-                    console.log(`[Worker Job ${job.id}] Extracting video frames...`);
+                    console.log(`[Worker Job ${job.id}] Extracting video frame (1-frame stability strategy)...`);
                     const extraction = await extractKeyframes(job.media_url, [
-                        { t_ms: 1000, label: 'start' },
-                        { t_ms: 5000, label: 'mid' },
-                        { t_ms: 10000, label: 'end' }
+                        { t_ms: 1000, label: 'start' }
                     ]);
                     tempDir = extraction.tempDir;
 
