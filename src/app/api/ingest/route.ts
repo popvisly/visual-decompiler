@@ -47,7 +47,7 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
 
 // Basic in-memory rate limiting for MVP
 const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
-const MAX_REQUESTS_PER_IP = 10;
+const MAX_REQUESTS_PER_IP = 50;
 const ipCache = new Map<string, { count: number, resetAt: number }>();
 
 export async function POST(req: Request) {

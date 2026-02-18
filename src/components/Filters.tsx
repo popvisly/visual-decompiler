@@ -19,7 +19,9 @@ export default function Filters({ currentFilters }: { currentFilters: Record<str
         } else {
             params.delete(key);
         }
-        router.push(`/dashboard?${params.toString()}`);
+        // Use the current path instead of hardcoded /dashboard
+        const currentPath = window.location.pathname;
+        router.push(`${currentPath}?${params.toString()}`);
     };
 
     const sections = [

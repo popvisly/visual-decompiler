@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { supabaseAdmin } from '@/lib/supabase';
 import { AdDigest } from '@/types/digest';
 import BrandTag from '@/components/BrandTag';
@@ -37,7 +38,7 @@ export default async function AdList({ filters }: { filters: Record<string, stri
             {ads.map((ad: any) => {
                 const digest = ad.digest as AdDigest;
                 return (
-                    <div key={ad.id} className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-slate-300 transition-all flex flex-col">
+                    <Link key={ad.id} href={`/dashboard/${ad.id}`} className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-slate-300 transition-all flex flex-col cursor-pointer">
                         <div className="aspect-[4/5] bg-slate-100 relative overflow-hidden flex items-center justify-center">
                             {ad.status === 'queued' || ad.status === 'processing' ? (
                                 <div className="flex flex-col items-center gap-3">
@@ -103,7 +104,7 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                                 )}
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 );
             })}
         </div>

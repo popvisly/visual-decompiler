@@ -18,7 +18,17 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
 
     // Path resolution hardening for Vercel
     let resolvedFfmpegPath = ffmpegPath;
-    if (process.env.NODE_ENV === 'production') {
+    const publicPath = path.join(process.cwd(), 'public/bin/ffmpeg');
+
+    if (fs.existsSync(publicPath)) {
+        resolvedFfmpegPath = publicPath;
+        // Ensure it's executable in the lambda environment
+        try {
+            fs.chmodSync(resolvedFfmpegPath, 0o755);
+        } catch (e) {
+            console.warn('[Video] Failed to set executable permissions:', e);
+        }
+    } else if (process.env.NODE_ENV === 'production') {
         const potentialPath = path.join(process.cwd(), 'node_modules/ffmpeg-static/ffmpeg');
         if (fs.existsSync(potentialPath)) {
             resolvedFfmpegPath = potentialPath;

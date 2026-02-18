@@ -4,6 +4,8 @@ import AdList from '@/components/AdList';
 import IngestForm from '@/components/IngestForm';
 import Filters from '@/components/Filters';
 
+import Header from '@/components/Header';
+
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
@@ -16,30 +18,7 @@ export default async function DashboardPage({
 
     return (
         <main className="min-h-screen bg-slate-50">
-            <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
-                <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <div>
-                        <h1 className="text-xl font-bold text-slate-900">Visual Decompiler</h1>
-                        <p className="text-xs text-slate-500 font-medium">Advertising Intelligence Dashboard</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <Link
-                            href="/dashboard/analytics"
-                            className="text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors"
-                        >
-                            Analytics
-                        </Link>
-                        <a
-                            href="/api/export"
-                            className="text-xs font-semibold text-slate-500 hover:text-slate-900 border border-slate-200 hover:border-slate-400 rounded-lg px-3 py-2 transition-colors"
-                            download
-                        >
-                            Export CSV
-                        </a>
-                        <IngestForm />
-                    </div>
-                </div>
-            </header>
+            <Header activeTab="dashboard" />
 
             <div className="max-w-7xl mx-auto px-6 py-8">
                 <div className="flex flex-col md:flex-row gap-8">
