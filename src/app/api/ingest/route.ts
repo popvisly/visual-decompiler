@@ -13,7 +13,12 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
     try {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 6000);
-        const res = await fetch(mediaUrl, { method: 'HEAD', redirect: 'follow', signal: controller.signal });
+        const res = await fetch(mediaUrl, {
+            method: 'GET',
+            redirect: 'follow',
+            signal: controller.signal,
+            headers: { 'Range': 'bytes=0-1024' } // Just get the headers and a tiny bit of content
+        });
         clearTimeout(timeout);
 
         const ct = res.headers.get('content-type');
