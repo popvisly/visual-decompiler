@@ -28,7 +28,25 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
     }
 }
 
+// Basic in-memory rate limiting for MVP
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
+const MAX_REQUESTS_PER_IP = 10;
+const ipCache = new Map<string, { count: number, resetAt: number }>();
+
 export async function POST(req: Request) {
+    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+    const now = Date.now();
+    const clientLimit = ipCache.get(ip);
+
+    if (clientLimit && now < clientLimit.resetAt) {
+        if (clientLimit.count >= MAX_REQUESTS_PER_IP) {
+            return NextResponse.json({ error: 'Rate limit exceeded. Please wait an hour.' }, { status: 429 });
+        }
+        clientLimit.count++;
+    } else {
+        ipCache.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+    }
+
     let tempDir: string | null = null;
     try {
         const { mediaUrl } = await req.json();
@@ -83,25 +101,12 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Could not process media as image or video' }, { status: 400 });
         }
 
-        // 2. Call the Black Box
-        const rawDigest = await decompileAd(visionInputs);
-
-        // 3. Enrich with metadata if video
-        if (info.type === 'video' && rawDigest.extraction) {
-            rawDigest.extraction.keyframes = keyframeMeta;
-        }
-
-        // 4. Validate
-        const validation = AdDigestSchema.safeParse(rawDigest);
-        const status = validation.success ? 'processed' : 'needs_review';
-
-        // 5. Insert into Supabase
-        const { data, error } = await supabaseAdmin
+        // 5. Insert 'queued' record into Supabase
+        const { data: job, error: insertError } = await supabaseAdmin
             .from('ad_digests')
             .insert({
                 media_url: mediaUrl,
-                status: status,
-                digest: rawDigest,
+                status: 'queued',
                 model: 'gpt-4o',
                 prompt_version: promptVersion,
                 media_kind: info.type || 'image',
@@ -110,19 +115,94 @@ export async function POST(req: Request) {
             .select()
             .single();
 
-        if (error) {
-            if (error.code === '23505') {
+        if (insertError) {
+            if (insertError.code === '23505') {
                 return NextResponse.json({ error: 'This ad has already been decompiled.' }, { status: 409 });
             }
-            console.error('Supabase error:', error);
-            return NextResponse.json({ error: 'Failed to store digest' }, { status: 500 });
+            console.error('Supabase error:', insertError);
+            return NextResponse.json({ error: 'Failed to queue ingestion' }, { status: 500 });
         }
 
+        // 6. Spawn Background Processing
+        // In Next.js App Router (standard deployment), we can't reliably "background" without an orchestrator
+        // but for this MVP/Local env, we'll use a detached promise.
+        (async () => {
+            let innerTempDir: string | null = null;
+            try {
+                // Update to 'processing'
+                await supabaseAdmin.from('ad_digests').update({ status: 'processing' }).eq('id', job.id);
+
+                // 2. Call the Black Box
+                console.log(`[Job ${job.id}] Calling Vision API...`);
+                // Note: visionInputs was prepared earlier but we need to re-extract frames if video
+                // because we want the main thread to be fast.
+                let backgroundVisionInputs: VisionInput[] = [];
+                let backgroundKeyframeMeta: any[] = [];
+
+                if (info.type === 'video') {
+                    const extraction = await extractKeyframes(mediaUrl, [
+                        { t_ms: 1000, label: 'start' },
+                        { t_ms: 5000, label: 'mid' },
+                        { t_ms: 10000, label: 'end' }
+                    ]);
+                    innerTempDir = extraction.tempDir;
+                    for (const result of extraction.results) {
+                        backgroundVisionInputs.push({
+                            type: 'base64',
+                            data: fs.readFileSync(result.path, { encoding: 'base64' }),
+                            mimeType: 'image/jpeg'
+                        });
+                        backgroundKeyframeMeta.push({
+                            t_ms: result.t_ms,
+                            label: result.label,
+                            image_url: null,
+                            notes: null
+                        });
+                    }
+                } else {
+                    backgroundVisionInputs.push({ type: 'url', url: mediaUrl });
+                }
+
+                const rawDigest = await decompileAd(backgroundVisionInputs);
+                if (info.type === 'video' && rawDigest.extraction) {
+                    rawDigest.extraction.keyframes = backgroundKeyframeMeta;
+                }
+
+                // Validate
+                const validation = AdDigestSchema.safeParse(rawDigest);
+                const finalStatus = validation.success ? 'processed' : 'needs_review';
+
+                // Final Update
+                await supabaseAdmin
+                    .from('ad_digests')
+                    .update({
+                        status: finalStatus,
+                        digest: rawDigest
+                    })
+                    .eq('id', job.id);
+
+                console.log(`[Job ${job.id}] Completed with status: ${finalStatus}`);
+
+            } catch (innerErr: any) {
+                console.error(`[Job ${job.id}] Background processing failed:`, innerErr);
+                await supabaseAdmin
+                    .from('ad_digests')
+                    .update({
+                        status: 'needs_review',
+                        digest: { error: innerErr.message || 'Background processing failed' }
+                    })
+                    .eq('id', job.id);
+            } finally {
+                if (innerTempDir) cleanupFrames(innerTempDir);
+            }
+        })();
+
+        // 7. Return Job ID immediately
         return NextResponse.json({
-            success: validation.success,
-            id: data.id,
-            digest: validation.success ? validation.data : rawDigest,
-            validationErrors: validation.success ? null : validation.error.format()
+            success: true,
+            job_id: job.id,
+            status: 'queued',
+            message: 'Decompilation started in background.'
         });
 
     } catch (err: any) {

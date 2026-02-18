@@ -31,6 +31,7 @@ export default function IngestForm() {
             }
 
             setUrl('');
+            alert('Ad queued for decompilation! It will appear in the dashboard shortly.');
             router.refresh();
         } catch (err: any) {
             console.error(err);

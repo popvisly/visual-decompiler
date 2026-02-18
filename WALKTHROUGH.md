@@ -26,12 +26,22 @@ This repository contains the foundation for a B2B SaaS Advertising Intelligence 
 - **Contextual Vision**: The Vision API now evaluates 3-5 images in a single strategic request, mapping temporal flow into a unified digest.
 - **Hard Deduplication**: Enforced `UNIQUE` constraint on `(media_url, prompt_version)` to prevent cross-team data clutter and optimize API costs.
 
+### 5. Production Hardening — Milestone 3
+
+- **Async Ingestion**: Ingestion now immediately returns a `job_id`, preventing timeouts on complex video assets by moving deconstruction to a background worker.
+- **Review Dashboard**: A dedicated interface at `/dashboard/review` for Art Directors to triage "Needs Review" data and refine JSON digests via a live editor.
+- **Circuit Breaker**: Implemented IP-based rate limiting on the ingestion API to prevent accidental cost overruns.
+- **Resilient Extraction**: Enhanced `ffmpeg` diagnostics and "best effort" frame logic to handle diverse remote MP4 delivery methods.
+
 ## File Structure (Updated)
 
 - `src/app/api/ingest/route.ts` - Media-aware ingestion (detects Image vs. Video).
 - `src/lib/video.ts` - Server-side keyframe extraction engine.
 - `supabase/migrations/002_video_ingest.sql` - Atomic schema evolution for nested keyframe data.
-- `scripts/verify-video-ingest.ts` - Logic verification script for video handling.
+- `src/app/dashboard/review/page.tsx` - Triage dashboard for flagged deconstructions.
+- `src/components/JSONEditor.tsx` - High-fidelity data refinement component.
+- `src/app/api/digests/[id]/route.ts` - RESTful endpoint for manual data updates.
+- `scripts/verify-video-ingest.ts` - CLI tool for verified frame-to-vision logic testing.
 
 ## Next Steps
 

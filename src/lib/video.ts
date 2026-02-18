@@ -21,24 +21,8 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
             const outputPath = path.join(tempDir, fileName);
             const timestampSeconds = req.t_ms / 1000;
 
-            // ffmpeg -ss [seconds] -i [url] -frames:v 1 [output]
-            // -ss before -i is faster for remote URLs as it seeks before downloading much
-            const command = [
-                'ffmpeg',
-                '-hide_banner',
-                '-loglevel', 'error',
-                // help for remote URLs / slow headers
-                '-rw_timeout', '15000000',
-                '-probesize', '20000000',
-                '-analyzeduration', '20000000',
-                // seek early (faster)
-                '-ss', String(timestampSeconds),
-                '-i', JSON.stringify(videoUrl),
-                '-frames:v', '1',
-                '-q:v', '2',
-                JSON.stringify(outputPath),
-                '-y',
-            ].join(' ');
+            // ffmpeg parameters for remote resilient extraction
+            const command = `ffmpeg -hide_banner -loglevel error -rw_timeout 15000000 -probesize 20000000 -analyzeduration 20000000 -ss ${timestampSeconds} -i "${videoUrl}" -frames:v 1 -q:v 2 "${outputPath}" -y`;
 
             try {
                 await execPromise(command);
@@ -46,17 +30,18 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
                     results.push({
                         t_ms: req.t_ms,
                         label: req.label,
-                        path: outputPath,
+                        path: outputPath
                     });
+                } else {
+                    console.warn(`[Video] Frame extraction failed for ${req.t_ms}ms (Command success but no file produced)`);
                 }
-            } catch {
-                // If a single keyframe fails (short clip / remote issues), continue.
-                // We'll fail the whole extraction only if we end up with zero frames.
+            } catch (cmdErr: any) {
+                console.warn(`[Video] Frame extraction command failed for ${req.t_ms}ms: ${cmdErr.message || 'Unknown error'}`);
             }
         }
 
         if (results.length === 0) {
-            throw new Error('Failed to extract keyframes (no frames produced). Try a different video URL.');
+            throw new Error('Failed to extract keyframes (no frames produced). Verify the video URL is reachable and indexable.');
         }
 
         return {

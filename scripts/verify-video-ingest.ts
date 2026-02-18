@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 async function test() {
-    const videoUrl = "https://sample-files.com/samples/video/mp4/720/sample-5.mp4"; // Sample 10s video
+    const videoUrl = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
     console.log("Starting video ingest verification...");
 
     try {
