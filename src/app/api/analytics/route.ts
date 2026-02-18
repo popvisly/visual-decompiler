@@ -20,7 +20,7 @@ export async function GET(req: Request) {
 
     let query = supabaseAdmin
         .from('ad_digests')
-        .select('trigger_mechanic, claim_type, offer_type, narrative_framework, cognitive_load, cta_strength, brand, brand_guess, digest')
+        .select('trigger_mechanic, claim_type, offer_type, narrative_framework, brand, brand_guess, digest')
         .eq('status', 'processed');
 
     if (brand) {
@@ -67,16 +67,23 @@ export async function GET(req: Request) {
         .sort((a, b) => b.count - a.count)
         .slice(0, 10);
 
+    // Enrich rows with fields that aren't generated columns (read from JSONB)
+    const enrichedRows = rows.map((r: any) => ({
+        ...r,
+        cognitive_load: r.digest?.classification?.cognitive_load ?? null,
+        cta_strength: r.digest?.classification?.cta_strength ?? null,
+    }));
+
     return NextResponse.json({
         total: rows.length,
         brand_filter: brand || null,
         avg_confidence: avgConfidence,
         top_brands: topBrands,
-        trigger_mechanic: toCounts(rows, 'trigger_mechanic'),
-        claim_type: toCounts(rows, 'claim_type'),
-        offer_type: toCounts(rows, 'offer_type'),
-        narrative_framework: toCounts(rows, 'narrative_framework'),
-        cognitive_load: toCounts(rows, 'cognitive_load'),
-        cta_strength: toCounts(rows, 'cta_strength'),
+        trigger_mechanic: toCounts(enrichedRows, 'trigger_mechanic'),
+        claim_type: toCounts(enrichedRows, 'claim_type'),
+        offer_type: toCounts(enrichedRows, 'offer_type'),
+        narrative_framework: toCounts(enrichedRows, 'narrative_framework'),
+        cognitive_load: toCounts(enrichedRows, 'cognitive_load'),
+        cta_strength: toCounts(enrichedRows, 'cta_strength'),
     });
 }
