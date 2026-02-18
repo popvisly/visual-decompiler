@@ -2,6 +2,12 @@ node_modules
 .next
 .vercel
 .DS_Store
+
+# env
 .env
 .env.*
 !.env.example
+
+# next/ts build artifacts
+next-env.d.ts
+tsconfig.tsbuildinfo
