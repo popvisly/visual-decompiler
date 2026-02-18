@@ -29,7 +29,7 @@ export default async function AdList({ filters }: { filters: Record<string, stri
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ads.map((ad) => {
+            {ads.map((ad: any) => {
                 const digest = ad.digest as AdDigest;
                 return (
                     <div key={ad.id} className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:border-slate-300 transition-all flex flex-col">

@@ -44,7 +44,7 @@ export default async function ReviewPage() {
                     </div>
                 ) : (
                     <div className="space-y-24">
-                        {ads.map((ad) => (
+                        {ads.map((ad: any) => (
                             <div key={ad.id} className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                                 <div className="space-y-6">
                                     <div className="aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border border-slate-800 relative">
