@@ -21,7 +21,16 @@ export default async function DashboardPage({
                         <h1 className="text-xl font-bold text-slate-900">Visual Decompiler</h1>
                         <p className="text-xs text-slate-500 font-medium">Advertising Intelligence Dashboard</p>
                     </div>
-                    <IngestForm />
+                    <div className="flex items-center gap-3">
+                        <a
+                            href="/api/export"
+                            className="text-xs font-semibold text-slate-500 hover:text-slate-900 border border-slate-200 hover:border-slate-400 rounded-lg px-3 py-2 transition-colors"
+                            download
+                        >
+                            Export CSV
+                        </a>
+                        <IngestForm />
+                    </div>
                 </div>
             </header>
 
