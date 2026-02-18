@@ -22,13 +22,22 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
         clearTimeout(timeout);
 
         const ct = res.headers.get('content-type');
-        if (!ct) return { ok: true, type: null, contentType: null };
+        if (ct?.startsWith('image/')) return { ok: true, type: 'image', contentType: ct };
+        if (ct?.startsWith('video/') || ct?.includes('mp4') || ct?.includes('mpeg')) return { ok: true, type: 'video', contentType: ct };
 
-        if (ct.startsWith('image/')) return { ok: true, type: 'image', contentType: ct };
-        if (ct.startsWith('video/') || ct.includes('mp4') || ct.includes('mpeg')) return { ok: true, type: 'video', contentType: ct };
+        // Fallback to extension check if content-type is missing or ambiguous
+        const urlWithoutQuery = mediaUrl.split('?')[0];
+        const ext = urlWithoutQuery.split('.').pop()?.toLowerCase() || '';
+        if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: `image/${ext}` };
+        if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: `video/${ext}` };
 
         return { ok: true, type: null, contentType: ct };
-    } catch {
+    } catch (err: any) {
+        // Fallback to extension even on network failure
+        const urlWithoutQuery = mediaUrl.split('?')[0];
+        const ext = urlWithoutQuery.split('.').pop()?.toLowerCase() || '';
+        if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: `image/${ext}` };
+        if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: `video/${ext}` };
         return { ok: true, type: null, contentType: null };
     }
 }
