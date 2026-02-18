@@ -2,9 +2,15 @@ import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
+let _openai: OpenAI | null = null;
+function getOpenAI() {
+    if (!_openai) {
+        _openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+        });
+    }
+    return _openai;
+}
 
 export type VisionInput =
     | { type: 'url'; url: string }
@@ -35,6 +41,7 @@ export async function decompileAd(inputs: VisionInput[]) {
     }
 
     // 3. Call Vision API
+    const openai = getOpenAI();
     const response = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: [
