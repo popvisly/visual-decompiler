@@ -20,12 +20,18 @@ This repository contains the foundation for a B2B SaaS Advertising Intelligence 
 - **Ingest**: Direct URL submission for on-the-fly deconstruction.
 - **Search & Filter**: Real-time filtering based on generated columns (Trigger Mechanics, Claim Types, Offer Types).
 
-## File Structure
+### 4. Video Ingest (MVP) — Milestone 2
 
-- `src/app/api/ingest/route.ts` - Main ingestion endpoint.
-- `src/app/dashboard/page.tsx` - Research feed and filter interface.
-- `src/lib/vision.ts` - Vision model wrapper.
-- `src/types/digest.ts` - Controlled vocabulary and JSON schema.
+- **Keyframe Extraction**: Automates the selection of high-signal frames (Start, Mid, End) using `ffmpeg` from direct MP4/MOV URLs.
+- **Contextual Vision**: The Vision API now evaluates 3-5 images in a single strategic request, mapping temporal flow into a unified digest.
+- **Hard Deduplication**: Enforced `UNIQUE` constraint on `(media_url, prompt_version)` to prevent cross-team data clutter and optimize API costs.
+
+## File Structure (Updated)
+
+- `src/app/api/ingest/route.ts` - Media-aware ingestion (detects Image vs. Video).
+- `src/lib/video.ts` - Server-side keyframe extraction engine.
+- `supabase/migrations/002_video_ingest.sql` - Atomic schema evolution for nested keyframe data.
+- `scripts/verify-video-ingest.ts` - Logic verification script for video handling.
 
 ## Next Steps
 

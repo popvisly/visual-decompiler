@@ -143,6 +143,12 @@ export const AdDigestSchema = z.object({
             disclaimers: z.array(z.string()),
         }),
         dominant_color_hex: z.string().nullable(),
+        keyframes: z.array(z.object({
+            t_ms: z.number(),
+            label: z.enum(["start", "mid", "end", "high_motion", "other"]),
+            image_url: z.string().nullable(),
+            notes: z.string().nullable(),
+        })).optional(),
         notable_visual_elements: z.array(z.string()),
         composition_notes: z.string(),
         audio_notes: z.string().nullable(),

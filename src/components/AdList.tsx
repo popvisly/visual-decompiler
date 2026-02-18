@@ -43,6 +43,11 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                                 <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-sm border border-slate-200 text-slate-900`}>
                                     {digest.classification.trigger_mechanic}
                                 </span>
+                                {ad.media_kind === 'video' && (
+                                    <span className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-indigo-600 text-white shadow-sm border border-indigo-500">
+                                        Video
+                                    </span>
+                                )}
                             </div>
                         </div>
                         <div className="p-5 flex-1">
