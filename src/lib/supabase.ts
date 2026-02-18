@@ -8,17 +8,27 @@ export const getSupabaseAdmin = () => {
         const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
         if (!supabaseUrl || !supabaseServiceKey) {
-            // During build-time static analysis, environment variables might be missing.
-            // We return a proxy that allows the build to proceed but will fail at runtime if still missing.
+            // In production, missing env should hard-fail (better than silently acting broken).
+            if (process.env.NODE_ENV === 'production') {
+                throw new Error('Supabase env vars missing: set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY');
+            }
+
+            // During build-time / local type-checking, env vars might be missing.
+            // Return a lightweight mock so `next build` can succeed.
             console.warn('[Supabase] Warning: Environment variables missing. Returning mock client for build safety.');
+
+            const empty = Promise.resolve({ data: [], error: null });
             return {
                 from: () => ({
-                    select: () => ({ order: () => Promise.resolve({ data: [], error: null }) }),
+                    select: () => ({
+                        eq: () => ({ order: () => empty }),
+                        order: () => empty,
+                    }),
+                    insert: () => ({ select: () => ({ single: () => Promise.resolve({ data: { id: null }, error: null }) }) }),
                     update: () => ({ eq: () => ({ select: () => ({ single: () => Promise.resolve({ data: null, error: null }) }) }) }),
                     delete: () => ({ eq: () => Promise.resolve({ error: null }) }),
-                    rpc: () => Promise.resolve({ data: [], error: null })
                 }),
-                rpc: () => Promise.resolve({ data: [], error: null })
+                rpc: () => Promise.resolve({ data: [], error: null }),
             } as any;
         }
 
