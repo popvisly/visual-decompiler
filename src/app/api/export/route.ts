@@ -1,48 +1,37 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 
-// Escape a value for CSV: wrap in quotes, escape internal quotes
-function csvEscape(val: unknown): string {
-    if (val === null || val === undefined) return '';
-    const str = Array.isArray(val) ? val.join('; ') : String(val);
-    return `"${str.replace(/"/g, '""')}"`;
-}
+// ---------------------------------------------------------------------------
+// Export contract — single source of truth for both CSV and JSON
+// ---------------------------------------------------------------------------
+type ExportRow = {
+    id: string;
+    created_at: string;
+    media_url: string;
+    media_kind: string;
+    status: string;
+    model: string;
+    prompt_version: string;
+    brand_guess: string | null;
+    product_category_guess: string | null;
+    language_guess: string | null;
+    trigger_mechanic: string | null;
+    secondary_trigger_mechanic: string | null;
+    claim_type: string | null;
+    offer_type: string | null;
+    narrative_framework: string | null;
+    gaze_priority: string | null;
+    cognitive_load: string | null;
+    cta_strength: string | null;
+    primary_headline: string | null;
+    positioning_claim: string | null;
+    confidence_overall: number | null;
+    confidence_trigger: number | null;
+    confidence_copy: number | null;
+    evidence_anchors: string | null;
+};
 
-const CSV_HEADERS = [
-    'id',
-    'media_url',
-    'media_kind',
-    'created_at',
-    'brand_guess',
-    'product_category_guess',
-    'language_guess',
-    'trigger_mechanic',
-    'secondary_trigger_mechanic',
-    'narrative_framework',
-    'gaze_priority',
-    'cognitive_load',
-    'offer_type',
-    'claim_type',
-    'proof_type',
-    'visual_style',
-    'emotion_tone',
-    'cta_strength',
-    'primary_headline',
-    'supporting_copy',
-    'cta_text',
-    'dominant_color_hex',
-    'notable_visual_elements',
-    'composition_notes',
-    'target_job_to_be_done',
-    'positioning_claim',
-    'differentiator_angle',
-    'objection_tackle',
-    'behavioral_nudge',
-    'confidence_overall',
-    'confidence_trigger_mechanic',
-];
-
-function digestToRow(job: any): string {
+function flattenDigest(job: any): ExportRow {
     const d = job.digest || {};
     const meta = d.meta || {};
     const cls = d.classification || {};
@@ -51,51 +40,77 @@ function digestToRow(job: any): string {
     const strat = d.strategy || {};
     const diag = d.diagnostics || {};
     const conf = diag.confidence || {};
+    const anchors: string[] = diag.evidence_anchors || [];
 
-    const values = [
-        job.id,
-        job.media_url,
-        job.media_kind,
-        job.created_at,
-        meta.brand_guess,
-        meta.product_category_guess,
-        meta.language_guess,
-        cls.trigger_mechanic,
-        cls.secondary_trigger_mechanic,
-        cls.narrative_framework,
-        cls.gaze_priority,
-        cls.cognitive_load,
-        cls.offer_type,
-        cls.claim_type,
-        cls.proof_type,
-        cls.visual_style,
-        cls.emotion_tone,
-        cls.cta_strength,
-        copy.primary_headline,
-        copy.supporting_copy,
-        copy.cta_text,
-        ext.dominant_color_hex,
-        ext.notable_visual_elements,
-        ext.composition_notes,
-        strat.target_job_to_be_done,
-        strat.positioning_claim,
-        strat.differentiator_angle,
-        strat.objection_tackle,
-        strat.behavioral_nudge,
-        conf.overall,
-        conf.trigger_mechanic,
-    ];
-
-    return values.map(csvEscape).join(',');
+    return {
+        id: job.id,
+        created_at: job.created_at,
+        media_url: job.media_url,
+        media_kind: job.media_kind,
+        status: job.status,
+        model: job.model,
+        prompt_version: job.prompt_version,
+        brand_guess: meta.brand_guess ?? null,
+        product_category_guess: meta.product_category_guess ?? null,
+        language_guess: meta.language_guess ?? null,
+        trigger_mechanic: cls.trigger_mechanic ?? null,
+        secondary_trigger_mechanic: cls.secondary_trigger_mechanic ?? null,
+        claim_type: cls.claim_type ?? null,
+        offer_type: cls.offer_type ?? null,
+        narrative_framework: cls.narrative_framework ?? null,
+        gaze_priority: cls.gaze_priority ?? null,
+        cognitive_load: cls.cognitive_load ?? null,
+        cta_strength: cls.cta_strength ?? null,
+        primary_headline: copy.primary_headline ?? null,
+        positioning_claim: strat.positioning_claim ?? null,
+        confidence_overall: conf.overall ?? null,
+        confidence_trigger: conf.trigger_mechanic ?? null,
+        confidence_copy: conf.copy_transcription ?? null,
+        evidence_anchors: anchors.length ? anchors.join(' | ') : null,
+    };
 }
 
+// ---------------------------------------------------------------------------
+// CSV helpers
+// ---------------------------------------------------------------------------
+function csvEscape(val: unknown): string {
+    if (val === null || val === undefined) return '';
+    return `"${String(val).replace(/"/g, '""')}"`;
+}
+
+function rowToCsv(row: ExportRow): string {
+    return (Object.values(row) as unknown[]).map(csvEscape).join(',');
+}
+
+const CSV_HEADER = Object.keys({
+    id: 0, created_at: 0, media_url: 0, media_kind: 0, status: 0, model: 0, prompt_version: 0,
+    brand_guess: 0, product_category_guess: 0, language_guess: 0,
+    trigger_mechanic: 0, secondary_trigger_mechanic: 0, claim_type: 0, offer_type: 0,
+    narrative_framework: 0, gaze_priority: 0, cognitive_load: 0, cta_strength: 0,
+    primary_headline: 0, positioning_claim: 0,
+    confidence_overall: 0, confidence_trigger: 0, confidence_copy: 0,
+    evidence_anchors: 0,
+} satisfies Record<keyof ExportRow, 0>).join(',');
+
+// ---------------------------------------------------------------------------
+// Route handler
+// ---------------------------------------------------------------------------
 export async function GET(req: Request) {
+    // Soft token guard — set EXPORT_TOKEN in Vercel env vars
+    const exportToken = process.env.EXPORT_TOKEN;
+    if (exportToken) {
+        const { searchParams } = new URL(req.url);
+        if (searchParams.get('key') !== exportToken) {
+            return new Response('Unauthorized', { status: 401 });
+        }
+    }
+
     const { searchParams } = new URL(req.url);
     const format = searchParams.get('format') || 'csv';
 
     const { data: jobs, error } = await supabaseAdmin
         .from('ad_digests')
-        .select('id, media_url, media_kind, created_at, digest')
+        .select('id, created_at, media_url, media_kind, status, model, prompt_version, digest')
         .eq('status', 'processed')
         .order('created_at', { ascending: false });
 
@@ -103,20 +118,17 @@ export async function GET(req: Request) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
+    const rows = (jobs || []).map(flattenDigest);
+
     if (format === 'json') {
-        return NextResponse.json(jobs, {
+        return NextResponse.json(rows, {
             headers: {
                 'Content-Disposition': 'attachment; filename="intelligence-export.json"',
             },
         });
     }
 
-    // CSV
-    const rows = [
-        CSV_HEADERS.join(','),
-        ...(jobs || []).map(digestToRow),
-    ];
-    const csv = rows.join('\n');
+    const csv = [CSV_HEADER, ...rows.map(rowToCsv)].join('\n');
 
     return new Response(csv, {
         headers: {
