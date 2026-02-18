@@ -110,7 +110,8 @@ export async function POST(req: Request) {
                 model: 'gpt-4o',
                 prompt_version: promptVersion,
                 media_kind: info.type || 'image',
-                media_type: info.contentType
+                media_type: info.contentType,
+                digest: {} // Placeholder to satisfy NOT NULL constraint
             })
             .select()
             .single();
@@ -123,86 +124,13 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Failed to queue ingestion' }, { status: 500 });
         }
 
-        // 6. Spawn Background Processing
-        // In Next.js App Router (standard deployment), we can't reliably "background" without an orchestrator
-        // but for this MVP/Local env, we'll use a detached promise.
-        (async () => {
-            let innerTempDir: string | null = null;
-            try {
-                // Update to 'processing'
-                await supabaseAdmin.from('ad_digests').update({ status: 'processing' }).eq('id', job.id);
-
-                // 2. Call the Black Box
-                console.log(`[Job ${job.id}] Calling Vision API...`);
-                // Note: visionInputs was prepared earlier but we need to re-extract frames if video
-                // because we want the main thread to be fast.
-                let backgroundVisionInputs: VisionInput[] = [];
-                let backgroundKeyframeMeta: any[] = [];
-
-                if (info.type === 'video') {
-                    const extraction = await extractKeyframes(mediaUrl, [
-                        { t_ms: 1000, label: 'start' },
-                        { t_ms: 5000, label: 'mid' },
-                        { t_ms: 10000, label: 'end' }
-                    ]);
-                    innerTempDir = extraction.tempDir;
-                    for (const result of extraction.results) {
-                        backgroundVisionInputs.push({
-                            type: 'base64',
-                            data: fs.readFileSync(result.path, { encoding: 'base64' }),
-                            mimeType: 'image/jpeg'
-                        });
-                        backgroundKeyframeMeta.push({
-                            t_ms: result.t_ms,
-                            label: result.label,
-                            image_url: null,
-                            notes: null
-                        });
-                    }
-                } else {
-                    backgroundVisionInputs.push({ type: 'url', url: mediaUrl });
-                }
-
-                const rawDigest = await decompileAd(backgroundVisionInputs);
-                if (info.type === 'video' && rawDigest.extraction) {
-                    rawDigest.extraction.keyframes = backgroundKeyframeMeta;
-                }
-
-                // Validate
-                const validation = AdDigestSchema.safeParse(rawDigest);
-                const finalStatus = validation.success ? 'processed' : 'needs_review';
-
-                // Final Update
-                await supabaseAdmin
-                    .from('ad_digests')
-                    .update({
-                        status: finalStatus,
-                        digest: rawDigest
-                    })
-                    .eq('id', job.id);
-
-                console.log(`[Job ${job.id}] Completed with status: ${finalStatus}`);
-
-            } catch (innerErr: any) {
-                console.error(`[Job ${job.id}] Background processing failed:`, innerErr);
-                await supabaseAdmin
-                    .from('ad_digests')
-                    .update({
-                        status: 'needs_review',
-                        digest: { error: innerErr.message || 'Background processing failed' }
-                    })
-                    .eq('id', job.id);
-            } finally {
-                if (innerTempDir) cleanupFrames(innerTempDir);
-            }
-        })();
-
-        // 7. Return Job ID immediately
+        // 6. Return Job ID immediately
+        // The /api/worker endpoint (or Vercel Cron) will pick this up for processing.
         return NextResponse.json({
             success: true,
             job_id: job.id,
             status: 'queued',
-            message: 'Decompilation started in background.'
+            message: 'Ad queued for decompilation.'
         });
 
     } catch (err: any) {

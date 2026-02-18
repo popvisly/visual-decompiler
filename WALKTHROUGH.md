@@ -40,8 +40,20 @@ This repository contains the foundation for a B2B SaaS Advertising Intelligence 
 - `supabase/migrations/002_video_ingest.sql` - Atomic schema evolution for nested keyframe data.
 - `src/app/dashboard/review/page.tsx` - Triage dashboard for flagged deconstructions.
 - `src/components/JSONEditor.tsx` - High-fidelity data refinement component.
-- `src/app/api/digests/[id]/route.ts` - RESTful endpoint for manual data updates.
-- `scripts/verify-video-ingest.ts` - CLI tool for verified frame-to-vision logic testing.
+
+### 6. Verification Tools (Reliability Fixes)
+
+- **CLI Debug Tool**: Fixed `scripts/verify-video-ingest.ts` to support reliable CLI testing.
+- **Lazy Init**: Updated `src/lib/vision.ts` to initialize the OpenAI client only when needed, allowing the CLI script to run logic checks even without API keys.
+
+## How to Test
+
+1. **Dashboard Test**: Paste `http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4` into the dashboard.
+2. **CLI Test**: Run the following command to verify frame extraction and payload preparation:
+
+   ```bash
+   npx ts-node --compiler-options '{"module": "commonjs"}' scripts/verify-video-ingest.ts
+   ```
 
 ## Next Steps
 
