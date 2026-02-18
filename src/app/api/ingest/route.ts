@@ -69,7 +69,13 @@ export async function POST(req: Request) {
         const promptVersion = 'V1';
 
         if (info.type === null) {
-            return NextResponse.json({ error: 'Could not detect media type. Please ensure the URL ends in a common image or video extension.' }, { status: 400 });
+            return NextResponse.json({
+                error: 'Could not detect media type. Please ensure the URL ends in a common image or video extension.',
+                debug: {
+                    contentType: info.contentType,
+                    detectedType: info.type
+                }
+            }, { status: 400 });
         }
 
         // 5. Insert 'queued' record into Supabase
