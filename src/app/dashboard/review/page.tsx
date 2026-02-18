@@ -4,6 +4,9 @@ import { AdDigest } from '@/types/digest';
 import Link from 'next/link';
 import { ChevronLeft, AlertCircle } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function ReviewPage() {
     // Fetch all items needing review
     const { data: ads, error } = await supabaseAdmin

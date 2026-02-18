@@ -3,6 +3,9 @@ import AdList from '@/components/AdList';
 import IngestForm from '@/components/IngestForm';
 import Filters from '@/components/Filters';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function DashboardPage({
     searchParams,
 }: {
