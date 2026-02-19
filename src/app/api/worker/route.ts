@@ -21,9 +21,17 @@ export async function POST(req: Request) {
     }
 
     try {
-        // 2. Atomic Claim via Postgres RPC
+        // 2a. Zombie Cleanup (Release jobs stuck in 'processing' for > 1 hour)
+        const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+        await supabaseAdmin
+            .from('ad_digests')
+            .update({ status: 'queued' })
+            .eq('status', 'processing')
+            .lt('updated_at', oneHourAgo);
+
+        // 2b. Atomic Claim via Postgres RPC
         const { data: jobs, error: claimError } = await supabaseAdmin
-            .rpc('claim_queued_jobs', { batch_size: 3 });
+            .rpc('claim_queued_jobs', { batch_size: 10 });
 
         if (claimError) throw claimError;
         if (!jobs || jobs.length === 0) {
