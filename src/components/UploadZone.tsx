@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
-import { Upload, Link as LinkIcon, Loader2 } from 'lucide-react';
+import { useState, useRef, useCallback, useEffect } from 'react';
+import { Upload, Link as LinkIcon, Loader2, Sparkles } from 'lucide-react';
 
 type UploadResult = {
     jobId: string;
     mediaUrl: string;
+    accessLevel?: 'full' | 'limited';
 };
 
 type Props = {
@@ -40,7 +41,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
             });
             const payload = await res.json().catch(() => null);
             if (!res.ok) throw new Error(payload?.error || `Ingestion failed (HTTP ${res.status})`);
-            onUploadComplete({ jobId: payload.job_id, mediaUrl: mediaUrl.trim() });
+            onUploadComplete({ jobId: payload.job_id, mediaUrl: mediaUrl.trim(), accessLevel: payload.access_level });
         } catch (err: any) {
             setError(err?.message || 'Failed to analyze ad.');
             setIsUploading(false);
@@ -52,6 +53,20 @@ export default function UploadZone({ onUploadComplete }: Props) {
         if (!url.trim()) return;
         handleIngest(url.trim());
     };
+
+    const loadExample = () => {
+        const exampleUrl = 'https://utfs.io/f/cd1157af-412e-4b47-bfa7-a4dc7d17482f-1y.png'; // Hosted Dior image or proxy to public
+        setUrl(exampleUrl);
+        handleIngest(exampleUrl);
+    };
+
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.location.search.includes('example=luxury')) {
+            const exampleUrl = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop'; // fallback URL
+            // Auto loading might be jarring if they just clicked the link, but filling the input is nice
+            setUrl('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop');
+        }
+    }, []);
 
     const handleDrop = useCallback((e: React.DragEvent) => {
         e.preventDefault();
@@ -82,7 +97,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
         <div className="w-full max-w-2xl mx-auto page-enter">
             {/* Upload zone */}
             <div
-                className={`upload-zone rounded-2xl p-12 text-center cursor-pointer ${isDragOver ? 'drag-over' : ''}`}
+                className={`rounded-[24px] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-center cursor-pointer transition-all ${isDragOver ? 'border-[#141414] shadow-md bg-white' : 'hover:border-[#D8CCBC] hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)]'}`}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -98,21 +113,21 @@ export default function UploadZone({ onUploadComplete }: Props) {
 
                 {isUploading ? (
                     <div className="flex flex-col items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center pulse-accent">
-                            <Loader2 className="w-7 h-7 text-accent animate-spin" />
+                        <div className="w-14 h-14 rounded-2xl bg-[#F6F1E7] border border-[#E7DED1] flex items-center justify-center">
+                            <Loader2 className="w-6 h-6 text-[#141414] animate-spin" />
                         </div>
-                        <p className="text-sm text-txt-on-dark-muted">Queuing for analysis…</p>
+                        <p className="text-[13px] font-medium text-[#6B6B6B]">Queuing for analysis…</p>
                     </div>
                 ) : (
                     <div className="flex flex-col items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10">
-                            <Upload className="w-7 h-7 text-txt-on-dark-muted" />
+                        <div className="w-14 h-14 rounded-2xl bg-[#F6F1E7] border border-[#E7DED1] flex items-center justify-center shadow-sm">
+                            <Upload className="w-6 h-6 text-[#6B6B6B]" />
                         </div>
                         <div>
-                            <p className="text-sm font-medium text-txt-on-dark">
+                            <p className="text-[15px] font-medium text-[#141414]">
                                 Drag & drop an ad here
                             </p>
-                            <p className="text-xs text-txt-on-dark-muted mt-1">
+                            <p className="text-[13px] text-[#6B6B6B] mt-1">
                                 or paste a URL below
                             </p>
                         </div>
@@ -121,33 +136,52 @@ export default function UploadZone({ onUploadComplete }: Props) {
             </div>
 
             {/* URL input */}
-            <form onSubmit={handleUrlSubmit} className="mt-4 flex gap-2">
-                <div className="relative flex-1">
-                    <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-txt-on-dark-muted" />
-                    <input
-                        type="url"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
-                        placeholder="https://example.com/ad-creative.jpg"
-                        className="w-full pl-10 pr-4 py-3 text-sm bg-white/5 text-txt-on-dark placeholder-txt-on-dark-muted border border-white/10 rounded-xl focus-accent transition-all"
-                        disabled={isUploading}
-                    />
+            <form onSubmit={handleUrlSubmit} className="mt-4 flex flex-col gap-3">
+                <div className="flex gap-2">
+                    <div className="relative flex-1">
+                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6B6B6B]" />
+                        <input
+                            type="url"
+                            value={url}
+                            onChange={(e) => setUrl(e.target.value)}
+                            placeholder="https://example.com/ad-creative.jpg"
+                            className="w-full pl-11 pr-4 py-3.5 text-[14px] bg-[#FBF7EF] text-[#141414] placeholder-[#6B6B6B]/60 border border-[#E7DED1] rounded-[16px] focus:outline-none focus:border-[#141414] focus:ring-1 focus:ring-[#141414] transition-all"
+                            disabled={isUploading}
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        disabled={isUploading || !url.trim()}
+                        className="px-6 py-3.5 bg-[#141414] text-[#FBF7EF] rounded-[16px] text-[14px] font-medium hover:-translate-y-[1px] hover:shadow-[0_10px_30px_rgba(20,20,20,0.15)] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                    >
+                        {isUploading ? 'Analyzing…' : 'Analyze'}
+                    </button>
                 </div>
-                <button
-                    type="submit"
-                    disabled={isUploading || !url.trim()}
-                    className="px-6 py-3 bg-accent text-surface rounded-xl text-sm font-bold hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed glow-accent"
-                >
-                    {isUploading ? 'Analyzing…' : 'Analyze'}
-                </button>
+
+                <div className="flex justify-center mt-2">
+                    <button
+                        type="button"
+                        onClick={loadExample}
+                        className="inline-flex items-center gap-2 text-[12px] font-medium text-[#6B6B6B] hover:text-[#141414] transition border border-[#E7DED1] rounded-full px-4 py-1.5 bg-[#FBF7EF]/50 hover:bg-[#FBF7EF]"
+                    >
+                        <Sparkles className="w-3.5 h-3.5" /> Load example: Luxury/Fashion
+                    </button>
+                </div>
             </form>
 
             {/* Floating category pills */}
-            <div className="flex flex-wrap justify-center gap-2 mt-8">
+            <div className="flex flex-wrap justify-center gap-2 mt-10">
                 {CATEGORY_PILLS.map((pill) => (
                     <span
                         key={pill}
-                        className="float-pill px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.1em] text-txt-on-dark-muted border border-white/8 bg-white/3"
+                        className="
+                            inline-flex items-center gap-2
+                            rounded-full border border-[#E7DED1]
+                            bg-[#FBF7EF]/90 backdrop-blur
+                            px-4 py-2
+                            text-[12px] font-medium tracking-[-0.01em] text-[#141414]/80
+                            shadow-sm
+                        "
                     >
                         {pill}
                     </span>

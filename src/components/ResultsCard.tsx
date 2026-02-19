@@ -12,15 +12,15 @@ type Props = {
 export default function ResultsCard({ title, variant, accentBorder = false, children }: Props) {
     return (
         <div
-            className={`card-stagger bg-surface rounded-2xl border overflow-hidden ${accentBorder ? 'border-accent/20' : 'border-white/5'
+            className={`card-stagger bg-white rounded-2xl border overflow-hidden shadow-[0_10px_40px_rgba(20,20,20,0.04)] ${accentBorder ? 'border-[#141414]/20' : 'border-[#E7DED1]'
                 }`}
         >
             <div className="p-5">
                 <div className="flex items-center gap-2 mb-4">
                     {accentBorder && (
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
                     )}
-                    <h3 className={`text-[10px] font-bold uppercase tracking-[0.2em] ${accentBorder ? 'text-accent' : 'text-txt-on-dark-muted'
+                    <h3 className={`text-[10px] font-bold uppercase tracking-[0.2em] ${accentBorder ? 'text-[#141414]' : 'text-[#6B6B6B]'
                         }`}>
                         {title}
                     </h3>
@@ -35,9 +35,9 @@ export default function ResultsCard({ title, variant, accentBorder = false, chil
 
 export function ClassificationPill({ label, value }: { label: string; value: string }) {
     return (
-        <div className="bg-white/5 rounded-xl px-3 py-2.5 border border-white/5">
-            <p className="spec-label-dark mb-0.5">{label}</p>
-            <p className="text-xs font-semibold text-txt-on-dark">{value.replace(/_/g, ' ')}</p>
+        <div className="bg-[#FBF7EF] rounded-xl px-3 py-2.5 border border-[#E7DED1]">
+            <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-0.5">{label}</p>
+            <p className="text-xs font-semibold text-[#141414]">{value.replace(/_/g, ' ')}</p>
         </div>
     );
 }
@@ -45,8 +45,8 @@ export function ClassificationPill({ label, value }: { label: string; value: str
 export function PullQuote({ text }: { text: string }) {
     return (
         <div className="flex gap-3">
-            <div className="w-1 rounded-full bg-accent/30 shrink-0" />
-            <p className="text-base font-medium text-txt-on-dark leading-relaxed italic font-editorial">
+            <div className="w-1 rounded-full bg-[#141414]/20 shrink-0" />
+            <p className="text-base font-medium text-[#141414] leading-relaxed italic font-sans tracking-[-0.01em]">
                 "{text}"
             </p>
         </div>
@@ -54,8 +54,8 @@ export function PullQuote({ text }: { text: string }) {
 }
 
 export function BulletList({ items, color = 'accent' }: { items: string[]; color?: 'accent' | 'red' }) {
-    const borderClass = color === 'red' ? 'border-red-500/30' : 'border-accent/30';
-    const textClass = color === 'red' ? 'text-red-400' : 'text-txt-on-dark-muted';
+    const borderClass = color === 'red' ? 'border-red-500/30' : 'border-[#141414]/20';
+    const textClass = color === 'red' ? 'text-red-500' : 'text-[#6B6B6B]';
     return (
         <ul className="space-y-1.5">
             {items.map((item, i) => (
@@ -77,7 +77,7 @@ export function ConfidenceGauge({ label, value }: { label: string; value: number
     return (
         <div className="flex items-center gap-3">
             <svg width="36" height="36" viewBox="0 0 64 64" className="shrink-0">
-                <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="4" />
+                <circle cx="32" cy="32" r="28" fill="none" stroke="#E7DED1" strokeWidth="4" />
                 <circle
                     cx="32" cy="32" r="28" fill="none"
                     stroke={strokeColor} strokeWidth="4"
@@ -89,7 +89,7 @@ export function ConfidenceGauge({ label, value }: { label: string; value: number
                 />
             </svg>
             <div className="flex-1 min-w-0">
-                <p className="spec-label-dark truncate">{label.replace(/_/g, ' ')}</p>
+                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] truncate">{label.replace(/_/g, ' ')}</p>
             </div>
             <span className={`text-xs font-bold ${color}`}>{pct}%</span>
         </div>
@@ -100,7 +100,7 @@ export function TagRow({ items }: { items: string[] }) {
     return (
         <div className="flex flex-wrap gap-1.5">
             {items.map((tag) => (
-                <span key={tag} className="px-2.5 py-1 rounded-lg bg-accent-muted text-accent text-[10px] font-bold border border-accent/10">
+                <span key={tag} className="px-2.5 py-1 rounded-lg bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1]">
                     {tag.replace(/_/g, ' ')}
                 </span>
             ))}
@@ -111,8 +111,8 @@ export function TagRow({ items }: { items: string[] }) {
 export function StrategyField({ label, value }: { label: string; value: string }) {
     return (
         <div>
-            <p className="spec-label-dark mb-1">{label}</p>
-            <p className="text-sm text-txt-on-dark-muted leading-relaxed">{value}</p>
+            <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-1">{label}</p>
+            <p className="text-sm text-[#6B6B6B] leading-[1.5]">{value}</p>
         </div>
     );
 }

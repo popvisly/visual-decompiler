@@ -16,10 +16,33 @@ type Props = {
     mediaKind: string;
     digest: AdDigest;
     brand?: string | null;
+    accessLevel?: 'full' | 'limited';
     onReset: () => void;
 };
 
-export default function ResultsView({ mediaUrl, mediaKind, digest, brand, onReset }: Props) {
+function BlurGate({ locked, children }: { locked: boolean; children: React.ReactNode }) {
+    if (!locked) return <>{children}</>;
+    return (
+        <div className="blur-locked rounded-2xl">
+            <div className="blur-content">{children}</div>
+            <div className="blur-overlay rounded-2xl">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mb-2 text-[#6B6B6B]">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#6B6B6B] mb-1">
+                    Pro Analysis
+                </span>
+                <span className="text-[10px] text-[#6B6B6B]">
+                    Upgrade to see full breakdown
+                </span>
+            </div>
+        </div>
+    );
+}
+
+export default function ResultsView({ mediaUrl, mediaKind, digest, brand, accessLevel = 'full', onReset }: Props) {
+    const isLimited = accessLevel === 'limited';
     const d = digest;
     const cls = d.classification;
     const ext = d.extraction;
@@ -32,23 +55,23 @@ export default function ResultsView({ mediaUrl, mediaKind, digest, brand, onRese
     return (
         <div className="w-full max-w-6xl mx-auto page-enter">
             {/* Top bar */}
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-8 mt-4">
                 <div>
-                    <h2 className="font-editorial text-3xl font-medium text-txt-on-dark tracking-tight">
+                    <h2 className="font-sans text-3xl font-medium text-[#141414] tracking-[-0.02em]">
                         Analysis Complete
                     </h2>
                     {displayBrand && (
-                        <p className="text-sm text-txt-on-dark-muted mt-1">
-                            Brand: <span className="text-accent font-semibold">{displayBrand}</span>
+                        <p className="text-[14px] text-[#6B6B6B] mt-1">
+                            Brand: <span className="text-[#141414] font-semibold">{displayBrand}</span>
                             {d.meta?.product_category_guess && (
-                                <span className="text-txt-on-dark-muted"> · {d.meta.product_category_guess}</span>
+                                <span className="text-[#6B6B6B]"> · {d.meta.product_category_guess}</span>
                             )}
                         </p>
                     )}
                 </div>
                 <button
                     onClick={onReset}
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-txt-on-dark-muted border border-white/10 hover:border-accent/30 hover:text-accent transition-all"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414]/70 border border-[#E7DED1] bg-[#FBF7EF]/50 hover:bg-[#FBF7EF] hover:border-[#D8CCBC] hover:text-[#141414] transition-all hover:-translate-y-[1px] shadow-sm hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)]"
                 >
                     <RotateCcw className="w-3.5 h-3.5" />
                     Analyze Another
@@ -58,8 +81,8 @@ export default function ResultsView({ mediaUrl, mediaKind, digest, brand, onRese
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
                 {/* Left — Media */}
                 <div className="lg:col-span-2">
-                    <div className="sticky top-8 space-y-4">
-                        <div className="bg-surface rounded-2xl border border-white/5 overflow-hidden">
+                    <div className="sticky top-24 space-y-4">
+                        <div className="bg-[#FBF7EF] rounded-2xl border border-[#E7DED1] shadow-sm overflow-hidden">
                             {mediaKind === 'video' ? (
                                 <video
                                     src={mediaUrl}
@@ -78,8 +101,8 @@ export default function ResultsView({ mediaUrl, mediaKind, digest, brand, onRese
                         {/* Headline */}
                         {copy?.primary_headline && (
                             <div className="px-1">
-                                <p className="spec-label-dark mb-1">Primary Headline</p>
-                                <p className="text-lg font-light text-txt-on-dark leading-tight tracking-tight">
+                                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-1">Primary Headline</p>
+                                <p className="text-[17px] font-medium text-[#141414] leading-[1.3] tracking-[-0.01em]">
                                     {copy.primary_headline}
                                 </p>
                             </div>
@@ -87,19 +110,19 @@ export default function ResultsView({ mediaUrl, mediaKind, digest, brand, onRese
 
                         {/* CTA */}
                         {copy?.cta_text && (
-                            <div className="inline-block px-4 py-2 bg-accent text-surface rounded-xl text-xs font-bold">
+                            <div className="inline-block px-4 py-2 bg-[#141414] text-[#FBF7EF] rounded-xl text-xs font-semibold">
                                 CTA: {copy.cta_text}
                             </div>
                         )}
 
                         {/* Dominant color */}
                         {ext?.dominant_color_hex && (
-                            <div className="flex items-center gap-3 px-1">
+                            <div className="flex items-center gap-3 px-1 mt-2">
                                 <div
-                                    className="w-6 h-6 rounded-lg border border-white/10"
+                                    className="w-6 h-6 rounded-full border border-[#E7DED1] shadow-sm"
                                     style={{ backgroundColor: ext.dominant_color_hex }}
                                 />
-                                <span className="text-xs font-mono font-bold text-txt-on-dark-muted">
+                                <span className="text-[12px] font-mono font-medium text-[#6B6B6B]">
                                     {ext.dominant_color_hex}
                                 </span>
                             </div>
@@ -109,23 +132,25 @@ export default function ResultsView({ mediaUrl, mediaKind, digest, brand, onRese
 
                 {/* Right — Analysis cards */}
                 <div className="lg:col-span-3 space-y-4">
-                    {/* ── Invisible Machinery (the hero card) ── */}
-                    <ResultsCard title="Invisible Machinery" variant="pullquote" accentBorder>
-                        <div className="space-y-5">
-                            <div>
-                                <p className="spec-label-dark mb-1.5 text-accent/70">
-                                    Semiotic Subtext — The Unspoken Promise
-                                </p>
-                                <PullQuote text={strat?.semiotic_subtext || 'Scanning for hidden meanings…'} />
+                    {/* ── Invisible Machinery (the hero card) — BLUR on limited ── */}
+                    <BlurGate locked={isLimited}>
+                        <ResultsCard title="Invisible Machinery" variant="pullquote" accentBorder>
+                            <div className="space-y-5">
+                                <div>
+                                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5 text-[#141414]/70">
+                                        Semiotic Subtext — The Unspoken Promise
+                                    </p>
+                                    <PullQuote text={strat?.semiotic_subtext || 'Scanning for hidden meanings…'} />
+                                </div>
+                                <div className="pt-4 border-t border-[#E7DED1]">
+                                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5">Objection Dismantling</p>
+                                    <p className="text-sm text-[#6B6B6B] leading-[1.5]">
+                                        {strat?.objection_tackle || 'Analyzing persuasion intent…'}
+                                    </p>
+                                </div>
                             </div>
-                            <div className="pt-4 border-t border-white/5">
-                                <p className="spec-label-dark mb-1.5">Objection Dismantling</p>
-                                <p className="text-sm text-txt-on-dark-muted leading-relaxed">
-                                    {strat?.objection_tackle || 'Analyzing persuasion intent…'}
-                                </p>
-                            </div>
-                        </div>
-                    </ResultsCard>
+                        </ResultsCard>
+                    </BlurGate>
 
                     {/* ── Classification ── */}
                     <ResultsCard title="Classification" variant="classification">
@@ -145,16 +170,16 @@ export default function ResultsView({ mediaUrl, mediaKind, digest, brand, onRese
                         </div>
                         {cls?.visual_style && cls.visual_style.length > 0 && (
                             <div className="mb-3">
-                                <p className="spec-label-dark mb-2">Visual Style</p>
+                                <p className="text-txt-muted text-[10px] font-bold uppercase tracking-[0.15em] mb-2">Visual Style</p>
                                 <TagRow items={cls.visual_style} />
                             </div>
                         )}
                         {cls?.emotion_tone && cls.emotion_tone.length > 0 && (
                             <div>
-                                <p className="spec-label-dark mb-2">Emotion / Tone</p>
+                                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-2">Emotion / Tone</p>
                                 <div className="flex flex-wrap gap-1.5">
                                     {cls.emotion_tone.map((e: string) => (
-                                        <span key={e} className="px-2.5 py-1 rounded-lg bg-white/5 text-txt-on-dark-muted text-[10px] font-bold border border-white/5">
+                                        <span key={e} className="px-2.5 py-1 rounded-lg bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1]">
                                             {e.replace(/_/g, ' ')}
                                         </span>
                                     ))}
@@ -163,26 +188,28 @@ export default function ResultsView({ mediaUrl, mediaKind, digest, brand, onRese
                         )}
                     </ResultsCard>
 
-                    {/* ── Strategic Intelligence ── */}
-                    <ResultsCard title="Strategic Intelligence" variant="strategy">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
-                            {strat?.target_job_to_be_done && (
-                                <StrategyField label="Job-to-be-Done" value={strat.target_job_to_be_done} />
-                            )}
-                            {strat?.positioning_claim && (
-                                <StrategyField label="Positioning Claim" value={strat.positioning_claim} />
-                            )}
-                            {strat?.differentiator_angle && (
-                                <StrategyField label="Differentiator Angle" value={strat.differentiator_angle} />
-                            )}
-                            {strat?.behavioral_nudge && (
-                                <StrategyField label="Behavioral Nudge" value={strat.behavioral_nudge} />
-                            )}
-                            {strat?.misdirection_or_friction_removed && (
-                                <StrategyField label="Friction Removed" value={strat.misdirection_or_friction_removed} />
-                            )}
-                        </div>
-                    </ResultsCard>
+                    {/* ── Strategic Intelligence — BLUR on limited ── */}
+                    <BlurGate locked={isLimited}>
+                        <ResultsCard title="Strategic Intelligence" variant="strategy">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+                                {strat?.target_job_to_be_done && (
+                                    <StrategyField label="Job-to-be-Done" value={strat.target_job_to_be_done} />
+                                )}
+                                {strat?.positioning_claim && (
+                                    <StrategyField label="Positioning Claim" value={strat.positioning_claim} />
+                                )}
+                                {strat?.differentiator_angle && (
+                                    <StrategyField label="Differentiator Angle" value={strat.differentiator_angle} />
+                                )}
+                                {strat?.behavioral_nudge && (
+                                    <StrategyField label="Behavioral Nudge" value={strat.behavioral_nudge} />
+                                )}
+                                {strat?.misdirection_or_friction_removed && (
+                                    <StrategyField label="Friction Removed" value={strat.misdirection_or_friction_removed} />
+                                )}
+                            </div>
+                        </ResultsCard>
+                    </BlurGate>
 
                     {/* ── Evidence Anchors ── */}
                     {((strat?.evidence_anchors?.length || 0) > 0 || (diag?.evidence_anchors?.length || 0) > 0) && (
@@ -196,14 +223,14 @@ export default function ResultsView({ mediaUrl, mediaKind, digest, brand, onRese
                     {/* ── Visual Extraction ── */}
                     <ResultsCard title="Visual Extraction" variant="tags">
                         {ext?.composition_notes && (
-                            <p className="text-xs text-txt-on-dark-muted leading-relaxed mb-4">
+                            <p className="text-sm text-[#6B6B6B] leading-[1.5] mb-4">
                                 {ext.composition_notes}
                             </p>
                         )}
                         {(ext?.notable_visual_elements?.length || 0) > 0 && (
                             <div className="flex flex-wrap gap-1.5">
                                 {ext.notable_visual_elements.map((el: string, i: number) => (
-                                    <span key={i} className="px-2.5 py-1 rounded-lg bg-white/5 text-txt-on-dark-muted text-[10px] font-bold border border-white/5">
+                                    <span key={i} className="px-2.5 py-1 rounded-lg bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1]">
                                         {el}
                                     </span>
                                 ))}

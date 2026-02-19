@@ -107,7 +107,7 @@ export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
                             return (
                                 <span
                                     key={pill}
-                                    className="float-pill absolute px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.12em] text-txt-on-dark-muted border border-white/8 bg-white/3 whitespace-nowrap"
+                                    className="float-pill absolute px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.12em] text-[#6B6B6B] border border-[#E7DED1] bg-[#FBF7EF]/90 shadow-sm whitespace-nowrap backdrop-blur"
                                     style={{
                                         top: `${50 + Math.sin((angle * Math.PI) / 180) * radius}%`,
                                         left: `${50 + Math.cos((angle * Math.PI) / 180) * radius}%`,
@@ -122,11 +122,11 @@ export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
                     </div>
 
                     {/* Media thumbnail */}
-                    <div className="w-64 h-64 rounded-2xl overflow-hidden border border-white/10 bg-surface relative">
+                    <div className="w-64 h-64 rounded-[20px] overflow-hidden border border-[#E7DED1] shadow-[0_20px_60px_rgba(20,20,20,0.08)] bg-white relative">
                         {isVideo ? (
                             <video
                                 src={mediaUrl}
-                                className="w-full h-full object-cover opacity-70"
+                                className="w-full h-full object-cover opacity-80"
                                 muted
                                 playsInline
                                 autoPlay
@@ -137,13 +137,13 @@ export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
                             <img
                                 src={mediaUrl}
                                 alt="Analyzing ad"
-                                className="w-full h-full object-cover opacity-70"
+                                className="w-full h-full object-cover opacity-80"
                             />
                         )}
                         {/* Overlay */}
-                        <div className="absolute inset-0 bg-surface/40 flex items-center justify-center">
-                            <div className="pulse-accent rounded-full p-3">
-                                <Loader2 className="w-8 h-8 text-accent animate-spin" />
+                        <div className="absolute inset-0 bg-[#FBF7EF]/30 flex items-center justify-center backdrop-blur-[2px]">
+                            <div className="rounded-2xl p-4 bg-white/80 border border-[#E7DED1] shadow-sm backdrop-blur-md">
+                                <Loader2 className="w-8 h-8 text-[#141414] animate-spin" />
                             </div>
                         </div>
                     </div>
@@ -151,18 +151,18 @@ export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
 
                 {/* Status text */}
                 <div className="text-center">
-                    <p className="text-sm font-medium text-txt-on-dark mb-1">
+                    <p className="text-[14px] font-medium text-[#141414] mb-1.5">
                         {ANALYSIS_STEPS[step]}{dots}
                     </p>
-                    <p className="spec-label-dark">
+                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em]">
                         Deep psychological analysis in progress
                     </p>
                 </div>
 
                 {/* Progress bar */}
-                <div className="w-64 h-1 rounded-full bg-white/5 overflow-hidden">
+                <div className="w-64 h-1.5 rounded-full bg-[#E7DED1] overflow-hidden shadow-inner">
                     <div
-                        className="h-full bg-accent rounded-full transition-all duration-[3000ms] ease-linear"
+                        className="h-full bg-[#141414] rounded-full transition-all duration-[3000ms] ease-linear"
                         style={{ width: `${((step + 1) / ANALYSIS_STEPS.length) * 100}%` }}
                     />
                 </div>

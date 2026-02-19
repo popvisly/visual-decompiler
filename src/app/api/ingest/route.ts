@@ -72,6 +72,30 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'mediaUrl is required' }, { status: 400 });
         }
 
+        // ── Viewer Gate ──
+        const cookieHeader = req.headers.get('cookie') || '';
+        const viewerIdMatch = cookieHeader.match(/vd_viewer_id=([^;]+)/);
+        const viewerId = viewerIdMatch ? viewerIdMatch[1] : null;
+
+        let accessLevel: 'full' | 'limited' = 'full';
+
+        if (viewerId) {
+            // Upsert viewer_usage row
+            const { data: usage } = await supabaseAdmin
+                .from('viewer_usage')
+                .upsert({ viewer_id: viewerId }, { onConflict: 'viewer_id' })
+                .select()
+                .single();
+
+            if (usage) {
+                if (usage.pro || usage.free_analyses_used < 1) {
+                    accessLevel = 'full';
+                } else {
+                    accessLevel = 'limited';
+                }
+            }
+        }
+
         // 0. Detect Media Type
         const info = await getMediaInfo(mediaUrl);
         if (!info.ok) {
@@ -85,7 +109,7 @@ export async function POST(req: Request) {
             }, { status: 400 });
         }
 
-        const promptVersion = 'V1';
+        const promptVersion = 'V2';
 
         if (info.type === null) {
             return NextResponse.json({
@@ -107,7 +131,9 @@ export async function POST(req: Request) {
                 prompt_version: promptVersion,
                 media_kind: info.type || 'image',
                 media_type: info.contentType,
-                digest: {} // Placeholder to satisfy NOT NULL constraint
+                digest: {}, // Placeholder to satisfy NOT NULL constraint
+                viewer_id: viewerId,
+                access_level: accessLevel,
             })
             .select()
             .single();
@@ -120,12 +146,23 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Failed to queue ingestion' }, { status: 500 });
         }
 
+        // Increment free usage counter (only for non-pro, full-access jobs)
+        if (viewerId && accessLevel === 'full') {
+            await supabaseAdmin
+                .from('viewer_usage')
+                .update({
+                    free_analyses_used: ((await supabaseAdmin.from('viewer_usage').select('free_analyses_used').eq('viewer_id', viewerId).single()).data?.free_analyses_used ?? 0) + 1,
+                    updated_at: new Date().toISOString(),
+                })
+                .eq('viewer_id', viewerId);
+        }
+
         // 6. Return Job ID immediately
-        // The /api/worker endpoint (or Vercel Cron) will pick this up for processing.
         return NextResponse.json({
             success: true,
             job_id: job.id,
             status: 'queued',
+            access_level: accessLevel,
             message: 'Ad queued for decompilation.'
         });
 

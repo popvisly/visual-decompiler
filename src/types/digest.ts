@@ -115,6 +115,34 @@ export const ctaStrengthSchema = z.enum([
     "Hard"
 ]);
 
+export const first3sHookTypeSchema = z.enum([
+    "Problem",
+    "Agitate",
+    "Solve",
+    "PatternInterrupt",
+    "SocialProof",
+    "Offer",
+    "Authority",
+    "Demo",
+    "Identity",
+    "Curiosity"
+]);
+
+export const premiumPrinciplesSchema = z.enum([
+    "exclusivity",
+    "identity",
+    "storytelling"
+]);
+
+export const exclusivityModeSchema = z.enum([
+    "scarcity",
+    "club/access",
+    "craftsmanship",
+    "drops",
+    "heritage",
+    "discriminating_clientele"
+]);
+
 export const AdDigestSchema = z.object({
     meta: z.object({
         media_type: z.enum(["image", "video", "mixed"]),
@@ -134,8 +162,38 @@ export const AdDigestSchema = z.object({
         visual_style: z.array(visualStyleSchema).max(2),
         emotion_tone: z.array(emotionToneSchema).max(2),
         cta_strength: ctaStrengthSchema,
-        brand_association_values: z.array(z.string()).optional(), // [NEW] Deep Decompiler
+        brand_association_values: z.array(z.string()).optional(),
     }),
+    audience_strategy: z.object({
+        target_audience_segment: z.string(),
+        unmet_need_tags: z.array(z.string()),
+        transfer_mechanism: z.string(),
+        first3s_hook_type: first3sHookTypeSchema.nullable(),
+        hook_clarity_score: z.number(),
+        evidence_anchors_timecoded: z.array(z.object({
+            t: z.string(),
+            anchor: z.string(),
+        })).optional(),
+    }).optional(),
+    premium_intelligence: z.object({
+        premium_principles: z.array(premiumPrinciplesSchema),
+        premium_principle_primary: premiumPrinciplesSchema.nullable(),
+        exclusivity_mode: exclusivityModeSchema.nullable(),
+        premium_index_score: z.number(),
+    }).optional(),
+    semiotic_intelligence: z.object({
+        semiotic_layers: z.array(z.object({
+            layer_name: z.string(),
+            cues: z.array(z.string()),
+            claim: z.string(),
+        })),
+        semiotic_tensions: z.array(z.string()),
+        possible_readings: z.array(z.object({
+            reading: z.string(),
+            support: z.array(z.string()),
+            note: z.string().nullable(),
+        })).optional(),
+    }).optional(),
     extraction: z.object({
         on_screen_copy: z.object({
             primary_headline: z.string().nullable(),

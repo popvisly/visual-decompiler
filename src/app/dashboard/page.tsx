@@ -17,15 +17,15 @@ export default async function DashboardPage({
         <div className="space-y-10">
             {/* Page title */}
             <div>
-                <h2 className="text-3xl font-light text-txt-on-dark tracking-tight uppercase">Library</h2>
-                <p className="text-[10px] text-txt-on-dark-muted mt-1 font-medium tracking-widest uppercase">Decompiled Archive</p>
+                <h2 className="text-4xl font-light text-[#141414] tracking-tight uppercase">Library</h2>
+                <p className="text-[10px] text-[#6B6B6B] mt-1 font-bold tracking-[0.2em] uppercase">Decompiled Archive</p>
             </div>
 
             <section className="flex-1">
                 <Suspense fallback={
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         {[1, 2, 3, 4, 5, 6].map(i => (
-                            <div key={i} className="h-72 bg-surface/50 rounded-2xl border border-white/5 animate-pulse" />
+                            <div key={i} className="h-72 bg-[#FBF7EF] rounded-2xl border border-[#E7DED1] animate-pulse" />
                         ))}
                     </div>
                 }>

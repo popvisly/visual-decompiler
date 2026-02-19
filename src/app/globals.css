@@ -1,27 +1,24 @@
-/* v3 — V1 front-end */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+/* v3 — Pure Swiss visual redesign */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Editorial serif for headlines */
-.font-editorial {
-    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-}
+/* Neo-lux serif removed. We use Inter everywhere. */
 
 /* ── V1 Upload Zone ── */
 .upload-zone {
     position: relative;
-    border: 2px dashed rgba(255, 255, 255, 0.12);
+    border: 2px dashed var(--border);
     transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .upload-zone:hover,
 .upload-zone.drag-over {
-    border-color: var(--accent);
-    box-shadow: 0 0 30px rgba(212, 255, 0, 0.12), 0 0 60px rgba(212, 255, 0, 0.05);
-    background: rgba(212, 255, 0, 0.03);
+    border-color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(20, 20, 20, 0.04);
+    background: var(--surface-overlay);
 }
 
 .upload-zone.drag-over {
@@ -107,6 +104,17 @@
 
 .float-pill {
     animation: float-gentle 3s ease-in-out infinite;
+    background: var(--canvas);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(20, 20, 20, 0.04);
+    transition: all 0.2s ease;
+}
+
+.float-pill:hover {
+    background: var(--surface-overlay);
+    border-color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(20, 20, 20, 0.06);
 }
 
 .float-pill:nth-child(odd) {
@@ -139,35 +147,206 @@
     animation: page-enter 0.4s ease both;
 }
 
+/* ══════════════════════════════════════════════
+   MARKETING PAGE — Light Theme
+   ══════════════════════════════════════════════ */
+
+.marketing-body {
+    background: #f8f7f4;
+    color: #1a1a1a;
+}
+
+/* Light hero */
+.hero-light {
+    background: transparent;
+}
+
+/* Light subtle grid */
+.light-grid {
+    background-image:
+        linear-gradient(rgba(20, 20, 20, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 20, 20, 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+}
+
+/* Light glass nav */
+.glass-nav-light {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ── Scroll reveal animation ── */
+@keyframes reveal-up {
+    from {
+        opacity: 0;
+        transform: translateY(48px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(48px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal-on-scroll.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── Card emerge from ad (decomposition) ── */
+@keyframes emerge-left {
+    from {
+        opacity: 0;
+        transform: translateX(40px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes emerge-right {
+    from {
+        opacity: 0;
+        transform: translateX(-40px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+.emerge-card {
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.emerge-card.visible {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+.emerge-card.from-left {
+    transform: translateX(40px) scale(0.9);
+}
+
+.emerge-card.from-right {
+    transform: translateX(-40px) scale(0.9);
+}
+
+/* ── Blur-locked card (free tier) ── */
+.blur-locked {
+    position: relative;
+    overflow: hidden;
+}
+
+.blur-locked>.blur-content {
+    filter: blur(8px);
+    user-select: none;
+    pointer-events: none;
+}
+
+.blur-locked>.blur-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+}
+
+/* ── Marketing section spacing ── */
+.section-marketing {
+    padding: 120px 24px;
+}
+
+@media (max-width: 768px) {
+    .section-marketing {
+        padding: 80px 16px;
+    }
+}
+
+/* ── Feature panel card ── */
+.feature-panel {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-panel:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Marketing accent (darker chartreuse for light bg) ── */
+.accent-dark {
+    color: #8fa800;
+}
+
+.bg-accent-cta {
+    background: #c8f000;
+    color: #1a1a1a;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.bg-accent-cta:hover {
+    background: #d4ff00;
+    transform: translateY(-1px);
+}
+
 :root {
+    /* Pure Swiss / Weavy.ai Inspiration */
+
     /* Canvas */
-    --canvas: #fafaf7;
+    --canvas: #F6F1E7;
+    /* Bone */
     --canvas-alt: #f0f0ec;
 
     /* Surfaces */
-    --surface: #1a1a1a;
-    --surface-raised: #242424;
-    --surface-overlay: rgba(26, 26, 26, 0.85);
+    --surface: #FBF7EF;
+    /* Ivory */
+    --surface-raised: #FFFFFF;
+    --surface-overlay: rgba(246, 241, 231, 0.85);
+    /* Bone overlay */
 
     /* Text */
-    --text-primary: #1a1a1a;
+    --text-primary: #141414;
+    /* Ink */
     --text-secondary: #6b6b6b;
+    /* Muted */
     --text-muted: #9a9a94;
     --text-on-dark: #f5f5f0;
     --text-on-dark-muted: rgba(245, 245, 240, 0.5);
 
-    /* Accent — acid lime */
-    --accent: #d4ff00;
-    --accent-muted: rgba(212, 255, 0, 0.15);
-    --accent-glow: rgba(212, 255, 0, 0.3);
+    /* Accent — Warm Highlight */
+    --accent: rgba(20, 20, 20, 0.06);
+    --accent-muted: rgba(20, 20, 20, 0.03);
+    --accent-glow: rgba(20, 20, 20, 0.06);
 
     /* Borders */
-    --border: rgba(26, 26, 26, 0.08);
+    --border: #E7DED1;
+    /* Warm Line */
     --border-dark: rgba(255, 255, 255, 0.08);
     --border-dark-hover: rgba(255, 255, 255, 0.15);
 
-    /* Confidence colors */
-    --confidence-high: #00e676;
+    /* Confidence colors - softened for light theme */
+    --confidence-high: #00b85e;
     --confidence-mid: #ffd740;
     --confidence-low: #ff5252;
 }
@@ -180,8 +359,8 @@ body {
 
 /* Subtle dot-grid canvas background */
 .dot-grid {
-    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-image: radial-gradient(circle, rgba(20, 20, 20, 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
 }
 
 /* Dark glass surface */
@@ -251,7 +430,8 @@ body {
 /* Focus ring with accent */
 .focus-accent:focus {
     outline: none;
-    box-shadow: 0 0 0 2px var(--accent), 0 0 12px var(--accent-glow);
+    box-shadow: 0 0 0 2px var(--text-primary);
+    /* Ink ring */
 }
 
 /* Select dropdown styling */

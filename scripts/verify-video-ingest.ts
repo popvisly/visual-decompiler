@@ -31,8 +31,8 @@ async function test() {
         // Note: This will fail if no OPENAI_API_KEY in process.env
         // But we can check if it at least prepares the payload correctly.
         if (process.env.OPENAI_API_KEY) {
-            const digest = await decompileAd(visionInputs);
-            console.log("Success! Digest generated:");
+            const digest = await decompileAd(visionInputs, 'V2');
+            console.log("Success! V2 Digest generated:");
             console.log(JSON.stringify(digest, null, 2));
         } else {
             console.log("Skipping Vision call (no API key). Logic verified up to payload preparation.");

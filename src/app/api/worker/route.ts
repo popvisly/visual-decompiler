@@ -28,7 +28,7 @@ export async function POST(req: Request) {
             .from('ad_digests')
             .update({ status: 'queued' })
             .eq('status', 'processing')
-            .lt('updated_at', oneHourAgo);
+            .lt('created_at', oneHourAgo);
 
         // 2b. Atomic Claim via Postgres RPC
         const { data: jobs, error: claimError } = await supabaseAdmin
@@ -76,7 +76,7 @@ export async function POST(req: Request) {
                 }
 
                 // 4. Call Vision API
-                const rawDigest = await decompileAd(visionInputs);
+                const rawDigest = await decompileAd(visionInputs, job.prompt_version);
                 if (job.media_kind === 'video' && rawDigest.extraction) {
                     rawDigest.extraction.keyframes = keyframeMeta;
                 }

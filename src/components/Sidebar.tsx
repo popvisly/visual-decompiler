@@ -7,50 +7,50 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
     const topBrands = brands.slice(0, 10);
 
     return (
-        <aside className="w-full md:w-64 shrink-0 flex flex-col gap-10">
+        <aside className="w-full md:w-64 shrink-0 flex flex-col gap-10 sticky top-[104px] self-start max-h-[calc(100vh-120px)] overflow-y-auto hidden-scrollbar pb-10">
             {/* Context Header (Mobile only or hidden) */}
             <div className="md:hidden mb-4">
-                <p className="spec-label">Navigation</p>
+                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em]">Navigation</p>
             </div>
 
             {/* Strategic Filters Section */}
             <div>
-                <p className="spec-label mb-5 text-accent/80">Strategic Filters</p>
-                <div className="bg-surface/50 backdrop-blur-sm rounded-2xl p-5 border border-white/5 shadow-2xl">
+                <p className="text-[#141414] text-[10px] font-bold uppercase tracking-[0.15em] mb-4">Strategic Filters</p>
+                <div className="bg-white rounded-2xl p-5 border border-[#E7DED1] shadow-[0_10px_40px_rgba(20,20,20,0.04)]">
                     <Filters currentFilters={searchParams} />
                 </div>
             </div>
 
             {/* Market Pulse / Brands Section */}
             <div>
-                <p className="spec-label mb-5 text-txt-on-dark-muted">Market Pulse <span className="text-[8px] opacity-40 ml-2 font-mono">/ TOP COMPETITORS</span></p>
+                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-4">Market Pulse <span className="text-[8px] opacity-40 ml-2 font-mono tracking-widest">/ TOP COMPETITORS</span></p>
                 <div className="space-y-1">
                     {topBrands.length > 0 ? topBrands.map((brand) => (
                         <Link
                             key={brand.name}
                             href={`/dashboard/brand/${encodeURIComponent(brand.name)}`}
-                            className="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/5 group transition-all"
+                            className="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-[#FBF7EF] border border-transparent hover:border-[#E7DED1] group transition-all"
                         >
-                            <span className="text-[11px] font-medium text-txt-on-dark-muted group-hover:text-accent transition-colors truncate max-w-[140px]">
+                            <span className="text-[12px] font-medium text-[#6B6B6B] group-hover:text-[#141414] transition-colors truncate max-w-[140px]">
                                 {brand.name}
                             </span>
-                            <span className="text-[9px] font-mono text-txt-on-dark-muted/40 group-hover:text-accent/60">
+                            <span className="text-[10px] font-mono text-[#6B6B6B]/40 group-hover:text-[#141414]/60">
                                 {String(brand.count).padStart(2, '0')}
                             </span>
                         </Link>
                     )) : (
-                        <p className="text-[10px] text-txt-on-dark-muted/40 italic px-3">Initializing market index...</p>
+                        <p className="text-[10px] text-[#6B6B6B]/60 italic px-3">Initializing market index...</p>
                     )}
                 </div>
             </div>
 
             {/* Quick Links */}
-            <div className="pt-4 border-t border-white/5">
+            <div className="pt-4 border-t border-[#E7DED1]">
                 <Link
                     href="/dashboard/analytics"
-                    className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-txt-on-dark-muted hover:text-accent uppercase tracking-widest transition-all"
+                    className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] transition-all"
                 >
-                    <div className="w-1 h-1 rounded-full bg-accent animate-pulse" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#141414] animate-pulse" />
                     Global Intelligence
                 </Link>
             </div>

@@ -10,26 +10,29 @@ export default {
         extend: {
             colors: {
                 canvas: {
-                    DEFAULT: "#fafaf7",
+                    DEFAULT: "#F6F1E7", // bone
                     alt: "#f0f0ec",
                 },
                 surface: {
-                    DEFAULT: "#1a1a1a",
-                    raised: "#242424",
-                    muted: "#2a2a2a",
+                    DEFAULT: "#FBF7EF", // ivory
+                    raised: "#FFFFFF",
+                    muted: "#f2f1ee",
                 },
                 accent: {
-                    DEFAULT: "#d4ff00",
-                    muted: "rgba(212, 255, 0, 0.15)",
-                    glow: "rgba(212, 255, 0, 0.3)",
+                    DEFAULT: "rgba(20,20,20,0.06)", // warm highlight (was acid-lime)
+                    muted: "rgba(20,20,20,0.03)",
+                    glow: "rgba(20,20,20,0.06)",
                 },
                 txt: {
-                    primary: "#1a1a1a",
-                    secondary: "#6b6b6b",
+                    primary: "#141414", // ink
+                    secondary: "#6B6B6B", // muted
                     muted: "#9a9a94",
-                    "on-dark": "#f5f5f0",
+                    "on-dark": "#f5f5f0", // keeping for any residual dark elements
                     "on-dark-muted": "rgba(245, 245, 240, 0.5)",
                 },
+                line: {
+                    DEFAULT: "#E7DED1", // warm border line
+                }
             },
             fontFamily: {
                 sans: ["'Inter'", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "sans-serif"],
