@@ -72,7 +72,7 @@ export default async function AdDetailPage({
                             <h1 className="text-2xl font-light text-txt-primary leading-tight mb-2 tracking-tight">
                                 {digest?.extraction?.on_screen_copy?.primary_headline || 'Headline Unavailable'}
                             </h1>
-                            {digest?.extraction?.on_screen_copy?.supporting_copy?.length > 0 && (
+                            {(digest?.extraction?.on_screen_copy?.supporting_copy?.length || 0) > 0 && (
                                 <p className="text-sm text-txt-secondary leading-relaxed">
                                     {digest.extraction.on_screen_copy.supporting_copy.join(' · ')}
                                 </p>
@@ -167,7 +167,7 @@ export default async function AdDetailPage({
                             {digest?.extraction?.composition_notes && (
                                 <p className="text-xs text-txt-on-dark-muted leading-relaxed mb-4">{digest.extraction.composition_notes}</p>
                             )}
-                            {digest?.extraction?.notable_visual_elements?.length > 0 && (
+                            {(digest?.extraction?.notable_visual_elements?.length || 0) > 0 && (
                                 <div className="flex flex-wrap gap-1.5">
                                     {digest.extraction.notable_visual_elements.map((el: string, i: number) => (
                                         <span key={i} className="px-2.5 py-1 rounded-lg bg-white/5 text-txt-on-dark-muted text-[10px] font-bold border border-white/5">{el}</span>
@@ -195,17 +195,17 @@ export default async function AdDetailPage({
                                     ))}
                                 </div>
                             )}
-                            {digest?.diagnostics?.evidence_anchors?.length > 0 && (
+                            {(digest?.diagnostics?.evidence_anchors?.length || 0) > 0 && (
                                 <div className="mb-4">
                                     <p className="spec-label-dark mb-2">Evidence Anchors</p>
                                     <ul className="space-y-1">
-                                        {digest.diagnostics.evidence_anchors.map((a: string, i: number) => (
+                                        {digest.diagnostics.evidence_anchors!.map((a: string, i: number) => (
                                             <li key={i} className="text-xs text-txt-on-dark-muted pl-3 border-l-2 border-accent/30">{a}</li>
                                         ))}
                                     </ul>
                                 </div>
                             )}
-                            {digest?.diagnostics?.failure_modes?.length > 0 && (
+                            {(digest?.diagnostics?.failure_modes?.length || 0) > 0 && (
                                 <div>
                                     <p className="spec-label-dark mb-2">Failure Modes</p>
                                     <ul className="space-y-1">
