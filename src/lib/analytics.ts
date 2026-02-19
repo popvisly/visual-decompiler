@@ -19,7 +19,7 @@ export interface AnalyticsData {
 }
 
 export async function getAnalyticsData(brandParam?: string | null): Promise<AnalyticsData> {
-    const { data: ads, error } = await supabaseAdmin
+    let query = supabaseAdmin
         .from('ad_digests')
         .select('digest, brand, brand_guess, status');
 
@@ -37,6 +37,8 @@ export async function getAnalyticsData(brandParam?: string | null): Promise<Anal
         return {
             summary: {
                 total: 0,
+                queued: 0,
+                processing: 0,
                 brands: [],
                 top_brand: null,
                 avg_confidence: null
