@@ -11,6 +11,7 @@ import {
 export default function Filters({ currentFilters }: { currentFilters: Record<string, string | undefined> }) {
     const router = useRouter();
     const [brandInput, setBrandInput] = useState(currentFilters.brand || '');
+    const [searchInput, setSearchInput] = useState(currentFilters.q || '');
 
     const updateFilter = (key: string, value: string) => {
         const params = new URLSearchParams(window.location.search);
@@ -27,6 +28,19 @@ export default function Filters({ currentFilters }: { currentFilters: Record<str
 
     return (
         <div className="space-y-6">
+            <div>
+                <label className="spec-label block mb-2">Intelligence Search</label>
+                <input
+                    type="text"
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') updateFilter('q', searchInput); }}
+                    onBlur={() => updateFilter('q', searchInput)}
+                    placeholder="Search triggers, subtext, mechanics..."
+                    className="w-full px-3 py-2.5 text-xs bg-surface text-txt-on-dark placeholder-txt-on-dark-muted border border-white/10 rounded-xl focus-accent transition-all font-medium"
+                />
+            </div>
+
             <div>
                 <label className="spec-label block mb-2">Brand / Competitor</label>
                 <input
@@ -57,7 +71,7 @@ export default function Filters({ currentFilters }: { currentFilters: Record<str
             ))}
 
             <button
-                onClick={() => { setBrandInput(''); router.push('/dashboard'); }}
+                onClick={() => { setBrandInput(''); setSearchInput(''); router.push('/dashboard'); }}
                 className="w-full py-2.5 text-[9px] font-bold text-txt-muted uppercase tracking-[0.15em] border border-dashed border-white/10 rounded-xl hover:border-accent/40 hover:text-accent transition-all"
             >
                 Clear All Filters

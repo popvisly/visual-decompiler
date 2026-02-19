@@ -16,6 +16,23 @@ export default async function AdList({ filters }: { filters: Record<string, stri
         query = query.or(`brand.ilike.%${filters.brand}%,brand_guess.ilike.%${filters.brand}%`);
     }
 
+    if (filters.q) {
+        const searchTerm = `%${filters.q}%`;
+        query = query.or(`
+            brand.ilike.${searchTerm},
+            brand_guess.ilike.${searchTerm},
+            digest->extraction->on_screen_copy->>primary_headline.ilike.${searchTerm},
+            digest->strategy->>target_job_to_be_done.ilike.${searchTerm},
+            digest->strategy->>positioning_claim.ilike.${searchTerm},
+            digest->classification->>trigger_mechanic.ilike.${searchTerm},
+            digest->classification->>narrative_framework.ilike.${searchTerm},
+            digest->classification->>gaze_priority.ilike.${searchTerm},
+            digest->classification->>cognitive_load.ilike.${searchTerm},
+            digest->strategy->>semiotic_subtext.ilike.${searchTerm},
+            digest->strategy->>objection_tackle.ilike.${searchTerm}
+        `.replace(/\s+/g, ''));
+    }
+
     const { data: ads, error } = await query;
 
     if (error) {
