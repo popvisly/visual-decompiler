@@ -32,16 +32,25 @@ async function AnalyticsContent({ brand }: { brand?: string }) {
             {/* Summary Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div className="bg-surface p-6 rounded-2xl border border-white/5">
-                    <p className="spec-label-dark mb-2">Total Processed</p>
+                    <div className="flex justify-between items-start mb-2">
+                        <p className="spec-label-dark">Processed</p>
+                        <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                    </div>
                     <p className="text-3xl font-light text-txt-on-dark">{data.summary.total}</p>
                 </div>
                 <div className="bg-surface p-6 rounded-2xl border border-white/5">
-                    <p className="spec-label-dark mb-2">Top Brand</p>
-                    <p className="text-lg font-semibold text-txt-on-dark truncate">{data.summary.top_brand || 'N/A'}</p>
+                    <div className="flex justify-between items-start mb-2">
+                        <p className="spec-label-dark">In Queue</p>
+                        <div className={`w-2 h-2 rounded-full ${data.summary.queued > 0 ? 'bg-accent animate-pulse' : 'bg-white/10'}`} />
+                    </div>
+                    <p className="text-3xl font-light text-txt-on-dark">{data.summary.queued}</p>
                 </div>
                 <div className="bg-surface p-6 rounded-2xl border border-white/5">
-                    <p className="spec-label-dark mb-2">Avg Confidence</p>
-                    <p className="text-3xl font-light text-accent">{data.summary.avg_confidence ? `${(data.summary.avg_confidence * 100).toFixed(0)}%` : 'N/A'}</p>
+                    <div className="flex justify-between items-start mb-2">
+                        <p className="spec-label-dark">Processing</p>
+                        <div className={`w-2 h-2 rounded-full ${data.summary.processing > 0 ? 'bg-yellow-500 animate-spin' : 'bg-white/10'}`} />
+                    </div>
+                    <p className="text-3xl font-light text-txt-on-dark">{data.summary.processing}</p>
                 </div>
             </div>
 

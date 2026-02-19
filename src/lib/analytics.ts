@@ -3,6 +3,8 @@ import { supabaseAdmin } from '@/lib/supabase';
 export interface AnalyticsData {
     summary: {
         total: number;
+        queued: number;
+        processing: number;
         brands: { label: string; count: number }[];
         top_brand: string | null;
         avg_confidence: number | null;
@@ -17,10 +19,9 @@ export interface AnalyticsData {
 }
 
 export async function getAnalyticsData(brandParam?: string | null): Promise<AnalyticsData> {
-    let query = supabaseAdmin
+    const { data: ads, error } = await supabaseAdmin
         .from('ad_digests')
-        .select('digest, brand, brand_guess')
-        .eq('status', 'processed');
+        .select('digest, brand, brand_guess, status');
 
     if (brandParam) {
         query = query.or(`brand.ilike.%${brandParam}%,brand_guess.ilike.%${brandParam}%`);
@@ -62,7 +63,21 @@ export async function getAnalyticsData(brandParam?: string | null): Promise<Anal
     let totalConfidence = 0;
     let confidenceCount = 0;
 
+    let processedAds = 0;
+    let queuedAds = 0;
+    let processingAds = 0;
+
     ads.forEach((ad: any) => {
+        if (ad.status === 'queued') {
+            queuedAds++;
+            return;
+        }
+        if (ad.status === 'processing') {
+            processingAds++;
+            return;
+        }
+
+        processedAds++;
         const digest = ad.digest;
         if (!digest) return;
 
@@ -107,7 +122,9 @@ export async function getAnalyticsData(brandParam?: string | null): Promise<Anal
 
     return {
         summary: {
-            total: ads.length,
+            total: processedAds,
+            queued: queuedAds,
+            processing: processingAds,
             top_brand: formattedBrands[0]?.label || null,
             avg_confidence: confidenceCount > 0 ? totalConfidence / confidenceCount : null,
             brands: formattedBrands
