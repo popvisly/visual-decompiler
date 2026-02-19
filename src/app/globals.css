@@ -1,9 +1,143 @@
-/* v2 — force recompile */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+/* v3 — V1 front-end */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Editorial serif for headlines */
+.font-editorial {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+}
+
+/* ── V1 Upload Zone ── */
+.upload-zone {
+    position: relative;
+    border: 2px dashed rgba(255, 255, 255, 0.12);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.upload-zone:hover,
+.upload-zone.drag-over {
+    border-color: var(--accent);
+    box-shadow: 0 0 30px rgba(212, 255, 0, 0.12), 0 0 60px rgba(212, 255, 0, 0.05);
+    background: rgba(212, 255, 0, 0.03);
+}
+
+.upload-zone.drag-over {
+    border-style: solid;
+}
+
+/* ── Card stagger animation ── */
+@keyframes card-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-stagger {
+    animation: card-fade-up 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.card-stagger:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.card-stagger:nth-child(2) {
+    animation-delay: 0.12s;
+}
+
+.card-stagger:nth-child(3) {
+    animation-delay: 0.19s;
+}
+
+.card-stagger:nth-child(4) {
+    animation-delay: 0.26s;
+}
+
+.card-stagger:nth-child(5) {
+    animation-delay: 0.33s;
+}
+
+.card-stagger:nth-child(6) {
+    animation-delay: 0.40s;
+}
+
+.card-stagger:nth-child(7) {
+    animation-delay: 0.47s;
+}
+
+/* ── Processing pulse ── */
+@keyframes pulse-ring {
+    0% {
+        box-shadow: 0 0 0 0 rgba(212, 255, 0, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 16px rgba(212, 255, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(212, 255, 0, 0);
+    }
+}
+
+.pulse-accent {
+    animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ── Floating pill orbit ── */
+@keyframes float-gentle {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.float-pill {
+    animation: float-gentle 3s ease-in-out infinite;
+}
+
+.float-pill:nth-child(odd) {
+    animation-delay: -1.5s;
+}
+
+/* ── Hero gradient ── */
+.hero-gradient {
+    background: radial-gradient(ellipse 80% 60% at 50% 120%, rgba(212, 255, 0, 0.06) 0%, transparent 60%),
+        linear-gradient(180deg, #1a1a1a 0%, #111111 100%);
+}
+
+/* ── Confidence gauge ── */
+.gauge-ring {
+    transition: stroke-dashoffset 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Smooth page transition ── */
+@keyframes page-enter {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.page-enter {
+    animation: page-enter 0.4s ease both;
+}
 
 :root {
     /* Canvas */
