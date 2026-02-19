@@ -98,8 +98,9 @@ const CSV_HEADER = Object.keys({
 export async function GET(req: Request) {
     // Auth: check httpOnly cookie set by /api/export/unlock
     // If EXPORT_TOKEN is not set in env or set to 'OPEN', the route is open
-    const exportToken = process.env.EXPORT_TOKEN;
-    if (exportToken && exportToken !== 'OPEN') {
+    // [cache-bust: v3 — force reload env vars]
+    const exportToken = (process.env.EXPORT_TOKEN || '').trim();
+    if (exportToken && exportToken !== 'OPEN' && exportToken !== '') {
         const cookieHeader = req.headers.get('cookie') || '';
         const hasExportCookie = cookieHeader.split(';').some(c => c.trim() === 'export_ok=1');
         if (!hasExportCookie) {
