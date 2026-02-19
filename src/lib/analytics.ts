@@ -8,6 +8,12 @@ export interface AnalyticsData {
         avg_confidence: number | null;
     };
     dimensions: Record<string, { label: string; count: number }[]>;
+    highlights: {
+        id: string;
+        brand: string;
+        subtext: string;
+        objection: string;
+    }[];
 }
 
 export async function getAnalyticsData(brandParam?: string | null): Promise<AnalyticsData> {
@@ -34,7 +40,8 @@ export async function getAnalyticsData(brandParam?: string | null): Promise<Anal
                 top_brand: null,
                 avg_confidence: null
             },
-            dimensions: {}
+            dimensions: {},
+            highlights: []
         };
     }
 
@@ -87,6 +94,17 @@ export async function getAnalyticsData(brandParam?: string | null): Promise<Anal
 
     const formattedBrands = toRankedList(brands);
 
+    // Deep Intelligence Highlights
+    const highlights = ads
+        .filter((ad: any) => ad.digest?.strategy?.semiotic_subtext || ad.digest?.strategy?.objection_tackle)
+        .slice(0, 6)
+        .map((ad: any) => ({
+            id: ad.id,
+            brand: ad.brand || ad.brand_guess || 'Unknown',
+            subtext: ad.digest.strategy.semiotic_subtext,
+            objection: ad.digest.strategy.objection_tackle
+        }));
+
     return {
         summary: {
             total: ads.length,
@@ -96,6 +114,7 @@ export async function getAnalyticsData(brandParam?: string | null): Promise<Anal
         },
         dimensions: Object.fromEntries(
             Object.entries(stats).map(([dim, counts]) => [dim, toRankedList(counts)])
-        )
+        ),
+        highlights
     };
 }

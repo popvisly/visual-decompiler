@@ -80,6 +80,36 @@ async function AnalyticsContent({ brand }: { brand?: string }) {
                     );
                 })}
             </div>
+
+            {/* Invisible Machinery: Lateral Inspiration Wall */}
+            <div className="space-y-6 pt-6 border-t border-white/5">
+                <div>
+                    <h3 className="text-xs font-bold text-accent uppercase tracking-widest mb-1">Invisible Machinery</h3>
+                    <p className="text-[10px] text-txt-on-dark-muted font-medium uppercase tracking-tight">Lateral Strategy Inspiration</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {data.highlights.map(item => (
+                        <div key={item.id} className="bg-surface p-5 rounded-2xl border border-white/5 flex flex-col gap-4 group hover:border-accent/40 transition-all cursor-default">
+                            <div className="flex items-center justify-between">
+                                <span className="spec-label-dark font-bold text-[9px] truncate max-w-[120px]">{item.brand}</span>
+                                <div className="w-1.5 h-1.5 rounded-full bg-accent/40 group-hover:bg-accent animate-pulse" />
+                            </div>
+
+                            <div className="space-y-3">
+                                <div>
+                                    <p className="text-[8px] font-bold text-accent/60 uppercase tracking-tighter mb-1">Semiotic Subtext</p>
+                                    <p className="text-[11px] text-txt-on-dark-muted leading-relaxed line-clamp-3 italic">"{item.subtext}"</p>
+                                </div>
+                                <div className="pt-3 border-t border-white/5">
+                                    <p className="text-[8px] font-bold text-txt-on-dark-muted/60 uppercase tracking-tighter mb-1">Objection Dismantling</p>
+                                    <p className="text-[11px] text-txt-on-dark leading-snug">{item.objection}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }
