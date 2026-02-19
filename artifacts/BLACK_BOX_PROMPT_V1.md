@@ -13,15 +13,19 @@ TASK
 Analyze the provided media (image(s) and/or video). Extract high-signal strategic and semiotic data using the controlled vocabularies and constraints below. Return ONLY a valid JSON object matching the schema exactly.
 
 GLOBAL RULES (HARD FAILS)
-1) Output must be strictly valid JSON. No markdown. No commentary. No extra keys.
-2) Never invent new category values. If uncertain, choose the closest allowed value and reflect uncertainty in confidence + evidence.
-3) Do not include personal data about real individuals. Do not guess sensitive demographics. Describe non-sensitive apparent attributes only if materially relevant.
-4) Do not use phrases like “Based on …” / “Since you …”. Output is JSON only.
-5) If on-screen text is not legible, set on_screen_copy.primary_headline to null and explain in diagnostics.notes.
 
-INPUT ASSUMPTIONS
-- If video: analyze the whole clip; if limited access to frames, analyze what is visible and state limitations in diagnostics.notes.
-- If multiple images: treat as one campaign unit.
+1) **Anti-Hallucination**: Every strategic claim must cite evidence anchors (visual cues, on-screen text, actions). If evidence is weak (e.g., black frame), mark as "Insufficient signal".
+2) **Brand Specificity**: If you assert a specific brand term (e.g., "Nike"), you must include an anchor that identifies the exact logo/text observed.
+3) Output must be strictly valid JSON. No markdown. No commentary. No extra keys.
+4) Do not include personal data about real individuals.
+
+ANALYSIS SEQUENCE (MUST FOLLOW)
+A) **Brand Aim & Target**: Infer audience and aim (awareness, conversion, trust). Cite anchors.
+B) **Association Principle**: Identify 2-4 values the ad attaches to the brand (e.g., "status", "simplicity"). Cite anchors.
+C) **Narrative**: Identify how attention is held (Problem/Solution, Product-as-Hero).
+D) **Psychological Trigger**: Choose trigger_mechanic and identify objection_dismantling.
+E) **Visual Hierarchy**: Explain gaze_priority.
+F) **Output**: Generate strict JSON.
 
 ---
 
@@ -29,6 +33,7 @@ INPUT ASSUMPTIONS
 
 trigger_mechanic (primary human lever; choose exactly ONE)
 Allowed:
+
 - "Status_Prestige"
 - "FOMO_Scarcity"
 - "Security_Trust"
@@ -46,6 +51,7 @@ Allowed: (same list as trigger_mechanic)
 
 narrative_framework (choose exactly ONE)
 Allowed:
+
 - "Problem_Agitation_Solution"
 - "Before_After_Transformation"
 - "Micro_Heros_Journey"
@@ -58,6 +64,7 @@ Allowed:
 
 gaze_priority (choose exactly ONE)
 Allowed:
+
 - "Human_Face_EyeContact"
 - "Human_Body_Action"
 - "Product_Packaging"
@@ -69,6 +76,7 @@ Allowed:
 
 cognitive_load (choose exactly ONE)
 Allowed:
+
 - "Minimal_HighContrast"
 - "Cinematic_SlowBurn"
 - "Fast_Tense"
@@ -77,6 +85,7 @@ Allowed:
 
 offer_type (choose exactly ONE)
 Allowed:
+
 - "No_Offer_BrandOnly"
 - "Free_Trial"
 - "Limited_Time_Discount"
@@ -90,6 +99,7 @@ Allowed:
 
 claim_type (dominant claim category; choose exactly ONE)
 Allowed:
+
 - "Health_Support"
 - "Performance"
 - "Taste_Indulgence"
@@ -100,6 +110,7 @@ Allowed:
 
 proof_type (primary credibility move; choose up to TWO, ordered)
 Allowed:
+
 - "None"
 - "Authority_Badge"
 - "Customer_Testimonial"
@@ -113,6 +124,7 @@ Allowed:
 
 visual_style (choose up to TWO)
 Allowed:
+
 - "Minimalist"
 - "Premium_Luxury"
 - "Playful_Bold"
@@ -126,6 +138,7 @@ Allowed:
 
 emotion_tone (choose up to TWO)
 Allowed:
+
 - "Awe"
 - "Desire"
 - "Relief"
@@ -140,12 +153,14 @@ Allowed:
 
 cta_strength (choose exactly ONE)
 Allowed:
+
 - "None"
 - "Soft"
 - "Direct"
 - "Hard"
 
 Color extraction rule:
+
 - dominant_color_hex must be a 6-character hex string like "1A2B3C".
 - If not reliably estimable, set null and explain in diagnostics.notes.
 
@@ -173,7 +188,8 @@ Return exactly this JSON object:
     "proof_type": ["…","…"],
     "visual_style": ["…","…"],
     "emotion_tone": ["…","…"],
-    "cta_strength": "…"
+    "cta_strength": "…",
+    "brand_association_values": ["string"]
   },
   "extraction": {
     "on_screen_copy": {
@@ -194,7 +210,8 @@ Return exactly this JSON object:
     "differentiator_angle": "string",
     "semiotic_subtext": "string",
     "behavioral_nudge": "string",
-    "misdirection_or_friction_removed": "string|null"
+    "misdirection_or_friction_removed": "string|null",
+    "evidence_anchors": ["string"]
   },
   "diagnostics": {
     "confidence": {
@@ -203,7 +220,9 @@ Return exactly this JSON object:
       "secondary_trigger_mechanic": 0.0,
       "narrative_framework": 0.0,
       "copy_transcription": 0.0,
-      "color_extraction": 0.0
+      "color_extraction": 0.0,
+      "subtext": 0.0,
+      "objection": 0.0
     },
     "evidence_anchors": ["string"],
     "failure_modes": ["string"],

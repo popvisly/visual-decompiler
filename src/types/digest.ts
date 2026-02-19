@@ -134,6 +134,7 @@ export const AdDigestSchema = z.object({
         visual_style: z.array(visualStyleSchema).max(2),
         emotion_tone: z.array(emotionToneSchema).max(2),
         cta_strength: ctaStrengthSchema,
+        brand_association_values: z.array(z.string()).optional(), // [NEW] Deep Decompiler
     }),
     extraction: z.object({
         on_screen_copy: z.object({
@@ -161,6 +162,7 @@ export const AdDigestSchema = z.object({
         semiotic_subtext: z.string(),
         behavioral_nudge: z.string(),
         misdirection_or_friction_removed: z.string().nullable(),
+        evidence_anchors: z.array(z.string()).optional(), // [NEW] Deep Decompiler
     }),
     diagnostics: z.object({
         confidence: z.object({
@@ -170,8 +172,10 @@ export const AdDigestSchema = z.object({
             narrative_framework: z.number(),
             copy_transcription: z.number(),
             color_extraction: z.number(),
+            subtext: z.number().optional(), // [NEW] Deep Decompiler
+            objection: z.number().optional(), // [NEW] Deep Decompiler
         }),
-        evidence_anchors: z.array(z.string()),
+        evidence_anchors: z.array(z.string()).optional(), // [NEW] moved/duplicated for safety
         failure_modes: z.array(z.string()),
         notes: z.string().nullable(),
     }),
