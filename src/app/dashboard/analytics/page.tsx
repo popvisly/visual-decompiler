@@ -5,15 +5,10 @@ import Header from '@/components/Header';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+import { getAnalyticsData } from '@/lib/analytics';
+
 async function AnalyticsContent({ brand }: { brand?: string }) {
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/analytics${brand ? `?brand=${brand}` : ''}`, { cache: 'no-store' });
-
-    if (!res.ok) {
-        return <div className="text-red-400 font-bold p-8 bg-red-500/10 rounded-2xl border border-red-500/20">Error loading analytics data</div>;
-    }
-
-    const data = await res.json();
+    const data = await getAnalyticsData(brand);
 
     if (data.summary.total === 0) {
         return (
