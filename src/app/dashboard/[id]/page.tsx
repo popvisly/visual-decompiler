@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { supabaseAdmin } from '@/lib/supabase';
 import { AdDigest } from '@/types/digest';
 import BrandTag from '@/components/BrandTag';
-import Header from '@/components/Header';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,10 +24,8 @@ export default async function AdDetailPage({
     const digest = ad.digest as AdDigest;
 
     return (
-        <main className="min-h-screen bg-canvas dot-grid">
-            <Header />
-
-            <div className="max-w-5xl mx-auto px-6 py-10">
+        <div className="py-10">
+            <div className="max-w-5xl mx-auto px-6">
                 {/* Breadcrumb */}
                 <nav className="spec-label mb-8 flex items-center gap-2">
                     <Link href="/dashboard" className="hover:text-accent transition-colors">Library</Link>
@@ -197,7 +194,7 @@ export default async function AdDetailPage({
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
     );
 }
 
