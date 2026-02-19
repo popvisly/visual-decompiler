@@ -115,16 +115,41 @@ export default async function AdDetailPage({
 
                         {/* Strategy */}
                         <Section title="Strategic Intelligence">
-                            <div className="space-y-4">
-                                <StrategyRow label="Job-to-be-Done" value={digest?.strategy?.target_job_to_be_done} />
-                                <StrategyRow label="Objection Tackle" value={digest?.strategy?.objection_tackle} />
-                                <StrategyRow label="Positioning Claim" value={digest?.strategy?.positioning_claim} />
-                                <StrategyRow label="Differentiator Angle" value={digest?.strategy?.differentiator_angle} />
-                                <StrategyRow label="Semiotic Subtext" value={digest?.strategy?.semiotic_subtext} />
-                                <StrategyRow label="Behavioral Nudge" value={digest?.strategy?.behavioral_nudge} />
-                                {digest?.strategy?.misdirection_or_friction_removed && (
-                                    <StrategyRow label="Friction Removed" value={digest.strategy.misdirection_or_friction_removed} />
-                                )}
+                            <div className="space-y-8">
+                                {/* The "Invisible Machinery" Highlight */}
+                                <div className="p-5 rounded-2xl bg-accent/5 border border-accent/20 space-y-5">
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                                        <p className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Invisible Machinery</p>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        <div>
+                                            <p className="spec-label-dark mb-1.5 text-accent/70">Semiotic Subtext (The Unspoken Promise)</p>
+                                            <p className="text-base font-medium text-txt-on-dark leading-relaxed italic">
+                                                "{digest?.strategy?.semiotic_subtext || 'Scanning for hidden meanings...'}"
+                                            </p>
+                                        </div>
+
+                                        <div className="pt-4 border-t border-white/5">
+                                            <p className="spec-label-dark mb-1.5">Objection Dismantling</p>
+                                            <p className="text-sm text-txt-on-dark-muted leading-relaxed">
+                                                {digest?.strategy?.objection_tackle || 'Analyzing persuasion intent...'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Standard Strategy Rows */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 px-1">
+                                    <StrategyRow label="Job-to-be-Done" value={digest?.strategy?.target_job_to_be_done} />
+                                    <StrategyRow label="Positioning Claim" value={digest?.strategy?.positioning_claim} />
+                                    <StrategyRow label="Differentiator Angle" value={digest?.strategy?.differentiator_angle} />
+                                    <StrategyRow label="Behavioral Nudge" value={digest?.strategy?.behavioral_nudge} />
+                                    {digest?.strategy?.misdirection_or_friction_removed && (
+                                        <StrategyRow label="Friction Removed" value={digest.strategy.misdirection_or_friction_removed} />
+                                    )}
+                                </div>
                             </div>
                         </Section>
 
