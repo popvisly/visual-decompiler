@@ -92,39 +92,26 @@ export default async function AnalyticsPage({
     const params = await searchParams;
 
     return (
-        <main className="min-h-screen bg-canvas dot-grid">
-            <Header activeTab="analytics" />
-
-            <div className="max-w-7xl mx-auto px-6 py-10">
-                <div className="mb-10">
-                    <h2 className="text-3xl font-light text-txt-primary tracking-tight">Analytics</h2>
-                    <p className="text-xs text-txt-muted mt-1 font-medium">Strategic pattern distribution across your library</p>
-                </div>
-
-                <div className="flex flex-col md:flex-row gap-10">
-                    <aside className="w-full md:w-56 shrink-0">
-                        <p className="spec-label mb-5">Focus Filter</p>
-                        <div className="bg-surface rounded-2xl p-4 border border-white/5">
-                            <Filters currentFilters={params} />
-                        </div>
-                    </aside>
-
-                    <section className="flex-1">
-                        <Suspense fallback={
-                            <div className="space-y-12 animate-pulse">
-                                <div className="grid grid-cols-3 gap-5">
-                                    {[1, 2, 3].map(i => <div key={i} className="h-24 bg-surface rounded-2xl border border-white/5" />)}
-                                </div>
-                                <div className="grid grid-cols-2 gap-6">
-                                    {[1, 2, 3, 4].map(i => <div key={i} className="h-56 bg-surface rounded-2xl border border-white/5" />)}
-                                </div>
-                            </div>
-                        }>
-                            <AnalyticsContent brand={params.brand} />
-                        </Suspense>
-                    </section>
-                </div>
+        <div className="space-y-10">
+            <div>
+                <h2 className="text-3xl font-light text-txt-on-dark tracking-tight uppercase">Global Intelligence</h2>
+                <p className="text-[10px] text-txt-on-dark-muted mt-1 font-medium tracking-widest uppercase">Strategic pattern distribution</p>
             </div>
-        </main>
+
+            <section className="flex-1">
+                <Suspense fallback={
+                    <div className="space-y-12 animate-pulse">
+                        <div className="grid grid-cols-3 gap-5">
+                            {[1, 2, 3].map(i => <div key={i} className="h-24 bg-surface/50 rounded-2xl border border-white/5" />)}
+                        </div>
+                        <div className="grid grid-cols-2 gap-6">
+                            {[1, 2, 3, 4].map(i => <div key={i} className="h-56 bg-surface/50 rounded-2xl border border-white/5" />)}
+                        </div>
+                    </div>
+                }>
+                    <AnalyticsContent brand={params.brand} />
+                </Suspense>
+            </section>
+        </div>
     );
 }

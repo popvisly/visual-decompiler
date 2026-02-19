@@ -42,7 +42,10 @@ export default function IngestForm() {
     };
 
     const handleBatch = async () => {
-        const urls = bulkText.split('\n').map(l => l.trim()).filter(l => l.length > 0 && /^https?:\/\//i.test(l));
+        const urls = bulkText
+            .split(/\s+/)
+            .map(l => l.trim())
+            .filter(l => l.length > 0 && /^https?:\/\//i.test(l));
         if (urls.length === 0) { setError('No valid URLs found. Paste one URL per line.'); return; }
         const unique = [...new Set(urls)];
         const items: BatchItem[] = unique.map(u => ({ url: u, status: 'pending' as BatchStatus }));
