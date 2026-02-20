@@ -28,6 +28,15 @@ type Props = {
 export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
     const [step, setStep] = useState(0);
     const [dots, setDots] = useState('');
+    const [isTakingLong, setIsTakingLong] = useState(false);
+
+    // Timeout for demo escape hatch
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setIsTakingLong(true);
+        }, 15000); // 15 seconds soft timeout
+        return () => clearTimeout(timeout);
+    }, []);
 
     // Progress step cycling
     useEffect(() => {
@@ -166,6 +175,18 @@ export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
                         style={{ width: `${((step + 1) / ANALYSIS_STEPS.length) * 100}%` }}
                     />
                 </div>
+
+                {/* Graceful Fallback CTA */}
+                {isTakingLong && (
+                    <div className="mt-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                        <a
+                            href="/report/46a65982-e892-45ff-a34a-d4ddb33c8581"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414] border border-[#E7DED1] bg-white hover:border-[#D8CCBC] hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)] transition-all"
+                        >
+                            Ingestion taking too long? View Sample Report
+                        </a>
+                    </div>
+                )}
             </div>
         </div>
     );

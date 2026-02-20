@@ -62,11 +62,15 @@ export default function UploadZone({ onUploadComplete }: Props) {
 
     useEffect(() => {
         if (typeof window !== 'undefined' && window.location.search.includes('example=luxury')) {
-            const exampleUrl = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop'; // fallback URL
-            // Auto loading might be jarring if they just clicked the link, but filling the input is nice
-            setUrl('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop');
+            const exampleUrl = 'https://utfs.io/f/cd1157af-412e-4b47-bfa7-a4dc7d17482f-1y.png'; // Hosted Dior image
+            setUrl(exampleUrl);
+
+            if (window.location.search.includes('autorun=1')) {
+                // Trigger auto-ingest for guided demos
+                handleIngest(exampleUrl);
+            }
         }
-    }, []);
+    }, [handleIngest]);
 
     const handleDrop = useCallback((e: React.DragEvent) => {
         e.preventDefault();
