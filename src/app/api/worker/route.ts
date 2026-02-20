@@ -6,6 +6,8 @@ import { AdDigestSchema } from '@/types/digest';
 import fs from 'fs';
 
 export async function POST(req: Request) {
+    console.log(`\n[Worker] Route Hit | timestamp: ${new Date().toISOString()}`);
+
     // 1. Authorization Check (Vercel Cron OR Bearer Token)
     const authHeader = req.headers.get('Authorization');
     const vercelCronHeader = req.headers.get('x-vercel-cron');
@@ -31,15 +33,20 @@ export async function POST(req: Request) {
             .lt('created_at', oneHourAgo);
 
         // 2b. Atomic Claim via Postgres RPC
+        console.log(`[Worker] Attempting to claim jobs via RPC 'claim_queued_jobs'...`);
         const { data: jobs, error: claimError } = await supabaseAdmin
             .rpc('claim_queued_jobs', { batch_size: 10 });
 
-        if (claimError) throw claimError;
+        if (claimError) {
+            console.error(`[Worker] RPC Claim Error:`, claimError);
+            throw claimError;
+        }
         if (!jobs || jobs.length === 0) {
+            console.log(`[Worker] No queued jobs found or claimed. Exiting.`);
             return NextResponse.json({ message: 'No jobs queued.' });
         }
 
-        console.log(`[Worker] Atomically claimed ${jobs.length} jobs.`);
+        console.log(`[Worker] Atomically claimed ${jobs.length} jobs. Job IDs: ${jobs.map((j: any) => j.id).join(', ')}`);
 
         const results = [];
 
@@ -83,7 +90,12 @@ export async function POST(req: Request) {
 
                 // 5. Validate & Update
                 const validation = AdDigestSchema.safeParse(rawDigest);
-                const finalStatus = validation.success ? 'processed' : 'needs_review';
+                let finalStatus = 'processed';
+
+                if (!validation.success) {
+                    finalStatus = 'needs_review';
+                    console.error(`[Worker Job ${job.id}] Zod Validation Failed:`, validation.error.message);
+                }
 
                 await supabaseAdmin
                     .from('ad_digests')

@@ -146,6 +146,8 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Failed to queue ingestion' }, { status: 500 });
         }
 
+        console.log(`[Ingest] Job Created | id: ${job.id} | status: ${job.status} | timestamp: ${new Date().toISOString()}`);
+
         // Increment free usage counter (only for non-pro, full-access jobs)
         if (viewerId && accessLevel === 'full') {
             await supabaseAdmin

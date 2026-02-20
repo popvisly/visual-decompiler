@@ -74,7 +74,7 @@ export default async function AdDetailPage({
                             </h1>
                             {(digest?.extraction?.on_screen_copy?.supporting_copy?.length || 0) > 0 && (
                                 <p className="text-sm text-txt-secondary leading-relaxed">
-                                    {digest.extraction.on_screen_copy.supporting_copy.join(' · ')}
+                                    {digest.extraction?.on_screen_copy?.supporting_copy?.join(' · ')}
                                 </p>
                             )}
                         </div>
@@ -209,7 +209,7 @@ export default async function AdDetailPage({
                                 <div>
                                     <p className="spec-label-dark mb-2">Failure Modes</p>
                                     <ul className="space-y-1">
-                                        {digest.diagnostics.failure_modes.map((f: string, i: number) => (
+                                        {digest.diagnostics?.failure_modes?.map((f: string, i: number) => (
                                             <li key={i} className="text-xs text-red-400 pl-3 border-l-2 border-red-500/30">{f}</li>
                                         ))}
                                     </ul>

@@ -298,7 +298,7 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, brand, ac
                     {/* ── Failure Modes ── */}
                     {(diag?.failure_modes?.length || 0) > 0 && (
                         <ResultsCard title="Failure Modes" variant="bullets">
-                            <BulletList items={diag.failure_modes} color="red" />
+                            <BulletList items={diag.failure_modes || []} color="red" />
                         </ResultsCard>
                     )}
                 </div>

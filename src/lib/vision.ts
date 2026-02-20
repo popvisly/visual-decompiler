@@ -29,10 +29,35 @@ export async function decompileAd(inputs: VisionInput[], version: string = 'V1')
 
     for (const input of inputs) {
         if (input.type === 'url') {
-            userContent.push({
-                type: "image_url",
-                image_url: { url: input.url }
-            });
+            try {
+                // Fetch the image and convert it to base64 to bypass OpenAI URL download errors
+                console.log(`[Vision] Fetching remote image to convert to base64: ${input.url}`);
+                const imgRes = await fetch(input.url, {
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                    }
+                });
+                if (!imgRes.ok) throw new Error(`Failed to fetch image: ${imgRes.status} ${imgRes.statusText}`);
+                const arrayBuffer = await imgRes.arrayBuffer();
+                const buffer = Buffer.from(arrayBuffer);
+
+                // utfs.io sometimes returns application/octet-stream for images, so we fallback to jpeg
+                let mimeType = imgRes.headers.get('content-type');
+                if (!mimeType || mimeType === 'application/octet-stream') {
+                    mimeType = input.url.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg';
+                }
+
+                const base64Data = buffer.toString('base64');
+                console.log(`[Vision] Successfully converted to base64 (${Math.round(base64Data.length / 1024)}KB). Mime: ${mimeType}`);
+
+                userContent.push({
+                    type: "image_url",
+                    image_url: { url: `data:${mimeType};base64,${base64Data}` }
+                });
+            } catch (err) {
+                console.error(`[Vision] FATAL: Image download failed for ${input.url}:`, err);
+                throw new Error(`Could not download media from URL: ${err}`);
+            }
         } else {
             userContent.push({
                 type: "image_url",
