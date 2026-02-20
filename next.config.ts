@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     // Route handlers
     '/api/ingest': ['./node_modules/ffmpeg-static/**'],
-    '/api/worker': ['./node_modules/ffmpeg-static/**'],
+    '/api/worker': ['./node_modules/ffmpeg-static/**', './artifacts/**'],
   },
 };
 

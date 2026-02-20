@@ -13,3 +13,7 @@ next-env.d.ts
 tsconfig.tsbuildinfo
 .env*.local
 artifacts/
+
+# Local dev logs
+dev_server.log
+dev_pid.txt

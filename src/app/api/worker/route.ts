@@ -5,6 +5,9 @@ import { decompileAd, VisionInput } from '@/lib/vision';
 import { AdDigestSchema } from '@/types/digest';
 import fs from 'fs';
 
+export const runtime = 'nodejs';
+export const maxDuration = 300; // 5 minutes for Vision API process
+
 export async function POST(req: Request) {
     console.log(`\n[Worker] Route Hit | timestamp: ${new Date().toISOString()}`);
 

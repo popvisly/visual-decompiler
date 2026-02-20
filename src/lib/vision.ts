@@ -19,7 +19,7 @@ export type VisionInput =
 export async function decompileAd(inputs: VisionInput[], version: string = 'V1') {
     // 1. Read the strict prompt from artifacts
     const promptFilename = version === 'V2' ? 'BLACK_BOX_PROMPT_V2.md' : 'BLACK_BOX_PROMPT_V1.md';
-    const promptPath = path.join('/Volumes/850EVO/visual-decompiler/artifacts', promptFilename);
+    const promptPath = path.join(process.cwd(), 'artifacts', promptFilename);
     const systemPrompt = fs.readFileSync(promptPath, 'utf-8');
 
     // 2. Prepare content
