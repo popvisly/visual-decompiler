@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent, MotionValue } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent, MotionValue, useReducedMotion } from 'framer-motion';
 import { Pill, PreviewCard, StageImage } from '@/types/homepage';
 
 type Props = {
@@ -20,7 +20,7 @@ function ConnectorLine({ i, pill, scrollYProgress, STAGE_CENTER_X, STAGE_CENTER_
             y1={`${pill.y}%`}
             x2={`${STAGE_CENTER_X}%`}
             y2={`${STAGE_CENTER_Y}%`}
-            className="stroke-[#141414]/25"
+            className="stroke-[#141414]/20"
             strokeWidth={0.75}
             strokeLinecap="round"
             style={{ pathLength, opacity }}
@@ -58,6 +58,8 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
     // Center focal point for SVG lines
     const STAGE_CENTER_X = 50;
     const STAGE_CENTER_Y = 50;
+
+    const shouldReduceMotion = useReducedMotion();
 
     return (
         <section id={id} ref={containerRef} className="relative h-[400vh] bg-[#F6F1E7]">
@@ -127,7 +129,7 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
                                     <motion.div
                                         className="group pointer-events-auto"
                                         variants={{
-                                            hidden: { opacity: 0, y: 10, scale: 0.98, filter: "blur(2px)" },
+                                            hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 10, scale: shouldReduceMotion ? 1 : 0.98, filter: shouldReduceMotion ? "blur(0px)" : "blur(2px)" },
                                             visible: {
                                                 opacity: 1, y: 0, scale: 1, filter: "blur(0px)",
                                                 transition: { ease: [0.22, 1, 0.36, 1], duration: 0.8 }
@@ -135,7 +137,7 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
                                         }}
                                     >
                                         <motion.div
-                                            animate={{ y: [0, -4, 0] }}
+                                            animate={shouldReduceMotion ? {} : { y: [0, -4, 0] }}
                                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
                                         >
                                             <button className="
@@ -182,10 +184,10 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
                         initial={false}
                         animate={{
                             opacity: reportVisible ? 1 : 0,
-                            x: reportVisible ? 0 : 48,
-                            filter: reportVisible ? "blur(0px)" : "blur(6px)"
+                            x: reportVisible ? 0 : (shouldReduceMotion ? 0 : 48),
+                            filter: reportVisible ? "blur(0px)" : (shouldReduceMotion ? "blur(0px)" : "blur(6px)")
                         }}
-                        transition={{
+                        transition={shouldReduceMotion ? { duration: 0.3 } : {
                             type: "spring",
                             stiffness: 120,
                             damping: 18,
