@@ -23,9 +23,9 @@ export default async function DashboardPage({
 
             <section className="flex-1">
                 <Suspense fallback={
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                        {[1, 2, 3, 4, 5, 6].map(i => (
-                            <div key={i} className="h-72 bg-[#FBF7EF] rounded-2xl border border-[#E7DED1] animate-pulse" />
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => (
+                            <div key={i} className="aspect-square bg-[#FBF7EF] rounded-xl border border-[#E7DED1] animate-pulse" />
                         ))}
                     </div>
                 }>

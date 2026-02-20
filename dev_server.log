@@ -1,0 +1,15 @@
+
+> visual-decompiler@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.12
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.100:3000
+   - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 1310ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 2.2s (701 modules)
+ ✓ Compiled in 75ms (264 modules)
+ GET /dashboard 200 in 3537ms

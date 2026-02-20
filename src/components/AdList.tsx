@@ -49,17 +49,17 @@ export default async function AdList({ filters }: { filters: Record<string, stri
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {ads.map((ad: any) => {
                 const digest = ad.digest as AdDigest;
                 return (
                     <Link
                         key={ad.id}
                         href={`/dashboard/${ad.id}`}
-                        className="group bg-white rounded-2xl border border-[#E7DED1] overflow-hidden flex flex-col cursor-pointer hover:border-[#D8CCBC] hover:shadow-[0_12px_40px_rgba(20,20,20,0.06)] hover:-translate-y-[2px] transition-all duration-300 shadow-[0_4px_20px_rgba(20,20,20,0.02)]"
+                        className="group bg-white rounded-xl border border-[#E7DED1] overflow-hidden flex flex-col cursor-pointer hover:border-[#D8CCBC] hover:shadow-[0_12px_40px_rgba(20,20,20,0.06)] hover:-translate-y-[2px] transition-all duration-300 shadow-[0_4px_20px_rgba(20,20,20,0.02)]"
                     >
                         {/* Media */}
-                        <div className="aspect-[4/5] bg-[#FBF7EF] relative overflow-hidden flex items-center justify-center border-b border-[#E7DED1]">
+                        <div className="aspect-square bg-[#FBF7EF] relative overflow-hidden flex items-center justify-center border-b border-[#E7DED1]">
                             {ad.status === 'queued' || ad.status === 'processing' ? (
                                 <div className="flex flex-col items-center gap-3">
                                     <div className="w-8 h-8 border-2 border-[#E7DED1] border-t-[#141414] rounded-full animate-spin shadow-sm" />
@@ -95,19 +95,19 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                         </div>
 
                         {/* Info section */}
-                        <div className="p-5 flex-1 flex flex-col">
+                        <div className="p-3 flex-1 flex flex-col">
                             <div className="flex items-center justify-between mb-2">
                                 <BrandTag
                                     adId={ad.id}
                                     brand={ad.brand ?? null}
                                     brandGuess={digest?.meta?.brand_guess ?? null}
                                 />
-                                <span className="text-[#6B6B6B] text-[10px] uppercase tracking-[0.15em] font-medium">
+                                <span className="text-[#6B6B6B] text-[9px] uppercase tracking-[0.1em] font-medium">
                                     {new Date(ad.created_at).toLocaleDateString()}
                                 </span>
                             </div>
 
-                            <h3 className="text-[15px] font-medium text-[#141414] mb-4 line-clamp-2 leading-[1.4] tracking-[-0.01em]">
+                            <h3 className="text-[13px] font-medium text-[#141414] mb-3 line-clamp-2 leading-[1.3] tracking-[-0.01em]">
                                 {digest?.extraction?.on_screen_copy?.primary_headline || 'Intelligence Pending…'}
                             </h3>
 
