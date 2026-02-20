@@ -9,15 +9,18 @@ import ResultsCard, {
     TagRow,
     StrategyField,
 } from './ResultsCard';
-import { RotateCcw, Download } from 'lucide-react';
+import { RotateCcw, Share, Check } from 'lucide-react';
+import { useState } from 'react';
 
 type Props = {
+    id: string;
     mediaUrl: string;
     mediaKind: string;
     digest: AdDigest;
     brand?: string | null;
     accessLevel?: 'full' | 'limited';
-    onReset: () => void;
+    isSharedView?: boolean;
+    onReset?: () => void;
 };
 
 function BlurGate({ locked, children }: { locked: boolean; children: React.ReactNode }) {
@@ -41,7 +44,7 @@ function BlurGate({ locked, children }: { locked: boolean; children: React.React
     );
 }
 
-export default function ResultsView({ mediaUrl, mediaKind, digest, brand, accessLevel = 'full', onReset }: Props) {
+export default function ResultsView({ id, mediaUrl, mediaKind, digest, brand, accessLevel = 'full', isSharedView = false, onReset }: Props) {
     const isLimited = accessLevel === 'limited';
     const d = digest;
     const cls = d.classification;
@@ -51,6 +54,17 @@ export default function ResultsView({ mediaUrl, mediaKind, digest, brand, access
     const copy = ext.on_screen_copy;
 
     const displayBrand = brand || d.meta?.brand_guess;
+
+    const [copied, setCopied] = useState(false);
+
+    const handleShare = () => {
+        if (!id) return;
+        const shareUrl = `${window.location.origin}/report/${id}`;
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        });
+    };
 
     return (
         <div className="w-full max-w-6xl mx-auto page-enter">
@@ -69,13 +83,44 @@ export default function ResultsView({ mediaUrl, mediaKind, digest, brand, access
                         </p>
                     )}
                 </div>
-                <button
-                    onClick={onReset}
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414]/70 border border-[#E7DED1] bg-[#FBF7EF]/50 hover:bg-[#FBF7EF] hover:border-[#D8CCBC] hover:text-[#141414] transition-all hover:-translate-y-[1px] shadow-sm hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)]"
-                >
-                    <RotateCcw className="w-3.5 h-3.5" />
-                    Analyze Another
-                </button>
+                <div className="flex items-center gap-3">
+                    {!isSharedView && (
+                        <button
+                            onClick={handleShare}
+                            className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#FBF7EF] bg-[#141414] border border-[#141414] hover:bg-[#2A2A2A] hover:border-[#2A2A2A] transition-all hover:-translate-y-[1px] shadow-sm hover:shadow-[0_10px_30px_rgba(20,20,20,0.15)]"
+                        >
+                            {copied ? (
+                                <>
+                                    <Check className="w-3.5 h-3.5" />
+                                    Copied Link
+                                </>
+                            ) : (
+                                <>
+                                    <Share className="w-3.5 h-3.5" />
+                                    Share Report
+                                </>
+                            )}
+                        </button>
+                    )}
+
+                    {isSharedView ? (
+                        <a
+                            href="/"
+                            className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414]/70 border border-[#E7DED1] bg-[#FBF7EF]/50 hover:bg-[#FBF7EF] hover:border-[#D8CCBC] hover:text-[#141414] transition-all hover:-translate-y-[1px] shadow-sm hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)]"
+                        >
+                            <RotateCcw className="w-3.5 h-3.5" />
+                            Analyze Your Own Ad
+                        </a>
+                    ) : (
+                        <button
+                            onClick={onReset}
+                            className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414]/70 border border-[#E7DED1] bg-[#FBF7EF]/50 hover:bg-[#FBF7EF] hover:border-[#D8CCBC] hover:text-[#141414] transition-all hover:-translate-y-[1px] shadow-sm hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)]"
+                        >
+                            <RotateCcw className="w-3.5 h-3.5" />
+                            Analyze Another
+                        </button>
+                    )}
+                </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">

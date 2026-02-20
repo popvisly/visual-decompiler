@@ -10,7 +10,7 @@ type AccessLevel = 'full' | 'limited';
 type AppState =
     | { phase: 'upload' }
     | { phase: 'processing'; jobId: string; mediaUrl: string; accessLevel: AccessLevel }
-    | { phase: 'results'; mediaUrl: string; mediaKind: string; digest: any; brand?: string; accessLevel: AccessLevel };
+    | { phase: 'results'; id: string; mediaUrl: string; mediaKind: string; digest: any; brand?: string; accessLevel: AccessLevel };
 
 // REDESIGN: "Premium Charcoal" aesthetic (V1 rebranded as redesigned tool)
 export default function V1App() {
@@ -33,6 +33,7 @@ export default function V1App() {
     const handleProcessingComplete = useCallback((data: any) => {
         setState((prev) => ({
             phase: 'results' as const,
+            id: data.id || ('jobId' in prev ? prev.jobId : ''),
             mediaUrl: data.media_url,
             mediaKind: data.media_kind || 'image',
             digest: data.digest,
@@ -143,6 +144,7 @@ export default function V1App() {
 
                     {state.phase === 'results' && (
                         <ResultsView
+                            id={state.id}
                             mediaUrl={state.mediaUrl}
                             mediaKind={state.mediaKind}
                             digest={state.digest}
