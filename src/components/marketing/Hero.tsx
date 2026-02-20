@@ -86,6 +86,16 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                 </motion.div>
 
             </div>
+
+            {/* Minimal Scroll Cue */}
+            <motion.div
+                style={{ opacity: useTransform(scrollY, [0, 400], [1, 0]) }}
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 pointer-events-none"
+            >
+                <div className="text-[#141414]/40 text-[9px] font-bold uppercase tracking-[0.2em]">Scroll</div>
+                <div className="w-[1px] h-12 bg-gradient-to-b from-[#141414]/20 to-transparent" />
+            </motion.div>
+
         </section>
     );
 }
