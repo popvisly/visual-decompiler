@@ -114,10 +114,10 @@ export default function IngestForm() {
                     </button>
                 </>
             ) : (
-                <div className="w-[30rem] glass-dark rounded-2xl p-5 space-y-4">
+                <div className="w-[30rem] bg-black/5 border border-black/10 shadow-[0_10px_30px_rgba(20,20,20,0.06)] backdrop-blur-xl rounded-2xl p-5 space-y-4">
                     <div className="flex items-center justify-between">
-                        <h3 className="text-xs font-bold text-accent uppercase tracking-[0.15em]">Bulk Ingest</h3>
-                        <button onClick={() => { setBulkMode(false); setBatchItems([]); setErrorObj(null); }} className="text-txt-on-dark-muted hover:text-txt-on-dark transition-colors">
+                        <h3 className="text-[10px] font-bold text-[#141414]/40 uppercase tracking-[0.15em]">Bulk Ingest</h3>
+                        <button onClick={() => { setBulkMode(false); setBatchItems([]); setErrorObj(null); }} className="text-[#141414]/40 hover:text-[#141414] transition-colors">
                             <X className="w-4 h-4" />
                         </button>
                     </div>
@@ -128,16 +128,16 @@ export default function IngestForm() {
                                 value={bulkText}
                                 onChange={(e) => setBulkText(e.target.value)}
                                 placeholder={"Paste URLs, one per line:\nhttps://example.com/ad1.jpg\nhttps://example.com/ad2.mp4"}
-                                className="w-full h-36 px-4 py-3 text-xs font-mono bg-white/5 text-txt-on-dark placeholder-txt-on-dark-muted border border-white/10 rounded-xl focus-accent transition-all resize-none"
+                                className="w-full h-36 px-4 py-3 text-xs font-mono bg-black/5 text-[#141414] placeholder-[#141414]/30 border border-black/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-black/20 transition-all resize-none"
                             />
                             <div className="flex items-center justify-between">
-                                <span className="spec-label-dark">
+                                <span className="text-[9px] font-bold text-[#141414]/40 uppercase tracking-[0.15em]">
                                     {bulkText.split('\n').filter(l => l.trim().length > 0).length} URLs detected
                                 </span>
                                 <button
                                     onClick={handleBatch}
                                     disabled={isBatching}
-                                    className="flex items-center gap-2 bg-accent text-surface px-5 py-2 rounded-xl text-xs font-bold hover:brightness-110 transition-all disabled:opacity-50"
+                                    className="flex items-center gap-2 bg-[#141414] text-[#FBF7EF] px-5 py-2 rounded-xl text-xs font-bold hover:-translate-y-[1px] shadow-[0_4px_12px_rgba(20,20,20,0.15)] hover:shadow-[0_6px_16px_rgba(20,20,20,0.2)] transition-all disabled:opacity-50 disabled:hover:translate-y-0"
                                 >
                                     {isBatching ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                                     Decompile All
@@ -153,23 +153,23 @@ export default function IngestForm() {
                                             {item.status === 'pending' && <div className="w-3.5 h-3.5 rounded-full border-2 border-white/20" />}
                                             {item.status === 'queuing' && <Loader2 className="w-3.5 h-3.5 text-accent animate-spin" />}
                                             {item.status === 'queued' && <Check className="w-3.5 h-3.5 text-green-400" />}
-                                            {item.status === 'error' && <AlertCircle className="w-3.5 h-3.5 text-red-400" />}
+                                            {item.status === 'error' && <AlertCircle className="w-3.5 h-3.5 text-red-500" />}
                                         </div>
-                                        <span className={`truncate font-mono text-[11px] ${item.status === 'error' ? 'text-red-400' : 'text-txt-on-dark-muted'}`}>
+                                        <span className={`truncate font-mono text-[11px] ${item.status === 'error' ? 'text-red-500' : 'text-[#141414]/70'}`}>
                                             {item.url}
                                         </span>
-                                        {item.error && <span className="shrink-0 text-[9px] text-red-400 font-bold">{item.error}</span>}
+                                        {item.error && <span className="shrink-0 text-[9px] text-red-500 font-bold">{item.error}</span>}
                                     </div>
                                 ))}
                             </div>
                             {!isBatching && (
-                                <div className="flex items-center justify-between pt-3 border-t border-white/10">
-                                    <span className="spec-label-dark">
+                                <div className="flex items-center justify-between pt-3 border-t border-black/10">
+                                    <span className="text-[9px] font-bold text-[#141414]/40 uppercase tracking-[0.15em]">
                                         ✅ {queuedCount} queued{errorCount > 0 && ` · ❌ ${errorCount} failed`}
                                     </span>
                                     <button
                                         onClick={() => { setBatchItems([]); setBulkText(''); }}
-                                        className="text-[9px] font-bold text-txt-on-dark-muted uppercase tracking-[0.15em] hover:text-accent transition-colors"
+                                        className="text-[9px] font-bold text-[#141414]/40 uppercase tracking-[0.15em] hover:text-[#141414] transition-colors"
                                     >
                                         New Batch
                                     </button>
