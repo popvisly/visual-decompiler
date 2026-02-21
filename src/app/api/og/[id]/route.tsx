@@ -2,6 +2,7 @@ import { ImageResponse } from 'next/og';
 import { supabaseAdmin } from '@/lib/supabase';
 
 export const runtime = 'edge';
+export const revalidate = 86400; // Cache for 24 hours
 
 export async function GET(
     request: Request,
@@ -117,9 +118,6 @@ export async function GET(
             {
                 width: 1200,
                 height: 630,
-                headers: {
-                    'Cache-Control': 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800',
-                },
             }
         );
     } catch (e: any) {
