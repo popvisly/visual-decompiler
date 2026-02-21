@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const revalidate = 0; // Temporarily disable cache for debugging
+export const revalidate = 86400; // Cache for 24 hours
 
 export async function GET(
     request: Request,
@@ -140,7 +140,7 @@ export async function GET(
             status: 200,
             headers: {
                 "Content-Type": "image/png",
-                "Cache-Control": "no-store, max-age=0"
+                "Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
             }
         });
     } catch (e: any) {
