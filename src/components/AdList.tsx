@@ -2,11 +2,16 @@ import Link from 'next/link';
 import { supabaseAdmin } from '@/lib/supabase';
 import { AdDigest } from '@/types/digest';
 import BrandTag from '@/components/BrandTag';
+import { auth } from '@clerk/nextjs/server';
 
 export default async function AdList({ filters }: { filters: Record<string, string | undefined> }) {
+    const { userId } = await auth();
+    if (!userId) return null;
+
     let query = supabaseAdmin
         .from('ad_digests')
         .select('*')
+        .eq('user_id', userId)
         .order('created_at', { ascending: false });
 
     if (filters.trigger_mechanic) query = query.eq('trigger_mechanic', filters.trigger_mechanic);

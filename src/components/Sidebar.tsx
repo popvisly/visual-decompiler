@@ -1,9 +1,13 @@
 import Link from 'next/link';
 import { getAllBrands } from '@/lib/brands';
 import Filters from './Filters';
+import { auth } from '@clerk/nextjs/server';
 
 export default async function Sidebar({ searchParams }: { searchParams: any }) {
-    const brands = await getAllBrands();
+    const { userId } = await auth();
+    if (!userId) return null;
+
+    const brands = await getAllBrands(userId);
     const topBrands = brands.slice(0, 10);
 
     return (
