@@ -10,50 +10,85 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
         return { ok: false, reason: 'Please paste a full http(s) URL.', type: null };
     }
 
-    try {
-        console.log(`[Ingest] Detecting media type for: ${mediaUrl}`);
+    const tryDetect = async (url: string, useRange: boolean) => {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 8000);
+        try {
+            const headers: Record<string, string> = {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'image/*,video/*,application/octet-stream'
+            };
+            if (useRange) headers['Range'] = 'bytes=0-1024';
 
-        // Use GET with Range to get headers and a tiny chunk, follow redirects
-        const res = await fetch(mediaUrl, {
-            method: 'GET',
-            redirect: 'follow', // CRITICAL for Unsplash/Redirected URLs
-            signal: controller.signal,
-            headers: {
-                'Range': 'bytes=0-1024',
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            const res = await fetch(url, {
+                method: 'GET',
+                redirect: 'follow',
+                signal: controller.signal,
+                headers
+            });
+            clearTimeout(timeout);
+            return res;
+        } catch (e) {
+            clearTimeout(timeout);
+            throw e;
+        }
+    };
+
+    try {
+        console.log(`[Ingest] Detecting media type for: ${mediaUrl}`);
+        let res = await tryDetect(mediaUrl, true);
+
+        let contentType = res.headers.get('content-type')?.toLowerCase() || '';
+
+        // If we get text/html, some CDNs might be rejecting the Range request for dynamic images.
+        // Retry with a standard HEAD request.
+        if (contentType.includes('text/html')) {
+            console.log(`[Ingest] Got text/html with Range request. Retrying with HEAD...`);
+            const headRes = await fetch(mediaUrl, {
+                method: 'HEAD',
+                redirect: 'follow',
+                headers: { 'User-Agent': 'Mozilla/5.0' }
+            });
+            if (headRes.ok) {
+                res = headRes;
+                contentType = res.headers.get('content-type')?.toLowerCase() || '';
             }
-        });
-        clearTimeout(timeout);
+        }
 
-        const contentType = res.headers.get('content-type');
         const contentLength = res.headers.get('content-length');
         const sizeMB = contentLength ? parseInt(contentLength) / (1024 * 1024) : undefined;
         const finalUrl = res.url || mediaUrl;
 
         console.log(`[Ingest] HTTP Check: status=${res.status}, type=${contentType}, url=${finalUrl}`);
 
-        if (contentType?.startsWith('image/')) return { ok: true, type: 'image', contentType, sizeMB };
-        if (contentType?.startsWith('video/') || contentType?.includes('mp4') || contentType?.includes('mpeg')) {
+        if (contentType.startsWith('image/')) return { ok: true, type: 'image', contentType, sizeMB };
+        if (contentType.startsWith('video/') || contentType.includes('mp4') || contentType.includes('mpeg')) {
             return { ok: true, type: 'video', contentType, sizeMB };
         }
 
-        // Fallback to extension check on the FINAL URL (after redirects)
-        const urlWithoutQuery = finalUrl.split('?')[0];
-        const ext = urlWithoutQuery.split('.').pop()?.toLowerCase() || '';
+        // Heuristic: If it's Unsplash photo, it's almost certainly an image even if detection failed
+        if (finalUrl.includes('unsplash.com/photo-')) {
+            console.log(`[Ingest] Unsplash heuristic triggered for: ${finalUrl}`);
+            return { ok: true, type: 'image', contentType: contentType || 'image/jpeg', sizeMB };
+        }
 
-        if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: contentType || `image/${ext}`, sizeMB };
-        if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: contentType || `video/${ext}`, sizeMB };
+        // Fallback to extension check on the FINAL URL (after redirects)
+        try {
+            const urlPath = new URL(finalUrl).pathname;
+            const ext = urlPath.split('.').pop()?.toLowerCase() || '';
+            if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: contentType || `image/${ext}`, sizeMB };
+            if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: contentType || `video/${ext}`, sizeMB };
+        } catch (e) { /* ignore */ }
 
         return { ok: true, type: null, contentType, sizeMB };
     } catch (err: any) {
         console.warn(`[Ingest] Connection failed during detection: ${err.message}. Falling back to extension.`);
-        // Fallback to extension even on network failure
-        const urlWithoutQuery = mediaUrl.split('?')[0];
-        const ext = urlWithoutQuery.split('.').pop()?.toLowerCase() || '';
-        if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: `image/${ext}` };
-        if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: `video/${ext}` };
+        try {
+            const urlPath = new URL(mediaUrl).pathname;
+            const ext = urlPath.split('.').pop()?.toLowerCase() || '';
+            if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: `image/${ext}` };
+            if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: `video/${ext}` };
+        } catch (urlErr) { /* ignore */ }
         return { ok: true, type: null, contentType: null };
     }
 }
