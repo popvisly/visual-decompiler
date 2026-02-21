@@ -3,7 +3,10 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { extractKeyframes, cleanupFrames } from '@/lib/video';
 import { decompileAd, VisionInput } from '@/lib/vision';
 import { AdDigestSchema } from '@/types/digest';
+import { hashFile } from '@/lib/hashing';
 import fs from 'fs';
+import path from 'path';
+import os from 'os';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300; // 5 minutes for Vision API process
@@ -71,15 +74,60 @@ export async function POST(req: Request) {
                 // Job is already 'processing' thanks to the RPC
                 let visionInputs: VisionInput[] = [];
                 let keyframeMeta: any[] = [];
+                let mediaHash: string | null = null;
+                tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vd-worker-'));
 
+                // 3. Download and Hash for Deduplication
+                const mediaPath = path.join(tempDir, 'source_media');
+                console.log(`[Worker Job ${job.id}] Downloading media for hashing...`);
+
+                const res = await fetch(job.media_url);
+                const buffer = await res.arrayBuffer();
+                fs.writeFileSync(mediaPath, Buffer.from(buffer));
+
+                mediaHash = await hashFile(mediaPath);
+                console.log(`[Worker Job ${job.id}] Media Hash: ${mediaHash}`);
+
+                // Check for duplicate content (already processed with same prompt)
+                const { data: existing } = await supabaseAdmin
+                    .from('ad_digests')
+                    .select('digest, status')
+                    .eq('media_hash', mediaHash)
+                    .eq('prompt_version', job.prompt_version)
+                    .eq('status', 'processed')
+                    .neq('id', job.id)
+                    .limit(1)
+                    .single();
+
+                if (existing) {
+                    console.log(`[Worker Job ${job.id}] Found duplicate content! Reusing digest from existing job.`);
+                    await supabaseAdmin
+                        .from('ad_digests')
+                        .update({
+                            status: 'processed',
+                            digest: existing.digest,
+                            media_hash: mediaHash
+                        })
+                        .eq('id', job.id);
+
+                    results.push({ id: job.id, status: 'processed', reused: true });
+                    continue;
+                }
+
+                // 4. Extract Frames or Prepare Inputs
                 if (job.media_kind === 'video') {
-                    console.log(`[Worker Job ${job.id}] Extracting video frames (Start, Mid, End strategy)...`);
+                    console.log(`[Worker Job ${job.id}] Extracting video frames...`);
+                    // We can reuse the already downloaded mediaPath if we update extractKeyframes to accept local paths
+                    // But for now, we'll let extractKeyframes do its thing (it has its own tempDir)
                     const extraction = await extractKeyframes(job.media_url, [
                         { t_ms: 1000, label: 'start' },
-                        { t_ms: -1, label: 'mid' }, // -1 triggers duration-based mid-point in lib
-                        { t_ms: -2, label: 'end' }   // -2 triggers duration-based end-point
+                        { t_ms: -1, label: 'mid' },
+                        { t_ms: -2, label: 'end' }
                     ]);
-                    tempDir = extraction.tempDir;
+                    // If we want to be super efficient, we should update extractKeyframes to use our mediaPath
+                    // but keeping it simple for now.
+
+                    const videoTempDir = extraction.tempDir;
 
                     for (const result of extraction.results) {
                         visionInputs.push({
@@ -94,12 +142,17 @@ export async function POST(req: Request) {
                             notes: null
                         });
                     }
+                    // Cleanup extra video temp dir
+                    cleanupFrames(videoTempDir);
                 } else {
-                    console.log(`[Worker Job ${job.id}] Processing image...`);
-                    visionInputs.push({ type: 'url', url: job.media_url });
+                    visionInputs.push({
+                        type: 'base64',
+                        data: fs.readFileSync(mediaPath, { encoding: 'base64' }),
+                        mimeType: job.media_type || 'image/jpeg'
+                    });
                 }
 
-                // 4. Call Vision API
+                // 5. Call Vision API
                 const rawDigest = await decompileAd(visionInputs, job.prompt_version);
                 if (job.media_kind === 'video' && rawDigest.extraction) {
                     rawDigest.extraction.keyframes = keyframeMeta;
@@ -118,7 +171,8 @@ export async function POST(req: Request) {
                     .from('ad_digests')
                     .update({
                         status: finalStatus,
-                        digest: rawDigest
+                        digest: rawDigest,
+                        media_hash: mediaHash
                     })
                     .eq('id', job.id);
 
