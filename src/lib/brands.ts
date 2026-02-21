@@ -31,7 +31,7 @@ export async function getBrandAds(brandName: string) {
     const { data, error } = await supabaseAdmin
         .from('ad_digests')
         .select('*')
-        .or(`brand.eq."${brandName}",brand_guess.eq."${brandName}"`)
+        .or(`brand.eq."${brandName}",and(brand.is.null,brand_guess.eq."${brandName}")`)
         .order('created_at', { ascending: false });
 
     if (error) throw new Error(error.message);
@@ -42,7 +42,7 @@ export async function getBrandStats(brandName: string): Promise<BrandStats> {
     const { data: ads, error } = await supabaseAdmin
         .from('ad_digests')
         .select('digest')
-        .or(`brand.eq."${brandName}",brand_guess.eq."${brandName}"`);
+        .or(`brand.eq."${brandName}",and(brand.is.null,brand_guess.eq."${brandName}")`);
 
     if (error) throw new Error(error.message);
 

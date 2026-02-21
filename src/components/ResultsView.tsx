@@ -11,6 +11,7 @@ import ResultsCard, {
 } from './ResultsCard';
 import { RotateCcw, Share, Check, Download } from 'lucide-react';
 import { useState, useRef } from 'react';
+import BrandTag from './BrandTag';
 
 type Props = {
     id: string;
@@ -103,12 +104,19 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
                         Analysis Complete
                     </h2>
                     {displayBrand && (
-                        <p className="text-[14px] text-[#6B6B6B] mt-1">
-                            Brand: <span className="text-[#141414] font-semibold">{displayBrand}</span>
+                        <div className="flex items-center gap-2 mt-1">
+                            <span className="text-[14px] text-[#6B6B6B]">Brand:</span>
+                            <div className="mt-1">
+                                <BrandTag
+                                    adId={id}
+                                    brand={brand ?? null}
+                                    brandGuess={d?.meta?.brand_guess ?? null}
+                                />
+                            </div>
                             {d.meta?.product_category_guess && (
-                                <span className="text-[#6B6B6B]"> · {d.meta.product_category_guess}</span>
+                                <span className="text-[14px] text-[#6B6B6B]"> · {d.meta.product_category_guess}</span>
                             )}
-                        </p>
+                        </div>
                     )}
                 </div>
                 <div className="flex items-center gap-3 no-print">

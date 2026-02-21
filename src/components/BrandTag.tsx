@@ -40,7 +40,7 @@ export default function BrandTag({ adId, brand, brandGuess }: BrandTagProps) {
                     if (e.key === 'Enter') save();
                     if (e.key === 'Escape') { setValue(saved || brandGuess || ''); setEditing(false); }
                 }}
-                className="text-[10px] font-bold uppercase tracking-[0.15em] text-accent bg-white/5 border border-accent/30 rounded px-1.5 py-0.5 w-28 focus:outline-none focus:ring-1 focus:ring-accent"
+                className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#141414] bg-black/5 border border-black/20 rounded px-1.5 py-0.5 w-28 focus:outline-none focus:ring-1 focus:ring-black/20"
                 placeholder="Brand name..."
             />
         );
@@ -52,11 +52,11 @@ export default function BrandTag({ adId, brand, brandGuess }: BrandTagProps) {
             title={isAiGuess ? `AI guess: ${brandGuess} — click to confirm or edit` : 'Click to edit brand'}
             className="flex items-center gap-1.5 group/brand"
         >
-            <span className="text-[10px] font-bold text-txt-on-dark-muted uppercase tracking-[0.15em] shrink-0 group-hover/brand:text-accent transition-colors">
+            <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.15em] shrink-0 group-hover/brand:text-[#141414] transition-colors">
                 {saved || displayBrand}
             </span>
             {isAiGuess && (
-                <span className="text-[8px] font-bold text-accent/50 uppercase tracking-widest border border-dashed border-accent/20 rounded px-1 group-hover/brand:border-accent/40 group-hover/brand:text-accent/80 transition-colors">
+                <span className="text-[8px] font-bold text-[#141414]/50 uppercase tracking-widest border border-dashed border-[#141414]/20 rounded px-1 group-hover/brand:border-[#141414]/40 group-hover/brand:text-[#141414]/80 transition-colors">
                     AI
                 </span>
             )}
