@@ -10,7 +10,7 @@ import ResultsCard, {
     StrategyField,
 } from './ResultsCard';
 import { RotateCcw, Share, Check } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 type Props = {
     id: string;
@@ -57,6 +57,7 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
     const displayBrand = brand || d?.meta?.brand_guess;
 
     const [copied, setCopied] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null);
 
     const handleShare = () => {
         if (!id) return;
@@ -65,6 +66,13 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
         });
+    };
+
+    const handleSeek = (ms: number) => {
+        if (videoRef.current) {
+            videoRef.current.currentTime = ms / 1000;
+            videoRef.current.play().catch(() => { }); // Play if possible
+        }
     };
 
     return (
@@ -147,6 +155,7 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
                         <div className="bg-[#FBF7EF] rounded-2xl border border-[#E7DED1] shadow-sm overflow-hidden">
                             {mediaKind === 'video' ? (
                                 <video
+                                    ref={videoRef}
                                     src={mediaUrl}
                                     className="w-full aspect-[4/5] object-cover"
                                     controls muted playsInline preload="metadata"
@@ -159,6 +168,44 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
                                 />
                             )}
                         </div>
+
+                        {/* Visual Timeline — Milestone 2 */}
+                        {mediaKind === 'video' && ext?.keyframes && ext.keyframes.length > 0 && (
+                            <div className="pt-2 px-1">
+                                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-4">Visual Timeline</p>
+                                <div className="flex items-center gap-4">
+                                    {ext.keyframes.map((kf: any, idx: number) => (
+                                        <div
+                                            key={idx}
+                                            className="flex-1 group cursor-pointer"
+                                            onClick={() => handleSeek(kf.t_ms)}
+                                        >
+                                            <div className="relative aspect-video rounded-xl bg-[#F2EBDD] border border-[#E7DED1] overflow-hidden shadow-sm group-hover:border-[#D8CCBC] transition-all">
+                                                {/* Fallback to video timestamp if image_url is missing */}
+                                                {kf.image_url ? (
+                                                    <img src={kf.image_url} alt={kf.label} className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center bg-[#FBF7EF]">
+                                                        <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-tighter opacity-40">
+                                                            {kf.label}
+                                                        </span>
+                                                    </div>
+                                                )}
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                <div className="absolute bottom-1 right-1.5 text-[9px] font-mono font-bold text-white opacity-80 group-hover:opacity-100 transition-opacity">
+                                                    {(kf.t_ms / 1000).toFixed(1)}s
+                                                </div>
+                                            </div>
+                                            <div className="mt-2 text-center">
+                                                <p className="text-[10px] font-bold uppercase tracking-widest text-[#141414]/60 group-hover:text-[#141414] transition-colors">
+                                                    {kf.label}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Headline */}
                         {copy?.primary_headline && (
