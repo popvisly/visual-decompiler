@@ -38,20 +38,23 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
         console.log(`[Ingest] Detecting media type for: ${mediaUrl}`);
         let res = await tryDetect(mediaUrl, true);
 
-        let contentType = res.headers.get('content-type')?.toLowerCase() || '';
+        let contentTypeHeader = res.headers.get('content-type')?.toLowerCase() || '';
+        // Handle comma-separated content types (e.g. "text/html,text/html")
+        let types = contentTypeHeader.split(',').map(t => t.trim());
 
         // If we get text/html, some CDNs might be rejecting the Range request for dynamic images.
         // Retry with a standard HEAD request.
-        if (contentType.includes('text/html')) {
+        if (types.some(t => t.includes('text/html'))) {
             console.log(`[Ingest] Got text/html with Range request. Retrying with HEAD...`);
             const headRes = await fetch(mediaUrl, {
                 method: 'HEAD',
                 redirect: 'follow',
-                headers: { 'User-Agent': 'Mozilla/5.0' }
+                headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' }
             });
             if (headRes.ok) {
                 res = headRes;
-                contentType = res.headers.get('content-type')?.toLowerCase() || '';
+                contentTypeHeader = res.headers.get('content-type')?.toLowerCase() || '';
+                types = contentTypeHeader.split(',').map(t => t.trim());
             }
         }
 
@@ -59,28 +62,38 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
         const sizeMB = contentLength ? parseInt(contentLength) / (1024 * 1024) : undefined;
         const finalUrl = res.url || mediaUrl;
 
-        console.log(`[Ingest] HTTP Check: status=${res.status}, type=${contentType}, url=${finalUrl}`);
+        console.log(`[Ingest] HTTP Check: status=${res.status}, types=${types.join('|')}, url=${finalUrl}`);
 
-        if (contentType.startsWith('image/')) return { ok: true, type: 'image', contentType, sizeMB };
-        if (contentType.startsWith('video/') || contentType.includes('mp4') || contentType.includes('mpeg')) {
-            return { ok: true, type: 'video', contentType, sizeMB };
+        if (types.some(t => t.startsWith('image/'))) return { ok: true, type: 'image', contentType: types.find(t => t.startsWith('image/')) || 'image/jpeg', sizeMB };
+        if (types.some(t => t.startsWith('video/') || t.includes('mp4') || t.includes('mpeg'))) {
+            return { ok: true, type: 'video', contentType: types.find(t => t.startsWith('video/')) || 'video/mp4', sizeMB };
         }
 
-        // Heuristic: If it's Unsplash photo, it's almost certainly an image even if detection failed
-        if (finalUrl.includes('unsplash.com/photo-')) {
-            console.log(`[Ingest] Unsplash heuristic triggered for: ${finalUrl}`);
-            return { ok: true, type: 'image', contentType: contentType || 'image/jpeg', sizeMB };
+        // Heuristic: If it's Unsplash, it's almost certainly an image even if detection failed
+        // Check both finalUrl and the original mediaUrl
+        const isUnsplash = [finalUrl, mediaUrl].some(u => u.includes('unsplash.com/photo-') || u.includes('images.unsplash.com'));
+        if (isUnsplash) {
+            console.log(`[Ingest] Unsplash heuristic triggered`);
+            return { ok: true, type: 'image', contentType: types[0] || 'image/jpeg', sizeMB };
         }
 
-        // Fallback to extension check on the FINAL URL (after redirects)
-        try {
-            const urlPath = new URL(finalUrl).pathname;
-            const ext = urlPath.split('.').pop()?.toLowerCase() || '';
-            if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: contentType || `image/${ext}`, sizeMB };
-            if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: contentType || `video/${ext}`, sizeMB };
-        } catch (e) { /* ignore */ }
+        // Fallback to extension check on both URLs
+        const checkExt = (url: string) => {
+            try {
+                const urlPath = new URL(url).pathname;
+                const ext = urlPath.split('.').pop()?.toLowerCase() || '';
+                if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { type: 'image', ext };
+                if (['mp4', 'mov', 'webm'].includes(ext)) return { type: 'video', ext };
+            } catch (e) { /* ignore */ }
+            return null;
+        };
 
-        return { ok: true, type: null, contentType, sizeMB };
+        const extResult = checkExt(finalUrl) || checkExt(mediaUrl);
+        if (extResult) {
+            return { ok: true, type: extResult.type as any, contentType: types[0] || `${extResult.type}/${extResult.ext}`, sizeMB };
+        }
+
+        return { ok: true, type: null, contentType: contentTypeHeader, sizeMB };
     } catch (err: any) {
         console.warn(`[Ingest] Connection failed during detection: ${err.message}. Falling back to extension.`);
         try {
