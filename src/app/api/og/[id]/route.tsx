@@ -131,30 +131,22 @@ export async function GET(
         );
     } catch (e: any) {
         console.error(`[OG Export] Failed: ${e.message}`);
-        // Hard Fallback Card
-        return new ImageResponse(
-            (
-                <div
-                    style={{
-                        height: '100%',
-                        width: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: '#141414',
-                        color: 'white',
-                    }}
-                >
-                    <div style={{ fontSize: '48px', fontWeight: 'bold', marginBottom: '20px' }}>
-                        Decompiler Intelligence Report
-                    </div>
-                    <div style={{ fontSize: '24px', color: '#6B6B6B' }}>
-                        Report #{id.slice(0, 8)}
-                    </div>
-                </div>
-            ),
-            { width: 1200, height: 630 }
-        );
+
+        // Hard Fallback Card (Pure SVG Response to guarantee non-zero bytes)
+        const svg = `
+            <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+                <rect width="1200" height="630" fill="#141414"/>
+                <text x="600" y="300" font-family="system-ui, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">Decompiler Intelligence Report</text>
+                <text x="600" y="360" font-family="system-ui, sans-serif" font-size="24" fill="#6B6B6B" text-anchor="middle">Report #${id.slice(0, 8)}</text>
+            </svg>
+        `.trim();
+
+        return new Response(svg, {
+            status: 200,
+            headers: {
+                'Content-Type': 'image/svg+xml',
+                'Cache-Control': 'no-store, max-age=0'
+            }
+        });
     }
 }
