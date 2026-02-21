@@ -11,31 +11,44 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
     }
 
     try {
+        console.log(`[Ingest] Detecting media type for: ${mediaUrl}`);
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 6000);
+        const timeout = setTimeout(() => controller.abort(), 8000);
+
+        // Use GET with Range to get headers and a tiny chunk, follow redirects
         const res = await fetch(mediaUrl, {
             method: 'GET',
-            redirect: 'follow',
+            redirect: 'follow', // CRITICAL for Unsplash/Redirected URLs
             signal: controller.signal,
-            headers: { 'Range': 'bytes=0-1024' } // Just get the headers and a tiny bit of content
+            headers: {
+                'Range': 'bytes=0-1024',
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            }
         });
         clearTimeout(timeout);
 
-        const ct = res.headers.get('content-type');
-        const cl = res.headers.get('content-length');
-        const sizeMB = cl ? parseInt(cl) / (1024 * 1024) : undefined;
+        const contentType = res.headers.get('content-type');
+        const contentLength = res.headers.get('content-length');
+        const sizeMB = contentLength ? parseInt(contentLength) / (1024 * 1024) : undefined;
+        const finalUrl = res.url || mediaUrl;
 
-        if (ct?.startsWith('image/')) return { ok: true, type: 'image', contentType: ct, sizeMB };
-        if (ct?.startsWith('video/') || ct?.includes('mp4') || ct?.includes('mpeg')) return { ok: true, type: 'video', contentType: ct, sizeMB };
+        console.log(`[Ingest] HTTP Check: status=${res.status}, type=${contentType}, url=${finalUrl}`);
 
-        // Fallback to extension check if content-type is missing or ambiguous
-        const urlWithoutQuery = mediaUrl.split('?')[0];
+        if (contentType?.startsWith('image/')) return { ok: true, type: 'image', contentType, sizeMB };
+        if (contentType?.startsWith('video/') || contentType?.includes('mp4') || contentType?.includes('mpeg')) {
+            return { ok: true, type: 'video', contentType, sizeMB };
+        }
+
+        // Fallback to extension check on the FINAL URL (after redirects)
+        const urlWithoutQuery = finalUrl.split('?')[0];
         const ext = urlWithoutQuery.split('.').pop()?.toLowerCase() || '';
-        if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: `image/${ext}`, sizeMB };
-        if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: `video/${ext}`, sizeMB };
 
-        return { ok: true, type: null, contentType: ct, sizeMB };
+        if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: contentType || `image/${ext}`, sizeMB };
+        if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: contentType || `video/${ext}`, sizeMB };
+
+        return { ok: true, type: null, contentType, sizeMB };
     } catch (err: any) {
+        console.warn(`[Ingest] Connection failed during detection: ${err.message}. Falling back to extension.`);
         // Fallback to extension even on network failure
         const urlWithoutQuery = mediaUrl.split('?')[0];
         const ext = urlWithoutQuery.split('.').pop()?.toLowerCase() || '';
