@@ -93,13 +93,13 @@ export default function IngestForm() {
                             placeholder="Paste image/video URL…"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
-                            className="w-56 px-3 py-1.5 text-xs bg-white/10 text-txt-on-dark placeholder-txt-on-dark-muted border border-white/10 rounded-lg focus-accent transition-all"
+                            className="w-56 px-3 py-1.5 text-xs bg-black/5 text-[#141414] placeholder-[#141414]/40 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-black/20 transition-all font-medium"
                             required
                         />
                         <button
                             type="submit"
                             disabled={isIngesting}
-                            className="flex items-center gap-1.5 bg-accent text-surface px-4 py-1.5 rounded-lg text-xs font-bold hover:brightness-110 transition-all disabled:opacity-50"
+                            className="flex items-center gap-1.5 bg-[#141414] text-[#FBF7EF] px-4 py-1.5 rounded-lg text-xs font-bold hover:-translate-y-[1px] shadow-[0_4px_12px_rgba(20,20,20,0.15)] hover:shadow-[0_6px_16px_rgba(20,20,20,0.2)] transition-all disabled:opacity-50 disabled:hover:translate-y-0"
                         >
                             {isIngesting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                             {isIngesting ? 'Ingesting…' : 'Decompile'}
@@ -107,7 +107,7 @@ export default function IngestForm() {
                     </form>
                     <button
                         onClick={() => setBulkMode(true)}
-                        className="flex items-center gap-1.5 text-[9px] font-bold text-txt-on-dark-muted uppercase tracking-[0.15em] hover:text-accent transition-colors"
+                        className="flex items-center gap-1.5 text-[9px] font-bold text-[#141414]/40 uppercase tracking-[0.15em] hover:text-[#141414] transition-colors"
                     >
                         <List className="w-3 h-3" />
                         Bulk Mode
@@ -182,8 +182,8 @@ export default function IngestForm() {
 
             {errorObj && (
                 <div className={`max-w-[26rem] text-right text-[11px] font-bold rounded-xl px-4 py-3 border ${errorObj.code === 'LIMIT_REACHED'
-                        ? 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20'
-                        : 'text-red-400 bg-red-500/10 border-red-500/20'
+                    ? 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20'
+                    : 'text-red-400 bg-red-500/10 border-red-500/20'
                     }`}>
                     <div className="flex flex-col gap-2 items-end">
                         <span>{errorObj.message}</span>

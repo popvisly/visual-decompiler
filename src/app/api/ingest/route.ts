@@ -11,6 +11,12 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
         return { ok: false, reason: 'Please paste a full http(s) URL.', type: null };
     }
 
+    // Heuristic: YouTube URLs (bypass network fetch totally)
+    if (mediaUrl.includes('youtube.com/') || mediaUrl.includes('youtu.be/')) {
+        console.log(`[Ingest] YouTube heuristic triggered (bypassing fetch)`);
+        return { ok: true, type: 'video', contentType: 'video/mp4' };
+    }
+
     const tryDetect = async (url: string, useRange: boolean) => {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 8000);
@@ -76,13 +82,6 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
         if (isUnsplash) {
             console.log(`[Ingest] Unsplash heuristic triggered`);
             return { ok: true, type: 'image', contentType: types[0] || 'image/jpeg', sizeMB };
-        }
-
-        // Heuristic: YouTube URLs
-        const isYouTube = [finalUrl, mediaUrl].some(u => u.includes('youtube.com/') || u.includes('youtu.be/'));
-        if (isYouTube) {
-            console.log(`[Ingest] YouTube heuristic triggered`);
-            return { ok: true, type: 'video', contentType: 'video/mp4', sizeMB };
         }
 
         // Fallback to extension check on both URLs
