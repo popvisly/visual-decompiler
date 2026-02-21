@@ -1,6 +1,5 @@
 import OpenAI from 'openai';
-import fs from 'fs';
-import path from 'path';
+import { BLACK_BOX_PROMPT_V1, BLACK_BOX_PROMPT_V2 } from './prompts';
 
 let _openai: OpenAI | null = null;
 function getOpenAI() {
@@ -17,10 +16,8 @@ export type VisionInput =
     | { type: 'base64'; data: string; mimeType: string };
 
 export async function decompileAd(inputs: VisionInput[], version: string = 'V1') {
-    // 1. Read the strict prompt from artifacts
-    const promptFilename = version === 'V2' ? 'BLACK_BOX_PROMPT_V2.md' : 'BLACK_BOX_PROMPT_V1.md';
-    const promptPath = path.join(process.cwd(), 'artifacts', promptFilename);
-    const systemPrompt = fs.readFileSync(promptPath, 'utf-8');
+    // 1. Select the strict prompt (inlined at build time)
+    const systemPrompt = version === 'V2' ? BLACK_BOX_PROMPT_V2 : BLACK_BOX_PROMPT_V1;
 
     // 2. Prepare content
     const userContent: OpenAI.Chat.Completions.ChatCompletionContentPart[] = [

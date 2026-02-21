@@ -18,21 +18,16 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
 
     // Path resolution hardening for Vercel
     let resolvedFfmpegPath = ffmpegPath;
-    const publicPath = path.join(process.cwd(), 'public/bin/ffmpeg');
+    let resolvedFfprobePath = ffmpegPath ? path.join(path.dirname(ffmpegPath), 'ffprobe') : 'ffprobe';
 
-    if (fs.existsSync(publicPath)) {
-        resolvedFfmpegPath = publicPath;
-        // Ensure it's executable in the lambda environment
-        try {
-            fs.chmodSync(resolvedFfmpegPath, 0o755);
-        } catch (e) {
-            console.warn('[Video] Failed to set executable permissions:', e);
-        }
-    } else if (process.env.NODE_ENV === 'production') {
-        const potentialPath = path.join(process.cwd(), 'node_modules/ffmpeg-static/ffmpeg');
-        if (fs.existsSync(potentialPath)) {
-            resolvedFfmpegPath = potentialPath;
-        }
+    // Homebrew/System fallback for local dev if ffmpeg-static isn't perfect
+    if (!fs.existsSync(resolvedFfmpegPath || '')) {
+        const brewFfmpeg = '/opt/homebrew/bin/ffmpeg';
+        if (fs.existsSync(brewFfmpeg)) resolvedFfmpegPath = brewFfmpeg;
+    }
+    if (!fs.existsSync(resolvedFfprobePath)) {
+        const brewFfprobe = '/opt/homebrew/bin/ffprobe';
+        if (fs.existsSync(brewFfprobe)) resolvedFfprobePath = brewFfprobe;
     }
 
     if (!resolvedFfmpegPath) {
@@ -58,40 +53,65 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
             clearTimeout(downloadTimeout);
         }
 
-        const inputSource = fs.existsSync(localVideoPath) ? localVideoPath : videoUrl;
+        const inputSourceFallback = fs.existsSync(localVideoPath) ? localVideoPath : videoUrl;
+
+        // Get duration for relative frame extraction
+        let durationMs = 10000; // Default fallback
+        try {
+            const probeCmd = `"${resolvedFfprobePath}" -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${inputSourceFallback}"`;
+            const { stdout } = await execPromise(probeCmd);
+            const seconds = parseFloat(stdout.trim());
+            if (!isNaN(seconds)) durationMs = seconds * 1000;
+            console.log(`[Video] Detected duration: ${durationMs}ms`);
+        } catch (probeErr) {
+            console.warn('[Video] ffprobe failed, using default duration for seek safety:', probeErr);
+        }
 
         for (const req of requests) {
-            const fileName = `frame_${req.t_ms}.jpg`;
-            const outputPath = path.join(tempDir, fileName);
-            const timestampSeconds = req.t_ms / 1000;
+            let targetMs = req.t_ms;
+            if (targetMs === -1) targetMs = durationMs / 2; // Mid
+            if (targetMs === -2) targetMs = Math.max(0, durationMs - 2000); // End (2s before finish)
 
-            // ffmpeg parameters for remote resilient extraction
-            const command = `"${resolvedFfmpegPath}" -hide_banner -loglevel error -rw_timeout 15000000 -probesize 20000000 -analyzeduration 20000000 -ss ${timestampSeconds} -i "${inputSource}" -frames:v 1 -q:v 2 "${outputPath}" -y`;
+            const fileName = `frame_${req.label}_${Math.round(targetMs)}.jpg`;
+            const outputPath = path.join(tempDir, fileName);
+            const timestampSeconds = targetMs / 1000;
+
+            // Strategy: If targeting mid/end (> 10MB mark roughly 10s), 
+            // use remote URL with fast seeking. If targeting start, use local buffer.
+            const isDeepSeek = targetMs > 8000; // > 8 seconds
+            const finalInput = (isDeepSeek || !fs.existsSync(localVideoPath)) ? videoUrl : localVideoPath;
+
+            console.log(`[Video] Extracting ${req.label} frame at ${targetMs}ms (ss ${timestampSeconds}s) using ${isDeepSeek ? 'remote' : 'buffer'}...`);
+
+            // ffmpeg parameters:
+            // For remote URLs, -ss BEFORE -i (fast seeking/output seeking) is CRITICAL to avoid timeouts.
+            // For local files, either is fine, but we'll stick to fast seeking for consistency.
+            const command = `"${resolvedFfmpegPath}" -hide_banner -loglevel error -rw_timeout 15000000 -ss ${timestampSeconds} -i "${finalInput}" -frames:v 1 -q:v 2 "${outputPath}" -y`;
 
             try {
                 const { stderr } = await execPromise(command);
                 if (fs.existsSync(outputPath)) {
                     results.push({
-                        t_ms: req.t_ms,
+                        t_ms: targetMs,
                         label: req.label,
                         path: outputPath
                     });
+                    console.log(`[Video] Successfully extracted ${req.label} frame.`);
                 } else {
-                    console.warn(`[Video] Frame extraction failed for ${req.t_ms}ms (Command success but no file produced). Stderr: ${stderr}`);
+                    console.warn(`[Video] Frame extraction success in command but file missing: ${outputPath}. Stderr: ${stderr}`);
                 }
             } catch (cmdErr: any) {
-                console.warn(`[Video] Frame extraction command failed for ${req.t_ms}ms: ${cmdErr.message || 'Unknown error'}. Stderr: ${cmdErr.stderr || 'none'}`);
-                throw new Error(`ffmpeg failed: ${cmdErr.message}. Stderr: ${cmdErr.stderr || 'none'}`);
+                console.warn(`[Video] Frame extraction failed for ${req.label} at ${targetMs}ms:`, cmdErr.message, 'Stderr:', cmdErr.stderr);
             }
         }
 
         if (results.length === 0) {
-            throw new Error('Failed to extract keyframes (no frames produced). Verify the video URL is reachable and indexable.');
+            throw new Error('Failed to extract keyframes (no frames produced). Verify the video URL is reachable.');
         }
 
         return { tempDir, results };
     } catch (err) {
-        fs.rmSync(tempDir, { recursive: true, force: true });
+        if (fs.existsSync(tempDir)) fs.rmSync(tempDir, { recursive: true, force: true });
         throw err;
     }
 }

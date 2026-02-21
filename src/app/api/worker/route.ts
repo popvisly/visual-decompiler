@@ -35,10 +35,10 @@ export async function POST(req: Request) {
             .eq('status', 'processing')
             .lt('created_at', oneHourAgo);
 
-        // 2b. Atomic Claim via Postgres RPC
+        // 2b. Atomic Claim via Postgres RPC (Reduced batch size to 3 for stability)
         console.log(`[Worker] Attempting to claim jobs via RPC 'claim_queued_jobs'...`);
         const { data: jobs, error: claimError } = await supabaseAdmin
-            .rpc('claim_queued_jobs', { batch_size: 10 });
+            .rpc('claim_queued_jobs', { batch_size: 3 });
 
         if (claimError) {
             console.error(`[Worker] RPC Claim Error:`, claimError);
@@ -52,8 +52,18 @@ export async function POST(req: Request) {
         console.log(`[Worker] Atomically claimed ${jobs.length} jobs. Job IDs: ${jobs.map((j: any) => j.id).join(', ')}`);
 
         const results = [];
+        const startTime = Date.now();
+        const TIME_LIMIT_MS = 4 * 60 * 1000; // 4 minutes safety threshold
 
         for (const job of jobs) {
+            // Self-preemption if running near Vercel timeout
+            if (Date.now() - startTime > TIME_LIMIT_MS) {
+                console.log(`[Worker] Reached time limit. Re-queueing remaining ${jobs.length - results.length} jobs.`);
+                // Update remaining jobs back to queued
+                const remainingIds = jobs.slice(results.length).map((j: any) => j.id);
+                await supabaseAdmin.from('ad_digests').update({ status: 'queued' }).in('id', remainingIds);
+                break;
+            }
             let tempDir: string | null = null;
             try {
                 // Job is already 'processing' thanks to the RPC
@@ -61,9 +71,11 @@ export async function POST(req: Request) {
                 let keyframeMeta: any[] = [];
 
                 if (job.media_kind === 'video') {
-                    console.log(`[Worker Job ${job.id}] Extracting video frame (1-frame stability strategy)...`);
+                    console.log(`[Worker Job ${job.id}] Extracting video frames (Start, Mid, End strategy)...`);
                     const extraction = await extractKeyframes(job.media_url, [
-                        { t_ms: 1000, label: 'start' }
+                        { t_ms: 1000, label: 'start' },
+                        { t_ms: -1, label: 'mid' }, // -1 triggers duration-based mid-point in lib
+                        { t_ms: -2, label: 'end' }   // -2 triggers duration-based end-point
                     ]);
                     tempDir = extraction.tempDir;
 

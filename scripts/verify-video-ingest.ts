@@ -10,11 +10,12 @@ async function test() {
     console.log("Starting video ingest verification...");
 
     try {
-        // 1. Extract frames
+        // 1. Extract frames (Start, Mid, End strategy)
         console.log("Extracting keyframes...");
         const extraction = await extractKeyframes(videoUrl, [
             { t_ms: 1000, label: 'start' },
-            { t_ms: 5000, label: 'mid' },
+            { t_ms: -1, label: 'mid' },
+            { t_ms: -2, label: 'end' },
         ]);
 
         console.log(`Extracted ${extraction.results.length} frames.`);
