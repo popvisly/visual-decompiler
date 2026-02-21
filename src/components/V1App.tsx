@@ -148,6 +148,7 @@ export default function V1App() {
                             mediaUrl={state.mediaUrl}
                             mediaKind={state.mediaKind}
                             digest={state.digest}
+                            status="success"
                             brand={state.brand}
                             accessLevel={state.accessLevel}
                             onReset={handleReset}

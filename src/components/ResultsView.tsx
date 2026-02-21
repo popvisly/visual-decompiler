@@ -17,6 +17,7 @@ type Props = {
     mediaUrl: string;
     mediaKind: string;
     digest: AdDigest;
+    status: string;
     brand?: string | null;
     accessLevel?: 'full' | 'limited';
     isSharedView?: boolean;
@@ -44,16 +45,16 @@ function BlurGate({ locked, children }: { locked: boolean; children: React.React
     );
 }
 
-export default function ResultsView({ id, mediaUrl, mediaKind, digest, brand, accessLevel = 'full', isSharedView = false, onReset }: Props) {
+export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, brand, accessLevel = 'full', isSharedView = false, onReset }: Props) {
     const isLimited = accessLevel === 'limited';
     const d = digest;
-    const cls = d.classification;
-    const ext = d.extraction;
-    const strat = d.strategy;
-    const diag = d.diagnostics;
-    const copy = ext.on_screen_copy;
+    const cls = d?.classification;
+    const ext = d?.extraction;
+    const strat = d?.strategy;
+    const diag = d?.diagnostics;
+    const copy = ext?.on_screen_copy;
 
-    const displayBrand = brand || d.meta?.brand_guess;
+    const displayBrand = brand || d?.meta?.brand_guess;
 
     const [copied, setCopied] = useState(false);
 
@@ -123,7 +124,23 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, brand, ac
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            <div className="relative grid grid-cols-1 lg:grid-cols-5 gap-8">
+                {/* Processing Overlay */}
+                {status !== 'success' && (
+                    <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#F6F1E7]/80 backdrop-blur-sm rounded-3xl">
+                        <div className="text-center p-12 bg-white/50 border border-[#E7DED1] rounded-3xl shadow-xl max-w-sm mx-auto">
+                            <div className="w-12 h-12 border-4 border-[#141414] border-t-transparent rounded-full animate-spin mx-auto mb-6" />
+                            <h3 className="text-xl font-medium text-[#141414] mb-2 uppercase tracking-wide">
+                                {status === 'queued' ? 'Queued' : 'Analyzing Ad...'}
+                            </h3>
+                            <p className="text-[#6B6B6B] text-sm">
+                                {status === 'queued'
+                                    ? "This ad is in line for deconstruction. We'll start extracting intelligence in a moment."
+                                    : "Our agents are currently deconstructing this ad's semiotic layers and strategic machinery."}
+                            </p>
+                        </div>
+                    </div>
+                )}
                 {/* Left — Media */}
                 <div className="lg:col-span-2">
                     <div className="sticky top-24 space-y-4">

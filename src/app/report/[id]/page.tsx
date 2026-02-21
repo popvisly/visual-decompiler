@@ -51,6 +51,7 @@ export default async function SharedReportPage({
                         mediaUrl={ad.media_url}
                         mediaKind={ad.media_kind}
                         digest={digest}
+                        status={ad.status}
                         brand={ad.brand}
                         accessLevel="full"
                         isSharedView={true}
