@@ -78,6 +78,13 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
             return { ok: true, type: 'image', contentType: types[0] || 'image/jpeg', sizeMB };
         }
 
+        // Heuristic: YouTube URLs
+        const isYouTube = [finalUrl, mediaUrl].some(u => u.includes('youtube.com/') || u.includes('youtu.be/'));
+        if (isYouTube) {
+            console.log(`[Ingest] YouTube heuristic triggered`);
+            return { ok: true, type: 'video', contentType: 'video/mp4', sizeMB };
+        }
+
         // Fallback to extension check on both URLs
         const checkExt = (url: string) => {
             try {
