@@ -1,8 +1,7 @@
 import { ImageResponse } from 'next/og';
-import { supabaseAdmin } from '@/lib/supabase';
 
 export const runtime = 'edge';
-export const revalidate = 86400; // Cache for 24 hours
+export const revalidate = 0; // Temporarily disable cache for debugging
 
 export async function GET(
     request: Request,
@@ -11,13 +10,23 @@ export async function GET(
     const { id } = await params;
 
     try {
-        const { data: ad, error } = await supabaseAdmin
-            .from('ad_digests')
-            .select('digest, brand')
-            .eq('id', id)
-            .single();
+        // Direct REST fetch to avoid Edge Runtime Node.js import issues with the Supabase client
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-        if (error || !ad) {
+        const res = await fetch(`${supabaseUrl}/rest/v1/ad_digests?id=eq.${id}&select=digest,brand`, {
+            headers: {
+                'apikey': supabaseKey!,
+                'Authorization': `Bearer ${supabaseKey!}`
+            }
+        });
+
+        if (!res.ok) throw new Error('Failed to fetch from Supabase REST endpoint');
+
+        const data = await res.json();
+        const ad = data[0];
+
+        if (!ad) {
             return new Response('Not Found', { status: 404 });
         }
 
@@ -122,6 +131,30 @@ export async function GET(
         );
     } catch (e: any) {
         console.error(`[OG Export] Failed: ${e.message}`);
-        return new Response('Failed to generate image', { status: 500 });
+        // Hard Fallback Card
+        return new ImageResponse(
+            (
+                <div
+                    style={{
+                        height: '100%',
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#141414',
+                        color: 'white',
+                    }}
+                >
+                    <div style={{ fontSize: '48px', fontWeight: 'bold', marginBottom: '20px' }}>
+                        Decompiler Intelligence Report
+                    </div>
+                    <div style={{ fontSize: '24px', color: '#6B6B6B' }}>
+                        Report #{id.slice(0, 8)}
+                    </div>
+                </div>
+            ),
+            { width: 1200, height: 630 }
+        );
     }
 }
