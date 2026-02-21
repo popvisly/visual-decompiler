@@ -110,7 +110,7 @@ export async function GET(
                         textTransform: 'uppercase',
                         letterSpacing: '0.2em'
                     }}>
-                        Intelligence Report #[id.slice(0, 8)]
+                        Intelligence Report #{id.slice(0, 8)}
                     </div>
                 </div>
             ),
