@@ -2,8 +2,53 @@ import { notFound } from 'next/navigation';
 import { supabaseAdmin } from '@/lib/supabase';
 import { AdDigest } from '@/types/digest';
 import ResultsView from '@/components/ResultsView';
+import ViewTracker from '@/components/ViewTracker';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata(
+    { params }: { params: Promise<{ id: string }> }
+): Promise<Metadata> {
+    const { id } = await params;
+    const { data: ad } = await supabaseAdmin
+        .from('ad_digests')
+        .select('digest, brand')
+        .eq('id', id)
+        .single();
+
+    if (!ad) return { title: 'Report Not Found' };
+
+    const digest = ad.digest as any;
+    const brand = ad.brand || digest?.meta?.brand_guess || 'Ad';
+    const headline = digest?.extraction?.on_screen_copy?.primary_headline || 'Advertising deconstructed.';
+
+    const ogUrl = new URL(`/api/og/${id}`, process.env.NEXT_PUBLIC_APP_URL || 'https://visual-decompiler.vercel.app');
+
+    return {
+        title: `${brand} Deconstructed | Visual Decompiler`,
+        description: headline,
+        openGraph: {
+            title: `${brand} Intelligence Report`,
+            description: headline,
+            images: [
+                {
+                    url: ogUrl.toString(),
+                    width: 1200,
+                    height: 630,
+                    alt: `${brand} Analysis`,
+                },
+            ],
+            type: 'website',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: `${brand} Intelligence Report`,
+            description: headline,
+            images: [ogUrl.toString()],
+        },
+    };
+}
 
 export default async function SharedReportPage({
     params,
@@ -46,6 +91,7 @@ export default async function SharedReportPage({
                 </header>
 
                 <main className="px-6">
+                    <ViewTracker reportId={id} />
                     <ResultsView
                         id={ad.id}
                         mediaUrl={ad.media_url}

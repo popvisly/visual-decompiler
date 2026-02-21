@@ -9,7 +9,7 @@ import ResultsCard, {
     TagRow,
     StrategyField,
 } from './ResultsCard';
-import { RotateCcw, Share, Check } from 'lucide-react';
+import { RotateCcw, Share, Check, Download } from 'lucide-react';
 import { useState, useRef } from 'react';
 
 type Props = {
@@ -75,8 +75,22 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
         }
     };
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div className="w-full max-w-6xl mx-auto page-enter">
+            {/* Print-only CSS */}
+            <style jsx global>{`
+                @media print {
+                    .no-print { display: none !important; }
+                    body { background: white !important; }
+                    .page-enter { animation: none !important; }
+                    .bg-[#FBF7EF] { background: white !important; border: 1px solid #E7DED1 !important; }
+                }
+            `}</style>
+
             {/* Top bar */}
             <div className="flex items-center justify-between mb-8 mt-4">
                 <div>
@@ -92,7 +106,14 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
                         </p>
                     )}
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 no-print">
+                    <button
+                        onClick={handlePrint}
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414]/70 border border-[#E7DED1] bg-[#FBF7EF]/50 hover:bg-[#FBF7EF] hover:border-[#D8CCBC] hover:text-[#141414] transition-all hover:-translate-y-[1px] shadow-sm hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)]"
+                    >
+                        <Download className="w-3.5 h-3.5" />
+                        Export PDF
+                    </button>
                     {!isSharedView && (
                         <button
                             onClick={handleShare}
