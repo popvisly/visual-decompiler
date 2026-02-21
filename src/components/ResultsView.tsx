@@ -84,10 +84,15 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
             {/* Print-only CSS */}
             <style jsx global>{`
                 @media print {
-                    .no-print { display: none !important; }
+                    .no-print, .spinner, .overlay { display: none !important; }
                     body { background: white !important; }
                     .page-enter { animation: none !important; }
                     .bg-[#FBF7EF] { background: white !important; border: 1px solid #E7DED1 !important; }
+                    
+                    /* Force sane page breaks */
+                    h2 { break-after: avoid; }
+                    .print-break-inside-avoid { break-inside: avoid; }
+                    .print-break-before { break-before: always; }
                 }
             `}</style>
 
