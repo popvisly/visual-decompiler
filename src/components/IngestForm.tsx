@@ -10,7 +10,7 @@ type BatchItem = { url: string; status: BatchStatus; error?: string; jobId?: str
 export default function IngestForm() {
     const [url, setUrl] = useState('');
     const [isIngesting, setIsIngesting] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [errorObj, setErrorObj] = useState<{ message: string; code?: string } | null>(null);
     const [bulkMode, setBulkMode] = useState(false);
     const [bulkText, setBulkText] = useState('');
     const [batchItems, setBatchItems] = useState<BatchItem[]>([]);
@@ -20,7 +20,7 @@ export default function IngestForm() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!url) return;
-        setError(null);
+        setErrorObj(null);
         setIsIngesting(true);
         try {
             const res = await fetch('/api/ingest', {
@@ -29,13 +29,17 @@ export default function IngestForm() {
                 body: JSON.stringify({ mediaUrl: url.trim() }),
             });
             const payload = await res.json().catch(() => null);
-            if (!res.ok) throw new Error(payload?.error || `Ingestion failed (HTTP ${res.status})`);
+            if (!res.ok) {
+                const err: any = new Error(payload?.message || payload?.error || `Ingestion failed (HTTP ${res.status})`);
+                err.code = payload?.error;
+                throw err;
+            }
             setUrl('');
             alert('Ad queued for decompilation! It will appear in the dashboard shortly.');
             router.refresh();
         } catch (err: any) {
             console.error(err);
-            setError(err?.message || 'Failed to ingest ad.');
+            setErrorObj({ message: err?.message || 'Failed to ingest ad.', code: err?.code });
         } finally {
             setIsIngesting(false);
         }
@@ -46,12 +50,12 @@ export default function IngestForm() {
             .split(/\s+/)
             .map(l => l.trim())
             .filter(l => l.length > 0 && /^https?:\/\//i.test(l));
-        if (urls.length === 0) { setError('No valid URLs found. Paste one URL per line.'); return; }
+        if (urls.length === 0) { setErrorObj({ message: 'No valid URLs found. Paste one URL per line.' }); return; }
         const unique = [...new Set(urls)];
         const items: BatchItem[] = unique.map(u => ({ url: u, status: 'pending' as BatchStatus }));
         setBatchItems(items);
         setIsBatching(true);
-        setError(null);
+        setErrorObj(null);
 
         for (let i = 0; i < items.length; i++) {
             setBatchItems(prev => prev.map((item, idx) => idx === i ? { ...item, status: 'queuing' } : item));
@@ -63,7 +67,7 @@ export default function IngestForm() {
                 });
                 const payload = await res.json().catch(() => null);
                 if (!res.ok) {
-                    setBatchItems(prev => prev.map((item, idx) => idx === i ? { ...item, status: 'error', error: payload?.error || `HTTP ${res.status}` } : item));
+                    setBatchItems(prev => prev.map((item, idx) => idx === i ? { ...item, status: 'error', error: payload?.message || payload?.error || `HTTP ${res.status}` } : item));
                 } else {
                     setBatchItems(prev => prev.map((item, idx) => idx === i ? { ...item, status: 'queued', jobId: payload?.job_id } : item));
                 }
@@ -113,7 +117,7 @@ export default function IngestForm() {
                 <div className="w-[30rem] glass-dark rounded-2xl p-5 space-y-4">
                     <div className="flex items-center justify-between">
                         <h3 className="text-xs font-bold text-accent uppercase tracking-[0.15em]">Bulk Ingest</h3>
-                        <button onClick={() => { setBulkMode(false); setBatchItems([]); setError(null); }} className="text-txt-on-dark-muted hover:text-txt-on-dark transition-colors">
+                        <button onClick={() => { setBulkMode(false); setBatchItems([]); setErrorObj(null); }} className="text-txt-on-dark-muted hover:text-txt-on-dark transition-colors">
                             <X className="w-4 h-4" />
                         </button>
                     </div>
@@ -176,9 +180,19 @@ export default function IngestForm() {
                 </div>
             )}
 
-            {error && (
-                <div className="max-w-[26rem] text-right text-[11px] font-bold text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-3 py-2">
-                    {error}
+            {errorObj && (
+                <div className={`max-w-[26rem] text-right text-[11px] font-bold rounded-xl px-4 py-3 border ${errorObj.code === 'LIMIT_REACHED'
+                        ? 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20'
+                        : 'text-red-400 bg-red-500/10 border-red-500/20'
+                    }`}>
+                    <div className="flex flex-col gap-2 items-end">
+                        <span>{errorObj.message}</span>
+                        {errorObj.code === 'LIMIT_REACHED' && (
+                            <a href="/pricing" className="inline-flex items-center gap-1.5 bg-yellow-400 text-[#141414] px-4 py-1.5 rounded-lg text-xs font-bold hover:brightness-110 transition-all mt-1">
+                                Upgrade to Pro
+                            </a>
+                        )}
+                    </div>
                 </div>
             )}
         </div>

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { auth } from '@clerk/nextjs/server';
 import { decompileAd, VisionInput } from '@/lib/vision';
 import { AdDigestSchema } from '@/types/digest';
 import { supabaseAdmin } from '@/lib/supabase';
@@ -149,29 +150,34 @@ export async function POST(req: Request) {
 
         mediaUrl = normalizeUrl(mediaUrl);
 
-        // ── Viewer Gate ──
-        const cookieHeader = req.headers.get('cookie') || '';
-        const viewerIdMatch = cookieHeader.match(/vd_viewer_id=([^;]+)/);
-        const viewerId = viewerIdMatch ? viewerIdMatch[1] : null;
+        // ── Auth & Rate Limit Gate ──
+        const { userId } = await auth();
+
+        if (!userId) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        // Upsert user to ensure they exist in our tracking
+        const { data: user, error: userErr } = await supabaseAdmin
+            .from('users')
+            .upsert({ id: userId }, { onConflict: 'id' })
+            .select()
+            .single();
+
+        if (userErr || !user) {
+            console.error('[Ingest] User sync failed:', userErr);
+            return NextResponse.json({ error: 'Failed to verify account status' }, { status: 500 });
+        }
+
+        const tierLimit = user.tier === 'pro' ? 100 : 5;
+        if (user.usage_count >= tierLimit) {
+            return NextResponse.json({
+                error: 'LIMIT_REACHED',
+                message: `You have reached your ${user.tier} plan limit of ${tierLimit} reports per month.`
+            }, { status: 429 });
+        }
 
         let accessLevel: 'full' | 'limited' = 'full';
-
-        if (viewerId) {
-            // Upsert viewer_usage row
-            const { data: usage } = await supabaseAdmin
-                .from('viewer_usage')
-                .upsert({ viewer_id: viewerId }, { onConflict: 'viewer_id' })
-                .select()
-                .single();
-
-            if (usage) {
-                if (usage.pro || usage.free_analyses_used < 1) {
-                    accessLevel = 'full';
-                } else {
-                    accessLevel = 'limited';
-                }
-            }
-        }
 
         // 0. Detect Media Type
         const info = await getMediaInfo(mediaUrl);
@@ -209,7 +215,7 @@ export async function POST(req: Request) {
                 media_kind: info.type || 'image',
                 media_type: info.contentType,
                 digest: {}, // Placeholder to satisfy NOT NULL constraint
-                viewer_id: viewerId,
+                user_id: userId,
                 access_level: accessLevel,
             })
             .select()
@@ -225,16 +231,14 @@ export async function POST(req: Request) {
 
         console.log(`[Ingest] Job Created | id: ${job.id} | status: ${job.status} | timestamp: ${new Date().toISOString()}`);
 
-        // Increment free usage counter (only for non-pro, full-access jobs)
-        if (viewerId && accessLevel === 'full') {
-            await supabaseAdmin
-                .from('viewer_usage')
-                .update({
-                    free_analyses_used: ((await supabaseAdmin.from('viewer_usage').select('free_analyses_used').eq('viewer_id', viewerId).single()).data?.free_analyses_used ?? 0) + 1,
-                    updated_at: new Date().toISOString(),
-                })
-                .eq('viewer_id', viewerId);
-        }
+        // Increment user usage counter
+        await supabaseAdmin
+            .from('users')
+            .update({
+                usage_count: user.usage_count + 1,
+                updated_at: new Date().toISOString(),
+            })
+            .eq('id', userId);
 
         // 6. Return Job ID immediately
         return NextResponse.json({

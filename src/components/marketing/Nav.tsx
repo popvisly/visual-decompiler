@@ -1,3 +1,5 @@
+import { SignInButton, UserButton, SignedIn, SignedOut } from '@clerk/nextjs';
+
 export default function Nav() {
     return (
         <header className="fixed top-0 inset-x-0 z-50">
@@ -46,35 +48,61 @@ export default function Nav() {
 
                         {/* CTA cluster */}
                         <div className="flex items-center gap-2">
-                            <a
-                                href="/signin"
-                                className="
-                                    hidden sm:inline-flex items-center justify-center
-                                    rounded-full px-4 py-2
-                                    text-[13px] font-medium text-[#141414]/70
-                                    hover:text-[#141414]
-                                    transition
-                                "
-                            >
-                                Sign in
-                            </a>
-                            <a
-                                href="/app"
-                                className="
-                                    inline-flex items-center justify-center
-                                    rounded-full
-                                    bg-[#141414] text-[#FBF7EF]
-                                    px-5 py-2.5
-                                    text-[13px] font-medium tracking-[-0.01em]
-                                    shadow-[0_14px_34px_rgba(20,20,20,0.18)]
-                                    transition
-                                    hover:-translate-y-[1px]
-                                    hover:shadow-[0_18px_44px_rgba(20,20,20,0.22)]
-                                    focus:outline-none focus-visible:ring-2 focus-visible:ring-[#141414]/25
-                                "
-                            >
-                                Start now
-                            </a>
+                            <SignedOut>
+                                <SignInButton forceRedirectUrl="/app" signUpForceRedirectUrl="/app">
+                                    <button
+                                        className="
+                                            hidden sm:inline-flex items-center justify-center
+                                            rounded-full px-4 py-2
+                                            text-[13px] font-medium text-[#141414]/70
+                                            hover:text-[#141414]
+                                            transition
+                                        "
+                                    >
+                                        Sign in
+                                    </button>
+                                </SignInButton>
+                                <a
+                                    href="/app"
+                                    className="
+                                        inline-flex items-center justify-center
+                                        rounded-full
+                                        bg-[#141414] text-[#FBF7EF]
+                                        px-5 py-2.5
+                                        text-[13px] font-medium tracking-[-0.01em]
+                                        shadow-[0_14px_34px_rgba(20,20,20,0.18)]
+                                        transition
+                                        hover:-translate-y-[1px]
+                                        hover:shadow-[0_18px_44px_rgba(20,20,20,0.22)]
+                                        focus:outline-none focus-visible:ring-2 focus-visible:ring-[#141414]/25
+                                    "
+                                >
+                                    Start now
+                                </a>
+                            </SignedOut>
+
+                            <SignedIn>
+                                <a
+                                    href="/app"
+                                    className="
+                                        inline-flex items-center justify-center
+                                        rounded-full
+                                        bg-[#141414] text-[#FBF7EF]
+                                        px-5 py-2.5
+                                        text-[13px] font-medium tracking-[-0.01em]
+                                        shadow-[0_14px_34px_rgba(20,20,20,0.18)]
+                                        transition
+                                        hover:-translate-y-[1px]
+                                        hover:shadow-[0_18px_44px_rgba(20,20,20,0.22)]
+                                        focus:outline-none focus-visible:ring-2 focus-visible:ring-[#141414]/25
+                                    "
+                                >
+                                    Dashboard
+                                </a>
+                                <div className="ml-2 flex items-center justify-center">
+                                    <UserButton />
+                                </div>
+                            </SignedIn>
                         </div>
                     </div>
                 </div>
