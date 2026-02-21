@@ -35,13 +35,13 @@ export async function GET(
         const headline = digest?.extraction?.on_screen_copy?.primary_headline || 'Advertising deconstructed.';
         const mechanic = digest?.classification?.trigger_mechanic || 'Analyzing...';
 
-        return new ImageResponse(
+        const img = new ImageResponse(
             (
                 <div
                     style={{
+                        display: 'flex',
                         height: '100%',
                         width: '100%',
-                        display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'flex-start',
                         justifyContent: 'center',
@@ -52,11 +52,11 @@ export async function GET(
                 >
                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '40px' }}>
                         <div style={{
+                            display: 'flex',
                             height: '40px',
                             width: '40px',
                             borderRadius: '20px',
                             backgroundColor: '#141414',
-                            display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             color: 'white',
@@ -67,6 +67,7 @@ export async function GET(
                             D
                         </div>
                         <div style={{
+                            display: 'flex',
                             fontSize: '24px',
                             fontWeight: 'bold',
                             letterSpacing: '0.1em',
@@ -78,6 +79,7 @@ export async function GET(
                     </div>
 
                     <div style={{
+                        display: 'flex',
                         fontSize: '64px',
                         fontWeight: 'bold',
                         lineHeight: 1.1,
@@ -90,6 +92,7 @@ export async function GET(
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <div style={{
+                            display: 'flex',
                             padding: '12px 24px',
                             backgroundColor: '#141414',
                             color: 'white',
@@ -102,6 +105,7 @@ export async function GET(
                             {brand}
                         </div>
                         <div style={{
+                            display: 'flex',
                             fontSize: '24px',
                             color: '#6B6B6B',
                             textTransform: 'uppercase',
@@ -112,6 +116,7 @@ export async function GET(
                     </div>
 
                     <div style={{
+                        display: 'flex',
                         position: 'absolute',
                         bottom: '40px',
                         right: '80px',
@@ -129,6 +134,15 @@ export async function GET(
                 height: 630,
             }
         );
+
+        const png = await img.arrayBuffer(); // Eagerly render to catch Satori CSS/Layout errors
+        return new Response(png, {
+            status: 200,
+            headers: {
+                "Content-Type": "image/png",
+                "Cache-Control": "no-store, max-age=0"
+            }
+        });
     } catch (e: any) {
         console.error(`[OG Export] Failed: ${e.message}`);
 
