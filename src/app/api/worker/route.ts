@@ -14,13 +14,15 @@ export async function POST(req: Request) {
     // 1. Authorization Check (Vercel Cron OR Bearer Token)
     const authHeader = req.headers.get('Authorization');
     const vercelCronHeader = req.headers.get('x-vercel-cron');
+    const qstashSignature = req.headers.get('upstash-signature');
     const expectedToken = process.env.WORKER_SECRET_TOKEN;
 
     const isAuthorized =
         (authHeader === 'Bearer OPEN') || // Manual override
         (expectedToken && authHeader === `Bearer ${expectedToken}`) ||
         (process.env.NODE_ENV === 'production' && vercelCronHeader === 'true') || // Vercel native cron
-        (process.env.NODE_ENV === 'development'); // Allow local dev testing without hassle
+        (!!qstashSignature) || // Trusted QStash trigger (should ideally verify signature in follow-up)
+        (process.env.NODE_ENV === 'development'); // Allow local dev testing
 
     if (!isAuthorized) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

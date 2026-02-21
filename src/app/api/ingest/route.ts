@@ -111,6 +111,20 @@ const RATE_LIMIT_WINDOW = 60 * 60 * 1000; // 1 hour
 const MAX_REQUESTS_PER_IP = 50;
 const ipCache = new Map<string, { count: number, resetAt: number }>();
 
+function normalizeUrl(urlStr: string): string {
+    try {
+        const url = new URL(urlStr);
+        // List of tracking parameters to strip
+        const toStrip = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', '_ga', '_gl'];
+        toStrip.forEach(p => url.searchParams.delete(p));
+        // Also remove fragments
+        url.hash = '';
+        return url.toString();
+    } catch (e) {
+        return urlStr;
+    }
+}
+
 export async function POST(req: Request) {
     const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
     const now = Date.now();
@@ -127,11 +141,13 @@ export async function POST(req: Request) {
 
     let tempDir: string | null = null;
     try {
-        const { mediaUrl } = await req.json();
+        let { mediaUrl } = await req.json();
 
         if (!mediaUrl) {
             return NextResponse.json({ error: 'mediaUrl is required' }, { status: 400 });
         }
+
+        mediaUrl = normalizeUrl(mediaUrl);
 
         // ── Viewer Gate ──
         const cookieHeader = req.headers.get('cookie') || '';
