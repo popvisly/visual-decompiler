@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
-import { extractKeyframes, cleanupFrames } from '@/lib/video';
-import { decompileAd, VisionInput } from '@/lib/vision';
+import { extractKeyframes, cleanupFrames, extractAudio } from '@/lib/video';
+import { decompileAd, VisionInput, transcribeAudio } from '@/lib/vision';
 import { AdDigestSchema } from '@/types/digest';
 import { hashFile } from '@/lib/hashing';
+import { generateEmbedding } from '@/lib/embeddings';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
@@ -91,7 +92,7 @@ export async function POST(req: Request) {
                 // Check for duplicate content (already processed with same prompt)
                 const { data: existing } = await supabaseAdmin
                     .from('ad_digests')
-                    .select('digest, status')
+                    .select('digest, status, embedding')
                     .eq('media_hash', mediaHash)
                     .eq('prompt_version', job.prompt_version)
                     .eq('status', 'processed')
@@ -106,7 +107,8 @@ export async function POST(req: Request) {
                         .update({
                             status: 'processed',
                             digest: existing.digest,
-                            media_hash: mediaHash
+                            media_hash: mediaHash,
+                            embedding: existing.embedding
                         })
                         .eq('id', job.id);
 
@@ -120,9 +122,11 @@ export async function POST(req: Request) {
                     // We can reuse the already downloaded mediaPath if we update extractKeyframes to accept local paths
                     // But for now, we'll let extractKeyframes do its thing (it has its own tempDir)
                     const extraction = await extractKeyframes(job.media_url, [
-                        { t_ms: 1000, label: 'start' },
-                        { t_ms: -1, label: 'mid' },
-                        { t_ms: -2, label: 'end' }
+                        { t_ms: 0, label: 'Hook' },
+                        { t_ms: -0.25, label: 'Body 1' },
+                        { t_ms: -0.5, label: 'Body 2' },
+                        { t_ms: -0.75, label: 'Body 3' },
+                        { t_ms: -1, label: 'CTA' }
                     ]);
                     // If we want to be super efficient, we should update extractKeyframes to use our mediaPath
                     // but keeping it simple for now.
@@ -152,10 +156,29 @@ export async function POST(req: Request) {
                     });
                 }
 
-                // 5. Call Vision API
-                const rawDigest = await decompileAd(visionInputs, job.prompt_version);
+                // 5. Deep Multimodal: Audio Extraction & Transcription (MS14)
+                let transcription = null;
+                try {
+                    if (job.media_kind === 'video') {
+                        const audioRes = await extractAudio(job.media_url);
+                        transcription = await transcribeAudio(audioRes.audioPath);
+                        cleanupFrames(audioRes.tempDir);
+                    }
+                } catch (audioErr) {
+                    console.warn(`[Worker Job ${job.id}] Audio extraction/STT failed:`, audioErr);
+                }
+
+                // 6. Call Vision API (Use V4 for videos to get Narrative Arc + OCR)
+                const promptVersion = job.media_kind === 'video' ? 'V4' : job.prompt_version;
+                const rawDigest = await decompileAd(visionInputs, promptVersion);
+
                 if (job.media_kind === 'video' && rawDigest.extraction) {
                     rawDigest.extraction.keyframes = keyframeMeta;
+
+                    // Attach transcription to narrative_arc
+                    if (transcription && rawDigest.extraction.narrative_arc) {
+                        rawDigest.extraction.narrative_arc.transcription = transcription;
+                    }
                 }
 
                 // 5. Validate & Update
@@ -167,17 +190,108 @@ export async function POST(req: Request) {
                     console.error(`[Worker Job ${job.id}] Zod Validation Failed:`, validation.error.message);
                 }
 
+                // 6. Generate Embedding for Semantic Search
+                console.log(`[Worker Job ${job.id}] Generating strategic embedding...`);
+                const embeddingText = [
+                    rawDigest.meta?.brand_guess,
+                    rawDigest.extraction?.on_screen_copy?.primary_headline,
+                    rawDigest.strategy?.semiotic_subtext,
+                    rawDigest.strategy?.competitive_advantage,
+                    rawDigest.classification?.trigger_mechanic,
+                    rawDigest.classification?.claim_type,
+                    rawDigest.extraction?.narrative_arc?.hook_analysis
+                ].filter(Boolean).join(' | ');
+
+                const embedding = await generateEmbedding(embeddingText);
+
+                // 6.5 Pattern Shift Detection (Milestone 13)
+                let isAnomaly = false;
+                let anomalyScore = 0;
+                let anomalyReason = null;
+
+                const brand = rawDigest.meta?.brand_guess;
+                if (brand && embedding) {
+                    const { data: baselineAds } = await supabaseAdmin
+                        .from('ad_digests')
+                        .select('embedding')
+                        .eq('status', 'processed')
+                        .filter('digest->meta->>brand_guess', 'eq', brand)
+                        .order('created_at', { ascending: false })
+                        .limit(10);
+
+                    if (baselineAds && baselineAds.length >= 3) {
+                        // Calculate average baseline embedding
+                        const baselineCount = baselineAds.length;
+                        const baselineSum = new Array(embedding.length).fill(0);
+                        baselineAds.forEach((b: any) => {
+                            const vec = typeof b.embedding === 'string'
+                                ? JSON.parse(b.embedding.replace('[', '').replace(']', '').split(','))
+                                : b.embedding;
+                            vec.forEach((val: number, i: number) => baselineSum[i] += val);
+                        });
+                        const baselineAvg = baselineSum.map(v => v / baselineCount);
+
+                        // Cosine Similarity (Dot product since OpenAI vectors are normalized)
+                        const similarity = embedding.reduce((acc, val, i) => acc + (val * baselineAvg[i]), 0);
+                        anomalyScore = 1 - similarity; // Distance
+
+                        if (anomalyScore > 0.25) { // Threshold for "Significant Shift"
+                            isAnomaly = true;
+                            anomalyReason = `Strategic pivot detected: Creative distance ${anomalyScore.toFixed(2)} from brand baseline.`;
+                            console.log(`[Worker Job ${job.id}] 🚨 PATTERN SHIFT DETECTED for ${brand}. Score: ${anomalyScore.toFixed(2)}`);
+                        }
+                    }
+                }
+
                 await supabaseAdmin
                     .from('ad_digests')
                     .update({
                         status: finalStatus,
                         digest: rawDigest,
-                        media_hash: mediaHash
+                        media_hash: mediaHash,
+                        embedding: embedding,
+                        is_anomaly: isAnomaly,
+                        anomaly_score: anomalyScore,
+                        anomaly_reason: anomalyReason
                     })
                     .eq('id', job.id);
 
                 results.push({ id: job.id, status: finalStatus });
                 console.log(`[Worker Job ${job.id}] Completed: ${finalStatus}`);
+
+                // 7. Dispatch Webhooks (Milestone 13)
+                if (finalStatus === 'processed') {
+                    const { data: hooks } = await supabaseAdmin
+                        .from('webhooks')
+                        .select('*')
+                        .eq('is_active', true);
+
+                    if (hooks && hooks.length > 0) {
+                        for (const hook of hooks) {
+                            const isAnomalyEvent = isAnomaly && hook.event_types.includes('strategic_anomaly');
+                            const isCompleteEvent = hook.event_types.includes('analysis_complete');
+
+                            if (isAnomalyEvent || isCompleteEvent) {
+                                console.log(`[Worker Job ${job.id}] Dispatching Webhook to ${hook.url}`);
+                                fetch(hook.url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-VD-Secret': hook.secret_token || ''
+                                    },
+                                    body: JSON.stringify({
+                                        event: isAnomalyEvent ? 'strategic_anomaly' : 'analysis_complete',
+                                        ad_id: job.id,
+                                        brand: brand,
+                                        is_anomaly: isAnomaly,
+                                        anomaly_reason: anomalyReason,
+                                        digest: rawDigest
+                                    })
+                                }).catch(err => console.error(`[Webhook Error] ${hook.url}:`, err));
+                            }
+                        }
+                    }
+                }
 
             } catch (jobErr: any) {
                 console.error(`[Worker Job ${job.id}] Failed:`, jobErr);

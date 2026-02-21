@@ -16,3 +16,10 @@ A small, isolated “black box” that decompiles advertising media (image/video
 ## Status
 
 V1 foundation: prompt + database schema.
+
+## Milestones Progress
+
+- [x] Milestone 7: Global Intelligence & Export.
+- [x] Milestone 8: AI Strategic Remixing.
+- [x] Milestone 9: Semantic Search & Similarity.
+- [x] Milestone 10: Collaborative Intel (Boards & Teams).

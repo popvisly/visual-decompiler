@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getAllBrands } from '@/lib/brands';
 import Filters from './Filters';
 import { auth } from '@clerk/nextjs/server';
+import { Settings, Globe, Activity, Zap } from 'lucide-react';
 
 export default async function Sidebar({ searchParams }: { searchParams: any }) {
     const { userId } = await auth();
@@ -49,13 +50,41 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
             </div>
 
             {/* Quick Links */}
-            <div className="pt-4 border-t border-[#E7DED1]">
+            <div className="pt-4 border-t border-[#E7DED1] space-y-1">
                 <Link
                     href="/dashboard/analytics"
                     className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] transition-all"
                 >
                     <div className="w-1.5 h-1.5 rounded-full bg-[#141414] animate-pulse" />
                     Global Intelligence
+                </Link>
+                <Link
+                    href="/dashboard/pulse"
+                    className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] transition-all"
+                >
+                    <Activity className="w-3.5 h-3.5 text-accent" />
+                    Market Pulse
+                </Link>
+                <Link
+                    href="/dashboard/discovery"
+                    className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] transition-all"
+                >
+                    <Globe className="w-3.5 h-3.5 text-blue-500" />
+                    Global Discovery
+                </Link>
+                <Link
+                    href="/dashboard/compare"
+                    className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] transition-all"
+                >
+                    <div className="w-1.5 h-1.5 rounded-full bg-accent/40" />
+                    Strategy Comparison
+                </Link>
+                <Link
+                    href="/dashboard/settings"
+                    className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] transition-all"
+                >
+                    <Settings className="w-3.5 h-3.5" />
+                    Branding Settings
                 </Link>
             </div>
         </aside>

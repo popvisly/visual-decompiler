@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
+import { UserButton } from '@clerk/nextjs';
+import Logo from '@/components/Logo';
 import UploadZone from '@/components/UploadZone';
 import ProcessingView from '@/components/ProcessingView';
 import ResultsView from '@/components/ResultsView';
@@ -53,29 +55,22 @@ export default function V1App() {
             <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0)_60%)] z-0" />
 
             <div className="relative z-10 flex flex-col min-h-screen">
-                {/* Swiss Nav */}
-                <header className="sticky top-0 z-50 pt-4 px-6 w-full max-w-6xl mx-auto">
-                    <div className="rounded-full border border-[#E7DED1] bg-[#FBF7EF]/80 backdrop-blur-xl shadow-[0_10px_30px_rgba(20,20,20,0.06)]">
-                        <div className="flex items-center justify-between px-4 py-2.5 md:px-6">
-                            <button onClick={handleReset} className="flex items-center gap-3">
-                                <div className="h-8 w-8 rounded-full border border-[#E7DED1] bg-[#F2EBDD] flex items-center justify-center font-bold text-[#141414] text-xs">
-                                    D
-                                </div>
-                                <div className="leading-none text-left">
-                                    <div className="text-[12px] font-semibold tracking-[0.14em] uppercase text-[#141414]">
-                                        Decompiler
-                                    </div>
-                                    <div className="mt-0.5 text-[11px] tracking-[0.18em] uppercase text-[#6B6B6B]">
-                                        App Interface
-                                    </div>
-                                </div>
-                            </button>
+                {/* Swiss Nav - Unified with Dashboard Header style */}
+                <header className="sticky top-6 z-50 w-full px-6 flex justify-center">
+                    <div className="flex items-center justify-between px-4 py-3 rounded-2xl bg-white/80 backdrop-blur-md border border-[#E7DED1] shadow-[0_8px_32px_rgba(20,20,20,0.06)] w-full max-w-6xl">
+                        <Logo onClick={handleReset} sublabel="Scanning Interface" />
 
-                            <nav className="flex items-center gap-4">
-                                <a href="/dashboard" className="text-[13px] font-medium tracking-[-0.01em] text-[#141414]/70 hover:text-[#141414] transition">
-                                    Dashboard
+                        <div className="flex items-center gap-6">
+                            <nav className="hidden md:flex items-center gap-4">
+                                <a href="/dashboard" className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B6B] hover:text-[#141414] transition">
+                                    Library
+                                </a>
+                                <a href="/dashboard/pulse" className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B6B] hover:text-[#141414] transition">
+                                    Market Pulse
                                 </a>
                             </nav>
+                            <div className="h-6 w-px bg-[#E7DED1]" />
+                            <UserButton afterSignOutUrl="/" />
                         </div>
                     </div>
                 </header>

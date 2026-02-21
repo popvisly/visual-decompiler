@@ -3,42 +3,60 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { AdDigest } from '@/types/digest';
 import BrandTag from '@/components/BrandTag';
 import { auth } from '@clerk/nextjs/server';
+import { semanticSearch } from '@/lib/search';
 
 export default async function AdList({ filters }: { filters: Record<string, string | undefined> }) {
-    const { userId } = await auth();
+    const { userId, orgId } = await auth();
     if (!userId) return null;
 
-    let query = supabaseAdmin
-        .from('ad_digests')
-        .select('*')
-        .eq('user_id', userId)
-        .order('created_at', { ascending: false });
-
-    if (filters.trigger_mechanic) query = query.eq('trigger_mechanic', filters.trigger_mechanic);
-    if (filters.claim_type) query = query.eq('claim_type', filters.claim_type);
-    if (filters.offer_type) query = query.eq('offer_type', filters.offer_type);
-    if (filters.brand) {
-        query = query.or(`brand.ilike.%${filters.brand}%,brand_guess.ilike.%${filters.brand}%`);
-    }
+    let ads: any[] = [];
+    let error: any = null;
 
     if (filters.q) {
-        const searchTerm = `%${filters.q}%`;
-        query = query.or(`
-            brand.ilike.${searchTerm},
-            brand_guess.ilike.${searchTerm},
-            digest->extraction->on_screen_copy->>primary_headline.ilike.${searchTerm},
-            digest->strategy->>target_job_to_be_done.ilike.${searchTerm},
-            digest->strategy->>positioning_claim.ilike.${searchTerm},
-            digest->classification->>trigger_mechanic.ilike.${searchTerm},
-            digest->classification->>narrative_framework.ilike.${searchTerm},
-            digest->classification->>gaze_priority.ilike.${searchTerm},
-            digest->classification->>cognitive_load.ilike.${searchTerm},
-            digest->strategy->>semiotic_subtext.ilike.${searchTerm},
-            digest->strategy->>objection_tackle.ilike.${searchTerm}
-        `.replace(/\s+/g, ''));
+        // Semantic Search path
+        ads = await semanticSearch(filters.q, userId, 50, orgId);
+
+        // Post-filter the semantic results for other active filters
+        if (filters.trigger_mechanic) ads = ads.filter(a => a.trigger_mechanic === filters.trigger_mechanic);
+        if (filters.claim_type) ads = ads.filter(a => a.claim_type === filters.claim_type);
+        if (filters.offer_type) ads = ads.filter(a => a.offer_type === filters.offer_type);
+        if (filters.brand) {
+            const b = filters.brand.toLowerCase();
+            ads = ads.filter(a =>
+                (a.brand?.toLowerCase().includes(b)) ||
+                (a.brand_guess?.toLowerCase().includes(b))
+            );
+        }
+    } else {
+        // Standard SQL filter path
+        let query = supabaseAdmin
+            .from('ad_digests')
+            .select('*')
+            .or(`user_id.eq.${userId}${orgId ? `,org_id.eq.${orgId}` : ''}`)
+            .order('created_at', { ascending: false });
+
+        if (filters.trigger_mechanic) query = query.eq('trigger_mechanic', filters.trigger_mechanic);
+        if (filters.claim_type) query = query.eq('claim_type', filters.claim_type);
+        if (filters.offer_type) query = query.eq('offer_type', filters.offer_type);
+        if (filters.brand) {
+            query = query.or(`brand.ilike.%${filters.brand}%,brand_guess.ilike.%${filters.brand}%`);
+        }
+
+        const res = await query;
+        ads = res.data || [];
+        error = res.error;
     }
 
-    const { data: ads, error } = await query;
+    // Handle board_id explicitly if provided (manual join for now)
+    if (filters.board_id) {
+        const { data: boardItems } = await supabaseAdmin
+            .from('board_items')
+            .select('ad_id')
+            .eq('board_id', filters.board_id);
+
+        const adIdsOnBoard = new Set(boardItems?.map((i: any) => i.ad_id) || []);
+        ads = ads.filter(ad => adIdsOnBoard.has(ad.id));
+    }
 
     if (error) {
         return <div className="text-red-400 font-bold p-8 bg-red-500/10 rounded-2xl border border-red-500/20">Error loading ads: {error.message}</div>;

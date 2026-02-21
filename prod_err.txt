@@ -1,0 +1,59 @@
+* Host visual-decompiler.vercel.app:443 was resolved.
+* IPv6: (none)
+* IPv4: 216.198.79.3, 64.29.17.3
+*   Trying 216.198.79.3:443...
+* Connected to visual-decompiler.vercel.app (216.198.79.3) port 443
+* ALPN: curl offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+} [333 bytes data]
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* (304) (IN), TLS handshake, Server hello (2):
+{ [122 bytes data]
+* (304) (IN), TLS handshake, Unknown (8):
+{ [19 bytes data]
+* (304) (IN), TLS handshake, Certificate (11):
+{ [4032 bytes data]
+* (304) (IN), TLS handshake, CERT verify (15):
+{ [264 bytes data]
+* (304) (IN), TLS handshake, Finished (20):
+{ [36 bytes data]
+* (304) (OUT), TLS handshake, Finished (20):
+} [36 bytes data]
+* SSL connection using TLSv1.3 / AEAD-CHACHA20-POLY1305-SHA256 / [blank] / UNDEF
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=*.vercel.app
+*  start date: Dec 26 17:44:01 2025 GMT
+*  expire date: Mar 26 17:44:00 2026 GMT
+*  subjectAltName: host "visual-decompiler.vercel.app" matched cert's "*.vercel.app"
+*  issuer: C=US; O=Google Trust Services; CN=WR1
+*  SSL certificate verify ok.
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://visual-decompiler.vercel.app/api/og/77e38994-db94-4147-95fe-126a5677e43a?v=8
+* [HTTP/2] [1] [:method: GET]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: visual-decompiler.vercel.app]
+* [HTTP/2] [1] [:path: /api/og/77e38994-db94-4147-95fe-126a5677e43a?v=8]
+* [HTTP/2] [1] [user-agent: curl/8.7.1]
+* [HTTP/2] [1] [accept: */*]
+> GET /api/og/77e38994-db94-4147-95fe-126a5677e43a?v=8 HTTP/2
+> Host: visual-decompiler.vercel.app
+> User-Agent: curl/8.7.1
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/2 200 
+< age: 0
+< cache-control: public, immutable, no-transform, max-age=31536000
+< content-type: image/png
+< date: Sat, 21 Feb 2026 09:58:05 GMT
+< server: Vercel
+< strict-transport-security: max-age=63072000; includeSubDomains; preload
+< x-matched-path: /api/og/[id]
+< x-vercel-cache: MISS
+< x-vercel-id: syd1::syd1::wgc22-1771667884057-f2ee191cf201
+< content-length: 0
+< 
+{ [0 bytes data]
+* Connection #0 to host visual-decompiler.vercel.app left intact

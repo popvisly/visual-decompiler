@@ -9,17 +9,23 @@ function toArrayJoinConst(name, text) {
 
 const v1Path = path.join(process.cwd(), 'artifacts', 'BLACK_BOX_PROMPT_V1.md');
 const v2Path = path.join(process.cwd(), 'artifacts', 'BLACK_BOX_PROMPT_V2.md');
+const v3Path = path.join(process.cwd(), 'artifacts', 'BLACK_BOX_PROMPT_V3.md');
+const v4Path = path.join(process.cwd(), 'artifacts', 'BLACK_BOX_PROMPT_V4.md');
 
 if (!fs.existsSync(v1Path)) throw new Error('Missing ' + v1Path);
 
 const v1 = fs.readFileSync(v1Path, 'utf8');
 const v2 = fs.existsSync(v2Path) ? fs.readFileSync(v2Path, 'utf8') : v1;
+const v3 = fs.existsSync(v3Path) ? fs.readFileSync(v3Path, 'utf8') : v1;
+const v4 = fs.existsSync(v4Path) ? fs.readFileSync(v4Path, 'utf8') : v1;
 
 const out = `// AUTO-GENERATED from artifacts/*.md. Do not hand-edit.
 // Regenerate: node scripts/generate-prompts.cjs
 
 ${toArrayJoinConst('BLACK_BOX_PROMPT_V1', v1)}
 ${toArrayJoinConst('BLACK_BOX_PROMPT_V2', v2)}
+${toArrayJoinConst('BLACK_BOX_PROMPT_V3', v3)}
+${toArrayJoinConst('BLACK_BOX_PROMPT_V4', v4)}
 `;
 
 const outPath = path.join(process.cwd(), 'src', 'lib', 'prompts.ts');

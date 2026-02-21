@@ -1,4 +1,5 @@
 import { SignInButton, UserButton, SignedIn, SignedOut } from '@clerk/nextjs';
+import Logo from '@/components/Logo';
 
 export default function Nav() {
     return (
@@ -15,18 +16,8 @@ export default function Nav() {
                     "
                 >
                     <div className="flex items-center justify-between px-4 py-2.5 md:px-6">
-                        {/* Brand block */}
-                        <a href="/" className="flex items-center gap-3">
-                            <div className="h-8 w-8 rounded-full border border-[#E7DED1] bg-[#F2EBDD]" />
-                            <div className="leading-none">
-                                <div className="text-[12px] font-semibold tracking-[0.14em] uppercase text-[#141414]">
-                                    Decompiler
-                                </div>
-                                <div className="mt-0.5 text-[11px] tracking-[0.18em] uppercase text-[#6B6B6B]">
-                                    Advertising Intelligence
-                                </div>
-                            </div>
-                        </a>
+                        {/* Standardized Logo Nav */}
+                        <Logo sublabel="Advertising Intelligence" />
 
                         {/* Links */}
                         <nav className="hidden md:flex items-center gap-6">

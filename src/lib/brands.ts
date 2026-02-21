@@ -9,11 +9,11 @@ export interface BrandStats {
     dimensions: Record<string, { label: string; count: number }[]>;
 }
 
-export async function getAllBrands(userId: string) {
+export async function getAllBrands(userId: string, orgId?: string | null) {
     const { data: brands, error } = await supabaseAdmin
         .from('ad_digests')
         .select('brand, brand_guess')
-        .eq('user_id', userId);
+        .or(`user_id.eq.${userId}${orgId ? `,org_id.eq.${orgId}` : ''}`);
 
     if (error) throw new Error(error.message);
 
@@ -28,12 +28,12 @@ export async function getAllBrands(userId: string) {
         .sort((a, b) => b.count - a.count);
 }
 
-export async function getBrandAds(brandName: string, userId: string) {
+export async function getBrandAds(brandName: string, userId: string, orgId?: string | null) {
     const q = JSON.stringify(brandName);
     const { data, error } = await supabaseAdmin
         .from('ad_digests')
         .select('*')
-        .eq('user_id', userId)
+        .or(`user_id.eq.${userId}${orgId ? `,org_id.eq.${orgId}` : ''}`)
         .or(`brand.eq.${q},and(brand.is.null,brand_guess.eq.${q})`)
         .order('created_at', { ascending: false });
 
@@ -41,12 +41,12 @@ export async function getBrandAds(brandName: string, userId: string) {
     return data || [];
 }
 
-export async function getBrandStats(brandName: string, userId: string): Promise<BrandStats> {
+export async function getBrandStats(brandName: string, userId: string, orgId?: string | null): Promise<BrandStats> {
     const q = JSON.stringify(brandName);
     const { data: ads, error } = await supabaseAdmin
         .from('ad_digests')
         .select('digest')
-        .eq('user_id', userId)
+        .or(`user_id.eq.${userId}${orgId ? `,org_id.eq.${orgId}` : ''}`)
         .or(`brand.eq.${q},and(brand.is.null,brand_guess.eq.${q})`);
 
     if (error) throw new Error(error.message);

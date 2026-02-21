@@ -200,17 +200,30 @@ export const AdDigestSchema = z.object({
             supporting_copy: z.array(z.string()).optional(),
             cta_text: z.string().nullable().optional(),
             disclaimers: z.array(z.string()).optional(),
+            ocr_text: z.array(z.string()).optional(), // [NEW] MS14 Deep OCR
         }),
         dominant_color_hex: z.string().nullable().optional(),
         keyframes: z.array(z.object({
             t_ms: z.number(),
-            label: z.enum(["start", "mid", "end", "high_motion", "other"]),
+            label: z.enum(["start", "mid", "end", "high_motion", "other", "Hook", "Body 1", "Body 2", "Body 3", "CTA"]),
             image_url: z.string().nullable(),
             notes: z.string().nullable(),
         })).optional(),
         notable_visual_elements: z.array(z.string()),
         composition_notes: z.string().optional(),
         audio_notes: z.string().nullable().optional(),
+        narrative_arc: z.object({
+            hook_analysis: z.string(),
+            retention_mechanics: z.string(),
+            story_structure: z.string(),
+            cta_climax: z.string(),
+            arc_segments: z.array(z.object({
+                t_ms: z.number(),
+                label: z.string(),
+                strategy_note: z.string()
+            })),
+            transcription: z.string().optional(), // [NEW] MS14 Speech-to-Text
+        }).optional(),
     }),
     strategy: z.object({
         target_job_to_be_done: z.string().optional(),
@@ -218,6 +231,7 @@ export const AdDigestSchema = z.object({
         positioning_claim: z.string().optional(),
         differentiator_angle: z.string().optional(),
         semiotic_subtext: z.string().optional(),
+        competitive_advantage: z.string().optional(),
         behavioral_nudge: z.string().optional(),
         misdirection_or_friction_removed: z.string().nullable().optional(),
         evidence_anchors: z.array(z.string()).optional(), // [NEW] Deep Decompiler

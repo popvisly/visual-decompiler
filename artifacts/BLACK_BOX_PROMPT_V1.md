@@ -24,8 +24,9 @@ A) **Brand Aim & Target**: Infer audience and aim (awareness, conversion, trust)
 B) **Association Principle**: Identify 2-4 values the ad attaches to the brand (e.g., "status", "simplicity"). Cite anchors.
 C) **Narrative**: Identify how attention is held (Problem/Solution, Product-as-Hero).
 D) **Psychological Trigger**: Choose trigger_mechanic and identify objection_dismantling.
-E) **Visual Hierarchy**: Explain gaze_priority.
-F) **Output**: Generate strict JSON.
+E) **Competitive Advantage**: Explicitly identify the core "Unfair Advantage" or "Moat" claimed in the ad.
+F) **Visual Hierarchy**: Explain gaze_priority.
+G) **Output**: Generate strict JSON.
 
 ---
 
@@ -209,6 +210,7 @@ Return exactly this JSON object:
     "positioning_claim": "string",
     "differentiator_angle": "string",
     "semiotic_subtext": "string",
+    "competitive_advantage": "string",
     "behavioral_nudge": "string",
     "misdirection_or_friction_removed": "string|null",
     "evidence_anchors": ["string"]

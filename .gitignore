@@ -17,3 +17,6 @@ artifacts/
 # Local dev logs
 dev_server.log
 dev_pid.txt
+
+# clerk configuration (can include secrets)
+/.clerk/

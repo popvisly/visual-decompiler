@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import AdList from '@/components/AdList';
 import Filters from '@/components/Filters';
 import Header from '@/components/Header';
+import CopilotPanel from '@/components/CopilotPanel';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -32,6 +33,8 @@ export default async function DashboardPage({
                     <AdList filters={params} />
                 </Suspense>
             </section>
+
+            <CopilotPanel />
         </div>
     );
 }

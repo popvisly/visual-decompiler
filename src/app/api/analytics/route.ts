@@ -6,7 +6,7 @@ export async function GET(req: Request) {
     const brandParam = searchParams.get('brand');
 
     try {
-        const data = await getAnalyticsData(brandParam);
+        const data = await getAnalyticsData(brandParam || '');
         return NextResponse.json(data);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });

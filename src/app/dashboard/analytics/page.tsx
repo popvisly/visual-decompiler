@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import Filters from '@/components/Filters';
 import Header from '@/components/Header';
+import { auth } from '@clerk/nextjs/server';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -8,7 +9,9 @@ export const revalidate = 0;
 import { getAnalyticsData } from '@/lib/analytics';
 
 async function AnalyticsContent({ brand }: { brand?: string }) {
-    const data = await getAnalyticsData(brand);
+    const { userId, orgId } = await auth();
+    if (!userId) return null;
+    const data = await getAnalyticsData(userId, orgId, brand);
 
     if (data.summary.total === 0) {
         return (

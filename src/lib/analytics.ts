@@ -18,10 +18,11 @@ export interface AnalyticsData {
     }[];
 }
 
-export async function getAnalyticsData(brandParam?: string | null): Promise<AnalyticsData> {
+export async function getAnalyticsData(userId: string, orgId?: string | null, brandParam?: string | null): Promise<AnalyticsData> {
     let query = supabaseAdmin
         .from('ad_digests')
-        .select('digest, brand, brand_guess, status');
+        .select('digest, brand, brand_guess, status')
+        .or(`user_id.eq.${userId}${orgId ? `,org_id.eq.${orgId}` : ''}`);
 
     if (brandParam) {
         query = query.or(`brand.ilike.%${brandParam}%,brand_guess.ilike.%${brandParam}%`);
@@ -135,5 +136,61 @@ export async function getAnalyticsData(brandParam?: string | null): Promise<Anal
             Object.entries(stats).map(([dim, counts]) => [dim, toRankedList(counts)])
         ),
         highlights
+    };
+}
+
+export interface ComparisonData {
+    brandA: { name: string; stats: Record<string, { label: string; count: number }[]>; total: number };
+    brandB: { name: string; stats: Record<string, { label: string; count: number }[]>; total: number };
+    dimensions: string[];
+}
+
+export async function getComparisonData(brandAName: string, brandBName: string, userId: string, orgId?: string | null): Promise<ComparisonData> {
+    const fetchBrand = async (name: string) => {
+        const q = JSON.stringify(name);
+        const { data, error } = await supabaseAdmin
+            .from('ad_digests')
+            .select('digest, brand, brand_guess')
+            .or(`user_id.eq.${userId}${orgId ? `,org_id.eq.${orgId}` : ''}`)
+            .or(`brand.eq.${q},and(brand.is.null,brand_guess.eq.${q})`)
+            .eq('status', 'processed');
+
+        if (error) throw error;
+
+        const dimensions = ['trigger_mechanic', 'claim_type', 'offer_type', 'narrative_framework'];
+        const stats: Record<string, Record<string, number>> = {};
+        dimensions.forEach(dim => stats[dim] = {});
+
+        data?.forEach((ad: any) => {
+            const d = ad.digest;
+            if (!d) return;
+            dimensions.forEach(dim => {
+                const val = d.classification?.[dim];
+                if (val) stats[dim][val] = (stats[dim][val] || 0) + 1;
+            });
+        });
+
+        const toRankedList = (counts: Record<string, number>) => {
+            return Object.entries(counts)
+                .map(([label, count]) => ({ label, count }))
+                .sort((a, b) => b.count - a.count);
+        };
+
+        return {
+            name,
+            total: data?.length || 0,
+            stats: Object.fromEntries(Object.entries(stats).map(([dim, counts]) => [dim, toRankedList(counts)]))
+        };
+    };
+
+    const [brandA, brandB] = await Promise.all([
+        fetchBrand(brandAName),
+        fetchBrand(brandBName)
+    ]);
+
+    return {
+        brandA,
+        brandB,
+        dimensions: ['trigger_mechanic', 'claim_type', 'offer_type', 'narrative_framework']
     };
 }

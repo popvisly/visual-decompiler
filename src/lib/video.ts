@@ -9,7 +9,7 @@ const execPromise = util.promisify(exec);
 
 export type KeyframeRequest = {
     t_ms: number;
-    label: "start" | "mid" | "end" | "high_motion" | "other";
+    label: "start" | "mid" | "end" | "high_motion" | "other" | "Hook" | "Body 1" | "Body 2" | "Body 3" | "CTA";
 };
 
 export async function extractKeyframes(videoUrl: string, requests: KeyframeRequest[]) {
@@ -69,8 +69,13 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
 
         for (const req of requests) {
             let targetMs = req.t_ms;
-            if (targetMs === -1) targetMs = durationMs / 2; // Mid
-            if (targetMs === -2) targetMs = Math.max(0, durationMs - 2000); // End (2s before finish)
+            if (targetMs < 0) {
+                // Percentage-based seeking (e.g. -0.25 for 25% into video)
+                // Legacy: -1 = mid, -2 = end
+                if (targetMs === -1) targetMs = durationMs / 2;
+                else if (targetMs === -2) targetMs = Math.max(0, durationMs - 2000);
+                else targetMs = Math.abs(targetMs) * durationMs;
+            }
 
             const fileName = `frame_${req.label}_${Math.round(targetMs)}.jpg`;
             const outputPath = path.join(tempDir, fileName);
@@ -122,5 +127,36 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
 export function cleanupFrames(tempDir: string) {
     if (fs.existsSync(tempDir)) {
         fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+}
+
+export async function extractAudio(videoUrl: string) {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vd-audio-'));
+    const audioPath = path.join(tempDir, 'audio.mp3');
+
+    let resolvedFfmpegPath = ffmpegPath;
+    if (!fs.existsSync(resolvedFfmpegPath || '')) {
+        const brewFfmpeg = '/opt/homebrew/bin/ffmpeg';
+        if (fs.existsSync(brewFfmpeg)) resolvedFfmpegPath = brewFfmpeg;
+    }
+
+    if (!resolvedFfmpegPath) {
+        throw new Error('ffmpeg binary not available for audio extraction.');
+    }
+
+    try {
+        console.log(`[Video] Extracting audio for transcription...`);
+        // Limit to 30 seconds for strategic synthesis to keep costs/latency low
+        const command = `"${resolvedFfmpegPath}" -hide_banner -loglevel error -i "${videoUrl}" -t 30 -vn -acodec libmp3lame -q:a 2 "${audioPath}" -y`;
+        await execPromise(command);
+
+        if (!fs.existsSync(audioPath)) {
+            throw new Error('Audio extraction failed (file not created).');
+        }
+
+        return { tempDir, audioPath };
+    } catch (err) {
+        if (fs.existsSync(tempDir)) fs.rmSync(tempDir, { recursive: true, force: true });
+        throw err;
     }
 }

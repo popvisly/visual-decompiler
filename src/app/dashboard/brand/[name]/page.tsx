@@ -11,10 +11,10 @@ export default async function BrandProfilePage({
 }) {
     const { name: encodedName } = await params;
     const name = decodeURIComponent(encodedName);
-    const { userId } = await auth();
+    const { userId, orgId } = await auth();
     if (!userId) return null;
 
-    const stats = await getBrandStats(name, userId);
+    const stats = await getBrandStats(name, userId, orgId);
 
     if (stats.totalAds === 0) {
         return (

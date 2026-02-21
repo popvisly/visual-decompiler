@@ -1,8 +1,9 @@
 import OpenAI from 'openai';
-import { BLACK_BOX_PROMPT_V1, BLACK_BOX_PROMPT_V2 } from './prompts';
+import { BLACK_BOX_PROMPT_V1, BLACK_BOX_PROMPT_V2, BLACK_BOX_PROMPT_V3, BLACK_BOX_PROMPT_V4 } from './prompts';
+import fs from 'fs';
 
 let _openai: OpenAI | null = null;
-function getOpenAI() {
+export function getOpenAI() {
     if (!_openai) {
         _openai = new OpenAI({
             apiKey: process.env.OPENAI_API_KEY,
@@ -17,7 +18,10 @@ export type VisionInput =
 
 export async function decompileAd(inputs: VisionInput[], version: string = 'V1') {
     // 1. Select the strict prompt (inlined at build time)
-    const systemPrompt = version === 'V2' ? BLACK_BOX_PROMPT_V2 : BLACK_BOX_PROMPT_V1;
+    let systemPrompt = BLACK_BOX_PROMPT_V1;
+    if (version === 'V2') systemPrompt = BLACK_BOX_PROMPT_V2;
+    else if (version === 'V3') systemPrompt = BLACK_BOX_PROMPT_V3;
+    else if (version === 'V4') systemPrompt = BLACK_BOX_PROMPT_V4;
 
     // 2. Prepare content
     const userContent: OpenAI.Chat.Completions.ChatCompletionContentPart[] = [
@@ -84,4 +88,14 @@ export async function decompileAd(inputs: VisionInput[], version: string = 'V1')
     if (!content) throw new Error("No response from Vision API");
 
     return JSON.parse(content);
+}
+
+export async function transcribeAudio(audioPath: string) {
+    const openai = getOpenAI();
+    console.log(`[Vision] Calling Whisper-1 for transcription: ${audioPath}`);
+    const transcription = await openai.audio.transcriptions.create({
+        file: fs.createReadStream(audioPath),
+        model: "whisper-1",
+    });
+    return transcription.text;
 }
