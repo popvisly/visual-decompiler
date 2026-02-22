@@ -65,7 +65,7 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
         <section id={id} ref={containerRef} className="relative h-[400vh] bg-[#F6F1E7]">
             {/* Sticky Container */}
             <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-                <div className="relative w-full max-w-7xl mx-auto px-6 h-[85vh] flex items-center justify-center">
+                <div className="relative w-full max-w-7xl mx-auto px-6 h-full flex items-center justify-center">
 
                     {/* Stage Labels (Absolute Top Left) */}
                     <div className="absolute top-10 left-4 md:left-8 xl:left-20 z-40">
@@ -195,7 +195,7 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
                             restDelta: 0.001
                         }}
                     >
-                        <div className="rounded-[24px] border border-[#E7DED1] bg-[#FBF7EF]/90 backdrop-blur-xl shadow-[0_30px_90px_rgba(20,20,20,0.14)] p-4 md:p-5 space-y-2 md:space-y-3 max-h-[85vh] overflow-y-auto hidden-scrollbar">
+                        <div className="rounded-[24px] border border-[#E7DED1] bg-[#FBF7EF]/90 backdrop-blur-xl shadow-[0_30px_90px_rgba(20,20,20,0.14)] p-4 md:p-5 space-y-2 md:space-y-3 max-h-[78vh] overflow-y-auto hidden-scrollbar">
                             <div className="flex items-center gap-2 mb-1">
                                 <span className="w-2 h-2 rounded-full bg-[#141414]" />
                                 <span className="text-[10px] md:text-[11px] font-semibold tracking-[0.18em] text-[#6B6B6B] uppercase">Intelligence Report</span>
@@ -204,7 +204,7 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
                             {reportPreviewCards.map((card, i) => (
                                 <div key={i} className="rounded-xl border border-[#E7DED1] bg-white p-3 md:p-4">
                                     <h4 className="text-[12px] md:text-[13px] font-semibold text-[#141414] mb-0.5 md:mb-1">{card.title}</h4>
-                                    <p className="text-[11px] md:text-[12px] text-[#6B6B6B] leading-[1.3] mb-2 md:mb-3">{card.micro}</p>
+                                    <p className="text-[11px] md:text-[12px] text-[#6B6B6B] leading-[1.3] mb-1.5 md:mb-2">{card.micro}</p>
 
                                     {card.bullets && (
                                         <ul className="space-y-0.5 md:space-y-1">
