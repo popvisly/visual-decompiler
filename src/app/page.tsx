@@ -1,6 +1,6 @@
 import Nav from '@/components/marketing/Nav';
 import Hero from '@/components/marketing/Hero';
-import StickyDecompileStage from '@/components/marketing/StickyDecompileStage';
+import DecompilePipeline from '@/components/marketing/DecompilePipeline';
 import CaseStudyFashion from '@/components/marketing/CaseStudyFashion';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 import { Pill, PreviewCard, CaseCard } from '@/types/homepage';
@@ -67,10 +67,10 @@ export default function HomePage() {
                 subhead="Drop any ad. Our system reconstructs the persuasion architecture—mechanics, cues, and leverage points."
                 ctaPrimary={{ label: "Start now", href: "/app" }}
                 ctaSecondary={{ label: "View example report", href: "#case-study" }}
-                stageImage={{ src: "/images/examples/dior.png", alt: "Example ad" }}
+                stageImage={{ src: "/images/hero/dior-panels.jpg", alt: "Dior deconstruction collage" }}
             />
 
-            <StickyDecompileStage
+            <DecompilePipeline
                 id="how"
                 stageImage={{ src: "/images/examples/dior.png", alt: "Example ad" }}
                 pills={PILLS}
