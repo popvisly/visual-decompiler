@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from '@clerk/nextjs';
+import { Inter } from 'next/font/google';
 import "./globals.css";
+
+const inter = Inter({
+    subsets: ['latin'],
+    variable: '--font-inter',
+    display: 'swap',
+});
 
 export const metadata: Metadata = {
     title: "Decompiler — Drop an ad. See the invisible.",
@@ -19,8 +26,8 @@ export default function RootLayout({
 }>) {
     return (
         <ClerkProvider>
-            <html lang="en">
-                <body className="antialiased font-sans">
+            <html lang="en" className={inter.variable}>
+                <body className="antialiased">
                     {children}
                 </body>
             </html>
