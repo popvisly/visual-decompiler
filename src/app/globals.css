@@ -500,3 +500,73 @@ select.styled-select {
 .reveal-text>span {
     display: inline-block;
 }
+
+@layer utilities {
+    .tracking-tightest {
+        letter-spacing: -0.06em;
+    }
+}
+
+/* ══════════════════════════════════════════════
+   STRATEGIC PRINT SYSTEM — Milestone 20
+   ══════════════════════════════════════════════ */
+
+@media print {
+
+    /* Reset canvas for pure delivery */
+    body {
+        background: #FFFFFF !important;
+        color: #141414 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Hide tactical UI elements */
+    header,
+    nav,
+    aside,
+    button,
+    .no-print,
+    .notification-bell,
+    form,
+    #client-deliberation-section {
+        display: none !important;
+    }
+
+    /* Force visibility and layout */
+    main {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* High-res typography adjustments */
+    h1 {
+        font-size: 4rem !important;
+        line-height: 1 !important;
+        color: #141414 !important;
+    }
+
+    p,
+    li {
+        color: #333333 !important;
+    }
+
+    /* Page breaks for editorial flow */
+    section {
+        page-break-inside: avoid;
+        margin-bottom: 40px;
+    }
+
+    .ad-card {
+        page-break-inside: avoid;
+    }
+
+    /* Restore contrast in white-label elements */
+    .brief-generator {
+        border-color: #E7DED1 !important;
+        background: #FBF7EF !important;
+    }
+}

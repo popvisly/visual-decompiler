@@ -2,12 +2,13 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { supabaseAdmin } from '@/lib/supabase';
 import { auth } from '@clerk/nextjs/server';
-import { ArrowLeft, Share2, Loader2, Play } from 'lucide-react';
+import { ArrowLeft, Share2, Loader2, Play, Sparkles } from 'lucide-react';
 import AdList from '@/components/AdList';
 import ShareBoard from '@/components/ShareBoard';
 import CopilotPanel from '@/components/CopilotPanel';
 import BenchmarkMap from '@/components/BenchmarkMap';
 import BriefGenerator from '@/components/BriefGenerator';
+import BriefIngest from '@/components/BriefIngest';
 import { AdDigest } from '@/types/digest';
 
 export const dynamic = 'force-dynamic';
@@ -67,28 +68,40 @@ export default async function BoardDetailPage({
     }));
 
     return (
-        <div className="space-y-12 py-10">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-white/5">
+        <div className="space-y-20 py-12">
+            {/* Header - Editorial Style */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 pb-16 border-b border-[#E7DED1]">
                 <div>
-                    <nav className="flex items-center gap-2 mb-6">
-                        <Link href="/dashboard/boards" className="text-[10px] font-bold text-txt-on-dark-muted uppercase tracking-widest hover:text-accent flex items-center gap-1 transition-colors">
-                            <ArrowLeft className="w-3 h-3" /> All Boards
+                    <nav className="flex items-center gap-2 mb-10">
+                        <Link href="/dashboard/boards" className="text-[11px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em] hover:text-[#141414] flex items-center gap-2 transition-all group">
+                            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+                            Back to Collection
                         </Link>
                     </nav>
-                    <h2 className="text-5xl font-light text-txt-on-dark tracking-tighter uppercase leading-[0.9]">{board.name}</h2>
-                    <p className="text-sm text-txt-on-dark-muted mt-4 max-w-2xl leading-relaxed">{board.description || 'Manage and deconstruct this strategic collection.'}</p>
+                    <h2 className="text-7xl font-light text-[#141414] tracking-tightest uppercase leading-[0.85] select-none">
+                        {board.name.split(' ').slice(0, -1).join(' ')}<br />
+                        <span className="text-[#6B6B6B]/30">{board.name.split(' ').pop()}</span>
+                    </h2>
+                    <p className="text-[12px] text-[#6B6B6B] mt-10 max-w-2xl font-bold tracking-[0.2em] uppercase leading-relaxed">
+                        {board.description || 'Deconstructing a strategic pattern collection.'}
+                    </p>
                 </div>
 
                 <div className="flex gap-4 no-print">
-                    <ShareBoard token={board.sharing_token} boardName={board.name} />
-                    <button className="flex items-center gap-2 px-6 py-2.5 bg-accent text-[#141414] rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-accent/90 transition-all shadow-lg shadow-accent/10">
-                        <Play className="w-4 h-4" /> Presentation Mode
+                    <ShareBoard boardId={id} boardName={board.name} />
+                    <button className="flex items-center gap-3 px-8 py-4 bg-[#141414] text-[#FBF7EF] rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-2xl shadow-black/10 active:scale-95 group">
+                        <Play className="w-4 h-4 text-accent group-hover:scale-110 transition-transform" />
+                        Presentation
                     </button>
                 </div>
             </div>
 
             {boardAds.length > 0 && (
-                <section>
+                <section className="bg-white p-16 rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
+                    <div className="flex items-center gap-3 mb-12">
+                        <Sparkles className="w-5 h-5 text-accent" />
+                        <span className="text-[11px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em]">Comparative Logic Mapping</span>
+                    </div>
                     <BenchmarkMap
                         category={primaryCategory}
                         userStats={userStats}
@@ -97,18 +110,25 @@ export default async function BoardDetailPage({
                 </section>
             )}
 
-            <section>
-                <BriefGenerator boardId={id} boardName={board.name} />
+            <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <BriefIngest
+                    boardId={id}
+                    initialBrief={board.client_brief_text}
+                />
+                <BriefGenerator
+                    boardId={id}
+                    boardName={board.name}
+                    initialBrief={board.strategic_answer || board.last_brief}
+                    sampleAd={boardItems?.[0]?.ad_digests}
+                />
             </section>
 
-            <div className="space-y-8">
-                <div className="flex items-center justify-between">
-                    <h3 className="text-[12px] font-bold text-txt-on-dark uppercase tracking-[0.15em]">Deconstructed Assets</h3>
-                    <p className="text-[10px] text-txt-on-dark-muted font-bold uppercase tracking-[0.2em] opacity-40">Collection contents</p>
+            <div className="space-y-12">
+                <div className="flex items-center justify-between px-4">
+                    <h3 className="text-[13px] font-bold text-[#141414] uppercase tracking-[0.3em]">Tactical Inventory</h3>
+                    <p className="text-[10px] text-[#6B6B6B] font-bold uppercase tracking-[0.4em] opacity-40">Deconstructed assets</p>
                 </div>
 
-                {/* We need a variant of AdList that filters for boardItems */}
-                {/* For now, we'll use regular AdList and pass the boardId as a filter */}
                 <AdList filters={{ board_id: id }} />
             </div>
 

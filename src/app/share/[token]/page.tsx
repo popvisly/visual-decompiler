@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import { supabaseAdmin } from '@/lib/supabase';
 import { AdDigest } from '@/types/digest';
-import { LayoutGrid, Boxes } from 'lucide-react';
+import { LayoutGrid, Boxes, Sparkles } from 'lucide-react';
+import BriefGenerator from '@/components/BriefGenerator';
 
 export const dynamic = 'force-dynamic';
 
@@ -84,6 +85,17 @@ export default async function SharedBoardPage({
                     <p className="text-2xl font-light text-[#141414] max-w-2xl leading-relaxed">
                         {board.description || "This collection contains strategic deconstructions of key competitive assets, analyzing trigger mechanics and semiotic subtext."}
                     </p>
+                </div>
+
+                {/* The Strategic Answer (Intelligence Layer) */}
+                <div className="mb-20">
+                    <BriefGenerator
+                        boardId={board.id}
+                        boardName={board.name}
+                        isShared={true}
+                        initialBrief={board.strategic_answer}
+                        sampleAd={ads[0]}
+                    />
                 </div>
 
                 {/* Ads Grid */}

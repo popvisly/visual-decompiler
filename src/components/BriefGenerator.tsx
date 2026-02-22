@@ -1,18 +1,43 @@
 'use client';
 
 import { useState } from 'react';
-import { FileText, Sparkles, Loader2, Download, CheckCircle2, AlertCircle } from 'lucide-react';
+import { FileText, Sparkles, Loader2, Download, CheckCircle2, AlertCircle, Wand2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { PrototypeService, StrategicPrototype } from '@/lib/prototype_service';
+import StrategicPrototypeView from '@/components/StrategicPrototype';
+import VisualMirror from '@/components/VisualMirror';
 
 interface BriefGeneratorProps {
     boardId: string;
     boardName: string;
+    isShared?: boolean;
+    initialBrief?: any; // Can be string (legacy) or object { content: string }
+    sampleAd?: any;
 }
 
-export default function BriefGenerator({ boardId, boardName }: BriefGeneratorProps) {
+export default function BriefGenerator({
+    boardId,
+    boardName,
+    isShared = false,
+    initialBrief = null,
+    sampleAd = null
+}: BriefGeneratorProps) {
     const [generating, setGenerating] = useState(false);
-    const [brief, setBrief] = useState<string | null>(null);
+    const [competitorAd, setCompetitorAd] = useState<any>(sampleAd);
+
+    // Extract brief from object if it's the new jsonb format
+    const initialContent = typeof initialBrief === 'object' && initialBrief !== null
+        ? initialBrief.content
+        : initialBrief;
+
+    const [brief, setBrief] = useState<string | null>(initialContent);
+    const [visualMirrorData, setVisualMirrorData] = useState<any>(
+        typeof initialBrief === 'object' && initialBrief !== null ? initialBrief.visual_mirror : null
+    );
     const [error, setError] = useState<string | null>(null);
+    const [prototype, setPrototype] = useState<StrategicPrototype | null>(null);
+    const [prototyping, setPrototyping] = useState(false);
+    const [viewingPrototype, setViewingPrototype] = useState(false);
 
     const generateBrief = async () => {
         setGenerating(true);
@@ -26,6 +51,7 @@ export default function BriefGenerator({ boardId, boardName }: BriefGeneratorPro
             const data = await res.json();
             if (data.error) throw new Error(data.error);
             setBrief(data.brief);
+            setVisualMirrorData(data.visualMirror);
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -33,26 +59,40 @@ export default function BriefGenerator({ boardId, boardName }: BriefGeneratorPro
         }
     };
 
+    const generatePrototype = async () => {
+        if (!brief) return;
+        setPrototyping(true);
+        try {
+            const result = await PrototypeService.generateFromAnswer(brief, "Aggregated Collection DNA");
+            setPrototype(result);
+            setViewingPrototype(true);
+        } catch (err: any) {
+            setError("Prototype generation failed.");
+        } finally {
+            setPrototyping(false);
+        }
+    };
+
     return (
-        <div className="bg-white rounded-[2.5rem] border border-[#E7DED1] shadow-[0_20px_50px_rgba(20,20,20,0.03)] overflow-hidden">
-            <div className="p-8 border-b border-[#E7DED1] bg-[#FBF7EF]/30 flex items-center justify-between">
+        <div className="bg-white rounded-[1.5rem] md:rounded-[2.5rem] border border-[#E7DED1] shadow-[0_20px_50px_rgba(20,20,20,0.03)] overflow-hidden">
+            <div className="p-6 md:p-8 border-b border-[#E7DED1] bg-[#FBF7EF]/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h3 className="text-[10px] font-bold text-accent uppercase tracking-widest mb-1">Strategic Intelligence</h3>
-                    <h4 className="text-xl font-light text-[#141414] uppercase tracking-tight">High-IQ Creative Brief</h4>
+                    <h3 className="text-[9px] md:text-[10px] font-bold text-accent uppercase tracking-widest mb-1">Neural Synthesis</h3>
+                    <h4 className="text-lg md:text-xl font-light text-[#141414] uppercase tracking-tight">The Strategic Answer</h4>
                 </div>
-                {!brief && (
+                {!brief && !isShared && (
                     <button
                         onClick={generateBrief}
                         disabled={generating}
-                        className="flex items-center gap-2 px-6 py-3 bg-[#141414] text-[#FBF7EF] rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-xl disabled:opacity-50"
+                        className="flex items-center justify-center gap-2 px-6 py-3 bg-[#141414] text-[#FBF7EF] rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-xl disabled:opacity-50"
                     >
                         {generating ? <Loader2 className="w-4 h-4 animate-spin text-accent" /> : <Sparkles className="w-4 h-4 text-accent" />}
-                        {generating ? 'Drafting Brief...' : 'Synthesize Collection'}
+                        {generating ? 'Deconstructing...' : 'Synthesize Answer'}
                     </button>
                 )}
             </div>
 
-            <div className="p-8">
+            <div className="p-6 md:p-8">
                 {error && (
                     <div className="flex items-center gap-3 p-4 bg-red-50 text-red-600 rounded-2xl border border-red-100 mb-6">
                         <AlertCircle className="w-5 h-5" />
@@ -60,31 +100,67 @@ export default function BriefGenerator({ boardId, boardName }: BriefGeneratorPro
                     </div>
                 )}
 
-                {brief ? (
-                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <div className="prose prose-sm max-w-none prose-headings:font-light prose-headings:uppercase prose-headings:tracking-tight prose-p:text-[#6B6B6B] prose-li:text-[#6B6B6B]">
+                {viewingPrototype && prototype ? (
+                    <StrategicPrototypeView prototype={prototype} onClose={() => setViewingPrototype(false)} />
+                ) : brief ? (
+                    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        {competitorAd && visualMirrorData && (
+                            <VisualMirror
+                                competitorImage={competitorAd.media_url}
+                                competitorLabel={competitorAd.brand || competitorAd.digest?.meta?.brand_guess || 'Competitor Asset'}
+                                directiveTitle={visualMirrorData.title}
+                                directiveText={visualMirrorData.directive}
+                                rationale={visualMirrorData.rationale}
+                            />
+                        )}
+                        <div className="prose prose-sm max-w-none prose-headings:font-light prose-headings:uppercase prose-headings:tracking-tight prose-p:text-[#6B6B6B] prose-li:text-[#6B6B6B] prose-strong:text-[#141414]">
                             <ReactMarkdown>{brief}</ReactMarkdown>
                         </div>
-                        <div className="pt-8 border-t border-[#E7DED1] flex items-center justify-between">
-                            <div className="flex items-center gap-2 text-green-600">
-                                <CheckCircle2 className="w-4 h-4" />
-                                <span className="text-[10px] font-bold uppercase tracking-widest">Brief Ready</span>
+                        {!isShared && (
+                            <div className="pt-8 border-t border-[#E7DED1] flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-2 text-green-600">
+                                        <CheckCircle2 className="w-4 h-4" />
+                                        <span className="text-[10px] font-bold uppercase tracking-widest">Synthesis Complete</span>
+                                    </div>
+                                    <button
+                                        onClick={generatePrototype}
+                                        disabled={prototyping}
+                                        className="flex items-center gap-2 px-6 py-2.5 bg-accent text-[#141414] rounded-xl text-[9px] font-bold uppercase tracking-widest hover:brightness-105 transition-all shadow-lg shadow-accent/20 disabled:opacity-50 group"
+                                    >
+                                        {prototyping ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Wand2 className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform" />}
+                                        {prototyping ? 'Prototyping...' : 'The Remix (Prototype)'}
+                                    </button>
+                                </div>
+                                <button
+                                    onClick={() => setBrief(null)}
+                                    className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest hover:text-[#141414] transition-colors"
+                                >
+                                    Re-Synthesize
+                                </button>
                             </div>
-                            <button
-                                onClick={() => setBrief(null)}
-                                className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest hover:text-[#141414] transition-colors"
-                            >
-                                Re-generate
-                            </button>
-                        </div>
+                        )}
+                        {prototype && !viewingPrototype && !isShared && (
+                            <div className="pt-4 text-center">
+                                <button
+                                    onClick={() => setViewingPrototype(true)}
+                                    className="text-[10px] font-bold text-accent uppercase tracking-widest hover:brightness-110 transition-all border-b border-accent/20 pb-1"
+                                >
+                                    View Latest Prototype Draft
+                                </button>
+                            </div>
+                        )}
                     </div>
                 ) : !generating ? (
                     <div className="py-20 text-center space-y-4">
                         <div className="w-16 h-16 bg-[#FBF7EF] rounded-3xl flex items-center justify-center mx-auto border border-[#E7DED1]">
-                            <FileText className="w-6 h-6 text-[#6B6B6B] opacity-40" />
+                            <Sparkles className="w-6 h-6 text-[#6B6B6B] opacity-40" />
                         </div>
-                        <p className="text-xs text-[#6B6B6B] max-w-sm mx-auto leading-relaxed">
-                            Synthesize this collection into a structured brief. Our models will account for **narrative hook architecture** and **competitor pattern shifts** detected across the board.
+                        <p className="text-xs text-[#6B6B6B] max-w-sm mx-auto leading-relaxed uppercase font-bold tracking-widest opacity-60">
+                            Neural deconstruction active.
+                        </p>
+                        <p className="text-[11px] text-[#6B6B6B] max-w-xs mx-auto leading-relaxed">
+                            Provide the **Client Brief** in the adjacent panel. Our engine will synthesize it against the competitive collection to find your "White Space" strategy.
                         </p>
                     </div>
                 ) : (
@@ -95,7 +171,7 @@ export default function BriefGenerator({ boardId, boardName }: BriefGeneratorPro
                             ))}
                         </div>
                         <p className="text-[10px] font-bold text-[#141414] uppercase tracking-widest animate-pulse">
-                            Synthesizing Strategic Patterns...
+                            Cross-Referencing Brief vs Competitors...
                         </p>
                     </div>
                 )}

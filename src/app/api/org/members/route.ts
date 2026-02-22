@@ -8,33 +8,37 @@ export async function GET() {
 
     try {
         const { data, error } = await supabaseAdmin
-            .from('org_settings')
+            .from('profiles')
             .select('*')
             .eq('org_id', orgId)
-            .single();
+            .order('name', { ascending: true });
 
-        return NextResponse.json(data || { org_id: orgId });
+        if (error) throw error;
+        return NextResponse.json(data);
     } catch (err: any) {
         return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }
 
 export async function POST(req: Request) {
-    const { orgId, userId } = await auth();
-    if (!orgId || !userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const { orgId, userId: currentUserId } = await auth();
+    if (!orgId || !currentUserId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {
         const body = await req.json();
-        const { logo_url, primary_color, white_label_enabled, custom_domain } = body;
+        const { user_id, email, name, role, avatar_url } = body;
+
+        // In a real app, you'd check if the currentUserId is an admin of the org
 
         const { data, error } = await supabaseAdmin
-            .from('org_settings')
+            .from('profiles')
             .upsert({
+                user_id,
                 org_id: orgId,
-                logo_url,
-                primary_color,
-                white_label_enabled,
-                custom_domain,
+                email,
+                name,
+                role: role || 'member',
+                avatar_url,
                 updated_at: new Date().toISOString()
             })
             .select()

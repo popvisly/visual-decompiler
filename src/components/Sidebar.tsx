@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { getAllBrands } from '@/lib/brands';
 import Filters from './Filters';
 import { auth } from '@clerk/nextjs/server';
-import { Settings, Globe, Activity, Zap } from 'lucide-react';
+import { Settings, Globe, Activity, Zap, Compass, Share2 } from 'lucide-react';
+import NotificationBell from './NotificationBell';
 
 export default async function Sidebar({ searchParams }: { searchParams: any }) {
     const { userId } = await auth();
@@ -12,79 +13,79 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
     const topBrands = brands.slice(0, 10);
 
     return (
-        <aside className="w-full md:w-64 shrink-0 flex flex-col gap-10 sticky top-[104px] self-start max-h-[calc(100vh-120px)] overflow-y-auto hidden-scrollbar pb-10">
-            {/* Context Header (Mobile only or hidden) */}
-            <div className="md:hidden mb-4">
-                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em]">Navigation</p>
+        <aside className="w-full md:w-64 shrink-0 flex flex-col gap-12 sticky top-[104px] self-start max-h-[calc(100vh-120px)] overflow-y-auto hidden-scrollbar pb-10 pr-2">
+            {/* Context Header (Mobile only) */}
+            <div className="md:hidden mb-6">
+                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.3em]">Strategic Menu</p>
             </div>
 
             {/* Strategic Filters Section */}
             <div>
-                <p className="text-[#141414] text-[10px] font-bold uppercase tracking-[0.15em] mb-4">Strategic Filters</p>
-                <div className="bg-white rounded-2xl p-5 border border-[#E7DED1] shadow-[0_10px_40px_rgba(20,20,20,0.04)]">
+                <p className="text-[#141414] text-[11px] font-bold uppercase tracking-[0.3em] mb-6 pl-1 border-l-2 border-accent">Filtering Logic</p>
+                <div className="bg-white rounded-[2rem] p-6 border border-[#E7DED1] shadow-[0_10px_40px_rgba(20,20,20,0.02)]">
                     <Filters currentFilters={searchParams} />
                 </div>
             </div>
 
             {/* Market Pulse / Brands Section */}
             <div>
-                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-4">Market Pulse <span className="text-[8px] opacity-40 ml-2 font-mono tracking-widest">/ TOP COMPETITORS</span></p>
+                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.3em] mb-6 flex items-center justify-between">
+                    Market Pulse
+                    <span className="text-[8px] opacity-30 font-mono tracking-[0.2em]">/ TOP 10</span>
+                </p>
                 <div className="space-y-1">
                     {topBrands.length > 0 ? topBrands.map((brand) => (
                         <Link
                             key={brand.name}
                             href={`/dashboard/brand/${encodeURIComponent(brand.name)}`}
-                            className="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-[#FBF7EF] border border-transparent hover:border-[#E7DED1] group transition-all"
+                            className="flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-white border border-transparent hover:border-[#E7DED1] group transition-all duration-300 hover:shadow-lg hover:shadow-black/[0.01]"
                         >
-                            <span className="text-[12px] font-medium text-[#6B6B6B] group-hover:text-[#141414] transition-colors truncate max-w-[140px]">
+                            <span className="text-[12px] font-bold text-[#6B6B6B] group-hover:text-[#141414] transition-colors truncate max-w-[140px] uppercase tracking-tight">
                                 {brand.name}
                             </span>
-                            <span className="text-[10px] font-mono text-[#6B6B6B]/40 group-hover:text-[#141414]/60">
+                            <span className="text-[10px] font-mono text-[#6B6B6B]/40 group-hover:text-accent font-bold">
                                 {String(brand.count).padStart(2, '0')}
                             </span>
                         </Link>
                     )) : (
-                        <p className="text-[10px] text-[#6B6B6B]/60 italic px-3">Initializing market index...</p>
+                        <p className="text-[10px] text-[#6B6B6B]/60 italic px-4 uppercase tracking-widest">Hydrating index...</p>
                     )}
                 </div>
             </div>
 
             {/* Quick Links */}
-            <div className="pt-4 border-t border-[#E7DED1] space-y-1">
+            <div className="pt-8 border-t border-[#E7DED1] space-y-2">
+                <div className="flex items-center justify-between px-1 mb-4">
+                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.3em] italic">Intelligence</p>
+                    <NotificationBell />
+                </div>
                 <Link
                     href="/dashboard/analytics"
-                    className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] transition-all"
+                    className="flex items-center gap-3 px-4 py-3 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] hover:bg-white rounded-2xl border border-transparent hover:border-[#E7DED1] uppercase tracking-[0.3em] transition-all group"
                 >
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#141414] animate-pulse" />
-                    Global Intelligence
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#141414] animate-pulse group-hover:scale-125 transition-transform" />
+                    Global Meta
                 </Link>
                 <Link
                     href="/dashboard/pulse"
-                    className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] transition-all"
+                    className="flex items-center gap-3 px-4 py-3 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] hover:bg-white rounded-2xl border border-transparent hover:border-[#E7DED1] uppercase tracking-[0.3em] transition-all group"
                 >
-                    <Activity className="w-3.5 h-3.5 text-accent" />
-                    Market Pulse
+                    <Activity className="w-4 h-4 text-accent transition-transform group-hover:rotate-12" />
+                    Strategic Pulse
                 </Link>
                 <Link
                     href="/dashboard/discovery"
-                    className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] transition-all"
+                    className="flex items-center gap-3 px-4 py-3 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] hover:bg-white rounded-2xl border border-transparent hover:border-[#E7DED1] uppercase tracking-[0.3em] transition-all group"
                 >
-                    <Globe className="w-3.5 h-3.5 text-blue-500" />
-                    Global Discovery
-                </Link>
-                <Link
-                    href="/dashboard/compare"
-                    className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] transition-all"
-                >
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent/40" />
-                    Strategy Comparison
+                    <Compass className="w-4 h-4 text-[#6B6B6B]/40 group-hover:text-[#141414] transition-colors" />
+                    Discovery
                 </Link>
                 <Link
                     href="/dashboard/settings"
-                    className="flex items-center gap-2 px-3 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] transition-all"
+                    className="flex items-center gap-3 px-4 py-3 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] hover:bg-white rounded-2xl border border-transparent hover:border-[#E7DED1] uppercase tracking-[0.3em] transition-all group"
                 >
-                    <Settings className="w-3.5 h-3.5" />
-                    Branding Settings
+                    <Settings className="w-4 h-4 text-[#6B6B6B]/40 group-hover:text-[#141414] transition-colors" />
+                    Settings
                 </Link>
             </div>
         </aside>

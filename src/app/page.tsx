@@ -1,6 +1,7 @@
 import Nav from '@/components/marketing/Nav';
 import Hero from '@/components/marketing/Hero';
 import DecompilePipeline from '@/components/marketing/DecompilePipeline';
+import StrategicLaboratory from '@/components/marketing/StrategicLaboratory';
 import CaseStudyFashion from '@/components/marketing/CaseStudyFashion';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 import { Pill, PreviewCard, CaseCard } from '@/types/homepage';
@@ -62,6 +63,7 @@ export default function HomePage() {
         <main className="bg-[#F6F1E7]">
             <Nav />
 
+            {/* ... Hero and DecompilePipeline ... */}
             <Hero
                 headline={["Advertising intelligence.", "Decompiled."]}
                 subhead="Drop any ad. Our system reconstructs the persuasion architecture—mechanics, cues, and leverage points."
@@ -76,6 +78,8 @@ export default function HomePage() {
                 pills={PILLS}
                 reportPreviewCards={REPORT_PREVIEW}
             />
+
+            <StrategicLaboratory />
 
             <CaseStudyFashion
                 id="case-study"

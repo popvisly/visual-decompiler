@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { extractKeyframes, cleanupFrames, extractAudio } from '@/lib/video';
 import { decompileAd, VisionInput, transcribeAudio } from '@/lib/vision';
+import { DeepAuditService } from '@/lib/deep_audit';
 import { AdDigestSchema } from '@/types/digest';
 import { hashFile } from '@/lib/hashing';
 import { generateEmbedding } from '@/lib/embeddings';
@@ -258,6 +259,26 @@ export async function POST(req: Request) {
 
                 results.push({ id: job.id, status: finalStatus });
                 console.log(`[Worker Job ${job.id}] Completed: ${finalStatus}`);
+
+                // 6.7 Persist Deep Audit Hooks (Milestone 24)
+                if (finalStatus === 'processed') {
+                    console.log(`[Worker Job ${job.id}] Persisting Deep Audit forensic hooks...`);
+                    const auditResult = DeepAuditService.perform(rawDigest);
+
+                    const hooksToInsert = [
+                        { ad_id: job.id, hook_type: 'pacing', intelligence_data: auditResult.pacing },
+                        { ad_id: job.id, hook_type: 'color', intelligence_data: auditResult.color },
+                        { ad_id: job.id, hook_type: 'semiotics', intelligence_data: auditResult.semiotics }
+                    ];
+
+                    const { error: hookError } = await supabaseAdmin
+                        .from('deep_hooks')
+                        .insert(hooksToInsert);
+
+                    if (hookError) {
+                        console.error(`[Worker Job ${job.id}] Failed to persist deep hooks:`, hookError);
+                    }
+                }
 
                 // 7. Dispatch Webhooks (Milestone 13)
                 if (finalStatus === 'processed') {

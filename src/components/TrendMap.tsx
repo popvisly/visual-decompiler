@@ -10,9 +10,10 @@ interface TrendPoint {
 interface TrendMapProps {
     data: TrendPoint[];
     category: string;
+    surge?: { trigger: string; increase: number };
 }
 
-export default function TrendMap({ data, category }: TrendMapProps) {
+export default function TrendMap({ data, category, surge }: TrendMapProps) {
     if (!data || data.length < 2) return null;
 
     // Get all unique triggers in the data
@@ -93,7 +94,13 @@ export default function TrendMap({ data, category }: TrendMapProps) {
                     <TrendingUp className="w-4 h-4 text-accent" />
                 </div>
                 <p className="text-[11px] text-[#6B6B6B] leading-relaxed">
-                    Detected a <span className="text-[#141414] font-bold">+12% surge</span> in <span className="underline decoration-accent underline-offset-4">FOMO_Scarcity</span> tactics across the {category} category in the last 7 days.
+                    {surge ? (
+                        <>
+                            Detected a <span className="text-[#141414] font-bold">+{surge.increase}% surge</span> in <span className="underline decoration-accent underline-offset-4">{surge.trigger.replace('_', ' ')}</span> tactics across the {category} category in the last period.
+                        </>
+                    ) : (
+                        <>Steady strategic distribution across the {category} category with no major shifts detected.</>
+                    )}
                 </p>
             </div>
         </div>
