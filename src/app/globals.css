@@ -348,6 +348,14 @@
     --confidence-high: #00b85e;
     --confidence-mid: #ffd740;
     --confidence-low: #ff5252;
+
+    /* Big Type System */
+    --headline-xs: 2.5rem;
+    --headline-sm: 3.5rem;
+    --headline-md: 5rem;
+    --headline-lg: 7.5rem;
+    --headline-xl: 10rem;
+    --headline-vw: 12vw;
 }
 
 body {
@@ -441,4 +449,54 @@ select.styled-select {
     background-position: right 12px center;
     background-size: 14px;
     padding-right: 36px;
+}
+
+/* ══════════════════════════════════════════════
+   BIG TYPE UTILITIES — Luxury Agency Feel
+   ══════════════════════════════════════════════ */
+
+.text-massive {
+    font-size: var(--headline-vw);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-weight: 600;
+}
+
+.text-headline-xl {
+    font-size: var(--headline-xl);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    font-weight: 600;
+}
+
+.text-headline-lg {
+    font-size: var(--headline-lg);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+}
+
+.text-luxury-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.tracking-luxury {
+    letter-spacing: -0.03em;
+}
+
+.leading-tightest {
+    line-height: 0.95;
+}
+
+/* Fluid reveal animations */
+.reveal-text {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.reveal-text>span {
+    display: inline-block;
 }

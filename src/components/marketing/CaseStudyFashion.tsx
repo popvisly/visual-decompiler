@@ -12,76 +12,78 @@ type Props = {
 
 export default function CaseStudyFashion({ id, label, title, body, stageImage, cards, cta }: Props) {
     return (
-        <section id={id} className="relative bg-[#FBF7EF] text-[#141414] py-32 overflow-hidden border-t border-[#E7DED1]">
+        <section id={id} className="relative bg-[#FBF7EF] text-[#141414] py-32 md:py-48 overflow-hidden border-t border-[#E7DED1]">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* Header Section */}
-                <div className="max-w-3xl mb-16">
-                    <p className="text-[11px] font-semibold tracking-[0.18em] text-[#6B6B6B] uppercase mb-4">
+                <div className="max-w-5xl mb-24 md:mb-32">
+                    <p className="text-luxury-label mb-8">
                         {label}
                     </p>
-                    <h2 className="text-4xl md:text-5xl font-semibold leading-[1.1] tracking-[-0.02em] mb-6">
-                        {title}
+                    <h2 className="text-[10vw] md:text-[84px] lg:text-[110px] font-semibold leading-[0.95] tracking-luxury uppercase mb-10">
+                        Sell restraint.<br />
+                        <span className="text-[#6B6B6B]/40">Aggressive mechanics.</span>
                     </h2>
-                    <p className="text-lg text-[#141414]/75 leading-[1.6]">
+                    <p className="text-[19px] md:text-[24px] text-[#141414]/70 leading-[1.3] max-w-3xl font-medium tracking-tight">
                         {body}
                     </p>
                 </div>
 
                 {/* Layout Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-16 lg:gap-24 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_600px] gap-16 lg:gap-32 items-start">
 
-                    {/* Left: Ad Tile */}
-                    <div className="relative w-full aspect-[4/5] rounded-[20px] overflow-hidden border border-[#E7DED1] shadow-[0_20px_60px_rgba(20,20,20,0.08)] bg-white">
-                        <img src={stageImage.src} alt={stageImage.alt} className="w-full h-full object-cover" />
-                    </div>
-
-                    {/* Right: Swiss Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Left: Swiss Cards (Aggressive Type) */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                         {cards.map((card, idx) => (
                             <div
                                 key={idx}
-                                className="rounded-2xl border border-[#E7DED1] bg-[#F6F1E7]/50 p-6 flex flex-col"
+                                className="group/card flex flex-col border-t border-[#141414]/5 pt-8"
                             >
-                                <div className="text-[11px] font-semibold tracking-[0.18em] text-[#6B6B6B] uppercase mb-3">
+                                <div className="text-[10px] font-bold tracking-[0.3em] text-[#6B6B6B]/60 uppercase mb-4 transition-colors group-hover/card:text-[#141414]">
                                     {card.title}
                                 </div>
-                                <div className="text-[14px] leading-[1.4] text-[#141414] font-medium mb-6">
+                                <div className="text-[22px] md:text-[28px] leading-[1.1] text-[#141414] font-semibold tracking-tight mb-8 uppercase">
                                     {card.micro}
                                 </div>
 
                                 {card.evidence && (
-                                    <div className="mt-auto flex flex-wrap gap-2 pt-4 border-t border-[#E7DED1]">
+                                    <div className="flex flex-col gap-2">
                                         {card.evidence.map((ev, i) => (
-                                            <span
+                                            <div
                                                 key={i}
-                                                className="px-2.5 py-1 rounded-lg bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1]"
+                                                className="flex items-center gap-3 text-[11px] md:text-[12px] font-bold tracking-[0.05em] text-[#141414]/40 group-hover/card:text-[#141414] transition-colors uppercase"
                                             >
+                                                <div className="w-1.5 h-1.5 rounded-full bg-[#141414]/10 group-hover/card:bg-[#141414] transition-colors" />
                                                 {ev}
-                                            </span>
+                                            </div>
                                         ))}
                                     </div>
                                 )}
                             </div>
                         ))}
 
-                        {/* CTA cell */}
-                        <div className="md:col-span-2 pt-8 flex justify-end">
+                        {/* CTA link cell */}
+                        <div className="md:col-span-2 pt-12">
                             <a
                                 href={cta.href}
                                 className="
-                                    inline-flex items-center justify-center
-                                    rounded-full border border-[#E7DED1]
-                                    bg-[#FBF7EF]
-                                    px-6 py-2.5
-                                    text-[13px] font-medium tracking-[-0.01em] text-[#141414]
-                                    shadow-sm transition-all hover:-translate-y-[1px] hover:border-[#D8CCBC] hover:shadow-md
+                                    inline-flex items-center gap-4
+                                    text-[14px] font-bold text-[#141414] transition-all
+                                    uppercase tracking-[0.2em] group
                                 "
                             >
-                                {cta.label} &rarr;
+                                {cta.label}
+                                <span className="transition-transform group-hover:translate-x-2">&rarr;</span>
                             </a>
                         </div>
                     </div>
+
+                    {/* Right: Massive Ad Feature */}
+                    <div className="relative sticky top-32 w-full aspect-[4/5] rounded-[32px] overflow-hidden border border-[#E7DED1] shadow-[0_40px_120px_rgba(20,20,20,0.12)] bg-[#FBF7EF]">
+                        <img src={stageImage.src} alt={stageImage.alt} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/10 to-transparent" />
+                    </div>
+
                 </div>
 
             </div>

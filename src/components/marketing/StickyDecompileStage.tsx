@@ -68,23 +68,32 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
                 <div className="relative w-full max-w-7xl mx-auto px-6 h-full flex items-center justify-center">
 
                     {/* Stage Labels (Absolute Top Left) */}
-                    <div className="absolute top-32 left-4 md:left-8 xl:left-20 z-40">
+                    <div className="absolute top-48 left-6 md:left-12 xl:left-24 z-40 max-w-xl">
                         {/* INPUT Label */}
-                        <motion.div style={{ opacity: inputOpacity }} className="absolute top-0 left-0 w-64">
-                            <h3 className="text-[11px] font-semibold tracking-[0.18em] text-[#6B6B6B] uppercase mb-2">Input</h3>
-                            <p className="text-[20px] leading-[1.2] text-[#141414] font-medium tracking-tight">Single asset in.<br />Full reconstruction out.</p>
+                        <motion.div style={{ opacity: inputOpacity }} className="absolute top-0 left-0">
+                            <h3 className="text-luxury-label mb-6">Input</h3>
+                            <p className="text-[32px] md:text-[48px] xl:text-[64px] leading-[0.95] text-[#141414] font-semibold tracking-luxury uppercase">
+                                Single asset in.<br />
+                                <span className="text-[#6B6B6B]/40">Full reconstruction.</span>
+                            </p>
                         </motion.div>
 
                         {/* SIGNALS Label */}
-                        <motion.div style={{ opacity: signalsOpacity }} className="absolute top-0 left-0 w-64 pointer-events-none">
-                            <h3 className="text-[11px] font-semibold tracking-[0.18em] text-[#6B6B6B] uppercase mb-2">Signals</h3>
-                            <p className="text-[20px] leading-[1.2] text-[#141414] font-medium tracking-tight">Mechanics extracted.<br />Evidence attached.</p>
+                        <motion.div style={{ opacity: signalsOpacity }} className="absolute top-0 left-0 pointer-events-none">
+                            <h3 className="text-luxury-label mb-6">Signals</h3>
+                            <p className="text-[32px] md:text-[48px] xl:text-[64px] leading-[0.95] text-[#141414] font-semibold tracking-luxury uppercase">
+                                Mechanics extracted.<br />
+                                <span className="text-[#6B6B6B]/40">Evidence attached.</span>
+                            </p>
                         </motion.div>
 
                         {/* OUTPUT Label */}
-                        <motion.div style={{ opacity: outputOpacity }} className="absolute top-0 left-0 w-64 pointer-events-none">
-                            <h3 className="text-[11px] font-semibold tracking-[0.18em] text-[#6B6B6B] uppercase mb-2">Output</h3>
-                            <p className="text-[20px] leading-[1.2] text-[#141414] font-medium tracking-tight">A report you can<br />defend in a room.</p>
+                        <motion.div style={{ opacity: outputOpacity }} className="absolute top-0 left-0 pointer-events-none">
+                            <h3 className="text-luxury-label mb-6">Output</h3>
+                            <p className="text-[32px] md:text-[48px] xl:text-[64px] leading-[0.95] text-[#141414] font-semibold tracking-luxury uppercase">
+                                A report you can<br />
+                                <span className="text-[#6B6B6B]/40">defend in a room.</span>
+                            </p>
                         </motion.div>
                     </div>
 
@@ -141,17 +150,17 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
                                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
                                         >
                                             <button className="
-                                                inline-flex items-center gap-2 whitespace-nowrap
-                                                rounded-full border border-[#E7DED1]
-                                                bg-[#FBF7EF]/90 backdrop-blur
-                                                px-4 py-2
-                                                text-[13px] font-medium tracking-[-0.01em] text-[#141414]
-                                                shadow-[0_10px_30px_rgba(20,20,20,0.07)]
-                                                transition-all duration-300
-                                                hover:-translate-y-[1px]
-                                                hover:border-[#D8CCBC]
-                                                hover:shadow-[0_16px_40px_rgba(20,20,20,0.10)]
-                                                group-hover:border-[#CDBFAF] group-hover:bg-[#F2EBDD]
+                                                inline-flex items-center gap-3 whitespace-nowrap
+                                                rounded-full border border-[#141414]/10
+                                                bg-white/80 backdrop-blur-md
+                                                px-6 py-3
+                                                text-[14px] font-semibold tracking-[-0.02em] text-[#141414]
+                                                shadow-[0_8px_32px_rgba(20,20,20,0.04)]
+                                                transition-all duration-500
+                                                hover:-translate-y-1
+                                                hover:border-[#141414]
+                                                hover:bg-[#141414] hover:text-[#FBF7EF]
+                                                hover:shadow-[0_12px_48px_rgba(20,20,20,0.12)]
                                             ">
                                                 {pill.label}
                                             </button>
@@ -196,25 +205,29 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
                                 restDelta: 0.001
                             }}
                         >
-                            <div className="rounded-[24px] border border-[#E7DED1] bg-[#FBF7EF]/90 backdrop-blur-xl shadow-[0_30px_90px_rgba(20,20,20,0.14)] p-4 md:p-5 space-y-2 md:space-y-3 max-h-[70vh] overflow-y-auto dark-scroll">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="w-2 h-2 rounded-full bg-[#141414]" />
-                                    <span className="text-[10px] md:text-[11px] font-semibold tracking-[0.18em] text-[#6B6B6B] uppercase">Intelligence Report</span>
+                            <div className="rounded-[32px] border border-[#E7DED1] bg-[#FBF7EF]/95 backdrop-blur-2xl shadow-[0_40px_100px_rgba(20,20,20,0.16)] p-6 md:p-8 space-y-6 md:space-y-8 max-h-[75vh] overflow-y-auto dark-scroll">
+                                <div className="flex items-center justify-between items-start mb-2">
+                                    <div className="flex items-center gap-3">
+                                        <span className="w-2.5 h-2.5 rounded-full bg-[#141414]" />
+                                        <span className="text-luxury-label">Intelligence Report</span>
+                                    </div>
+                                    <span className="text-[10px] font-bold text-[#141414]/20 tabular-nums">V1.0.8</span>
                                 </div>
 
                                 {reportPreviewCards.map((card, i) => (
-                                    <div key={i} className="rounded-xl border border-[#E7DED1] bg-white p-3 md:p-4">
-                                        <h4 className="text-[12px] md:text-[13px] font-semibold text-[#141414] mb-0.5 md:mb-1">{card.title}</h4>
-                                        <p className="text-[11px] md:text-[12px] text-[#6B6B6B] leading-[1.3] mb-1.5 md:mb-2">{card.micro}</p>
+                                    <div key={i} className="group/card">
+                                        <h4 className="text-[20px] md:text-[24px] font-semibold text-[#141414] mb-2 tracking-tight leading-none uppercase">{card.title}</h4>
+                                        <p className="text-[13px] md:text-[14px] text-[#6B6B6B] leading-[1.4] mb-4 md:mb-6 max-w-[280px]">{card.micro}</p>
 
                                         {card.bullets && (
-                                            <ul className="space-y-0.5 md:space-y-1">
+                                            <div className="grid grid-cols-1 gap-2 border-t border-[#141414]/5 pt-4">
                                                 {card.bullets.map((b, bi) => (
-                                                    <li key={bi} className="text-[10px] md:text-[11px] text-[#141414]/80 flex gap-2">
-                                                        <span className="text-[#141414]/30">•</span> {b}
-                                                    </li>
+                                                    <div key={bi} className="text-[11px] md:text-[12px] font-medium text-[#141414] flex items-center gap-3">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-[#141414]/10 group-hover/card:bg-[#141414] transition-colors" />
+                                                        {b}
+                                                    </div>
                                                 ))}
-                                            </ul>
+                                            </div>
                                         )}
                                     </div>
                                 ))}
