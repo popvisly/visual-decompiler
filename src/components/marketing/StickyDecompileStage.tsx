@@ -68,7 +68,7 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
                 <div className="relative w-full max-w-7xl mx-auto px-6 h-full flex items-center justify-center">
 
                     {/* Stage Labels (Absolute Top Left) */}
-                    <div className="absolute top-10 left-4 md:left-8 xl:left-20 z-40">
+                    <div className="absolute top-32 left-4 md:left-8 xl:left-20 z-40">
                         {/* INPUT Label */}
                         <motion.div style={{ opacity: inputOpacity }} className="absolute top-0 left-0 w-64">
                             <h3 className="text-[11px] font-semibold tracking-[0.18em] text-[#6B6B6B] uppercase mb-2">Input</h3>
