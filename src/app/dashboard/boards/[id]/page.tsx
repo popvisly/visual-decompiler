@@ -9,6 +9,7 @@ import CopilotPanel from '@/components/CopilotPanel';
 import BenchmarkMap from '@/components/BenchmarkMap';
 import BriefGenerator from '@/components/BriefGenerator';
 import BriefIngest from '@/components/BriefIngest';
+import BoardPresentationTrigger from '@/components/BoardPresentationTrigger';
 import { AdDigest } from '@/types/digest';
 
 export const dynamic = 'force-dynamic';
@@ -89,10 +90,11 @@ export default async function BoardDetailPage({
 
                 <div className="flex gap-4 no-print">
                     <ShareBoard boardId={id} boardName={board.name} />
-                    <button className="flex items-center gap-3 px-8 py-4 bg-[#141414] text-[#FBF7EF] rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-2xl shadow-black/10 active:scale-95 group">
-                        <Play className="w-4 h-4 text-accent group-hover:scale-110 transition-transform" />
-                        Presentation
-                    </button>
+                    <BoardPresentationTrigger
+                        boardName={board.name}
+                        strategicAnswer={board.strategic_answer?.content || null}
+                        stats={userStats}
+                    />
                 </div>
             </div>
 
