@@ -27,7 +27,14 @@ export const getSupabaseAdmin = () => {
                     insert: () => ({ select: () => ({ single: () => Promise.resolve({ data: { id: null }, error: null }) }) }),
                     update: () => ({ eq: () => ({ select: () => ({ single: () => Promise.resolve({ data: null, error: null }) }) }) }),
                     delete: () => ({ eq: () => Promise.resolve({ error: null }) }),
+                    upload: () => Promise.resolve({ data: null, error: null }),
                 }),
+                storage: {
+                    from: () => ({
+                        upload: () => Promise.resolve({ data: null, error: null }),
+                        getPublicUrl: () => ({ data: { publicUrl: '' } }),
+                    }),
+                },
                 rpc: () => Promise.resolve({ data: [], error: null }),
             } as any;
         }

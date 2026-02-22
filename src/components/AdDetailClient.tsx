@@ -10,18 +10,22 @@ import VideoPins from '@/components/VideoPins';
 import AdShareButton from '@/components/AdShareButton';
 import DeepAuditView from '@/components/DeepAuditView';
 import { AdDigest } from '@/types/digest';
+import { ForecastingService } from '@/lib/forecasting';
 
 export default function AdDetailClient({
     ad,
     digest,
     relatedAds,
-    isShared = false
+    isShared = false,
+    pulseText
 }: {
     ad: any,
     digest: AdDigest,
     relatedAds: any[],
-    isShared?: boolean
+    isShared?: boolean,
+    pulseText?: string
 }) {
+    const forecasting = ForecastingService.analyzeAd(digest, pulseText || '');
     const [currentTimeMs, setCurrentTimeMs] = useState(0);
     const [roiPredict, setRoiPredict] = useState<any>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -198,6 +202,36 @@ export default function AdDetailClient({
                         <Sparkles className="w-5 h-5 text-accent" />
                         <h3 className="text-xs font-bold uppercase tracking-[0.4em] text-[#141414]">Technical Creative Forensics</h3>
                     </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                        <div className="p-8 bg-white border border-[#E7DED1] rounded-[2rem] shadow-sm">
+                            <h4 className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-4">Saturation Risk</h4>
+                            <div className="flex items-end gap-3 mb-4">
+                                <span className="text-5xl font-light text-[#141414] leading-none">{forecasting.saturationLevel}%</span>
+                                <span className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${forecasting.saturationLevel > 60 ? 'text-red-500' : 'text-green-600'}`}>
+                                    {forecasting.saturationLevel > 60 ? 'High Risk' : 'Healthy Space'}
+                                </span>
+                            </div>
+                            <div className="h-1.5 w-full bg-[#F6F1E7] rounded-full overflow-hidden">
+                                <div
+                                    className={`h-full transition-all duration-1000 ${forecasting.saturationLevel > 60 ? 'bg-red-500' : 'bg-accent'}`}
+                                    style={{ width: `${forecasting.saturationLevel}%` }}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="p-8 bg-white border border-[#E7DED1] rounded-[2rem] shadow-sm">
+                            <h4 className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-4">Predicted Lifespan</h4>
+                            <div className="flex items-end gap-3 mb-4">
+                                <span className="text-5xl font-light text-[#141414] leading-none">{forecasting.estimatedLifespanDays}</span>
+                                <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-1">Days Remaining</span>
+                            </div>
+                            <p className="text-[11px] text-[#6B6B6B] leading-relaxed">
+                                Expected performance decline after {forecasting.estimatedLifespanDays} days based on category momentum.
+                            </p>
+                        </div>
+                    </div>
+
                     <DeepAuditView digest={digest} />
                 </div>
             </div>

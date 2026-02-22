@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import { PrototypeService, StrategicPrototype } from '@/lib/prototype_service';
 import StrategicPrototypeView from '@/components/StrategicPrototype';
 import VisualMirror from '@/components/VisualMirror';
+import MarketVelocity from '@/components/MarketVelocity';
 
 interface BriefGeneratorProps {
     boardId: string;
@@ -34,6 +35,9 @@ export default function BriefGenerator({
     const [visualMirrorData, setVisualMirrorData] = useState<any>(
         typeof initialBrief === 'object' && initialBrief !== null ? initialBrief.visual_mirror : null
     );
+    const [forecastingData, setForecastingData] = useState<any>(
+        typeof initialBrief === 'object' && initialBrief !== null ? initialBrief.forecasting : null
+    );
     const [error, setError] = useState<string | null>(null);
     const [prototype, setPrototype] = useState<StrategicPrototype | null>(null);
     const [prototyping, setPrototyping] = useState(false);
@@ -52,6 +56,7 @@ export default function BriefGenerator({
             if (data.error) throw new Error(data.error);
             setBrief(data.brief);
             setVisualMirrorData(data.visualMirror);
+            setForecastingData(data.forecasting);
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -104,6 +109,10 @@ export default function BriefGenerator({
                     <StrategicPrototypeView prototype={prototype} onClose={() => setViewingPrototype(false)} />
                 ) : brief ? (
                     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        {forecastingData && (
+                            <MarketVelocity metrics={forecastingData} />
+                        )}
+
                         {competitorAd && visualMirrorData && (
                             <VisualMirror
                                 competitorImage={competitorAd.media_url}

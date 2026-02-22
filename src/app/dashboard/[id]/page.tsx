@@ -29,5 +29,18 @@ export default async function AdDetailPage({
     const digest = ad.digest as AdDigest;
     const relatedAds = await getRelatedAds(id, userId, 4, orgId);
 
-    return <AdDetailClient ad={ad} digest={digest} relatedAds={relatedAds} />;
+    // Fetch latest pulse for forecasting
+    const { data: latestPulse } = await supabaseAdmin
+        .from('pulse_reports')
+        .select('report_text')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+    return <AdDetailClient
+        ad={ad}
+        digest={digest}
+        relatedAds={relatedAds}
+        pulseText={latestPulse?.report_text || ''}
+    />;
 }

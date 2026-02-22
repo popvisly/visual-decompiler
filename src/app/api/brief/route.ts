@@ -3,6 +3,7 @@ import { auth } from '@clerk/nextjs/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { getOpenAI } from '@/lib/vision';
 import { VisualDNAService } from '@/lib/visual_dna';
+import { ForecastingService } from '@/lib/forecasting';
 import { extractKeyframes, cleanupFrames } from '@/lib/video';
 import fs from 'fs';
 import path from 'path';
@@ -89,6 +90,10 @@ Strategic Anomaly: ${ad.is_anomaly ? 'YES - Significant Pivot Detected' : 'No'}
             .limit(1)
             .single();
 
+        // 3.5 Run Forecasting Analysis
+        const pulseText = latestPulse?.report_text || '';
+        const forecasting = ForecastingService.analyze(ads.map((as: any) => as.digest), pulseText);
+
         // 4. Generate Neural Answer with GPT-4o
         const openai = getOpenAI();
         const response = await openai.chat.completions.create({
@@ -110,9 +115,16 @@ Strategic Anomaly: ${ad.is_anomaly ? 'YES - Significant Pivot Detected' : 'No'}
                     Instructions:
                     1. FIND THE GAP: Analyze where the competitive ads (provided as text data AND visual frames) are failing to address the objectives in the Client Brief.
                     2. VISUAL VERIFICATION: Use the provided images to verify the "Aesthetic DNA." If the metadata says "Minimalist" but you see "Chaotic," prioritize your visual observation.
-                    3. THE SYNTHETIC HOOK: Provide a mechanical, 3-second hook that beats current competitor patterns.
-                    4. VISUAL DNA DIRECTIVE: Give exact instructions on lenses, lighting, and motion (Visual DNA) to contrast or dominate the competitors.
-                    5. NARRATIVE ARCHITECTURE: Provide the exact 15-30s script framework based on deconstructed pattern mastery.
+                    3. MARKET FORECASTING: Use the provided Velocity Metrics to advise on timing. If saturation is over 70%, suggest a rapid pivot. If lifespan is > 100 days, suggest scaling.
+                    4. THE SYNTHETIC HOOK: Provide a mechanical, 3-second hook that beats current competitor patterns.
+                    5. VISUAL DNA DIRECTIVE: Give exact instructions on lenses, lighting, and motion (Visual DNA) to contrast or dominate the competitors.
+                    6. NARRATIVE ARCHITECTURE: Provide the exact 15-30s script framework based on deconstructed pattern mastery.
+
+                    Market Velocity Metrics for this Collection:
+                    - Saturation: ${forecasting.saturationLevel}%
+                    - Phase: ${forecasting.trendPhase}
+                    - Velocity: ${forecasting.marketVelocity}
+                    - Est. Lifespan: ${forecasting.estimatedLifespanDays} days
                     
                     OUTPUT FORMAT: Return a JSON object with:
                     - "brief": The Markdown strategic answer.
@@ -143,12 +155,13 @@ Strategic Anomaly: ${ad.is_anomaly ? 'YES - Significant Pivot Detected' : 'No'}
                     content: brief,
                     visual_mirror: visualMirror,
                     generated_at: new Date().toISOString(),
-                    visual_dna: visualDNAPatterns
+                    visual_dna: visualDNAPatterns,
+                    forecasting: forecasting
                 }
             })
             .eq('id', boardId);
 
-        return NextResponse.json({ brief, visualMirror });
+        return NextResponse.json({ brief, visualMirror, forecasting });
 
     } catch (err: any) {
         return NextResponse.json({ error: err.message }, { status: 500 });
