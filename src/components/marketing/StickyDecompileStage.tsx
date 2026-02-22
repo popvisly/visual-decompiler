@@ -179,46 +179,48 @@ export default function StickyDecompileStage({ id, stageImage, pills, reportPrev
                     </div>
 
                     {/* Report Panel Slide-in (Beat D) */}
-                    <motion.div
-                        className="absolute right-4 md:right-8 xl:right-16 top-1/2 -translate-y-1/2 w-[280px] md:w-[320px] xl:w-full xl:max-w-sm z-30"
-                        initial={false}
-                        animate={{
-                            opacity: reportVisible ? 1 : 0,
-                            x: reportVisible ? 0 : (shouldReduceMotion ? 0 : 48),
-                            filter: reportVisible ? "blur(0px)" : (shouldReduceMotion ? "blur(0px)" : "blur(6px)")
-                        }}
-                        transition={shouldReduceMotion ? { duration: 0.3 } : {
-                            type: "spring",
-                            stiffness: 120,
-                            damping: 18,
-                            mass: 0.8,
-                            restDelta: 0.001
-                        }}
-                    >
-                        <div className="rounded-[24px] border border-[#E7DED1] bg-[#FBF7EF]/90 backdrop-blur-xl shadow-[0_30px_90px_rgba(20,20,20,0.14)] p-4 md:p-5 space-y-2 md:space-y-3 max-h-[78vh] overflow-y-auto hidden-scrollbar">
-                            <div className="flex items-center gap-2 mb-1">
-                                <span className="w-2 h-2 rounded-full bg-[#141414]" />
-                                <span className="text-[10px] md:text-[11px] font-semibold tracking-[0.18em] text-[#6B6B6B] uppercase">Intelligence Report</span>
-                            </div>
-
-                            {reportPreviewCards.map((card, i) => (
-                                <div key={i} className="rounded-xl border border-[#E7DED1] bg-white p-3 md:p-4">
-                                    <h4 className="text-[12px] md:text-[13px] font-semibold text-[#141414] mb-0.5 md:mb-1">{card.title}</h4>
-                                    <p className="text-[11px] md:text-[12px] text-[#6B6B6B] leading-[1.3] mb-1.5 md:mb-2">{card.micro}</p>
-
-                                    {card.bullets && (
-                                        <ul className="space-y-0.5 md:space-y-1">
-                                            {card.bullets.map((b, bi) => (
-                                                <li key={bi} className="text-[10px] md:text-[11px] text-[#141414]/80 flex gap-2">
-                                                    <span className="text-[#141414]/30">•</span> {b}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
+                    <div className="absolute inset-y-0 right-4 md:right-8 xl:right-16 flex items-center pointer-events-none z-30">
+                        <motion.div
+                            className="w-[280px] md:w-[320px] xl:w-full xl:max-w-sm pointer-events-auto"
+                            initial={false}
+                            animate={{
+                                opacity: reportVisible ? 1 : 0,
+                                x: reportVisible ? 0 : (shouldReduceMotion ? 0 : 48),
+                                filter: reportVisible ? "blur(0px)" : (shouldReduceMotion ? "blur(0px)" : "blur(6px)")
+                            }}
+                            transition={shouldReduceMotion ? { duration: 0.3 } : {
+                                type: "spring",
+                                stiffness: 120,
+                                damping: 18,
+                                mass: 0.8,
+                                restDelta: 0.001
+                            }}
+                        >
+                            <div className="rounded-[24px] border border-[#E7DED1] bg-[#FBF7EF]/90 backdrop-blur-xl shadow-[0_30px_90px_rgba(20,20,20,0.14)] p-4 md:p-5 space-y-2 md:space-y-3 max-h-[70vh] overflow-y-auto dark-scroll">
+                                <div className="flex items-center gap-2 mb-1">
+                                    <span className="w-2 h-2 rounded-full bg-[#141414]" />
+                                    <span className="text-[10px] md:text-[11px] font-semibold tracking-[0.18em] text-[#6B6B6B] uppercase">Intelligence Report</span>
                                 </div>
-                            ))}
-                        </div>
-                    </motion.div>
+
+                                {reportPreviewCards.map((card, i) => (
+                                    <div key={i} className="rounded-xl border border-[#E7DED1] bg-white p-3 md:p-4">
+                                        <h4 className="text-[12px] md:text-[13px] font-semibold text-[#141414] mb-0.5 md:mb-1">{card.title}</h4>
+                                        <p className="text-[11px] md:text-[12px] text-[#6B6B6B] leading-[1.3] mb-1.5 md:mb-2">{card.micro}</p>
+
+                                        {card.bullets && (
+                                            <ul className="space-y-0.5 md:space-y-1">
+                                                {card.bullets.map((b, bi) => (
+                                                    <li key={bi} className="text-[10px] md:text-[11px] text-[#141414]/80 flex gap-2">
+                                                        <span className="text-[#141414]/30">•</span> {b}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+                    </div>
 
                 </div>
             </div>
