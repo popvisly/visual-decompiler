@@ -6,6 +6,7 @@ import { DeepAuditService } from '@/lib/deep_audit';
 import { AdDigestSchema } from '@/types/digest';
 import { hashFile } from '@/lib/hashing';
 import { generateEmbedding } from '@/lib/embeddings';
+import { RoutingService } from '@/lib/routing_service';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
@@ -226,7 +227,7 @@ export async function POST(req: Request) {
                         const baselineSum = new Array(embedding.length).fill(0);
                         baselineAds.forEach((b: any) => {
                             const vec = typeof b.embedding === 'string'
-                                ? JSON.parse(b.embedding.replace('[', '').replace(']', '').split(','))
+                                ? b.embedding.replace('[', '').replace(']', '').split(',').map(Number)
                                 : b.embedding;
                             vec.forEach((val: number, i: number) => baselineSum[i] += val);
                         });
@@ -240,6 +241,13 @@ export async function POST(req: Request) {
                             isAnomaly = true;
                             anomalyReason = `Strategic pivot detected: Creative distance ${anomalyScore.toFixed(2)} from brand baseline.`;
                             console.log(`[Worker Job ${job.id}] 🚨 PATTERN SHIFT DETECTED for ${brand}. Score: ${anomalyScore.toFixed(2)}`);
+
+                            // Milestone 33: Advanced Anomaly Routing
+                            await RoutingService.routeAnomaly(job.id, {
+                                dimension: 'general', // In future, extract specific dimension from embedding delta
+                                type: 'Pattern Shift',
+                                severity: anomalyScore > 0.5 ? 'critical' : 'warning'
+                            });
                         }
                     }
                 }

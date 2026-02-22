@@ -8,9 +8,10 @@ interface Props {
     boardName: string;
     strategicAnswer: string | null;
     stats: any[];
+    sentiment: any;
 }
 
-export default function BoardPresentationTrigger({ boardName, strategicAnswer, stats }: Props) {
+export default function BoardPresentationTrigger({ boardName, strategicAnswer, stats, sentiment }: Props) {
     const [showPresentation, setShowPresentation] = useState(false);
 
     if (!strategicAnswer) return null;
@@ -30,6 +31,7 @@ export default function BoardPresentationTrigger({ boardName, strategicAnswer, s
                     boardName={boardName}
                     strategicAnswer={strategicAnswer}
                     stats={stats}
+                    sentiment={sentiment}
                     onClose={() => setShowPresentation(false)}
                 />
             )}

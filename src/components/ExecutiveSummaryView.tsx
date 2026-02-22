@@ -8,10 +8,11 @@ interface Props {
     boardName: string;
     strategicAnswer: string;
     stats: any[];
+    sentiment: any;
     onClose: () => void;
 }
 
-export default function ExecutiveSummaryView({ boardName, strategicAnswer, stats, onClose }: Props) {
+export default function ExecutiveSummaryView({ boardName, strategicAnswer, stats, sentiment, onClose }: Props) {
     const [summary, setSummary] = useState<ExecutiveSummary | null>(null);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -22,7 +23,7 @@ export default function ExecutiveSummaryView({ boardName, strategicAnswer, stats
                 const res = await fetch('/api/summarize', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ boardName, strategicAnswer, stats })
+                    body: JSON.stringify({ boardName, strategicAnswer, stats, sentiment })
                 });
                 const data = await res.json();
                 setSummary(data);
@@ -133,6 +134,25 @@ export default function ExecutiveSummaryView({ boardName, strategicAnswer, stats
                             <h1 className="text-5xl md:text-[5vw] font-light text-white leading-[1.1] tracking-tight italic border-l-[3px] md:border-l-[6px] border-accent pl-12 md:pl-20 py-4 max-w-5xl">
                                 "{slide.content}"
                             </h1>
+                        </div>
+                    ) : slide.type === 'sentiment' ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32 items-center">
+                            <div className="space-y-12">
+                                <h1 className="text-7xl md:text-[6vw] font-light text-white leading-[0.9] tracking-tightest uppercase">
+                                    Audience<br />Impact<br /><span className="text-accent underline decoration-white/10 underline-offset-8">Resonance</span>
+                                </h1>
+                                <p className="text-xl md:text-2xl font-light text-white/50 tracking-tight leading-relaxed italic">
+                                    "{slide.content}"
+                                </p>
+                            </div>
+                            <div className="grid grid-cols-1 gap-8 md:gap-12">
+                                {slide.metrics?.map((m, idx) => (
+                                    <div key={idx} className="border-l-2 border-accent pl-8 py-2 group hover:bg-white/5 transition-colors rounded-r-2xl">
+                                        <p className="text-5xl md:text-[3vw] font-light text-white leading-none mb-4">{m.value}</p>
+                                        <p className="text-[10px] md:text-[12px] font-bold text-accent uppercase tracking-[0.4em]">{m.label}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     ) : (
                         <div className="text-center space-y-16">

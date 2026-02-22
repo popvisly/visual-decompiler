@@ -11,6 +11,8 @@ import BriefGenerator from '@/components/BriefGenerator';
 import BriefIngest from '@/components/BriefIngest';
 import BoardPresentationTrigger from '@/components/BoardPresentationTrigger';
 import { AdDigest } from '@/types/digest';
+import CategoryBenchmark from '@/components/CategoryBenchmark';
+import StressTestPanel from '@/components/StressTestPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -94,22 +96,22 @@ export default async function BoardDetailPage({
                         boardName={board.name}
                         strategicAnswer={board.strategic_answer?.content || null}
                         stats={userStats}
+                        sentiment={board.strategic_answer?.sentiment || null}
                     />
                 </div>
             </div>
 
+
             {boardAds.length > 0 && (
-                <section className="bg-white p-16 rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
-                    <div className="flex items-center gap-3 mb-12">
-                        <Sparkles className="w-5 h-5 text-accent" />
-                        <span className="text-[11px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em]">Comparative Logic Mapping</span>
-                    </div>
-                    <BenchmarkMap
-                        category={primaryCategory}
-                        userStats={userStats}
-                        categoryAverages={categoryAverages}
-                    />
-                </section>
+                <>
+                    <section className="bg-white p-16 rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
+                        <CategoryBenchmark boardId={id} />
+                    </section>
+
+                    <section className="bg-white p-16 rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
+                        <StressTestPanel boardId={id} />
+                    </section>
+                </>
             )}
 
             <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
@@ -121,6 +123,7 @@ export default async function BoardDetailPage({
                     boardId={id}
                     boardName={board.name}
                     initialBrief={board.strategic_answer || board.last_brief}
+                    initialWhitePaper={board.white_paper}
                     sampleAd={boardItems?.[0]?.ad_digests}
                 />
             </section>

@@ -128,7 +128,12 @@ Strategic Anomaly: ${ad.is_anomaly ? 'YES - Significant Pivot Detected' : 'No'}
                     
                     OUTPUT FORMAT: Return a JSON object with:
                     - "brief": The Markdown strategic answer.
-                    - "visual_mirror": { "title": string, "directive": string, "rationale": string } based on the most significant visual contrast detected.`
+                    - "visual_mirror": { "title": string, "directive": string, "rationale": string } based on the most significant visual contrast detected.
+                    - "sentiment": {
+                        "metrics": [{ "label": string, "score": number, "resonance": "High" | "Medium" | "Low", "description": string }],
+                        "psychologicalFootprint": string,
+                        "alignmentScore": number
+                    }`
                 },
                 {
                     role: 'user',
@@ -146,6 +151,7 @@ Strategic Anomaly: ${ad.is_anomaly ? 'YES - Significant Pivot Detected' : 'No'}
         const result = JSON.parse(response.choices[0].message.content || '{}');
         const brief = result.brief;
         const visualMirror = result.visual_mirror;
+        const sentiment = result.sentiment;
 
         // 5. Persist the Strategic Answer for Shared Portal access
         await supabaseAdmin
@@ -156,12 +162,13 @@ Strategic Anomaly: ${ad.is_anomaly ? 'YES - Significant Pivot Detected' : 'No'}
                     visual_mirror: visualMirror,
                     generated_at: new Date().toISOString(),
                     visual_dna: visualDNAPatterns,
-                    forecasting: forecasting
+                    forecasting: forecasting,
+                    sentiment: sentiment
                 }
             })
             .eq('id', boardId);
 
-        return NextResponse.json({ brief, visualMirror, forecasting });
+        return NextResponse.json({ brief, visualMirror, forecasting, sentiment });
 
     } catch (err: any) {
         return NextResponse.json({ error: err.message }, { status: 500 });

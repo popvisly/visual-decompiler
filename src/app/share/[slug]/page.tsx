@@ -102,6 +102,7 @@ export default async function SharedPortalPage({
                                 boardName={link.board.name}
                                 isShared={true}
                                 initialBrief={link.board.strategic_answer || link.board.last_brief}
+                                initialWhitePaper={link.board.white_paper}
                                 sampleAd={ads[0]}
                             />
                         </section>

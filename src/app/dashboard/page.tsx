@@ -3,6 +3,9 @@ import AdList from '@/components/AdList';
 import Filters from '@/components/Filters';
 import Header from '@/components/Header';
 import CopilotPanel from '@/components/CopilotPanel';
+import AnomalyRouter from '@/components/AnomalyRouter';
+import GlobalMesh from '@/components/GlobalMesh';
+import TrendForecaster from '@/components/TrendForecaster';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -26,6 +29,18 @@ export default async function DashboardPage({
                     <p className="text-[12px] text-[#6B6B6B] mt-6 font-bold tracking-[0.3em] uppercase">Private Archive / Competitive intelligence</p>
                 </div>
             </div>
+
+            <section className="mb-20">
+                <TrendForecaster />
+            </section>
+
+            <section className="bg-[#141414] rounded-[4rem] border border-white/5 relative overflow-hidden mb-20">
+                <GlobalMesh />
+            </section>
+
+            <section className="bg-white p-16 rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)] mb-20">
+                <AnomalyRouter />
+            </section>
 
             <section className="flex-1">
                 <Suspense fallback={

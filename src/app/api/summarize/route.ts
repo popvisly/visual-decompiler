@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {
-        const { boardName, strategicAnswer, stats } = await req.json();
+        const { boardName, strategicAnswer, stats, sentiment } = await req.json();
 
         const openai = getOpenAI();
         const response = await openai.chat.completions.create({
@@ -25,13 +25,19 @@ export async function POST(req: Request) {
                     Output JSON format:
                     {
                         "slides": [
-                            { "title": string, "subtitle": string, "type": "title" | "stat" | "insight" | "conclusion", "content": string, "metrics": [{ "label": string, "value": string }] }
+                            { 
+                                "title": string, 
+                                "subtitle": string, 
+                                "type": "title" | "stat" | "insight" | "conclusion" | "sentiment", 
+                                "content": string, 
+                                "metrics": [{ "label": string, "value": string }] 
+                            }
                         ]
                     }`
                 },
                 {
                     role: 'user',
-                    content: `Project: ${boardName}\n\nStrategic Answer:\n${strategicAnswer}\n\nKey Stats:\n${JSON.stringify(stats)}`
+                    content: `Project: ${boardName}\n\nStrategic Answer:\n${strategicAnswer}\n\nKey Stats:\n${JSON.stringify(stats)}\n\nSentiment Intelligence:\n${JSON.stringify(sentiment)}`
                 }
             ],
             response_format: { type: "json_object" }
