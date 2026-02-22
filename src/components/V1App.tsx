@@ -58,7 +58,7 @@ export default function V1App() {
                 {/* Swiss Nav - Unified with Dashboard Header style */}
                 <header className="sticky top-6 z-50 w-full px-6 flex justify-center">
                     <div className="flex items-center justify-between px-4 py-3 rounded-2xl bg-white/80 backdrop-blur-md border border-[#E7DED1] shadow-[0_8px_32px_rgba(20,20,20,0.06)] w-full max-w-6xl">
-                        <Logo onClick={handleReset} sublabel="Scanning Interface" />
+                        <Logo sublabel="Scanning Interface" />
 
                         <div className="flex items-center gap-6">
                             <nav className="hidden md:flex items-center gap-4">

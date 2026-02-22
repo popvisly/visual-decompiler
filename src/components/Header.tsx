@@ -8,7 +8,7 @@ export default function Header({ activeTab }: { activeTab?: 'dashboard' | 'analy
         <header className="sticky top-6 z-50 w-full px-6 flex justify-center pointer-events-none">
             <div className="pointer-events-auto flex items-center justify-between px-4 py-3 rounded-2xl bg-white/80 backdrop-blur-md border border-[#E7DED1] shadow-[0_8px_32px_rgba(20,20,20,0.06)] w-full max-w-7xl">
                 <div className="flex items-center gap-8">
-                    <Logo href="/dashboard" sublabel="Strategic Library" />
+                    <Logo href="/" sublabel="Strategic Library" />
 
                     <nav className="flex items-center gap-2">
                         <Link
