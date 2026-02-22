@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Upload, Link as LinkIcon, Loader2, Sparkles } from 'lucide-react';
+import { uploadAdMedia } from '@/lib/storage';
 
 type UploadResult = {
     jobId: string;
@@ -72,6 +73,18 @@ export default function UploadZone({ onUploadComplete }: Props) {
         }
     }, [handleIngest]);
 
+    const handleFile = async (file: File) => {
+        setIsUploading(true);
+        setError(null);
+        try {
+            const publicUrl = await uploadAdMedia(file);
+            await handleIngest(publicUrl);
+        } catch (err: any) {
+            setError(err?.message || 'Failed to upload file.');
+            setIsUploading(false);
+        }
+    };
+
     const handleDrop = useCallback((e: React.DragEvent) => {
         e.preventDefault();
         setIsDragOver(false);
@@ -86,9 +99,9 @@ export default function UploadZone({ onUploadComplete }: Props) {
         // Check for files
         const files = e.dataTransfer.files;
         if (files.length > 0) {
-            setError('Direct file upload coming soon — for now, paste an image/video URL.');
+            handleFile(files[0]);
         }
-    }, [handleIngest]);
+    }, [handleIngest, handleFile]);
 
     const handleDragOver = (e: React.DragEvent) => {
         e.preventDefault();
@@ -112,7 +125,10 @@ export default function UploadZone({ onUploadComplete }: Props) {
                     type="file"
                     accept="image/*,video/*"
                     className="hidden"
-                    onChange={() => setError('Direct file upload coming soon — for now, paste a URL.')}
+                    onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) handleFile(file);
+                    }}
                 />
 
                 {isUploading ? (
