@@ -20,9 +20,22 @@ export default function CaseStudyFashion({ id, label, title, body, stageImage, c
                     <p className="text-luxury-label mb-8">
                         {label}
                     </p>
-                    <h2 className="text-[10vw] md:text-[84px] lg:text-[110px] font-semibold leading-[0.95] tracking-luxury uppercase mb-10">
-                        Sell restraint.<br />
-                        <span className="text-[#6B6B6B]/40">Aggressive mechanics.</span>
+                    <h2 className="text-[10vw] md:text-[84px] lg:text-[110px] font-semibold leading-[0.95] tracking-[-0.03em] mb-10">
+                        {(() => {
+                            // Prefer a two-beat editorial break if the title contains two sentences.
+                            const parts = title.split(/\.\s+/);
+                            if (parts.length >= 2) {
+                                const first = parts[0] + '.';
+                                const rest = parts.slice(1).join('. ');
+                                return (
+                                    <>
+                                        {first}<br />
+                                        <span className="text-[#6B6B6B]/45">{rest}</span>
+                                    </>
+                                );
+                            }
+                            return title;
+                        })()}
                     </h2>
                     <p className="text-[19px] md:text-[24px] text-[#141414]/70 leading-[1.3] max-w-3xl font-medium tracking-tight">
                         {body}
