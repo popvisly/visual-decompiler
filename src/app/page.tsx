@@ -79,8 +79,6 @@ export default function HomePage() {
                 reportPreviewCards={REPORT_PREVIEW}
             />
 
-            <StrategicLaboratory />
-
             <CaseStudyFashion
                 id="case-study"
                 label="CASE STUDY — LUXURY / FASHION"
@@ -90,6 +88,8 @@ export default function HomePage() {
                 cards={FASHION_CARDS}
                 cta={{ label: "Load this example in the app", href: "/app?example=luxury" }}
             />
+
+            <StrategicLaboratory />
 
             <FooterStartNow
                 headline="Start now"

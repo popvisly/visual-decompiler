@@ -69,8 +69,10 @@ export async function decompileAd(inputs: VisionInput[], version: string = 'V1')
 
     // 3. Call Vision API
     const openai = getOpenAI();
+    const visionModel = process.env.OPENAI_VISION_MODEL || (process.env.NODE_ENV === 'development' ? 'gpt-4o-mini' : 'gpt-4o');
+
     const response = await openai.chat.completions.create({
-        model: "gpt-4o",
+        model: visionModel,
         messages: [
             {
                 role: "system",
@@ -95,7 +97,7 @@ export async function transcribeAudio(audioPath: string) {
     console.log(`[Vision] Calling Whisper-1 for transcription: ${audioPath}`);
     const transcription = await openai.audio.transcriptions.create({
         file: fs.createReadStream(audioPath),
-        model: "whisper-1",
+        model: (process.env.OPENAI_WHISPER_MODEL || "whisper-1"),
     });
     return transcription.text;
 }

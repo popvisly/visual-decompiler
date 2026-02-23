@@ -78,7 +78,7 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                 return (
                     <Link
                         key={ad.id}
-                        href={`/dashboard/${ad.id}`}
+                        href={`/report/${ad.id}`}
                         className="group bg-white rounded-xl border border-[#E7DED1] overflow-hidden flex flex-col cursor-pointer hover:border-[#D8CCBC] hover:shadow-[0_12px_40px_rgba(20,20,20,0.06)] hover:-translate-y-[2px] transition-all duration-300 shadow-[0_4px_20px_rgba(20,20,20,0.02)]"
                     >
                         {/* Media */}
@@ -131,7 +131,8 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                             </div>
 
                             <h3 className="text-[13px] font-medium text-[#141414] mb-3 line-clamp-2 leading-[1.3] tracking-[-0.01em]">
-                                {digest?.extraction?.on_screen_copy?.primary_headline || 'Intelligence Pending…'}
+                                {digest?.extraction?.on_screen_copy?.primary_headline
+                                    || (ad.brand || digest?.meta?.brand_guess ? `${ad.brand || digest?.meta?.brand_guess} — Untitled` : 'Untitled')}
                             </h3>
 
                             <div className="flex flex-wrap gap-1.5 mt-auto">

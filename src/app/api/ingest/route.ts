@@ -6,7 +6,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { extractKeyframes, cleanupFrames } from '@/lib/video';
 import fs from 'fs';
 
-async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: string; type: 'image' | 'video' | null; contentType?: string | null; sizeMB?: number }> {
+async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: string; type: 'image' | 'video' | null; contentType?: string | null; sizeMB?: number; finalUrl?: string }> {
     if (!/^https?:\/\//i.test(mediaUrl)) {
         return { ok: false, reason: 'Please paste a full http(s) URL.', type: null };
     }
@@ -71,9 +71,9 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
 
         console.log(`[Ingest] HTTP Check: status=${res.status}, types=${types.join('|')}, url=${finalUrl}`);
 
-        if (types.some(t => t.startsWith('image/'))) return { ok: true, type: 'image', contentType: types.find(t => t.startsWith('image/')) || 'image/jpeg', sizeMB };
+        if (types.some(t => t.startsWith('image/'))) return { ok: true, type: 'image', contentType: types.find(t => t.startsWith('image/')) || 'image/jpeg', sizeMB, finalUrl };
         if (types.some(t => t.startsWith('video/') || t.includes('mp4') || t.includes('mpeg'))) {
-            return { ok: true, type: 'video', contentType: types.find(t => t.startsWith('video/')) || 'video/mp4', sizeMB };
+            return { ok: true, type: 'video', contentType: types.find(t => t.startsWith('video/')) || 'video/mp4', sizeMB, finalUrl };
         }
 
         // Heuristic: If it's Unsplash, it's almost certainly an image even if detection failed
@@ -81,7 +81,7 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
         const isUnsplash = [finalUrl, mediaUrl].some(u => u.includes('unsplash.com/photo-') || u.includes('images.unsplash.com'));
         if (isUnsplash) {
             console.log(`[Ingest] Unsplash heuristic triggered`);
-            return { ok: true, type: 'image', contentType: types[0] || 'image/jpeg', sizeMB };
+            return { ok: true, type: 'image', contentType: types[0] || 'image/jpeg', sizeMB, finalUrl };
         }
 
         // Fallback to extension check on both URLs
@@ -97,7 +97,7 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
 
         const extResult = checkExt(finalUrl) || checkExt(mediaUrl);
         if (extResult) {
-            return { ok: true, type: extResult.type as any, contentType: types[0] || `${extResult.type}/${extResult.ext}`, sizeMB };
+            return { ok: true, type: extResult.type as any, contentType: types[0] || `${extResult.type}/${extResult.ext}`, sizeMB, finalUrl };
         }
 
         return { ok: true, type: null, contentType: contentTypeHeader, sizeMB };
@@ -122,7 +122,7 @@ function normalizeUrl(urlStr: string): string {
     try {
         const url = new URL(urlStr);
         // List of tracking parameters to strip
-        const toStrip = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', '_ga', '_gl'];
+        const toStrip = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', '_ga', '_gl', 't'];
         toStrip.forEach(p => url.searchParams.delete(p));
         // Also remove fragments
         url.hash = '';
@@ -191,6 +191,12 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: info.reason }, { status: 400 });
         }
 
+        // If the media URL redirects (common for CDNs like Unsplash), persist the final URL so
+        // the worker can fetch it reliably later.
+        if (info.finalUrl && info.finalUrl !== mediaUrl) {
+            mediaUrl = info.finalUrl;
+        }
+
         // Production Guardrail: Max 50MB for videos
         if (info.type === 'video' && info.sizeMB && info.sizeMB > 50) {
             return NextResponse.json({
@@ -216,7 +222,7 @@ export async function POST(req: Request) {
             .insert({
                 media_url: mediaUrl,
                 status: 'queued',
-                model: 'gpt-4o',
+                model: process.env.OPENAI_VISION_MODEL || (process.env.NODE_ENV === 'development' ? 'gpt-4o-mini' : 'gpt-4o'),
                 prompt_version: promptVersion,
                 media_kind: info.type || 'image',
                 media_type: info.contentType,
@@ -230,7 +236,43 @@ export async function POST(req: Request) {
 
         if (insertError) {
             if (insertError.code === '23505') {
-                return NextResponse.json({ error: 'This ad has already been decompiled.' }, { status: 409 });
+                // Duplicate: return the existing job instead of blocking the user.
+                // This commonly happens when a job previously landed in needs_review.
+                const { data: existing, error: lookupErr } = await supabaseAdmin
+                    .from('ad_digests')
+                    .select('id,status,access_level')
+                    .eq('media_url', mediaUrl)
+                    .order('created_at', { ascending: false })
+                    .limit(1)
+                    .single();
+
+                if (lookupErr || !existing) {
+                    return NextResponse.json({ error: 'This ad already exists, but could not be loaded.' }, { status: 409 });
+                }
+
+                // If it failed previously, let the user re-run it.
+                if (existing.status === 'needs_review') {
+                    await supabaseAdmin
+                        .from('ad_digests')
+                        .update({ status: 'queued', digest: {} })
+                        .eq('id', existing.id);
+
+                    return NextResponse.json({
+                        success: true,
+                        job_id: existing.id,
+                        status: 'queued',
+                        access_level: existing.access_level,
+                        message: 'Ad re-queued for decompilation.'
+                    });
+                }
+
+                return NextResponse.json({
+                    success: true,
+                    job_id: existing.id,
+                    status: existing.status,
+                    access_level: existing.access_level,
+                    message: 'Ad already in the system.'
+                }, { status: 200 });
             }
             console.error('Supabase error:', insertError);
             return NextResponse.json({ error: 'Failed to queue ingestion' }, { status: 500 });
@@ -238,14 +280,10 @@ export async function POST(req: Request) {
 
         console.log(`[Ingest] Job Created | id: ${job.id} | status: ${job.status} | timestamp: ${new Date().toISOString()}`);
 
-        // Increment user usage counter
-        await supabaseAdmin
-            .from('users')
-            .update({
-                usage_count: user.usage_count + 1,
-                updated_at: new Date().toISOString(),
-            })
-            .eq('id', userId);
+        // NOTE: We do NOT increment usage_count here.
+        // Queueing is not the same as a successful analysis, and incrementing here can
+        // quickly exhaust limits if jobs fail or get re-queued.
+        // usage_count is incremented in the worker when a job is actually processed.
 
         // 6. Return Job ID immediately
         return NextResponse.json({

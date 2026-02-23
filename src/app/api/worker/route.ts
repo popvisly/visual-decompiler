@@ -14,7 +14,17 @@ import os from 'os';
 export const runtime = 'nodejs';
 export const maxDuration = 300; // 5 minutes for Vision API process
 
+// Basic in-memory throttle to prevent spam-triggering the worker (especially in dev)
+const WORKER_MIN_INTERVAL_MS = Number(process.env.WORKER_MIN_INTERVAL_MS || 8000);
+let lastWorkerRunAt = 0;
+
 export async function POST(req: Request) {
+    const now = Date.now();
+    if (now - lastWorkerRunAt < WORKER_MIN_INTERVAL_MS) {
+        return NextResponse.json({ error: 'Worker throttled. Please wait a moment.' }, { status: 429 });
+    }
+    lastWorkerRunAt = now;
+
     console.log(`\n[Worker] Route Hit | timestamp: ${new Date().toISOString()}`);
 
     // 1. Authorization Check (Vercel Cron OR Bearer Token)
@@ -183,13 +193,25 @@ export async function POST(req: Request) {
                     }
                 }
 
-                // 5. Validate & Update
+                // 5. Validate & Auto-Repair (Zod)
+                // Models sometimes return arrays longer than our UI/schema expects.
+                // We clamp a few known fields to keep the digest usable.
+                try {
+                    const cls: any = (rawDigest as any)?.classification;
+                    if (cls) {
+                        const clamp2 = (v: any) => (Array.isArray(v) ? v.slice(0, 2) : v);
+                        cls.proof_type = clamp2(cls.proof_type);
+                        cls.visual_style = clamp2(cls.visual_style);
+                        cls.emotion_tone = clamp2(cls.emotion_tone);
+                    }
+                } catch { /* ignore */ }
+
                 const validation = AdDigestSchema.safeParse(rawDigest);
                 let finalStatus = 'processed';
 
                 if (!validation.success) {
                     finalStatus = 'needs_review';
-                    console.error(`[Worker Job ${job.id}] Zod Validation Failed:`, validation.error.message);
+                    console.error(`[Worker Job ${job.id}] Zod Validation Failed:`, validation.error.issues);
                 }
 
                 // 6. Generate Embedding for Semantic Search
@@ -252,18 +274,36 @@ export async function POST(req: Request) {
                     }
                 }
 
-                await supabaseAdmin
+                // Persist the digest itself. Several columns in this schema (e.g. brand_guess)
+                // appear to be generated/computed and cannot be directly updated.
+                // Keep writes minimal and let DB triggers/computed columns derive fields.
+                const updatePayload: any = {
+                    status: finalStatus,
+                    digest: rawDigest,
+                };
+
+                const { error: updateErr } = await supabaseAdmin
                     .from('ad_digests')
-                    .update({
-                        status: finalStatus,
-                        digest: rawDigest,
-                        media_hash: mediaHash,
-                        embedding: embedding,
-                        is_anomaly: isAnomaly,
-                        anomaly_score: anomalyScore,
-                        anomaly_reason: anomalyReason
-                    })
+                    .update(updatePayload)
                     .eq('id', job.id);
+
+                if (updateErr) throw updateErr;
+
+                // Increment usage only when a job is truly processed.
+                // (Queueing/retries should not consume quota.)
+                if (finalStatus === 'processed' && job.user_id) {
+                    const { data: u } = await supabaseAdmin
+                        .from('users')
+                        .select('usage_count')
+                        .eq('id', job.user_id)
+                        .single();
+
+                    const nextCount = (u?.usage_count || 0) + 1;
+                    await supabaseAdmin
+                        .from('users')
+                        .update({ usage_count: nextCount })
+                        .eq('id', job.user_id);
+                }
 
                 results.push({ id: job.id, status: finalStatus });
                 console.log(`[Worker Job ${job.id}] Completed: ${finalStatus}`);
@@ -284,7 +324,10 @@ export async function POST(req: Request) {
                         .insert(hooksToInsert);
 
                     if (hookError) {
-                        console.error(`[Worker Job ${job.id}] Failed to persist deep hooks:`, hookError);
+                        // deep_hooks is optional in some deployments; avoid spamming logs if the table doesn't exist.
+                        if (hookError.code !== 'PGRST205') {
+                            console.error(`[Worker Job ${job.id}] Failed to persist deep hooks:`, hookError);
+                        }
                     }
                 }
 

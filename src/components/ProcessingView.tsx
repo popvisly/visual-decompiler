@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 
 const ANALYSIS_STEPS = [
@@ -26,23 +27,60 @@ type Props = {
 };
 
 export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
+    const router = useRouter();
     const [step, setStep] = useState(0);
     const [dots, setDots] = useState('');
-    const [isTakingLong, setIsTakingLong] = useState(false);
+    const [progress, setProgress] = useState(0); // 0..95 (we reserve the last 5% for completion)
+    // In local dev, we auto-kick the worker periodically so the UI actually progresses.
+    // The worker endpoint is throttled server-side to prevent runaway spend.
+    const kickWorkerOnce = async () => {
+        try {
+            const res = await fetch('/api/worker', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer OPEN',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}),
+            });
 
-    // Timeout for demo escape hatch
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setIsTakingLong(true);
-        }, 15000); // 15 seconds soft timeout
-        return () => clearTimeout(timeout);
-    }, []);
+            // If the worker response includes this job as processed, jump to its report.
+            const text = await res.text();
+            try {
+                const json = JSON.parse(text);
+                const detail = Array.isArray(json?.details)
+                    ? json.details.find((d: any) => d?.id === jobId)
+                    : null;
+                if (detail?.status === 'processed') {
+                    router.push(`/dashboard/${jobId}`);
+                    return;
+                }
+            } catch { /* ignore */ }
 
-    // Progress step cycling
+            router.refresh();
+        } catch {
+            // ignore
+        }
+    };
+
+    // Progress text cycling (keeps the page feeling alive)
     useEffect(() => {
         const interval = setInterval(() => {
             setStep((s) => (s + 1) % ANALYSIS_STEPS.length);
         }, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
+    // Monotonic progress bar (never goes backwards)
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setProgress((p) => {
+                if (p >= 95) return 95;
+                // Ease forward in small, slightly random increments.
+                const bump = 2 + Math.floor(Math.random() * 4); // 2..5
+                return Math.min(95, p + bump);
+            });
+        }, 1800);
         return () => clearInterval(interval);
     }, []);
 
@@ -62,16 +100,14 @@ export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
 
         const poll = async () => {
             try {
-                // First trigger the worker
-                if (attempts === 0 || attempts % 6 === 0) {
-                    await fetch('/api/worker', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': 'Bearer OPEN',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({}),
-                    }).catch(() => { });
+                // In dev, auto-kick the worker so the page actually completes.
+                // You can disable this by setting NEXT_PUBLIC_ALLOW_CLIENT_WORKER_KICK="false".
+                const allowWorkerKick =
+                    process.env.NODE_ENV === 'development' &&
+                    process.env.NEXT_PUBLIC_ALLOW_CLIENT_WORKER_KICK !== 'false';
+
+                if (allowWorkerKick && (attempts === 0 || attempts % 4 === 0)) {
+                    await kickWorkerOnce();
                 }
 
                 // Then check the job status
@@ -105,21 +141,36 @@ export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
 
     return (
         <div className="w-full max-w-3xl mx-auto page-enter">
-            <div className="flex flex-col items-center gap-10">
+            <div className="flex flex-col items-center gap-16">
                 {/* Media preview with orbit pills */}
-                <div className="relative">
+                <div className="relative mb-10">
                     {/* Orbiting pills */}
                     <div className="absolute -inset-16 pointer-events-none">
                         {ORBIT_PILLS.map((pill, i) => {
+                            // Place pills around the square canvas.
+                            // We also add a small per-pill offset so they don't collide with buttons below.
                             const angle = (i / ORBIT_PILLS.length) * 360;
-                            const radius = 48;
+                            let radius = 92;
+                            let dx = 0;
+                            let dy = 0;
+
+                            // Nudge the "Subtext" pill upward/left a bit so it doesn't overlap the action buttons.
+                            if (pill.toLowerCase() === 'subtext') {
+                                radius = 104;
+                                dx = -10;
+                                dy = -22;
+                            }
+
+                            const top = 50 + Math.sin((angle * Math.PI) / 180) * radius;
+                            const left = 50 + Math.cos((angle * Math.PI) / 180) * radius;
+
                             return (
                                 <span
                                     key={pill}
                                     className="float-pill absolute px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.12em] text-[#6B6B6B] border border-[#E7DED1] bg-[#FBF7EF]/90 shadow-sm whitespace-nowrap backdrop-blur"
                                     style={{
-                                        top: `${50 + Math.sin((angle * Math.PI) / 180) * radius}%`,
-                                        left: `${50 + Math.cos((angle * Math.PI) / 180) * radius}%`,
+                                        top: `calc(${top}% + ${dy}px)`,
+                                        left: `calc(${left}% + ${dx}px)`,
                                         transform: 'translate(-50%, -50%)',
                                         animationDelay: `${i * -0.4}s`,
                                     }}
@@ -172,21 +223,18 @@ export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
                 <div className="w-64 h-1.5 rounded-full bg-[#E7DED1] overflow-hidden shadow-inner">
                     <div
                         className="h-full bg-[#141414] rounded-full transition-all duration-[3000ms] ease-linear"
-                        style={{ width: `${((step + 1) / ANALYSIS_STEPS.length) * 100}%` }}
+                        style={{ width: `${progress}%` }}
                     />
                 </div>
 
-                {/* Graceful Fallback CTA */}
-                {isTakingLong && (
-                    <div className="mt-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                        <a
-                            href="/report/46a65982-e892-45ff-a34a-d4ddb33c8581"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414] border border-[#E7DED1] bg-white hover:border-[#D8CCBC] hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)] transition-all"
-                        >
-                            Ingestion taking too long? View Sample Report
-                        </a>
-                    </div>
-                )}
+                <div className="mt-6 flex flex-col items-center gap-3">
+                    <a
+                        href="/dashboard"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414] border border-[#E7DED1] bg-white hover:border-[#D8CCBC] hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)] transition-all"
+                    >
+                        Go to Analysis Library
+                    </a>
+                </div>
             </div>
         </div>
     );

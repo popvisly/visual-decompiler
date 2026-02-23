@@ -22,8 +22,11 @@ export async function POST(req: Request) {
         const { error } = await supabaseAdmin.rpc('increment_view_count', { row_id: reportId });
 
         if (error) {
-            console.error('Failed to increment view count:', error);
-            // Non-fatal, just swallow so client isn't affected
+            // Non-fatal, just swallow so client isn't affected.
+            // Some environments don't have this RPC installed yet.
+            if (error.code !== 'PGRST202') {
+                console.error('Failed to increment view count:', error);
+            }
         }
 
         // Set cookie response

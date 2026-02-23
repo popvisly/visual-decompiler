@@ -26,7 +26,8 @@ C) **Narrative**: Identify how attention is held (Problem/Solution, Product-as-H
 D) **Psychological Trigger**: Choose trigger_mechanic and identify objection_dismantling.
 E) **Competitive Advantage**: Explicitly identify the core "Unfair Advantage" or "Moat" claimed in the ad.
 F) **Visual Hierarchy**: Explain gaze_priority.
-G) **Output**: Generate strict JSON.
+G) **Temporal Genealogy**: Detect the "Aesthetic Year" (1950s-2010s) and map the strategic genealogy.
+H) **Output**: Generate strict JSON.
 
 ---
 
@@ -167,6 +168,18 @@ Color extraction rule:
 
 ---
 
+## TEMPORAL ARCHETYPES (ERA DNA)
+
+When determining **aesthetic_year**, use these anchors:
+
+- **1950s**: Technicolor, Nuclear Family, Staged Studio, USP-focus.
+- **1960s**: Art Deco, Minimalist Swiss Style, Counter-culture, Soft-sell irony.
+- **1980s**: High-gloss, Neon, Bold Silhouettes, MTV-pacing, Lifestyle/Celebrity.
+- **1990s**: Grunge, Analog grain, Unpolished handheld, Transgressive/Anti-Ad.
+- **2000s**: Frutiger Aero, Digital glassmorphism, Multi-device focus, Purpose/Inclusion.
+
+---
+
 ## OUTPUT JSON SCHEMA (EXACT KEYS)
 
 Return exactly this JSON object:
@@ -176,7 +189,9 @@ Return exactly this JSON object:
     "media_type": "image|video|mixed",
     "brand_guess": "string|null",
     "product_category_guess": "string|null",
-    "language_guess": "string|null"
+    "language_guess": "string|null",
+    "aesthetic_year": "string (e.g. 1950s)",
+    "historical_genealogy": "string (mapping modern tactics to historical roots)"
   },
   "classification": {
     "trigger_mechanic": "…",

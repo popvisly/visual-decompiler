@@ -24,10 +24,18 @@ export interface SemioticAudit {
     meaningClaim: string;
 }
 
+export interface TemporalAudit {
+    aestheticYear: string;
+    historicalGenealogy: string;
+    eraArchetype: string;
+    revivalPotential: number; // 0-100
+}
+
 export interface DeepAuditResult {
     pacing: PacingAudit;
     color: ColorAudit;
     semiotics: SemioticAudit;
+    temporal: TemporalAudit;
 }
 
 export class DeepAuditService {
@@ -100,13 +108,50 @@ export class DeepAuditService {
     }
 
     /**
+     * Maps aesthetic years to strategic archetypes.
+     */
+    static analyzeTemporal(digest: any): TemporalAudit {
+        const year = digest.meta?.aesthetic_year || 'Modern';
+        const genealogy = digest.meta?.historical_genealogy || 'Strategic lineage not detected.';
+
+        // Map year to archetype
+        let archetype = 'Modern Data-Driven';
+        let revival = 10;
+
+        if (year.includes('1950')) {
+            archetype = 'The Golden Persuader (USP)';
+            revival = 85;
+        } else if (year.includes('1960')) {
+            archetype = 'Creative Revolution (Irony)';
+            revival = 70;
+        } else if (year.includes('1980')) {
+            archetype = 'Lifestyle Sovereignty (Glamour)';
+            revival = 95;
+        } else if (year.includes('1990')) {
+            archetype = 'Anti-Ad (Grunge/Authenticity)';
+            revival = 60;
+        } else if (year.includes('2000')) {
+            archetype = 'Digital Transition (Polish)';
+            revival = 40;
+        }
+
+        return {
+            aestheticYear: year,
+            historicalGenealogy: genealogy,
+            eraArchetype: archetype,
+            revivalPotential: revival
+        };
+    }
+
+    /**
      * Orchestrates the total Deep Audit.
      */
     static perform(digest: any): DeepAuditResult {
         return {
             pacing: this.analyzePacing(digest),
             color: this.analyzeColor(digest),
-            semiotics: this.analyzeSemiotics(digest)
+            semiotics: this.analyzeSemiotics(digest),
+            temporal: this.analyzeTemporal(digest)
         };
     }
 }

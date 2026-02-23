@@ -22,6 +22,8 @@ type Props = {
     brand?: string | null;
     accessLevel?: 'full' | 'limited';
     isSharedView?: boolean;
+    /** When false, ResultsView will not render its own media preview column (useful when the parent already shows the ad media). */
+    showMedia?: boolean;
     onReset?: () => void;
 };
 
@@ -46,7 +48,7 @@ function BlurGate({ locked, children }: { locked: boolean; children: React.React
     );
 }
 
-export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, brand, accessLevel = 'full', isSharedView = false, onReset }: Props) {
+export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, brand, accessLevel = 'full', isSharedView = false, showMedia = true, onReset }: Props) {
     const isLimited = accessLevel === 'limited';
     const d = digest;
     const cls = d?.classification;
@@ -166,9 +168,9 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
                 </div>
             </div>
 
-            <div className="relative grid grid-cols-1 lg:grid-cols-5 gap-8">
+            <div className={`relative grid grid-cols-1 gap-8 ${showMedia ? 'lg:grid-cols-5' : ''}`}>
                 {/* Processing Overlay */}
-                {status !== 'success' && (
+                {!(status === 'processed' || status === 'success') && (
                     <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#F6F1E7]/80 backdrop-blur-sm rounded-3xl">
                         <div className="text-center p-12 bg-white/50 border border-[#E7DED1] rounded-3xl shadow-xl max-w-sm mx-auto">
                             <div className="w-12 h-12 border-4 border-[#141414] border-t-transparent rounded-full animate-spin mx-auto mb-6" />
@@ -184,97 +186,99 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
                     </div>
                 )}
                 {/* Left — Media */}
-                <div className="lg:col-span-2">
-                    <div className="sticky top-24 space-y-4">
-                        <div className="bg-[#FBF7EF] rounded-2xl border border-[#E7DED1] shadow-sm overflow-hidden">
-                            {mediaKind === 'video' ? (
-                                <video
-                                    ref={videoRef}
-                                    src={mediaUrl}
-                                    className="w-full aspect-[4/5] object-cover"
-                                    controls muted playsInline preload="metadata"
-                                />
-                            ) : (
-                                <img
-                                    src={mediaUrl}
-                                    alt={displayBrand || 'Ad'}
-                                    className="w-full aspect-[4/5] object-cover"
-                                />
-                            )}
-                        </div>
+                {showMedia && (
+                    <div className="lg:col-span-2">
+                        <div className="sticky top-24 space-y-4">
+                            <div className="bg-[#FBF7EF] rounded-2xl border border-[#E7DED1] shadow-sm overflow-hidden">
+                                {mediaKind === 'video' ? (
+                                    <video
+                                        ref={videoRef}
+                                        src={mediaUrl}
+                                        className="w-full aspect-[4/5] object-cover"
+                                        controls muted playsInline preload="metadata"
+                                    />
+                                ) : (
+                                    <img
+                                        src={mediaUrl}
+                                        alt={displayBrand || 'Ad'}
+                                        className="w-full aspect-[4/5] object-cover"
+                                    />
+                                )}
+                            </div>
 
-                        {/* Visual Timeline — Milestone 2 */}
-                        {mediaKind === 'video' && ext?.keyframes && ext.keyframes.length > 0 && (
-                            <div className="pt-2 px-1">
-                                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-4">Visual Timeline</p>
-                                <div className="flex items-center gap-4">
-                                    {ext.keyframes.map((kf: any, idx: number) => (
-                                        <div
-                                            key={idx}
-                                            className="flex-1 group cursor-pointer"
-                                            onClick={() => handleSeek(kf.t_ms)}
-                                        >
-                                            <div className="relative aspect-video rounded-xl bg-[#F2EBDD] border border-[#E7DED1] overflow-hidden shadow-sm group-hover:border-[#D8CCBC] transition-all">
-                                                {/* Fallback to video timestamp if image_url is missing */}
-                                                {kf.image_url ? (
-                                                    <img src={kf.image_url} alt={kf.label} className="w-full h-full object-cover" />
-                                                ) : (
-                                                    <div className="w-full h-full flex items-center justify-center bg-[#FBF7EF]">
-                                                        <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-tighter opacity-40">
-                                                            {kf.label}
-                                                        </span>
+                            {/* Visual Timeline — Milestone 2 */}
+                            {mediaKind === 'video' && ext?.keyframes && ext.keyframes.length > 0 && (
+                                <div className="pt-2 px-1">
+                                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-4">Visual Timeline</p>
+                                    <div className="flex items-center gap-4">
+                                        {ext.keyframes.map((kf: any, idx: number) => (
+                                            <div
+                                                key={idx}
+                                                className="flex-1 group cursor-pointer"
+                                                onClick={() => handleSeek(kf.t_ms)}
+                                            >
+                                                <div className="relative aspect-video rounded-xl bg-[#F2EBDD] border border-[#E7DED1] overflow-hidden shadow-sm group-hover:border-[#D8CCBC] transition-all">
+                                                    {/* Fallback to video timestamp if image_url is missing */}
+                                                    {kf.image_url ? (
+                                                        <img src={kf.image_url} alt={kf.label} className="w-full h-full object-cover" />
+                                                    ) : (
+                                                        <div className="w-full h-full flex items-center justify-center bg-[#FBF7EF]">
+                                                            <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-tighter opacity-40">
+                                                                {kf.label}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                    <div className="absolute bottom-1 right-1.5 text-[9px] font-mono font-bold text-white opacity-80 group-hover:opacity-100 transition-opacity">
+                                                        {(kf.t_ms / 1000).toFixed(1)}s
                                                     </div>
-                                                )}
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                                                <div className="absolute bottom-1 right-1.5 text-[9px] font-mono font-bold text-white opacity-80 group-hover:opacity-100 transition-opacity">
-                                                    {(kf.t_ms / 1000).toFixed(1)}s
+                                                </div>
+                                                <div className="mt-2 text-center">
+                                                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#141414]/60 group-hover:text-[#141414] transition-colors">
+                                                        {kf.label}
+                                                    </p>
                                                 </div>
                                             </div>
-                                            <div className="mt-2 text-center">
-                                                <p className="text-[10px] font-bold uppercase tracking-widest text-[#141414]/60 group-hover:text-[#141414] transition-colors">
-                                                    {kf.label}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
 
-                        {/* Headline */}
-                        {copy?.primary_headline && (
-                            <div className="px-1">
-                                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-1">Primary Headline</p>
-                                <p className="text-[17px] font-medium text-[#141414] leading-[1.3] tracking-[-0.01em]">
-                                    {copy.primary_headline}
-                                </p>
-                            </div>
-                        )}
+                            {/* Headline */}
+                            {copy?.primary_headline && (
+                                <div className="px-1">
+                                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-1">Primary Headline</p>
+                                    <p className="text-[17px] font-medium text-[#141414] leading-[1.3] tracking-[-0.01em]">
+                                        {copy.primary_headline}
+                                    </p>
+                                </div>
+                            )}
 
-                        {/* CTA */}
-                        {copy?.cta_text && (
-                            <div className="inline-block px-4 py-2 bg-[#141414] text-[#FBF7EF] rounded-xl text-xs font-semibold">
-                                CTA: {copy.cta_text}
-                            </div>
-                        )}
+                            {/* CTA */}
+                            {copy?.cta_text && (
+                                <div className="inline-block px-4 py-2 bg-[#141414] text-[#FBF7EF] rounded-xl text-xs font-semibold">
+                                    CTA: {copy.cta_text}
+                                </div>
+                            )}
 
-                        {/* Dominant color */}
-                        {ext?.dominant_color_hex && (
-                            <div className="flex items-center gap-3 px-1 mt-2">
-                                <div
-                                    className="w-6 h-6 rounded-full border border-[#E7DED1] shadow-sm"
-                                    style={{ backgroundColor: ext.dominant_color_hex }}
-                                />
-                                <span className="text-[12px] font-mono font-medium text-[#6B6B6B]">
-                                    {ext.dominant_color_hex}
-                                </span>
-                            </div>
-                        )}
+                            {/* Dominant color */}
+                            {ext?.dominant_color_hex && (
+                                <div className="flex items-center gap-3 px-1 mt-2">
+                                    <div
+                                        className="w-6 h-6 rounded-full border border-[#E7DED1] shadow-sm"
+                                        style={{ backgroundColor: ext.dominant_color_hex }}
+                                    />
+                                    <span className="text-[12px] font-mono font-medium text-[#6B6B6B]">
+                                        {ext.dominant_color_hex}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                </div>
+                )}
 
                 {/* Right — Analysis cards */}
-                <div className="lg:col-span-3 space-y-4">
+                <div className={`${showMedia ? 'lg:col-span-3' : ''} space-y-4`}>
                     {/* ── Invisible Machinery (the hero card) — BLUR on limited ── */}
                     <BlurGate locked={isLimited}>
                         <ResultsCard title="Invisible Machinery" variant="pullquote" accentBorder>

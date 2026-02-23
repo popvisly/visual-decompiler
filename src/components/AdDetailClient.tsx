@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useMemo, useState, useRef } from 'react';
 import Link from 'next/link';
-import { TrendingUp, Sparkles, Activity, ArrowLeft, Play, Layout } from 'lucide-react';
+import { TrendingUp, Sparkles, Activity, ArrowLeft, Play } from 'lucide-react';
 import BrandTag from '@/components/BrandTag';
-import RemixView from '@/components/RemixView';
+import ResultsView from '@/components/ResultsView';
 import PDFReport from '@/components/PDFReport';
 import VideoPins from '@/components/VideoPins';
 import AdShareButton from '@/components/AdShareButton';
@@ -25,9 +25,12 @@ export default function AdDetailClient({
     isShared?: boolean,
     pulseText?: string
 }) {
-    const forecasting = ForecastingService.analyzeAd(digest, pulseText || '');
+    const forecasting = useMemo(() => ForecastingService.analyzeAd(digest, pulseText || ''), [digest, pulseText]);
     const [currentTimeMs, setCurrentTimeMs] = useState(0);
     const [roiPredict, setRoiPredict] = useState<any>(null);
+
+    type TabKey = 'report' | 'forensics' | 'pins';
+    const [tab, setTab] = useState<TabKey>('report');
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const handleTimeUpdate = () => {
@@ -49,8 +52,8 @@ export default function AdDetailClient({
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 adId: ad.id,
-                trigger_mechanic: digest.classification.trigger_mechanic,
-                narrative_framework: digest.classification.narrative_framework
+                trigger_mechanic: digest?.classification?.trigger_mechanic || ad.trigger_mechanic,
+                narrative_framework: digest?.classification?.narrative_framework || ad.narrative_framework
             })
         });
         const data = await res.json();
@@ -76,9 +79,10 @@ export default function AdDetailClient({
                             <span className="text-[#6B6B6B]/30 mb-4 md:mb-8 block">Deconstruction</span>
                         </h2>
                         <h1 className="text-xl md:text-2xl font-light text-[#141414] tracking-tight mt-6 md:mt-8 border-l-[2px] md:border-l-[3px] border-accent pl-4 md:pl-6 py-2 max-w-3xl leading-snug lg:text-3xl">
-                            {digest?.extraction?.on_screen_copy?.primary_headline || 'Intelligence Pending…'}
+                            {digest?.extraction?.on_screen_copy?.primary_headline || 'Untitled'}
                         </h1>
                     </div>
+
                     {!isShared && (
                         <div className="flex items-center gap-4">
                             <button
@@ -128,6 +132,7 @@ export default function AdDetailClient({
                 )}
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16">
+                    {/* Left: media always visible */}
                     <div className="lg:col-span-5 space-y-8 md:space-y-12">
                         <div className="sticky top-12 space-y-6 md:space-y-8">
                             <div className="bg-white p-3 md:p-4 rounded-[2rem] md:rounded-[3.5rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)] overflow-hidden relative group">
@@ -147,92 +152,103 @@ export default function AdDetailClient({
                                     />
                                 )}
                             </div>
-
-                            <div className="no-print">
-                                <VideoPins
-                                    adId={ad.id}
-                                    currentTimeMs={currentTimeMs}
-                                    onSeek={handleSeek}
-                                />
-                            </div>
                         </div>
                     </div>
 
-                    <div className="lg:col-span-7 space-y-8 md:space-y-12">
-                        {/* Summary Section */}
-                        <div className="bg-white p-8 md:p-16 rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)] relative overflow-hidden group">
-                            <div className="absolute top-0 left-0 w-1.5 h-full bg-accent opacity-20 group-hover:opacity-100 transition-opacity" />
-                            <div className="flex items-center gap-3 mb-8 md:mb-10 text-[#141414]">
-                                <Layout className="w-5 h-5 text-accent" />
-                                <h3 className="text-xs font-bold uppercase tracking-[0.3em]">Deconstructed Thesis</h3>
-                            </div>
-
-                            {digest.extraction?.narrative_arc?.transcription && (
-                                <div className="mb-8 md:mb-12 p-6 md:p-10 bg-[#FBF7EF] rounded-[1.5rem] md:rounded-[2.5rem] border border-[#E7DED1]">
-                                    <p className="text-[9px] md:text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.4em] mb-3 md:mb-4 opacity-100">Narrative Extraction</p>
-                                    <p className="text-lg md:text-xl font-light text-[#141414]/80 leading-relaxed italic border-l-2 border-accent/20 pl-6 md:pl-8">
-                                        "{digest.extraction.narrative_arc.transcription}"
-                                    </p>
-                                </div>
-                            )}
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                                <div className="p-6 md:p-8 bg-[#FBF7EF] rounded-[1.5rem] md:rounded-[2rem] border border-[#E7DED1] hover:border-[#BB9E7B]/50 transition-all">
-                                    <p className="text-[8px] md:text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.4em] mb-2">Psychological Trigger</p>
-                                    <p className="text-sm md:text-md font-bold text-[#141414] uppercase tracking-tight">{digest.classification.trigger_mechanic.replace('_', ' ')}</p>
-                                </div>
-                                <div className="p-6 md:p-8 bg-[#FBF7EF] rounded-[1.5rem] md:rounded-[2rem] border border-[#E7DED1] hover:border-[#BB9E7B]/50 transition-all">
-                                    <p className="text-[8px] md:text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.4em] mb-2">Narrative Framework</p>
-                                    <p className="text-sm md:text-md font-bold text-[#141414] uppercase tracking-tight">{digest.classification.narrative_framework.replace('_', ' ')}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Remix Engine Integration */}
+                    {/* Right: tabbed workspace */}
+                    <div className="lg:col-span-7 space-y-6 md:space-y-8">
                         {!isShared && (
-                            <div className="pt-8">
-                                <RemixView digest={digest} adId={ad.id} />
+                            <div className="no-print">
+                                <div className="flex flex-wrap gap-2 rounded-full bg-white border border-[#E7DED1] p-1.5 shadow-sm">
+                                    {([
+                                        { key: 'report', label: 'Report' },
+                                        { key: 'forensics', label: 'Forensics' },
+                                        { key: 'pins', label: 'Pins' },
+                                    ] as const).map(t => (
+                                        <button
+                                            key={t.key}
+                                            type="button"
+                                            onClick={() => setTab(t.key)}
+                                            className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-[0.18em] transition-all ${tab === t.key
+                                                ? 'bg-[#141414] text-[#FBF7EF]'
+                                                : 'text-[#6B6B6B] hover:text-[#141414]'
+                                                }`}
+                                        >
+                                            {t.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {tab === 'report' && (
+                            <ResultsView
+                                id={ad.id}
+                                mediaUrl={ad.media_url}
+                                mediaKind={ad.media_kind}
+                                digest={digest}
+                                status={ad.status}
+                                brand={ad.brand}
+                                accessLevel={ad.access_level || 'full'}
+                                isSharedView={false}
+                                showMedia={false}
+                            />
+                        )}
+
+                        {tab === 'pins' && !isShared && (
+                            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
+                                <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-[#141414] mb-6">Strategic Pins</h3>
+                                {ad.media_kind === 'video' ? (
+                                    <VideoPins
+                                        adId={ad.id}
+                                        currentTimeMs={currentTimeMs}
+                                        onSeek={handleSeek}
+                                    />
+                                ) : (
+                                    <p className="text-[12px] text-[#6B6B6B]">Pins are available for video ads.</p>
+                                )}
+                            </div>
+                        )}
+
+                        {tab === 'forensics' && (
+                            <div>
+                                <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)] mb-8">
+                                    <h3 className="text-xs font-bold uppercase tracking-[0.4em] text-[#141414] mb-8">Technical Creative Forensics</h3>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="p-8 bg-[#FBF7EF] border border-[#E7DED1] rounded-[2rem] shadow-sm">
+                                            <h4 className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-4">Saturation Risk</h4>
+                                            <div className="flex items-end gap-3 mb-4">
+                                                <span className="text-5xl font-light text-[#141414] leading-none">{forecasting.saturationLevel}%</span>
+                                                <span className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${forecasting.saturationLevel > 60 ? 'text-red-500' : 'text-green-600'}`}>
+                                                    {forecasting.saturationLevel > 60 ? 'High Risk' : 'Healthy Space'}
+                                                </span>
+                                            </div>
+                                            <div className="h-1.5 w-full bg-white rounded-full overflow-hidden">
+                                                <div
+                                                    className={`h-full transition-all duration-1000 ${forecasting.saturationLevel > 60 ? 'bg-red-500' : 'bg-accent'}`}
+                                                    style={{ width: `${forecasting.saturationLevel}%` }}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="p-8 bg-[#FBF7EF] border border-[#E7DED1] rounded-[2rem] shadow-sm">
+                                            <h4 className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-4">Predicted Lifespan</h4>
+                                            <div className="flex items-end gap-3 mb-4">
+                                                <span className="text-5xl font-light text-[#141414] leading-none">{forecasting.estimatedLifespanDays}</span>
+                                                <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-1">Days Remaining</span>
+                                            </div>
+                                            <p className="text-[11px] text-[#6B6B6B] leading-relaxed">
+                                                Expected performance decline after {forecasting.estimatedLifespanDays} days based on category momentum.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <DeepAuditView digest={digest} />
                             </div>
                         )}
                     </div>
-                </div>
-
-                <div className="pt-16 md:pt-24 border-t border-[#E7DED1]">
-                    <div className="flex items-center gap-3 mb-10 md:mb-16">
-                        <Sparkles className="w-5 h-5 text-accent" />
-                        <h3 className="text-xs font-bold uppercase tracking-[0.4em] text-[#141414]">Technical Creative Forensics</h3>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                        <div className="p-8 bg-white border border-[#E7DED1] rounded-[2rem] shadow-sm">
-                            <h4 className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-4">Saturation Risk</h4>
-                            <div className="flex items-end gap-3 mb-4">
-                                <span className="text-5xl font-light text-[#141414] leading-none">{forecasting.saturationLevel}%</span>
-                                <span className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${forecasting.saturationLevel > 60 ? 'text-red-500' : 'text-green-600'}`}>
-                                    {forecasting.saturationLevel > 60 ? 'High Risk' : 'Healthy Space'}
-                                </span>
-                            </div>
-                            <div className="h-1.5 w-full bg-[#F6F1E7] rounded-full overflow-hidden">
-                                <div
-                                    className={`h-full transition-all duration-1000 ${forecasting.saturationLevel > 60 ? 'bg-red-500' : 'bg-accent'}`}
-                                    style={{ width: `${forecasting.saturationLevel}%` }}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="p-8 bg-white border border-[#E7DED1] rounded-[2rem] shadow-sm">
-                            <h4 className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-4">Predicted Lifespan</h4>
-                            <div className="flex items-end gap-3 mb-4">
-                                <span className="text-5xl font-light text-[#141414] leading-none">{forecasting.estimatedLifespanDays}</span>
-                                <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-1">Days Remaining</span>
-                            </div>
-                            <p className="text-[11px] text-[#6B6B6B] leading-relaxed">
-                                Expected performance decline after {forecasting.estimatedLifespanDays} days based on category momentum.
-                            </p>
-                        </div>
-                    </div>
-
-                    <DeepAuditView digest={digest} />
                 </div>
             </div>
         </div >

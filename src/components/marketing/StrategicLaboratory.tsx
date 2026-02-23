@@ -6,22 +6,22 @@ import { Sparkles, Microscope, ShieldCheck } from 'lucide-react';
 export default function StrategicLaboratory() {
     const pillars = [
         {
-            title: "Scientific Fee Justification",
-            description: "Replace 'trust us' with 'here is the data'. Open-source your agency's genius by showing the mechanics, triggers, and semiotic subtext behind every recommendation.",
+            title: "Evidence-based counsel",
+            description: "Replace 'trust us' with 'here is the data'. Show the mechanics, triggers, and semiotic subtext behind every recommendation.",
             icon: <Microscope className="w-6 h-6 text-accent" />,
-            label: "EVIDENCE-BASED COUNSEL"
+            label: "PROOF, NOT OPINION"
         },
         {
-            title: "The Strategic Laboratory",
-            description: "Provide clients with a bespoke, white-labeled portal. A private archive where they can track competitor pivots and industry surges alongside your team.",
+            title: "Agency delivery layer (optional)",
+            description: "Client-ready share links and a high-trust interface for delivering strategy. White‑labeling is available as it rolls out.",
             icon: <Sparkles className="w-6 h-6 text-accent" />,
-            label: "WHITE-LABELED INTELLIGENCE"
+            label: "CLIENT DELIVERY"
         },
         {
-            title: "The Calm Advisor UX",
-            description: "Ditch the messy decks. Deliver strategic insights through a high-fashion, high-trust interface that positions your agency as an unassailable technical moat.",
+            title: "The calm advisor UX",
+            description: "Ditch messy decks. Deliver strategic insights in a high-fashion, high-trust format that holds up in a room.",
             icon: <ShieldCheck className="w-6 h-6 text-accent" />,
-            label: "HIGH-TRUST DELIVERY"
+            label: "HIGH-TRUST PRESENTATION"
         }
     ];
 

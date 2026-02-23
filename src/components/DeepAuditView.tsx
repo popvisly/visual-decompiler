@@ -1,7 +1,7 @@
 'use client';
 
 import { DeepAuditService, DeepAuditResult } from '@/lib/deep_audit';
-import { Activity, Palette, Search, Info } from 'lucide-react';
+import { Activity, Palette, Search, Info, History, Sparkles } from 'lucide-react';
 
 interface DeepAuditViewProps {
     digest: any;
@@ -105,6 +105,58 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                             <p className="text-sm font-light text-[#141414] leading-relaxed italic border-l-2 border-accent/20 pl-6">
                                 {audit.semiotics.meaningClaim}
                             </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* 4. Temporal Intelligence (Universal History) */}
+            <div className="bg-[#141414] p-8 md:p-12 rounded-[2.5rem] border border-white/5 relative overflow-hidden group">
+                <div className="absolute inset-0 opacity-5 [background-image:linear-gradient(#FBF7EF_1px,transparent_1px),linear-gradient(90deg,#FBF7EF_1px,transparent_1px)] [background-size:64px_64px]" />
+
+                <div className="relative z-10 flex flex-col lg:flex-row gap-12">
+                    <div className="lg:w-1/3">
+                        <div className="flex items-center gap-3 mb-6">
+                            <History className="w-5 h-5 text-accent" />
+                            <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-[#FBF7EF]">Temporal Genealogy</h3>
+                        </div>
+                        <div className="space-y-4">
+                            <h2 className="text-4xl font-light text-[#FBF7EF] tracking-tightest uppercase leading-none">
+                                {audit.temporal.aestheticYear}<br />
+                                <span className="text-accent italic">Archetype</span>
+                            </h2>
+                            <p className="text-[10px] font-bold text-[#FBF7EF]/40 uppercase tracking-[0.2em]">{audit.temporal.eraArchetype}</p>
+                        </div>
+                    </div>
+
+                    <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+                        <div className="p-8 bg-white/5 border border-white/10 rounded-[2rem] space-y-6">
+                            <p className="text-[9px] font-bold text-[#FBF7EF]/40 uppercase tracking-[0.4em]">Genealogy of Strategy</p>
+                            <p className="text-sm font-light text-[#FBF7EF]/70 leading-relaxed italic border-l-2 border-accent/20 pl-6">
+                                {audit.temporal.historicalGenealogy}
+                            </p>
+                        </div>
+
+                        <div className="space-y-8">
+                            <div>
+                                <div className="flex justify-between items-end mb-4">
+                                    <p className="text-[9px] font-bold text-[#FBF7EF]/40 uppercase tracking-[0.4em]">Trend Revival Potential</p>
+                                    <span className="text-xs font-bold text-accent">{audit.temporal.revivalPotential}%</span>
+                                </div>
+                                <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-accent animate-pulse"
+                                        style={{ width: `${audit.temporal.revivalPotential}%` }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="p-6 bg-accent/10 border border-accent/20 rounded-2xl flex items-center gap-4">
+                                <Sparkles className="w-5 h-5 text-accent shrink-0" />
+                                <p className="text-[11px] font-bold text-accent uppercase tracking-widest leading-normal">
+                                    High cultural resonance window for "{audit.temporal.aestheticYear}" revivals in modern category clusters.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
