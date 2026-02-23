@@ -11,7 +11,7 @@ export async function GET() {
             return new NextResponse('Unauthorized', { status: 401 });
         }
 
-        const metrics = await SovereigntyEngine.getAgencyMetrics();
+        const metrics = await SovereigntyEngine.getAgencyMetrics(userId);
         const briefing = await SovereigntyEngine.generateBriefing(metrics);
         const score = SovereigntyEngine.calculateSovereigntyScore(metrics);
 

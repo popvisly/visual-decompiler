@@ -1,4 +1,5 @@
 import { MeshService, MacroCluster } from './mesh_service';
+import { supabaseAdmin } from './supabase';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
@@ -78,6 +79,49 @@ export class PredictionService {
             console.error('[PredictionService Error]', error);
             return [this.getFallbackPrediction()];
         }
+    }
+
+    /**
+     * Calculates the Strategic Rarity of the agency's collection.
+     * Rarity increases when the collection uses high-leverage attributes that are not yet oversaturated.
+     */
+    static async calculateStrategicRarity(orgId: string): Promise<number> {
+        const { data: ads } = await supabaseAdmin
+            .from('ad_digests')
+            .select('classification')
+            .limit(100);
+
+        if (!ads || ads.length === 0) return 0.5;
+
+        // Count frequency of trigger mechanics
+        const frequency: Record<string, number> = {};
+        ads.forEach((ad: any) => {
+            const trigger = ad.classification?.trigger_mechanic;
+            if (trigger) frequency[trigger] = (frequency[trigger] || 0) + 1;
+        });
+
+        // Simple Rarity score: 1 - (most_common_trigger_count / total_ads)
+        // High score means a diverse, experimental set of triggers.
+        const values = Object.values(frequency);
+        const maxFreq = values.length > 0 ? Math.max(...values) : 0;
+        const score = 1 - (maxFreq / ads.length);
+
+        return Math.min(Math.max(score, 0), 1);
+    }
+
+    /**
+     * Determines the Trend Longevity of the current cultural shifts.
+     */
+    static calculateTrendLongevity(clusters: MacroCluster[]): 'FAD' | 'MICRO' | 'MACRO' | 'CLASSIC' {
+        if (clusters.length === 0) return 'MACRO';
+
+        const highImpactClusters = clusters.filter(c => c.impactLevel === 'high');
+        const avgBoardInvolvement = clusters.reduce((acc, c) => acc + c.boardsInvolved.length, 0) / clusters.length;
+
+        if (avgBoardInvolvement > 4) return 'CLASSIC';
+        if (avgBoardInvolvement >= 3) return 'MACRO';
+        if (highImpactClusters.length > 0) return 'MICRO';
+        return 'FAD';
     }
 
     private static getFallbackPrediction(): TrendPrediction {

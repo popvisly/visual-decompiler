@@ -9,6 +9,9 @@ import { AdDigest } from '@/types/digest';
 export function normalizeDigest(input: any): any {
     const d: any = (input && typeof input === 'object') ? input : {};
 
+    const asStr = (v: any) => (typeof v === 'string' ? v : (v == null ? '' : String(v)));
+    const lc = (v: any) => asStr(v).toLowerCase();
+
     // Ensure objects exist
     d.meta = d.meta && typeof d.meta === 'object' ? d.meta : {};
     d.classification = d.classification && typeof d.classification === 'object' ? d.classification : {};
@@ -48,6 +51,52 @@ export function normalizeDigest(input: any): any {
     d.classification.proof_type = arr(d.classification.proof_type).slice(0, 2);
     d.classification.visual_style = arr(d.classification.visual_style).slice(0, 2);
     d.classification.emotion_tone = arr(d.classification.emotion_tone).slice(0, 2);
+
+    // --- Enum-ish mapping (keep contract consistent) ---
+    // offer_type is an enum; models sometimes output free-text.
+    // Prefer OCR/text grounding over vibes.
+    const ocrAll = [
+        ...arr(d.extraction?.on_screen_copy?.ocr_text),
+        d.extraction?.on_screen_copy?.primary_headline,
+        d.extraction?.on_screen_copy?.cta_text,
+    ].map(lc).join(' | ');
+
+    // Hard override: if OCR indicates pre-owned / used inventory, map to OneTime_Purchase.
+    if (ocrAll.includes('used') || ocrAll.includes('pre-owned') || ocrAll.includes('preowned') || ocrAll.includes('premium selection')) {
+        d.classification.offer_type = 'OneTime_Purchase';
+    } else {
+        const offerRaw = lc(d.classification.offer_type);
+        if (offerRaw) {
+            // Generic promotional language should map to a known enum.
+            if (offerRaw.includes('promo') || offerRaw.includes('promotion') || offerRaw.includes('promotional')) {
+                d.classification.offer_type = 'Limited_Time_Discount';
+            }
+            // If it looks like a hard discount, map to discount.
+            if (offerRaw.includes('%') || offerRaw.includes('off') || offerRaw.includes('sale') || offerRaw.includes('discount')) {
+                d.classification.offer_type = 'Limited_Time_Discount';
+            }
+        }
+    }
+
+    // Emotion tone: collapse common synonyms to our enum values.
+    const tone = arr(d.classification.emotion_tone).map((t: any) => lc(t));
+    if (tone.some(t => t.includes('seduct') || t.includes('intimat') || t.includes('allure') || t.includes('sexy'))) {
+        d.classification.emotion_tone = ['Desire'];
+    } else if (tone.some(t => t.includes('funny') || t.includes('humor') || t.includes('irony') || t.includes('satire') || t.includes('cheeky'))) {
+        d.classification.emotion_tone = ['Humor'];
+    }
+
+    // Visual style: map common free-text to our enums.
+    const vs = arr(d.classification.visual_style).map((t: any) => lc(t));
+    if (vs.some(t => t.includes('high contrast') || t.includes('high-contrast') || t.includes('glamour') || t.includes('glossy') || t.includes('fashion'))) {
+        d.classification.visual_style = ['Editorial_Fashion'];
+    }
+
+    // Gaze priority: map free-text to known enum.
+    const gaze = lc(d.classification.gaze_priority);
+    if (gaze && (gaze.includes('face') || gaze.includes('gaze') || gaze.includes('expression') || gaze.includes('eye'))) {
+        d.classification.gaze_priority = 'Human_Face_EyeContact';
+    }
 
     // Optional extraction arrays
     d.extraction.on_screen_copy.supporting_copy = arr(d.extraction.on_screen_copy.supporting_copy);
