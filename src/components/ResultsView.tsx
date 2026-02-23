@@ -9,7 +9,7 @@ import ResultsCard, {
     TagRow,
     StrategyField,
 } from './ResultsCard';
-import { RotateCcw, Share, Check, Download } from 'lucide-react';
+import { RotateCcw, Share, Check, Download, Activity, TrendingUp } from 'lucide-react';
 import { useState, useRef } from 'react';
 import BrandTag from './BrandTag';
 
@@ -25,6 +25,9 @@ type Props = {
     /** When false, ResultsView will not render its own media preview column (useful when the parent already shows the ad media). */
     showMedia?: boolean;
     onReset?: () => void;
+    roiPredict?: any;
+    isAnomaly?: boolean;
+    anomalyReason?: string | null;
 };
 
 function BlurGate({ locked, children }: { locked: boolean; children: React.ReactNode }) {
@@ -48,7 +51,21 @@ function BlurGate({ locked, children }: { locked: boolean; children: React.React
     );
 }
 
-export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, brand, accessLevel = 'full', isSharedView = false, showMedia = true, onReset }: Props) {
+export default function ResultsView({
+    id,
+    mediaUrl,
+    mediaKind,
+    digest,
+    status,
+    brand,
+    accessLevel = 'full',
+    isSharedView = false,
+    showMedia = true,
+    onReset,
+    roiPredict,
+    isAnomaly,
+    anomalyReason
+}: Props) {
     const isLimited = accessLevel === 'limited';
     const d = digest;
     const cls = d?.classification;
@@ -291,6 +308,40 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
 
                 {/* Right — Analysis cards */}
                 <div className={`${showMedia ? 'lg:col-span-3' : ''} space-y-4`}>
+                    {/* ROI Predictor Integration */}
+                    {roiPredict && (
+                        <div className="p-10 bg-[#141414] rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-48 h-48 bg-accent/5 rounded-full -translate-y-24 translate-x-24 blur-3xl" />
+                            <div className="relative z-10 flex items-center justify-between gap-8">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 text-accent">
+                                        <Activity className="w-4 h-4" />
+                                        <h3 className="text-[10px] font-bold uppercase tracking-[0.3em]">ROI Projection</h3>
+                                    </div>
+                                    <p className="text-base font-light text-white/90 leading-relaxed italic pr-4">
+                                        "{roiPredict.rationale}"
+                                    </p>
+                                </div>
+                                <div className="shrink-0 text-center bg-white/5 px-6 py-5 rounded-2xl border border-white/5">
+                                    <p className="text-4xl font-light text-accent leading-none mb-2">{roiPredict.score}%</p>
+                                    <p className="text-[8px] font-bold text-[#FBF7EF]/40 uppercase tracking-[0.2em]">Efficiency</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Anomaly Integration */}
+                    {isAnomaly && (
+                        <div className="p-8 bg-accent rounded-[2.5rem] shadow-xl shadow-accent/10">
+                            <div className="flex items-center gap-2 text-[#141414] mb-3">
+                                <TrendingUp className="w-4 h-4" />
+                                <h3 className="text-[10px] font-bold uppercase tracking-[0.3em]">Pivot Warning</h3>
+                            </div>
+                            <p className="text-xl font-light text-[#141414] leading-relaxed italic">
+                                {anomalyReason}
+                            </p>
+                        </div>
+                    )}
                     {/* ── Invisible Machinery (the hero card) — BLUR on limited ── */}
                     <BlurGate locked={isLimited}>
                         <ResultsCard title="Invisible Machinery" variant="pullquote" accentBorder>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useRef } from 'react';
+import { useMemo, useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { TrendingUp, Sparkles, Activity, ArrowLeft, Play } from 'lucide-react';
 import BrandTag from '@/components/BrandTag';
@@ -47,18 +47,29 @@ export default function AdDetailClient({
     };
 
     const predictROI = async () => {
-        const res = await fetch('/api/discovery/predict', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                adId: ad.id,
-                trigger_mechanic: digest?.classification?.trigger_mechanic || ad.trigger_mechanic,
-                narrative_framework: digest?.classification?.narrative_framework || ad.narrative_framework
-            })
-        });
-        const data = await res.json();
-        setRoiPredict(data);
+        try {
+            const res = await fetch('/api/discovery/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    adId: ad.id,
+                    trigger_mechanic: digest?.classification?.trigger_mechanic || ad.trigger_mechanic,
+                    narrative_framework: digest?.classification?.narrative_framework || ad.narrative_framework
+                })
+            });
+            const data = await res.json();
+            setRoiPredict(data);
+        } catch (err) {
+            console.error('ROI Prediction failed:', err);
+        }
     };
+
+    // Auto-predict ROI on mount
+    useEffect(() => {
+        if (!roiPredict) {
+            predictROI();
+        }
+    }, [ad.id]);
 
     return (
         <div className={`py-12 space-y-16 ${isShared ? 'pt-0' : ''}`}>
@@ -85,51 +96,11 @@ export default function AdDetailClient({
 
                     {!isShared && (
                         <div className="flex items-center gap-4">
-                            <button
-                                onClick={predictROI}
-                                className="flex items-center gap-3 px-8 py-4 bg-white border border-[#E7DED1] rounded-full text-[11px] font-bold uppercase tracking-widest hover:border-accent transition-all shadow-xl shadow-black/[0.02] active:scale-95 group"
-                            >
-                                <Sparkles className="w-4 h-4 text-accent group-hover:scale-110 transition-transform" />
-                                ROI Predictor
-                            </button>
-                            <AdShareButton adId={ad.id} />
                             <PDFReport />
                         </div>
                     )}
                 </div>
 
-                {roiPredict && (
-                    <div className="mb-16 p-12 bg-[#141414] rounded-[3.5rem] border border-accent/20 shadow-2xl shadow-black/20 animate-in fade-in slide-in-from-top-4 duration-500 overflow-hidden relative group">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -translate-y-32 translate-x-32 blur-3xl" />
-                        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
-                            <div className="space-y-6 flex-1">
-                                <div className="flex items-center gap-3 text-accent mb-4">
-                                    <Activity className="w-6 h-6" />
-                                    <h3 className="text-xs font-bold uppercase tracking-[0.3em]">Strategic ROI Projection</h3>
-                                </div>
-                                <p className="text-xl font-light text-white leading-relaxed italic pr-10 opacity-90">
-                                    "{roiPredict.rationale}"
-                                </p>
-                            </div>
-                            <div className="shrink-0 text-center bg-white/5 p-10 rounded-[2.5rem] border border-white/5 min-w-[200px]">
-                                <p className="text-7xl font-light text-accent leading-none mb-4">{roiPredict.score}%</p>
-                                <p className="text-[10px] font-bold text-[#FBF7EF] uppercase tracking-[0.3em] opacity-40">Predicted Efficiency</p>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {ad.is_anomaly && (
-                    <div className="mb-16 p-12 bg-accent rounded-[3.5rem] shadow-2xl shadow-accent/20">
-                        <div className="flex items-center gap-3 text-[#141414] mb-4">
-                            <TrendingUp className="w-6 h-6" />
-                            <h3 className="text-xs font-bold uppercase tracking-[0.4em]">Strategic Pivot Warning</h3>
-                        </div>
-                        <p className="text-2xl font-light text-[#141414] leading-relaxed italic pr-10">
-                            {ad.anomaly_reason}
-                        </p>
-                    </div>
-                )}
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16">
                     {/* Left: media always visible */}
@@ -192,6 +163,9 @@ export default function AdDetailClient({
                                 accessLevel={ad.access_level || 'full'}
                                 isSharedView={false}
                                 showMedia={false}
+                                roiPredict={roiPredict}
+                                isAnomaly={ad.is_anomaly}
+                                anomalyReason={ad.anomaly_reason}
                             />
                         )}
 
