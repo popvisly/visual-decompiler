@@ -53,16 +53,28 @@ export function normalizeDigest(input: any): any {
     d.classification.emotion_tone = arr(d.classification.emotion_tone).slice(0, 2);
 
     // --- Enum-ish mapping (keep contract consistent) ---
-    // offer_type is an enum; models sometimes output free-text like "Used Cars".
-    // We map common phrases to our controlled vocabulary.
-    const offerRaw = lc(d.classification.offer_type);
-    if (offerRaw) {
-        if (offerRaw.includes('used') || offerRaw.includes('pre-owned') || offerRaw.includes('preowned') || offerRaw.includes('premium selection')) {
-            d.classification.offer_type = 'OneTime_Purchase';
-        }
-        // If it looks like a hard discount, map to discount.
-        if (offerRaw.includes('%') || offerRaw.includes('off') || offerRaw.includes('sale') || offerRaw.includes('discount')) {
-            d.classification.offer_type = 'Limited_Time_Discount';
+    // offer_type is an enum; models sometimes output free-text.
+    // Prefer OCR/text grounding over vibes.
+    const ocrAll = [
+        ...arr(d.extraction?.on_screen_copy?.ocr_text),
+        d.extraction?.on_screen_copy?.primary_headline,
+        d.extraction?.on_screen_copy?.cta_text,
+    ].map(lc).join(' | ');
+
+    // Hard override: if OCR indicates pre-owned / used inventory, map to OneTime_Purchase.
+    if (ocrAll.includes('used') || ocrAll.includes('pre-owned') || ocrAll.includes('preowned') || ocrAll.includes('premium selection')) {
+        d.classification.offer_type = 'OneTime_Purchase';
+    } else {
+        const offerRaw = lc(d.classification.offer_type);
+        if (offerRaw) {
+            // Generic promotional language should map to a known enum.
+            if (offerRaw.includes('promo') || offerRaw.includes('promotion') || offerRaw.includes('promotional')) {
+                d.classification.offer_type = 'Limited_Time_Discount';
+            }
+            // If it looks like a hard discount, map to discount.
+            if (offerRaw.includes('%') || offerRaw.includes('off') || offerRaw.includes('sale') || offerRaw.includes('discount')) {
+                d.classification.offer_type = 'Limited_Time_Discount';
+            }
         }
     }
 
