@@ -4,6 +4,7 @@ import { extractKeyframes, cleanupFrames, extractAudio } from '@/lib/video';
 import { decompileAd, VisionInput, transcribeAudio } from '@/lib/vision';
 import { DeepAuditService } from '@/lib/deep_audit';
 import { AdDigestSchema } from '@/types/digest';
+import { normalizeDigest } from '@/lib/digest_normalize';
 import { hashFile } from '@/lib/hashing';
 import { generateEmbedding } from '@/lib/embeddings';
 import { RoutingService } from '@/lib/routing_service';
@@ -213,9 +214,11 @@ export async function POST(req: Request) {
                     generated_at: new Date().toISOString(),
                 };
 
-                const validation = AdDigestSchema.safeParse(rawDigest);
+                const normalizedDigest = normalizeDigest(rawDigest);
+
+                const validation = AdDigestSchema.safeParse(normalizedDigest);
                 let finalStatus = 'processed';
-                const digestToPersist: any = validation.success ? validation.data : rawDigest;
+                const digestToPersist: any = validation.success ? validation.data : normalizedDigest;
 
                 if (!validation.success) {
                     finalStatus = 'needs_review';
