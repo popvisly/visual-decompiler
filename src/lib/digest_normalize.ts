@@ -47,6 +47,31 @@ export function normalizeDigest(input: any): any {
     // Arrays that must be arrays (prevent single string values)
     const arr = (v: any) => (Array.isArray(v) ? v : (v == null ? [] : [v]));
 
+    // Palette: coerce to array of 6-char hex strings (no #). Keep up to 6.
+    d.extraction.palette_hex = arr(d.extraction.palette_hex)
+        .map((c: any) => asStr(c).trim().replace(/^#/, '').toUpperCase())
+        .filter((c: string) => /^[0-9A-F]{6}$/.test(c))
+        .slice(0, 6);
+
+    // If we have a dominant color, ensure it appears first in the palette.
+    if (d.extraction.dominant_color_hex) {
+        const dom = asStr(d.extraction.dominant_color_hex).trim().replace(/^#/, '').toUpperCase();
+        if (/^[0-9A-F]{6}$/.test(dom)) {
+            d.extraction.dominant_color_hex = dom;
+            const rest = (d.extraction.palette_hex || []).filter((c: string) => c !== dom);
+            d.extraction.palette_hex = [dom, ...rest].slice(0, 6);
+        } else {
+            // If dominant isn't a valid hex, drop it to avoid UI issues.
+            d.extraction.dominant_color_hex = null;
+        }
+    }
+
+    // If we have a dominant color but no palette, seed palette with dominant.
+    if (d.extraction.dominant_color_hex && (!Array.isArray(d.extraction.palette_hex) || d.extraction.palette_hex.length === 0)) {
+        const dom = asStr(d.extraction.dominant_color_hex).trim().replace(/^#/, '').toUpperCase();
+        if (/^[0-9A-F]{6}$/.test(dom)) d.extraction.palette_hex = [dom];
+    }
+
     // Clamp known UI-bounded arrays
     d.classification.proof_type = arr(d.classification.proof_type).slice(0, 2);
     d.classification.visual_style = arr(d.classification.visual_style).slice(0, 2);

@@ -217,6 +217,11 @@ export const AdDigestSchema = z.object({
             ocr_text: z.array(z.string()).optional(), // [NEW] MS14 Deep OCR
         }),
         dominant_color_hex: z.string().nullable().optional(),
+        /**
+         * Palette extracted from the creative (dominant + supporting colors).
+         * Hex strings without # (e.g. "F2C94C"). Keep small for UI.
+         */
+        palette_hex: z.array(z.string()).optional(),
         keyframes: z.array(z.object({
             t_ms: z.number(),
             label: z.enum(["start", "mid", "end", "high_motion", "other", "Hook", "Body 1", "Body 2", "Body 3", "CTA"]),

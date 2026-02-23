@@ -53,7 +53,7 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                         <h3 className="text-xs font-bold uppercase tracking-[0.3em]">Color Theory Logic</h3>
                     </div>
 
-                    <div className="flex items-center gap-6 mb-8">
+                    <div className="flex items-center gap-6 mb-6">
                         <div
                             className="w-20 h-20 rounded-3xl border border-[#E7DED1] shadow-inner"
                             style={{ backgroundColor: `#${audit.color.dominantHex.replace('#', '')}` }}
@@ -65,6 +65,24 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                             </p>
                         </div>
                     </div>
+
+                    {/* Palette swatches (when available) */}
+                    {Array.isArray(digest?.extraction?.palette_hex) && digest.extraction.palette_hex.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mb-8">
+                            {digest.extraction.palette_hex.slice(0, 6).map((hex: string) => {
+                                const clean = String(hex).replace(/^#/, '');
+                                return (
+                                    <div key={clean} className="flex items-center gap-2 bg-[#FBF7EF] border border-[#E7DED1] rounded-xl px-3 py-2">
+                                        <div
+                                            className="w-4 h-4 rounded-full border border-[#E7DED1]"
+                                            style={{ backgroundColor: `#${clean}` }}
+                                        />
+                                        <span className="text-[10px] font-mono text-[#6B6B6B]">#{clean}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
 
                     <div className="space-y-4">
                         <div className="flex flex-wrap gap-2">

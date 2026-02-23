@@ -67,10 +67,19 @@ export function BulletList({ items, color = 'accent' }: { items: string[]; color
     );
 }
 
-export function ConfidenceGauge({ label, value }: { label: string; value: number }) {
+export function ConfidenceGauge({ label, value, description }: { label: string; value: number; description?: string }) {
     const pct = Math.round(value * 100);
-    const color = pct >= 80 ? 'text-green-400' : pct >= 50 ? 'text-yellow-400' : 'text-red-400';
-    const strokeColor = pct >= 80 ? '#00e676' : pct >= 50 ? '#ffd740' : '#ff5252';
+    const color = pct >= 90 ? 'text-green-500' : pct >= 75 ? 'text-green-400' : pct >= 50 ? 'text-yellow-500' : 'text-red-500';
+    const strokeColor = pct >= 90 ? '#10b981' : pct >= 75 ? '#34d399' : pct >= 50 ? '#f59e0b' : '#ef4444';
+
+    const getStatusLabel = (p: number) => {
+        if (p >= 90) return 'Definitive';
+        if (p >= 75) return 'High Probability';
+        if (p >= 50) return 'Probabilistic';
+        return 'Low Signal';
+    };
+
+    const statusLabel = getStatusLabel(pct);
     const circumference = 2 * Math.PI * 28;
     const offset = circumference - (value * circumference);
 
@@ -89,7 +98,19 @@ export function ConfidenceGauge({ label, value }: { label: string; value: number
                 />
             </svg>
             <div className="flex-1 min-w-0">
-                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] truncate">{label.replace(/_/g, ' ')}</p>
+                <div className="flex items-center gap-2 mb-0.5">
+                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] truncate">
+                        {label.replace(/_/g, ' ')}
+                    </p>
+                    <span className={`text-[8px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded-md bg-white border border-[#E7DED1] ${color}`}>
+                        {statusLabel}
+                    </span>
+                </div>
+                {description && (
+                    <p className="text-[10px] text-[#6B6B6B]/60 leading-tight">
+                        {description}
+                    </p>
+                )}
             </div>
             <span className={`text-xs font-bold ${color}`}>{pct}%</span>
         </div>

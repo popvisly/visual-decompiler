@@ -261,16 +261,28 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
                                 </div>
                             )}
 
-                            {/* Dominant color */}
-                            {ext?.dominant_color_hex && (
-                                <div className="flex items-center gap-3 px-1 mt-2">
-                                    <div
-                                        className="w-6 h-6 rounded-full border border-[#E7DED1] shadow-sm"
-                                        style={{ backgroundColor: ext.dominant_color_hex }}
-                                    />
-                                    <span className="text-[12px] font-mono font-medium text-[#6B6B6B]">
-                                        {ext.dominant_color_hex}
-                                    </span>
+                            {/* Color palette */}
+                            {((ext as any)?.palette_hex?.length || ext?.dominant_color_hex) && (
+                                <div className="px-1 mt-2">
+                                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-2">Palette</p>
+                                    <div className="flex items-center gap-2 flex-wrap">
+                                        {(((ext as any)?.palette_hex?.length ? (ext as any).palette_hex : [ext?.dominant_color_hex]) as any[])
+                                            .filter(Boolean)
+                                            .slice(0, 6)
+                                            .map((hex: string) => {
+                                                const clean = String(hex).replace(/^#/, '');
+                                                return (
+                                                    <div key={clean} className="flex items-center gap-2">
+                                                        <div
+                                                            className="w-6 h-6 rounded-full border border-[#E7DED1] shadow-sm"
+                                                            style={{ backgroundColor: `#${clean}` }}
+                                                            title={`#${clean}`}
+                                                        />
+                                                        <span className="text-[11px] font-mono font-medium text-[#6B6B6B]">#{clean}</span>
+                                                    </div>
+                                                );
+                                            })}
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -387,13 +399,42 @@ export default function ResultsView({ id, mediaUrl, mediaKind, digest, status, b
 
                     {/* ── Confidence / Diagnostics ── */}
                     <ResultsCard title="Confidence Scores" variant="gauge">
-                        <div className="space-y-3">
-                            {diag?.confidence && Object.entries(diag.confidence)
-                                .filter(([_, val]) => typeof val === 'number')
-                                .map(([key, val]) => (
-                                    <ConfidenceGauge key={key} label={key} value={val as number} />
-                                ))
-                            }
+                        <div className="space-y-6">
+                            {/* Highlight Overall Score */}
+                            {diag?.confidence?.overall !== undefined && (
+                                <div className="pb-4 border-b border-[#E7DED1]">
+                                    <ConfidenceGauge
+                                        label="System Confidence (Overall)"
+                                        value={diag.confidence.overall}
+                                        description="Aggregate probability across all semiotic and strategic layers."
+                                    />
+                                </div>
+                            )}
+
+                            <div className="grid grid-cols-1 gap-4">
+                                {diag?.confidence && Object.entries(diag.confidence)
+                                    .filter(([key, val]) => typeof val === 'number' && key !== 'overall')
+                                    .map(([key, val]) => {
+                                        const descriptions: Record<string, string> = {
+                                            trigger_mechanic: "Detection of underlying psychological triggers.",
+                                            secondary_trigger_mechanic: "Secondary motivational drivers.",
+                                            narrative_framework: "Structural semiotic pattern alignment.",
+                                            copy_transcription: "OCR and manual copy accuracy.",
+                                            color_extraction: "Spectrum and palette precision.",
+                                            subtext: "Inferred semiotic and cultural subtext accuracy.",
+                                            objection: "Persuasion-logic dismantling confidence."
+                                        };
+                                        return (
+                                            <ConfidenceGauge
+                                                key={key}
+                                                label={key}
+                                                value={val as number}
+                                                description={descriptions[key] || "Component-level signal strength."}
+                                            />
+                                        );
+                                    })
+                                }
+                            </div>
                         </div>
                     </ResultsCard>
 
