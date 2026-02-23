@@ -206,8 +206,16 @@ export async function POST(req: Request) {
                     }
                 } catch { /* ignore */ }
 
+                // Stamp schema metadata so downstream UI / exports can rely on a stable contract.
+                (rawDigest as any).meta = {
+                    ...(rawDigest as any).meta,
+                    schema_version: '2026-02-23',
+                    generated_at: new Date().toISOString(),
+                };
+
                 const validation = AdDigestSchema.safeParse(rawDigest);
                 let finalStatus = 'processed';
+                const digestToPersist: any = validation.success ? validation.data : rawDigest;
 
                 if (!validation.success) {
                     finalStatus = 'needs_review';
@@ -217,13 +225,13 @@ export async function POST(req: Request) {
                 // 6. Generate Embedding for Semantic Search
                 console.log(`[Worker Job ${job.id}] Generating strategic embedding...`);
                 const embeddingText = [
-                    rawDigest.meta?.brand_guess,
-                    rawDigest.extraction?.on_screen_copy?.primary_headline,
-                    rawDigest.strategy?.semiotic_subtext,
-                    rawDigest.strategy?.competitive_advantage,
-                    rawDigest.classification?.trigger_mechanic,
-                    rawDigest.classification?.claim_type,
-                    rawDigest.extraction?.narrative_arc?.hook_analysis
+                    digestToPersist.meta?.brand_guess,
+                    digestToPersist.extraction?.on_screen_copy?.primary_headline,
+                    digestToPersist.strategy?.semiotic_subtext,
+                    digestToPersist.strategy?.competitive_advantage,
+                    digestToPersist.classification?.trigger_mechanic,
+                    digestToPersist.classification?.claim_type,
+                    digestToPersist.extraction?.narrative_arc?.hook_analysis
                 ].filter(Boolean).join(' | ');
 
                 const embedding = await generateEmbedding(embeddingText);
@@ -233,7 +241,7 @@ export async function POST(req: Request) {
                 let anomalyScore = 0;
                 let anomalyReason = null;
 
-                const brand = rawDigest.meta?.brand_guess;
+                const brand = digestToPersist.meta?.brand_guess;
                 if (brand && embedding) {
                     const { data: baselineAds } = await supabaseAdmin
                         .from('ad_digests')
@@ -279,7 +287,7 @@ export async function POST(req: Request) {
                 // Keep writes minimal and let DB triggers/computed columns derive fields.
                 const updatePayload: any = {
                     status: finalStatus,
-                    digest: rawDigest,
+                    digest: digestToPersist,
                 };
 
                 const { error: updateErr } = await supabaseAdmin
@@ -311,7 +319,7 @@ export async function POST(req: Request) {
                 // 6.7 Persist Deep Audit Hooks (Milestone 24)
                 if (finalStatus === 'processed') {
                     console.log(`[Worker Job ${job.id}] Persisting Deep Audit forensic hooks...`);
-                    const auditResult = DeepAuditService.perform(rawDigest);
+                    const auditResult = DeepAuditService.perform(digestToPersist);
 
                     const hooksToInsert = [
                         { ad_id: job.id, hook_type: 'pacing', intelligence_data: auditResult.pacing },
@@ -357,7 +365,7 @@ export async function POST(req: Request) {
                                         brand: brand,
                                         is_anomaly: isAnomaly,
                                         anomaly_reason: anomalyReason,
-                                        digest: rawDigest
+                                        digest: digestToPersist
                                     })
                                 }).catch(err => console.error(`[Webhook Error] ${hook.url}:`, err));
                             }
