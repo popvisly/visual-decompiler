@@ -123,7 +123,9 @@ export default function CommandCenter() {
                                 { label: 'Total Boards', value: data.metrics.totalBoards, icon: BarChart3 },
                                 { label: 'Intelligence Depth', value: `${data.metrics.totalAds}`, icon: TrendingUp },
                                 { label: 'Active Anomalies', value: data.metrics.anomalyCount, icon: AlertTriangle },
-                                { label: 'Market Velocity', value: `${(data.metrics.marketVelocity * 100).toFixed(0)}%`, icon: Zap }
+                                { label: 'Market Velocity', value: `${(data.metrics.marketVelocity * 100).toFixed(0)}%`, icon: Zap },
+                                { label: 'Strategic Rarity', value: `${(data.metrics.strategicRarity * 100).toFixed(0)}%`, icon: Target },
+                                { label: 'Intent Mapping', value: `${(data.metrics.intentMappingScore * 100).toFixed(0)}%`, icon: Activity }
                             ].map((stat, i) => (
                                 <div key={i} className="p-8 bg-white/5 border border-white/10 rounded-[2.5rem] hover:bg-white/[0.08] transition-all cursor-default group relative overflow-hidden">
                                     <div className="absolute top-0 left-0 w-1 h-full bg-accent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -139,8 +141,13 @@ export default function CommandCenter() {
 
                             <div className="relative z-10 flex items-center justify-between">
                                 <h4 className="text-[10px] font-bold text-[#FBF7EF]/40 uppercase tracking-[0.4em]">Market Adoption Curve</h4>
-                                <div className="px-3 py-1 bg-accent/20 border border-accent/40 rounded-full">
-                                    <span className="text-[8px] font-bold text-accent uppercase tracking-widest">Forecasting Active</span>
+                                <div className="flex gap-2">
+                                    <div className="px-3 py-1 bg-white/10 border border-white/20 rounded-full">
+                                        <span className="text-[8px] font-bold text-[#FBF7EF]/60 uppercase tracking-widest">{data.metrics.trendLongevity} CYCLE</span>
+                                    </div>
+                                    <div className="px-3 py-1 bg-accent/20 border border-accent/40 rounded-full">
+                                        <span className="text-[8px] font-bold text-accent uppercase tracking-widest">Forecasting Active</span>
+                                    </div>
                                 </div>
                             </div>
 
