@@ -25,6 +25,15 @@ export function normalizeDigest(input: any): any {
     // Coerce common “empty” values to null where appropriate
     const nullIfEmpty = (v: any) => (typeof v === 'string' && v.trim() === '' ? null : v);
     d.meta.brand_guess = nullIfEmpty(d.meta.brand_guess);
+    d.meta.historical_genealogy = nullIfEmpty(d.meta.historical_genealogy);
+    d.meta.adoption_tier = nullIfEmpty(d.meta.adoption_tier);
+    d.meta.predicted_resonance_window = nullIfEmpty(d.meta.predicted_resonance_window);
+
+    // momentum must be a number
+    if (typeof d.meta.trend_momentum === 'string') {
+        const n = Number(d.meta.trend_momentum);
+        if (!Number.isNaN(n)) d.meta.trend_momentum = n;
+    }
     d.meta.product_category_guess = nullIfEmpty(d.meta.product_category_guess);
     d.meta.language_guess = nullIfEmpty(d.meta.language_guess);
 

@@ -12,6 +12,8 @@ export type AgencyMetrics = {
     anomalyCount: number;
     marketVelocity: number;
     predictionAccuracy: number;
+    trendResonance: number;
+    edgySignalDensity: number;
 };
 
 export type ExecutiveBriefing = {
@@ -27,15 +29,16 @@ export class SovereigntyEngine {
      * Based on data density, anomaly volume, and market velocity.
      */
     static calculateSovereigntyScore(metrics: AgencyMetrics): number {
-        const boardDensityFactor = Math.min(metrics.totalBoards * 5, 20); // Max 20 points
-        const adDensityFactor = Math.min(metrics.totalAds / 10, 20); // Max 20 points
-        const confidenceFactor = metrics.avgConfidence * 20; // Max 20 points (assuming 0-1)
-        const anomalyResilience = Math.max(20 - metrics.anomalyCount, 0); // Fewer anomalies = higher stability? Or more = better data? 
-        // Let's say high anomaly detection density is good.
-        const anomalyDensityFactor = Math.min(metrics.anomalyCount * 2, 20);
-        const marketVelocityFactor = metrics.marketVelocity * 20;
+        const boardDensityFactor = Math.min(metrics.totalBoards * 5, 20);
+        const adDensityFactor = Math.min(metrics.totalAds / 10, 20);
+        const confidenceFactor = metrics.avgConfidence * 15;
+        const anomalyDensityFactor = Math.min(metrics.anomalyCount * 2, 15);
+        const marketVelocityFactor = metrics.marketVelocity * 10;
 
-        const rawScore = boardDensityFactor + adDensityFactor + confidenceFactor + anomalyDensityFactor + marketVelocityFactor;
+        const resonanceFactor = (metrics.trendResonance || 0) * 10;
+        const edgyFactor = (metrics.edgySignalDensity || 0) * 10;
+
+        const rawScore = boardDensityFactor + adDensityFactor + confidenceFactor + anomalyDensityFactor + marketVelocityFactor + resonanceFactor + edgyFactor;
         return Math.min(Math.round(rawScore), 100);
     }
 
@@ -53,8 +56,10 @@ export class SovereigntyEngine {
             totalAds: adCount || 0,
             avgConfidence: 0.88,
             anomalyCount: 24,
-            marketVelocity: 0.75, // 0-1 scale
-            predictionAccuracy: 0.92
+            marketVelocity: 0.75,
+            predictionAccuracy: 0.92,
+            trendResonance: 0.68,
+            edgySignalDensity: 0.42
         };
     }
 
@@ -75,6 +80,8 @@ export class SovereigntyEngine {
                     - Active Analytics: ${metrics.totalAds} ads
                     - Anomaly Detection: ${metrics.anomalyCount} active clusters
                     - Prediction Accuracy: ${metrics.predictionAccuracy * 100}%
+                    - Trend Resonance: ${metrics.trendResonance * 100}%
+                    - Edgy Signal Density: ${metrics.edgySignalDensity * 100}%
                     
                     Return a JSON object with:
                     - macroNarrative: A 2-sentence summary of the current market state.

@@ -143,15 +143,26 @@ export const exclusivityModeSchema = z.enum([
     "discriminating_clientele"
 ]);
 
+export const adoptionTierSchema = z.enum([
+    "Edgy",
+    "Trendy",
+    "Mainstream"
+]);
+
 export const AdDigestSchema = z.object({
     meta: z.object({
-        /** Version the digest contract so prompt/schema iterations don't silently break the UI. */
+        /** Version the digest contract so prompt/schema iterations don't silently break the UI. (v2.2: Trend Intelligence) */
         schema_version: z.string().optional(),
         generated_at: z.string().optional(),
         media_type: z.enum(["image", "video", "mixed"]),
         brand_guess: z.string().nullable(),
         product_category_guess: z.string().nullable(),
         language_guess: z.string().nullable().optional(),
+        aesthetic_year: z.string().nullable().optional(),
+        historical_genealogy: z.string().nullable().optional(),
+        adoption_tier: adoptionTierSchema.or(z.string()).nullable().optional(),
+        trend_momentum: z.number().nullable().optional(),
+        predicted_resonance_window: z.string().nullable().optional(),
     }),
     classification: z.object({
         trigger_mechanic: triggerMechanicSchema.or(z.string()),

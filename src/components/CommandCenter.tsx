@@ -134,6 +134,54 @@ export default function CommandCenter() {
                             ))}
                         </div>
 
+                        <div className="p-10 bg-black/40 border border-white/5 rounded-[3rem] space-y-10 group relative overflow-hidden">
+                            <div className="absolute inset-0 opacity-5 [background-image:linear-gradient(#FBF7EF_1px,transparent_1px),linear-gradient(90deg,#FBF7EF_1px,transparent_1px)] [background-size:20px_20px]" />
+
+                            <div className="relative z-10 flex items-center justify-between">
+                                <h4 className="text-[10px] font-bold text-[#FBF7EF]/40 uppercase tracking-[0.4em]">Market Adoption Curve</h4>
+                                <div className="px-3 py-1 bg-accent/20 border border-accent/40 rounded-full">
+                                    <span className="text-[8px] font-bold text-accent uppercase tracking-widest">Forecasting Active</span>
+                                </div>
+                            </div>
+
+                            <div className="relative h-32 flex items-end justify-between px-10 pb-4 border-b border-white/10">
+                                <div className="flex flex-col items-center gap-3">
+                                    <div className="w-12 bg-accent/40 h-16 rounded-t-xl group-hover:h-20 transition-all duration-700" />
+                                    <span className="text-[9px] font-bold opacity-40 tracking-widest">EDGY</span>
+                                </div>
+                                <div className="flex flex-col items-center gap-3">
+                                    <div className="w-12 bg-accent h-24 rounded-t-xl group-hover:h-28 transition-all duration-700 shadow-[0_0_30px_rgba(251,188,5,0.3)]" />
+                                    <span className="text-[9px] font-bold text-accent tracking-widest">TRENDY</span>
+                                </div>
+                                <div className="flex flex-col items-center gap-3">
+                                    <div className="w-12 bg-white/20 h-12 rounded-t-xl group-hover:h-14 transition-all duration-700" />
+                                    <span className="text-[9px] font-bold opacity-40 tracking-widest">MAINSTREAM</span>
+                                </div>
+
+                                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20 px-8" viewBox="0 0 200 100" preserveAspectRatio="none">
+                                    <path
+                                        d="M20,80 C50,20 100,20 180,80"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="1.5"
+                                        strokeDasharray="4 4"
+                                        className="text-accent"
+                                    />
+                                </svg>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-6 pt-2">
+                                <div className="space-y-2">
+                                    <p className="text-[9px] font-bold text-[#FBF7EF]/40 uppercase tracking-widest">Velocity</p>
+                                    <p className="text-xl font-light text-accent italic">Accelerating</p>
+                                </div>
+                                <div className="space-y-2 text-right">
+                                    <p className="text-[9px] font-bold text-[#FBF7EF]/40 uppercase tracking-widest">Resonance</p>
+                                    <p className="text-xl font-light text-[#FBF7EF] leading-none">High</p>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="p-8 bg-black/40 border border-white/5 rounded-[3rem] space-y-8">
                             <div className="flex items-center justify-between">
                                 <h4 className="text-[10px] font-bold text-[#FBF7EF]/40 uppercase tracking-[0.3em]">Operational Readiness</h4>
@@ -171,6 +219,6 @@ export default function CommandCenter() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
