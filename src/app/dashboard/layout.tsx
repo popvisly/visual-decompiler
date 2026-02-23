@@ -1,5 +1,4 @@
 import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar';
 
 export default function DashboardLayout({
     children,
@@ -14,12 +13,9 @@ export default function DashboardLayout({
 
             <div className="relative z-10 flex flex-col min-h-screen">
                 <Header />
-                <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-10 w-full">
-                    <Sidebar searchParams={{}} />
-                    <main className="flex-1 w-full relative z-20">
-                        {children}
-                    </main>
-                </div>
+                <main className="flex-1 w-full relative z-20">
+                    {children}
+                </main>
             </div>
         </div>
     );

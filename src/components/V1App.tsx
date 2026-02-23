@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { UserButton } from '@clerk/nextjs';
 import Logo from '@/components/Logo';
 import UploadZone from '@/components/UploadZone';
-import ProcessingView from '@/components/ProcessingView';
+import ProcessingViewClient from '@/components/ProcessingViewClient';
 import ResultsView from '@/components/ResultsView';
 
 type AccessLevel = 'full' | 'limited';
@@ -129,7 +129,7 @@ export default function V1App() {
 
                     {state.phase === 'processing' && (
                         <div className="mt-16">
-                            <ProcessingView
+                            <ProcessingViewClient
                                 mediaUrl={state.mediaUrl}
                                 jobId={state.jobId}
                                 onComplete={handleProcessingComplete}

@@ -35,8 +35,8 @@ export default function IngestForm() {
                 throw err;
             }
             setUrl('');
-            alert('Ad queued for decompilation! It will appear in the dashboard shortly.');
-            router.refresh();
+            // alert('Ad queued for decompilation! It will appear in the dashboard shortly.');
+            router.push(`/dashboard/processing/${payload.job_id}`);
         } catch (err: any) {
             console.error(err);
             setErrorObj({ message: err?.message || 'Failed to ingest ad.', code: err?.code });

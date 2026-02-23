@@ -23,10 +23,10 @@ const ORBIT_PILLS = [
 type Props = {
     mediaUrl: string;
     jobId: string;
-    onComplete: (digest: any) => void;
+    onComplete?: (digest: any) => void;
 };
 
-export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
+export default function ProcessingViewClient({ mediaUrl, jobId, onComplete }: Props) {
     const router = useRouter();
     const [step, setStep] = useState(0);
     const [dots, setDots] = useState('');
@@ -52,7 +52,7 @@ export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
                     ? json.details.find((d: any) => d?.id === jobId)
                     : null;
                 if (detail?.status === 'processed') {
-                    router.push(`/dashboard/${jobId}`);
+                    router.push(`/dashboard/${jobId}?new=true`);
                     return;
                 }
             } catch { /* ignore */ }
@@ -115,11 +115,17 @@ export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
                 if (res.ok) {
                     const data = await res.json();
                     if (data.status === 'processed' && data.digest) {
-                        if (!cancelled) onComplete(data);
+                        if (!cancelled) {
+                            if (onComplete) onComplete(data);
+                            else router.push(`/dashboard/${jobId}?new=true`);
+                        }
                         return;
                     }
                     if (data.status === 'failed') {
-                        if (!cancelled) onComplete({ ...data, _error: 'Analysis failed. Please try again.' });
+                        if (!cancelled) {
+                            if (onComplete) onComplete({ ...data, _error: 'Analysis failed. Please try again.' });
+                            else router.push('/dashboard?error=analysis_failed');
+                        }
                         return;
                     }
                 }
@@ -230,9 +236,9 @@ export default function ProcessingView({ mediaUrl, jobId, onComplete }: Props) {
                 <div className="mt-6 flex flex-col items-center gap-3">
                     <a
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414] border border-[#E7DED1] bg-white hover:border-[#D8CCBC] hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)] transition-all"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414]/70 border border-[#E7DED1] bg-white/50 hover:bg-white hover:border-[#D8CCBC] hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)] transition-all"
                     >
-                        Go to Analysis Library
+                        Return to Library
                     </a>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { supabaseAdmin } from '@/lib/supabase';
 import { auth } from '@clerk/nextjs/server';
 import { LayoutGrid, Folder, Plus, ArrowRight, Loader2 } from 'lucide-react';
+import Sidebar from '@/components/Sidebar';
 
 export const dynamic = 'force-dynamic';
 
@@ -70,28 +71,31 @@ async function BoardsList() {
 
 export default function BoardsPage() {
     return (
-        <div className="space-y-16 py-12">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-16 border-b border-[#E7DED1]">
-                <div>
-                    <h2 className="text-7xl font-light text-[#141414] tracking-tightest uppercase leading-[0.85] select-none">
-                        Strategic<br />
-                        <span className="text-[#6B6B6B]/30">Boards</span>
-                    </h2>
-                    <p className="text-[12px] text-[#6B6B6B] mt-6 font-bold tracking-[0.3em] uppercase">Private & Team Collections / Knowledge Bases</p>
-                </div>
-            </div>
-
-            <Suspense fallback={
-                <div className="flex flex-col items-center justify-center py-40 space-y-8">
-                    <div className="flex gap-1.5">
-                        {[0, 1, 2].map(i => (
-                            <div key={i} className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: `${i * 0.2}s` }} />
-                        ))}
+        <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-10 w-full relative z-20">
+            <Sidebar searchParams={{}} />
+            <div className="flex-1 space-y-16 py-12">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-16 border-b border-[#E7DED1]">
+                    <div>
+                        <h2 className="text-7xl font-light text-[#141414] tracking-tightest uppercase leading-[0.85] select-none">
+                            Strategic<br />
+                            <span className="text-[#6B6B6B]/30">Boards</span>
+                        </h2>
+                        <p className="text-[12px] text-[#6B6B6B] mt-6 font-bold tracking-[0.3em] uppercase">Private & Team Collections / Knowledge Bases</p>
                     </div>
                 </div>
-            }>
-                <BoardsList />
-            </Suspense>
+
+                <Suspense fallback={
+                    <div className="flex flex-col items-center justify-center py-40 space-y-8">
+                        <div className="flex gap-1.5">
+                            {[0, 1, 2].map(i => (
+                                <div key={i} className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: `${i * 0.2}s` }} />
+                            ))}
+                        </div>
+                    </div>
+                }>
+                    <BoardsList />
+                </Suspense>
+            </div>
         </div>
     );
 }

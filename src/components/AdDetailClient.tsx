@@ -1,8 +1,9 @@
 'use client';
 
 import { useMemo, useState, useRef, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { TrendingUp, Sparkles, Activity, ArrowLeft, Play } from 'lucide-react';
+import { TrendingUp, Sparkles, Activity, ArrowLeft, Play, CheckCircle2, X } from 'lucide-react';
 import BrandTag from '@/components/BrandTag';
 import ResultsView from '@/components/ResultsView';
 import PDFReport from '@/components/PDFReport';
@@ -27,6 +28,9 @@ export default function AdDetailClient({
 }) {
     const forecasting = useMemo(() => ForecastingService.analyzeAd(digest, pulseText || ''), [digest, pulseText]);
     const [currentTimeMs, setCurrentTimeMs] = useState(0);
+    const searchParams = useSearchParams();
+    const isNew = searchParams.get('new') === 'true';
+    const [showBanner, setShowBanner] = useState(isNew);
     const [roiPredict, setRoiPredict] = useState<any>(null);
 
     type TabKey = 'report' | 'forensics' | 'pins';
@@ -73,6 +77,34 @@ export default function AdDetailClient({
 
     return (
         <div className={`py-12 space-y-16 ${isShared ? 'pt-0' : ''}`}>
+            {showBanner && (
+                <div className="max-w-6xl mx-auto px-6 pt-8 animate-in fade-in slide-in-from-top-4 duration-1000">
+                    <div className="bg-[#141414] rounded-3xl p-6 md:p-8 flex items-center justify-between shadow-2xl shadow-black/20 border border-white/5 relative overflow-hidden group">
+                        {/* Progress Glow */}
+                        <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent" />
+
+                        <div className="flex items-center gap-6 relative z-10">
+                            <div className="w-12 h-12 rounded-2xl bg-accent/20 flex items-center justify-center text-accent shadow-inner">
+                                <CheckCircle2 className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <h3 className="text-white text-sm font-bold uppercase tracking-widest mb-1">Analysis Complete</h3>
+                                <p className="text-white/50 text-[11px] font-medium tracking-wide">Deconstruction successfully merged into agency library.</p>
+                            </div>
+                        </div>
+
+                        <button
+                            onClick={() => setShowBanner(false)}
+                            className="p-2 text-white/30 hover:text-white transition-colors relative z-10"
+                        >
+                            <X className="w-5 h-5" />
+                        </button>
+
+                        <div className="absolute -right-20 -top-20 w-64 h-64 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
+                    </div>
+                </div>
+            )}
+
             <div className="max-w-6xl mx-auto px-6">
                 {/* Header - Editorial Style */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-10 pb-8 md:pb-16 border-b border-[#E7DED1] mb-12 md:mb-16">

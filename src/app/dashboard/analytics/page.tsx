@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import Filters from '@/components/Filters';
 import Header from '@/components/Header';
 import { auth } from '@clerk/nextjs/server';
+import Sidebar from '@/components/Sidebar';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -134,26 +135,29 @@ export default async function AnalyticsPage({
     const params = await searchParams;
 
     return (
-        <div className="space-y-10">
-            <div>
-                <h2 className="text-3xl font-light text-txt-on-dark tracking-tight uppercase">Global Intelligence</h2>
-                <p className="text-[10px] text-txt-on-dark-muted mt-1 font-medium tracking-widest uppercase">Strategic pattern distribution</p>
-            </div>
+        <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-10 w-full relative z-20">
+            <Sidebar searchParams={params} />
+            <div className="flex-1 space-y-10">
+                <div>
+                    <h2 className="text-3xl font-light text-txt-on-dark tracking-tight uppercase">Global Intelligence</h2>
+                    <p className="text-[10px] text-txt-on-dark-muted mt-1 font-medium tracking-widest uppercase">Strategic pattern distribution</p>
+                </div>
 
-            <section className="flex-1">
-                <Suspense fallback={
-                    <div className="space-y-12 animate-pulse">
-                        <div className="grid grid-cols-3 gap-5">
-                            {[1, 2, 3].map(i => <div key={i} className="h-24 bg-surface/50 rounded-2xl border border-white/5" />)}
+                <section className="flex-1">
+                    <Suspense fallback={
+                        <div className="space-y-12 animate-pulse">
+                            <div className="grid grid-cols-3 gap-5">
+                                {[1, 2, 3].map(i => <div key={i} className="h-24 bg-surface/50 rounded-2xl border border-white/5" />)}
+                            </div>
+                            <div className="grid grid-cols-2 gap-6">
+                                {[1, 2, 3, 4].map(i => <div key={i} className="h-56 bg-surface/50 rounded-2xl border border-white/5" />)}
+                            </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-6">
-                            {[1, 2, 3, 4].map(i => <div key={i} className="h-56 bg-surface/50 rounded-2xl border border-white/5" />)}
-                        </div>
-                    </div>
-                }>
-                    <AnalyticsContent brand={params.brand} />
-                </Suspense>
-            </section>
+                    }>
+                        <AnalyticsContent brand={params.brand} />
+                    </Suspense>
+                </section>
+            </div>
         </div>
     );
 }

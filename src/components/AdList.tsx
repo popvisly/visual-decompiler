@@ -78,7 +78,7 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                 return (
                     <Link
                         key={ad.id}
-                        href={`/report/${ad.id}`}
+                        href={`/dashboard/${ad.id}`}
                         className="group bg-white rounded-xl border border-[#E7DED1] overflow-hidden flex flex-col cursor-pointer hover:border-[#D8CCBC] hover:shadow-[0_12px_40px_rgba(20,20,20,0.06)] hover:-translate-y-[2px] transition-all duration-300 shadow-[0_4px_20px_rgba(20,20,20,0.02)]"
                     >
                         {/* Media */}
