@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Activity, Zap, TrendingUp, Search, Loader2, Sparkles, RefreshCw } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import TrendMap from '@/components/TrendMap';
+import TrendRadar from '@/components/TrendRadar';
 
 export default function PulsePage() {
     const [pulse, setPulse] = useState<any>(null);
@@ -143,6 +144,8 @@ export default function PulsePage() {
                                     <p className="text-[11px] text-[#6B6B6B] font-bold uppercase tracking-widest">No trend data for {selectedCategory}</p>
                                 </div>
                             )}
+
+                            <TrendRadar category={selectedCategory} days={30} />
                         </div>
                     </div>
 
