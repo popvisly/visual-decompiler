@@ -197,11 +197,11 @@ Return exactly this JSON object:
     "product_category_guess": "string|null",
     "language_guess": "string|null",
     "schema_version": "2.2",
-    "aesthetic_year": "string (e.g. 1950s)",
-    "historical_genealogy": "string (mapping modern tactics to historical roots)",
+    "aesthetic_year": "string|null",
+    "historical_genealogy": "string|null",
     "adoption_tier": "Edgy|Trendy|Mainstream",
-    "trend_momentum": "0-100",
-    "predicted_resonance_window": "string (e.g. 6-12 months)"
+    "trend_momentum": 0,
+    "predicted_resonance_window": "string|null"
   },
   "classification": {
     "trigger_mechanic": "…",
@@ -211,23 +211,50 @@ Return exactly this JSON object:
     "cognitive_load": "…",
     "offer_type": "…",
     "claim_type": "…",
-    "proof_type": ["…","…"],
-    "visual_style": ["…","…"],
-    "emotion_tone": ["…","…"],
+    "proof_type": ["…"],
+    "visual_style": ["…"],
+    "emotion_tone": ["…"],
     "cta_strength": "…",
     "brand_association_values": ["string"]
+  },
+  "audience_strategy": {
+    "target_audience_segment": "string",
+    "unmet_need_tags": ["string"],
+    "transfer_mechanism": "string",
+    "first3s_hook_type": "…|null",
+    "hook_clarity_score": 0.0,
+    "evidence_anchors_timecoded": [{ "t": "string", "anchor": "string" }]
+  },
+  "premium_intelligence": {
+    "premium_principles": ["…"],
+    "premium_principle_primary": "…|null",
+    "exclusivity_mode": "…|null",
+    "premium_index_score": 0
+  },
+  "semiotic_intelligence": {
+    "semiotic_layers": [{ "layer_name": "string", "cues": ["string"], "claim": "string" }],
+    "semiotic_tensions": ["string"],
+    "possible_readings": [{ "reading": "string", "support": ["string"], "note": "string|null" }]
   },
   "extraction": {
     "on_screen_copy": {
       "primary_headline": "string|null",
       "supporting_copy": ["string"],
       "cta_text": "string|null",
-      "disclaimers": ["string"]
+      "disclaimers": ["string"],
+      "ocr_text": ["string"]
     },
     "dominant_color_hex": "string|null",
     "notable_visual_elements": ["string"],
     "composition_notes": "string",
-    "audio_notes": "string|null"
+    "audio_notes": "string|null",
+    "narrative_arc": {
+      "hook_analysis": "string",
+      "retention_mechanics": "string",
+      "story_structure": "string",
+      "cta_climax": "string",
+      "arc_segments": [{ "t_ms": 0, "label": "string", "strategy_note": "string" }]
+    }
   },
   "strategy": {
     "target_job_to_be_done": "string",

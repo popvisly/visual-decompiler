@@ -31,11 +31,18 @@ export interface TemporalAudit {
     revivalPotential: number; // 0-100
 }
 
+export interface TrendAudit {
+    adoptionTier: 'Edgy' | 'Trendy' | 'Mainstream';
+    momentum: number; // 0-100
+    resonanceWindow: string;
+}
+
 export interface DeepAuditResult {
     pacing: PacingAudit;
     color: ColorAudit;
     semiotics: SemioticAudit;
     temporal: TemporalAudit;
+    trend: TrendAudit;
 }
 
 export class DeepAuditService {
@@ -144,6 +151,17 @@ export class DeepAuditService {
     }
 
     /**
+     * Extracts trend intelligence from the digest meta.
+     */
+    static analyzeTrend(digest: any): TrendAudit {
+        return {
+            adoptionTier: digest.meta?.adoption_tier || 'Trendy',
+            momentum: digest.meta?.trend_momentum ?? 50,
+            resonanceWindow: digest.meta?.predicted_resonance_window || 'Immediate'
+        };
+    }
+
+    /**
      * Orchestrates the total Deep Audit.
      */
     static perform(digest: any): DeepAuditResult {
@@ -151,7 +169,8 @@ export class DeepAuditService {
             pacing: this.analyzePacing(digest),
             color: this.analyzeColor(digest),
             semiotics: this.analyzeSemiotics(digest),
-            temporal: this.analyzeTemporal(digest)
+            temporal: this.analyzeTemporal(digest),
+            trend: this.analyzeTrend(digest)
         };
     }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { DeepAuditService, DeepAuditResult } from '@/lib/deep_audit';
-import { Activity, Palette, Search, Info, History, Sparkles } from 'lucide-react';
+import { Activity, Palette, Search, Info, History, Sparkles, Zap, ChevronRight } from 'lucide-react';
 
 interface DeepAuditViewProps {
     digest: any;
@@ -156,6 +156,88 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                                 <p className="text-[11px] font-bold text-accent uppercase tracking-widest leading-normal">
                                     High cultural resonance window for "{audit.temporal.aestheticYear}" revivals in modern category clusters.
                                 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* 5. Trend Intelligence (Market Adoption) */}
+            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] border border-[#E7DED1] shadow-[0_30px_60px_rgba(20,20,20,0.03)] relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+
+                <div className="relative z-10 flex flex-col lg:flex-row gap-16">
+                    <div className="lg:w-[40%] space-y-10">
+                        <div className="flex items-center gap-3">
+                            <Zap className="w-5 h-5 text-accent" />
+                            <h3 className="text-xs font-bold uppercase tracking-[0.3em]">Trend Intelligence</h3>
+                        </div>
+
+                        <div className="space-y-6">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full">
+                                <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
+                                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Adoption: {audit.trend.adoptionTier}</span>
+                            </div>
+
+                            <h4 className="text-3xl font-light text-[#141414] leading-tight uppercase tracking-tight">
+                                {audit.trend.adoptionTier === 'Edgy' ? 'Early Signal Detection' : audit.trend.adoptionTier === 'Trendy' ? 'Peak Market Resonance' : 'Mass Market Saturation'}
+                            </h4>
+
+                            <p className="text-sm font-light text-[#6B6B6B] leading-relaxed italic border-l-2 border-accent/20 pl-6">
+                                Predicated resonance window of <span className="font-bold text-[#141414] not-italic">{audit.trend.resonanceWindow}</span>. Creative velocity suggests high probability of categorical migration.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="lg:w-[60%] flex flex-col justify-between pt-4">
+                        <div className="relative h-40 flex items-end justify-between px-12 pb-6 border-b border-[#E7DED1]">
+                            {/* Curve SVG */}
+                            <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20 px-8" viewBox="0 0 200 100" preserveAspectRatio="none">
+                                <path
+                                    d="M20,80 C50,20 100,20 180,80"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    strokeDasharray="4 4"
+                                    className="text-accent"
+                                />
+                                {audit.trend.adoptionTier === 'Edgy' && <circle cx="45" cy="45" r="4" className="fill-accent animate-pulse" />}
+                                {audit.trend.adoptionTier === 'Trendy' && <circle cx="100" cy="25" r="4" className="fill-accent animate-pulse" />}
+                                {audit.trend.adoptionTier === 'Mainstream' && <circle cx="155" cy="65" r="4" className="fill-accent animate-pulse" />}
+                            </svg>
+
+                            <div className="flex flex-col items-center gap-4">
+                                <div className={`w-1 bg-accent/10 h-12 rounded-t-full transition-all duration-700 ${audit.trend.adoptionTier === 'Edgy' ? 'h-16 bg-accent opacity-100' : 'opacity-40'}`} />
+                                <span className={`text-[9px] font-bold tracking-widest ${audit.trend.adoptionTier === 'Edgy' ? 'text-accent' : 'opacity-30'}`}>EDGY</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-4">
+                                <div className={`w-1 bg-accent/10 h-12 rounded-t-full transition-all duration-700 ${audit.trend.adoptionTier === 'Trendy' ? 'h-24 bg-accent opacity-100' : 'opacity-40'}`} />
+                                <span className={`text-[9px] font-bold tracking-widest ${audit.trend.adoptionTier === 'Trendy' ? 'text-accent' : 'opacity-30'}`}>TRENDY</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-4">
+                                <div className={`w-1 bg-accent/10 h-12 rounded-t-full transition-all duration-700 ${audit.trend.adoptionTier === 'Mainstream' ? 'h-16 bg-accent opacity-100' : 'opacity-40'}`} />
+                                <span className={`text-[9px] font-bold tracking-widest ${audit.trend.adoptionTier === 'Mainstream' ? 'text-accent' : 'opacity-30'}`}>MAINSTREAM</span>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-12 pt-10">
+                            <div>
+                                <div className="flex justify-between items-end mb-3">
+                                    <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.4em]">Creative Velocity</p>
+                                    <span className="text-xs font-bold text-accent">{audit.trend.momentum}%</span>
+                                </div>
+                                <div className="h-1 w-full bg-[#FBF7EF] border border-[#E7DED1] rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-accent"
+                                        style={{ width: `${audit.trend.momentum}%` }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex items-center justify-end">
+                                <button className="flex items-center gap-2 group/btn">
+                                    <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest group-hover/btn:text-accent transition-colors">Forecasting Logic</span>
+                                    <ChevronRight className="w-3 h-3 text-[#6B6B6B] group-hover/btn:text-accent group-hover/btn:translate-x-0.5 transition-all" />
+                                </button>
                             </div>
                         </div>
                     </div>
