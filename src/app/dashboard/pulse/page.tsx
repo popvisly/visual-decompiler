@@ -13,6 +13,8 @@ export default function PulsePage() {
     const [selectedCategory, setSelectedCategory] = useState<string>('E-commerce');
     const [isLoading, setIsLoading] = useState(true);
     const [isTrendsLoading, setIsTrendsLoading] = useState(false);
+    const [radarDays, setRadarDays] = useState<number>(30);
+    const [radarTop, setRadarTop] = useState<number>(6);
 
     const fetchCategories = async () => {
         try {
@@ -120,17 +122,48 @@ export default function PulsePage() {
 
                         {/* Trend Section */}
                         <div className="space-y-10">
-                            <div className="flex items-center justify-between px-4">
+                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-4">
                                 <p className="text-[12px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em]">Industry Pivot Analysis</p>
-                                <select
-                                    className="bg-white border border-[#E7DED1] rounded-2xl px-6 py-3 text-[11px] font-bold uppercase tracking-widest focus:outline-none focus:border-accent transition-all shadow-sm hover:border-[#BB9E7B]"
-                                    value={selectedCategory}
-                                    onChange={(e) => setSelectedCategory(e.target.value)}
-                                >
-                                    {categories.map(c => (
-                                        <option key={c} value={c}>{c}</option>
-                                    ))}
-                                </select>
+                                <div className="flex flex-wrap items-center gap-3 justify-end">
+                                    <select
+                                        className="bg-white border border-[#E7DED1] rounded-2xl px-6 py-3 text-[11px] font-bold uppercase tracking-widest focus:outline-none focus:border-accent transition-all shadow-sm hover:border-[#BB9E7B]"
+                                        value={selectedCategory}
+                                        onChange={(e) => setSelectedCategory(e.target.value)}
+                                    >
+                                        {categories.map(c => (
+                                            <option key={c} value={c}>{c}</option>
+                                        ))}
+                                    </select>
+
+                                    {/* Radar controls */}
+                                    <div className="flex items-center gap-2 bg-white border border-[#E7DED1] rounded-2xl px-4 py-2 shadow-sm">
+                                        <span className="text-[9px] font-bold uppercase tracking-widest text-[#6B6B6B]">Radar</span>
+                                        {[7, 30, 90].map(d => (
+                                            <button
+                                                key={d}
+                                                type="button"
+                                                onClick={() => setRadarDays(d)}
+                                                className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-colors ${radarDays === d
+                                                    ? 'bg-[#141414] text-[#FBF7EF] border-[#141414]'
+                                                    : 'bg-[#FBF7EF] text-[#6B6B6B] border-[#E7DED1] hover:border-[#141414] hover:text-[#141414]'
+                                                    }`}
+                                            >
+                                                {d}d
+                                            </button>
+                                        ))}
+                                        <div className="h-6 w-px bg-[#E7DED1] mx-1" />
+                                        <label className="text-[9px] font-bold uppercase tracking-widest text-[#6B6B6B]">Top</label>
+                                        <select
+                                            className="bg-[#FBF7EF] border border-[#E7DED1] rounded-xl px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest focus:outline-none"
+                                            value={radarTop}
+                                            onChange={(e) => setRadarTop(parseInt(e.target.value))}
+                                        >
+                                            {[3, 5, 6, 8, 10].map(n => (
+                                                <option key={n} value={n}>{n}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
                             {isTrendsLoading ? (
@@ -145,7 +178,7 @@ export default function PulsePage() {
                                 </div>
                             )}
 
-                            <TrendRadar category={selectedCategory} days={30} />
+                            <TrendRadar category={selectedCategory} days={radarDays} top={radarTop} />
                         </div>
                     </div>
 

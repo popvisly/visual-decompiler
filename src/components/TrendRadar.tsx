@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { TrendingUp, TrendingDown, Loader2 } from 'lucide-react';
 
-export default function TrendRadar({ category, days = 30 }: { category?: string; days?: number }) {
+export default function TrendRadar({ category, days = 30, top = 6 }: { category?: string; days?: number; top?: number }) {
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -13,7 +13,7 @@ export default function TrendRadar({ category, days = 30 }: { category?: string;
         const run = async () => {
             setLoading(true);
             try {
-                const url = `/api/analytics/radar?days=${days}${category ? `&category=${encodeURIComponent(category)}` : ''}`;
+                const url = `/api/analytics/radar?days=${days}&top=${top}${category ? `&category=${encodeURIComponent(category)}` : ''}`;
                 const res = await fetch(url);
                 const json = await res.json();
                 if (!cancelled) setData(json);
@@ -27,7 +27,7 @@ export default function TrendRadar({ category, days = 30 }: { category?: string;
         return () => {
             cancelled = true;
         };
-    }, [category, days]);
+    }, [category, days, top]);
 
     if (loading) {
         return (
@@ -105,14 +105,22 @@ export default function TrendRadar({ category, days = 30 }: { category?: string;
                         {block.rising && block.rising[0]?.exemplarsRecent?.length > 0 && (
                             <div className="pt-2">
                                 <p className="text-[9px] font-bold uppercase tracking-widest text-[#6B6B6B] mb-2">Recent exemplars</p>
-                                <div className="flex flex-wrap gap-2">
-                                    {block.rising[0].exemplarsRecent.slice(0, 4).map((ex: any) => (
+                                <div className="flex flex-wrap gap-3">
+                                    {block.rising[0].exemplarsRecent.slice(0, 6).map((ex: any) => (
                                         <Link
                                             key={ex.id}
                                             href={`/dashboard/${ex.id}`}
-                                            className="px-3 py-1.5 rounded-full bg-white border border-[#E7DED1] text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] hover:border-[#141414] transition-colors"
+                                            className="group flex items-center gap-2 rounded-2xl bg-white border border-[#E7DED1] hover:border-[#141414] transition-colors p-2"
+                                            title="Open ad"
                                         >
-                                            View
+                                            <div className="w-10 h-10 rounded-xl overflow-hidden bg-[#FBF7EF] border border-[#E7DED1] shrink-0">
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img src={ex.media_url} alt="" className="w-full h-full object-cover" />
+                                            </div>
+                                            <div className="leading-none">
+                                                <div className="text-[10px] font-bold text-[#6B6B6B] group-hover:text-[#141414] uppercase tracking-widest">View</div>
+                                                <div className="text-[9px] font-mono text-[#6B6B6B]/50">{String(ex.id).slice(0, 6)}…</div>
+                                            </div>
                                         </Link>
                                     ))}
                                 </div>
