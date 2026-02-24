@@ -167,23 +167,6 @@ export default function ResultsView({
                         </button>
                     )}
 
-                    {isSharedView ? (
-                        <a
-                            href="/"
-                            className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414]/70 border border-[#E7DED1] bg-[#FBF7EF]/50 hover:bg-[#FBF7EF] hover:border-[#D8CCBC] hover:text-[#141414] transition-all hover:-translate-y-[1px] shadow-sm hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)]"
-                        >
-                            <RotateCcw className="w-3.5 h-3.5" />
-                            Analyze Your Own Ad
-                        </a>
-                    ) : (
-                        <button
-                            onClick={onReset}
-                            className="flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414]/70 border border-[#E7DED1] bg-[#FBF7EF]/50 hover:bg-[#FBF7EF] hover:border-[#D8CCBC] hover:text-[#141414] transition-all hover:-translate-y-[1px] shadow-sm hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)]"
-                        >
-                            <RotateCcw className="w-3.5 h-3.5" />
-                            Analyze Another
-                        </button>
-                    )}
                 </div>
             </div>
 

@@ -21,7 +21,7 @@ export default async function ProcessingPage({
 
     return (
         <div className="min-h-screen bg-[#F6F1E7] flex items-center justify-center p-6">
-            <ProcessingViewClient mediaUrl={ad.media_url} jobId={id} />
+            <ProcessingViewClient mediaUrl={ad.media_url} jobId={id} onComplete={undefined} />
         </div>
     );
 }

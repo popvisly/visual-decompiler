@@ -84,9 +84,9 @@ export default function IngestForm() {
     const errorCount = batchItems.filter(i => i.status === 'error').length;
 
     return (
-        <div className="flex flex-col items-end gap-2">
+        <div className="flex items-center gap-4">
             {!bulkMode ? (
-                <>
+                <div className="flex items-center gap-3">
                     <form onSubmit={handleSubmit} className="flex gap-2">
                         <input
                             type="url"
@@ -112,7 +112,7 @@ export default function IngestForm() {
                         <List className="w-3 h-3" />
                         Bulk Mode
                     </button>
-                </>
+                </div>
             ) : (
                 <div className="w-[30rem] bg-black/5 border border-black/10 shadow-[0_10px_30px_rgba(20,20,20,0.06)] backdrop-blur-xl rounded-2xl p-5 space-y-4">
                     <div className="flex items-center justify-between">

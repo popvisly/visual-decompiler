@@ -38,6 +38,15 @@ export default function Header({ activeTab }: { activeTab?: 'dashboard' | 'analy
                         >
                             Analytics
                         </Link>
+                        <Link
+                            href="/dashboard/processing/new"
+                            className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-[0.15em] transition-all ${activeTab === undefined
+                                ? 'text-[#6B6B6B] hover:text-[#141414] hover:bg-white/50'
+                                : 'text-[#6B6B6B] hover:text-[#141414] hover:bg-white/50'
+                                }`}
+                        >
+                            Analyze
+                        </Link>
                     </nav>
                 </div>
 
