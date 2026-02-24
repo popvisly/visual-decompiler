@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Settings, Image, Palette, CheckCircle2, Loader2, Save, Link2, Plus, Trash2, Globe, ShieldCheck, Users } from 'lucide-react';
+import { Settings, Image, Palette, CheckCircle2, Loader2, Save, Link2, Plus, Trash2, Globe, ShieldCheck, Users, Zap } from 'lucide-react';
 
 export default function SettingsClient() {
     const [loading, setLoading] = useState(true);
@@ -17,7 +17,9 @@ export default function SettingsClient() {
         logo_url: '',
         primary_color: '#BB9E7B',
         white_label_enabled: false,
-        custom_domain: ''
+        custom_domain: '',
+        tier: 'free',
+        stripe_customer_id: ''
     });
 
     useEffect(() => {
@@ -31,7 +33,9 @@ export default function SettingsClient() {
                     logo_url: data.logo_url || '',
                     primary_color: data.primary_color || '#BB9E7B',
                     white_label_enabled: data.white_label_enabled || false,
-                    custom_domain: data.custom_domain || ''
+                    custom_domain: data.custom_domain || '',
+                    tier: data.tier || 'free',
+                    stripe_customer_id: data.stripe_customer_id || ''
                 });
                 if (data.custom_domain) setDomainStatus('verified'); // Assume verified if already saved for now
             }
@@ -114,7 +118,22 @@ export default function SettingsClient() {
                 setWebhooks(webhooks.filter(h => h.id !== id));
             }
         } catch (err) {
-            console.error(err);
+            console.error('Delete webhook failed:', err);
+        }
+    };
+
+    const handleManageBilling = async () => {
+        try {
+            const res = await fetch('/api/billing/portal', { method: 'POST' });
+            const data = await res.json();
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                alert(data.error || 'Failed to open billing portal');
+            }
+        } catch (err) {
+            console.error('Portal redirect failed:', err);
+            alert('Failed to redirect to billing portal.');
         }
     };
 
@@ -261,6 +280,76 @@ export default function SettingsClient() {
                                     <ShieldCheck className="w-4 h-4 text-accent inline-block mr-2 group-hover:scale-110 transition-transform" />
                                     Provision Laboratory
                                 </button>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Subscription & Billing */}
+                    <div className="space-y-10 group">
+                        <p className="text-[12px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em] px-2">Access & Governance</p>
+
+                        <div className="bg-white p-12 rounded-[3.5rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)] overflow-hidden relative">
+                            {/* Decorative background signal */}
+                            <div className="absolute -top-24 -right-24 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+
+                            <div className="flex items-center gap-3 mb-12 text-[#141414]">
+                                <ShieldCheck className="w-5 h-5 text-accent" />
+                                <h3 className="text-xs font-bold uppercase tracking-[0.2em]">Deployment Tier</h3>
+                            </div>
+
+                            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-12">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-4">
+                                        <h4 className="text-4xl font-light text-[#141414] tracking-tightest uppercase">
+                                            {settings.tier === 'pro' ? 'Agency Sovereignty' : 'The Observer'}
+                                        </h4>
+                                        <span className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border ${settings.tier === 'pro' ? 'bg-accent/10 border-accent/20 text-accent' : 'bg-[#E7DED1]/20 border-[#E7DED1]/40 text-[#6B6B6B]'}`}>
+                                            {settings.tier === 'pro' ? 'Premium active' : 'Standard'}
+                                        </span>
+                                    </div>
+                                    <p className="text-[12px] text-[#6B6B6B] leading-relaxed max-w-md">
+                                        {settings.tier === 'pro'
+                                            ? "Full-spectrum deconstruction active. You have executive command over all forensic modules."
+                                            : "Basic observer access. Upgrade to Agency Sovereignty to unlock unlimited deconstructions and white-label portals."}
+                                    </p>
+                                </div>
+
+                                <div className="flex gap-4">
+                                    {settings.tier === 'pro' ? (
+                                        <button
+                                            onClick={handleManageBilling}
+                                            className="px-10 py-5 bg-[#141414] hover:bg-black text-[#FBF7EF] font-bold text-[11px] uppercase tracking-widest rounded-full shadow-2xl transition-all active:scale-95 flex items-center gap-3"
+                                        >
+                                            <Globe className="w-4 h-4 text-accent" />
+                                            Manage Subscription
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => window.location.href = '/pricing'}
+                                            className="px-10 py-5 bg-accent hover:bg-[#A38865] text-white font-bold text-[11px] uppercase tracking-widest rounded-full shadow-2xl transition-all active:scale-95 flex items-center gap-3"
+                                        >
+                                            <Zap className="w-4 h-4 text-white" />
+                                            Upgrade Access
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+
+                            {settings.tier === 'pro' && (
+                                <div className="mt-12 pt-8 border-t border-[#E7DED1]/50 grid grid-cols-1 sm:grid-cols-3 gap-8">
+                                    <div className="space-y-1">
+                                        <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-widest opacity-50">Billing Identity</p>
+                                        <p className="text-[11px] font-mono text-[#141414] truncate">{settings.stripe_customer_id}</p>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-widest opacity-50">Seat Utilization</p>
+                                        <p className="text-[11px] font-bold text-[#141414]">Unlimited / Unlimited</p>
+                                    </div>
+                                    <div className="space-y-1">
+                                        <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-widest opacity-50">Laboratory Status</p>
+                                        <p className="text-[11px] font-bold text-accent">Active</p>
+                                    </div>
+                                </div>
                             )}
                         </div>
                     </div>
