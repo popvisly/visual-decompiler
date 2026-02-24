@@ -73,14 +73,6 @@ export default function StrategicLaboratory() {
                                 We provide the sovereign infrastructure to justify your fees with forensic precision.
                             </p>
 
-                            <div className="flex items-center gap-4 py-6 border-y border-white/5">
-                                <div className="p-2 bg-accent/20 rounded-full">
-                                    <div className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
-                                </div>
-                                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/60">
-                                    Continuous Signal Extraction Active
-                                </span>
-                            </div>
                         </motion.div>
                     </div>
 
@@ -126,41 +118,6 @@ export default function StrategicLaboratory() {
 
                 </div>
 
-                {/* Footer: Credibility & CTA */}
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 }}
-                    className="mt-32 pt-16 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-12"
-                >
-                    <div className="flex flex-col md:flex-row items-center gap-8">
-                        <div className="flex -space-x-4">
-                            {[1, 2, 3, 4].map(i => (
-                                <div key={i} className="w-12 h-12 rounded-full bg-[#1A1A1A] border-2 border-[#141414] flex items-center justify-center relative overflow-hidden group/avatar">
-                                    <div className="absolute inset-0 bg-accent/20 opacity-0 group-hover/avatar:opacity-100 transition-opacity" />
-                                    <span className="text-[10px] font-bold text-white/40 group-hover/avatar:text-accent transition-colors relative z-10">S{i}</span>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="text-center md:text-left">
-                            <p className="text-[12px] font-bold tracking-[0.3em] uppercase text-[#FBF7EF]">
-                                Trusted by Elite Strategy Units
-                            </p>
-                            <p className="text-[10px] font-medium text-white/30 mt-1 uppercase tracking-widest">
-                                ISO-27001 Certified Infrastructure
-                            </p>
-                        </div>
-                    </div>
-
-                    <a
-                        href="/app"
-                        className="group relative px-12 py-5 bg-[#FBF7EF] text-[#141414] rounded-full text-[12px] font-bold uppercase tracking-widest overflow-hidden transition-all active:scale-95 shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
-                    >
-                        <span className="relative z-10">Provision your portal</span>
-                        <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16, 1, 0.3, 1]" />
-                    </a>
-                </motion.div>
             </div>
         </section>
     );
