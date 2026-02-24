@@ -3,6 +3,7 @@ import Hero from '@/components/marketing/Hero';
 import DecompilePipeline from '@/components/marketing/DecompilePipeline';
 import StrategicLaboratory from '@/components/marketing/StrategicLaboratory';
 import CaseStudyFashion from '@/components/marketing/CaseStudyFashion';
+import PersonaGrid from '@/components/marketing/PersonaGrid';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 import { Pill, PreviewCard, CaseCard } from '@/types/homepage';
 
@@ -88,6 +89,8 @@ export default function HomePage() {
                 cards={FASHION_CARDS}
                 cta={{ label: "Load this example in the app", href: "/app?example=luxury" }}
             />
+
+            <PersonaGrid />
 
             <StrategicLaboratory />
 
