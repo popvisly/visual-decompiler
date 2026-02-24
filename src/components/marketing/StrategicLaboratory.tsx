@@ -1,126 +1,164 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Sparkles, Microscope, ShieldCheck } from 'lucide-react';
+import { Target, Fingerprint, Landmark, ArrowUpRight } from 'lucide-react';
 
 export default function StrategicLaboratory() {
     const pillars = [
         {
             title: "Evidence-based counsel",
             description: "Replace 'trust us' with 'here is the data'. Show the mechanics, triggers, and semiotic subtext behind every recommendation.",
-            icon: <Microscope className="w-6 h-6 text-accent" />,
-            label: "PROOF, NOT OPINION"
+            icon: <Fingerprint className="w-5 h-5 text-accent" />,
+            label: "01 / ARCHITECTURE"
         },
         {
-            title: "Agency delivery layer (optional)",
-            description: "Client-ready share links and a high-trust interface for delivering strategy. White‑labeling is available as it rolls out.",
-            icon: <Sparkles className="w-6 h-6 text-accent" />,
-            label: "CLIENT DELIVERY"
+            title: "Agency delivery layer",
+            description: "Client-ready share links and a high-trust interface for delivering strategy. White‑labeling is standard for enterprise partners.",
+            icon: <Landmark className="w-5 h-5 text-accent" />,
+            label: "02 / SOVEREIGNTY"
         },
         {
             title: "The calm advisor UX",
-            description: "Ditch messy decks. Deliver strategic insights in a high-fashion, high-trust format that holds up in a room.",
-            icon: <ShieldCheck className="w-6 h-6 text-accent" />,
-            label: "HIGH-TRUST PRESENTATION"
+            description: "Ditch messy decks. Deliver strategic insights in a high-fashion, high-trust format designed for leadership presentation.",
+            icon: <Target className="w-5 h-5 text-accent" />,
+            label: "03 / AUTHENTICITY"
         }
     ];
 
     return (
-        <section className="bg-[#141414] text-[#FBF7EF] py-32 md:py-48 overflow-hidden relative">
-            {/* Fine line background */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none [background-image:linear-gradient(rgba(251,247,239,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(251,247,239,0.1)_1px,transparent_1px)] [background-size:64px_64px]" />
+        <section className="bg-[#141414] text-[#FBF7EF] py-32 md:py-64 overflow-hidden relative">
+            {/* Fine architectural grid background */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none [background-image:linear-gradient(rgba(251,247,239,1)_1px,transparent_1px),linear-gradient(90deg,rgba(251,247,239,1)_1px,transparent_1px)] [background-size:100px_100px]" />
+
+            {/* Subtle glow / light leak */}
+            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-accent/5 blur-[160px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+                <div className="flex flex-col lg:flex-row gap-24 lg:gap-8 items-start">
 
-                    {/* Massive Typography Side */}
-                    <div>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                    {/* Left: Dramatic Typography Column */}
+                    <div className="w-full lg:w-[45%] sticky lg:top-32">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="text-accent text-[12px] font-bold tracking-[0.4em] uppercase mb-8"
+                            className="flex items-center gap-3 mb-10"
                         >
-                            Strategic Infrastructure
-                        </motion.p>
+                            <div className="w-8 h-[1px] bg-accent" />
+                            <span className="text-accent text-[11px] font-bold tracking-[0.4em] uppercase">
+                                Infrastructure for elite agencies
+                            </span>
+                        </motion.div>
+
                         <motion.h2
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                            className="text-6xl md:text-8xl font-light leading-[0.9] tracking-tightest uppercase"
+                            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                            className="text-[12vw] lg:text-[7vw] font-light leading-[0.85] tracking-tightest uppercase mb-12"
                         >
                             The Strategic<br />
-                            <span className="text-[#6B6B6B]">Laboratory</span>
+                            <span className="text-[#FBF7EF] italic font-serif lowercase italic tracking-normal">Laboratory</span>
                         </motion.h2>
-                        <motion.p
+
+                        <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="text-xl text-[#6B6B6B] mt-12 max-w-xl leading-relaxed"
+                            className="max-w-md space-y-8"
                         >
-                            Your agency's value isn't just creative—it's intelligence.
-                            We provide the white-labeled infrastructure to justify your fees with scientific precision.
-                        </motion.p>
+                            <p className="text-xl text-[#FBF7EF]/60 leading-relaxed font-light">
+                                Your agency's value isn't just creative—it's <span className="text-[#FBF7EF] font-medium">intelligence</span>.
+                                We provide the sovereign infrastructure to justify your fees with forensic precision.
+                            </p>
+
+                            <div className="flex items-center gap-4 py-8 border-y border-white/5">
+                                <div className="p-2 bg-accent/20 rounded-full">
+                                    <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+                                </div>
+                                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/40">
+                                    Continuous Signal Extraction Active
+                                </span>
+                            </div>
+                        </motion.div>
                     </div>
 
-                    {/* Pillars Side */}
-                    <div className="space-y-16">
+                    {/* Right: Asymmetrical Pillar Cards */}
+                    <div className="w-full lg:w-[55%] lg:pl-20 space-y-8 lg:space-y-12">
                         {pillars.map((pillar, idx) => (
                             <motion.div
                                 key={idx}
-                                initial={{ opacity: 0, x: 20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                initial={{ opacity: 0, y: 30, x: idx % 2 === 0 ? 20 : -20 }}
+                                whileInView={{ opacity: 1, y: 0, x: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: 0.1 * idx }}
-                                className="group"
+                                transition={{ delay: 0.1 * idx, duration: 0.8 }}
+                                className={`relative group p-8 md:p-12 rounded-[2.5rem] border border-white/5 bg-white/[0.02] backdrop-blur-xl hover:bg-white/[0.04] transition-all duration-500 overflow-hidden ${idx === 1 ? 'lg:ml-12' : idx === 2 ? 'lg:ml-24' : ''
+                                    }`}
                             >
-                                <div className="flex items-center gap-4 mb-6">
-                                    <div className="p-3 bg-white/5 rounded-2xl border border-white/10 group-hover:border-accent/50 transition-colors">
-                                        {pillar.icon}
+                                {/* Background Accent Glow */}
+                                <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-accent/10 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                                <div className="relative z-10">
+                                    <div className="flex items-center justify-between mb-8">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-10 rounded-2xl bg-accent/10 flex items-center justify-center border border-accent/20">
+                                                {pillar.icon}
+                                            </div>
+                                            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-accent/80">
+                                                {pillar.label}
+                                            </span>
+                                        </div>
+                                        <ArrowUpRight className="w-4 h-4 text-white/20 group-hover:text-accent transition-colors group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                                     </div>
-                                    <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-accent/60">
-                                        {pillar.label}
-                                    </span>
+
+                                    <h3 className="text-3xl md:text-4xl font-light uppercase tracking-tight mb-6 text-[#FBF7EF]">
+                                        {pillar.title}
+                                    </h3>
+
+                                    <p className="text-lg text-[#FBF7EF]/40 font-light leading-relaxed group-hover:text-[#FBF7EF]/80 transition-colors duration-500">
+                                        {pillar.description}
+                                    </p>
                                 </div>
-                                <h3 className="text-3xl font-light uppercase tracking-tight mb-4">
-                                    {pillar.title}
-                                </h3>
-                                <p className="text-lg text-[#6B6B6B] leading-relaxed group-hover:text-[#FBF7EF]/70 transition-colors">
-                                    {pillar.description}
-                                </p>
                             </motion.div>
                         ))}
                     </div>
 
                 </div>
 
-                {/* Bottom Graphic / CTA */}
+                {/* Footer: Credibility & CTA */}
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.4 }}
-                    className="mt-32 pt-16 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-8"
+                    className="mt-48 pt-16 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-12"
                 >
-                    <div className="flex items-center gap-6">
-                        <div className="flex -space-x-3">
-                            {[1, 2, 3].map(i => (
-                                <div key={i} className="w-10 h-10 rounded-full bg-[#6B6B6B]/20 border border-[#141414] flex items-center justify-center text-[10px] font-bold">
-                                    C{i}
+                    <div className="flex flex-col md:flex-row items-center gap-8">
+                        <div className="flex -space-x-4">
+                            {[1, 2, 3, 4].map(i => (
+                                <div key={i} className="w-12 h-12 rounded-full bg-[#1A1A1A] border-2 border-[#141414] flex items-center justify-center relative overflow-hidden group/avatar">
+                                    <div className="absolute inset-0 bg-accent/20 opacity-0 group-hover/avatar:opacity-100 transition-opacity" />
+                                    <span className="text-[10px] font-bold text-white/30 group-hover/avatar:text-accent transition-colors relative z-10">S{i}</span>
                                 </div>
                             ))}
                         </div>
-                        <p className="text-[11px] font-bold tracking-widest uppercase text-[#6B6B6B]">
-                            Deployed by elite agencies worldwide
-                        </p>
+                        <div className="text-center md:text-left">
+                            <p className="text-[12px] font-bold tracking-[0.3em] uppercase text-[#FBF7EF]">
+                                Trusted by Elite Strategy Units
+                            </p>
+                            <p className="text-[10px] font-medium text-white/20 mt-1 uppercase tracking-widest">
+                                ISO-27001 Certified Infrastructure
+                            </p>
+                        </div>
                     </div>
+
                     <a
                         href="/app"
-                        className="px-8 py-4 bg-[#FBF7EF] text-[#141414] rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-white transition-all active:scale-95"
+                        className="group relative px-12 py-5 bg-[#FBF7EF] text-[#141414] rounded-full text-[12px] font-bold uppercase tracking-widest overflow-hidden transition-all active:scale-95 shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
                     >
-                        Provision your portal
+                        <span className="relative z-10">Provision your portal</span>
+                        <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16, 1, 0.3, 1]" />
                     </a>
                 </motion.div>
             </div>
