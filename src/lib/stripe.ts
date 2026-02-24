@@ -1,12 +1,12 @@
 import Stripe from 'stripe';
 
-if (!process.env.STRIPE_SECRET_KEY) {
-    if (process.env.NODE_ENV === 'production') {
-        throw new Error('STRIPE_SECRET_KEY is missing');
-    }
+const secretKey = process.env.STRIPE_SECRET_KEY;
+
+if (!secretKey && process.env.NODE_ENV === 'production') {
+    console.warn('⚠️ STRIPE_SECRET_KEY is missing. Billing features will be disabled at runtime.');
 }
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder', {
-    apiVersion: '2026-01-28.clover' as any, // Using the version required by the installed SDK
+export const stripe = new Stripe(secretKey || '', {
+    apiVersion: '2023-10-16' as any, // Use a stable API version
     typescript: true,
 });
