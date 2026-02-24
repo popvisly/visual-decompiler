@@ -56,9 +56,9 @@ export default function PricingPage() {
 
             if (error) throw new Error(error);
             if (url) window.location.href = url;
-        } catch (err) {
+        } catch (err: any) {
             console.error('Upgrade failed:', err);
-            alert('Failed to initiate checkout. Please ensure API keys are configured.');
+            alert(`Unable to initiate checkout: ${err.message || 'Please try again later.'}`);
         } finally {
             setLoading(null);
         }

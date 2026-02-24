@@ -53,28 +53,35 @@ export async function POST(req: Request) {
         }
 
         // 3. Create Checkout Session
-        const session = await stripe.checkout.sessions.create({
-            customer: stripeCustomerId,
-            line_items: [
-                {
-                    price: planId, // This should be a Stripe Price ID (e.g., price_H5ggv...)
-                    quantity: 1,
-                },
-            ],
-            mode: 'subscription',
-            success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/app?billing=success`,
-            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pricing?billing=cancel`,
-            subscription_data: {
-                metadata: {
-                    clerkId: userId,
-                },
-            },
-        });
+        console.log('[Billing Checkout] Using Stripe Customer:', stripeCustomerId);
 
-        return NextResponse.json({ url: session.url });
+        try {
+            const session = await stripe.checkout.sessions.create({
+                customer: stripeCustomerId,
+                line_items: [
+                    {
+                        price: planId, // This should be a Stripe Price ID (e.g., price_H5ggv...)
+                        quantity: 1,
+                    },
+                ],
+                mode: 'subscription',
+                success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard?billing=success`,
+                cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pricing?billing=cancel`,
+                subscription_data: {
+                    metadata: {
+                        clerkId: userId,
+                    },
+                },
+            });
+
+            return NextResponse.json({ url: session.url });
+        } catch (stripeErr: any) {
+            console.error('[Billing Checkout] Stripe Session Error:', stripeErr);
+            return NextResponse.json({ error: `Stripe Error: ${stripeErr.message}` }, { status: 400 });
+        }
 
     } catch (err: any) {
-        console.error('[Billing Checkout] Error:', err);
+        console.error('[Billing Checkout] Global Error:', err);
         return NextResponse.json({ error: err.message }, { status: 500 });
     }
 }
