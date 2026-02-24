@@ -108,7 +108,7 @@ export function ConfidenceGauge({ label, value, description }: { label: string; 
                     </span>
                 </div>
                 {description && (
-                    <p className="text-[10px] text-[#6B6B6B]/60 leading-tight">
+                    <p className="text-[10px] text-[#141414]/70 leading-tight">
                         {description}
                     </p>
                 )}
@@ -133,8 +133,8 @@ export function TagRow({ items }: { items: string[] }) {
 export function StrategyField({ label, value }: { label: string; value: string }) {
     return (
         <div>
-            <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-1">{label}</p>
-            <p className="text-sm text-[#6B6B6B] leading-[1.5]">{value}</p>
+            <p className="text-[#141414]/70 text-[10px] font-bold uppercase tracking-[0.15em] mb-1">{label}</p>
+            <p className="text-sm text-[#141414] leading-[1.5]">{value}</p>
         </div>
     );
 }

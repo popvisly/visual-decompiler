@@ -130,7 +130,7 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
 
                     <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
                         <div className="p-8 bg-[#FBF7EF] border border-[#E7DED1] rounded-[2rem] space-y-6">
-                            <p className="text-[9px] font-bold text-[#6B6B6B]/40 uppercase tracking-[0.4em]">Genealogy of Strategy</p>
+                            <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.4em]">Genealogy of Strategy</p>
                             <p className="text-sm font-light text-[#141414] leading-relaxed italic border-l-2 border-accent/40 pl-6">
                                 {audit.temporal.historicalGenealogy}
                             </p>
@@ -139,7 +139,7 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                         <div className="space-y-8">
                             <div>
                                 <div className="flex justify-between items-end mb-4">
-                                    <p className="text-[9px] font-bold text-[#6B6B6B]/40 uppercase tracking-[0.4em]">Trend Revival Potential</p>
+                                    <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.4em]">Trend Revival Potential</p>
                                     <span className="text-xs font-bold text-accent">{audit.temporal.revivalPotential}%</span>
                                 </div>
                                 <div className="h-1.5 w-full bg-[#FBF7EF] border border-[#E7DED1] rounded-full overflow-hidden">
@@ -150,9 +150,9 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                                 </div>
                             </div>
 
-                            <div className="p-6 bg-accent/10 border border-accent/20 rounded-2xl flex items-center gap-4">
-                                <Sparkles className="w-5 h-5 text-accent shrink-0" />
-                                <p className="text-[11px] font-bold text-accent uppercase tracking-widest leading-normal">
+                            <div className="p-6 bg-accent/5 border border-accent/20 rounded-2xl flex items-center gap-4">
+                                <Sparkles className="w-5 h-5 text-accent shrink-0 opacity-70" />
+                                <p className="text-[11px] font-bold text-[#141414] uppercase tracking-widest leading-normal">
                                     High cultural resonance window for "{audit.temporal.aestheticYear}" revivals in modern category clusters.
                                 </p>
                             </div>
@@ -200,15 +200,15 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
 
                             <div className="flex flex-col items-center gap-4">
                                 <div className={`w-1 bg-accent/10 h-12 rounded-t-full transition-all duration-700 ${audit.trend.adoptionTier === 'Edgy' ? 'h-16 bg-accent opacity-100' : 'opacity-40'}`} />
-                                <span className={`text-[9px] font-bold tracking-widest ${audit.trend.adoptionTier === 'Edgy' ? 'text-accent' : 'opacity-30'}`}>EDGY</span>
+                                <span className={`text-[9px] font-bold tracking-widest ${audit.trend.adoptionTier === 'Edgy' ? 'text-accent' : 'text-[#6B6B6B]'}`}>EDGY</span>
                             </div>
                             <div className="flex flex-col items-center gap-4">
                                 <div className={`w-1 bg-accent/10 h-12 rounded-t-full transition-all duration-700 ${audit.trend.adoptionTier === 'Trendy' ? 'h-24 bg-accent opacity-100' : 'opacity-40'}`} />
-                                <span className={`text-[9px] font-bold tracking-widest ${audit.trend.adoptionTier === 'Trendy' ? 'text-accent' : 'opacity-30'}`}>TRENDY</span>
+                                <span className={`text-[9px] font-bold tracking-widest ${audit.trend.adoptionTier === 'Trendy' ? 'text-accent' : 'text-[#6B6B6B]'}`}>TRENDY</span>
                             </div>
                             <div className="flex flex-col items-center gap-4">
                                 <div className={`w-1 bg-accent/10 h-12 rounded-t-full transition-all duration-700 ${audit.trend.adoptionTier === 'Mainstream' ? 'h-16 bg-accent opacity-100' : 'opacity-40'}`} />
-                                <span className={`text-[9px] font-bold tracking-widest ${audit.trend.adoptionTier === 'Mainstream' ? 'text-accent' : 'opacity-30'}`}>MAINSTREAM</span>
+                                <span className={`text-[9px] font-bold tracking-widest ${audit.trend.adoptionTier === 'Mainstream' ? 'text-accent' : 'text-[#6B6B6B]'}`}>MAINSTREAM</span>
                             </div>
                         </div>
 
@@ -216,7 +216,7 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                             <div>
                                 <div className="flex justify-between items-end mb-3">
                                     <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.4em]">Creative Velocity</p>
-                                    <span className="text-xs font-bold text-accent">{audit.trend.momentum}%</span>
+                                    <span className="text-xs font-bold text-[#141414]">{audit.trend.momentum}%</span>
                                 </div>
                                 <div className="h-1 w-full bg-[#FBF7EF] border border-[#E7DED1] rounded-full overflow-hidden">
                                     <div
