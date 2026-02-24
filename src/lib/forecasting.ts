@@ -80,15 +80,31 @@ export class ForecastingService {
 
     static analyzeAd(ad: AdDigest, pulseText: string): Pick<VelocityMetrics, 'saturationLevel' | 'estimatedLifespanDays'> {
         // High-IQ heuristic for single ad
-        const style = ad.classification?.visual_style?.[0] || 'Unknown';
-        const isTrending = pulseText.toLowerCase().includes(style.toLowerCase());
+        const styles = ad.classification?.visual_style || [];
+        const trigger = ad.classification?.trigger_mechanic || 'Unknown';
 
-        let saturation = isTrending ? 65 : 15;
-        const lifespan = isTrending ? 45 : 120;
+        // Check for "Pulse Match" - is the style currently trending?
+        const trendingKeywords = ['minimalist', 'lo-fi', 'fast-cut', 'cinematic', 'ugc'];
+        const hasTrendingStyle = styles.some(s => trendingKeywords.some(kw => s.toLowerCase().includes(kw)));
+        const pulseMatch = pulseText.toLowerCase().includes(trigger.toLowerCase()) || hasTrendingStyle;
+
+        // Heuristic: If it's trending, it's popular (Higher resonance) but also saturating faster.
+        // If it's a "Status Prestige" or "Aspirational" ad, it typically has a longer shelf life but higher competition.
+        let saturation = pulseMatch ? 72 : 28;
+        let lifespan = pulseMatch ? 35 : 90;
+
+        // Adjust based on Trigger
+        if (trigger === 'Status Prestige') {
+            saturation += 10;
+            lifespan += 30;
+        } else if (trigger === 'Fear of Missing Out') {
+            saturation += 20;
+            lifespan -= 20;
+        }
 
         return {
-            saturationLevel: saturation,
-            estimatedLifespanDays: lifespan
+            saturationLevel: Math.min(Math.max(saturation, 5), 95),
+            estimatedLifespanDays: Math.max(lifespan, 7)
         };
     }
 }

@@ -9,7 +9,7 @@ import ResultsCard, {
     TagRow,
     StrategyField,
 } from './ResultsCard';
-import { RotateCcw, Share, Check, Download, Activity, TrendingUp } from 'lucide-react';
+import { RotateCcw, Share, Check, Download, Activity, TrendingUp, Sparkles } from 'lucide-react';
 import { useState, useRef } from 'react';
 import BrandTag from './BrandTag';
 
@@ -26,6 +26,7 @@ type Props = {
     showMedia?: boolean;
     onReset?: () => void;
     roiPredict?: any;
+    forecasting?: any;
     isAnomaly?: boolean;
     anomalyReason?: string | null;
 };
@@ -63,6 +64,7 @@ export default function ResultsView({
     showMedia = true,
     onReset,
     roiPredict,
+    forecasting,
     isAnomaly,
     anomalyReason
 }: Props) {
@@ -308,54 +310,91 @@ export default function ResultsView({
 
                 {/* Right — Analysis cards */}
                 <div className={`${showMedia ? 'lg:col-span-3' : ''} space-y-4`}>
-                    {/* ROI Predictor Integration */}
-                    {roiPredict && (
-                        <div className="p-10 bg-[#141414] rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 w-48 h-48 bg-accent/5 rounded-full -translate-y-24 translate-x-24 blur-3xl" />
-                            <div className="relative z-10 flex items-center justify-between gap-8">
-                                <div className="space-y-4">
-                                    <div className="flex items-center gap-2 text-accent">
-                                        <Activity className="w-4 h-4" />
-                                        <h3 className="text-[10px] font-bold uppercase tracking-[0.3em]">ROI Projection</h3>
-                                    </div>
-                                    <p className="text-base font-light text-white/90 leading-relaxed italic pr-4">
-                                        "{roiPredict.rationale}"
+                    {/* Neural Thesis — The Primary Executive Summary */}
+                    <div className="p-8 md:p-12 bg-[#141414] rounded-[2.5rem] md:rounded-[4rem] border border-white/10 shadow-2xl relative overflow-hidden group">
+                        {/* Background Aura */}
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full -translate-y-48 translate-x-48 blur-[120px] pointer-events-none" />
+                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/3 rounded-full translate-y-32 -translate-x-32 blur-[80px] pointer-events-none" />
+
+                        <div className="relative z-10 space-y-10">
+                            {/* Top Tier: Thesis Quote */}
+                            <div className="space-y-6">
+                                <div className="flex items-center gap-3 text-accent/60">
+                                    <Sparkles className="w-4 h-4" />
+                                    <h3 className="text-[10px] font-bold uppercase tracking-[0.4em]">Neural Thesis</h3>
+                                </div>
+                                <div className="relative">
+                                    <span className="absolute -left-6 -top-4 text-6xl text-accent/10 font-serif leading-none italic select-none">"</span>
+                                    <p className="text-2xl md:text-3xl font-light text-[#FBF7EF] leading-[1.3] italic tracking-tight pr-6">
+                                        {strat?.semiotic_subtext || 'Calculating semiotic alignment...'}
                                     </p>
                                 </div>
-                                <div className="shrink-0 text-center bg-white/5 px-6 py-5 rounded-2xl border border-white/5">
-                                    <p className="text-4xl font-light text-accent leading-none mb-2">{roiPredict.score}%</p>
-                                    <p className="text-[8px] font-bold text-[#FBF7EF]/40 uppercase tracking-[0.2em]">Efficiency</p>
+                            </div>
+
+                            {/* Middle Tier: Metrics Row */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10 border-t border-white/10">
+                                {/* Resonance */}
+                                <div className="space-y-1">
+                                    <p className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Market Resonance</p>
+                                    <div className="flex items-baseline gap-2">
+                                        <span className="text-3xl font-light text-accent">{roiPredict?.score || 70}%</span>
+                                        <span className="text-[10px] font-bold text-accent/40 uppercase">High</span>
+                                    </div>
+                                    <p className="text-[11px] text-white/40 leading-tight pr-2">{roiPredict?.rationale}</p>
+                                </div>
+
+                                {/* Saturation */}
+                                <div className="space-y-1">
+                                    <p className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Category Density</p>
+                                    <div className="flex items-baseline gap-2">
+                                        <span className="text-3xl font-light text-[#FBF7EF]">{forecasting?.saturationLevel || 0}%</span>
+                                        <span className={`text-[10px] font-bold uppercase ${(forecasting?.saturationLevel || 0) > 60 ? 'text-red-400' : 'text-green-400/60'}`}>
+                                            {(forecasting?.saturationLevel || 0) > 60 ? 'Saturated' : 'Innovative'}
+                                        </span>
+                                    </div>
+                                    <p className="text-[11px] text-white/40 leading-tight">
+                                        {(forecasting?.saturationLevel || 0) > 60
+                                            ? 'Highly competitive tactical space.'
+                                            : 'Strategic blue ocean identified.'}
+                                    </p>
+                                </div>
+
+                                {/* Window */}
+                                <div className="space-y-1">
+                                    <p className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Tactical Window</p>
+                                    <div className="flex items-baseline gap-2">
+                                        <span className="text-3xl font-light text-[#FBF7EF]">{forecasting?.estimatedLifespanDays || 0}</span>
+                                        <span className="text-[10px] font-bold text-white/30 uppercase">Days</span>
+                                    </div>
+                                    <p className="text-[11px] text-white/40 leading-tight">Estimated effectiveness period for this pattern.</p>
                                 </div>
                             </div>
-                        </div>
-                    )}
 
-                    {/* Anomaly Integration */}
-                    {isAnomaly && (
-                        <div className="p-8 bg-accent rounded-[2.5rem] shadow-xl shadow-accent/10">
-                            <div className="flex items-center gap-2 text-[#141414] mb-3">
-                                <TrendingUp className="w-4 h-4" />
-                                <h3 className="text-[10px] font-bold uppercase tracking-[0.3em]">Pivot Warning</h3>
-                            </div>
-                            <p className="text-xl font-light text-[#141414] leading-relaxed italic">
-                                {anomalyReason}
-                            </p>
+                            {/* Bottom Tier: Alerts if any */}
+                            {isAnomaly && (
+                                <div className="pt-8 border-t border-white/10">
+                                    <div className="bg-accent/10 border border-accent/20 rounded-2xl p-5 flex items-start gap-4 animate-pulse">
+                                        <TrendingUp className="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                                        <div>
+                                            <p className="text-[10px] font-bold text-accent uppercase tracking-widest mb-1">Strategic Pivot Warning</p>
+                                            <p className="text-[13px] text-white/80 font-medium leading-relaxed italic">{anomalyReason}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    )}
-                    {/* ── Invisible Machinery (the hero card) — BLUR on limited ── */}
+                    </div>
+
+                    {/* ── Invisible Machinery — (Reduced to secondary info) ── */}
                     <BlurGate locked={isLimited}>
-                        <ResultsCard title="Invisible Machinery" variant="pullquote" accentBorder>
+                        <ResultsCard title="Invisible Machinery" variant="pullquote">
                             <div className="space-y-5">
                                 <div>
                                     <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5 text-[#141414]/70">
-                                        Semiotic Subtext — The Unspoken Promise
+                                        Objection Dismantling Logic
                                     </p>
-                                    <PullQuote text={strat?.semiotic_subtext || 'Scanning for hidden meanings…'} />
-                                </div>
-                                <div className="pt-4 border-t border-[#E7DED1]">
-                                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5">Objection Dismantling</p>
-                                    <p className="text-sm text-[#6B6B6B] leading-[1.5]">
-                                        {strat?.objection_tackle || 'Analyzing persuasion intent…'}
+                                    <p className="text-base font-light text-[#141414] leading-relaxed italic">
+                                        "{strat?.objection_tackle || 'Analyzing persuasion intent…'}"
                                     </p>
                                 </div>
                             </div>

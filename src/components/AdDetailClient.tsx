@@ -196,6 +196,7 @@ export default function AdDetailClient({
                                 isSharedView={false}
                                 showMedia={false}
                                 roiPredict={roiPredict}
+                                forecasting={forecasting}
                                 isAnomaly={ad.is_anomaly}
                                 anomalyReason={ad.anomaly_reason}
                             />
