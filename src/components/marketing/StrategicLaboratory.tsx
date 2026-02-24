@@ -8,19 +8,19 @@ export default function StrategicLaboratory() {
         {
             title: "Evidence-based counsel",
             description: "Replace 'trust us' with 'here is the data'. Show the mechanics, triggers, and semiotic subtext behind every recommendation.",
-            icon: <Fingerprint className="w-5 h-5 text-accent" />,
+            icon: <Fingerprint className="w-5 h-5 text-[#FBF7EF]" />,
             label: "01 / ARCHITECTURE"
         },
         {
             title: "Agency delivery layer",
             description: "Client-ready share links and a high-trust interface for delivering strategy. White‑labeling is standard for enterprise partners.",
-            icon: <Landmark className="w-5 h-5 text-accent" />,
+            icon: <Landmark className="w-5 h-5 text-[#FBF7EF]" />,
             label: "02 / SOVEREIGNTY"
         },
         {
             title: "The calm advisor UX",
             description: "Ditch messy decks. Deliver strategic insights in a high-fashion, high-trust format designed for leadership presentation.",
-            icon: <Target className="w-5 h-5 text-accent" />,
+            icon: <Target className="w-5 h-5 text-[#FBF7EF]" />,
             label: "03 / AUTHENTICITY"
         }
     ];
@@ -102,7 +102,7 @@ export default function StrategicLaboratory() {
                                 <div className="relative z-10">
                                     <div className="flex items-center justify-between mb-6">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-9 h-9 rounded-xl bg-accent/15 flex items-center justify-center border border-accent/20">
+                                            <div className="w-10 h-10 rounded-2xl bg-accent/20 flex items-center justify-center border border-accent/30 shadow-[0_0_20px_rgba(var(--accent-rgb),0.1)]">
                                                 {pillar.icon}
                                             </div>
                                             <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">
