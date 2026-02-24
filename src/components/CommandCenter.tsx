@@ -7,6 +7,25 @@ import { AgencyMetrics, ExecutiveBriefing } from '@/lib/sovereignty_engine';
 export default function CommandCenter() {
     const [data, setData] = useState<{ metrics: AgencyMetrics, briefing: ExecutiveBriefing, score: number } | null>(null);
     const [loading, setLoading] = useState(true);
+    const [syncing, setSyncing] = useState(false);
+
+    const handleSync = async () => {
+        setSyncing(true);
+        try {
+            await fetch('/api/worker', {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer OPEN' }
+            });
+            // Refresh data after sync
+            const res = await fetch('/api/briefing');
+            const json = await res.json();
+            setData(json);
+        } catch (err) {
+            console.error('Sync failed:', err);
+        } finally {
+            setSyncing(false);
+        }
+    };
 
     useEffect(() => {
         async function fetchCommandData() {
@@ -217,11 +236,30 @@ export default function CommandCenter() {
                                     </div>
                                 </div>
                             </div>
+                            <div className="space-y-3">
+                                <button
+                                    onClick={handleSync}
+                                    disabled={syncing}
+                                    className="w-full py-5 bg-accent/20 hover:bg-accent/30 disabled:opacity-50 rounded-2xl border border-accent/40 text-[10px] font-bold uppercase tracking-[0.4em] text-accent transition-all flex items-center justify-center gap-3 group shadow-[0_0_30px_rgba(251,188,5,0.1)]"
+                                >
+                                    {syncing ? (
+                                        <>
+                                            <Zap className="w-3 h-3 animate-pulse" />
+                                            Syncing Matrix...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Zap className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                                            Force Intelligence Sync
+                                        </>
+                                    )}
+                                </button>
 
-                            <button className="w-full py-5 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 text-[10px] font-bold uppercase tracking-[0.4em] text-[#FBF7EF]/60 hover:text-[#FBF7EF] transition-all flex items-center justify-center gap-3 group">
-                                System Health Overview
-                                <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                            </button>
+                                <button className="w-full py-5 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 text-[10px] font-bold uppercase tracking-[0.4em] text-[#FBF7EF]/60 hover:text-[#FBF7EF] transition-all flex items-center justify-center gap-3 group">
+                                    System Health Overview
+                                    <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

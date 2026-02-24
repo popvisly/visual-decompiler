@@ -114,7 +114,7 @@ export default function ProcessingViewClient({ mediaUrl, jobId, onComplete }: Pr
                 const res = await fetch(`/api/digests/${jobId}`);
                 if (res.ok) {
                     const data = await res.json();
-                    if (data.status === 'processed' && data.digest) {
+                    if ((data.status === 'processed' || data.status === 'needs_review') && data.digest) {
                         if (!cancelled) {
                             if (onComplete) onComplete(data);
                             else router.push(`/dashboard/${jobId}?new=true`);

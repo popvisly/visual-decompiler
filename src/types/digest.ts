@@ -254,7 +254,7 @@ export const AdDigestSchema = z.object({
         behavioral_nudge: z.string().optional(),
         misdirection_or_friction_removed: z.string().nullable().optional(),
         evidence_anchors: z.array(z.string()).optional(), // [NEW] Deep Decompiler
-        reconstruction_prompt: z.string().optional(), // [NEW] Milestone 51: Semantic Prompting
+        reconstruction_prompt: z.string().nullable().optional(), // [NEW] Milestone 51: Semantic Prompting
     }),
     diagnostics: z.object({
         confidence: z.object({
