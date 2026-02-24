@@ -48,13 +48,6 @@ export default function Header({ activeTab }: { activeTab?: 'dashboard' | 'analy
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <a
-                        href="/api/export"
-                        className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.15em] hover:text-[#141414] border border-[#E7DED1] bg-[#FBF7EF]/50 hover:bg-[#FBF7EF] hover:border-[#D8CCBC] rounded-xl px-4 py-2 transition-all shadow-sm"
-                        download
-                    >
-                        Export CSV
-                    </a>
                     <IngestForm />
                     <div className="h-6 w-px bg-[#E7DED1]" />
                     <UserButton afterSignOutUrl="/" />

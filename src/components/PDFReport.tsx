@@ -13,8 +13,8 @@ export default function PDFReport() {
                 onClick={handlePrint}
                 className="flex items-center gap-2 px-4 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] border border-[#E7DED1] rounded-xl hover:bg-[#FBF7EF] transition-all"
             >
-                <Printer className="w-3.5 h-3.5" />
-                Export Strategic Brief
+                <FileDown className="w-3.5 h-3.5" />
+                Export Strategic Dossier
             </button>
 
             <style jsx global>{`

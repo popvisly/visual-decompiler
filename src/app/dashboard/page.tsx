@@ -37,6 +37,13 @@ export default async function DashboardPage({
                     </div>
 
                     <div className="md:pb-2 flex items-center gap-4">
+                        <a
+                            href="/api/export"
+                            className="flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest bg-white border border-[#E7DED1] hover:border-[#141414] hover:text-[#141414] transition-all shadow-sm"
+                            download
+                        >
+                            Export CSV
+                        </a>
                         <Link
                             href={params.v === 'executive' ? '/dashboard' : '/dashboard?v=executive'}
                             className={`flex items-center gap-3 px-6 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all border ${params.v === 'executive'
