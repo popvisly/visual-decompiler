@@ -337,10 +337,12 @@ export default function ResultsView({
                                 <div className="space-y-1">
                                     <p className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Market Resonance</p>
                                     <div className="flex items-baseline gap-2">
-                                        <span className="text-3xl font-light text-accent">{roiPredict?.score || 70}%</span>
-                                        <span className="text-[10px] font-bold text-accent/40 uppercase">High</span>
+                                        <span className="text-3xl font-light text-[#FBF7EF]">{(roiPredict?.score || 70)}%</span>
+                                        <span className={`text-[10px] font-bold uppercase ${(roiPredict?.score || 70) > 60 ? 'text-accent/60' : 'text-red-400/60'}`}>
+                                            {(roiPredict?.score || 70) > 60 ? 'High' : 'Moderate'}
+                                        </span>
                                     </div>
-                                    <p className="text-[11px] text-white/40 leading-tight pr-2">{roiPredict?.rationale}</p>
+                                    <p className="text-[11px] text-white/40 leading-tight pr-2">{roiPredict?.rationale || 'Calculating resonance score...'}</p>
                                 </div>
 
                                 {/* Saturation */}
