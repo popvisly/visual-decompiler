@@ -6,17 +6,18 @@ type Props = {
     title: string;
     variant: CardVariant;
     accentBorder?: boolean;
+    noPadding?: boolean;
     children: React.ReactNode;
 };
 
-export default function ResultsCard({ title, variant, accentBorder = false, children }: Props) {
+export default function ResultsCard({ title, variant, accentBorder = false, noPadding = false, children }: Props) {
     return (
         <div
             className={`card-stagger bg-white rounded-2xl border overflow-hidden shadow-[0_10px_40px_rgba(20,20,20,0.04)] ${accentBorder ? 'border-[#141414]/20' : 'border-[#E7DED1]'
                 }`}
         >
-            <div className="p-5">
-                <div className="flex items-center gap-2 mb-4">
+            <div className={noPadding ? '' : 'p-5'}>
+                <div className={`flex items-center gap-2 mb-4 ${noPadding ? 'p-5 mb-0' : ''}`}>
                     {accentBorder && (
                         <div className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
                     )}

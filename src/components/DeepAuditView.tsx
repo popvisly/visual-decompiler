@@ -2,6 +2,7 @@
 
 import { DeepAuditService, DeepAuditResult } from '@/lib/deep_audit';
 import { Activity, Palette, Search, Info, History, Sparkles, Zap, ChevronRight } from 'lucide-react';
+import ResultsCard from '@/components/ResultsCard';
 
 interface DeepAuditViewProps {
     digest: any;
@@ -13,12 +14,8 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
     return (
         <div className="space-y-12">
             {/* 1. Visual Pacing Analysis */}
-            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] border border-[#E7DED1] shadow-[0_20px_50px_rgba(20,20,20,0.02)]">
+            <ResultsCard title="Visual Pacing Audit" variant="gauge">
                 <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-3">
-                        <Activity className="w-5 h-5 text-accent" />
-                        <h3 className="text-xs font-bold uppercase tracking-[0.3em]">Visual Pacing Audit</h3>
-                    </div>
                     <div className="px-4 py-2 bg-[#FBF7EF] rounded-full border border-[#E7DED1]">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-[#6B6B6B]">
                             Cut Intensity: {audit.pacing.cutIntensity}%
@@ -43,16 +40,11 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                 <p className="text-sm font-light text-[#6B6B6B] leading-relaxed italic border-l-2 border-accent/20 pl-6">
                     {audit.pacing.pacingNotes}
                 </p>
-            </div>
+            </ResultsCard>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* 2. Color Psychology */}
-                <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-[#E7DED1] shadow-[0_20px_50px_rgba(20,20,20,0.02)]">
-                    <div className="flex items-center gap-3 mb-8">
-                        <Palette className="w-5 h-5 text-accent" />
-                        <h3 className="text-xs font-bold uppercase tracking-[0.3em]">Color Theory Logic</h3>
-                    </div>
-
+                <ResultsCard title="Color Theory Logic" variant="gauge">
                     <div className="flex items-center gap-6 mb-6">
                         <div
                             className="w-20 h-20 rounded-3xl border border-[#E7DED1] shadow-inner"
@@ -96,15 +88,10 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                             {audit.color.categoryNorms}
                         </p>
                     </div>
-                </div>
+                </ResultsCard>
 
                 {/* 3. Semiotic Mapping */}
-                <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-[#E7DED1] shadow-[0_20px_50px_rgba(20,20,20,0.02)]">
-                    <div className="flex items-center gap-3 mb-8">
-                        <Search className="w-5 h-5 text-accent" />
-                        <h3 className="text-xs font-bold uppercase tracking-[0.3em]">Semiotics & Subtext</h3>
-                    </div>
-
+                <ResultsCard title="Semiotics & Subtext" variant="strategy">
                     <div className="space-y-6">
                         <div>
                             <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.4em] mb-4">Cultural Icons</p>
@@ -125,32 +112,26 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                             </p>
                         </div>
                     </div>
-                </div>
+                </ResultsCard>
             </div>
 
             {/* 4. Temporal Intelligence (Universal History) */}
-            <div className="bg-[#141414] p-8 md:p-12 rounded-[2.5rem] border border-white/5 relative overflow-hidden group">
-                <div className="absolute inset-0 opacity-5 [background-image:linear-gradient(#FBF7EF_1px,transparent_1px),linear-gradient(90deg,#FBF7EF_1px,transparent_1px)] [background-size:64px_64px]" />
-
-                <div className="relative z-10 flex flex-col lg:flex-row gap-12">
+            <ResultsCard title="Temporal Genealogy" variant="strategy" accentBorder>
+                <div className="flex flex-col lg:flex-row gap-12">
                     <div className="lg:w-1/3">
-                        <div className="flex items-center gap-3 mb-6">
-                            <History className="w-5 h-5 text-accent" />
-                            <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-[#FBF7EF]">Temporal Genealogy</h3>
-                        </div>
                         <div className="space-y-4">
-                            <h2 className="text-4xl font-light text-[#FBF7EF] tracking-tightest uppercase leading-none">
+                            <h2 className="text-4xl font-light text-[#141414] tracking-tightest uppercase leading-none">
                                 {audit.temporal.aestheticYear}<br />
                                 <span className="text-accent italic">Archetype</span>
                             </h2>
-                            <p className="text-[10px] font-bold text-[#FBF7EF]/40 uppercase tracking-[0.2em]">{audit.temporal.eraArchetype}</p>
+                            <p className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.2em]">{audit.temporal.eraArchetype}</p>
                         </div>
                     </div>
 
                     <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-                        <div className="p-8 bg-white/5 border border-white/10 rounded-[2rem] space-y-6">
-                            <p className="text-[9px] font-bold text-[#FBF7EF]/40 uppercase tracking-[0.4em]">Genealogy of Strategy</p>
-                            <p className="text-sm font-light text-[#FBF7EF]/70 leading-relaxed italic border-l-2 border-accent/20 pl-6">
+                        <div className="p-8 bg-[#FBF7EF] border border-[#E7DED1] rounded-[2rem] space-y-6">
+                            <p className="text-[9px] font-bold text-[#6B6B6B]/40 uppercase tracking-[0.4em]">Genealogy of Strategy</p>
+                            <p className="text-sm font-light text-[#141414] leading-relaxed italic border-l-2 border-accent/40 pl-6">
                                 {audit.temporal.historicalGenealogy}
                             </p>
                         </div>
@@ -158,10 +139,10 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                         <div className="space-y-8">
                             <div>
                                 <div className="flex justify-between items-end mb-4">
-                                    <p className="text-[9px] font-bold text-[#FBF7EF]/40 uppercase tracking-[0.4em]">Trend Revival Potential</p>
+                                    <p className="text-[9px] font-bold text-[#6B6B6B]/40 uppercase tracking-[0.4em]">Trend Revival Potential</p>
                                     <span className="text-xs font-bold text-accent">{audit.temporal.revivalPotential}%</span>
                                 </div>
-                                <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div className="h-1.5 w-full bg-[#FBF7EF] border border-[#E7DED1] rounded-full overflow-hidden">
                                     <div
                                         className="h-full bg-accent animate-pulse"
                                         style={{ width: `${audit.temporal.revivalPotential}%` }}
@@ -178,19 +159,12 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </ResultsCard>
 
             {/* 5. Trend Intelligence (Market Adoption) */}
-            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] border border-[#E7DED1] shadow-[0_30px_60px_rgba(20,20,20,0.03)] relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
-
-                <div className="relative z-10 flex flex-col lg:flex-row gap-16">
+            <ResultsCard title="Trend Intelligence" variant="gauge">
+                <div className="flex flex-col lg:flex-row gap-16">
                     <div className="lg:w-[40%] space-y-10">
-                        <div className="flex items-center gap-3">
-                            <Zap className="w-5 h-5 text-accent" />
-                            <h3 className="text-xs font-bold uppercase tracking-[0.3em]">Trend Intelligence</h3>
-                        </div>
-
                         <div className="space-y-6">
                             <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full">
                                 <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
@@ -260,7 +234,7 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </ResultsCard>
         </div>
     );
 }

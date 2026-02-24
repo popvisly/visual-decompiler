@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { TrendingUp, Sparkles, Activity, ArrowLeft, Play, CheckCircle2, X } from 'lucide-react';
 import BrandTag from '@/components/BrandTag';
 import ResultsView from '@/components/ResultsView';
+import ResultsCard from '@/components/ResultsCard';
 import PDFReport from '@/components/PDFReport';
 import VideoPins from '@/components/VideoPins';
 import AdShareButton from '@/components/AdShareButton';
@@ -218,38 +219,32 @@ export default function AdDetailClient({
                         )}
 
                         {tab === 'forensics' && (
-                            <div>
-                                <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)] mb-8">
-                                    <h3 className="text-xs font-bold uppercase tracking-[0.4em] text-[#141414] mb-8">Technical Creative Forensics</h3>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="p-8 bg-[#FBF7EF] border border-[#E7DED1] rounded-[2rem] shadow-sm">
-                                            <h4 className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-4">Saturation Risk</h4>
-                                            <div className="flex items-end gap-3 mb-4">
-                                                <span className="text-5xl font-light text-[#141414] leading-none">{forecasting.saturationLevel}%</span>
-                                                <span className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${forecasting.saturationLevel > 60 ? 'text-red-500' : 'text-green-600'}`}>
-                                                    {forecasting.saturationLevel > 60 ? 'High Risk' : 'Healthy Space'}
-                                                </span>
-                                            </div>
-                                            <div className="h-1.5 w-full bg-white rounded-full overflow-hidden">
-                                                <div
-                                                    className={`h-full transition-all duration-1000 ${forecasting.saturationLevel > 60 ? 'bg-red-500' : 'bg-accent'}`}
-                                                    style={{ width: `${forecasting.saturationLevel}%` }}
-                                                />
-                                            </div>
+                            <div className="space-y-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <ResultsCard title="Saturation Risk" variant="gauge">
+                                        <div className="flex items-end gap-3 mb-4">
+                                            <span className="text-5xl font-light text-[#141414] leading-none">{forecasting.saturationLevel}%</span>
+                                            <span className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${forecasting.saturationLevel > 60 ? 'text-red-500' : 'text-green-600'}`}>
+                                                {forecasting.saturationLevel > 60 ? 'High Risk' : 'Healthy Space'}
+                                            </span>
                                         </div>
-
-                                        <div className="p-8 bg-[#FBF7EF] border border-[#E7DED1] rounded-[2rem] shadow-sm">
-                                            <h4 className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-4">Predicted Lifespan</h4>
-                                            <div className="flex items-end gap-3 mb-4">
-                                                <span className="text-5xl font-light text-[#141414] leading-none">{forecasting.estimatedLifespanDays}</span>
-                                                <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-1">Days Remaining</span>
-                                            </div>
-                                            <p className="text-[11px] text-[#6B6B6B] leading-relaxed">
-                                                Expected performance decline after {forecasting.estimatedLifespanDays} days based on category momentum.
-                                            </p>
+                                        <div className="h-1.5 w-full bg-[#FBF7EF] border border-[#E7DED1] rounded-full overflow-hidden">
+                                            <div
+                                                className={`h-full transition-all duration-1000 ${forecasting.saturationLevel > 60 ? 'bg-red-500' : 'bg-accent'}`}
+                                                style={{ width: `${forecasting.saturationLevel}%` }}
+                                            />
                                         </div>
-                                    </div>
+                                    </ResultsCard>
+
+                                    <ResultsCard title="Predicted Lifespan" variant="gauge">
+                                        <div className="flex items-end gap-3 mb-4">
+                                            <span className="text-5xl font-light text-[#141414] leading-none">{forecasting.estimatedLifespanDays}</span>
+                                            <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-1">Days Remaining</span>
+                                        </div>
+                                        <p className="text-[11px] text-[#6B6B6B] leading-relaxed">
+                                            Expected performance decline after {forecasting.estimatedLifespanDays} days based on category momentum.
+                                        </p>
+                                    </ResultsCard>
                                 </div>
 
                                 <DeepAuditView digest={digest} />
