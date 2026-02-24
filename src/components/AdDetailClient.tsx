@@ -11,6 +11,7 @@ import PDFReport from '@/components/PDFReport';
 import VideoPins from '@/components/VideoPins';
 import AdShareButton from '@/components/AdShareButton';
 import DeepAuditView from '@/components/DeepAuditView';
+import PromptView from '@/components/PromptView';
 import { AdDigest } from '@/types/digest';
 import { ForecastingService } from '@/lib/forecasting';
 
@@ -34,7 +35,7 @@ export default function AdDetailClient({
     const [showBanner, setShowBanner] = useState(isNew);
     const [roiPredict, setRoiPredict] = useState<any>(null);
 
-    type TabKey = 'report' | 'forensics' | 'pins';
+    type TabKey = 'report' | 'forensics' | 'pins' | 'prompt';
     const [tab, setTab] = useState<TabKey>('report');
     const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -166,6 +167,7 @@ export default function AdDetailClient({
                                 <div className="flex flex-wrap gap-2 rounded-full bg-white border border-[#E7DED1] p-1.5 shadow-sm">
                                     {([
                                         { key: 'report', label: 'Report' },
+                                        { key: 'prompt', label: 'Prompt' },
                                         { key: 'forensics', label: 'Forensics' },
                                         { key: 'pins', label: 'Pins' },
                                     ] as const).map(t => (
@@ -201,6 +203,10 @@ export default function AdDetailClient({
                                 isAnomaly={ad.is_anomaly}
                                 anomalyReason={ad.anomaly_reason}
                             />
+                        )}
+
+                        {tab === 'prompt' && (
+                            <PromptView digest={digest} />
                         )}
 
                         {tab === 'pins' && !isShared && (
