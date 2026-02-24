@@ -24,13 +24,13 @@ export default function Nav() {
                             {["How it works", "Case study", "Pricing"].map((label) => (
                                 <a
                                     key={label}
-                                    href={label === "How it works" ? "#how" : label === "Case study" ? "#case-study" : "/pricing"}
+                                    href={label === "How it works" ? "/#how" : label === "Case study" ? "/#case-study" : "/pricing"}
                                     className="
-                                        text-[11px] font-bold tracking-[0.1em] uppercase
-                                        text-[#141414]/40
-                                        hover:text-[#141414]
-                                        transition-all
-                                    "
+                                            text-[11px] font-bold tracking-[0.1em] uppercase
+                                            text-[#141414]/40
+                                            hover:text-[#141414]
+                                            transition-all
+                                        "
                                 >
                                     {label}
                                 </a>
