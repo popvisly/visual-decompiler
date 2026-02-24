@@ -53,8 +53,6 @@ export async function POST(req: Request) {
         }
 
         // 3. Create Checkout Session
-        console.log('[Billing Checkout] Using Stripe Customer:', stripeCustomerId);
-
         try {
             const session = await stripe.checkout.sessions.create({
                 customer: stripeCustomerId,
