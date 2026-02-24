@@ -21,7 +21,7 @@ const PLANS = [
         highlight: false,
     },
     {
-        id: 'price_placeholder_pro', // Replace with real Stripe Price ID
+        id: 'price_1T4BU70LZZUO4xz4b4A57HNV', // Real Stripe Price ID for Agency Sovereignty
         name: 'Agency Sovereignty',
         price: '$199',
         interval: '/mo',
