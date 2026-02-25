@@ -132,7 +132,6 @@ export default function V1App() {
                             <ProcessingViewClient
                                 mediaUrl={state.mediaUrl}
                                 jobId={state.jobId}
-                                onComplete={handleProcessingComplete}
                             />
                         </div>
                     )}
