@@ -3,7 +3,7 @@
 import { useMemo, useState, useRef, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { TrendingUp, Sparkles, Activity, ArrowLeft, Play, CheckCircle2, X } from 'lucide-react';
+import { TrendingUp, Sparkles, Activity, ArrowLeft, Play, CheckCircle2, X, Dna, Users, Zap, Lock } from 'lucide-react';
 import BrandTag from '@/components/BrandTag';
 import ResultsView from '@/components/ResultsView';
 import ResultsCard from '@/components/ResultsCard';
@@ -35,7 +35,7 @@ export default function AdDetailClient({
     const [showBanner, setShowBanner] = useState(isNew);
     const [roiPredict, setRoiPredict] = useState<any>(null);
 
-    type TabKey = 'report' | 'forensics' | 'pins' | 'prompt';
+    type TabKey = 'report' | 'forensics' | 'pins' | 'prompt' | 'dna' | 'audience' | 'remix';
     const [tab, setTab] = useState<TabKey>('report');
     const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -170,6 +170,9 @@ export default function AdDetailClient({
                                         { key: 'prompt', label: 'Prompt' },
                                         { key: 'forensics', label: 'Forensics' },
                                         { key: 'pins', label: 'Pins' },
+                                        { key: 'dna', label: 'DNA' },
+                                        { key: 'audience', label: 'Audience' },
+                                        { key: 'remix', label: 'Remix' },
                                     ] as const).map(t => (
                                         <button
                                             key={t.key}
@@ -254,6 +257,60 @@ export default function AdDetailClient({
                                 </div>
 
                                 <DeepAuditView digest={digest} />
+                            </div>
+                        )}
+
+                        {tab === 'dna' && (
+                            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
+                                <div className="flex flex-col items-center justify-center py-16 text-center">
+                                    <div className="w-16 h-16 rounded-2xl bg-[#141414] flex items-center justify-center mb-6">
+                                        <Dna className="w-7 h-7 text-[#FBF7EF]" />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-[#141414] tracking-tight mb-2">Structural DNA</h3>
+                                    <p className="text-[12px] text-[#6B6B6B] max-w-sm leading-relaxed mb-6">
+                                        Map the ad&apos;s persuasion genome — hook type × CTA × proof architecture — into a visual fingerprint comparable across your entire library.
+                                    </p>
+                                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#FBF7EF] border border-[#E7DED1] rounded-full">
+                                        <Lock className="w-3 h-3 text-[#6B6B6B]" />
+                                        <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.15em]">Coming Soon</span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {tab === 'audience' && (
+                            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
+                                <div className="flex flex-col items-center justify-center py-16 text-center">
+                                    <div className="w-16 h-16 rounded-2xl bg-[#141414] flex items-center justify-center mb-6">
+                                        <Users className="w-7 h-7 text-[#FBF7EF]" />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-[#141414] tracking-tight mb-2">Audience Intelligence</h3>
+                                    <p className="text-[12px] text-[#6B6B6B] max-w-sm leading-relaxed mb-6">
+                                        AI-inferred target profile — psychographics, income bracket, age cohort, and lifestyle signals extracted from visual and copy cues.
+                                    </p>
+                                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#FBF7EF] border border-[#E7DED1] rounded-full">
+                                        <Lock className="w-3 h-3 text-[#6B6B6B]" />
+                                        <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.15em]">Coming Soon</span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {tab === 'remix' && (
+                            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
+                                <div className="flex flex-col items-center justify-center py-16 text-center">
+                                    <div className="w-16 h-16 rounded-2xl bg-[#141414] flex items-center justify-center mb-6">
+                                        <Zap className="w-7 h-7 text-[#FBF7EF]" />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-[#141414] tracking-tight mb-2">Remix Engine</h3>
+                                    <p className="text-[12px] text-[#6B6B6B] max-w-sm leading-relaxed mb-6">
+                                        AI-generated counter-briefs — &ldquo;How would a competitor respond?&rdquo; Auto-generates strategic counter-angles with copy suggestions.
+                                    </p>
+                                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#FBF7EF] border border-[#E7DED1] rounded-full">
+                                        <Lock className="w-3 h-3 text-[#6B6B6B]" />
+                                        <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.15em]">Coming Soon</span>
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>
