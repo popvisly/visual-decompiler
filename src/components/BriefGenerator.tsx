@@ -178,7 +178,7 @@ export default function BriefGenerator({
                                     <button
                                         onClick={generatePrototype}
                                         disabled={prototyping}
-                                        className="flex items-center gap-2 px-6 py-2.5 bg-accent text-[#141414] rounded-xl text-[9px] font-bold uppercase tracking-widest hover:brightness-105 transition-all shadow-lg shadow-accent/20 disabled:opacity-50 group"
+                                        className="flex items-center gap-2 px-6 py-2.5 bg-[#141414] text-[#FBF7EF] rounded-xl text-[9px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-lg disabled:opacity-50 group"
                                     >
                                         {prototyping ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Wand2 className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform" />}
                                         {prototyping ? 'Prototyping...' : 'The Remix (Prototype)'}

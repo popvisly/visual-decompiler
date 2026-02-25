@@ -333,10 +333,10 @@
     --text-on-dark: #f5f5f0;
     --text-on-dark-muted: rgba(245, 245, 240, 0.5);
 
-    /* Accent — Warm Highlight */
-    --accent: rgba(20, 20, 20, 0.06);
-    --accent-muted: rgba(20, 20, 20, 0.03);
-    --accent-glow: rgba(20, 20, 20, 0.06);
+    /* Accent — Ink Highlight (use opacity for soft variants) */
+    --accent: #141414;
+    --accent-muted: rgba(20, 20, 20, 0.06);
+    --accent-glow: rgba(20, 20, 20, 0.12);
 
     /* Borders */
     --border: #E7DED1;

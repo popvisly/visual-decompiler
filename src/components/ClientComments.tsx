@@ -131,7 +131,7 @@ export default function ClientComments({ slug }: ClientCommentsProps) {
                             <div className={`p-6 md:p-10 rounded-[1.5rem] md:rounded-[2.5rem] border transition-all ${comment.feedback_type === 'remix_request' ? 'bg-[#141414] border-accent/30 text-white' : 'bg-white border-[#E7DED1] text-[#141414]'}`}>
                                 <div className="flex justify-between items-start mb-4 md:mb-6">
                                     <div className="flex items-center gap-3 md:gap-4">
-                                        <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-[9px] md:text-[10px] font-bold ${comment.feedback_type === 'remix_request' ? 'bg-accent text-[#141414]' : 'bg-[#FBF7EF] text-[#6B6B6B]'}`}>
+                                        <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-[9px] md:text-[10px] font-bold ${comment.feedback_type === 'remix_request' ? 'bg-accent text-[#FBF7EF]' : 'bg-[#FBF7EF] text-[#6B6B6B]'}`}>
                                             {comment.client_name.charAt(0)}
                                         </div>
                                         <div>

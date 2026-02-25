@@ -143,7 +143,7 @@ export default function AddToBoard({ adId }: { adId: string }) {
                                 <button
                                     onClick={handleCreateBoard}
                                     disabled={isSaving || !newBoardName.trim()}
-                                    className="flex-1 py-2 bg-accent text-[10px] font-bold text-[#141414] uppercase rounded-lg hover:bg-accent/90 transition-all disabled:opacity-50"
+                                    className="flex-1 py-2 bg-accent text-[10px] font-bold text-[#FBF7EF] uppercase rounded-lg hover:bg-black transition-all disabled:opacity-50"
                                 >
                                     {isSaving ? 'Saving...' : 'Create'}
                                 </button>

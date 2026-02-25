@@ -19,9 +19,9 @@ export default {
                     muted: "#f2f1ee",
                 },
                 accent: {
-                    DEFAULT: "rgba(20,20,20,0.06)", // warm highlight (was acid-lime)
-                    muted: "rgba(20,20,20,0.03)",
-                    glow: "rgba(20,20,20,0.06)",
+                    DEFAULT: "#141414", // solid ink — use /5, /10, /20 for subtle tints
+                    muted: "rgba(20,20,20,0.06)",
+                    glow: "rgba(20,20,20,0.12)",
                 },
                 txt: {
                     primary: "#141414", // ink

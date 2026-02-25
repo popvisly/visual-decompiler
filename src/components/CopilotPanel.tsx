@@ -62,7 +62,7 @@ export default function CopilotPanel({ boardId }: { boardId?: string }) {
             {/* Toggle Button */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="fixed bottom-8 right-8 w-14 h-14 bg-[#141414] text-accent rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all z-40 group no-print"
+                className="fixed bottom-8 right-8 w-14 h-14 bg-[#141414] text-[#FBF7EF] rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all z-40 group no-print"
             >
                 <Bot className="w-6 h-6 group-hover:hidden" />
                 <Sparkles className="w-6 h-6 hidden group-hover:block transition-all" />
@@ -110,7 +110,7 @@ export default function CopilotPanel({ boardId }: { boardId?: string }) {
                                 {m.role === 'assistant' ? <Bot className="w-4 h-4 text-accent" /> : <User className="w-4 h-4 text-txt-on-dark" />}
                             </div>
                             <div className={`space-y-4 max-w-[85%]`}>
-                                <div className={`p-4 rounded-2xl text-[13px] leading-relaxed ${m.role === 'assistant' ? 'bg-white/5 text-txt-on-dark-muted' : 'bg-accent text-[#141414] font-medium'}`}>
+                                <div className={`p-4 rounded-2xl text-[13px] leading-relaxed ${m.role === 'assistant' ? 'bg-white/5 text-txt-on-dark-muted' : 'bg-[#FBF7EF] text-[#141414] font-medium'}`}>
                                     {m.content}
                                 </div>
                                 {m.sources && m.sources.length > 0 && (
@@ -164,7 +164,7 @@ export default function CopilotPanel({ boardId }: { boardId?: string }) {
                         <button
                             onClick={handleSend}
                             disabled={isLoading || !input.trim()}
-                            className="absolute bottom-4 right-4 p-2 bg-accent text-[#141414] rounded-xl hover:scale-110 transition-all disabled:opacity-50 disabled:scale-100"
+                            className="absolute bottom-4 right-4 p-2 bg-[#FBF7EF] text-[#141414] rounded-xl hover:scale-110 transition-all disabled:opacity-50 disabled:scale-100"
                         >
                             <Send className="w-4 h-4" />
                         </button>
