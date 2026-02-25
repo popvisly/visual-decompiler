@@ -9,10 +9,10 @@ export default function MarketingNav() {
                 {/* Logo */}
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg bg-[#1a1a1a] flex items-center justify-center text-white font-black text-sm">
-                        D
+                        V
                     </div>
                     <div>
-                        <span className="text-sm font-bold text-[#1a1a1a] tracking-tight">Decompiler</span>
+                        <span className="text-sm font-bold text-[#1a1a1a] tracking-tight">VisualDecompiler.com</span>
                         <span className="hidden sm:inline text-[9px] font-bold text-[#9a9a94] uppercase tracking-[0.15em] ml-3">
                             Advertising Intelligence
                         </span>

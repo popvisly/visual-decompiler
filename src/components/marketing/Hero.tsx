@@ -98,7 +98,7 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     <div className="pointer-events-none absolute left-5 top-5 md:left-7 md:top-7">
                         <div className="inline-flex items-center gap-2 rounded-full border border-[#E7DED1] bg-[#FBF7EF]/70 backdrop-blur px-3 py-2 shadow-[0_10px_30px_rgba(20,20,20,0.06)]">
                             <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#141414]/55">
-                                Decompiled layers
+                                Forensic layers
                             </span>
                             <span className="text-[#141414]/25">•</span>
                             <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#141414]/45">

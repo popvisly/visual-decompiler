@@ -243,7 +243,7 @@ export default function SettingsClient() {
                                         ) : domainStatus === 'propagation_pending' ? (
                                             <span className="text-accent font-bold animate-pulse">● Propagating through the meta-layer...</span>
                                         ) : (
-                                            "Point your CNAME to laboratory.visual-decompiler.com to activate."
+                                            "Point your CNAME to laboratory.visualdecompiler.com to activate."
                                         )}
                                     </p>
                                 </div>

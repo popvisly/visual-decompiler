@@ -23,10 +23,10 @@ export async function generateMetadata(
     const brand = ad.brand || digest?.meta?.brand_guess || 'Ad';
     const headline = digest?.extraction?.on_screen_copy?.primary_headline || 'Advertising deconstructed.';
 
-    const ogUrl = new URL(`/api/og2/${id}`, process.env.NEXT_PUBLIC_APP_URL || 'https://visual-decompiler.vercel.app');
+    const ogUrl = new URL(`/api/og2/${id}`, process.env.NEXT_PUBLIC_APP_URL || 'https://visualdecompiler.com');
 
     return {
-        title: `${brand} Deconstructed | Visual Decompiler`,
+        title: `${brand} Deconstructed | VisualDecompiler.com`,
         description: headline,
         openGraph: {
             title: `${brand} Intelligence Report`,
@@ -76,12 +76,12 @@ export default async function SharedReportPage({
                 {/* Header Strip */}
                 <header className="px-6 mb-8 mt-2">
                     <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-full border border-[#E7DED1] bg-[#F2EBDD] flex items-center justify-center font-bold text-[#141414] text-xs shadow-sm">
-                            D
+                        <div className="h-8 w-8 rounded-full border border-[#E7DED1] bg-[#141414] flex items-center justify-center font-bold text-[#FBF7EF] text-xs shadow-sm">
+                            V
                         </div>
                         <div className="leading-none text-left">
                             <div className="text-[12px] font-semibold tracking-[0.14em] uppercase text-[#141414]">
-                                Decompiler
+                                VisualDecompiler.com
                             </div>
                             <div className="mt-0.5 text-[10px] tracking-[0.18em] uppercase text-[#6B6B6B]">
                                 Shared Intelligence Report
@@ -107,7 +107,7 @@ export default async function SharedReportPage({
 
             <div className="mt-20 text-center relative z-10">
                 <a href="/" className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FBF7EF]/80 border border-[#E7DED1] backdrop-blur-sm hover:bg-white hover:border-[#D8CCBC] hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)] transition-all">
-                    <span className="text-[12px] font-medium text-[#141414]/70 group-hover:text-[#141414]">Powered by Decompiler</span>
+                    <span className="text-[12px] font-medium text-[#141414]/70 group-hover:text-[#141414]">Powered by VisualDecompiler.com</span>
                     <span className="text-[#141414]/30 group-hover:text-[#141414]/60">→</span>
                 </a>
             </div>

@@ -22,7 +22,7 @@ export default function Logo({
             </div>
             <div className="leading-none text-left">
                 <h1 className="text-[13px] font-bold text-[#141414] tracking-[-0.01em] uppercase">
-                    Visual Decompiler
+                    VisualDecompiler.com
                 </h1>
                 <p className="mt-0.5 text-[#6B6B6B] uppercase tracking-[0.2em]" style={{ fontSize: '8px' }}>
                     {sublabel}

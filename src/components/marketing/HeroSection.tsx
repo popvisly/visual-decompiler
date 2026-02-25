@@ -32,8 +32,8 @@ export default function HeroSection() {
 
                 {/* Subtitle */}
                 <p className="text-lg md:text-xl text-txt-secondary max-w-xl mx-auto leading-relaxed mb-10">
-                    Drop any advertisement. Our AI deconstructs the hidden psychology,
-                    trigger mechanics, and persuasion strategies in seconds.
+                    Drop any advertisement. Our AI deconstructs the architecture of persuasion
+                    to understand & comprehend the hidden mechanics in seconds.
                 </p>
 
                 {/* CTA */}

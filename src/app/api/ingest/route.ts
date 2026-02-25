@@ -204,7 +204,7 @@ export async function POST(req: Request) {
             }, { status: 400 });
         }
 
-        const promptVersion = 'V2';
+        const promptVersion = 'V4';
 
         if (info.type === null) {
             return NextResponse.json({

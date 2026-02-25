@@ -184,11 +184,12 @@ export default function PulseClient() {
 
                     {/* Stats Sidebar */}
                     <div className="space-y-8">
-                        <div className="bg-[#141414] p-10 rounded-[3rem] text-white shadow-2xl shadow-black/20">
-                            <TrendingUp className="w-10 h-10 text-accent mb-8" />
-                            <p className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-2 opacity-80">Volume</p>
-                            <h4 className="text-6xl font-light uppercase tracking-tightest leading-none">{pulse.adCount}</h4>
-                            <p className="text-sm text-white/40 mt-4 leading-relaxed">Strategic inputs ingested and deconstructed this period.</p>
+                        <div className="bg-[#FBF7EF] p-10 rounded-[3rem] border border-[#E7DED1] shadow-sm relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#BB9E7B] opacity-20 group-hover:opacity-100 transition-opacity" />
+                            <TrendingUp className="w-10 h-10 text-[#BB9E7B] mb-8" />
+                            <p className="text-[11px] font-bold text-[#BB9E7B] uppercase tracking-[0.3em] mb-2 opacity-80">Volume</p>
+                            <h4 className="text-6xl font-semibold text-[#1A1A18] uppercase tracking-tightest leading-none">{pulse.adCount}</h4>
+                            <p className="text-sm text-[#6B6B6B] mt-4 leading-relaxed font-medium">Strategic inputs ingested and deconstructed this period.</p>
                         </div>
 
                         <div className="bg-white p-10 rounded-[3rem] border border-[#E7DED1] shadow-xl shadow-black/[0.02]">

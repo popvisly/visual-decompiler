@@ -34,6 +34,19 @@ export default function PersonaGrid() {
     return (
         <section className="bg-[#F6F1E7] py-24 md:py-48 px-6">
             <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-24 md:mb-32 space-y-8">
+                    <div className="flex flex-col items-center gap-4">
+                        <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#BB9E7B]">Competitive Intelligence</span>
+                        <h2 className="text-4xl md:text-7xl font-semibold text-[#1A1A18] tracking-tightest uppercase leading-[0.9]">
+                            Built for every stage<br />
+                            <span className="text-[#BB9E7B]">of the Strategy Loop.</span>
+                        </h2>
+                    </div>
+                    <p className="text-base md:text-lg text-[#6B6B6B] max-w-2xl mx-auto leading-relaxed font-medium">
+                        From C-suite macro intelligence to creative execution and pulse-monitoring.
+                        A unified platform to deconstruct, synthesize, and outpace the market.
+                    </p>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
                     {PERSONAS.map((persona, idx) => (
                         <motion.div

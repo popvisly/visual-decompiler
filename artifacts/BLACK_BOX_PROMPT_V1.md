@@ -1,4 +1,4 @@
-# BLACK_BOX_PROMPT_V1 — Deep Decompiler (Vision)
+# BLACK_BOX_PROMPT_V1 — VisualDecompiler.com (Vision)
 
 Purpose: one-shot prompt for a Vision-capable model (Gemini Pro Vision / GPT-4o-class) to analyze an ad (image/video) and return a **strict JSON digest** suitable for storage + indexing.
 

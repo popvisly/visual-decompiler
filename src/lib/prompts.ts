@@ -2,7 +2,7 @@
 // Regenerate: node scripts/generate-prompts.cjs
 
 export const BLACK_BOX_PROMPT_V1 = [
-  "# BLACK_BOX_PROMPT_V1 — Deep Decompiler (Vision)",
+  "# BLACK_BOX_PROMPT_V1 — VisualDecompiler.com (Vision)",
   "",
   "Purpose: one-shot prompt for a Vision-capable model (Gemini Pro Vision / GPT-4o-class) to analyze an ad (image/video) and return a **strict JSON digest** suitable for storage + indexing.",
   "",
@@ -298,7 +298,7 @@ export const BLACK_BOX_PROMPT_V1 = [
 ].join("\n");
 
 export const BLACK_BOX_PROMPT_V2 = [
-  "# BLACK_BOX_PROMPT_V2 — Deep Decompiler (Vision)",
+  "# BLACK_BOX_PROMPT_V2 — VisualDecompiler.com (Vision)",
   "",
   "Purpose: Advanced one-shot prompt for a Vision-capable model (GPT-4o) to analyze an ad (image/video) and return a **Premium Strategic JSON Digest**.",
   "",
@@ -310,7 +310,13 @@ export const BLACK_BOX_PROMPT_V2 = [
   "You are an elite Advertising Strategist, Creative Director, and Semiotician. You diagnose persuasion mechanisms, visual hierarchy, and strategic intent in marketing media.",
   "",
   "TASK",
-  "Analyze the provided media (image(s) and/or video). Extract high-signal strategic, semiotic, and behavioral data. Return ONLY a valid JSON object matching the schema exactly.",
+  "",
+  "1. Analyze the provided media (image(s) and/or video).",
+  "2. Extract high-signal strategic, semiotic, and behavioral data.",
+  "3. Return ONLY a valid JSON object matching the schema exactly.",
+  "4. **CTA Strategy**: Analyze the final conversion trigger.",
+  "5. **Reconstruction Strategy (NEW)**: Generate a high-fidelity image prompt for DALL-E 3 or Midjourney that captures the lighting, composition, and aesthetic tone of the ad.",
+  "6. **Adoption Tier Detection**: Determine the current adoption tier of the ad's aesthetic and strategic approach.",
   "",
   "GLOBAL RULES (HARD FAILS)",
   "",
@@ -429,7 +435,8 @@ export const BLACK_BOX_PROMPT_V2 = [
   "    \"competitive_advantage\": \"string\",",
   "    \"behavioral_nudge\": \"string\",",
   "    \"misdirection_or_friction_removed\": \"string|null\",",
-  "    \"evidence_anchors\": [\"string\"]",
+  "    \"evidence_anchors\": [\"string\"],",
+  "    \"reconstruction_prompt\": \"string detailing a DALL-E 3/Midjourney prompt to replicate this visual style\"",
   "  },",
   "  \"diagnostics\": {",
   "    \"confidence\": {",
@@ -451,7 +458,7 @@ export const BLACK_BOX_PROMPT_V2 = [
 ].join("\n");
 
 export const BLACK_BOX_PROMPT_V3 = [
-  "# BLACK_BOX_PROMPT_V3 — Narrative Decompiler (Vision)",
+  "# BLACK_BOX_PROMPT_V3 — VisualDecompiler.com (Narrative)",
   "",
   "Purpose: Analyzes the **Narrative Arc** and **Strategic Timeline** of video creative.",
   "",
@@ -578,7 +585,7 @@ export const BLACK_BOX_PROMPT_V3 = [
 ].join("\n");
 
 export const BLACK_BOX_PROMPT_V4 = [
-  "# BLACK_BOX_PROMPT_V4 — Deep Multimodal Decompiler",
+  "# BLACK_BOX_PROMPT_V4 — VisualDecompiler.com (Multimodal)",
   "",
   "Purpose: Analyzes the **Narrative Arc**, **Strategic Timeline**, and **Multimodal Signals** (STT/OCR) of high-performance creative.",
   "",

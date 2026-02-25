@@ -38,7 +38,7 @@ export default function NotFound() {
             </main>
 
             <footer className="relative z-10 w-full text-center py-8">
-                <p className="text-[#6B6B6B] text-[10px] font-semibold tracking-[0.15em] uppercase">Visual Decompiler // Error Code 404</p>
+                <p className="text-[#6B6B6B] text-[10px] font-semibold tracking-[0.15em] uppercase">VisualDecompiler.com // Error Code 404</p>
             </footer>
         </div>
     );

@@ -4,6 +4,7 @@ import DecompilePipeline from '@/components/marketing/DecompilePipeline';
 import StrategicLaboratory from '@/components/marketing/StrategicLaboratory';
 import CaseStudyFashion from '@/components/marketing/CaseStudyFashion';
 import PersonaGrid from '@/components/marketing/PersonaGrid';
+import PromptShowcase from '@/components/marketing/PromptShowcase';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 import { Pill, PreviewCard, CaseCard } from '@/types/homepage';
 
@@ -66,8 +67,8 @@ export default function HomePage() {
 
             {/* ... Hero and DecompilePipeline ... */}
             <Hero
-                headline={["Advertising intelligence.", "Decompiled."]}
-                subhead="Drop any ad. Our system reconstructs the persuasion architecture—mechanics, cues, and leverage points."
+                headline={["Advertising intelligence.", "Deconstructed."]}
+                subhead="The sovereign infrastructure for elite agencies. Understand & comprehend the architecture of persuasion to justify high-stakes strategy with forensic precision."
                 ctaPrimary={{ label: "Start now", href: "/app" }}
                 ctaSecondary={{ label: "View example report", href: "#case-study" }}
                 stageImage={{ src: "/images/hero/dior-panels.jpg", alt: "Dior deconstruction collage" }}
@@ -91,14 +92,12 @@ export default function HomePage() {
             />
 
             <PersonaGrid />
+            <PromptShowcase />
 
             <StrategicLaboratory />
 
-            <FooterStartNow
-                headline="Start now"
-                subhead="Decompile your first ad in under a minute."
-                cta={{ label: "Start now", href: "/app" }}
-            />
+            <FooterStartNow />
+
         </main>
     );
 }

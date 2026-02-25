@@ -31,9 +31,9 @@ export default function StrategicPrototypeView({ prototype, onClose }: Strategic
             </div>
 
             {/* Strategic Rationale */}
-            <div className="p-8 md:p-12 bg-[#141414] rounded-[2.5rem] md:rounded-[3.5rem] text-white">
-                <p className="text-xs font-bold uppercase tracking-[0.4em] text-accent/60 mb-6">Strategic Rationale</p>
-                <p className="text-xl md:text-2xl font-light leading-relaxed italic opacity-90">
+            <div className="p-8 md:p-12 bg-[#FBF7EF] rounded-[2.5rem] md:rounded-[3.5rem] border border-[#E7DED1] shadow-sm">
+                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#BB9E7B] mb-6">Strategic Rationale</p>
+                <p className="text-xl md:text-2xl font-semibold leading-relaxed italic text-[#1A1A18]">
                     "{prototype.strategicRationale}"
                 </p>
             </div>

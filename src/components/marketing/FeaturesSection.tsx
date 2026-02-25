@@ -6,7 +6,7 @@ const FEATURES = [
     {
         title: 'Trigger Mechanics',
         headline: 'Identify the psychological lever',
-        desc: 'Every ad pulls a trigger — FOMO, status, desire, security. Decompiler names it in seconds and explains exactly how the mechanic operates.',
+        desc: 'Every ad pulls a trigger — FOMO, status, desire, security. VisualDecompiler.com names it in seconds and explains exactly how the mechanic operates.',
         demo: {
             label: 'Trigger Mechanic',
             value: 'FOMO / Scarcity',

@@ -105,13 +105,13 @@ export default function V1App() {
                                         },
                                         {
                                             step: '02',
-                                            title: 'Decompilation',
-                                            desc: 'Our models decode layers of persuasion, semiotics, and psychology.',
+                                            title: 'Forensic Analysis',
+                                            desc: 'Our models decode strategic layers of persuasion, semiotics, and psychology.',
                                         },
                                         {
                                             step: '03',
-                                            title: 'Report',
-                                            desc: 'Receive a comprehensive breakdown of hidden strategy and mechanics.',
+                                            title: 'Intelligence Report',
+                                            desc: 'Understand & comprehend the architecture of persuasion with a forensic breakdown.',
                                         },
                                     ].map((item) => (
                                         <div key={item.step} className="text-center">
@@ -153,7 +153,7 @@ export default function V1App() {
 
                 {/* Footer */}
                 <footer className="w-full text-center py-8">
-                    <p className="text-[#6B6B6B] text-[11px] font-semibold tracking-[0.15em] uppercase">© 2026 Decompiler. All rights reserved.</p>
+                    <p className="text-[#6B6B6B] text-[11px] font-semibold tracking-[0.15em] uppercase">© 2026 VisualDecompiler.com. All rights reserved.</p>
                 </footer>
             </div>
         </div>

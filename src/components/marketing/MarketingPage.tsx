@@ -26,10 +26,10 @@ export default function MarketingPage() {
                         <div>
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="w-8 h-8 rounded-lg bg-[#c8f000] flex items-center justify-center text-[#1a1a1a] font-black text-sm">
-                                    D
+                                    V
                                 </div>
                                 <div>
-                                    <span className="text-sm font-bold text-white tracking-tight">Decompiler</span>
+                                    <span className="text-sm font-bold text-white tracking-tight">VisualDecompiler.com</span>
                                 </div>
                             </div>
                             <p className="text-[13px] text-[rgba(255,255,255,0.5)] leading-relaxed max-w-xs">
@@ -73,7 +73,7 @@ export default function MarketingPage() {
                     {/* Bottom bar */}
                     <div className="pt-8 border-t border-[rgba(255,255,255,0.06)]">
                         <p className="text-[11px] text-[rgba(255,255,255,0.3)] uppercase tracking-[0.1em]">
-                            Decompiler © 2026. All rights reserved.
+                            VisualDecompiler.com © 2026. All rights reserved.
                         </p>
                     </div>
                 </div>
