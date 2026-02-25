@@ -100,10 +100,10 @@ export default function ProcessingViewClient({ mediaUrl, jobId, onComplete }: Pr
 
         const poll = async () => {
             try {
-                // In dev, auto-kick the worker so the page actually completes.
+                // Auto-kick the worker so the processing page actually completes.
+                // The worker endpoint is throttled server-side to prevent abuse.
                 // You can disable this by setting NEXT_PUBLIC_ALLOW_CLIENT_WORKER_KICK="false".
                 const allowWorkerKick =
-                    process.env.NODE_ENV === 'development' &&
                     process.env.NEXT_PUBLIC_ALLOW_CLIENT_WORKER_KICK !== 'false';
 
                 if (allowWorkerKick && (attempts === 0 || attempts % 4 === 0)) {
