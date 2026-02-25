@@ -19,6 +19,11 @@ export const maxDuration = 300; // 5 minutes for Vision API process
 const WORKER_MIN_INTERVAL_MS = Number(process.env.WORKER_MIN_INTERVAL_MS || 8000);
 let lastWorkerRunAt = 0;
 
+export async function GET(req: Request) {
+    // Vercel cron sends GET requests — delegate to the POST handler
+    return POST(req);
+}
+
 export async function POST(req: Request) {
     const now = Date.now();
     if (now - lastWorkerRunAt < WORKER_MIN_INTERVAL_MS) {
