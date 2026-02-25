@@ -164,8 +164,8 @@ export default function ResultsView({
             </div>
 
             <div className={`relative grid grid-cols-1 gap-8 ${showMedia ? 'lg:grid-cols-5' : ''}`}>
-                {/* Processing Overlay */}
-                {!(status === 'processed' || status === 'success') && (
+                {/* Processing Overlay — only show if BOTH status is not processed AND digest is empty */}
+                {!(status === 'processed' || status === 'success') && !d?.classification?.trigger_mechanic && (
                     <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#F6F1E7]/80 backdrop-blur-sm rounded-3xl">
                         <div className="text-center p-12 bg-white/50 border border-[#E7DED1] rounded-3xl shadow-xl max-w-sm mx-auto">
                             <div className="w-12 h-12 border-4 border-[#141414] border-t-transparent rounded-full animate-spin mx-auto mb-6" />
