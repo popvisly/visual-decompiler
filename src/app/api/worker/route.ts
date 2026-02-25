@@ -46,13 +46,13 @@ export async function POST(req: Request) {
     }
 
     try {
-        // 2a. Zombie Cleanup (Release jobs stuck in 'processing' for > 1 hour)
-        const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+        // 2a. Zombie Cleanup (Release jobs stuck in 'processing' for > 10 min)
+        const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
         await supabaseAdmin
             .from('ad_digests')
             .update({ status: 'queued' })
             .eq('status', 'processing')
-            .lt('created_at', oneHourAgo);
+            .lt('created_at', tenMinutesAgo);
 
         // 2b. Atomic Claim via Postgres RPC (Reduced batch size to 3 for stability)
         console.log(`[Worker] Attempting to claim jobs via RPC 'claim_queued_jobs'...`);

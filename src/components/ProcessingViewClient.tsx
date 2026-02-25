@@ -31,36 +31,17 @@ export default function ProcessingViewClient({ mediaUrl, jobId, onComplete }: Pr
     const [step, setStep] = useState(0);
     const [dots, setDots] = useState('');
     const [progress, setProgress] = useState(0); // 0..95 (we reserve the last 5% for completion)
-    // In local dev, we auto-kick the worker periodically so the UI actually progresses.
-    // The worker endpoint is throttled server-side to prevent runaway spend.
-    const kickWorkerOnce = async () => {
-        try {
-            const res = await fetch('/api/worker', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer OPEN',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({}),
-            });
-
-            // If the worker response includes this job as processed, jump to its report.
-            const text = await res.text();
-            try {
-                const json = JSON.parse(text);
-                const detail = Array.isArray(json?.details)
-                    ? json.details.find((d: any) => d?.id === jobId)
-                    : null;
-                if (detail?.status === 'processed') {
-                    router.push(`/dashboard/${jobId}?new=true`);
-                    return;
-                }
-            } catch { /* ignore */ }
-
-            router.refresh();
-        } catch {
-            // ignore
-        }
+    // Fire-and-forget worker kick — DON'T await the response.
+    // The worker takes ~3 min for Vision API; we poll job status separately.
+    const kickWorkerOnce = () => {
+        fetch('/api/worker', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer OPEN',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({}),
+        }).catch(() => { /* ignore — fire and forget */ });
     };
 
     // Progress text cycling (keeps the page feeling alive)
@@ -107,7 +88,7 @@ export default function ProcessingViewClient({ mediaUrl, jobId, onComplete }: Pr
                     process.env.NEXT_PUBLIC_ALLOW_CLIENT_WORKER_KICK !== 'false';
 
                 if (allowWorkerKick && (attempts === 0 || attempts % 4 === 0)) {
-                    await kickWorkerOnce();
+                    kickWorkerOnce(); // fire-and-forget — no await
                 }
 
                 // Then check the job status
