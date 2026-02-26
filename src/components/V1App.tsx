@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import UploadZone from '@/components/UploadZone';
 import ProcessingViewClient from '@/components/ProcessingViewClient';
@@ -24,12 +24,7 @@ export default function V1App() {
         []
     );
 
-    // Provide the example handler to UploadZone via a query param or window effect
-    useEffect(() => {
-        if (typeof window !== 'undefined' && window.location.search.includes('example=luxury')) {
-            // Optional: You could directly auto-trigger here, but letting UploadZone handle the UI is cleaner.
-        }
-    }, []);
+
 
     const handleProcessingComplete = useCallback((data: any) => {
         setState((prev) => ({
@@ -74,33 +69,39 @@ export default function V1App() {
 
                             <UploadZone onUploadComplete={handleUploadComplete} />
 
-                            {/* How it works */}
-                            <div className="max-w-3xl mx-auto mt-24 opacity-80">
-                                <h2 className="text-[#6B6B6B] text-[11px] font-semibold uppercase tracking-[0.18em] text-center mb-10">How it works</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {/* Forensic Workflow Pipeline */}
+                            <div className="max-w-3xl mx-auto mt-28 opacity-60">
+                                <h2 className="text-[#6B6B6B] text-[9px] font-bold uppercase tracking-[0.5em] text-center mb-12">Forensic Workflow</h2>
+                                <div className="relative grid grid-cols-1 md:grid-cols-3 gap-0">
+                                    {/* Neural Thread — connecting line */}
+                                    <div className="hidden md:block absolute top-5 left-[16.67%] right-[16.67%] h-px">
+                                        <div className="w-full h-full bg-gradient-to-r from-transparent via-[#E7DED1] to-transparent" />
+                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#BB9E7B]/30 to-transparent animate-pulse" />
+                                    </div>
+
                                     {[
                                         {
                                             step: '01',
-                                            title: 'Upload',
-                                            desc: 'Drop any ad creative — image, video, or paste a URL.',
+                                            title: 'Ingestion',
+                                            desc: 'Multi-modal entry for high-stakes visual/video data.',
                                         },
                                         {
                                             step: '02',
-                                            title: 'Forensic Analysis',
-                                            desc: 'Our models decode strategic layers of persuasion, semiotics, and psychology.',
+                                            title: 'Deconstruction',
+                                            desc: 'Decoding semiotic layers and psychological trigger mechanics.',
                                         },
                                         {
                                             step: '03',
-                                            title: 'Intelligence Report',
-                                            desc: 'Understand & comprehend the architecture of persuasion with a forensic breakdown.',
+                                            title: 'Intelligence',
+                                            desc: 'Generation of audit-ready forensic dossiers for executive decision-making.',
                                         },
                                     ].map((item) => (
-                                        <div key={item.step} className="text-center">
-                                            <div className="w-10 h-10 rounded-full bg-[#FBF7EF] border border-[#E7DED1] flex items-center justify-center mx-auto mb-4 shadow-sm">
-                                                <span className="text-[11px] font-bold text-[#141414] tracking-widest">{item.step}</span>
+                                        <div key={item.step} className="text-center px-6 relative">
+                                            <div className="relative z-10 w-10 h-10 rounded-full bg-[#FBF7EF] border border-[#E7DED1] flex items-center justify-center mx-auto mb-5 shadow-sm">
+                                                <span className="text-[9px] font-bold text-[#141414]/60 tracking-[0.2em] font-mono">{item.step}</span>
                                             </div>
-                                            <h3 className="text-[14px] font-semibold text-[#141414] mb-2">{item.title}</h3>
-                                            <p className="text-[13px] text-[#6B6B6B] leading-[1.5]">{item.desc}</p>
+                                            <h3 className="text-[10px] font-bold text-[#141414] uppercase tracking-[0.25em] mb-2">{item.title}</h3>
+                                            <p className="text-[11px] text-[#6B6B6B]/50 leading-[1.6] font-medium">{item.desc}</p>
                                         </div>
                                     ))}
                                 </div>
