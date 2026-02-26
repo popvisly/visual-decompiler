@@ -164,7 +164,7 @@ export default function AdDetailClient({
                     <div className="lg:col-span-7 space-y-6 md:space-y-8">
                         {!isShared && (
                             <div className="no-print">
-                                <div className="flex flex-wrap gap-2 rounded-full bg-white border border-[#E7DED1] p-1.5 shadow-sm">
+                                <div className="flex flex-wrap gap-2 rounded-[2rem] bg-white border border-[#E7DED1] p-1.5 shadow-sm">
                                     {([
                                         { key: 'report', label: 'Report' },
                                         { key: 'forensics', label: 'Forensics' },
