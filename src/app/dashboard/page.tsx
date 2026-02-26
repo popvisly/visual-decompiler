@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import AdList from '@/components/AdList';
 import Filters from '@/components/Filters';
-import Header from '@/components/Header';
 import CopilotPanel from '@/components/CopilotPanel';
 import AnomalyRouter from '@/components/AnomalyRouter';
 import GlobalMesh from '@/components/GlobalMesh';

@@ -1,4 +1,4 @@
-import Header from '@/components/Header';
+import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 
 export default function DashboardLayout({
     children,
@@ -12,7 +12,7 @@ export default function DashboardLayout({
             <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0)_60%)] z-0" />
 
             <div className="relative z-10 flex flex-col min-h-screen">
-                <Header />
+                <UnifiedSovereignHeader />
                 <main className="flex-1 w-full relative z-20">
                     {children}
                 </main>

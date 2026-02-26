@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, ShieldCheck, Zap, Globe, Lock } from 'lucide-react';
-import Nav from '@/components/marketing/Nav';
+import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 
 const PLANS = [
     {
@@ -66,7 +66,7 @@ export default function PricingPage() {
 
     return (
         <main className="bg-[#F6F1E7] min-h-screen">
-            <Nav />
+            <UnifiedSovereignHeader />
 
             <section className="pt-48 pb-32 px-6">
                 <div className="max-w-7xl mx-auto">

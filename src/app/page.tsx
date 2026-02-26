@@ -1,4 +1,4 @@
-import Nav from '@/components/marketing/Nav';
+import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import Hero from '@/components/marketing/Hero';
 import DecompilePipeline from '@/components/marketing/DecompilePipeline';
 import StrategicLaboratory from '@/components/marketing/StrategicLaboratory';
@@ -63,7 +63,7 @@ const FASHION_CARDS: CaseCard[] = [
 export default function HomePage() {
     return (
         <main className="bg-[#F6F1E7]">
-            <Nav />
+            <UnifiedSovereignHeader />
 
             {/* ... Hero and DecompilePipeline ... */}
             <Hero

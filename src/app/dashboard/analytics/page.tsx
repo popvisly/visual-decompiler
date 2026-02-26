@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import Filters from '@/components/Filters';
-import Header from '@/components/Header';
 import { auth } from '@clerk/nextjs/server';
 import Sidebar from '@/components/Sidebar';
 
