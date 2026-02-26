@@ -13,6 +13,7 @@ import { RotateCcw, Share, Check, Download, Activity, TrendingUp, Sparkles } fro
 import { useState, useRef, useMemo } from 'react';
 import BrandTag from './BrandTag';
 import { NeuralDeconstructionService } from '@/lib/neural_deconstruction_service';
+import ForensicTooltip from './ForensicTooltip';
 
 type Props = {
     id: string;
@@ -319,7 +320,9 @@ export default function ResultsView({
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10 border-t border-white/10">
                                 {/* Resonance */}
                                 <div className="space-y-1">
-                                    <p className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Market Resonance</p>
+                                    <ForensicTooltip term="Market Resonance" definition="A quantitative measure of how well the creative DNA aligns with current high-performing industry benchmarks and cultural sentiment within a specific category.">
+                                        <p className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Market Resonance</p>
+                                    </ForensicTooltip>
                                     <div className="flex items-baseline gap-2">
                                         <span className="text-3xl font-light text-[#FBF7EF]">{(roiPredict?.score || 70)}%</span>
                                         <span className={`text-[10px] font-bold uppercase ${(roiPredict?.score || 70) > 60 ? 'text-accent/60' : 'text-red-400/60'}`}>
@@ -347,7 +350,9 @@ export default function ResultsView({
 
                                 {/* Window */}
                                 <div className="space-y-1">
-                                    <p className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Tactical Window</p>
+                                    <ForensicTooltip term="Tactical Window" definition="The estimated lifespan of the ad's effectiveness before 'Creative Fatigue' sets in, requiring a strategic pivot or asset refresh.">
+                                        <p className="text-[9px] font-bold text-white/30 uppercase tracking-widest">Tactical Window</p>
+                                    </ForensicTooltip>
                                     <div className="flex items-baseline gap-2">
                                         <span className="text-3xl font-light text-[#FBF7EF]">{forecasting?.estimatedLifespanDays || 0}</span>
                                         <span className="text-[10px] font-bold text-white/30 uppercase">Days</span>
@@ -373,12 +378,14 @@ export default function ResultsView({
 
                     {/* ── Invisible Machinery — (Reduced to secondary info) ── */}
                     <BlurGate locked={isLimited}>
-                        <ResultsCard title="Invisible Machinery" variant="pullquote">
+                        <ResultsCard title="Invisible Machinery" variant="pullquote" tooltip="The underlying psychological framework and technical composition (lighting, geometry, color theory) that drives subconscious brand recall without the viewer's awareness.">
                             <div className="space-y-5">
                                 <div>
-                                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5 text-[#141414]/70">
-                                        Objection Dismantling Logic
-                                    </p>
+                                    <ForensicTooltip term="Objection Dismantling Logic" definition="A forensic breakdown of how the creative specifically neutralizes common consumer hesitations (e.g., price, effort, or trust) through subtle visual cues and messaging.">
+                                        <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-1.5 text-[#141414]/70">
+                                            Objection Dismantling Logic
+                                        </p>
+                                    </ForensicTooltip>
                                     <p className="text-base font-light text-[#141414] leading-relaxed italic">
                                         "{strat?.objection_tackle || 'Analyzing persuasion intent…'}"
                                     </p>

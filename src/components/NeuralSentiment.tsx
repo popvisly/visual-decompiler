@@ -30,7 +30,7 @@ function getIntensityLabel(intensity: number): string {
 
 export default function NeuralSentiment({ drivers, verdict }: Props) {
     return (
-        <ResultsCard title="Neural Sentiment Breakdown" variant="strategy">
+        <ResultsCard title="Neural Sentiment Breakdown" variant="strategy" tooltip="High-resolution emotional tracking that moves beyond basic polarity to identify 'Elite' drivers such as Aspiration, Authority, and Exclusive Scarcity.">
             <div className="space-y-8">
                 <div className="flex items-center gap-3 text-[#C1A67B]/60">
                     <Brain className="w-4 h-4" />

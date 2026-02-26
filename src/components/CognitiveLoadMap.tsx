@@ -32,7 +32,7 @@ export default function CognitiveLoadMap({ score, zones }: Props) {
     const status = getLoadLabel(score);
 
     return (
-        <ResultsCard title="Cognitive Load Map" variant="gauge">
+        <ResultsCard title="Cognitive Load Map" variant="gauge" tooltip="A neuro-analytical overlay that identifies areas of 'Visual Friction,' ensuring the core persuasion message isn't buried by excessive detail or poor hierarchy.">
             <div className="space-y-8">
                 {/* Score Hero */}
                 <div className="flex items-end gap-5 pb-8 border-b border-[#E7DED1]">

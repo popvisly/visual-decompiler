@@ -1,5 +1,7 @@
 'use client';
 
+import ForensicTooltip from './ForensicTooltip';
+
 type CardVariant = 'classification' | 'pullquote' | 'bullets' | 'gauge' | 'strategy' | 'tags';
 
 type Props = {
@@ -7,10 +9,11 @@ type Props = {
     variant: CardVariant;
     accentBorder?: boolean;
     noPadding?: boolean;
+    tooltip?: string;
     children: React.ReactNode;
 };
 
-export default function ResultsCard({ title, variant, accentBorder = false, noPadding = false, children }: Props) {
+export default function ResultsCard({ title, variant, accentBorder = false, noPadding = false, tooltip, children }: Props) {
     return (
         <div
             className={`card-stagger bg-white rounded-2xl border overflow-hidden shadow-[0_10px_40px_rgba(20,20,20,0.04)] ${accentBorder ? 'border-[#141414]/20' : 'border-[#E7DED1]'
@@ -21,10 +24,19 @@ export default function ResultsCard({ title, variant, accentBorder = false, noPa
                     {accentBorder && (
                         <div className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
                     )}
-                    <h3 className={`text-[10px] font-bold uppercase tracking-[0.2em] ${accentBorder ? 'text-[#141414]' : 'text-[#6B6B6B]'
-                        }`}>
-                        {title}
-                    </h3>
+                    {tooltip ? (
+                        <ForensicTooltip term={title} definition={tooltip}>
+                            <h3 className={`text-[10px] font-bold uppercase tracking-[0.2em] ${accentBorder ? 'text-[#141414]' : 'text-[#6B6B6B]'
+                                }`}>
+                                {title}
+                            </h3>
+                        </ForensicTooltip>
+                    ) : (
+                        <h3 className={`text-[10px] font-bold uppercase tracking-[0.2em] ${accentBorder ? 'text-[#141414]' : 'text-[#6B6B6B]'
+                            }`}>
+                            {title}
+                        </h3>
+                    )}
                 </div>
                 {children}
             </div>

@@ -18,7 +18,7 @@ const SEGMENT_COLORS = ['#141414', '#6B6B6B', '#B5A99A', '#C1A67B', '#E7DED1'];
 
 export default function SchemaAutopsy({ segments }: Props) {
     return (
-        <ResultsCard title="Schema Autopsy" variant="strategy">
+        <ResultsCard title="Schema Autopsy" variant="strategy" tooltip="A frame-by-frame structural extraction that reveals the 'Persuasion Blueprint' — the exact timing and sequence of hooks, social proof, and closing triggers.">
             <div className="space-y-8">
                 <p className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em]">
                     Persuasion Sequence — Structural DNA
