@@ -71,12 +71,12 @@ export default function HomePage() {
                 subhead="The sovereign infrastructure for elite agencies. Understand & comprehend the architecture of persuasion to justify high-stakes strategy with forensic precision."
                 ctaPrimary={{ label: "Start now", href: "/app" }}
                 ctaSecondary={{ label: "View example report", href: "#case-study" }}
-                stageImage={{ src: "/images/examples/perfume_ad_no_logo.jpg", alt: "Luxury perfume ad" }}
+                stageImage={{ src: "/images/examples/Model_Mirror.jpg", alt: "Luxury fashion ad" }}
             />
 
             <DecompilePipeline
                 id="how"
-                stageImage={{ src: "/images/examples/perfume_ad_no_logo.jpg", alt: "Example ad" }}
+                stageImage={{ src: "/images/examples/Model_Mirror.jpg", alt: "Example ad" }}
                 pills={PILLS}
                 reportPreviewCards={REPORT_PREVIEW}
             />
