@@ -23,9 +23,9 @@ export default function RadarChart({ data }: Props) {
     // Take top 6 points to avoid overcrowding
     const chartData = safeData.slice(0, 6);
 
-    const size = 200;
+    const size = 260; // Increased canvas size to give more margin for text
     const center = size / 2;
-    const radius = size * 0.35; // Leave room for labels
+    const radius = size * 0.28; // Smaller relative radius to give labels more room
     const maxValue = Math.max(...chartData.map((d) => d.value), 1); // Avoid div by 0
 
     const getCoordinates = (value: number, index: number, total: number) => {
@@ -124,6 +124,8 @@ export default function RadarChart({ data }: Props) {
                     if (x < center - 10) textAnchor = 'end';
                     else if (x > center + 10) textAnchor = 'start';
 
+                    const words = d.label.replace(/_/g, ' ').split(' ');
+
                     return (
                         <text
                             key={`label-${i}`}
@@ -136,7 +138,15 @@ export default function RadarChart({ data }: Props) {
                             alignmentBaseline="middle"
                             className="uppercase tracking-widest"
                         >
-                            {d.label.replace(/_/g, ' ')}
+                            {words.map((word: string, wIdx: number) => (
+                                <tspan
+                                    key={wIdx}
+                                    x={x}
+                                    dy={wIdx === 0 ? `${-(words.length - 1) * 0.5}em` : '1.2em'}
+                                >
+                                    {word}
+                                </tspan>
+                            ))}
                         </text>
                     );
                 })}
