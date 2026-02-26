@@ -7,10 +7,9 @@ type Props = {
     body: string;
     stageImage: StageImage;
     cards: CaseCard[];
-    cta: LinkCta;
 };
 
-export default function CaseStudyFashion({ id, label, title, body, stageImage, cards, cta }: Props) {
+export default function CaseStudyFashion({ id, label, title, body, stageImage, cards }: Props) {
     return (
         <section id={id} className="relative bg-[#FBF7EF] text-[#141414] py-32 md:py-48 overflow-hidden border-t border-[#E7DED1]">
             <div className="max-w-7xl mx-auto px-6">
@@ -73,21 +72,6 @@ export default function CaseStudyFashion({ id, label, title, body, stageImage, c
                                 )}
                             </div>
                         ))}
-
-                        {/* CTA link cell */}
-                        <div className="md:col-span-2 pt-12 border-t border-[#141414]/5">
-                            <a
-                                href={cta.href}
-                                className="
-                                    inline-flex items-center gap-4
-                                    text-[12px] font-bold text-[#141414] transition-all
-                                    uppercase tracking-[0.25em] group
-                                "
-                            >
-                                {cta.label}
-                                <span className="transition-transform group-hover:translate-x-2 text-[#C1A67B]">&rarr;</span>
-                            </a>
-                        </div>
                     </div>
 
                     {/* Right: Massive Ad Feature */}

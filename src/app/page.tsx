@@ -88,7 +88,6 @@ export default function HomePage() {
                 body="We surface scarcity cues, status signaling, and aesthetic authority—then show the exact elements carrying each claim."
                 stageImage={{ src: "/images/examples/perfume_ad_no_logo.jpg", alt: "Luxury fashion ad example" }}
                 cards={FASHION_CARDS}
-                cta={{ label: "Load this example in the app", href: "/app?example=luxury" }}
             />
 
             <PersonaGrid />
