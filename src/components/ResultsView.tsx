@@ -10,8 +10,9 @@ import ResultsCard, {
     StrategyField,
 } from './ResultsCard';
 import { RotateCcw, Share, Check, Download, Activity, TrendingUp, Sparkles } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import BrandTag from './BrandTag';
+import { NeuralDeconstructionService } from '@/lib/neural_deconstruction_service';
 
 type Props = {
     id: string;
@@ -80,6 +81,7 @@ export default function ResultsView({
 
     const [copied, setCopied] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const neuralData = useMemo(() => NeuralDeconstructionService.resolve(d, forecasting ? { saturationLevel: forecasting.saturationLevel ?? 0, estimatedLifespanDays: forecasting.estimatedLifespanDays ?? 0 } : undefined), [d, forecasting]);
 
     const handleShare = () => {
         if (!id) return;
@@ -305,6 +307,12 @@ export default function ResultsView({
                                         {strat?.semiotic_subtext || 'Calculating semiotic alignment...'}
                                     </p>
                                 </div>
+                                {/* Strategic Verdict */}
+                                {neuralData.strategic_verdict && (
+                                    <p className="text-[12px] font-medium text-accent/50 leading-relaxed mt-4 uppercase tracking-wide">
+                                        {neuralData.strategic_verdict}
+                                    </p>
+                                )}
                             </div>
 
                             {/* Middle Tier: Metrics Row */}

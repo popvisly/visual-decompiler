@@ -12,8 +12,14 @@ import VideoPins from '@/components/VideoPins';
 import AdShareButton from '@/components/AdShareButton';
 import DeepAuditView from '@/components/DeepAuditView';
 import PromptView from '@/components/PromptView';
+import CognitiveLoadMap from '@/components/CognitiveLoadMap';
+import SchemaAutopsy from '@/components/SchemaAutopsy';
+import MediaBuyProjections from '@/components/MediaBuyProjections';
+import SovereignBenchmark from '@/components/SovereignBenchmark';
+import NeuralSentiment from '@/components/NeuralSentiment';
 import { AdDigest } from '@/types/digest';
 import { ForecastingService } from '@/lib/forecasting';
+import { NeuralDeconstructionService } from '@/lib/neural_deconstruction_service';
 
 export default function AdDetailClient({
     ad,
@@ -35,8 +41,9 @@ export default function AdDetailClient({
     const [showBanner, setShowBanner] = useState(isNew);
     const [roiPredict, setRoiPredict] = useState<any>(null);
 
-    type TabKey = 'report' | 'forensics' | 'pins' | 'prompt' | 'dna' | 'audience' | 'remix';
+    type TabKey = 'report' | 'forensics' | 'pins' | 'prompt' | 'intelligence' | 'audience' | 'remix';
     const [tab, setTab] = useState<TabKey>('report');
+    const neuralData = useMemo(() => NeuralDeconstructionService.resolve(digest, forecasting), [digest, forecasting]);
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const handleTimeUpdate = () => {
@@ -170,7 +177,7 @@ export default function AdDetailClient({
                                         { key: 'forensics', label: 'Forensics' },
                                         { key: 'prompt', label: 'Prompt' },
                                         { key: 'pins', label: 'Pins' },
-                                        { key: 'dna', label: 'DNA' },
+                                        { key: 'intelligence', label: 'Intelligence' },
                                         { key: 'audience', label: 'Audience' },
                                         { key: 'remix', label: 'Remix' },
                                     ] as const).map(t => (
@@ -319,21 +326,23 @@ export default function AdDetailClient({
                             </div>
                         )}
 
-                        {tab === 'dna' && (
-                            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
-                                <div className="flex flex-col items-center justify-center py-16 text-center">
-                                    <div className="w-16 h-16 rounded-2xl bg-[#141414] flex items-center justify-center mb-6">
-                                        <Dna className="w-7 h-7 text-[#FBF7EF]" />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-[#141414] tracking-tight mb-2">Structural DNA</h3>
-                                    <p className="text-[12px] text-[#6B6B6B] max-w-sm leading-relaxed mb-6">
-                                        Map the ad&apos;s persuasion genome — hook type × CTA × proof architecture — into a visual fingerprint comparable across your entire library.
-                                    </p>
-                                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#FBF7EF] border border-[#E7DED1] rounded-full">
-                                        <Lock className="w-3 h-3 text-[#6B6B6B]" />
-                                        <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.15em]">Coming Soon</span>
-                                    </div>
-                                </div>
+                        {tab === 'intelligence' && (
+                            <div className="space-y-8">
+                                <CognitiveLoadMap
+                                    score={neuralData.cognitive_load_score}
+                                    zones={neuralData.cognitive_load_zones}
+                                />
+                                <SchemaAutopsy segments={neuralData.schema_segments} />
+                                <MediaBuyProjections platforms={neuralData.platform_affinity} />
+                                <SovereignBenchmark
+                                    percentile={neuralData.percentile_estimate}
+                                    category={digest.meta?.product_category_guess || undefined}
+                                    resonanceScore={roiPredict?.score}
+                                />
+                                <NeuralSentiment
+                                    drivers={neuralData.emotional_drivers}
+                                    verdict={neuralData.strategic_verdict}
+                                />
                             </div>
                         )}
 

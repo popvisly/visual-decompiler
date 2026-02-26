@@ -256,6 +256,32 @@ export const AdDigestSchema = z.object({
         evidence_anchors: z.array(z.string()).optional(), // [NEW] Deep Decompiler
         reconstruction_prompt: z.string().nullable().optional(), // [NEW] Milestone 51: Semantic Prompting
     }),
+    neural_deconstruction: z.object({
+        cognitive_load_score: z.number(),
+        cognitive_load_zones: z.array(z.object({
+            zone: z.string(),
+            load: z.number(),
+            note: z.string(),
+        })),
+        schema_segments: z.array(z.object({
+            label: z.string(),
+            duration_hint: z.string(),
+            trigger_used: z.string(),
+            note: z.string(),
+        })),
+        platform_affinity: z.array(z.object({
+            platform: z.string(),
+            fit_score: z.number(),
+            rationale: z.string(),
+        })),
+        emotional_drivers: z.array(z.object({
+            driver: z.string(),
+            intensity: z.number(),
+            source: z.string(),
+        })),
+        strategic_verdict: z.string(),
+        percentile_estimate: z.number(),
+    }).optional(),
     diagnostics: z.object({
         confidence: z.object({
             overall: z.number(),
