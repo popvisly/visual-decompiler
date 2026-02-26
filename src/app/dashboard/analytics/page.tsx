@@ -2,6 +2,11 @@ import { Suspense } from 'react';
 import Filters from '@/components/Filters';
 import { auth } from '@clerk/nextjs/server';
 import Sidebar from '@/components/Sidebar';
+import Link from 'next/link';
+import { Download, Activity, Clock, Zap } from 'lucide-react';
+import CircularGauge from '@/components/CircularGauge';
+import RadarChart from '@/components/RadarChart';
+import OpportunityVoids from '@/components/OpportunityVoids';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -15,113 +20,136 @@ async function AnalyticsContent({ brand }: { brand?: string }) {
 
     if (data.summary.total === 0) {
         return (
-            <div className="text-center py-20 bg-surface rounded-3xl border border-white/5">
-                <p className="text-txt-on-dark-muted font-medium text-sm">No data found for the selected filters.</p>
+            <div className="text-center py-20 bg-[#141414] rounded-[24px] border border-[#E7DED1]/10">
+                <p className="text-[#6B6B6B] font-medium text-sm">No data found for the selected filters.</p>
             </div>
         );
     }
 
-    const dimensions = [
-        { key: 'trigger_mechanic', label: 'Trigger Mechanics' },
-        { key: 'claim_type', label: 'Claim Types' },
-        { key: 'offer_type', label: 'Offer Types' },
-        { key: 'narrative_framework', label: 'Narrative Frameworks' },
-        { key: 'cognitive_load', label: 'Cognitive Load' },
-        { key: 'cta_strength', label: 'CTA Strength' },
-    ];
+    const triggerMechanics = data.dimensions['trigger_mechanic'] || [];
+    const dominantTrigger = triggerMechanics.length > 0 ? triggerMechanics[0] : null;
+
+    const emotionalFrameworks = data.dimensions['narrative_framework'] || [];
+
+    // Heuristics for dashboard display
+    const saturationPercentage = Math.min(Math.round((data.summary.total / 500) * 100), 100) || 5;
+
+    // Sort frameworks by count to show top 4 blocks
+    const topEmotions = [...emotionalFrameworks].sort((a, b) => b.count - a.count).slice(0, 4);
+    const maxEmotionCount = topEmotions.length > 0 ? topEmotions[0].count : 1;
 
     return (
         <div className="space-y-12">
-            {/* Summary Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div className="bg-surface p-6 rounded-2xl border border-white/5">
-                    <div className="flex justify-between items-start mb-2">
-                        <p className="spec-label-dark">Processed</p>
-                        <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+            {/* 1. The Sovereign Market Pulse (Top Row) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Saturation Gauge */}
+                <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm">
+                    <div className="mb-6 flex justify-between items-start">
+                        <Activity className="w-5 h-5 text-[#BB9E7B]" />
+                        <div className="w-2 h-2 rounded-full bg-accent/40 animate-pulse" />
                     </div>
-                    <p className="text-3xl font-light text-txt-on-dark">{data.summary.total}</p>
+                    <CircularGauge value={saturationPercentage} label="Market Saturation" sublabel="Category Density Index" />
                 </div>
-                <div className="bg-surface p-6 rounded-2xl border border-white/5">
-                    <div className="flex justify-between items-start mb-2">
-                        <p className="spec-label-dark">In Queue</p>
-                        <div className={`w-2 h-2 rounded-full ${data.summary.queued > 0 ? 'bg-accent animate-pulse' : 'bg-white/10'}`} />
+
+                {/* Dominant Schema */}
+                <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div className="mb-6">
+                            <Zap className="w-5 h-5 text-[#BB9E7B]" />
+                        </div>
+                        <h3 className="text-xs font-bold text-[#BB9E7B] uppercase tracking-widest mb-1">Dominant Schema</h3>
+                        <p className="text-[10px] text-txt-on-dark-muted font-medium uppercase tracking-tight">Top Trigger Mechanic</p>
                     </div>
-                    <p className="text-3xl font-light text-txt-on-dark">{data.summary.queued}</p>
+                    <div className="mt-6 flex flex-col gap-1">
+                        <span className="text-2xl font-light text-txt-on-dark capitalize tracking-tight">
+                            {dominantTrigger ? dominantTrigger.label.replace(/_/g, ' ') : 'N/A'}
+                        </span>
+                        {dominantTrigger && (
+                            <span className="text-[11px] font-bold text-[#BB9E7B] tracking-wide">
+                                +{dominantTrigger.count} Deployments
+                            </span>
+                        )}
+                    </div>
                 </div>
-                <div className="bg-surface p-6 rounded-2xl border border-white/5">
-                    <div className="flex justify-between items-start mb-2">
-                        <p className="spec-label-dark">Processing</p>
-                        <div className={`w-2 h-2 rounded-full ${data.summary.processing > 0 ? 'bg-yellow-500 animate-spin' : 'bg-white/10'}`} />
+
+                {/* Tactical Window */}
+                <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm flex flex-col justify-between relative overflow-hidden">
+                    {/* decorative background graph line */}
+                    <div className="absolute bottom-0 left-0 right-0 h-1/2 opacity-10 pointer-events-none">
+                        <svg viewBox="0 0 100 50" preserveAspectRatio="none" className="w-full h-full text-[#BB9E7B]">
+                            <path d="M0,50 L20,30 L40,40 L60,10 L80,20 L100,5" fill="none" stroke="currentColor" strokeWidth="2" />
+                        </svg>
                     </div>
-                    <p className="text-3xl font-light text-txt-on-dark">{data.summary.processing}</p>
+                    <div>
+                        <div className="mb-6 relative z-10">
+                            <Clock className="w-5 h-5 text-[#BB9E7B]" />
+                        </div>
+                        <h3 className="text-xs font-bold text-[#BB9E7B] uppercase tracking-widest mb-1 relative z-10">Predictive Window</h3>
+                        <p className="text-[10px] text-txt-on-dark-muted font-medium uppercase tracking-tight relative z-10">Creative Longevity</p>
+                    </div>
+                    <div className="mt-6 relative z-10">
+                        <span className="text-2xl font-light text-txt-on-dark tracking-tight">
+                            Fatigue at Day 32
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            {/* Dimension Grids */}
+            {/* 2. Forensic Trend Mapping (Middle Row) */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {dimensions.map(dim => {
-                    const items = data.dimensions[dim.key] || [];
-                    const maxCount = items.length > 0 ? items[0].count : 0;
+                {/* Trigger Radar */}
+                <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm flex flex-col items-center">
+                    <h3 className="text-[11px] font-bold text-txt-on-dark uppercase tracking-[0.2em] mb-8 self-start w-full border-b border-white/5 pb-4">
+                        Trigger Distribution Map
+                    </h3>
+                    <div className="w-full max-w-[320px]">
+                        <RadarChart data={triggerMechanics.map(t => ({ label: t.label, value: t.count }))} />
+                    </div>
+                </div>
 
-                    return (
-                        <div key={dim.key} className="bg-surface p-6 rounded-2xl border border-white/5">
-                            <h3 className="text-xs font-bold text-txt-on-dark uppercase tracking-tight mb-5 flex items-center justify-between">
-                                {dim.label}
-                                <span className="spec-label-dark">{items.length} variants</span>
-                            </h3>
-                            <div className="space-y-3">
-                                {items.map((item: any) => (
-                                    <div key={item.label} className="group">
-                                        <div className="flex justify-between text-[11px] font-medium text-txt-on-dark-muted mb-1 px-0.5">
-                                            <span className="group-hover:text-txt-on-dark transition-colors capitalize">{item.label.replace(/_/g, ' ')}</span>
-                                            <span>{item.count}</span>
-                                        </div>
-                                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                            <div
-                                                className="h-full bg-accent rounded-full transition-all duration-1000 ease-out"
-                                                style={{ width: `${(item.count / maxCount) * 100}%` }}
-                                            />
-                                        </div>
+                {/* Emotional Heatmap (Blocks) */}
+                <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm flex flex-col">
+                    <h3 className="text-[11px] font-bold text-txt-on-dark uppercase tracking-[0.2em] mb-8 border-b border-white/5 pb-4">
+                        Emotional DNA Heatmap
+                    </h3>
+                    <div className="flex-1 grid grid-cols-2 gap-3">
+                        {topEmotions.map((emo, idx) => {
+                            // Calculate opacity based on relative count to max
+                            const ratio = emo.count / maxEmotionCount;
+                            // Ensure minimum visibility
+                            const opacity = Math.max(0.2, ratio);
+
+                            return (
+                                <div key={idx} className="relative rounded-xl border border-white/5 overflow-hidden flex flex-col justify-end p-4 group">
+                                    {/* Heatmap background block */}
+                                    <div
+                                        className="absolute inset-0 bg-[#BB9E7B]"
+                                        style={{ opacity: opacity * 0.4 }}
+                                    />
+                                    {/* Content */}
+                                    <div className="relative z-10">
+                                        <p className="text-[10px] text-txt-on-dark/70 font-bold uppercase tracking-widest mb-1">
+                                            Usage: {emo.count}
+                                        </p>
+                                        <p className="text-[13px] font-medium text-txt-on-dark capitalize leading-tight">
+                                            {emo.label.replace(/_/g, ' ')}
+                                        </p>
                                     </div>
-                                ))}
-                                {items.length === 0 && (
-                                    <p className="text-xs text-txt-on-dark-muted italic">No data recorded.</p>
-                                )}
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-
-            {/* Invisible Machinery: Lateral Inspiration Wall */}
-            <div className="space-y-6 pt-6 border-t border-white/5">
-                <div>
-                    <h3 className="text-xs font-bold text-accent uppercase tracking-widest mb-1">Invisible Machinery</h3>
-                    <p className="text-[10px] text-txt-on-dark-muted font-medium uppercase tracking-tight">Lateral Strategy Inspiration</p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {data.highlights.map(item => (
-                        <div key={item.id} className="bg-surface p-5 rounded-2xl border border-white/5 flex flex-col gap-4 group hover:border-accent/40 transition-all cursor-default">
-                            <div className="flex items-center justify-between">
-                                <span className="spec-label-dark font-bold text-[9px] truncate max-w-[120px]">{item.brand}</span>
-                                <div className="w-1.5 h-1.5 rounded-full bg-accent/40 group-hover:bg-accent animate-pulse" />
-                            </div>
-
-                            <div className="space-y-3">
-                                <div>
-                                    <p className="text-[8px] font-bold text-accent/60 uppercase tracking-tighter mb-1">Semiotic Subtext</p>
-                                    <p className="text-[11px] text-txt-on-dark-muted leading-relaxed line-clamp-3 italic">"{item.subtext}"</p>
                                 </div>
-                                <div className="pt-3 border-t border-white/5">
-                                    <p className="text-[8px] font-bold text-txt-on-dark-muted/60 uppercase tracking-tighter mb-1">Objection Dismantling</p>
-                                    <p className="text-[11px] text-txt-on-dark leading-snug">{item.objection}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                            );
+                        })}
+                        {topEmotions.length === 0 && (
+                            <p className="text-xs text-txt-on-dark-muted italic col-span-2">No emotional data recorded.</p>
+                        )}
+                    </div>
                 </div>
             </div>
+
+            {/* 3. Competitor Vulnerability Feed (Bottom Row) */}
+            <OpportunityVoids
+                triggerMechanics={data.dimensions['trigger_mechanic'] || []}
+                claimTypes={data.dimensions['claim_type'] || []}
+            />
         </div>
     );
 }
@@ -136,10 +164,25 @@ export default async function AnalyticsPage({
     return (
         <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-10 w-full relative z-20">
             <Sidebar searchParams={params} />
-            <div className="flex-1 space-y-10">
-                <div>
-                    <h2 className="text-3xl font-light text-txt-on-dark tracking-tight uppercase">Global Intelligence</h2>
-                    <p className="text-[10px] text-txt-on-dark-muted mt-1 font-medium tracking-widest uppercase">Strategic pattern distribution</p>
+            <div className="flex-1 space-y-12 py-12">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-[#E7DED1]">
+                    <div>
+                        <h2 className="text-5xl font-light text-[#141414] tracking-tightest uppercase leading-[0.85] select-none">
+                            Market<br />
+                            <span className="text-[#6B6B6B]/30">Pulse</span>
+                        </h2>
+                        <p className="text-[12px] text-[#6B6B6B] mt-6 font-bold tracking-[0.3em] uppercase">Sovereign Intelligence Dashboard</p>
+                    </div>
+
+                    <div className="md:pb-2 flex items-center gap-4">
+                        <Link
+                            href="/dashboard?v=executive"
+                            className="flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest bg-white border border-[#E7DED1] hover:border-accent hover:text-[#141414] transition-all shadow-sm"
+                        >
+                            <Download className="w-3.5 h-3.5" />
+                            Export Category Audit
+                        </Link>
+                    </div>
                 </div>
 
                 <section className="flex-1">
