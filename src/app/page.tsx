@@ -86,7 +86,7 @@ export default function HomePage() {
                 label="CASE STUDY — LUXURY / FASHION"
                 title="Luxury ads sell restraint. The mechanics are aggressive."
                 body="We surface scarcity cues, status signaling, and aesthetic authority—then show the exact elements carrying each claim."
-                stageImage={{ src: "/images/examples/perfume_ad_no_logo.jpg", alt: "Luxury fashion ad example" }}
+                stageImage={{ src: "/images/examples/Model_Mirror.jpg", alt: "Luxury fashion ad example" }}
                 cards={FASHION_CARDS}
             />
 

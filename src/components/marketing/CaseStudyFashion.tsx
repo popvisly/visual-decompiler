@@ -41,7 +41,7 @@ export default function CaseStudyFashion({ id, label, title, body, stageImage, c
                 </div>
 
                 {/* Layout Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_500px] xl:grid-cols-[1fr_600px] gap-16 lg:gap-24 xl:gap-32 items-start max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_450px] gap-16 lg:gap-20 xl:gap-24 items-center max-w-6xl mx-auto">
 
                     {/* Left: Swiss Cards (Aggressive Type) */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-8">
@@ -75,9 +75,9 @@ export default function CaseStudyFashion({ id, label, title, body, stageImage, c
                     </div>
 
                     {/* Right: Massive Ad Feature */}
-                    <div className="relative sticky top-32 w-full aspect-[4/5] rounded-[32px] overflow-hidden border-[8px] md:border-[12px] border-white shadow-[0_40px_100px_rgba(20,20,20,0.12)] bg-white rotate-1 hover:rotate-0 transition-transform duration-700">
-                        <img src={stageImage.src} alt={stageImage.alt} className="w-full h-full object-cover rounded-[20px]" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/5 to-transparent rounded-[20px]" />
+                    <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden border-[8px] md:border-[12px] border-white shadow-[0_40px_100px_rgba(20,20,20,0.12)] bg-white rotate-1 hover:rotate-0 transition-transform duration-700">
+                        <img src={stageImage.src} alt={stageImage.alt} className="w-full h-full object-cover rounded-[12px]" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/5 to-transparent rounded-[12px]" />
                     </div>
 
                 </div>
