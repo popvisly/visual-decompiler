@@ -56,27 +56,33 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                     )}
                 </div>
 
-                {/* Timeline bars */}
-                <div className="flex items-end gap-[3px] h-28 mb-3">
-                    {audit.pacing.timeline.map((item, i) => (
-                        <div
-                            key={i}
-                            className="flex-1 rounded-t-md hover:opacity-80 transition-all group relative cursor-help"
-                            style={{
-                                height: `${item.intensity}%`,
-                                backgroundColor: '#141414',
-                                opacity: 0.15 + (item.intensity / 100) * 0.85,
-                            }}
-                        >
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-[#141414] text-white text-[9px] py-1.5 px-3 rounded-lg whitespace-nowrap z-50 shadow-lg">
-                                <span className="font-bold">{item.label}</span>
-                                {audit.pacing.totalDurationMs > 0 && (
-                                    <span className="text-white/50 ml-1">@ {Math.round(item.t_ms / 1000)}s</span>
-                                )}
-                                <span className="text-white/50 ml-1">({item.intensity}%)</span>
+                {/* Timeline bars — gradient from amber (low) to dark (high) */}
+                <div className="flex items-end gap-1 h-28 mb-3">
+                    {audit.pacing.timeline.map((item, i) => {
+                        const pct = item.intensity / 100;
+                        // Interpolate from warm amber (#D4A574) to dark charcoal (#1A1A1A)
+                        const r = Math.round(212 - pct * 186);
+                        const g = Math.round(165 - pct * 139);
+                        const b = Math.round(116 - pct * 90);
+                        return (
+                            <div
+                                key={i}
+                                className="flex-1 rounded-t-lg hover:scale-105 transition-all group relative cursor-help"
+                                style={{
+                                    height: `${Math.max(20, item.intensity)}%`,
+                                    backgroundColor: `rgb(${r}, ${g}, ${b})`,
+                                }}
+                            >
+                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-[#141414] text-white text-[9px] py-1.5 px-3 rounded-lg whitespace-nowrap z-50 shadow-lg">
+                                    <span className="font-bold">{item.label}</span>
+                                    {audit.pacing.totalDurationMs > 0 && (
+                                        <span className="text-white/50 ml-1">@ {Math.round(item.t_ms / 1000)}s</span>
+                                    )}
+                                    <span className="text-white/50 ml-1">({item.intensity}%)</span>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 {/* Timeline labels */}
@@ -130,17 +136,20 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                         </span>
                     </div>
 
-                    {/* Swatch pills */}
-                    <div className="flex flex-wrap gap-2 mb-6">
+                    {/* Swatch pills — each with psychological reasoning */}
+                    <div className="space-y-2 mb-6">
                         {audit.color.swatches.map((swatch, i) => (
-                            <div key={i} className="flex items-center gap-2 bg-[#FBF7EF] border border-[#E7DED1] rounded-xl px-3 py-2">
+                            <div key={i} className="flex items-center gap-3 bg-[#FBF7EF] border border-[#E7DED1] rounded-xl px-3 py-2.5">
                                 <div
-                                    className="w-5 h-5 rounded-lg border border-[#E7DED1] shadow-sm"
+                                    className="w-8 h-8 rounded-lg border border-[#E7DED1] shadow-sm shrink-0"
                                     style={{ backgroundColor: `#${swatch.hex}` }}
                                 />
-                                <div className="flex flex-col">
-                                    <span className="text-[9px] font-bold text-[#141414] uppercase tracking-wide">{swatch.label}</span>
-                                    <span className="text-[8px] font-mono text-[#6B6B6B]">#{swatch.hex}</span>
+                                <div className="flex flex-col min-w-0">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-[9px] font-bold text-[#141414] uppercase tracking-wide">{swatch.label}</span>
+                                        <span className="text-[8px] font-mono text-[#6B6B6B]">#{swatch.hex}</span>
+                                    </div>
+                                    <span className="text-[10px] text-[#6B6B6B] leading-tight">{swatch.psychologicalEffect}</span>
                                 </div>
                             </div>
                         ))}

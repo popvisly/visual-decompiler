@@ -167,8 +167,8 @@ export default function AdDetailClient({
                                 <div className="flex flex-wrap gap-2 rounded-full bg-white border border-[#E7DED1] p-1.5 shadow-sm">
                                     {([
                                         { key: 'report', label: 'Report' },
-                                        { key: 'prompt', label: 'Prompt' },
                                         { key: 'forensics', label: 'Forensics' },
+                                        { key: 'prompt', label: 'Prompt' },
                                         { key: 'pins', label: 'Pins' },
                                         { key: 'dna', label: 'DNA' },
                                         { key: 'audience', label: 'Audience' },
