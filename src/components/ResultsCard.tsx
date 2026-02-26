@@ -16,23 +16,23 @@ type Props = {
 export default function ResultsCard({ title, variant, accentBorder = false, noPadding = false, tooltip, children }: Props) {
     return (
         <div
-            className={`card-stagger bg-white rounded-2xl border overflow-hidden shadow-[0_10px_40px_rgba(20,20,20,0.04)] ${accentBorder ? 'border-[#141414]/20' : 'border-[#E7DED1]'
+            className={`card-stagger bg-white rounded-[2rem] border overflow-hidden shadow-[0_12px_48px_rgba(20,20,20,0.03)] ${accentBorder ? 'border-[#141414]/15' : 'border-[#E7DED1]'
                 }`}
         >
-            <div className={noPadding ? '' : 'p-5'}>
-                <div className={`flex items-center gap-2 mb-4 ${noPadding ? 'p-5 mb-0' : ''}`}>
+            <div className={noPadding ? '' : 'p-7'}>
+                <div className={`flex items-center gap-2.5 mb-5 ${noPadding ? 'p-7 mb-0' : ''}`}>
                     {accentBorder && (
                         <div className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
                     )}
                     {tooltip ? (
                         <ForensicTooltip term={title} definition={tooltip}>
-                            <h3 className={`text-[10px] font-bold uppercase tracking-[0.2em] ${accentBorder ? 'text-[#141414]' : 'text-[#6B6B6B]'
+                            <h3 className={`text-[10px] font-bold uppercase tracking-[0.25em] ${accentBorder ? 'text-[#141414]' : 'text-[#6B6B6B]'
                                 }`}>
                                 {title}
                             </h3>
                         </ForensicTooltip>
                     ) : (
-                        <h3 className={`text-[10px] font-bold uppercase tracking-[0.2em] ${accentBorder ? 'text-[#141414]' : 'text-[#6B6B6B]'
+                        <h3 className={`text-[10px] font-bold uppercase tracking-[0.25em] ${accentBorder ? 'text-[#141414]' : 'text-[#6B6B6B]'
                             }`}>
                             {title}
                         </h3>
@@ -48,8 +48,8 @@ export default function ResultsCard({ title, variant, accentBorder = false, noPa
 
 export function ClassificationPill({ label, value }: { label: string; value: string }) {
     return (
-        <div className="bg-[#FBF7EF] rounded-xl px-3 py-2.5 border border-[#E7DED1]">
-            <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-0.5">{label}</p>
+        <div className="bg-[#FBF7EF] rounded-2xl px-4 py-3 border border-[#E7DED1] hover:border-accent/30 transition-colors">
+            <p className="text-[#6B6B6B] text-[9px] font-bold uppercase tracking-[0.25em] mb-1">{label}</p>
             <p className="text-xs font-semibold text-[#141414]">{value.replace(/_/g, ' ')}</p>
         </div>
     );
@@ -144,9 +144,9 @@ export function TagRow({ items }: { items: string[] }) {
 
 export function StrategyField({ label, value }: { label: string; value: string }) {
     return (
-        <div>
-            <p className="text-[#141414]/70 text-[10px] font-bold uppercase tracking-[0.15em] mb-1">{label}</p>
-            <p className="text-sm text-[#141414] leading-[1.5]">{value}</p>
+        <div className="border-l-2 border-[#E7DED1] pl-4 hover:border-accent/40 transition-colors">
+            <p className="text-[#6B6B6B] text-[9px] font-bold uppercase tracking-[0.25em] mb-1.5">{label}</p>
+            <p className="text-[13px] text-[#141414] leading-relaxed font-light">{value}</p>
         </div>
     );
 }

@@ -124,7 +124,7 @@ export default function ResultsView({
             {/* Top bar */}
             <div className="flex items-center justify-between mb-8 mt-4">
                 <div>
-                    <h2 className="font-sans text-3xl font-medium text-[#141414] tracking-[-0.02em]">
+                    <h2 className="font-sans text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.4em]">
                         Analysis Complete
                     </h2>
                     {displayBrand && (
@@ -288,7 +288,7 @@ export default function ResultsView({
                 )}
 
                 {/* Right — Analysis cards */}
-                <div className={`${showMedia ? 'lg:col-span-3' : ''} space-y-4`}>
+                <div className={`${showMedia ? 'lg:col-span-3' : ''} space-y-6`}>
                     {/* Neural Thesis — The Primary Executive Summary */}
                     <div className="p-8 md:p-12 bg-[#141414] rounded-[2.5rem] md:rounded-[4rem] border border-white/10 shadow-2xl relative overflow-hidden group">
                         {/* Background Aura */}
@@ -421,7 +421,7 @@ export default function ResultsView({
                                 <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-2">Emotion / Tone</p>
                                 <div className="flex flex-wrap gap-1.5">
                                     {cls.emotion_tone.map((e: string) => (
-                                        <span key={e} className="px-2.5 py-1 rounded-lg bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1]">
+                                        <span key={e} className="px-3 py-1.5 rounded-xl bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1] hover:border-accent/30 transition-colors">
                                             {e.replace(/_/g, ' ')}
                                         </span>
                                     ))}
@@ -472,7 +472,7 @@ export default function ResultsView({
                         {(ext?.notable_visual_elements?.length || 0) > 0 && (
                             <div className="flex flex-wrap gap-1.5">
                                 {ext.notable_visual_elements.map((el: string, i: number) => (
-                                    <span key={i} className="px-2.5 py-1 rounded-lg bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1]">
+                                    <span key={i} className="px-3 py-1.5 rounded-xl bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1] hover:border-accent/30 transition-colors">
                                         {el}
                                     </span>
                                 ))}

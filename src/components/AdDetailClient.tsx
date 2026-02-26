@@ -188,10 +188,10 @@ export default function AdDetailClient({
                                 <div className="flex flex-wrap gap-2 rounded-[2rem] bg-white border border-[#E7DED1] p-1.5 shadow-sm">
                                     {([
                                         { key: 'report', label: 'Report' },
+                                        { key: 'intelligence', label: 'Intelligence' },
                                         { key: 'forensics', label: 'Forensics' },
                                         { key: 'prompt', label: 'Prompt' },
                                         { key: 'pins', label: 'Pins' },
-                                        { key: 'intelligence', label: 'Intelligence' },
                                         { key: 'audience', label: 'Audience' },
                                         { key: 'remix', label: 'Remix' },
                                     ] as const).map(t => (
