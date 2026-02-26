@@ -41,7 +41,7 @@ export default function CaseStudyFashion({ id, label, title, body, stageImage, c
                 </div>
 
                 {/* Layout Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_450px] gap-16 lg:gap-20 xl:gap-24 items-center max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] xl:grid-cols-[1fr_380px] gap-16 lg:gap-20 xl:gap-24 items-center max-w-5xl mx-auto">
 
                     {/* Left: Swiss Cards (Aggressive Type) */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-8">
