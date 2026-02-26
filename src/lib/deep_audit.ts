@@ -154,13 +154,37 @@ function getColorLabel(hex: string): string {
     if (luminance < 30 && saturation < 0.1) return 'Deep Black';
     if (saturation < 0.1) return luminance > 128 ? 'Light Grey' : 'Dark Grey';
 
-    // Dominant channel
-    if (r > g && r > b) return saturation > 0.5 ? 'Warm Red' : 'Soft Coral';
-    if (g > r && g > b) return saturation > 0.5 ? 'Vivid Green' : 'Sage';
-    if (b > r && b > g) return saturation > 0.5 ? 'Electric Blue' : 'Dusty Blue';
+    // Proper Hue calculation (0-360)
+    const rf = r / 255;
+    const gf = g / 255;
+    const bf = b / 255;
+    const cMax = Math.max(rf, gf, bf);
+    const cMin = Math.min(rf, gf, bf);
+    const delta = cMax - cMin;
 
-    if (r > 200 && g > 200 && b < 100) return 'Golden Yellow';
-    if (r > 200 && b > 150) return 'Magenta';
+    let h = 0;
+    if (delta > 0) {
+        if (cMax === rf) h = ((gf - bf) / delta) % 6;
+        else if (cMax === gf) h = (bf - rf) / delta + 2;
+        else h = (rf - gf) / delta + 4;
+        h = Math.round(h * 60);
+        if (h < 0) h += 360;
+    }
+
+    const isLight = luminance > 128;
+    const isDesaturated = saturation < 0.3;
+
+    if (h < 15 || h >= 345) return isLight ? 'Soft Pink' : (isDesaturated ? 'Muted Red' : 'Crimson Red');
+    if (h >= 15 && h < 45) {
+        if (luminance < 80) return 'Deep Brown';
+        if (luminance < 140) return 'Terracotta';
+        return isDesaturated ? 'Warm Sand' : 'Vibrant Orange';
+    }
+    if (h >= 45 && h < 75) return isLight ? 'Pale Yellow' : (isDesaturated ? 'Olive Green' : 'Golden Yellow');
+    if (h >= 75 && h < 165) return isLight ? 'Mint Green' : (isDesaturated ? 'Sage Green' : 'Forest Green');
+    if (h >= 165 && h < 255) return isLight ? 'Powder Blue' : (isDesaturated ? 'Dusty Blue' : 'Cobalt Blue');
+    if (h >= 255 && h < 295) return isLight ? 'Lavender' : 'Deep Purple';
+    if (h >= 295 && h < 345) return isLight ? 'Rose Water' : 'Magenta';
 
     return classifyColor(clean).label;
 }
