@@ -73,7 +73,7 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
                 <div className="text-[10px] font-semibold tracking-[0.22em] text-[#6B6B6B] uppercase mb-3">Input</div>
                 <div className="text-[18px] leading-[1.2] text-[#141414] font-medium tracking-tight mb-6">Single asset in.<br />Full reconstruction out.</div>
 
-                <div className="relative group cursor-pointer w-[200px] md:w-[240px] mx-auto lg:mx-0 aspect-[4/5] rounded-[22px] overflow-hidden border border-[#E7DED1] shadow-[0_24px_70px_rgba(20,20,20,0.10)] bg-white">
+                <div className="relative group cursor-pointer w-[260px] md:w-[300px] mx-auto lg:mx-0 aspect-[4/5] rounded-[22px] overflow-hidden border border-[#E7DED1] shadow-[0_24px_70px_rgba(20,20,20,0.10)] bg-white">
                   {/* The underlying ad (revealed on hover) */}
                   <img src={stageImage.src} alt={stageImage.alt} className="absolute inset-0 w-full h-full object-cover" />
                   {/* The overlay graphic (default visible, fades out on hover) */}
