@@ -56,8 +56,8 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                     )}
                 </div>
 
-                {/* Timeline bars — gradient from amber (low) to dark (high) */}
-                <div className="flex items-end gap-1 h-28 mb-3">
+                {/* Timeline bars — distinct segments with clear separation */}
+                <div className="flex items-end gap-2 h-32 mb-2">
                     {audit.pacing.timeline.map((item, i) => {
                         const pct = item.intensity / 100;
                         // Interpolate from warm amber (#D4A574) to dark charcoal (#1A1A1A)
@@ -67,12 +67,17 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                         return (
                             <div
                                 key={i}
-                                className="flex-1 rounded-t-lg hover:scale-105 transition-all group relative cursor-help"
+                                className="flex-1 rounded-xl hover:scale-[1.03] transition-all group relative cursor-help flex items-end justify-center pb-2"
                                 style={{
-                                    height: `${Math.max(20, item.intensity)}%`,
+                                    height: `${Math.max(25, item.intensity)}%`,
                                     backgroundColor: `rgb(${r}, ${g}, ${b})`,
                                 }}
                             >
+                                {/* Intensity label inside bar */}
+                                <span className="text-[8px] font-bold uppercase tracking-wider opacity-60" style={{ color: pct > 0.5 ? '#FBF7EF' : '#141414' }}>
+                                    {item.intensity}%
+                                </span>
+                                {/* Hover tooltip */}
                                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-[#141414] text-white text-[9px] py-1.5 px-3 rounded-lg whitespace-nowrap z-50 shadow-lg">
                                     <span className="font-bold">{item.label}</span>
                                     {audit.pacing.totalDurationMs > 0 && (
@@ -85,12 +90,13 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
                     })}
                 </div>
 
-                {/* Timeline labels */}
-                <div className="flex justify-between text-[8px] font-bold uppercase tracking-[0.2em] text-[#6B6B6B]/50 mb-8">
-                    <span>Hook</span>
-                    <span>Build</span>
-                    <span>Peak</span>
-                    <span>CTA</span>
+                {/* Timeline labels — aligned under each bar */}
+                <div className="flex gap-2 mb-8">
+                    {audit.pacing.timeline.map((item, i) => (
+                        <div key={i} className="flex-1 text-center">
+                            <span className="text-[8px] font-bold uppercase tracking-[0.15em] text-[#6B6B6B]/60">{item.label}</span>
+                        </div>
+                    ))}
                 </div>
 
                 <p className="text-sm font-light text-[#141414] leading-relaxed italic border-l-[3px] border-[#141414] pl-6">
