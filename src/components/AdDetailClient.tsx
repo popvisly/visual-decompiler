@@ -233,7 +233,6 @@ export default function AdDetailClient({
                                 <ResultsCard title="Saturation Risk" variant="gauge">
                                     <div className="flex items-end gap-4 mb-6">
                                         <div>
-                                            <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em] mb-2">Category Density</p>
                                             <span className="text-5xl font-bold text-[#141414] leading-none tracking-tight">{forecasting.saturationLevel}%</span>
                                         </div>
                                         <div className="inline-flex items-center gap-2 px-4 py-2 mb-1 rounded-full" style={{ backgroundColor: forecasting.saturationLevel > 60 ? '#FEE2E2' : '#DCFCE7' }}>
@@ -278,7 +277,6 @@ export default function AdDetailClient({
                                 <ResultsCard title="Predicted Lifespan" variant="gauge">
                                     <div className="flex items-end gap-4 mb-6">
                                         <div>
-                                            <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em] mb-2">Effectiveness Window</p>
                                             <span className="text-5xl font-bold text-[#141414] leading-none tracking-tight">{forecasting.estimatedLifespanDays}</span>
                                         </div>
                                         <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-1.5">Days</span>
