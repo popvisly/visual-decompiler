@@ -338,20 +338,65 @@ export default function AdDetailClient({
                         )}
 
                         {tab === 'audience' && (
-                            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
-                                <div className="flex flex-col items-center justify-center py-16 text-center">
-                                    <div className="w-16 h-16 rounded-2xl bg-[#141414] flex items-center justify-center mb-6">
-                                        <Users className="w-7 h-7 text-[#FBF7EF]" />
+                            <div className="space-y-8">
+                                <ResultsCard title="Target Persona" variant="strategy">
+                                    <div className="space-y-8">
+                                        {/* Primary Persona */}
+                                        <div>
+                                            <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em] mb-4">Inferred Target Segment</p>
+                                            <h2 className="text-3xl font-light text-[#141414] leading-tight tracking-tight border-l-[3px] border-[#141414] pl-6">
+                                                {digest.audience_strategy?.target_audience_segment || 'Broad Consumer Segment'}
+                                            </h2>
+                                        </div>
+
+                                        <div className="h-px bg-[#E7DED1] w-full my-6" />
+
+                                        {/* Psychographics Grid */}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            <div className="space-y-6">
+                                                <div>
+                                                    <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em] mb-3">Target Job-to-be-Done</p>
+                                                    <div className="p-5 bg-[#FBF7EF] border border-[#E7DED1] rounded-2xl relative overflow-hidden">
+                                                        <Sparkles className="absolute -bottom-2 -right-2 w-16 h-16 text-[#E7DED1]/50" />
+                                                        <p className="text-sm font-medium text-[#141414] leading-relaxed relative z-10">
+                                                            "{digest.strategy?.target_job_to_be_done || 'Enhance quality of life and social status'}"
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em] mb-3">Unmet Need Signals</p>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {(digest.audience_strategy?.unmet_need_tags || ['Convenience', 'Status', 'Reliability']).map((tag: string, i: number) => (
+                                                            <span key={i} className="text-[10px] font-bold uppercase tracking-widest text-[#6B6B6B] bg-[#141414]/5 px-3 py-1.5 rounded-lg border border-[#141414]/10">
+                                                                {tag}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-6">
+                                                <div>
+                                                    <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em] mb-3">Conversion Friction Tackled</p>
+                                                    <div className="p-5 bg-[#141414] rounded-2xl flex items-start gap-3">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-[#FBF7EF] mt-1.5 shrink-0" />
+                                                        <p className="text-sm font-light text-[#FBF7EF]/90 leading-relaxed italic">
+                                                            {digest.strategy?.objection_tackle || 'Overcoming price sensitivity through premium framing'}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em] mb-3">Behavioral Nudge</p>
+                                                    <p className="text-sm font-light text-[#6B6B6B] leading-relaxed pl-4 border-l-2 border-[#E7DED1]">
+                                                        {digest.strategy?.behavioral_nudge || digest.audience_strategy?.transfer_mechanism || 'Utilizing social proof and scarcity modifiers.'}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h3 className="text-xl font-bold text-[#141414] tracking-tight mb-2">Audience Intelligence</h3>
-                                    <p className="text-[12px] text-[#6B6B6B] max-w-sm leading-relaxed mb-6">
-                                        AI-inferred target profile — psychographics, income bracket, age cohort, and lifestyle signals extracted from visual and copy cues.
-                                    </p>
-                                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#FBF7EF] border border-[#E7DED1] rounded-full">
-                                        <Lock className="w-3 h-3 text-[#6B6B6B]" />
-                                        <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.15em]">Coming Soon</span>
-                                    </div>
-                                </div>
+                                </ResultsCard>
                             </div>
                         )}
 
