@@ -7,13 +7,7 @@ import { useState } from 'react';
 export default function PromptShowcase() {
     const [copied, setCopied] = useState(false);
 
-    const prompt = `Luxury fashion editorial photo, full-body blonde woman walking toward camera, wearing a minimal white bikini and an elegant dark oversized fur coat draped over shoulders, carrying a small luxury handbag, sleek sunglasses, confident runway posture.
-
-Setting: tropical luxury resort at sunset, infinity pool reflecting pink and gold sky, palm trees silhouetted, calm ocean horizon, warm sunset light, cinematic reflections on water, wooden deck foreground.
-
-Style: high-end fashion campaign photography, ultra realistic skin texture, soft golden hour lighting, shallow depth of field, editorial composition, symmetrical framing, premium luxury aesthetic.
-
-Camera: full body, centered composition, eye-level, 85mm lens look, crisp focus.`;
+    const prompt = `A high-end commercial advertisement for a futuristic ultra-slim flat screen TV with a sleek metallic frame and minimalist design, the screen seamlessly expands beyond the edges of the page, creating an immersive visual experience. On the screen is a vibrant, hyper-realistic macro-close-up of a delicate flower, showcasing intricate petal details and textures in sharp focus, rendered in stunning 8k resolution. The luxury tech aesthetic is evident in the TV's slim profile and the crisp, vivid colors of the flower, which appears to leap off the screen, evoking a sense of depth and dimensionality, with the background of the screen fading into a subtle gradient that accentuates the flower's beauty.`;
 
     const handleCopy = () => {
         navigator.clipboard.writeText(prompt);
@@ -40,8 +34,8 @@ Camera: full body, centered composition, eye-level, 85mm lens look, crisp focus.
                         >
                             <div className="rounded-[24px] overflow-hidden bg-black relative aspect-[4/5]">
                                 <img
-                                    src="/images/examples/Blonde_Poolside.jpg"
-                                    alt="Luxury Synthesis Result"
+                                    src="/images/examples/Flatscreen_Ad.jpg"
+                                    alt="Luxury Tech Synthesis Result"
                                     className="w-full h-full object-cover opacity-95 transition-transform duration-[6s] group-hover:scale-105"
                                 />
 
@@ -99,22 +93,22 @@ Camera: full body, centered composition, eye-level, 85mm lens look, crisp focus.
                                 </button>
                             </div>
 
-                            <blockquote className="text-base md:text-lg leading-relaxed text-[#1A1A18]/80 line-clamp-6 group-hover:line-clamp-none transition-all duration-500 font-medium">
+                            <blockquote className="text-sm md:text-base leading-relaxed text-[#1A1A18]/80 line-clamp-6 group-hover:line-clamp-none transition-all duration-500 font-medium">
                                 "{prompt}"
                             </blockquote>
 
                             <div className="mt-8 pt-8 border-t border-[#E7DED1] flex flex-wrap gap-x-12 gap-y-4">
                                 <div>
                                     <p className="text-[9px] font-bold uppercase tracking-widest text-[#BB9E7B] mb-1.5">Visual Anchor</p>
-                                    <p className="text-[13px] font-medium text-[#6B6B6B] font-mono tracking-tight">Editorial Beach</p>
+                                    <p className="text-[13px] font-medium text-[#6B6B6B] font-mono tracking-tight">Edge-to-Edge Display</p>
                                 </div>
                                 <div>
                                     <p className="text-[9px] font-bold uppercase tracking-widest text-[#BB9E7B] mb-1.5">Lighting</p>
-                                    <p className="text-[13px] font-medium text-[#6B6B6B] font-mono tracking-tight">Dramatic Sunset</p>
+                                    <p className="text-[13px] font-medium text-[#6B6B6B] font-mono tracking-tight">Vivid Studio Brightness</p>
                                 </div>
                                 <div>
                                     <p className="text-[9px] font-bold uppercase tracking-widest text-[#BB9E7B] mb-1.5">Aesthetic</p>
-                                    <p className="text-[13px] font-medium text-[#6B6B6B] font-mono tracking-tight">High-Fashion Luxury</p>
+                                    <p className="text-[13px] font-medium text-[#6B6B6B] font-mono tracking-tight">Immersive Luxury Tech</p>
                                 </div>
                             </div>
                         </div>
