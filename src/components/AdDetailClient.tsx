@@ -7,7 +7,7 @@ import { TrendingUp, Sparkles, Activity, ArrowLeft, Play, CheckCircle2, X, Dna, 
 import BrandTag from '@/components/BrandTag';
 import ResultsView from '@/components/ResultsView';
 import ResultsCard from '@/components/ResultsCard';
-import PDFReport from '@/components/PDFReport';
+import StrategicDossier from '@/components/StrategicDossier';
 import VideoPins from '@/components/VideoPins';
 import AdShareButton from '@/components/AdShareButton';
 import DeepAuditView from '@/components/DeepAuditView';
@@ -40,6 +40,7 @@ export default function AdDetailClient({
     const isNew = searchParams.get('new') === 'true';
     const [showBanner, setShowBanner] = useState(isNew);
     const [roiPredict, setRoiPredict] = useState<any>(null);
+    const [orgSettings, setOrgSettings] = useState<{ agency_name?: string; logo_url?: string }>({});
 
     type TabKey = 'report' | 'forensics' | 'pins' | 'prompt' | 'intelligence' | 'audience' | 'remix';
     const [tab, setTab] = useState<TabKey>('report');
@@ -82,6 +83,10 @@ export default function AdDetailClient({
         if (!roiPredict) {
             predictROI();
         }
+        // Fetch org settings for dossier white-labeling
+        fetch('/api/org/settings').then(r => r.json()).then(d => {
+            if (d && !d.error) setOrgSettings({ agency_name: d.agency_name, logo_url: d.logo_url });
+        }).catch(() => { });
     }, [ad.id]);
 
     return (
@@ -137,7 +142,16 @@ export default function AdDetailClient({
 
                     {!isShared && (
                         <div className="flex items-center gap-4">
-                            <PDFReport />
+                            <StrategicDossier
+                                digest={digest}
+                                neuralData={neuralData}
+                                brandName={ad.brand || digest?.meta?.brand_guess || 'Unknown Brand'}
+                                agencyName={orgSettings.agency_name || ''}
+                                agencyLogo={orgSettings.logo_url || undefined}
+                                resonanceScore={roiPredict?.score}
+                                saturationLevel={forecasting?.saturationLevel}
+                                tacticalWindow={forecasting?.estimatedLifespanDays}
+                            />
                         </div>
                     )}
                 </div>

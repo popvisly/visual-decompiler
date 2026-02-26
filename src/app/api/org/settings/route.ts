@@ -25,7 +25,7 @@ export async function POST(req: Request) {
 
     try {
         const body = await req.json();
-        const { logo_url, primary_color, white_label_enabled, custom_domain } = body;
+        const { logo_url, primary_color, white_label_enabled, custom_domain, agency_name } = body;
 
         const { data, error } = await supabaseAdmin
             .from('org_settings')
@@ -35,6 +35,7 @@ export async function POST(req: Request) {
                 primary_color,
                 white_label_enabled,
                 custom_domain,
+                agency_name,
                 updated_at: new Date().toISOString()
             })
             .select()

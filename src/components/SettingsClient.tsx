@@ -18,6 +18,7 @@ export default function SettingsClient() {
         primary_color: '#BB9E7B',
         white_label_enabled: false,
         custom_domain: '',
+        agency_name: '',
         tier: 'free',
         stripe_customer_id: ''
     });
@@ -34,6 +35,7 @@ export default function SettingsClient() {
                     primary_color: data.primary_color || '#BB9E7B',
                     white_label_enabled: data.white_label_enabled || false,
                     custom_domain: data.custom_domain || '',
+                    agency_name: data.agency_name || '',
                     tier: data.tier || 'free',
                     stripe_customer_id: data.stripe_customer_id || ''
                 });
@@ -184,6 +186,25 @@ export default function SettingsClient() {
                                     />
                                     <p className="text-[11px] text-[#6B6B6B] leading-relaxed px-2">
                                         Upload your agency logo to replace the "V" icon on public reports and dashboards.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-10 rounded-[3rem] border border-[#E7DED1] shadow-[0_20px_50px_rgba(20,20,20,0.02)]">
+                                <div className="flex items-center gap-3 mb-8 text-[#141414]">
+                                    <Settings className="w-5 h-5 text-accent" />
+                                    <h3 className="text-xs font-bold uppercase tracking-[0.2em]">Agency Identity</h3>
+                                </div>
+                                <div className="space-y-4">
+                                    <input
+                                        type="text"
+                                        placeholder="Your Agency Name"
+                                        className="w-full bg-[#FBF7EF] border border-[#E7DED1] rounded-2xl px-6 py-4 text-sm focus:outline-none focus:border-accent transition-all hover:border-[#BB9E7B]/50"
+                                        value={settings.agency_name}
+                                        onChange={(e) => setSettings({ ...settings, agency_name: e.target.value })}
+                                    />
+                                    <p className="text-[11px] text-[#6B6B6B] leading-relaxed px-2">
+                                        Appears in Strategic Dossier exports as &ldquo;Confidential Forensic Audit for <span className="font-bold text-[#141414]">{settings.agency_name || 'Your Agency'}</span>&rdquo;
                                     </p>
                                 </div>
                             </div>
