@@ -163,7 +163,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
             </form>
 
             {/* Floating category pills */}
-            <div className="flex flex-wrap justify-center gap-2 mt-10">
+            <div className="flex flex-wrap justify-center gap-2 mt-6 mb-6">
                 {CATEGORY_PILLS.map((pill) => (
                     <span
                         key={pill}
