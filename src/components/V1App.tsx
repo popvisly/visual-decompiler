@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
-import { UserButton } from '@clerk/nextjs';
-import Logo from '@/components/Logo';
+import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import UploadZone from '@/components/UploadZone';
 import ProcessingViewClient from '@/components/ProcessingViewClient';
 import ResultsView from '@/components/ResultsView';
@@ -55,25 +54,7 @@ export default function V1App() {
             <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0)_60%)] z-0" />
 
             <div className="relative z-10 flex flex-col min-h-screen">
-                {/* Swiss Nav - Unified with Dashboard Header style */}
-                <header className="sticky top-6 z-50 w-full px-6 flex justify-center">
-                    <div className="flex items-center justify-between px-4 py-3 rounded-2xl bg-white/80 backdrop-blur-md border border-[#E7DED1] shadow-[0_8px_32px_rgba(20,20,20,0.06)] w-full max-w-6xl">
-                        <Logo sublabel="Scanning Interface" />
-
-                        <div className="flex items-center gap-6">
-                            <nav className="hidden md:flex items-center gap-4">
-                                <a href="/dashboard" className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B6B] hover:text-[#141414] transition">
-                                    Library
-                                </a>
-                                <a href="/dashboard/pulse" className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#6B6B6B] hover:text-[#141414] transition">
-                                    Market Pulse
-                                </a>
-                            </nav>
-                            <div className="h-6 w-px bg-[#E7DED1]" />
-                            <UserButton afterSignOutUrl="/" />
-                        </div>
-                    </div>
-                </header>
+                <UnifiedSovereignHeader />
 
                 {/* Main content */}
                 <main className="flex-1 w-full mx-auto px-6 py-16">
