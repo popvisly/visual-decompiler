@@ -99,114 +99,113 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
             </ResultsCard>
 
             {/* ═══════════════════════════════════════════════════
-                2 & 3. COLOR THEORY + SEMIOTICS (side by side)
+                2. COLOR THEORY (full width)
             ═══════════════════════════════════════════════════ */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* 2. Color Psychology */}
-                <ResultsCard title="Color Theory Logic" variant="gauge">
-                    {/* Color bar — full palette rendered as a continuous strip */}
-                    <div className="flex rounded-2xl overflow-hidden h-16 mb-6 border border-[#E7DED1] shadow-inner">
-                        {audit.color.swatches.map((swatch, i) => (
-                            <div
-                                key={i}
-                                className="flex-1 flex items-center justify-center group relative cursor-help transition-all hover:flex-[2]"
-                                style={{ backgroundColor: `#${swatch.hex}` }}
+            <ResultsCard title="Color Theory Logic" variant="gauge">
+                {/* Color bar — full palette rendered as a continuous strip */}
+                <div className="flex rounded-2xl overflow-hidden h-16 mb-6 border border-[#E7DED1] shadow-inner">
+                    {audit.color.swatches.map((swatch, i) => (
+                        <div
+                            key={i}
+                            className="flex-1 flex items-center justify-center group relative cursor-help transition-all hover:flex-[2]"
+                            style={{ backgroundColor: `#${swatch.hex}` }}
+                        >
+                            <span
+                                className="text-[9px] font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity"
+                                style={{ color: textColorForHex(swatch.hex) }}
                             >
-                                <span
-                                    className="text-[9px] font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity"
-                                    style={{ color: textColorForHex(swatch.hex) }}
-                                >
-                                    #{swatch.hex}
-                                </span>
-                                {/* Hover tooltip */}
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-[#141414] text-white text-[9px] py-2 px-3 rounded-lg whitespace-nowrap z-50 shadow-lg">
-                                    <span className="font-bold">{swatch.label}</span>
-                                    <br />
-                                    <span className="text-white/60">{swatch.psychologicalEffect}</span>
-                                </div>
+                                #{swatch.hex}
+                            </span>
+                            {/* Hover tooltip */}
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-[#141414] text-white text-[9px] py-2 px-3 rounded-lg whitespace-nowrap z-50 shadow-lg">
+                                <span className="font-bold">{swatch.label}</span>
+                                <br />
+                                <span className="text-white/60">{swatch.psychologicalEffect}</span>
                             </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Harmony badge */}
+                <div className="flex items-center gap-2 mb-5">
+                    <Layers className="w-3.5 h-3.5 text-[#6B6B6B]" />
+                    <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#141414]">
+                        {audit.color.harmonyType} Harmony
+                    </span>
+                </div>
+
+                {/* Swatch pills — each with psychological reasoning */}
+                <div className="space-y-2 mb-6">
+                    {audit.color.swatches.map((swatch, i) => (
+                        <div key={i} className="flex items-center gap-3 bg-[#FBF7EF] border border-[#E7DED1] rounded-xl px-3 py-2.5">
+                            <div
+                                className="w-8 h-8 rounded-lg border border-[#E7DED1] shadow-sm shrink-0"
+                                style={{ backgroundColor: `#${swatch.hex}` }}
+                            />
+                            <div className="flex flex-col min-w-0">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-[9px] font-bold text-[#141414] uppercase tracking-wide">{swatch.label}</span>
+                                    <span className="text-[8px] font-mono text-[#6B6B6B]">#{swatch.hex}</span>
+                                </div>
+                                <span className="text-[10px] text-[#6B6B6B] leading-tight">{swatch.psychologicalEffect}</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Psychological triggers */}
+                <div className="space-y-4">
+                    <div className="flex flex-wrap gap-2">
+                        {audit.color.psychologicalTriggers.map(t => (
+                            <span key={t} className="text-[9px] font-bold uppercase tracking-widest text-[#141414] border border-[#141414]/20 bg-[#141414]/5 px-3 py-1.5 rounded-full">
+                                {t}
+                            </span>
                         ))}
                     </div>
+                    <p className="text-[11px] text-[#6B6B6B] leading-relaxed">
+                        {audit.color.categoryNorms}
+                    </p>
+                </div>
+            </ResultsCard>
 
-                    {/* Harmony badge */}
-                    <div className="flex items-center gap-2 mb-5">
-                        <Layers className="w-3.5 h-3.5 text-[#6B6B6B]" />
-                        <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#141414]">
-                            {audit.color.harmonyType} Harmony
-                        </span>
-                    </div>
-
-                    {/* Swatch pills — each with psychological reasoning */}
-                    <div className="space-y-2 mb-6">
-                        {audit.color.swatches.map((swatch, i) => (
-                            <div key={i} className="flex items-center gap-3 bg-[#FBF7EF] border border-[#E7DED1] rounded-xl px-3 py-2.5">
-                                <div
-                                    className="w-8 h-8 rounded-lg border border-[#E7DED1] shadow-sm shrink-0"
-                                    style={{ backgroundColor: `#${swatch.hex}` }}
-                                />
-                                <div className="flex flex-col min-w-0">
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-[9px] font-bold text-[#141414] uppercase tracking-wide">{swatch.label}</span>
-                                        <span className="text-[8px] font-mono text-[#6B6B6B]">#{swatch.hex}</span>
-                                    </div>
-                                    <span className="text-[10px] text-[#6B6B6B] leading-tight">{swatch.psychologicalEffect}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Psychological triggers */}
-                    <div className="space-y-4">
+            {/* ═══════════════════════════════════════════════════
+                3. SEMIOTICS (full width)
+            ═══════════════════════════════════════════════════ */}
+            <ResultsCard title="Semiotics & Subtext" variant="strategy">
+                <div className="flex flex-col lg:flex-row gap-8">
+                    <div className="lg:w-1/3">
+                        <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em] mb-4">Cultural Icons</p>
                         <div className="flex flex-wrap gap-2">
-                            {audit.color.psychologicalTriggers.map(t => (
-                                <span key={t} className="text-[9px] font-bold uppercase tracking-widest text-[#141414] border border-[#141414]/20 bg-[#141414]/5 px-3 py-1.5 rounded-full">
-                                    {t}
-                                </span>
+                            {audit.semiotics.culturalIcons.map(icon => (
+                                <div key={icon} className="flex items-center gap-2 px-4 py-2.5 bg-[#141414]/5 rounded-xl border border-[#141414]/10">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
+                                    <span className="text-[11px] font-medium text-[#141414]">{icon}</span>
+                                </div>
                             ))}
                         </div>
-                        <p className="text-[11px] text-[#6B6B6B] leading-relaxed">
-                            {audit.color.categoryNorms}
+                    </div>
+
+                    <div className="lg:w-1/3">
+                        <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em] mb-3">Meaning Claim</p>
+                        <p className="text-sm font-light text-[#141414] leading-relaxed italic border-l-[3px] border-[#141414] pl-6">
+                            {audit.semiotics.meaningClaim}
                         </p>
                     </div>
-                </ResultsCard>
 
-                {/* 3. Semiotic Mapping */}
-                <ResultsCard title="Semiotics & Subtext" variant="strategy">
-                    <div className="space-y-6">
-                        <div>
-                            <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em] mb-4">Cultural Icons</p>
+                    {audit.semiotics.subtextualSignals.length > 0 && (
+                        <div className="lg:w-1/3">
+                            <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em] mb-3">Subtextual Signals</p>
                             <div className="flex flex-wrap gap-2">
-                                {audit.semiotics.culturalIcons.map(icon => (
-                                    <div key={icon} className="flex items-center gap-2 px-4 py-2.5 bg-[#141414]/5 rounded-xl border border-[#141414]/10">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
-                                        <span className="text-[11px] font-medium text-[#141414]">{icon}</span>
-                                    </div>
+                                {audit.semiotics.subtextualSignals.map((s, i) => (
+                                    <span key={i} className="text-[10px] text-[#6B6B6B] bg-[#FBF7EF] border border-[#E7DED1] px-3 py-1.5 rounded-lg">
+                                        {s}
+                                    </span>
                                 ))}
                             </div>
                         </div>
-
-                        <div>
-                            <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em] mb-3">Meaning Claim</p>
-                            <p className="text-sm font-light text-[#141414] leading-relaxed italic border-l-[3px] border-[#141414] pl-6">
-                                {audit.semiotics.meaningClaim}
-                            </p>
-                        </div>
-
-                        {audit.semiotics.subtextualSignals.length > 0 && (
-                            <div>
-                                <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em] mb-3">Subtextual Signals</p>
-                                <div className="flex flex-wrap gap-2">
-                                    {audit.semiotics.subtextualSignals.map((s, i) => (
-                                        <span key={i} className="text-[10px] text-[#6B6B6B] bg-[#FBF7EF] border border-[#E7DED1] px-3 py-1.5 rounded-lg">
-                                            {s}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </ResultsCard>
-            </div>
+                    )}
+                </div>
+            </ResultsCard>
 
             {/* ═══════════════════════════════════════════════════
                 4. TEMPORAL GENEALOGY
