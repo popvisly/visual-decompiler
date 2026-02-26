@@ -31,10 +31,10 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="text-5xl md:text-7xl xl:text-[84px] font-semibold leading-[1.02] tracking-[-0.03em] mb-5"
+                    className="text-4xl md:text-7xl font-semibold leading-[0.9] tracking-tighter uppercase text-[#141414] mb-6"
                 >
                     {headline[0]}<br />
-                    <span className="text-[#6B6B6B]">{headline[1]}</span>
+                    <span className="text-[#C1A67B]">{headline[1]}</span>
                 </motion.h1>
 
                 {/* Subhead */}
