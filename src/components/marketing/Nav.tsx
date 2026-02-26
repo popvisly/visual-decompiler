@@ -21,10 +21,10 @@ export default function Nav() {
 
                         {/* Links */}
                         <nav className="hidden md:flex items-center gap-10">
-                            {["How it works", "Case study", "Pricing", "Docs"].map((label) => (
+                            {["How it works", "Case study", "Pricing", "Intelligence"].map((label) => (
                                 <a
                                     key={label}
-                                    href={label === "How it works" ? "/#how" : label === "Case study" ? "/#case-study" : label === "Docs" ? "/docs" : "/pricing"}
+                                    href={label === "How it works" ? "/#how" : label === "Case study" ? "/#case-study" : label === "Intelligence" ? "/docs" : "/pricing"}
                                     className="
                                             text-[11px] font-bold tracking-[0.1em] uppercase
                                             text-[#141414]/40
