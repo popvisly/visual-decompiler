@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { LinkCta, StageImage } from '@/types/homepage';
+import HeroNodeGraph from '@/components/marketing/HeroNodeGraph';
 
 type Props = {
     headline: string[];
@@ -83,30 +84,10 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     Image • Video • YouTube&nbsp;&nbsp;·&nbsp;&nbsp;PDF export&nbsp;&nbsp;·&nbsp;&nbsp;Share-ready reports
                 </div>
 
-                {/* Hero collage plate (print-layout) */}
-                <motion.div
-                    style={{ y: tileY }}
-                    className="relative w-full max-w-6xl rounded-[28px] overflow-hidden border border-[#E7DED1] shadow-[0_30px_90px_rgba(20,20,20,0.10)] bg-[#FBF7EF]"
-                >
-                    <img
-                        src={stageImage.src}
-                        alt={stageImage.alt}
-                        className="w-full h-auto object-cover"
-                    />
-
-                    {/* Editorial label (very subtle) */}
-                    <div className="pointer-events-none absolute left-5 top-5 md:left-7 md:top-7">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-[#E7DED1] bg-[#FBF7EF]/70 backdrop-blur px-3 py-2 shadow-[0_10px_30px_rgba(20,20,20,0.06)]">
-                            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#141414]/55">
-                                Forensic layers
-                            </span>
-                            <span className="text-[#141414]/25">•</span>
-                            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#141414]/45">
-                                7 extracted cues
-                            </span>
-                        </div>
-                    </div>
-                </motion.div>
+                {/* Hero Node Graph Visualization */}
+                <div className="w-full mt-4">
+                    <HeroNodeGraph stageImage={stageImage} />
+                </div>
 
                 {/* Caption line under plate */}
                 <div className="mt-6 text-[11px] md:text-[12px] text-[#141414]/55 tracking-[-0.01em]">
