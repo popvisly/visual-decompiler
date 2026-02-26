@@ -76,7 +76,7 @@ export default function HomePage() {
 
             <DecompilePipeline
                 id="how"
-                stageImage={{ src: "/images/examples/dior.png", alt: "Example ad" }}
+                stageImage={{ src: "/images/examples/perfume_ad.jpg", alt: "Example ad" }}
                 pills={PILLS}
                 reportPreviewCards={REPORT_PREVIEW}
             />
@@ -86,7 +86,7 @@ export default function HomePage() {
                 label="CASE STUDY — LUXURY / FASHION"
                 title="Luxury ads sell restraint. The mechanics are aggressive."
                 body="We surface scarcity cues, status signaling, and aesthetic authority—then show the exact elements carrying each claim."
-                stageImage={{ src: "/images/examples/dior.png", alt: "Luxury fashion ad example" }}
+                stageImage={{ src: "/images/examples/perfume_ad.jpg", alt: "Luxury fashion ad example" }}
                 cards={FASHION_CARDS}
                 cta={{ label: "Load this example in the app", href: "/app?example=luxury" }}
             />
