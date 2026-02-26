@@ -37,27 +37,31 @@ export default function HeroNodeGraph({ stageImage }: Props) {
                     </linearGradient>
                 </defs>
 
-                {/* Lines from center of main image (roughly 25% width, 50% height) to various nodes */}
-                {/* Desktop lines (sm and below hidden via css or rendered but mostly offscreen) */}
+                {/* Lines from center of main image to various nodes */}
                 <g className="hidden md:block">
-                    {/* To Semiotics (top mid) */}
-                    <path d="M 30% 50% C 45% 50%, 45% 20%, 55% 20%" fill="none" stroke="url(#lineGrad)" strokeWidth="1.5" strokeDasharray="4 4" />
-                    {/* To Extracted Colors (mid right) */}
-                    <path d="M 30% 50% C 45% 50%, 55% 65%, 68% 65%" fill="none" stroke="url(#lineGrad)" strokeWidth="1.5" strokeDasharray="4 4" />
-                    {/* To Mechanics (bottom mid) */}
-                    <path d="M 30% 50% C 40% 50%, 45% 80%, 55% 80%" fill="none" stroke="url(#lineGrad)" strokeWidth="1.5" strokeDasharray="4 4" />
-                    {/* To Final AI Report (top right) */}
-                    <path d="M 55% 20% C 70% 20%, 75% 30%, 85% 30%" fill="none" stroke="url(#lineGrad)" strokeWidth="1.5" />
-                    <path d="M 68% 65% C 75% 65%, 80% 30%, 85% 30%" fill="none" stroke="url(#lineGrad)" strokeWidth="1.5" />
+                    {/* Input to Semiotics */}
+                    <path d="M 30% 50% C 34% 50%, 35% 22%, 38% 22%" fill="none" stroke="url(#lineGrad)" strokeWidth="1.5" strokeDasharray="4 4" />
+                    {/* Input to Mechanics */}
+                    <path d="M 30% 50% C 34% 50%, 35% 78%, 38% 78%" fill="none" stroke="url(#lineGrad)" strokeWidth="1.5" strokeDasharray="4 4" />
+                    {/* Input to Color */}
+                    <path d="M 30% 50% C 45% 50%, 55% 62%, 70% 62%" fill="none" stroke="url(#lineGrad)" strokeWidth="1.5" strokeDasharray="4 4" />
+
+                    {/* Semiotics to Final Report */}
+                    <path d="M 60% 22% C 65% 22%, 65% 30%, 70% 30%" fill="none" stroke="url(#lineGrad)" strokeWidth="1.5" />
+                    {/* Mechanics to Final Report */}
+                    <path d="M 60% 78% C 65% 78%, 65% 38%, 70% 38%" fill="none" stroke="url(#lineGrad)" strokeWidth="1.5" />
                 </g>
 
                 {/* Connection Dots */}
                 <g className="hidden md:block" fill="#FBF7EF" stroke="#141414" strokeWidth="2">
                     <circle cx="30%" cy="50%" r="4" />
-                    <circle cx="55%" cy="20%" r="4" />
-                    <circle cx="68%" cy="65%" r="4" />
-                    <circle cx="55%" cy="80%" r="4" />
-                    <circle cx="85%" cy="30%" r="4" />
+                    <circle cx="38%" cy="22%" r="4" />
+                    <circle cx="38%" cy="78%" r="4" />
+                    <circle cx="70%" cy="62%" r="4" />
+                    <circle cx="60%" cy="22%" r="4" />
+                    <circle cx="60%" cy="78%" r="4" />
+                    <circle cx="70%" cy="30%" r="4" />
+                    <circle cx="70%" cy="38%" r="4" />
                 </g>
             </svg>
 
@@ -67,7 +71,7 @@ export default function HeroNodeGraph({ stageImage }: Props) {
                 {/* 1. MAIN INPUT NODE (Left) */}
                 <motion.div
                     custom={0} initial="hidden" animate="visible" variants={nodeVariants}
-                    className="md:absolute top-1/2 md:-translate-y-1/2 left-[5%] w-[80%] md:w-[25%] max-w-[280px] bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E7DED1] flex flex-col mx-auto md:mx-0 mb-8 md:mb-0"
+                    className="md:absolute top-1/2 md:-translate-y-1/2 left-[4%] w-[80%] md:w-[26%] max-w-[280px] bg-white rounded-2xl shadow-xl overflow-hidden border border-[#E7DED1] flex flex-col mx-auto md:mx-0 mb-8 md:mb-0"
                 >
                     <div className="bg-[#141414] text-white text-[9px] font-mono tracking-widest px-4 py-2 uppercase flex justify-between items-center">
                         <span>Input Asset</span>
@@ -81,7 +85,7 @@ export default function HeroNodeGraph({ stageImage }: Props) {
                 {/* 2. SEMIOTIC SUBTEXT (Top Middle) */}
                 <motion.div
                     custom={1} initial="hidden" animate="visible" variants={nodeVariants}
-                    className="md:absolute top-[10%] left-[55%] w-[80%] md:w-[22%] max-w-[240px] bg-white/90 backdrop-blur rounded-xl shadow-lg border border-[#E7DED1] p-4 mx-auto md:mx-0 mb-4 md:mb-0"
+                    className="md:absolute top-[12%] left-[38%] w-[80%] md:w-[22%] max-w-[240px] bg-white/90 backdrop-blur rounded-xl shadow-lg border border-[#E7DED1] p-4 mx-auto md:mx-0 mb-4 md:mb-0"
                 >
                     <div className="text-[10px] font-bold tracking-[0.2em] text-[#6B6B6B] uppercase mb-2">Semiotics</div>
                     <p className="text-[#141414] text-sm leading-snug">
@@ -89,10 +93,22 @@ export default function HeroNodeGraph({ stageImage }: Props) {
                     </p>
                 </motion.div>
 
-                {/* 3. COLOR PSYCHOLOGY (Middle Right) */}
+                {/* 3. TRIGGER MECHANIC (Bottom Middle) */}
+                <motion.div
+                    custom={3} initial="hidden" animate="visible" variants={nodeVariants}
+                    className="md:absolute top-[70%] left-[38%] w-[80%] md:w-[22%] max-w-[240px] bg-white/90 backdrop-blur rounded-xl shadow-lg border border-[#E7DED1] p-4 mx-auto md:mx-0 mb-4 md:mb-0"
+                >
+                    <div className="text-[10px] font-bold tracking-[0.2em] text-[#6B6B6B] uppercase mb-2">Mechanic</div>
+                    <div className="bg-[#F6F1E7] border border-[#E7DED1] rounded-lg px-3 py-2 text-xs font-medium text-[#141414]">
+                        Status Signaling
+                    </div>
+                    <p className="text-[11px] text-[#6B6B6B] mt-2 leading-tight">Viewer elevates perceived self-worth through association with austere aesthetics.</p>
+                </motion.div>
+
+                {/* 4. COLOR PSYCHOLOGY (Middle Right) */}
                 <motion.div
                     custom={2} initial="hidden" animate="visible" variants={nodeVariants}
-                    className="md:absolute top-[55%] left-[68%] w-[80%] md:w-[20%] max-w-[220px] bg-white/90 backdrop-blur rounded-xl shadow-lg border border-[#E7DED1] p-4 mx-auto md:mx-0 mb-4 md:mb-0"
+                    className="md:absolute top-[55%] left-[70%] w-[80%] md:w-[22%] max-w-[220px] bg-white/90 backdrop-blur rounded-xl shadow-lg border border-[#E7DED1] p-4 mx-auto md:mx-0 mb-4 md:mb-0"
                 >
                     <div className="flex justify-between items-end mb-3">
                         <div className="text-[10px] font-bold tracking-[0.2em] text-[#6B6B6B] uppercase">Palette Logic</div>
@@ -106,22 +122,10 @@ export default function HeroNodeGraph({ stageImage }: Props) {
                     <p className="text-[11px] text-[#6B6B6B] leading-tight">Muted deep tones trigger associations with mystery, elegance, and exclusivity.</p>
                 </motion.div>
 
-                {/* 4. TRIGGER MECHANIC (Bottom Middle) */}
-                <motion.div
-                    custom={3} initial="hidden" animate="visible" variants={nodeVariants}
-                    className="md:absolute top-[75%] left-[55%] w-[80%] md:w-[22%] max-w-[240px] bg-white/90 backdrop-blur rounded-xl shadow-lg border border-[#E7DED1] p-4 mx-auto md:mx-0 mb-4 md:mb-0"
-                >
-                    <div className="text-[10px] font-bold tracking-[0.2em] text-[#6B6B6B] uppercase mb-2">Mechanic</div>
-                    <div className="bg-[#F6F1E7] border border-[#E7DED1] rounded-lg px-3 py-2 text-xs font-medium text-[#141414]">
-                        Status Signaling
-                    </div>
-                    <p className="text-[11px] text-[#6B6B6B] mt-2 leading-tight">Viewer elevates perceived self-worth through association with austere aesthetics.</p>
-                </motion.div>
-
                 {/* 5. FINAL REPORT NODE (Top Right) */}
                 <motion.div
                     custom={4} initial="hidden" animate="visible" variants={nodeVariants}
-                    className="md:absolute top-[20%] right-[3%] md:right-[5%] w-[80%] md:w-[24%] max-w-[260px] bg-[#141414] text-white rounded-xl shadow-2xl border border-[#333] p-5 mx-auto md:mx-0"
+                    className="md:absolute top-[18%] left-[70%] w-[80%] md:w-[26%] max-w-[280px] bg-[#141414] text-white rounded-xl shadow-2xl border border-[#333] p-5 mx-auto md:mx-0"
                 >
                     <div className="flex items-center gap-2 mb-4">
                         <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />

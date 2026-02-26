@@ -71,7 +71,7 @@ export default function HomePage() {
                 subhead="The sovereign infrastructure for elite agencies. Understand & comprehend the architecture of persuasion to justify high-stakes strategy with forensic precision."
                 ctaPrimary={{ label: "Start now", href: "/app" }}
                 ctaSecondary={{ label: "View example report", href: "#case-study" }}
-                stageImage={{ src: "/images/hero/dior-panels.jpg", alt: "Dior deconstruction collage" }}
+                stageImage={{ src: "/images/examples/perfume_ad_no_logo.jpg", alt: "Luxury perfume ad" }}
             />
 
             <DecompilePipeline
