@@ -39,15 +39,17 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
         >
           {/* Section Header */}
           <div className="text-center w-full mx-auto mb-16 lg:mb-24 px-4 overflow-visible">
-            <div className="text-[10px] md:text-[11px] font-bold tracking-[0.25em] text-[#C1A67B] uppercase mb-6 md:mb-8">
-              Competitive Intelligence
+            <div className="flex flex-col items-center gap-4">
+              <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#C1A67B]">
+                How It Works
+              </span>
+              <h2 className="text-4xl md:text-7xl font-semibold text-[#141414] tracking-tightest uppercase leading-[0.9]">
+                Decode the Invisible<br />
+                <span className="text-[#C1A67B]">Architecture of Persuasion.</span>
+              </h2>
             </div>
-            <h2 className="text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[105px] font-bold tracking-tighter leading-[0.85] md:leading-[0.9] flex flex-col items-center justify-center -ml-2 md:-ml-4 text-center pb-2">
-              <span className="text-[#141414]">BUILT FOR EVERY STAGE</span>
-              <span className="text-[#C1A67B]">OF THE STRATEGY LOOP.</span>
-            </h2>
-            <p className="text-sm md:text-base lg:text-lg text-[#6B6B6B] leading-relaxed max-w-3xl mx-auto mt-8 md:mt-12 font-medium">
-              From C-suite macro intelligence to creative execution and pulse-monitoring. A unified platform to deconstruct, synthesize, and outpace the market.
+            <p className="text-base md:text-lg text-[#6B6B6B] max-w-2xl mx-auto leading-relaxed font-medium mt-8">
+              This isn't a surface-level semantic scan. The visual reasoning engine deconstructs the structural architecture of the creative—drilling into subtext to isolate the precise trigger mechanics, evidence anchors, and behavioral nudges being deployed.
             </p>
           </div>
 
