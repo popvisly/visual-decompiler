@@ -19,23 +19,55 @@ export default function HeroNodeGraph({ stageImage }: Props) {
     };
 
     return (
-        <div className="w-full max-w-[1300px] mx-auto min-h-[600px] rounded-[32px] overflow-hidden border border-[#E7DED1] shadow-[0_30px_90px_rgba(20,20,20,0.08)] bg-[#F8F5EE] p-6 lg:p-10 my-10 relative">
+        <div className="w-full max-w-[1440px] mx-auto min-h-[600px] rounded-[32px] overflow-hidden border border-[#E7DED1] shadow-[0_30px_90px_rgba(20,20,20,0.08)] bg-[#F8F5EE] p-6 lg:p-10 my-10 relative flex flex-col xl:flex-row gap-8">
 
             {/* Background grid for technical feel */}
             <div className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(rgba(20,20,20,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.04)_1px,transparent_1px)] [background-size:24px_24px]" />
 
+            {/* Global Ingest Stream (Anti-Pigeonhole Queue) */}
+            <div className="relative z-10 hidden xl:flex flex-col justify-center w-[160px] shrink-0 border-r border-[#141414]/10 pr-6">
+                <div className="text-[10px] font-mono tracking-[0.15em] text-[#141414]/60 uppercase mb-8">
+                    Ingest Queue
+                </div>
+                <div className="flex flex-col gap-5">
+                    <div className="flex items-center gap-2 opacity-30">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
+                        <span className="text-[9px] font-mono truncate">AUTO_SUV_Q3.mp4</span>
+                    </div>
+                    <div className="flex items-center gap-2 opacity-40">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
+                        <span className="text-[9px] font-mono truncate">FMCG_Snack.jpg</span>
+                    </div>
+                    <div className="flex items-center gap-2 opacity-60">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
+                        <span className="text-[9px] font-mono truncate">B2B_SaaS_Hero.mp4</span>
+                    </div>
+
+                    {/* Active Processing Target */}
+                    <div className="flex items-center gap-2 opacity-100 bg-white/80 p-2 rounded border border-[#141414]/10 shadow-[0_4px_12px_rgba(20,20,20,0.05)] relative -ml-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-[pulse_1.5s_ease-in-out_infinite] shadow-[0_0_5px_rgba(34,197,94,0.5)]" />
+                        <span className="text-[9px] font-mono font-bold truncate">LUX_FRAGR.jpeg</span>
+
+                        {/* Connection Line to Grid */}
+                        <div className="absolute right-[-24px] top-1/2 -translate-y-1/2 w-[24px] h-px bg-[#141414]/10 border-b border-[#141414]/10 border-dashed" />
+                    </div>
+
+                    <div className="flex items-center gap-2 opacity-20">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
+                        <span className="text-[9px] font-mono truncate">TECH_Launch.mov</span>
+                    </div>
+                </div>
+            </div>
+
             {/* Faint Horizontal Joining Lines */}
-            <div className="pointer-events-none absolute inset-0 hidden lg:block" style={{ zIndex: 1 }}>
-                {/* Line mapping 1 */}
-                <div className="absolute top-[22%] left-[10%] w-[80%] h-px bg-[#141414]/10 border-b border-[#141414]/5 border-dashed" />
-                {/* Line mapping 2 */}
-                <div className="absolute top-[48%] left-[10%] w-[80%] h-px bg-[#141414]/10 border-b border-[#141414]/5 border-dashed" />
-                {/* Line mapping 3 */}
-                <div className="absolute top-[75%] left-[10%] w-[80%] h-px bg-[#141414]/10 border-b border-[#141414]/5 border-dashed" />
+            <div className="pointer-events-none absolute inset-0 hidden xl:block" style={{ zIndex: 1 }}>
+                <div className="absolute top-[22%] left-[230px] w-[calc(100%-270px)] h-px bg-[#141414]/10 border-b border-[#141414]/5 border-dashed" />
+                <div className="absolute top-[48%] left-[230px] w-[calc(100%-270px)] h-px bg-[#141414]/10 border-b border-[#141414]/5 border-dashed" />
+                <div className="absolute top-[75%] left-[230px] w-[calc(100%-270px)] h-px bg-[#141414]/10 border-b border-[#141414]/5 border-dashed" />
             </div>
 
             {/* Evidence Board Grid */}
-            <div className="relative z-10 w-full flex flex-col lg:grid lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="relative z-10 w-full flex flex-col md:grid md:grid-cols-4 gap-4 md:gap-6 flex-1">
 
                 {/* COLUMN 1: MACRO ASSET */}
                 <div className="flex flex-col gap-4 md:gap-6">
@@ -165,7 +197,7 @@ export default function HeroNodeGraph({ stageImage }: Props) {
                             <div>
                                 <div className="text-[8px] text-white/40 uppercase tracking-widest mb-1.5 font-mono">Confidence Score</div>
                                 <div className="text-[32px] tracking-tight font-light text-white leading-none">94%</div>
-                                <div className="text-[11px] text-green-400 opacity-80 mt-1 uppercase max-w-[60%] mx-auto py-1 border border-green-400/20 rounded bg-green-400/10">High Confidence</div>
+                                <div className="text-[11px] text-green-400 opacity-80 mt-1 uppercase max-w-[60%] mx-auto py-1 border border-green-400/20 rounded bg-green-400/10 hidden lg:block">High Confidence</div>
                             </div>
 
                             <div className="h-px w-[60%] mx-auto bg-[#333]" />
