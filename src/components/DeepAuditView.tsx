@@ -32,80 +32,7 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
     return (
         <div className="space-y-10">
             {/* ═══════════════════════════════════════════════════
-                1. VISUAL PACING AUDIT
-            ═══════════════════════════════════════════════════ */}
-            <ResultsCard title="Visual Pacing Audit" variant="gauge">
-                <div className="flex flex-wrap items-center gap-3 mb-8">
-                    <div className="px-4 py-2 bg-[#141414] rounded-full">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#FBF7EF]">
-                            Cut Intensity: {audit.pacing.cutIntensity}%
-                        </span>
-                    </div>
-                    <div className="px-3 py-1.5 bg-[#FBF7EF] rounded-full border border-[#E7DED1]">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#6B6B6B]">
-                            Rhythm: {audit.pacing.rhythmicSync}
-                        </span>
-                    </div>
-                    {audit.pacing.totalDurationMs > 0 && (
-                        <div className="px-3 py-1.5 bg-[#FBF7EF] rounded-full border border-[#E7DED1] flex items-center gap-1.5">
-                            <Clock className="w-3 h-3 text-[#6B6B6B]" />
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-[#6B6B6B]">
-                                {formatDuration(audit.pacing.totalDurationMs)}
-                            </span>
-                        </div>
-                    )}
-                </div>
-
-                {/* Timeline bars — distinct segments with clear separation */}
-                <div className="flex items-end gap-2 h-32 mb-2">
-                    {audit.pacing.timeline.map((item, i) => {
-                        const pct = item.intensity / 100;
-                        // Interpolate from warm amber (#D4A574) to dark charcoal (#1A1A1A)
-                        const r = Math.round(212 - pct * 186);
-                        const g = Math.round(165 - pct * 139);
-                        const b = Math.round(116 - pct * 90);
-                        return (
-                            <div
-                                key={i}
-                                className="flex-1 rounded-xl hover:scale-[1.03] transition-all group relative cursor-help flex items-end justify-center pb-2"
-                                style={{
-                                    height: `${Math.max(25, item.intensity)}%`,
-                                    backgroundColor: `rgb(${r}, ${g}, ${b})`,
-                                }}
-                            >
-                                {/* Intensity label inside bar */}
-                                <span className="text-[8px] font-bold uppercase tracking-wider opacity-60" style={{ color: pct > 0.5 ? '#FBF7EF' : '#141414' }}>
-                                    {item.intensity}%
-                                </span>
-                                {/* Hover tooltip */}
-                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-[#141414] text-white text-[9px] py-1.5 px-3 rounded-lg whitespace-nowrap z-50 shadow-lg">
-                                    <span className="font-bold">{item.label}</span>
-                                    {audit.pacing.totalDurationMs > 0 && (
-                                        <span className="text-white/50 ml-1">@ {Math.round(item.t_ms / 1000)}s</span>
-                                    )}
-                                    <span className="text-white/50 ml-1">({item.intensity}%)</span>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-
-                {/* Timeline labels — aligned under each bar */}
-                <div className="flex gap-2 mb-8">
-                    {audit.pacing.timeline.map((item, i) => (
-                        <div key={i} className="flex-1 text-center">
-                            <span className="text-[8px] font-bold uppercase tracking-[0.15em] text-[#6B6B6B]/60">{item.label}</span>
-                        </div>
-                    ))}
-                </div>
-
-                <p className="text-sm font-light text-[#141414] leading-relaxed italic border-l-[3px] border-[#141414] pl-6">
-                    {audit.pacing.pacingNotes}
-                </p>
-            </ResultsCard>
-
-            {/* ═══════════════════════════════════════════════════
-                2. COLOR THEORY (full width)
+                1. TEMPORAL GENEALOGY
             ═══════════════════════════════════════════════════ */}
             <ResultsCard title="Color Theory Logic" variant="gauge">
                 {/* Color bar — full palette rendered as a continuous strip */}
@@ -175,7 +102,7 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
             </ResultsCard>
 
             {/* ═══════════════════════════════════════════════════
-                3. SEMIOTICS (full width)
+                2. SEMIOTICS (full width)
             ═══════════════════════════════════════════════════ */}
             <ResultsCard title="Semiotics & Subtext" variant="strategy">
                 <div className="flex flex-col lg:flex-row gap-8">
@@ -214,7 +141,7 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
             </ResultsCard>
 
             {/* ═══════════════════════════════════════════════════
-                4. TEMPORAL GENEALOGY
+                3. TEMPORAL GENEALOGY
             ═══════════════════════════════════════════════════ */}
             <ResultsCard title="Temporal Genealogy" variant="strategy">
                 <div className="flex flex-col lg:flex-row gap-10">
@@ -266,7 +193,7 @@ export default function DeepAuditView({ digest }: DeepAuditViewProps) {
             </ResultsCard>
 
             {/* ═══════════════════════════════════════════════════
-                5. TREND INTELLIGENCE
+                4. TREND INTELLIGENCE
             ═══════════════════════════════════════════════════ */}
             <ResultsCard title="Trend Intelligence" variant="gauge">
                 <div className="flex flex-col lg:flex-row gap-12">
