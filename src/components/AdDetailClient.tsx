@@ -229,119 +229,92 @@ export default function AdDetailClient({
 
                         {tab === 'forensics' && (
                             <div className="space-y-8">
-                                {/* ═══ SATURATION RISK — Full width like Temporal Genealogy ═══ */}
+                                {/* ═══ SATURATION RISK ═══ */}
                                 <ResultsCard title="Saturation Risk" variant="gauge">
-                                    <div className="flex flex-col lg:flex-row gap-10">
-                                        {/* Left: Big Metric + Risk Classification */}
-                                        <div className="lg:w-1/3 space-y-5">
-                                            <div>
-                                                <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em] mb-3">Category Density</p>
-                                                <h2 className="text-5xl font-bold text-[#141414] leading-none tracking-tight mb-4">{forecasting.saturationLevel}%</h2>
-                                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full" style={{ backgroundColor: forecasting.saturationLevel > 60 ? '#FEE2E2' : '#DCFCE7' }}>
-                                                    <span className={`w-2 h-2 rounded-full ${forecasting.saturationLevel > 60 ? 'bg-red-500 animate-pulse' : 'bg-green-500'}`} />
-                                                    <span className={`text-[10px] font-bold uppercase tracking-[0.15em] ${forecasting.saturationLevel > 60 ? 'text-red-700' : 'text-green-700'}`}>
-                                                        {forecasting.saturationLevel > 80 ? 'Critical Saturation' : forecasting.saturationLevel > 60 ? 'High Competition' : forecasting.saturationLevel > 35 ? 'Moderate Space' : 'Blue Ocean'}
-                                                    </span>
-                                                </div>
-                                            </div>
+                                    <div className="flex items-end gap-4 mb-6">
+                                        <div>
+                                            <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em] mb-2">Category Density</p>
+                                            <span className="text-5xl font-bold text-[#141414] leading-none tracking-tight">{forecasting.saturationLevel}%</span>
                                         </div>
-
-                                        {/* Right: Gauge + Insight — 2 column sub-grid */}
-                                        <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            {/* Segmented gauge bar */}
-                                            <div className="p-6 bg-[#FBF7EF] border border-[#E7DED1] rounded-2xl space-y-4">
-                                                <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em]">Competition Gauge</p>
-                                                <div className="flex gap-1.5 mb-2">
-                                                    {[20, 40, 60, 80, 100].map((threshold, i) => (
-                                                        <div key={i} className="flex-1 h-4 rounded-full overflow-hidden" style={{ backgroundColor: '#E7DED1' }}>
-                                                            <div
-                                                                className="h-full rounded-full transition-all duration-1000"
-                                                                style={{
-                                                                    width: forecasting.saturationLevel >= threshold ? '100%' : forecasting.saturationLevel > threshold - 20 ? `${((forecasting.saturationLevel - (threshold - 20)) / 20) * 100}%` : '0%',
-                                                                    backgroundColor: threshold <= 40 ? '#22C55E' : threshold <= 60 ? '#F59E0B' : '#EF4444',
-                                                                }}
-                                                            />
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                                <div className="flex justify-between text-[8px] font-bold text-[#6B6B6B]/50 uppercase tracking-widest">
-                                                    <span>Open</span>
-                                                    <span>Moderate</span>
-                                                    <span>Crowded</span>
-                                                </div>
-                                            </div>
-
-                                            {/* Strategic insight */}
-                                            <div className="space-y-6">
-                                                <div className="p-5 bg-[#141414] rounded-2xl flex items-start gap-3">
-                                                    <Activity className="w-4 h-4 text-[#FBF7EF]/60 shrink-0 mt-0.5" />
-                                                    <p className="text-[11px] font-medium text-[#FBF7EF]/80 leading-relaxed">
-                                                        {forecasting.saturationLevel > 60
-                                                            ? 'High pattern density in this category. Differentiation through creative innovation is critical to cut through noise.'
-                                                            : 'Low competitive density detected. This creative pattern has strategic room for dominance before category saturation.'}
-                                                    </p>
-                                                </div>
-                                                <p className="text-sm font-light text-[#6B6B6B] leading-relaxed italic border-l-[3px] border-[#141414]/30 pl-5">
-                                                    {forecasting.saturationLevel > 60
-                                                        ? 'Consider pivoting to under-exploited visual approaches or narrative frameworks to capture attention in a crowded field.'
-                                                        : 'First-mover advantage is available. Scaling this creative pattern now could establish category ownership before competitive density rises.'}
-                                                </p>
-                                            </div>
+                                        <div className="inline-flex items-center gap-2 px-4 py-2 mb-1 rounded-full" style={{ backgroundColor: forecasting.saturationLevel > 60 ? '#FEE2E2' : '#DCFCE7' }}>
+                                            <span className={`w-2 h-2 rounded-full ${forecasting.saturationLevel > 60 ? 'bg-red-500 animate-pulse' : 'bg-green-500'}`} />
+                                            <span className={`text-[10px] font-bold uppercase tracking-[0.15em] ${forecasting.saturationLevel > 60 ? 'text-red-700' : 'text-green-700'}`}>
+                                                {forecasting.saturationLevel > 80 ? 'Critical Saturation' : forecasting.saturationLevel > 60 ? 'High Competition' : forecasting.saturationLevel > 35 ? 'Moderate Space' : 'Blue Ocean'}
+                                            </span>
                                         </div>
                                     </div>
+
+                                    {/* Segmented gauge bar — full width */}
+                                    <div className="mb-6">
+                                        <div className="flex gap-1.5 mb-2">
+                                            {[20, 40, 60, 80, 100].map((threshold, i) => (
+                                                <div key={i} className="flex-1 h-3 rounded-full overflow-hidden" style={{ backgroundColor: '#E7DED1' }}>
+                                                    <div
+                                                        className="h-full rounded-full transition-all duration-1000"
+                                                        style={{
+                                                            width: forecasting.saturationLevel >= threshold ? '100%' : forecasting.saturationLevel > threshold - 20 ? `${((forecasting.saturationLevel - (threshold - 20)) / 20) * 100}%` : '0%',
+                                                            backgroundColor: threshold <= 40 ? '#22C55E' : threshold <= 60 ? '#F59E0B' : '#EF4444',
+                                                        }}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="flex justify-between text-[8px] font-bold text-[#6B6B6B]/50 uppercase tracking-widest px-1">
+                                            <span>Open</span>
+                                            <span>Moderate</span>
+                                            <span>Crowded</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Insight */}
+                                    <p className="text-sm font-light text-[#141414] leading-relaxed italic border-l-[3px] border-[#141414] pl-6">
+                                        {forecasting.saturationLevel > 60
+                                            ? 'High pattern density in this category. Differentiation through creative innovation is critical to cut through competitive noise.'
+                                            : 'Low competitive density detected. First-mover advantage is available — scaling this creative pattern now could establish category ownership.'}
+                                    </p>
                                 </ResultsCard>
 
                                 {/* ═══ PREDICTED LIFESPAN ═══ */}
                                 <ResultsCard title="Predicted Lifespan" variant="gauge">
-                                    <div className="flex flex-col lg:flex-row gap-10">
-                                        {/* Left: Big metric */}
-                                        <div className="lg:w-1/3">
-                                            <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em] mb-3">Effectiveness Window</p>
-                                            <div className="flex items-end gap-2 mb-2">
-                                                <span className="text-5xl font-bold text-[#141414] leading-none tracking-tight">{forecasting.estimatedLifespanDays}</span>
-                                                <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-1.5">Days</span>
-                                            </div>
+                                    <div className="flex items-end gap-4 mb-6">
+                                        <div>
+                                            <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em] mb-2">Effectiveness Window</p>
+                                            <span className="text-5xl font-bold text-[#141414] leading-none tracking-tight">{forecasting.estimatedLifespanDays}</span>
                                         </div>
+                                        <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-1.5">Days</span>
+                                    </div>
 
-                                        {/* Right: Timeline + Insight */}
-                                        <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            {/* Decay Phase Timeline */}
-                                            <div className="p-6 bg-[#FBF7EF] border border-[#E7DED1] rounded-2xl space-y-4">
-                                                <p className="text-[9px] font-bold text-[#141414] uppercase tracking-[0.3em]">Decay Phases</p>
-                                                <div className="flex gap-0.5 mb-2">
-                                                    {[
-                                                        { label: 'Peak', pct: 30, color: '#141414' },
-                                                        { label: 'Steady', pct: 40, color: '#6B6B6B' },
-                                                        { label: 'Decline', pct: 20, color: '#B5A99A' },
-                                                        { label: 'Fatigue', pct: 10, color: '#E7DED1' },
-                                                    ].map((phase, i) => (
-                                                        <div key={i} className="group relative cursor-help" style={{ flex: phase.pct }}>
-                                                            <div className="h-5 rounded-sm" style={{ backgroundColor: phase.color }} />
-                                                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-[#141414] text-white text-[9px] py-1.5 px-3 rounded-lg whitespace-nowrap z-50 shadow-lg">
-                                                                {phase.label}: ~{Math.round(forecasting.estimatedLifespanDays * phase.pct / 100)}d
-                                                            </div>
-                                                        </div>
-                                                    ))}
+                                    {/* Decay Phase Timeline — full width */}
+                                    <div className="mb-6">
+                                        <div className="flex gap-0.5 mb-2">
+                                            {[
+                                                { label: 'Peak', pct: 30, color: '#141414' },
+                                                { label: 'Steady', pct: 40, color: '#6B6B6B' },
+                                                { label: 'Decline', pct: 20, color: '#B5A99A' },
+                                                { label: 'Fatigue', pct: 10, color: '#E7DED1' },
+                                            ].map((phase, i) => (
+                                                <div key={i} className="group relative cursor-help" style={{ flex: phase.pct }}>
+                                                    <div className="h-4 rounded-sm" style={{ backgroundColor: phase.color }} />
+                                                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-[#141414] text-white text-[9px] py-1.5 px-3 rounded-lg whitespace-nowrap z-50 shadow-lg">
+                                                        {phase.label}: ~{Math.round(forecasting.estimatedLifespanDays * phase.pct / 100)} days
+                                                    </div>
                                                 </div>
-                                                <div className="flex justify-between text-[8px] font-bold text-[#6B6B6B]/50 uppercase tracking-widest">
-                                                    <span>Launch</span>
-                                                    <span>Peak</span>
-                                                    <span>Decline</span>
-                                                    <span>Fatigue</span>
-                                                </div>
-                                            </div>
-
-                                            {/* Insight card */}
-                                            <div className="p-5 bg-[#141414] rounded-2xl flex items-start gap-3">
-                                                <TrendingUp className="w-4 h-4 text-[#FBF7EF]/60 shrink-0 mt-0.5" />
-                                                <p className="text-[11px] font-medium text-[#FBF7EF]/80 leading-relaxed">
-                                                    {forecasting.estimatedLifespanDays > 60
-                                                        ? `Extended runway of ${forecasting.estimatedLifespanDays} days indicates strong creative durability. Pattern has low fatigue risk in current category cycle.`
-                                                        : `Short ${forecasting.estimatedLifespanDays}-day window suggests high trend velocity. Recommend rapid deployment and A/B variant testing within the first ${Math.round(forecasting.estimatedLifespanDays * 0.3)} days.`}
-                                                </p>
-                                            </div>
+                                            ))}
+                                        </div>
+                                        <div className="flex text-[8px] font-bold text-[#6B6B6B]/50 uppercase tracking-widest px-1">
+                                            <span style={{ width: '30%' }}>Peak</span>
+                                            <span style={{ width: '40%' }}>Steady</span>
+                                            <span style={{ width: '20%' }}>Decline</span>
+                                            <span style={{ width: '10%', textAlign: 'right' }}>Fatigue</span>
                                         </div>
                                     </div>
+
+                                    {/* Insight */}
+                                    <p className="text-sm font-light text-[#141414] leading-relaxed italic border-l-[3px] border-[#141414] pl-6">
+                                        {forecasting.estimatedLifespanDays > 60
+                                            ? `Extended runway of ${forecasting.estimatedLifespanDays} days indicates strong creative durability. Low fatigue risk in the current category cycle.`
+                                            : `Short ${forecasting.estimatedLifespanDays}-day window suggests high trend velocity. Deploy rapidly and test variants within the first ${Math.round(forecasting.estimatedLifespanDays * 0.3)} days.`}
+                                    </p>
                                 </ResultsCard>
 
                                 <DeepAuditView digest={digest} />
