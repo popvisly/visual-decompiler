@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef, useCallback, useEffect } from 'react';
-import { Upload, Link as LinkIcon, Loader2, Sparkles } from 'lucide-react';
+import { useState, useRef, useCallback } from 'react';
+import { Upload, Link as LinkIcon, Loader2 } from 'lucide-react';
 import { uploadAdMedia } from '@/lib/storage';
 
 type UploadResult = {
@@ -54,24 +54,6 @@ export default function UploadZone({ onUploadComplete }: Props) {
         if (!url.trim()) return;
         handleIngest(url.trim());
     };
-
-    const loadExample = () => {
-        const exampleUrl = 'https://utfs.io/f/cd1157af-412e-4b47-bfa7-a4dc7d17482f-1y.png'; // Hosted Dior image or proxy to public
-        setUrl(exampleUrl);
-        handleIngest(exampleUrl);
-    };
-
-    useEffect(() => {
-        if (typeof window !== 'undefined' && window.location.search.includes('example=luxury')) {
-            const exampleUrl = 'https://utfs.io/f/cd1157af-412e-4b47-bfa7-a4dc7d17482f-1y.png'; // Hosted Dior image
-            setUrl(exampleUrl);
-
-            if (window.location.search.includes('autorun=1')) {
-                // Trigger auto-ingest for guided demos
-                handleIngest(exampleUrl);
-            }
-        }
-    }, [handleIngest]);
 
     const handleFile = async (file: File) => {
         setIsUploading(true);
@@ -178,15 +160,6 @@ export default function UploadZone({ onUploadComplete }: Props) {
                     </button>
                 </div>
 
-                <div className="flex justify-center mt-2">
-                    <button
-                        type="button"
-                        onClick={loadExample}
-                        className="inline-flex items-center gap-2 text-[12px] font-medium text-[#6B6B6B] hover:text-[#141414] transition border border-[#E7DED1] rounded-full px-4 py-1.5 bg-[#FBF7EF]/50 hover:bg-[#FBF7EF]"
-                    >
-                        <Sparkles className="w-3.5 h-3.5" /> Load example: Luxury/Fashion
-                    </button>
-                </div>
             </form>
 
             {/* Floating category pills */}

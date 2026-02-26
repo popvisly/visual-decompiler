@@ -69,39 +69,30 @@ export default function V1App() {
 
                             <UploadZone onUploadComplete={handleUploadComplete} />
 
-                            {/* Forensic Workflow Pipeline */}
+                            {/* Operational Pipeline */}
                             <div className="max-w-3xl mx-auto mt-28 opacity-60">
-                                <h2 className="text-[#6B6B6B] text-[9px] font-bold uppercase tracking-[0.5em] text-center mb-12">Forensic Workflow</h2>
+                                <h2 className="text-[#6B6B6B] text-[9px] font-bold uppercase tracking-[0.5em] text-center mb-12">Operational Pipeline</h2>
                                 <div className="relative grid grid-cols-1 md:grid-cols-3 gap-0">
-                                    {/* Neural Thread — connecting line */}
-                                    <div className="hidden md:block absolute top-5 left-[16.67%] right-[16.67%] h-px">
-                                        <div className="w-full h-full bg-gradient-to-r from-transparent via-[#E7DED1] to-transparent" />
-                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#BB9E7B]/30 to-transparent animate-pulse" />
-                                    </div>
+                                    {/* Static Connector */}
+                                    <div className="hidden md:block absolute top-[1px] left-[16.67%] right-[16.67%] h-px bg-[#BB9E7B]/30" />
 
                                     {[
                                         {
-                                            step: '01',
-                                            title: 'Ingestion',
-                                            desc: 'Multi-modal entry for high-stakes visual/video data.',
+                                            title: 'STAGE 01: ASSET INGESTION',
+                                            desc: 'Multi-modal entry for high-stakes visual and video data. Securely processed on ISO-27001 infrastructure.',
                                         },
                                         {
-                                            step: '02',
-                                            title: 'Deconstruction',
-                                            desc: 'Decoding semiotic layers and psychological trigger mechanics.',
+                                            title: 'STAGE 02: NEURAL DECONSTRUCTION',
+                                            desc: 'Heuristic decoding of semiotic layers, psychological triggers, and invisible machinery.',
                                         },
                                         {
-                                            step: '03',
-                                            title: 'Intelligence',
-                                            desc: 'Generation of audit-ready forensic dossiers for executive decision-making.',
+                                            title: 'STAGE 03: SOVEREIGN OUTPUT',
+                                            desc: 'Generation of white-labeled, audit-ready forensic dossiers for executive-level strategy.',
                                         },
-                                    ].map((item) => (
-                                        <div key={item.step} className="text-center px-6 relative">
-                                            <div className="relative z-10 w-10 h-10 rounded-full bg-[#FBF7EF] border border-[#E7DED1] flex items-center justify-center mx-auto mb-5 shadow-sm">
-                                                <span className="text-[9px] font-bold text-[#141414]/60 tracking-[0.2em] font-mono">{item.step}</span>
-                                            </div>
-                                            <h3 className="text-[10px] font-bold text-[#141414] uppercase tracking-[0.25em] mb-2">{item.title}</h3>
-                                            <p className="text-[11px] text-[#6B6B6B]/50 leading-[1.6] font-medium">{item.desc}</p>
+                                    ].map((item, idx) => (
+                                        <div key={idx} className="text-center px-6 relative pt-4">
+                                            <h3 className="text-[10px] font-bold text-[#BB9E7B] uppercase tracking-[0.25em] mb-3">{item.title}</h3>
+                                            <p className="text-[11px] text-[#6B6B6B] leading-[1.6] font-medium">{item.desc}</p>
                                         </div>
                                     ))}
                                 </div>
