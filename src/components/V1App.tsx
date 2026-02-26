@@ -70,11 +70,11 @@ export default function V1App() {
                             <UploadZone onUploadComplete={handleUploadComplete} />
 
                             {/* Operational Pipeline */}
-                            <div className="max-w-3xl mx-auto mt-28 opacity-60">
-                                <h2 className="text-[#6B6B6B] text-[9px] font-bold uppercase tracking-[0.5em] text-center mb-12">Operational Pipeline</h2>
+                            <div className="max-w-3xl mx-auto mt-28 opacity-80">
+                                <h2 className="text-[#6B6B6B] text-[11px] font-bold uppercase tracking-[0.4em] text-center mb-12">Operational Pipeline</h2>
                                 <div className="relative grid grid-cols-1 md:grid-cols-3 gap-0">
                                     {/* Static Connector */}
-                                    <div className="hidden md:block absolute top-[1px] left-[16.67%] right-[16.67%] h-px bg-[#BB9E7B]/30" />
+                                    <div className="hidden md:block absolute top-[1px] left-[16.67%] right-[16.67%] h-px bg-[#BB9E7B]/40" />
 
                                     {[
                                         {
@@ -91,8 +91,8 @@ export default function V1App() {
                                         },
                                     ].map((item, idx) => (
                                         <div key={idx} className="text-center px-6 relative pt-4">
-                                            <h3 className="text-[10px] font-bold text-[#BB9E7B] uppercase tracking-[0.25em] mb-3">{item.title}</h3>
-                                            <p className="text-[11px] text-[#6B6B6B] leading-[1.6] font-medium">{item.desc}</p>
+                                            <h3 className="text-[12px] font-bold text-[#BB9E7B] uppercase tracking-[0.2em] mb-3">{item.title}</h3>
+                                            <p className="text-[13px] text-[#6B6B6B] leading-[1.6] font-medium">{item.desc}</p>
                                         </div>
                                     ))}
                                 </div>
