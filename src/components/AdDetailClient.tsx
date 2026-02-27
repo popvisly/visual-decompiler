@@ -20,6 +20,7 @@ import NeuralSentiment from '@/components/NeuralSentiment';
 import { AdDigest } from '@/types/digest';
 import { ForecastingService } from '@/lib/forecasting';
 import { NeuralDeconstructionService } from '@/lib/neural_deconstruction_service';
+import AdAnalyticsTab from '@/components/AdAnalyticsTab';
 
 export default function AdDetailClient({
     ad,
@@ -42,7 +43,7 @@ export default function AdDetailClient({
     const [roiPredict, setRoiPredict] = useState<any>(null);
     const [orgSettings, setOrgSettings] = useState<{ agency_name?: string; logo_url?: string }>({});
 
-    type TabKey = 'report' | 'forensics' | 'pins' | 'prompt' | 'intelligence' | 'audience' | 'remix';
+    type TabKey = 'report' | 'forensics' | 'analytics' | 'pins' | 'prompt' | 'intelligence' | 'audience' | 'remix';
     const [tab, setTab] = useState<TabKey>('report');
     const neuralData = useMemo(() => NeuralDeconstructionService.resolve(digest, forecasting), [digest, forecasting]);
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -190,6 +191,7 @@ export default function AdDetailClient({
                                         { key: 'report', label: 'Report' },
                                         { key: 'intelligence', label: 'Intelligence' },
                                         { key: 'forensics', label: 'Forensics' },
+                                        { key: 'analytics', label: 'Analytics' },
                                         { key: 'prompt', label: 'Prompt' },
                                         { key: 'pins', label: 'Pins' },
                                         { key: 'audience', label: 'Audience' },
@@ -246,6 +248,10 @@ export default function AdDetailClient({
                                     <p className="text-[12px] text-[#6B6B6B]">Pins are available for video ads.</p>
                                 )}
                             </div>
+                        )}
+
+                        {tab === 'analytics' && (
+                            <AdAnalyticsTab brand={ad.brand || digest?.meta?.brand_guess} />
                         )}
 
                         {tab === 'forensics' && (

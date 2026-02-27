@@ -1,45 +1,79 @@
-import { Suspense } from 'react';
-import Filters from '@/components/Filters';
-import { auth } from '@clerk/nextjs/server';
-import Sidebar from '@/components/Sidebar';
-import Link from 'next/link';
-import { Download, Activity, Clock, Zap } from 'lucide-react';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { Download, Activity, Clock, Zap, Loader2 } from 'lucide-react';
 import CircularGauge from '@/components/CircularGauge';
 import RadarChart from '@/components/RadarChart';
 import OpportunityVoids from '@/components/OpportunityVoids';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export default function AdAnalyticsTab({ brand }: { brand?: string | null }) {
+    const [data, setData] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
 
-import { getAnalyticsData } from '@/lib/analytics';
+    useEffect(() => {
+        const fetchAnalytics = async () => {
+            setLoading(true);
+            try {
+                const url = new URL('/api/analytics', window.location.origin);
+                if (brand) {
+                    url.searchParams.set('brand', brand);
+                }
+                const res = await fetch(url.toString());
+                if (res.ok) {
+                    const json = await res.json();
+                    setData(json);
+                }
+            } catch (err) {
+                console.error("Failed to fetch analytics", err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-async function AnalyticsContent({ brand }: { brand?: string }) {
-    const { userId, orgId } = await auth();
-    if (!userId) return null;
-    const data = await getAnalyticsData(userId, orgId, brand);
+        fetchAnalytics();
+    }, [brand]);
 
-    if (data.summary.total === 0) {
+    if (loading) {
         return (
-            <div className="text-center py-20 bg-[#141414] rounded-[24px] border border-[#E7DED1]/10">
-                <p className="text-[#6B6B6B] font-medium text-sm">No data found for the selected filters.</p>
+            <div className="flex flex-col items-center justify-center py-32 space-y-6">
+                <Loader2 className="w-8 h-8 text-[#141414] animate-spin" />
+                <p className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em]">
+                    Aggregating Market Context...
+                </p>
+            </div>
+        );
+    }
+
+    if (!data || data.summary.total === 0) {
+        return (
+            <div className="text-center py-20 bg-[#141414] rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1]/10 shadow-sm mt-8">
+                <p className="text-[#6B6B6B] font-medium text-sm">No categorical analysis found for the selected competitive set.</p>
             </div>
         );
     }
 
     const triggerMechanics = data.dimensions['trigger_mechanic'] || [];
     const dominantTrigger = triggerMechanics.length > 0 ? triggerMechanics[0] : null;
-
     const emotionalFrameworks = data.dimensions['narrative_framework'] || [];
 
     // Heuristics for dashboard display
     const saturationPercentage = Math.min(Math.round((data.summary.total / 500) * 100), 100) || 5;
 
     // Sort frameworks by count to show top 4 blocks
-    const topEmotions = [...emotionalFrameworks].sort((a, b) => b.count - a.count).slice(0, 4);
+    const topEmotions = [...emotionalFrameworks].sort((a: any, b: any) => b.count - a.count).slice(0, 4);
     const maxEmotionCount = topEmotions.length > 0 ? topEmotions[0].count : 1;
 
     return (
         <div className="space-y-12">
+            <div className="flex items-center justify-between pb-4 border-b border-[#E7DED1]">
+                <div>
+                    <h2 className="text-3xl font-light text-[#141414] tracking-tight uppercase leading-[0.85] select-none">
+                        Market Pulse
+                    </h2>
+                    <p className="text-[10px] text-[#6B6B6B] mt-2 font-bold tracking-[0.3em] uppercase">Sovereign Intelligence Dashboard</p>
+                </div>
+            </div>
+
             {/* 1. The Sovereign Market Pulse (Top Row) */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Saturation Gauge */}
@@ -103,7 +137,7 @@ async function AnalyticsContent({ brand }: { brand?: string }) {
                         Trigger Distribution Map
                     </h3>
                     <div className="w-full max-w-[320px]">
-                        <RadarChart data={triggerMechanics.map(t => ({ label: t.label, value: t.count }))} />
+                        <RadarChart data={triggerMechanics.map((t: any) => ({ label: t.label, value: t.count }))} />
                     </div>
                 </div>
 
@@ -113,7 +147,7 @@ async function AnalyticsContent({ brand }: { brand?: string }) {
                         Emotional DNA Heatmap
                     </h3>
                     <div className="flex-1 grid grid-cols-2 gap-3">
-                        {topEmotions.map((emo, idx) => {
+                        {topEmotions.map((emo: any, idx) => {
                             // Calculate opacity based on relative count to max
                             const ratio = emo.count / maxEmotionCount;
                             // Ensure minimum visibility
@@ -150,56 +184,6 @@ async function AnalyticsContent({ brand }: { brand?: string }) {
                 triggerMechanics={data.dimensions['trigger_mechanic'] || []}
                 claimTypes={data.dimensions['claim_type'] || []}
             />
-        </div>
-    );
-}
-
-export default async function AnalyticsPage({
-    searchParams,
-}: {
-    searchParams: Promise<{ brand?: string }>;
-}) {
-    const params = await searchParams;
-
-    return (
-        <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-10 w-full relative z-20">
-            <Sidebar searchParams={params} />
-            <div className="flex-1 space-y-12 py-12">
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-[#E7DED1]">
-                    <div>
-                        <h2 className="text-5xl font-light text-[#141414] tracking-tightest uppercase leading-[0.85] select-none">
-                            Market<br />
-                            <span className="text-[#6B6B6B]/30">Pulse</span>
-                        </h2>
-                        <p className="text-[12px] text-[#6B6B6B] mt-6 font-bold tracking-[0.3em] uppercase">Sovereign Intelligence Dashboard</p>
-                    </div>
-
-                    <div className="md:pb-2 flex items-center gap-4">
-                        <Link
-                            href="/dashboard?v=executive"
-                            className="flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest bg-white border border-[#E7DED1] hover:border-accent hover:text-[#141414] transition-all shadow-sm"
-                        >
-                            <Download className="w-3.5 h-3.5" />
-                            Export Category Audit
-                        </Link>
-                    </div>
-                </div>
-
-                <section className="flex-1">
-                    <Suspense fallback={
-                        <div className="space-y-12 animate-pulse">
-                            <div className="grid grid-cols-3 gap-5">
-                                {[1, 2, 3].map(i => <div key={i} className="h-24 bg-surface/50 rounded-2xl border border-white/5" />)}
-                            </div>
-                            <div className="grid grid-cols-2 gap-6">
-                                {[1, 2, 3, 4].map(i => <div key={i} className="h-56 bg-surface/50 rounded-2xl border border-white/5" />)}
-                            </div>
-                        </div>
-                    }>
-                        <AnalyticsContent brand={params.brand} />
-                    </Suspense>
-                </section>
-            </div>
         </div>
     );
 }

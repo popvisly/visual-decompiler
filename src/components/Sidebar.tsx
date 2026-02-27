@@ -60,13 +60,6 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
                     <NotificationBell />
                 </div>
                 <Link
-                    href="/dashboard/analytics"
-                    className="flex items-center gap-3 px-4 py-3 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] hover:bg-white rounded-2xl border border-transparent hover:border-[#E7DED1] uppercase tracking-[0.3em] transition-all group"
-                >
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#141414] animate-pulse group-hover:scale-125 transition-transform" />
-                    Global Meta
-                </Link>
-                <Link
                     href="/dashboard/pulse"
                     className="flex items-center gap-3 px-4 py-3 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] hover:bg-white rounded-2xl border border-transparent hover:border-[#E7DED1] uppercase tracking-[0.3em] transition-all group"
                 >
