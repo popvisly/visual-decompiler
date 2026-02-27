@@ -78,11 +78,15 @@ export default function AdAnalyticsTab({ brand }: { brand?: string | null }) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Saturation Gauge */}
                 <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm flex flex-col justify-between h-[280px]">
-                    <div className="mb-6 flex justify-between items-start">
-                        <Activity className="w-5 h-5 text-[#BB9E7B]" />
-                        <div className="w-2 h-2 rounded-full bg-accent/40 animate-pulse" />
+                    <div>
+                        <div className="mb-6 flex justify-between items-start w-full">
+                            <Activity className="w-5 h-5 text-[#BB9E7B]" />
+                            <div className="w-2 h-2 rounded-full bg-accent/40 animate-pulse mt-1.5" />
+                        </div>
+                        <h3 className="text-xs font-bold text-[#BB9E7B] uppercase tracking-widest mb-1">Market Saturation</h3>
+                        <p className="text-[10px] text-txt-on-dark-muted font-medium uppercase tracking-tight">Category Density Index</p>
                     </div>
-                    <div className="flex-1 mt-6">
+                    <div className="mt-6 flex flex-col items-center">
                         <CircularGauge value={saturationPercentage} label="Market Saturation" sublabel="Category Density Index" />
                     </div>
                 </div>
