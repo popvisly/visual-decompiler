@@ -91,10 +91,11 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                             digest,
                         }}
                     >
-                        <Link
-                            href={`/dashboard/${ad.id}`}
-                            className="group bg-white rounded-xl border border-[#E7DED1] overflow-hidden flex flex-col cursor-pointer hover:border-[#D8CCBC] hover:shadow-[0_12px_40px_rgba(20,20,20,0.06)] hover:-translate-y-[2px] transition-all duration-300 shadow-[0_4px_20px_rgba(20,20,20,0.02)]"
+                        <div
+                            className="group relative bg-white rounded-xl border border-[#E7DED1] overflow-hidden flex flex-col hover:border-[#D8CCBC] hover:shadow-[0_12px_40px_rgba(20,20,20,0.06)] hover:-translate-y-[2px] transition-all duration-300 shadow-[0_4px_20px_rgba(20,20,20,0.02)]"
                         >
+                            <Link href={`/dashboard/${ad.id}`} className="absolute inset-0 z-10" aria-label={`View ${ad.brand} ad`} />
+
                             {/* Media */}
                             <div className="aspect-square bg-[#FBF7EF] relative overflow-hidden flex items-center justify-center border-b border-[#E7DED1]">
                                 {ad.status === 'queued' || ad.status === 'processing' ? (
@@ -117,7 +118,7 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                                 )}
 
                                 {/* Overlay badges */}
-                                <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                                <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-20 pointer-events-none">
                                     {ad.status !== 'queued' && ad.status !== 'processing' && (
                                         <span className="bg-white/80 backdrop-blur-md border border-[#E7DED1] px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.1em] text-[#141414] shadow-sm">
                                             {digest?.classification?.trigger_mechanic || 'Analyzing…'}
@@ -132,14 +133,16 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                             </div>
 
                             {/* Info section */}
-                            <div className="p-3 flex-1 flex flex-col">
+                            <div className="p-3 flex-1 flex flex-col relative z-20 pointer-events-none">
                                 <div className="flex items-center justify-between mb-2">
-                                    <BrandTag
-                                        adId={ad.id}
-                                        brand={ad.brand ?? null}
-                                        brandGuess={digest?.meta?.brand_guess ?? null}
-                                    />
-                                    <span className="text-[#6B6B6B] text-[9px] uppercase tracking-[0.1em] font-medium">
+                                    <div className="pointer-events-auto">
+                                        <BrandTag
+                                            adId={ad.id}
+                                            brand={ad.brand ?? null}
+                                            brandGuess={digest?.meta?.brand_guess ?? null}
+                                        />
+                                    </div>
+                                    <span suppressHydrationWarning className="text-[#6B6B6B] text-[9px] uppercase tracking-[0.1em] font-medium">
                                         {new Date(ad.created_at).toLocaleDateString()}
                                     </span>
                                 </div>
@@ -166,7 +169,7 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                                     )}
                                 </div>
                             </div>
-                        </Link>
+                        </div>
                     </AdCardSelectable>
                 );
             })}
