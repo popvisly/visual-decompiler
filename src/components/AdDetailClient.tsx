@@ -10,6 +10,7 @@ import ResultsCard from '@/components/ResultsCard';
 import StrategicDossier from '@/components/StrategicDossier';
 import VideoPins from '@/components/VideoPins';
 import AdShareButton from '@/components/AdShareButton';
+import AddToBoard from '@/components/AddToBoard';
 import DeepAuditView from '@/components/DeepAuditView';
 import PromptView from '@/components/PromptView';
 import CognitiveLoadMap from '@/components/CognitiveLoadMap';
@@ -143,6 +144,7 @@ export default function AdDetailClient({
 
                     {!isShared && (
                         <div className="flex items-center gap-4">
+                            <AddToBoard adId={ad.id} />
                             <StrategicDossier
                                 digest={digest}
                                 neuralData={neuralData}

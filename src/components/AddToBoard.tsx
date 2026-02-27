@@ -82,7 +82,7 @@ export default function AddToBoard({ adId }: { adId: string }) {
                     setIsOpen(!isOpen);
                     if (!isOpen && boards.length === 0) fetchBoards();
                 }}
-                className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] font-bold text-txt-on-dark uppercase tracking-widest hover:bg-white/10 transition-all no-print"
+                className="flex items-center gap-2 px-4 py-2 bg-[#141414] border border-[#141414] rounded-xl text-[10px] font-bold text-[#FBF7EF] uppercase tracking-widest hover:bg-[#1A1A1A] transition-all no-print shadow-sm"
             >
                 <Plus className="w-3.5 h-3.5" />
                 Add to Board
