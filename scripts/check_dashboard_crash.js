@@ -1,26 +1,24 @@
-const puppeteer = require('puppeteer');
+const { createClient } = require('@supabase/supabase-js');
+require('dotenv').config({ path: '.env.local' });
 
-(async () => {
-    const browser = await puppeteer.launch({ headless: 'new' });
-    const page = await browser.newPage();
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    page.on('console', msg => {
-        if (msg.type() === 'error') {
-            console.log(`BROWSER ERROR: ${msg.text()}`);
-        }
-    });
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-    page.on('pageerror', err => {
-        console.log(`PAGE ERROR: ${err.message}`);
-    });
+async function run() {
+    const twentyMinutesAgo = new Date(Date.now() - 20 * 60 * 1000).toISOString();
+    const { data, error } = await supabase
+        .from('ad_digests')
+        .select('id, status, media_url, digest, created_at')
+        .gte('created_at', twentyMinutesAgo)
+        .order('created_at', { ascending: false });
 
-    // Attempting to load the dashboard locally
-    try {
-        await page.goto('http://localhost:3000/dashboard', { waitUntil: 'networkidle0' });
-        console.log("Page loaded. If there's a client-side exception, it should appear above.");
-    } catch (e) {
-        console.error("Navigation failed:", e.message);
+    if (error) {
+        console.error('Error fetching:', error);
+    } else {
+        console.log(JSON.stringify(data, null, 2));
     }
+}
 
-    await browser.close();
-})();
+run();

@@ -1,4 +1,4 @@
-import youtubedl from 'youtube-dl-exec';
+import ytdl from '@distube/ytdl-core';
 import { URL } from 'url';
 
 /**
@@ -58,51 +58,37 @@ export async function extractYouTubeMetadata(url: string) {
     }
 
     try {
-        // Vercel friendly execution using yt-dlp binary safely bundled
-        const output = await youtubedl(url, {
-            dumpSingleJson: true,
-            noCheckCertificates: true,
-            noWarnings: true,
-            preferFreeFormats: true,
-            addHeader: [
-                'referer:youtube.com',
-                'user-agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-            ]
-        });
+        const info = await ytdl.getInfo(url);
 
-        // Try to find the highest-quality format that contains BOTH video and audio
-        // and is specifically an MP4 container (which ffmpeg and browsers prefer).
-        const formats = (output as any).formats || [];
-
-        // yt-dlp formats:
-        // ext: mp4/webm
-        // vcodec: none (audio only)
-        // acodec: none (video only)
-        let bestFormat = formats.find((f: any) =>
-            f.ext === 'mp4' &&
-            f.vcodec !== 'none' &&
-            f.acodec !== 'none'
+        // Find the best merged MP4 format that does NOT require signature deciphering 
+        let bestFormat = info.formats.find(f =>
+            f.hasVideo &&
+            f.hasAudio &&
+            f.container === 'mp4' &&
+            !f.isHLS &&
+            !f.isDashMPD &&
+            !f.url.includes('signature')
         );
 
-        // Fallback to highest quality video-only stream if merged audio/video isn't available
-        // Extractor pipeline will still work visually
+        // Fallback to highest quality regardless of cipher if none found
         if (!bestFormat) {
-            const videoFormats = formats
-                .filter((f: any) => f.vcodec !== 'none' && f.ext === 'mp4')
-                .sort((a: any, b: any) => (b.height || 0) - (a.height || 0));
-
-            bestFormat = videoFormats[0];
+            bestFormat = ytdl.chooseFormat(info.formats, { quality: 'highest', filter: 'videoandaudio' });
         }
 
         if (!bestFormat?.url) {
             throw new Error('Could not resolve a playable stream URL from YouTube');
         }
 
+        const durationSecs = parseInt(info.videoDetails.lengthSeconds, 10);
+        const title = info.videoDetails.title || 'YouTube Video';
+        const thumbnails = info.videoDetails.thumbnails || [];
+        const bestThumb = thumbnails.length > 0 ? thumbnails[thumbnails.length - 1].url : null;
+
         return {
             streamUrl: bestFormat.url,
-            title: (output as any).title || 'YouTube Video',
-            duration: (output as any).duration, // in seconds
-            thumbnail: (output as any).thumbnail
+            title: title,
+            duration: durationSecs, // in seconds
+            thumbnail: bestThumb
         };
     } catch (error: any) {
         console.error('[YouTube Extraction Error]', error);
