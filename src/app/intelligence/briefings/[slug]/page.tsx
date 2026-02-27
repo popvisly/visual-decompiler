@@ -15,7 +15,7 @@ const components = {
     DeconstructionModule,
     LexiconLink,
     h2: (props: any) => <h2 className="text-3xl font-light text-[#FBF7EF] tracking-tight mt-16 mb-6" {...props} />,
-    h3: (props: any) => <h3 className="text-xl font-medium text-accent tracking-tight mt-12 mb-4" {...props} />,
+    h3: (props: any) => <h3 className="text-xl font-medium text-[#BB9E7B] tracking-tight mt-12 mb-4" {...props} />,
     p: (props: any) => <p className="text-lg text-white/70 leading-relaxed mb-6 font-light" {...props} />,
     ul: (props: any) => <ul className="list-disc list-outside ml-6 space-y-3 mb-8 text-lg text-white/70 font-light" {...props} />,
     li: (props: any) => <li className="pl-2 leading-relaxed" {...props} />,
@@ -79,14 +79,14 @@ export default async function BriefingPage({ params }: { params: Promise<{ slug:
 
             <Link
                 href="/intelligence"
-                className="inline-flex flex-row items-center gap-2 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] hover:text-accent transition-colors mb-12"
+                className="inline-flex flex-row items-center gap-2 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em] hover:text-[#BB9E7B] transition-colors mb-12"
             >
                 <ArrowLeft className="w-3.5 h-3.5" /> Back to Briefings
             </Link>
 
             <header className="mb-16 md:mb-24 max-w-4xl">
                 <div className="flex flex-wrap items-center gap-4 mb-6">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent/10 border border-accent/20 rounded-full text-[9px] font-bold text-accent uppercase tracking-widest">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#BB9E7B]/10 border border-[#BB9E7B]/20 rounded-full text-[9px] font-bold text-[#BB9E7B] uppercase tracking-widest">
                         <Sparkles className="w-3 h-3" /> {post.meta.pillar}
                     </span>
                     <span className="text-[10px] text-white/30 font-mono tracking-widest uppercase">
@@ -123,14 +123,14 @@ export default async function BriefingPage({ params }: { params: Promise<{ slug:
 
                 {/* Main Content Area */}
                 <div className="lg:col-span-8">
-                    <main className="prose prose-invert prose-lg max-w-none prose-headings:font-light prose-h3:text-accent">
+                    <main className="prose prose-invert prose-lg max-w-none prose-headings:font-light prose-h3:text-[#BB9E7B]">
                         <MDXRemote source={post.content} components={components} />
                     </main>
 
                     <div className="mt-24 pt-10 border-t border-white/10">
                         <div className="flex items-center justify-between">
                             <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/50">Written by <span className="text-white">{post.meta.author}</span></span>
-                            <Link href="/intelligence" className="text-[10px] uppercase tracking-[0.2em] font-bold text-accent hover:text-white transition-colors">More Briefings</Link>
+                            <Link href="/intelligence" className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#BB9E7B] hover:text-white transition-colors">More Briefings</Link>
                         </div>
                     </div>
                 </div>

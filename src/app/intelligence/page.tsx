@@ -14,7 +14,7 @@ export default async function IntelligenceIndex() {
     return (
         <div className="max-w-7xl mx-auto px-6">
             <div className="mb-20">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20 mb-6 font-mono text-[10px] text-accent uppercase tracking-widest">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#BB9E7B]/10 border border-[#BB9E7B]/20 mb-6 font-mono text-[10px] text-[#BB9E7B] uppercase tracking-widest">
                     <Sparkles className="w-3 h-3" />
                     Global Strategy Desk
                 </div>
@@ -32,7 +32,7 @@ export default async function IntelligenceIndex() {
                     <Link
                         key={post.slug}
                         href={`/intelligence/briefings/${post.slug}`}
-                        className="group flex flex-col h-full bg-[#141414] rounded-3xl border border-white/10 overflow-hidden hover:border-accent/40 transition-all shadow-lg hover:shadow-accent/5"
+                        className="group flex flex-col h-full bg-[#141414] rounded-3xl border border-white/10 overflow-hidden hover:border-[#BB9E7B]/40 transition-all shadow-lg hover:shadow-[#BB9E7B]/5"
                     >
                         {post.imageUrl ? (
                             <div className="relative aspect-[16/10] overflow-hidden bg-white/5">
@@ -50,7 +50,7 @@ export default async function IntelligenceIndex() {
 
                         <div className="p-8 flex flex-col flex-1">
                             <div className="flex items-center justify-between gap-4 mb-4">
-                                <span className="text-[9px] font-bold text-accent uppercase tracking-[0.2em]">
+                                <span className="text-[9px] font-bold text-[#BB9E7B] uppercase tracking-[0.2em]">
                                     {post.pillar}
                                 </span>
                                 <span className="text-[10px] text-white/40 font-mono">
@@ -58,7 +58,7 @@ export default async function IntelligenceIndex() {
                                 </span>
                             </div>
 
-                            <h2 className="text-xl font-medium text-[#FBF7EF] mb-3 group-hover:text-accent transition-colors leading-snug">
+                            <h2 className="text-xl font-medium text-[#FBF7EF] mb-3 group-hover:text-[#BB9E7B] transition-colors leading-snug">
                                 {post.title}
                             </h2>
 
@@ -70,8 +70,8 @@ export default async function IntelligenceIndex() {
                                 <div className="text-[10px] text-white/40 uppercase tracking-widest font-medium">
                                     {post.readingTime} Read
                                 </div>
-                                <div className="w-8 h-8 rounded-full bg-white/5 group-hover:bg-accent/10 flex items-center justify-center transition-colors">
-                                    <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover:text-accent" />
+                                <div className="w-8 h-8 rounded-full bg-white/5 group-hover:bg-[#BB9E7B]/10 flex items-center justify-center transition-colors">
+                                    <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover:text-[#BB9E7B]" />
                                 </div>
                             </div>
                         </div>
