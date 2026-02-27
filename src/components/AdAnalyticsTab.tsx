@@ -77,16 +77,18 @@ export default function AdAnalyticsTab({ brand }: { brand?: string | null }) {
             {/* 1. The Sovereign Market Pulse (Top Row) */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Saturation Gauge */}
-                <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm">
+                <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm flex flex-col justify-between h-[280px]">
                     <div className="mb-6 flex justify-between items-start">
                         <Activity className="w-5 h-5 text-[#BB9E7B]" />
                         <div className="w-2 h-2 rounded-full bg-accent/40 animate-pulse" />
                     </div>
-                    <CircularGauge value={saturationPercentage} label="Market Saturation" sublabel="Category Density Index" />
+                    <div className="flex-1 mt-6">
+                        <CircularGauge value={saturationPercentage} label="Market Saturation" sublabel="Category Density Index" />
+                    </div>
                 </div>
 
                 {/* Dominant Schema */}
-                <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm flex flex-col justify-between">
+                <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm flex flex-col justify-between h-[280px]">
                     <div>
                         <div className="mb-6">
                             <Zap className="w-5 h-5 text-[#BB9E7B]" />
@@ -107,7 +109,7 @@ export default function AdAnalyticsTab({ brand }: { brand?: string | null }) {
                 </div>
 
                 {/* Tactical Window */}
-                <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm flex flex-col justify-between relative overflow-hidden">
+                <div className="bg-[#141414] p-8 rounded-[24px] border border-[#E7DED1]/5 shadow-sm flex flex-col justify-between relative overflow-hidden h-[280px]">
                     {/* decorative background graph line */}
                     <div className="absolute bottom-0 left-0 right-0 h-1/2 opacity-10 pointer-events-none">
                         <svg viewBox="0 0 100 50" preserveAspectRatio="none" className="w-full h-full text-[#BB9E7B]">
