@@ -9,7 +9,14 @@ const isProtectedRoute = createRouteMatcher([
 
 export default clerkMiddleware(async (auth, req) => {
     if (isProtectedRoute(req)) {
-        await auth.protect();
+        const { userId } = await auth();
+        if (!userId) {
+            // Redirect unauthenticated users back to the homepage instead of a non-existent /sign-in page
+            // This prevents Next.js <Link> prefetching from choking on a 404 HTML response.
+            const homeUrl = new URL('/', req.url);
+            homeUrl.searchParams.set('sign_in', 'true');
+            return NextResponse.redirect(homeUrl);
+        }
     }
 
     const response = NextResponse.next();
