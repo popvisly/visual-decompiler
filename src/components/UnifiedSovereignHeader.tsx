@@ -44,7 +44,7 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                 >
                     {/* ── Left: Logo + Pillars ── */}
                     <div className="flex items-center gap-6 lg:gap-8">
-                        <Logo href="/" sublabel="Advertising Intelligence" />
+                        <Logo href="/" sublabel="Advertising Intelligence" forceDark={forceDark} />
 
                         {/* Desktop Pillars */}
                         <nav className="hidden md:flex items-center gap-1">
@@ -80,9 +80,9 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                         {/* IngestForm — signed in only, desktop */}
                         <SignedIn>
                             <div className="hidden lg:block">
-                                <IngestForm />
+                                <IngestForm forceDark={forceDark} />
                             </div>
-                            <div className="hidden lg:block h-6 w-px bg-[#E7DED1]" />
+                            <div className={`hidden lg:block h-6 w-px ${forceDark ? 'bg-white/20' : 'bg-[#E7DED1]'}`} />
                             <UserButton afterSignOutUrl="/" />
                         </SignedIn>
 

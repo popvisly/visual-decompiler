@@ -7,7 +7,7 @@ import { Loader2, Plus, List, X, Check, AlertCircle } from 'lucide-react';
 type BatchStatus = 'pending' | 'queuing' | 'queued' | 'error';
 type BatchItem = { url: string; status: BatchStatus; error?: string; jobId?: string };
 
-export default function IngestForm() {
+export default function IngestForm({ forceDark = false }: { forceDark?: boolean } = {}) {
     const [url, setUrl] = useState('');
     const [isIngesting, setIsIngesting] = useState(false);
     const [errorObj, setErrorObj] = useState<{ message: string; code?: string } | null>(null);
@@ -93,31 +93,33 @@ export default function IngestForm() {
                             placeholder="Paste image/video URL…"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
-                            className="w-56 px-3 py-1.5 text-xs bg-black/5 text-[#141414] placeholder-[#141414]/40 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-black/20 transition-all font-medium"
+                            className={`w-56 px-3 py-1.5 text-xs rounded-lg focus:outline-none focus:ring-2 transition-all font-medium ${forceDark
+                                ? 'bg-white/10 text-white placeholder-white/30 border-white/10 focus:ring-white/20'
+                                : 'bg-black/5 text-[#141414] placeholder-[#141414]/40 border-black/10 focus:ring-black/20'}`}
                             required
                         />
                         <button
                             type="submit"
                             disabled={isIngesting}
-                            className="flex items-center gap-1.5 bg-[#141414] text-[#FBF7EF] px-4 py-1.5 rounded-lg text-xs font-bold hover:-translate-y-[1px] shadow-[0_4px_12px_rgba(20,20,20,0.15)] hover:shadow-[0_6px_16px_rgba(20,20,20,0.2)] transition-all disabled:opacity-50 disabled:hover:translate-y-0"
+                            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-bold hover:-translate-y-[1px] shadow-[0_4px_12px_rgba(20,20,20,0.15)] hover:shadow-[0_6px_16px_rgba(20,20,20,0.2)] transition-all disabled:opacity-50 disabled:hover:translate-y-0 ${forceDark ? 'bg-accent text-[#141414] hover:bg-white' : 'bg-[#141414] text-[#FBF7EF]'}`}
                         >
                             {isIngesting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                             {isIngesting ? 'Ingesting…' : 'Decompile'}
                         </button>
                     </form>
                     <button
-                        onClick={() => setBulkMode(true)}
-                        className="flex items-center gap-1.5 text-[9px] font-bold text-[#141414]/40 uppercase tracking-[0.15em] hover:text-[#141414] transition-colors"
+                        onClick={(e) => { e.preventDefault(); setBulkMode(true); }}
+                        className={`flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.15em] transition-colors ${forceDark ? 'text-white/40 hover:text-white' : 'text-[#141414]/40 hover:text-[#141414]'}`}
                     >
                         <List className="w-3 h-3" />
                         Bulk Mode
                     </button>
                 </div>
             ) : (
-                <div className="w-[30rem] bg-black/5 border border-black/10 shadow-[0_10px_30px_rgba(20,20,20,0.06)] backdrop-blur-xl rounded-2xl p-5 space-y-4">
+                <div className={`w-[30rem] border shadow-[0_10px_30px_rgba(20,20,20,0.06)] backdrop-blur-xl rounded-2xl p-5 space-y-4 ${forceDark ? 'bg-black/40 border-white/10 text-white' : 'bg-black/5 border-black/10'}`}>
                     <div className="flex items-center justify-between">
-                        <h3 className="text-[10px] font-bold text-[#141414]/40 uppercase tracking-[0.15em]">Bulk Ingest</h3>
-                        <button onClick={() => { setBulkMode(false); setBatchItems([]); setErrorObj(null); }} className="text-[#141414]/40 hover:text-[#141414] transition-colors">
+                        <h3 className={`text-[10px] font-bold uppercase tracking-[0.15em] ${forceDark ? 'text-white/40' : 'text-[#141414]/40'}`}>Bulk Ingest</h3>
+                        <button onClick={(e) => { e.preventDefault(); setBulkMode(false); setBatchItems([]); setErrorObj(null); }} className={`transition-colors ${forceDark ? 'text-white/40 hover:text-white' : 'text-[#141414]/40 hover:text-[#141414]'}`}>
                             <X className="w-4 h-4" />
                         </button>
                     </div>
@@ -128,16 +130,16 @@ export default function IngestForm() {
                                 value={bulkText}
                                 onChange={(e) => setBulkText(e.target.value)}
                                 placeholder={"Paste URLs, one per line:\nhttps://example.com/ad1.jpg\nhttps://example.com/ad2.mp4"}
-                                className="w-full h-36 px-4 py-3 text-xs font-mono bg-black/5 text-[#141414] placeholder-[#141414]/30 border border-black/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-black/20 transition-all resize-none"
+                                className={`w-full h-36 px-4 py-3 text-xs font-mono rounded-xl focus:outline-none focus:ring-2 transition-all resize-none ${forceDark ? 'bg-white/10 text-white placeholder-white/20 border-white/10 focus:ring-white/20' : 'bg-black/5 text-[#141414] placeholder-[#141414]/30 border border-black/10 focus:ring-black/20'}`}
                             />
                             <div className="flex items-center justify-between">
-                                <span className="text-[9px] font-bold text-[#141414]/40 uppercase tracking-[0.15em]">
+                                <span className={`text-[9px] font-bold uppercase tracking-[0.15em] ${forceDark ? 'text-white/40' : 'text-[#141414]/40'}`}>
                                     {bulkText.split('\n').filter(l => l.trim().length > 0).length} URLs detected
                                 </span>
                                 <button
-                                    onClick={handleBatch}
+                                    onClick={(e) => { e.preventDefault(); handleBatch(); }}
                                     disabled={isBatching}
-                                    className="flex items-center gap-2 bg-[#141414] text-[#FBF7EF] px-5 py-2 rounded-xl text-xs font-bold hover:-translate-y-[1px] shadow-[0_4px_12px_rgba(20,20,20,0.15)] hover:shadow-[0_6px_16px_rgba(20,20,20,0.2)] transition-all disabled:opacity-50 disabled:hover:translate-y-0"
+                                    className={`flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-bold hover:-translate-y-[1px] shadow-[0_4px_12px_rgba(20,20,20,0.15)] hover:shadow-[0_6px_16px_rgba(20,20,20,0.2)] transition-all disabled:opacity-50 disabled:hover:translate-y-0 ${forceDark ? 'bg-accent text-[#141414] hover:bg-white' : 'bg-[#141414] text-[#FBF7EF]'}`}
                                 >
                                     {isBatching ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                                     Decompile All
