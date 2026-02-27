@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { supabaseAdmin } from '@/lib/supabase';
 import { auth } from '@clerk/nextjs/server';
 import { LayoutGrid, Folder, Plus, ArrowRight, Loader2 } from 'lucide-react';
-import Sidebar from '@/components/Sidebar';
 import CreateBoardButton from '@/components/CreateBoardButton';
 
 export const dynamic = 'force-dynamic';
@@ -72,9 +71,8 @@ async function BoardsList() {
 
 export default function BoardsPage() {
     return (
-        <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-10 w-full relative z-20">
-            <Sidebar searchParams={{}} />
-            <div className="flex-1 space-y-16 py-12">
+        <div className="max-w-7xl mx-auto px-6 py-10 w-full relative z-20">
+            <div className="space-y-16 py-12">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-16 border-b border-[#E7DED1]">
                     <div>
                         <h2 className="text-7xl font-light text-[#141414] tracking-tightest uppercase leading-[0.85] select-none">
