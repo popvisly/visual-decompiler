@@ -4,14 +4,12 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { SignInButton, UserButton, SignedIn, SignedOut } from '@clerk/nextjs';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Plus } from 'lucide-react';
 import Logo from '@/components/Logo';
-import IngestForm from '@/components/IngestForm';
 
 const PILLARS = [
     { key: 'library', label: 'Library', href: '/dashboard' },
     { key: 'boards', label: 'Boards', href: '/dashboard/boards' },
-    { key: 'analyze', label: 'Analyze', href: '/app' },
     { key: 'intelligence', label: 'Intelligence', href: '/intelligence' },
     { key: 'lexicon', label: 'Lexicon', href: '/docs' },
 ] as const;
@@ -77,11 +75,20 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
 
                     {/* ── Right: Utility Bar ── */}
                     <div className="flex items-center gap-4">
-                        {/* IngestForm — signed in only, desktop */}
+                        {/* Direct App Link — signed in only, desktop */}
                         <SignedIn>
-                            <div className="hidden lg:block">
-                                <IngestForm forceDark={forceDark} />
-                            </div>
+                            <Link
+                                href="/app"
+                                className={`
+                                    hidden lg:flex items-center gap-1.5 px-5 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest
+                                    hover:-translate-y-[1px] shadow-[0_4px_12px_rgba(20,20,20,0.15)] hover:shadow-[0_6px_16px_rgba(20,20,20,0.2)]
+                                    transition-all
+                                    ${forceDark ? 'bg-accent text-[#141414] hover:bg-white' : 'bg-[#141414] text-[#FBF7EF] hover:bg-black'}
+                                `}
+                            >
+                                <Plus className="w-3.5 h-3.5" />
+                                Decompile
+                            </Link>
                             <div className={`hidden lg:block h-6 w-px ${forceDark ? 'bg-white/20' : 'bg-[#E7DED1]'}`} />
                             <UserButton afterSignOutUrl="/" />
                         </SignedIn>
@@ -154,10 +161,17 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                             );
                         })}
 
-                        {/* Mobile IngestForm */}
+                        {/* Mobile Direct App Link */}
                         <SignedIn>
                             <div className="pt-2 border-t border-[#E7DED1] mt-2">
-                                <IngestForm />
+                                <Link
+                                    href="/app"
+                                    onClick={() => setMobileOpen(false)}
+                                    className="flex w-full items-center justify-center gap-1.5 px-4 py-3 rounded-xl text-[11px] font-bold uppercase tracking-widest bg-[#141414] text-[#FBF7EF] hover:bg-black transition-all"
+                                >
+                                    <Plus className="w-3.5 h-3.5" />
+                                    Decompile
+                                </Link>
                             </div>
                         </SignedIn>
                     </div>
