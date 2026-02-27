@@ -102,9 +102,20 @@ export default async function BriefingPage({ params }: { params: Promise<{ slug:
                     {post.meta.title}
                 </h1>
 
-                <p className="text-xl md:text-2xl text-white/50 leading-relaxed font-light">
+                <p className="text-xl md:text-2xl text-white/50 leading-relaxed font-light mb-12">
                     {post.meta.excerpt}
                 </p>
+
+                {post.meta.imageUrl && (
+                    <div className="relative w-full aspect-[21/9] md:aspect-[3/1] rounded-3xl overflow-hidden mb-12 border border-white/10 shadow-2xl">
+                        <img
+                            src={post.meta.imageUrl}
+                            alt={post.meta.title}
+                            className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent opacity-60" />
+                    </div>
+                )}
             </header>
 
             {/* Post Layout: 2 Columns on large screens (Content + Details/Pulse) */}
