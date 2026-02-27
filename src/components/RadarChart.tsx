@@ -124,7 +124,9 @@ export default function RadarChart({ data }: Props) {
                     if (x < center - 10) textAnchor = 'end';
                     else if (x > center + 10) textAnchor = 'start';
 
-                    const words = d.label.replace(/_/g, ' ').split(' ');
+                    // Clean up overly specific AI labels (e.g. "Visual Appeal of Chocolate...")
+                    const cleanLabel = d.label.replace(/_/g, ' ').replace(/\s+of\s+.*/i, '');
+                    const words = cleanLabel.split(' ');
 
                     return (
                         <text
