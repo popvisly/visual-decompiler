@@ -9,15 +9,15 @@ const NEWS_ITEMS = [
         id: '1',
         source: 'B&T',
         headline: 'WPP & Adobe announce deep partnership for AI-driven creative workflows',
-        analysis: 'Indicates a rapid shift toward automated CX Orchestration. Agencies failing to adopt AI pipelines will see margin compression within 18 months.',
+        analysis: "Forensic Filter: This indicates a shift toward automated CX Orchestration. Agencies without a 'Sovereign' data layer will lose visibility into these automated workflows, functioning merely as operators of someone else's black-box algorithm.",
         url: '#',
         date: '2 Hours Ago'
     },
     {
         id: '2',
-        source: 'AdNews',
-        headline: 'Omnicom reports 15% increase in programmatic ad spend for Q1',
-        analysis: 'Despite the rise of privacy-first targeting, algorithmic buying remains dominant. High-end creative differentiation is now the only moat.',
+        source: 'B&T',
+        headline: 'Multiply.co Signs Together Group As First International Client',
+        analysis: "Forensic Filter: Analysis indicates a rise in 'Aggregator Agency' models. This shift necessitates unified 'Sovereign' data layers like Visual Decompiler to maintain creative consistency across international borders and disparate teams.",
         url: '#',
         date: '5 Hours Ago'
     }
