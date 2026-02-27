@@ -12,7 +12,8 @@ const PILLARS = [
     { key: 'library', label: 'Library', href: '/dashboard' },
     { key: 'boards', label: 'Boards', href: '/dashboard/boards' },
     { key: 'analyze', label: 'Analyze', href: '/app' },
-    { key: 'intelligence', label: 'Intelligence', href: '/docs' },
+    { key: 'intelligence', label: 'Intelligence', href: '/intelligence' },
+    { key: 'lexicon', label: 'Lexicon', href: '/docs' },
 ] as const;
 
 function isActive(pathname: string, href: string): boolean {
