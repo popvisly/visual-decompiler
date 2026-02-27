@@ -11,6 +11,8 @@ import { RoutingService } from '@/lib/routing_service';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
+import { isYouTubeUrl } from '@/lib/youtube';
+import { extractYouTubeMetadata } from '@/lib/youtube-server';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300; // 5 minutes for Vision API process
@@ -100,7 +102,29 @@ export async function POST(req: Request) {
                 const mediaPath = path.join(tempDir, 'source_media');
                 console.log(`[Worker Job ${job.id}] Downloading media for hashing...`);
 
-                const res = await fetch(job.media_url);
+                let downloadUrl = job.media_url;
+
+                // --- YOUTUBE INTERCEPTION ---
+                if (job.media_kind === 'video' && isYouTubeUrl(downloadUrl)) {
+                    console.log(`[Worker Job ${job.id}] Intercepting YouTube URL to extract raw MP4 stream...`);
+                    try {
+                        const ytMeta = await extractYouTubeMetadata(downloadUrl);
+                        downloadUrl = ytMeta.streamUrl;
+                        console.log(`[Worker Job ${job.id}] YouTube resolved to stream. Duration: ${ytMeta.duration}s`);
+                    } catch (yterr: any) {
+                        console.error(`[Worker Job ${job.id}] YouTube extraction failed:`, yterr.message);
+                        throw new Error(`YouTube Extraction Failed: ${yterr.message}`);
+                    }
+                }
+
+                // If fetching a large YouTube stream, adding a generic User-Agent helps prevent 403s
+                const fetchOpts: RequestInit = isYouTubeUrl(job.media_url) ? {
+                    headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36' }
+                } : {};
+
+                const res = await fetch(downloadUrl, fetchOpts);
+                if (!res.ok) throw new Error(`Failed to fetch media stream. Status: ${res.status}`);
+
                 const buffer = await res.arrayBuffer();
                 fs.writeFileSync(mediaPath, Buffer.from(buffer));
 
@@ -138,8 +162,9 @@ export async function POST(req: Request) {
                 if (job.media_kind === 'video') {
                     console.log(`[Worker Job ${job.id}] Extracting video frames...`);
                     // We can reuse the already downloaded mediaPath if we update extractKeyframes to accept local paths
-                    // But for now, we'll let extractKeyframes do its thing (it has its own tempDir)
-                    const extraction = await extractKeyframes(job.media_url, [
+                    // Note: We MUST pass the local path `mediaPath` here so we don't re-download the YouTube stream 
+                    // or accidentally pass the raw HTML youtube link to FFmpeg.
+                    const extraction = await extractKeyframes(mediaPath, [
                         { t_ms: 0, label: 'Hook' },
                         { t_ms: -0.25, label: 'Body 1' },
                         { t_ms: -0.5, label: 'Body 2' },
@@ -179,11 +204,12 @@ export async function POST(req: Request) {
                 let pacingResult = null;
                 try {
                     if (job.media_kind === 'video') {
-                        const audioRes = await extractAudio(job.media_url);
+                        // Again, pass the local mediaPath instead of the remote URL to prevent FFmpeg hanging on HTML
+                        const audioRes = await extractAudio(mediaPath);
                         transcription = await transcribeAudio(audioRes.audioPath);
                         cleanupFrames(audioRes.tempDir);
 
-                        pacingResult = await analyzeVideoPacing(job.media_url);
+                        pacingResult = await analyzeVideoPacing(mediaPath);
                     }
                 } catch (audioErr) {
                     console.warn(`[Worker Job ${job.id}] Audio/Pacing extraction failed:`, audioErr);

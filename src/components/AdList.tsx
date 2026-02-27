@@ -5,6 +5,7 @@ import BrandTag from '@/components/BrandTag';
 import { auth } from '@clerk/nextjs/server';
 import { semanticSearch } from '@/lib/search';
 import AdCardSelectable from '@/components/AdCardSelectable';
+import { extractYouTubeId } from '@/lib/youtube';
 
 export default async function AdList({ filters }: { filters: Record<string, string | undefined> }) {
     const { userId, orgId } = await auth();
@@ -99,16 +100,33 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                             {/* Media */}
                             <div className="aspect-square bg-[#FBF7EF] relative overflow-hidden flex items-center justify-center border-b border-[#E7DED1]">
                                 {ad.status === 'queued' || ad.status === 'processing' ? (
-                                    <div className="flex flex-col items-center gap-3">
-                                        <div className="w-8 h-8 border-2 border-[#E7DED1] border-t-[#141414] rounded-full animate-spin shadow-sm" />
-                                        <span className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em]">{ad.status}...</span>
+                                    <div className="flex flex-col items-center gap-3 w-full h-full relative">
+                                        {extractYouTubeId(ad.media_url) && (
+                                            <img
+                                                src={`https://img.youtube.com/vi/${extractYouTubeId(ad.media_url)}/maxresdefault.jpg`}
+                                                alt="YouTube Thumbnail Placeholder"
+                                                className="absolute inset-0 w-full h-full object-cover opacity-30"
+                                            />
+                                        )}
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 backdrop-blur-[2px]">
+                                            <div className="w-8 h-8 border-2 border-[#E7DED1] border-t-[#141414] rounded-full animate-spin shadow-sm" />
+                                            <span className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em]">{ad.status}...</span>
+                                        </div>
                                     </div>
                                 ) : ad.media_kind === 'video' ? (
-                                    <video
-                                        src={ad.media_url}
-                                        className="w-full h-full object-cover"
-                                        muted playsInline preload="metadata"
-                                    />
+                                    extractYouTubeId(ad.media_url) ? (
+                                        <img
+                                            src={`https://img.youtube.com/vi/${extractYouTubeId(ad.media_url)}/maxresdefault.jpg`}
+                                            alt={ad.brand || digest?.meta?.brand_guess || 'Ad media'}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                                        />
+                                    ) : (
+                                        <video
+                                            src={ad.media_url}
+                                            className="w-full h-full object-cover"
+                                            muted playsInline preload="metadata"
+                                        />
+                                    )
                                 ) : (
                                     <img
                                         src={ad.media_url}

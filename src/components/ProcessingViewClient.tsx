@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
+import { extractYouTubeId } from '@/lib/youtube';
 
 const ANALYSIS_STEPS = [
     'Extracting visual elements…',
@@ -170,8 +171,14 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
                     </div>
 
                     {/* Media thumbnail */}
-                    <div className="w-64 h-64 rounded-[20px] overflow-hidden border border-[#E7DED1] shadow-[0_20px_60px_rgba(20,20,20,0.08)] bg-white relative">
-                        {isVideo ? (
+                    <div className="w-64 h-64 rounded-[20px] overflow-hidden border border-[#E7DED1] shadow-[0_20px_60px_rgba(20,20,20,0.08)] bg-white relative flex items-center justify-center">
+                        {extractYouTubeId(mediaUrl) ? (
+                            <img
+                                src={`https://img.youtube.com/vi/${extractYouTubeId(mediaUrl)}/maxresdefault.jpg`}
+                                alt="YouTube Thumbnail Placeholder"
+                                className="absolute inset-0 w-full h-full object-cover opacity-60"
+                            />
+                        ) : isVideo ? (
                             <video
                                 src={mediaUrl}
                                 className="w-full h-full object-cover opacity-80"

@@ -4,7 +4,7 @@ import { decompileAd, VisionInput } from '@/lib/vision';
 import { AdDigestSchema } from '@/types/digest';
 import { supabaseAdmin } from '@/lib/supabase';
 import { extractKeyframes, cleanupFrames } from '@/lib/video';
-import fs from 'fs';
+import { isYouTubeUrl } from '@/lib/youtube';
 
 async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: string; type: 'image' | 'video' | null; contentType?: string | null; sizeMB?: number; finalUrl?: string }> {
     if (!/^https?:\/\//i.test(mediaUrl)) {
@@ -12,7 +12,7 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
     }
 
     // Heuristic: YouTube URLs (bypass network fetch totally)
-    if (mediaUrl.includes('youtube.com/') || mediaUrl.includes('youtu.be/')) {
+    if (isYouTubeUrl(mediaUrl)) {
         console.log(`[Ingest] YouTube heuristic triggered (bypassing fetch)`);
         return { ok: true, type: 'video', contentType: 'video/mp4' };
     }
