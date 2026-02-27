@@ -30,7 +30,7 @@ export default function TrendForecaster() {
         </div>
     );
 
-    if (predictions.length === 0) return null;
+    if (!Array.isArray(predictions) || predictions.length === 0) return null;
 
     return (
         <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">

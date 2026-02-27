@@ -51,7 +51,7 @@ export default function CommandCenter() {
         );
     }
 
-    if (!data) return null;
+    if (!data || !data.briefing) return null;
 
     const riskColor = data.briefing.criticalRiskLevel === 'HIGH' ? 'text-red-500' : data.briefing.criticalRiskLevel === 'MEDIUM' ? 'text-orange-500' : 'text-green-500';
 

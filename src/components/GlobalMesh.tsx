@@ -31,7 +31,7 @@ export default function GlobalMesh() {
         </div>
     );
 
-    if (!data || data.clusters.length === 0) return (
+    if (!data || !data.clusters || data.clusters.length === 0) return (
         <div className="p-16 bg-[#141414] rounded-[3rem] border border-white/5 relative overflow-hidden flex items-center justify-between group">
             <div className="absolute inset-0 opacity-5 [background-image:linear-gradient(#FBF7EF_1px,transparent_1px),linear-gradient(90deg,#FBF7EF_1px,transparent_1px)] [background-size:64px_64px]" />
             <div className="relative z-10">
