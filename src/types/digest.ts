@@ -243,6 +243,11 @@ export const AdDigestSchema = z.object({
             })),
             transcription: z.string().optional(), // [NEW] MS14 Speech-to-Text
         }).optional(),
+        video_pacing: z.object({
+            average_shot_length: z.number(),
+            cut_cadence: z.enum(["Frenetic", "Fast", "Moderate", "Slow", "Hypnotic"]),
+            total_cuts: z.number(),
+        }).optional(),
     }),
     strategy: z.object({
         target_job_to_be_done: z.string().optional(),

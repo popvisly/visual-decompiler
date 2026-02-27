@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
-import { extractKeyframes, cleanupFrames, extractAudio } from '@/lib/video';
+import { extractKeyframes, cleanupFrames, extractAudio, analyzeVideoPacing } from '@/lib/video';
 import { decompileAd, VisionInput, transcribeAudio } from '@/lib/vision';
 import { DeepAuditService } from '@/lib/deep_audit';
 import { AdDigestSchema } from '@/types/digest';
@@ -176,14 +176,17 @@ export async function POST(req: Request) {
 
                 // 5. Deep Multimodal: Audio Extraction & Transcription (MS14)
                 let transcription = null;
+                let pacingResult = null;
                 try {
                     if (job.media_kind === 'video') {
                         const audioRes = await extractAudio(job.media_url);
                         transcription = await transcribeAudio(audioRes.audioPath);
                         cleanupFrames(audioRes.tempDir);
+
+                        pacingResult = await analyzeVideoPacing(job.media_url);
                     }
                 } catch (audioErr) {
-                    console.warn(`[Worker Job ${job.id}] Audio extraction/STT failed:`, audioErr);
+                    console.warn(`[Worker Job ${job.id}] Audio/Pacing extraction failed:`, audioErr);
                 }
 
                 // 6. Call Vision API (Use V4 for videos to get Narrative Arc + OCR)
@@ -196,6 +199,11 @@ export async function POST(req: Request) {
                     // Attach transcription to narrative_arc
                     if (transcription && rawDigest.extraction.narrative_arc) {
                         rawDigest.extraction.narrative_arc.transcription = transcription;
+                    }
+
+                    // Attach mathematical pacing data
+                    if (pacingResult) {
+                        rawDigest.extraction.video_pacing = pacingResult;
                     }
                 }
 

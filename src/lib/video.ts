@@ -160,3 +160,81 @@ export async function extractAudio(videoUrl: string) {
         throw err;
     }
 }
+
+export type VideoPacingResult = {
+    average_shot_length: number;
+    cut_cadence: "Frenetic" | "Fast" | "Moderate" | "Slow" | "Hypnotic";
+    total_cuts: number;
+};
+
+export async function analyzeVideoPacing(videoUrl: string): Promise<VideoPacingResult | null> {
+    let resolvedFfprobePath = ffmpegPath ? path.join(path.dirname(ffmpegPath), 'ffprobe') : 'ffprobe';
+    if (!fs.existsSync(resolvedFfprobePath)) {
+        const brewFfprobe = '/opt/homebrew/bin/ffprobe';
+        if (fs.existsSync(brewFfprobe)) resolvedFfprobePath = brewFfprobe;
+    }
+
+    if (!resolvedFfprobePath) {
+        console.warn('[Video/Pacing] ffprobe binary not available.');
+        return null;
+    }
+
+    try {
+        console.log(`[Video/Pacing] Analyzing clip cadence...`);
+        // Use ffprobe to detect scene changes (> 30% difference)
+        const command = `"${resolvedFfprobePath}" -show_frames -of compact=p=0 -f lavfi "movie='${videoUrl}',select=gt(scene\\,0.3)" -v error | grep pkt_pts_time`;
+
+        let stdout = '';
+        try {
+            const { stdout: resOut } = await execPromise(command);
+            stdout = resOut;
+        } catch (e: any) {
+            // grep exits with 1 if no matches found
+            if (e.code === 1) {
+                stdout = '';
+            } else {
+                throw e;
+            }
+        }
+
+        const lines = stdout.split('\\n').filter(l => l.includes('pkt_pts_time='));
+        const cutTimestamps = lines
+            .map(l => {
+                const match = l.match(/pkt_pts_time=([0-9.]+)/);
+                return match ? parseFloat(match[1]) : null;
+            })
+            .filter((t): t is number => t !== null);
+
+        let durationSeconds = 10;
+        try {
+            const probeCmd = `"${resolvedFfprobePath}" -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${videoUrl}"`;
+            const { stdout: durOut } = await execPromise(probeCmd);
+            const parsedDur = parseFloat(durOut.trim());
+            if (!isNaN(parsedDur)) durationSeconds = parsedDur;
+        } catch (err) {
+            console.warn('[Video/Pacing] Duration probe failed, using fallback.');
+        }
+
+        const totalCuts = cutTimestamps.length;
+        const totalShots = totalCuts + 1;
+        const asl = durationSeconds / totalShots;
+
+        let cadence: VideoPacingResult["cut_cadence"] = "Moderate";
+        if (asl < 1.0) cadence = "Frenetic";
+        else if (asl < 2.5) cadence = "Fast";
+        else if (asl <= 4.0) cadence = "Moderate";
+        else if (asl <= 7.0) cadence = "Slow";
+        else cadence = "Hypnotic";
+
+        console.log(`[Video/Pacing] Total Cuts: ${totalCuts}, ASL: ${asl.toFixed(2)}s (${cadence})`);
+
+        return {
+            average_shot_length: parseFloat(asl.toFixed(2)),
+            cut_cadence: cadence,
+            total_cuts: totalCuts
+        };
+    } catch (err: any) {
+        console.warn(`[Video/Pacing] Pacing analysis failed:`, err.message);
+        return null;
+    }
+}
