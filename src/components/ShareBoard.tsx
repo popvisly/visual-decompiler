@@ -47,9 +47,9 @@ export default function ShareBoard({ boardId, boardName }: ShareBoardProps) {
     };
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col items-end gap-4">
             {!slug && (
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col items-end gap-2">
                     <button
                         onClick={() => setShowPasswordInput(!showPasswordInput)}
                         className={`text-[9px] font-bold uppercase tracking-widest flex items-center gap-2 transition-colors ${showPasswordInput ? 'text-accent' : 'text-[#6B6B6B] hover:text-[#141414]'}`}

@@ -21,6 +21,7 @@ export default function NotificationBell() {
     const fetchNotifications = async () => {
         try {
             const res = await fetch('/api/notifications');
+            if (!res.ok) return;
             const data = await res.json();
             if (Array.isArray(data)) {
                 setNotifications(data);

@@ -18,6 +18,10 @@ export default function StressTestPanel({ boardId }: Props) {
         async function fetchMetrics() {
             try {
                 const res = await fetch(`/api/benchmark?boardId=${boardId}`);
+                if (!res.ok) {
+                    console.warn("Benchmark API returned non-OK status:", res.status);
+                    return;
+                }
                 const data = await res.json();
                 setBoardMetrics(data.board);
             } catch (err) {

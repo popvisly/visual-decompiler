@@ -40,7 +40,9 @@ export default async function BoardDetailPage({
         .select(`ad_digests(digest)`)
         .eq('board_id', id);
 
-    const boardAds = boardItems?.map((i: any) => i.ad_digests.digest as AdDigest) || [];
+    const boardAds = boardItems
+        ?.filter((i: any) => i.ad_digests && i.ad_digests.digest)
+        .map((i: any) => i.ad_digests.digest as AdDigest) || [];
 
     // 1. Get Board Stats
     const boardTriggers: Record<string, number> = {};
@@ -71,7 +73,7 @@ export default async function BoardDetailPage({
     }));
 
     return (
-        <div className="space-y-20 py-12">
+        <div className="max-w-7xl mx-auto px-6 w-full space-y-20 py-12">
             {/* Header - Editorial Style */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 pb-16 border-b border-[#E7DED1]">
                 <div>
@@ -81,11 +83,10 @@ export default async function BoardDetailPage({
                             Back to Collection
                         </Link>
                     </nav>
-                    <h2 className="text-7xl font-light text-[#141414] tracking-tightest uppercase leading-[0.85] select-none">
-                        {board.name.split(' ').slice(0, -1).join(' ')}<br />
-                        <span className="text-[#6B6B6B]/30">{board.name.split(' ').pop()}</span>
+                    <h2 className="text-6xl md:text-8xl font-light text-[#141414] tracking-tighter uppercase leading-[0.85] select-none max-w-5xl">
+                        {board.name}
                     </h2>
-                    <p className="text-[12px] text-[#6B6B6B] mt-10 max-w-2xl font-bold tracking-[0.2em] uppercase leading-relaxed">
+                    <p className="text-[12px] text-[#6B6B6B] mt-8 max-w-2xl font-bold tracking-[0.2em] uppercase leading-relaxed">
                         {board.description || 'Deconstructing a strategic pattern collection.'}
                     </p>
                 </div>

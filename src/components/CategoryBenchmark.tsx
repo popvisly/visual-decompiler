@@ -18,7 +18,10 @@ export default function CategoryBenchmark({ boardId }: Props) {
             setLoading(true);
             try {
                 const res = await fetch(`/api/benchmark?boardId=${boardId}`);
-                if (!res.ok) throw new Error("Failed to load benchmark data");
+                if (!res.ok) {
+                    const text = await res.text();
+                    throw new Error(`Failed to load benchmark data: ${res.status} ${text.substring(0, 50)}`);
+                }
                 const json = await res.json();
                 setData(json);
             } catch (err: any) {
