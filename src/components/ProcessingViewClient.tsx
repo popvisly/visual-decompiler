@@ -125,7 +125,7 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
         return () => { cancelled = true; clearTimeout(timeout); };
     }, [jobId, onComplete]);
 
-    const isVideo = mediaKind === 'video' || /\.(mp4|mov|webm|avi)/i.test(mediaUrl);
+    const isVideo = mediaKind === 'video' || (mediaUrl ? /\.(mp4|mov|webm|avi)/i.test(mediaUrl) : false);
 
     return (
         <div className="w-full max-w-3xl mx-auto page-enter">
