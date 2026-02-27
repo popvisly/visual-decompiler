@@ -270,12 +270,12 @@ export class NeuralDeconstructionService {
         });
 
         // Add drivers from semiotic layers
-        semLayers.forEach(layer => {
+        (semLayers || []).forEach(layer => {
             if (!drivers.find(d => d.driver.toLowerCase() === layer.layer_name.toLowerCase())) {
                 drivers.push({
                     driver: layer.layer_name,
-                    intensity: Math.min(50 + layer.cues.length * 12, 95),
-                    source: layer.cues.slice(0, 2).join(', '),
+                    intensity: Math.min(50 + (layer.cues?.length || 0) * 12, 95),
+                    source: layer.cues?.slice(0, 2).join(', ') || 'Implicit semiotic signal',
                 });
             }
         });

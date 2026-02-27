@@ -22,11 +22,12 @@ const ORBIT_PILLS = [
 
 type Props = {
     mediaUrl: string;
+    mediaKind?: string;
     jobId: string;
     onComplete?: (digest: any) => void;
 };
 
-export default function ProcessingViewClient({ mediaUrl, jobId, onComplete }: Props) {
+export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jobId, onComplete }: Props) {
     const router = useRouter();
     const [step, setStep] = useState(0);
     const [dots, setDots] = useState('');
@@ -124,7 +125,7 @@ export default function ProcessingViewClient({ mediaUrl, jobId, onComplete }: Pr
         return () => { cancelled = true; clearTimeout(timeout); };
     }, [jobId, onComplete]);
 
-    const isVideo = /\.(mp4|mov|webm|avi)/i.test(mediaUrl);
+    const isVideo = mediaKind === 'video' || /\.(mp4|mov|webm|avi)/i.test(mediaUrl);
 
     return (
         <div className="w-full max-w-3xl mx-auto page-enter">

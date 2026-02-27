@@ -249,7 +249,7 @@ export default function StrategicDossier({
                                         </div>
                                     </div>
                                 )}
-                                {(ext as any)?.palette_hex?.slice(0, 4).map((hex: string, i: number) => (
+                                {((ext as any)?.palette_hex || []).slice(0, 4).map((hex: string, i: number) => (
                                     <div key={i} className="dossier-color-chip">
                                         <div className="dossier-color-swatch" style={{ backgroundColor: `#${hex}` }} />
                                         <div>
