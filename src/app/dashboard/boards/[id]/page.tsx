@@ -13,6 +13,7 @@ import BoardPresentationTrigger from '@/components/BoardPresentationTrigger';
 import { AdDigest } from '@/types/digest';
 import CategoryBenchmark from '@/components/CategoryBenchmark';
 import StressTestPanel from '@/components/StressTestPanel';
+import DeleteBoardButton from '@/components/DeleteBoardButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -91,14 +92,17 @@ export default async function BoardDetailPage({
                     </p>
                 </div>
 
-                <div className="flex gap-4 no-print">
-                    <ShareBoard boardId={id} boardName={board.name} />
-                    <BoardPresentationTrigger
-                        boardName={board.name}
-                        strategicAnswer={board.strategic_answer?.content || null}
-                        stats={userStats}
-                        sentiment={board.strategic_answer?.sentiment || null}
-                    />
+                <div className="flex flex-col items-end gap-6 no-print">
+                    <div className="flex gap-4">
+                        <ShareBoard boardId={id} boardName={board.name} />
+                        <BoardPresentationTrigger
+                            boardName={board.name}
+                            strategicAnswer={board.strategic_answer?.content || null}
+                            stats={userStats}
+                            sentiment={board.strategic_answer?.sentiment || null}
+                        />
+                    </div>
+                    <DeleteBoardButton boardId={id} boardName={board.name} />
                 </div>
             </div>
 
