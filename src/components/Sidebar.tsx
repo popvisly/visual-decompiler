@@ -13,7 +13,7 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
     const topBrands = brands.slice(0, 10);
 
     return (
-        <aside className="w-full md:w-64 shrink-0 flex flex-col gap-12 sticky top-[104px] self-start max-h-[calc(100vh-120px)] overflow-y-auto hidden-scrollbar pb-10 pr-2">
+        <aside className="w-full md:w-64 shrink-0 flex flex-col gap-12 sticky top-[104px] self-start max-h-[calc(100vh-120px)] overflow-y-auto hidden-scrollbar pt-10 pb-10 pr-2">
             {/* Context Header (Mobile only) */}
             <div className="md:hidden mb-6">
                 <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.3em]">Strategic Menu</p>
