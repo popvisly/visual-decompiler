@@ -39,13 +39,17 @@ export default async function AdList({ filters }: { filters: Record<string, stri
         if (filters.trigger_mechanic) query = query.eq('trigger_mechanic', filters.trigger_mechanic);
         if (filters.claim_type) query = query.eq('claim_type', filters.claim_type);
         if (filters.offer_type) query = query.eq('offer_type', filters.offer_type);
-        if (filters.brand) {
-            query = query.or(`brand.ilike.%${filters.brand}%,brand_guess.ilike.%${filters.brand}%`);
-        }
-
         const res = await query;
         ads = res.data || [];
         error = res.error;
+
+        if (filters.brand) {
+            const b = filters.brand.toLowerCase();
+            ads = ads.filter(a =>
+                (a.brand?.toLowerCase().includes(b)) ||
+                (a.brand_guess?.toLowerCase().includes(b))
+            );
+        }
     }
 
     // Handle board_id explicitly if provided (manual join for now)
