@@ -1,12 +1,42 @@
 'use client';
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useSelection } from './SelectionProvider';
 import DossierMultiExport from './DossierMultiExport';
-import { Shield, LayoutGrid, X } from 'lucide-react';
+import { Shield, LayoutGrid, X, Trash2, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ExecutiveCommandBar({ isExecutiveView }: { isExecutiveView: boolean }) {
-    const { count, clearAll } = useSelection();
+    const { count, clearAll, selectedIds } = useSelection();
+    const router = useRouter();
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    const handleDelete = async () => {
+        if (!confirm(`Are you sure you want to delete ${count} asset${count !== 1 ? 's' : ''}? This action cannot be undone.`)) return;
+
+        setIsDeleting(true);
+        try {
+            const res = await fetch('/api/ads/bulk', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ids: Array.from(selectedIds) })
+            });
+
+            if (res.ok) {
+                clearAll();
+                router.refresh();
+            } else {
+                console.error('Failed to delete assets');
+                alert('Failed to delete assets.');
+            }
+        } catch (error) {
+            console.error('Error deleting assets:', error);
+            alert('An error occurred while deleting assets.');
+        } finally {
+            setIsDeleting(false);
+        }
+    };
 
     return (
         <div className="flex items-center gap-3 flex-wrap">
@@ -22,6 +52,18 @@ export default function ExecutiveCommandBar({ isExecutiveView }: { isExecutiveVi
                         aria-label="Clear selection"
                     >
                         <X className="w-3 h-3 text-[#6B6B6B]" />
+                    </button>
+
+                    <div className="w-px h-3 bg-accent/30 mx-1" />
+
+                    <button
+                        onClick={handleDelete}
+                        disabled={isDeleting}
+                        className="p-1 px-3 flex items-center gap-2 rounded-full hover:bg-red-500/10 text-red-500 transition-colors"
+                        aria-label="Delete selected assets"
+                    >
+                        {isDeleting ? <Loader2 className="w-3 h-3 animate-spin" /> : <Trash2 className="w-3 h-3" />}
+                        <span className="text-[10px] font-bold uppercase tracking-[0.1em]">{isDeleting ? 'Deleting...' : 'Delete'}</span>
                     </button>
                 </div>
             )}
