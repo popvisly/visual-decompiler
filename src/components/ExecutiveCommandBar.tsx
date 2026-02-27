@@ -11,10 +11,9 @@ export default function ExecutiveCommandBar({ isExecutiveView }: { isExecutiveVi
     const { count, clearAll, selectedIds } = useSelection();
     const router = useRouter();
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isConfirming, setIsConfirming] = useState(false);
 
     const handleDelete = async () => {
-        if (!confirm(`Are you sure you want to delete ${count} asset${count !== 1 ? 's' : ''}? This action cannot be undone.`)) return;
-
         setIsDeleting(true);
         try {
             const res = await fetch('/api/ads/bulk', {
@@ -25,6 +24,7 @@ export default function ExecutiveCommandBar({ isExecutiveView }: { isExecutiveVi
 
             if (res.ok) {
                 clearAll();
+                setIsConfirming(false);
                 router.refresh();
             } else {
                 console.error('Failed to delete assets');
@@ -42,29 +42,60 @@ export default function ExecutiveCommandBar({ isExecutiveView }: { isExecutiveVi
         <div className="flex items-center gap-3 flex-wrap">
             {/* Selection counter — appears when items are selected */}
             {count > 0 && (
-                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 animate-in fade-in slide-in-from-left-2">
-                    <span className="text-[10px] font-bold text-[#141414] uppercase tracking-[0.1em]">
-                        {count} Asset{count !== 1 ? 's' : ''} Selected
-                    </span>
-                    <button
-                        onClick={clearAll}
-                        className="p-0.5 rounded-full hover:bg-accent/20 transition-colors"
-                        aria-label="Clear selection"
-                    >
-                        <X className="w-3 h-3 text-[#6B6B6B]" />
-                    </button>
+                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 animate-in fade-in slide-in-from-left-2 transition-all">
+                    {isConfirming ? (
+                        <div className="flex items-center gap-3 animate-in fade-in zoom-in-95 duration-200">
+                            <span className="text-[10px] font-bold text-red-500 uppercase tracking-[0.1em]">
+                                Permanently delete {count} asset{count !== 1 ? 's' : ''}?
+                            </span>
+                            <div className="w-px h-3 bg-red-500/30 mx-1" />
+                            <button
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsConfirming(false); }}
+                                disabled={isDeleting}
+                                className="px-2 py-1 flex items-center justify-center text-[9px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-widest transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDelete(); }}
+                                disabled={isDeleting}
+                                className="px-3 py-1.5 flex items-center justify-center gap-1.5 rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors shadow-sm"
+                            >
+                                {isDeleting ? <Loader2 className="w-3 h-3 animate-spin" /> : <Trash2 className="w-3 h-3" />}
+                                <span className="text-[9px] font-bold uppercase tracking-widest leading-none mt-[1px]">
+                                    {isDeleting ? 'Deleting...' : 'Yes, Delete'}
+                                </span>
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-3 animate-in fade-in zoom-in-95 duration-200">
+                            <span className="text-[10px] font-bold text-[#141414] uppercase tracking-[0.1em]">
+                                {count} Asset{count !== 1 ? 's' : ''} Selected
+                            </span>
+                            <button
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); clearAll(); }}
+                                className="p-0.5 rounded-full hover:bg-accent/20 transition-colors"
+                                aria-label="Clear selection"
+                            >
+                                <X className="w-3 h-3 text-[#6B6B6B]" />
+                            </button>
 
-                    <div className="w-px h-3 bg-accent/30 mx-1" />
+                            <div className="w-px h-3 bg-accent/30 mx-1" />
 
-                    <button
-                        onClick={handleDelete}
-                        disabled={isDeleting}
-                        className="p-1 px-3 flex items-center gap-2 rounded-full hover:bg-red-500/10 text-red-500 transition-colors"
-                        aria-label="Delete selected assets"
-                    >
-                        {isDeleting ? <Loader2 className="w-3 h-3 animate-spin" /> : <Trash2 className="w-3 h-3" />}
-                        <span className="text-[10px] font-bold uppercase tracking-[0.1em]">{isDeleting ? 'Deleting...' : 'Delete'}</span>
-                    </button>
+                            <button
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsConfirming(true); }}
+                                className="p-1 px-3 flex items-center gap-2 rounded-full hover:bg-red-500/10 text-red-500 transition-colors"
+                                aria-label="Delete selected assets"
+                            >
+                                <Trash2 className="w-3 h-3" />
+                                <span className="text-[10px] font-bold uppercase tracking-[0.1em]">Delete</span>
+                            </button>
+                        </div>
+                    )}
                 </div>
             )}
 
