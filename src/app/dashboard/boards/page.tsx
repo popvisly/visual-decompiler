@@ -4,6 +4,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { auth } from '@clerk/nextjs/server';
 import { LayoutGrid, Folder, Plus, ArrowRight, Loader2 } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
+import CreateBoardButton from '@/components/CreateBoardButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -81,6 +82,9 @@ export default function BoardsPage() {
                             <span className="text-[#6B6B6B]/30">Boards</span>
                         </h2>
                         <p className="text-[12px] text-[#6B6B6B] mt-6 font-bold tracking-[0.3em] uppercase">Private & Team Collections / Knowledge Bases</p>
+                    </div>
+                    <div>
+                        <CreateBoardButton />
                     </div>
                 </div>
 
