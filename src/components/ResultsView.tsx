@@ -290,15 +290,15 @@ export default function ResultsView({
                 {/* Right — Analysis cards */}
                 <div className={`${showMedia ? 'lg:col-span-3' : ''} space-y-6`}>
                     {/* Neural Thesis — The Primary Executive Summary */}
-                    <div className="p-8 md:p-12 bg-[#141414] rounded-[2.5rem] md:rounded-[4rem] border border-white/10 shadow-2xl relative overflow-hidden group">
+                    <div className="p-8 md:p-10 bg-[#141414] rounded-[2.5rem] md:rounded-[3rem] border border-white/10 shadow-2xl relative overflow-hidden group">
                         {/* Background Aura */}
                         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full -translate-y-48 translate-x-48 blur-[120px] pointer-events-none" />
                         <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/3 rounded-full translate-y-32 -translate-x-32 blur-[80px] pointer-events-none" />
 
-                        <div className="relative z-10 space-y-10">
+                        <div className="relative z-10 flex flex-col gap-8">
                             {/* Top Tier: Thesis Quote */}
-                            <div className="space-y-6">
-                                <div className="flex items-center gap-3 text-accent/60">
+                            <div className="flex flex-col gap-5">
+                                <div className="flex items-center gap-3 text-accent/60 opacity-50">
                                     <Sparkles className="w-4 h-4" />
                                     <h3 className="text-[10px] font-bold uppercase tracking-[0.4em]">Neural Thesis</h3>
                                 </div>
@@ -310,14 +310,14 @@ export default function ResultsView({
                                 </div>
                                 {/* Strategic Verdict */}
                                 {neuralData.strategic_verdict && (
-                                    <p className="text-[12px] font-medium text-accent/50 leading-relaxed mt-4 uppercase tracking-wide">
+                                    <p className="text-[12px] font-medium text-accent/50 leading-relaxed mt-2 uppercase tracking-wide">
                                         {neuralData.strategic_verdict}
                                     </p>
                                 )}
                             </div>
 
                             {/* Middle Tier: Metrics Row */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10 border-t border-white/10">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-white/10">
                                 {/* Resonance */}
                                 <div className="space-y-1">
                                     <ForensicTooltip term="Market Resonance" definition="A quantitative measure of how well the creative DNA aligns with current high-performing industry benchmarks and cultural sentiment within a specific category.">
