@@ -11,7 +11,6 @@ import IngestForm from '@/components/IngestForm';
 const PILLARS = [
     { key: 'library', label: 'Library', href: '/dashboard' },
     { key: 'boards', label: 'Boards', href: '/dashboard/boards' },
-    { key: 'analytics', label: 'Analytics', href: '/dashboard/analytics' },
     { key: 'analyze', label: 'Analyze', href: '/app' },
     { key: 'intelligence', label: 'Intelligence', href: '/docs' },
 ] as const;
