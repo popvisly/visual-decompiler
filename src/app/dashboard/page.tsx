@@ -38,6 +38,12 @@ export default async function DashboardPage({
                         </div>
 
                         <div className="md:pb-2 flex items-center gap-4">
+                            <Link
+                                href="/dashboard/analytics"
+                                className="flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest bg-white border border-[#E7DED1] hover:border-[#141414] hover:text-[#141414] transition-all shadow-sm"
+                            >
+                                Analytics
+                            </Link>
                             <a
                                 href="/api/export"
                                 className="flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest bg-white border border-[#E7DED1] hover:border-[#141414] hover:text-[#141414] transition-all shadow-sm"
