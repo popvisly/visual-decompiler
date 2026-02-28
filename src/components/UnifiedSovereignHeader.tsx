@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { SignInButton, UserButton, SignedIn, SignedOut } from '@clerk/nextjs';
-import { Menu, X, Plus } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import Logo from '@/components/Logo';
 
 const PILLARS = [
@@ -86,7 +86,7 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                                     ${forceDark ? 'bg-accent text-[#141414] hover:bg-white' : 'bg-[#141414] text-[#FBF7EF] hover:bg-black'}
                                 `}
                             >
-                                <Plus className="w-3.5 h-3.5" />
+                                <ArrowUpRight className="w-3.5 h-3.5" />
                                 Decompile
                             </Link>
                             <div className={`hidden lg:block h-6 w-px ${forceDark ? 'bg-white/20' : 'bg-[#E7DED1]'}`} />
@@ -169,7 +169,7 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                                     onClick={() => setMobileOpen(false)}
                                     className="flex w-full items-center justify-center gap-1.5 px-4 py-3 rounded-xl text-[11px] font-bold uppercase tracking-widest bg-[#141414] text-[#FBF7EF] hover:bg-black transition-all"
                                 >
-                                    <Plus className="w-3.5 h-3.5" />
+                                    <ArrowUpRight className="w-3.5 h-3.5" />
                                     Decompile
                                 </Link>
                             </div>
