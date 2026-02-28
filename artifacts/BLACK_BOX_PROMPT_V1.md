@@ -277,6 +277,16 @@ Return exactly this JSON object:
     "competitive_advantage": "string",
     "behavioral_nudge": "string",
     "misdirection_or_friction_removed": "string|null",
+    "test_plan": {
+      "hypothesis": "string",
+      "sprint_duration_days": 14,
+      "test_cells": [
+        { "lever": "CTA", "change": "string", "predicted_impact": "High", "rationale": "string" }
+      ]
+    },
+    "variant_matrix": [
+      { "name": "string", "description": "string", "primary_lever": "string" }
+    ],
     "evidence_anchors": ["string"]
   },
   "diagnostics": {

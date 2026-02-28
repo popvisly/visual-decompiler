@@ -19,6 +19,7 @@ import ScanPath from './ScanPath';
 import ForensicOverlay from './ForensicOverlay';
 import PlatformFitness from './PlatformFitness';
 import RiskAnalysis from './RiskAnalysis';
+import TestPlanBuilder from './TestPlanBuilder';
 
 type Props = {
     id: string;
@@ -556,6 +557,20 @@ export default function ResultsView({
                             </div>
                         </ResultsCard>
                     </BlurGate>
+
+                    {/* ── Test Plan Builder ── */}
+                    {(strat as any)?.test_plan && (
+                        <ResultsCard
+                            title="14-Day Tactical Sprint"
+                            variant="strategy"
+                            tooltip="A production-ready testing roadmap to isolate and validate the ad's core conversion levers."
+                        >
+                            <TestPlanBuilder
+                                testPlan={(strat as any).test_plan}
+                                variants={(strat as any).variant_matrix || []}
+                            />
+                        </ResultsCard>
+                    )}
 
                     {/* ── Evidence Anchors ── */}
                     {((strat?.evidence_anchors?.length || 0) > 0 || (diag?.evidence_anchors?.length || 0) > 0) && (

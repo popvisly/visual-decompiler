@@ -304,9 +304,25 @@ export const AdDigestSchema = z.object({
         differentiator_angle: z.string().optional(),
         semiotic_subtext: z.string().optional(),
         competitive_advantage: z.string().optional(),
-        behavioral_nudge: z.string().optional(),
-        misdirection_or_friction_removed: z.string().nullable().optional(),
+        behavioral_nudge: z.string().describe("Direct psychological nudge (e.g. Scarcity, Reciprocity)"),
+        misdirection_or_friction_removed: z.string().nullable().describe("What hurdle does this ad clear?"),
+        test_plan: z.object({
+            hypothesis: z.string(),
+            sprint_duration_days: z.number().default(14),
+            test_cells: z.array(z.object({
+                lever: z.enum(['Hook', 'Body_Copy', 'Visual_Crop', 'Background', 'CTA']),
+                change: z.string(),
+                predicted_impact: z.enum(['Low', 'Medium', 'High']),
+                rationale: z.string()
+            }))
+        }).optional().describe("14-day creative testing sprint matrix"),
+        variant_matrix: z.array(z.object({
+            name: z.string(),
+            description: z.string(),
+            primary_lever: z.string()
+        })).optional().describe("High-level variant directions for production"),
         evidence_anchors: z.array(z.string()).optional(), // [NEW] Deep Decompiler
+        notes: z.string().nullable().optional(),
         reconstruction_prompt: z.string().nullable().optional(), // [NEW] Milestone 51: Semantic Prompting
     }),
     neural_deconstruction: z.object({
