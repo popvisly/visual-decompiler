@@ -8,7 +8,6 @@ import BrandTag from '@/components/BrandTag';
 import ResultsView from '@/components/ResultsView';
 import ResultsCard from '@/components/ResultsCard';
 import StrategicDossier from '@/components/StrategicDossier';
-import VideoPins from '@/components/VideoPins';
 import AdShareButton from '@/components/AdShareButton';
 import AddToBoard from '@/components/AddToBoard';
 import DeepAuditView from '@/components/DeepAuditView';
@@ -37,30 +36,16 @@ export default function AdDetailClient({
     pulseText?: string
 }) {
     const forecasting = useMemo(() => ForecastingService.analyzeAd(digest, pulseText || ''), [digest, pulseText]);
-    const [currentTimeMs, setCurrentTimeMs] = useState(0);
     const searchParams = useSearchParams();
     const isNew = searchParams.get('new') === 'true';
     const [showBanner, setShowBanner] = useState(isNew);
     const [roiPredict, setRoiPredict] = useState<any>(null);
     const [orgSettings, setOrgSettings] = useState<{ agency_name?: string; logo_url?: string }>({});
 
-    type TabKey = 'report' | 'forensics' | 'analytics' | 'pins' | 'prompt' | 'intelligence' | 'audience' | 'remix';
+    type TabKey = 'report' | 'forensics' | 'analytics' | 'prompt' | 'intelligence' | 'audience' | 'remix';
     const [tab, setTab] = useState<TabKey>('report');
     const neuralData = useMemo(() => NeuralDeconstructionService.resolve(digest, forecasting), [digest, forecasting]);
     const videoRef = useRef<HTMLVideoElement>(null);
-
-    const handleTimeUpdate = () => {
-        if (videoRef.current) {
-            setCurrentTimeMs(videoRef.current.currentTime * 1000);
-        }
-    };
-
-    const handleSeek = (ms: number) => {
-        if (videoRef.current) {
-            videoRef.current.currentTime = ms / 1000;
-            videoRef.current.play();
-        }
-    };
 
     const predictROI = async () => {
         try {
@@ -140,6 +125,11 @@ export default function AdDetailClient({
                         <h1 className="text-xl md:text-2xl font-light text-[#141414] tracking-tight mt-6 md:mt-8 border-l-[2px] md:border-l-[3px] border-accent pl-4 md:pl-6 py-2 max-w-3xl leading-snug lg:text-3xl">
                             {digest?.extraction?.on_screen_copy?.primary_headline || 'Untitled'}
                         </h1>
+                        {digest?.meta?.campaign_category && (
+                            <p className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.2em] mt-4 ml-4 md:ml-6">
+                                Format: {digest.meta.campaign_category.replace('_', ' ')}
+                            </p>
+                        )}
                     </div>
 
                     {!isShared && (
@@ -171,7 +161,6 @@ export default function AdDetailClient({
                                         src={ad.media_url}
                                         className="w-full aspect-[4/5] object-cover rounded-[1.5rem] md:rounded-[2.5rem]"
                                         controls muted playsInline preload="metadata"
-                                        onTimeUpdate={handleTimeUpdate}
                                     />
                                 ) : (
                                     <img
@@ -195,7 +184,6 @@ export default function AdDetailClient({
                                         { key: 'forensics', label: 'Forensics' },
                                         { key: 'analytics', label: 'Analytics' },
                                         { key: 'prompt', label: 'Prompt' },
-                                        { key: 'pins', label: 'Pins' },
                                         { key: 'audience', label: 'Audience' },
                                         { key: 'remix', label: 'Remix' },
                                     ] as const).map(t => (
@@ -235,21 +223,6 @@ export default function AdDetailClient({
 
                         {tab === 'prompt' && (
                             <PromptView digest={digest} />
-                        )}
-
-                        {tab === 'pins' && !isShared && (
-                            <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
-                                <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-[#141414] mb-6">Strategic Pins</h3>
-                                {ad.media_kind === 'video' ? (
-                                    <VideoPins
-                                        adId={ad.id}
-                                        currentTimeMs={currentTimeMs}
-                                        onSeek={handleSeek}
-                                    />
-                                ) : (
-                                    <p className="text-[12px] text-[#6B6B6B]">Pins are available for video ads.</p>
-                                )}
-                            </div>
                         )}
 
                         {tab === 'analytics' && (

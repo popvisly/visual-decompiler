@@ -149,6 +149,16 @@ export const adoptionTierSchema = z.enum([
     "Mainstream"
 ]);
 
+export const campaignCategorySchema = z.enum([
+    "Print",
+    "OOH",
+    "Digital_Display",
+    "Social",
+    "Direct_Mail",
+    "TV_Cinema",
+    "Other"
+]);
+
 export const AdDigestSchema = z.object({
     meta: z.object({
         /** Version the digest contract so prompt/schema iterations don't silently break the UI. (v2.2: Trend Intelligence) */
@@ -161,6 +171,7 @@ export const AdDigestSchema = z.object({
         aesthetic_year: z.string().nullable().optional(),
         historical_genealogy: z.string().nullable().optional(),
         adoption_tier: adoptionTierSchema.or(z.string()).nullable().optional(),
+        campaign_category: campaignCategorySchema.or(z.string()).nullable().optional(),
         trend_momentum: z.number().nullable().optional(),
         predicted_resonance_window: z.string().nullable().optional(),
     }),

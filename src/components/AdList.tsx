@@ -138,9 +138,16 @@ export default async function AdList({ filters }: { filters: Record<string, stri
                                 {/* Overlay badges */}
                                 <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-20 pointer-events-none">
                                     {ad.status !== 'queued' && ad.status !== 'processing' && (
-                                        <span className="bg-white/80 backdrop-blur-md border border-[#E7DED1] px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.1em] text-[#141414] shadow-sm">
-                                            {digest?.classification?.trigger_mechanic || 'Analyzing…'}
-                                        </span>
+                                        <>
+                                            <span className="bg-white/80 backdrop-blur-md border border-[#E7DED1] px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.1em] text-[#141414] shadow-sm">
+                                                {digest?.classification?.trigger_mechanic || 'Analyzing…'}
+                                            </span>
+                                            {digest?.meta?.campaign_category && (
+                                                <span className="bg-white/80 backdrop-blur-md border border-[#E7DED1] px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.1em] text-[#6B6B6B] shadow-sm">
+                                                    {digest.meta.campaign_category}
+                                                </span>
+                                            )}
+                                        </>
                                     )}
                                     {ad.media_kind === 'video' && (
                                         <span className="px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.1em] bg-[#141414] text-[#FBF7EF] shadow-sm">
