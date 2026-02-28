@@ -287,6 +287,16 @@ Return exactly this JSON object:
     "variant_matrix": [
       { "name": "string", "description": "string", "primary_lever": "string" }
     ],
+    "competitive_intelligence": {
+      "nearest_neighbor_id": "string",
+      "similarity_score": 60,
+      "pattern_overlaps": ["string"],
+      "differentiation_levers": ["string"],
+      "strategic_shift": {
+        "target_posture": "string",
+        "moves": ["string"]
+      }
+    },
     "evidence_anchors": ["string"]
   },
   "diagnostics": {

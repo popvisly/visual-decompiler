@@ -322,6 +322,16 @@ export const AdDigestSchema = z.object({
             primary_lever: z.string()
         })).optional().describe("High-level variant directions for production"),
         evidence_anchors: z.array(z.string()).optional(), // [NEW] Deep Decompiler
+        competitive_intelligence: z.object({
+            nearest_neighbor_id: z.string().optional(),
+            similarity_score: z.number().min(0).max(100),
+            pattern_overlaps: z.array(z.string()),
+            differentiation_levers: z.array(z.string()),
+            strategic_shift: z.object({
+                target_posture: z.string(),
+                moves: z.array(z.string())
+            })
+        }).optional().describe("Contextualizing against the library and competitors"),
         notes: z.string().nullable().optional(),
         reconstruction_prompt: z.string().nullable().optional(), // [NEW] Milestone 51: Semantic Prompting
     }),

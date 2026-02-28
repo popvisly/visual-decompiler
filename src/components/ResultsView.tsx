@@ -20,6 +20,7 @@ import ForensicOverlay from './ForensicOverlay';
 import PlatformFitness from './PlatformFitness';
 import RiskAnalysis from './RiskAnalysis';
 import TestPlanBuilder from './TestPlanBuilder';
+import CompetitorPatternMap from './CompetitorPatternMap';
 
 type Props = {
     id: string;
@@ -569,6 +570,17 @@ export default function ResultsView({
                                 testPlan={(strat as any).test_plan}
                                 variants={(strat as any).variant_matrix || []}
                             />
+                        </ResultsCard>
+                    )}
+
+                    {/* ── Competitive Intelligence ── */}
+                    {(strat as any)?.competitive_intelligence && (
+                        <ResultsCard
+                            title="Competitor Pattern Map"
+                            variant="strategy"
+                            tooltip="Analysis of how this creative overlaps with competitors and the strategic moves required to achieve a unique brand posture."
+                        >
+                            <CompetitorPatternMap intel={(strat as any).competitive_intelligence} />
                         </ResultsCard>
                     )}
 
