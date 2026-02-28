@@ -1,4 +1,5 @@
 import play from 'play-dl';
+import youtubedl from 'youtube-dl-exec';
 import { URL } from 'url';
 
 /**
@@ -57,46 +58,61 @@ export async function extractYouTubeMetadata(url: string) {
         throw new Error('Not a valid YouTube URL');
     }
 
+    const cookie = process.env.YOUTUBE_COOKIE;
+
     try {
-        // Updated User-Agent to match the one likely used to generate the cookie (Mac Chrome)
-        (play as any).user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
+        console.log(`[YouTube v6] Attempting yt-dlp extraction (Cookie: ${cookie ? 'PRESENT' : 'MISSING'})`);
 
-        // Final Bypass: Session Cookies
-        const cookie = process.env.YOUTUBE_COOKIE;
-        if (cookie) {
-            console.log(`[YouTube v5] Cookie detected (length: ${cookie.length}). Applying...`);
-            await play.setToken({
-                youtube: {
-                    cookie: cookie
-                }
-            });
-        } else {
-            console.warn('[YouTube v5] No YOUTUBE_COOKIE found in environment.');
+        // Pass the raw cookie string to yt-dlp via temporary header emulation or direct flag
+        // youtube-dl-exec handles the binary execution
+        const info: any = await youtubedl(url, {
+            dumpSingleJson: true,
+            noCheckCertificates: true,
+            noWarnings: true,
+            preferFreeFormats: true,
+            youtubeSkipDashManifest: true,
+            referer: 'https://www.google.com/',
+            addHeader: cookie ? [`Cookie: ${cookie}`] : undefined,
+            format: 'best[ext=mp4]/best'
+        });
+
+        if (info && info.url) {
+            return {
+                streamUrl: info.url,
+                title: info.title || 'YouTube Video',
+                duration: info.duration || 0,
+                thumbnail: info.thumbnail || null
+            };
         }
 
-        const info = await play.video_info(url);
+        throw new Error('yt-dlp returned no stream URL');
 
-        // Find best merged MP4 (720p = itag 22, 360p = itag 18)
-        const bestFormat = info.format.find(f => f.itag === 22) || info.format.find(f => f.itag === 18);
+    } catch (ytdlError: any) {
+        console.warn('[YouTube v6] yt-dlp failed, falling back to play-dl...', ytdlError.message);
 
-        if (!bestFormat?.url) {
-            throw new Error('No playable itag 18/22 found (v5)');
+        try {
+            (play as any).user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
+
+            if (cookie) {
+                await play.setToken({ youtube: { cookie: cookie } });
+            }
+
+            const info = await play.video_info(url);
+            const bestFormat = info.format.find(f => f.itag === 22) || info.format.find(f => f.itag === 18);
+
+            if (!bestFormat?.url) {
+                throw new Error('No playable itag 18/22 found in fallback');
+            }
+
+            return {
+                streamUrl: bestFormat.url,
+                title: info.video_details.title || 'YouTube Video',
+                duration: info.video_details.durationInSec || 0,
+                thumbnail: info.video_details.thumbnails?.[0]?.url || null
+            };
+        } catch (error: any) {
+            console.error('[YouTube Extraction Error]', error);
+            throw new Error(`[v6] YouTube Extraction Failed: ${error.message} (Cookie bit: ${cookie ? 'PRESENT' : 'MISSING'})`);
         }
-
-        const durationSecs = info.video_details.durationInSec || 0;
-        const title = info.video_details.title || 'YouTube Video';
-        const thumbnails = info.video_details.thumbnails || [];
-        const bestThumb = thumbnails.length > 0 ? thumbnails[thumbnails.length - 1].url : null;
-
-        return {
-            streamUrl: bestFormat.url,
-            title: title,
-            duration: durationSecs, // in seconds
-            thumbnail: bestThumb
-        };
-    } catch (error: any) {
-        console.error('[YouTube Extraction Error]', error);
-        // Versioning the error to v5
-        throw new Error(`[v5] YouTube Extraction Failed: ${error.message} (Cookie bit: ${process.env.YOUTUBE_COOKIE ? 'PRESENT' : 'MISSING'})`);
     }
 }
