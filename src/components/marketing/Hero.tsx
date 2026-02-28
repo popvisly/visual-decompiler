@@ -81,7 +81,7 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
 
                 {/* Proof line (print-ad style) */}
                 <div className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.22em] text-[#141414]/45 mb-10">
-                    Image • Video • YouTube&nbsp;&nbsp;·&nbsp;&nbsp;PDF export&nbsp;&nbsp;·&nbsp;&nbsp;Share-ready reports
+                    PDF export&nbsp;&nbsp;·&nbsp;&nbsp;Share-ready reports
                 </div>
 
                 {/* Hero Node Graph Visualization */}
