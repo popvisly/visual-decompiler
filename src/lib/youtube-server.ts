@@ -58,20 +58,20 @@ export async function extractYouTubeMetadata(url: string) {
     }
 
     try {
-        // Attempt to bypass by setting a more "human" user-agent
-        (play as any).user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+        // Updated User-Agent to match the one likely used to generate the cookie (Mac Chrome)
+        (play as any).user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
 
         // Final Bypass: Session Cookies
         const cookie = process.env.YOUTUBE_COOKIE;
         if (cookie) {
-            console.log(`[YouTube v4] Cookie detected (length: ${cookie.length}). Applying...`);
+            console.log(`[YouTube v5] Cookie detected (length: ${cookie.length}). Applying...`);
             await play.setToken({
                 youtube: {
                     cookie: cookie
                 }
             });
         } else {
-            console.warn('[YouTube v4] No YOUTUBE_COOKIE found in environment.');
+            console.warn('[YouTube v5] No YOUTUBE_COOKIE found in environment.');
         }
 
         const info = await play.video_info(url);
@@ -80,7 +80,7 @@ export async function extractYouTubeMetadata(url: string) {
         const bestFormat = info.format.find(f => f.itag === 22) || info.format.find(f => f.itag === 18);
 
         if (!bestFormat?.url) {
-            throw new Error('No playable itag 18/22 found (v4)');
+            throw new Error('No playable itag 18/22 found (v5)');
         }
 
         const durationSecs = info.video_details.durationInSec || 0;
@@ -96,7 +96,7 @@ export async function extractYouTubeMetadata(url: string) {
         };
     } catch (error: any) {
         console.error('[YouTube Extraction Error]', error);
-        // Versioning the error to v4
-        throw new Error(`[v4] YouTube Extraction Failed: ${error.message} (Cookie bit: ${process.env.YOUTUBE_COOKIE ? 'PRESENT' : 'MISSING'})`);
+        // Versioning the error to v5
+        throw new Error(`[v5] YouTube Extraction Failed: ${error.message} (Cookie bit: ${process.env.YOUTUBE_COOKIE ? 'PRESENT' : 'MISSING'})`);
     }
 }
