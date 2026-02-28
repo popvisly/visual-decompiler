@@ -62,14 +62,16 @@ export async function extractYouTubeMetadata(url: string) {
         (play as any).user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 
         // Final Bypass: Session Cookies
-        // If the user has provided a YouTube cookie in the env, use it to appear as logged in.
         const cookie = process.env.YOUTUBE_COOKIE;
         if (cookie) {
+            console.log(`[YouTube v4] Cookie detected (length: ${cookie.length}). Applying...`);
             await play.setToken({
                 youtube: {
                     cookie: cookie
                 }
             });
+        } else {
+            console.warn('[YouTube v4] No YOUTUBE_COOKIE found in environment.');
         }
 
         const info = await play.video_info(url);
@@ -78,7 +80,7 @@ export async function extractYouTubeMetadata(url: string) {
         const bestFormat = info.format.find(f => f.itag === 22) || info.format.find(f => f.itag === 18);
 
         if (!bestFormat?.url) {
-            throw new Error('No playable itag 18/22 found (v3)');
+            throw new Error('No playable itag 18/22 found (v4)');
         }
 
         const durationSecs = info.video_details.durationInSec || 0;
@@ -94,7 +96,7 @@ export async function extractYouTubeMetadata(url: string) {
         };
     } catch (error: any) {
         console.error('[YouTube Extraction Error]', error);
-        // Versioning the error to v3 to track cookie integration
-        throw new Error(`[v3] YouTube Extraction Failed: ${error.message}`);
+        // Versioning the error to v4
+        throw new Error(`[v4] YouTube Extraction Failed: ${error.message} (Cookie bit: ${process.env.YOUTUBE_COOKIE ? 'PRESENT' : 'MISSING'})`);
     }
 }
