@@ -60,15 +60,19 @@ export async function extractYouTubeMetadata(url: string) {
 
     let cookie = process.env.YOUTUBE_COOKIE;
 
-    // v8 Fix: Many users copy the "cookie: " prefix by accident. Let's strip it.
+    // v9 Fix: Many users copy the "cookie: " prefix by accident. Let's strip it.
     if (cookie && cookie.toLowerCase().startsWith('cookie:')) {
         cookie = cookie.substring(7).trim();
     }
 
-    try {
-        console.log(`[YouTube v8] Attempting yt-dlp extraction (Cookie length: ${cookie?.length || 0})`);
+    // v9 Logging: Let's see if the cookie is being truncated or mangled.
+    const cookieLength = cookie?.length || 0;
+    const cookieStart = cookie?.substring(0, 20) || 'NONE';
+    const cookieEnd = cookie?.substring(Math.max(0, cookieLength - 20)) || 'NONE';
 
-        // v8 Note: yt-dlp often fails on Vercel due to missing binary in serverless context.
+    try {
+        console.log(`[YouTube v9] Attempting yt-dlp extraction (Length: ${cookieLength}, Start: ${cookieStart}..., End: ...${cookieEnd})`);
+
         const info: any = await youtubedl(url, {
             dumpSingleJson: true,
             noCheckCertificates: true,
@@ -77,12 +81,13 @@ export async function extractYouTubeMetadata(url: string) {
             youtubeSkipDashManifest: true,
             referer: 'https://www.google.com/',
             addHeader: cookie ? [`Cookie: ${cookie.trim()}`] : undefined,
-            userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
+            // v9 Fix: Use a REAL User Agent. Chrome 145 is flagged as bot immediately.
+            userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
             format: 'best[ext=mp4]/best'
         });
 
         if (info && info.url) {
-            console.log(`[YouTube v8] Success via yt-dlp!`);
+            console.log(`[YouTube v9] Success via yt-dlp!`);
             return {
                 streamUrl: info.url,
                 title: info.title || 'YouTube Video',
@@ -95,13 +100,13 @@ export async function extractYouTubeMetadata(url: string) {
 
     } catch (ytdlError: any) {
         if (ytdlError.code === 'ENOENT') {
-            console.warn('[YouTube v8] yt-dlp binary not found (ENOENT). Falling back to play-dl...');
+            console.warn('[YouTube v9] yt-dlp binary not found. Falling back to play-dl...');
         } else {
-            console.error('[YouTube v8] yt-dlp error:', ytdlError.message || ytdlError);
+            console.error('[YouTube v9] yt-dlp error:', ytdlError.message || ytdlError);
         }
 
         try {
-            const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
+            const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36';
             (play as any).user_agent = ua;
 
             if (cookie) {
@@ -119,7 +124,7 @@ export async function extractYouTubeMetadata(url: string) {
                 throw new Error('No playable formats found in fallback');
             }
 
-            console.log(`[YouTube v8] play-dl Success! Title: ${info.video_details.title}`);
+            console.log(`[YouTube v9] play-dl Success! (Format: ${bestFormat.itag})`);
 
             return {
                 streamUrl: bestFormat.url,
@@ -129,7 +134,7 @@ export async function extractYouTubeMetadata(url: string) {
             };
         } catch (error: any) {
             console.error('[YouTube Extraction Error]', error);
-            throw new Error(`[v8] Extraction Failed. Your cookie might be truncated or "Cookie:" was included. (Length: ${cookie?.length || 0}). Error: ${error.message}`);
+            throw new Error(`[v9] Extraction Failed. Length: ${cookieLength}. Error: ${error.message}`);
         }
     }
 }
