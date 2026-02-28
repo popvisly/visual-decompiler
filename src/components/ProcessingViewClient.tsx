@@ -100,7 +100,7 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
                     if ((data.status === 'processed' || data.status === 'needs_review') && data.digest) {
                         if (!cancelled) {
                             if (onComplete) onComplete(data);
-                            else router.push(`/dashboard/${jobId}?new=true`);
+                            else router.push(`/report/${jobId}?new=true`);
                         }
                         return;
                     }
