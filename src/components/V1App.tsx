@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import UploadZone from '@/components/UploadZone';
 import ProcessingViewClient from '@/components/ProcessingViewClient';
@@ -15,6 +16,7 @@ type AppState =
 
 // REDESIGN: "Premium Charcoal" aesthetic (V1 rebranded as redesigned tool)
 export default function V1App() {
+    const router = useRouter();
     const [state, setState] = useState<AppState>({ phase: 'upload' });
 
     const handleUploadComplete = useCallback(
@@ -27,16 +29,9 @@ export default function V1App() {
 
 
     const handleProcessingComplete = useCallback((data: any) => {
-        setState((prev) => ({
-            phase: 'results' as const,
-            id: data.id || ('jobId' in prev ? prev.jobId : ''),
-            mediaUrl: data.media_url,
-            mediaKind: data.media_kind || 'image',
-            digest: data.digest,
-            brand: data.brand,
-            accessLevel: ('accessLevel' in prev ? prev.accessLevel : data.access_level) || 'full',
-        }));
-    }, []);
+        const id = data.id || ('jobId' in state ? (state as any).jobId : '');
+        router.push(`/dashboard/${id}?new=true`);
+    }, [router, state]);
 
     const handleReset = useCallback(() => {
         setState({ phase: 'upload' });
@@ -105,21 +100,9 @@ export default function V1App() {
                             <ProcessingViewClient
                                 mediaUrl={state.mediaUrl}
                                 jobId={state.jobId}
+                                onComplete={handleProcessingComplete}
                             />
                         </div>
-                    )}
-
-                    {state.phase === 'results' && (
-                        <ResultsView
-                            id={state.id}
-                            mediaUrl={state.mediaUrl}
-                            mediaKind={state.mediaKind}
-                            digest={state.digest}
-                            status="success"
-                            brand={state.brand}
-                            accessLevel={state.accessLevel}
-                            onReset={handleReset}
-                        />
                     )}
                 </main>
 

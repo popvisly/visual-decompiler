@@ -4,9 +4,10 @@ import { URL } from 'url';
 import path from 'path';
 import fs from 'fs';
 
-// v12: Use the bundled Linux binary on Vercel
+// v12: Use the bundled Linux binary on Vercel, but use system yt-dlp locally
 const binaryPath = path.join(process.cwd(), 'src/lib/bin/yt-dlp');
-const ytdl = create(fs.existsSync(binaryPath) ? binaryPath : 'yt-dlp');
+const isProduction = !!process.env.VERCEL;
+const ytdl = create(isProduction && fs.existsSync(binaryPath) ? binaryPath : 'yt-dlp');
 
 /**
  * Checks if a URL belongs to YouTube or its shorteners
@@ -103,18 +104,23 @@ export async function extractYouTubeMetadata(url: string) {
         }
 
         const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
+        const proxy = process.env.YOUTUBE_PROXY;
 
         const info: any = await ytdl(url, {
             dumpSingleJson: true,
             noCheckCertificates: true,
             noWarnings: true,
             preferFreeFormats: true,
-            youtubeSkipDashManifest: true,
+            // youtubeSkipDashManifest: true, // Deprecated in recent yt-dlp
             referer: 'https://www.google.com/',
+            proxy: proxy || undefined,
             cookies: cookie ? cookieFile : undefined,
             // v14: Bypass tokens
-            extractorArgs: poToken ? `youtube:player-client=web,android;po_token=web+${poToken}` : undefined,
-            visitorData: visitorData || undefined,
+            extractorArgs: (poToken || visitorData) ?
+                `youtube:player-client=web,android` +
+                (poToken ? `;po_token=web+${poToken}` : '') +
+                (visitorData ? `;visitor_data=${visitorData}` : '')
+                : undefined,
             // v13/v14: Aggressive bypass flags
             forceIpv4: true,
             geoBypass: true,

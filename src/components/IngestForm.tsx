@@ -90,7 +90,7 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
                     <form onSubmit={handleSubmit} className="flex gap-2">
                         <input
                             type="url"
-                            placeholder="Paste image/video URL…"
+                            placeholder="Paste an ad IMAGE link (jpg, png)…"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                             className={`w-56 px-3 py-1.5 text-xs rounded-lg focus:outline-none focus:ring-2 transition-all font-medium ${forceDark
