@@ -1,4 +1,4 @@
-import ytdl from '@distube/ytdl-core';
+import play from 'play-dl';
 import { URL } from 'url';
 
 /**
@@ -58,30 +58,18 @@ export async function extractYouTubeMetadata(url: string) {
     }
 
     try {
-        const info = await ytdl.getInfo(url);
+        const info = await play.video_info(url);
 
-        // Find the best merged MP4 format that does NOT require signature deciphering 
-        let bestFormat = info.formats.find(f =>
-            f.hasVideo &&
-            f.hasAudio &&
-            f.container === 'mp4' &&
-            !f.isHLS &&
-            !f.isDashMPD &&
-            !f.url.includes('signature')
-        );
-
-        // Fallback to highest quality regardless of cipher if none found
-        if (!bestFormat) {
-            bestFormat = ytdl.chooseFormat(info.formats, { quality: 'highest', filter: 'videoandaudio' });
-        }
+        // Find best merged MP4 (720p = itag 22, 360p = itag 18)
+        const bestFormat = info.format.find(f => f.itag === 22) || info.format.find(f => f.itag === 18);
 
         if (!bestFormat?.url) {
-            throw new Error('Could not resolve a playable stream URL from YouTube');
+            throw new Error('Could not resolve a playable MP4 stream URL from YouTube (itags 18/22 missing)');
         }
 
-        const durationSecs = parseInt(info.videoDetails.lengthSeconds, 10);
-        const title = info.videoDetails.title || 'YouTube Video';
-        const thumbnails = info.videoDetails.thumbnails || [];
+        const durationSecs = info.video_details.durationInSec || 0;
+        const title = info.video_details.title || 'YouTube Video';
+        const thumbnails = info.video_details.thumbnails || [];
         const bestThumb = thumbnails.length > 0 ? thumbnails[thumbnails.length - 1].url : null;
 
         return {
@@ -92,6 +80,6 @@ export async function extractYouTubeMetadata(url: string) {
         };
     } catch (error: any) {
         console.error('[YouTube Extraction Error]', error);
-        throw new Error(`Failed to extract YouTube metadata: ${error.message}`);
+        throw new Error(`YouTube Extraction Failed: ${error.message}`);
     }
 }
