@@ -14,6 +14,11 @@ import { useState, useRef, useMemo } from 'react';
 import BrandTag from './BrandTag';
 import { NeuralDeconstructionService } from '@/lib/neural_deconstruction_service';
 import ForensicTooltip from './ForensicTooltip';
+import PersuasionStack from './PersuasionStack';
+import ScanPath from './ScanPath';
+import ForensicOverlay from './ForensicOverlay';
+import PlatformFitness from './PlatformFitness';
+import RiskAnalysis from './RiskAnalysis';
 
 type Props = {
     id: string;
@@ -220,6 +225,11 @@ export default function ResultsView({
                                         className="w-full aspect-[4/5] object-cover"
                                         controls muted playsInline preload="metadata"
                                     />
+                                ) : (ext as any)?.evidence_receipts?.length > 0 ? (
+                                    <ForensicOverlay
+                                        imageUrl={mediaUrl}
+                                        anchors={(ext as any).evidence_receipts}
+                                    />
                                 ) : (
                                     <img
                                         src={mediaUrl}
@@ -421,19 +431,28 @@ export default function ResultsView({
 
                     {/* ── Classification ── */}
                     <ResultsCard title="Classification" variant="classification">
-                        <div className="grid grid-cols-2 gap-3 mb-4">
-                            {[
-                                { label: 'Trigger Mechanic', value: cls?.trigger_mechanic },
-                                { label: 'Secondary Trigger', value: cls?.secondary_trigger_mechanic },
-                                { label: 'Narrative Framework', value: cls?.narrative_framework },
-                                { label: 'Claim Type', value: cls?.claim_type },
-                                { label: 'Offer Type', value: cls?.offer_type },
-                                { label: 'CTA Strength', value: cls?.cta_strength },
-                                { label: 'Cognitive Load', value: cls?.cognitive_load },
-                                { label: 'Gaze Priority', value: cls?.gaze_priority },
-                            ].filter(i => i.value).map(item => (
-                                <ClassificationPill key={item.label} label={item.label} value={item.value!} />
-                            ))}
+                        <div className="space-y-6">
+                            {(cls as any)?.persuasion_stack ? (
+                                <PersuasionStack
+                                    stack={(cls as any).persuasion_stack}
+                                    stackTypeLabel={(cls as any).stack_type_label}
+                                />
+                            ) : (
+                                <div className="grid grid-cols-2 gap-3">
+                                    {[
+                                        { label: 'Trigger Mechanic', value: cls?.trigger_mechanic },
+                                        { label: 'Secondary Trigger', value: cls?.secondary_trigger_mechanic },
+                                        { label: 'Narrative Framework', value: cls?.narrative_framework },
+                                        { label: 'Claim Type', value: cls?.claim_type },
+                                        { label: 'Offer Type', value: cls?.offer_type },
+                                        { label: 'CTA Strength', value: cls?.cta_strength },
+                                        { label: 'Cognitive Load', value: cls?.cognitive_load },
+                                        { label: 'Gaze Priority', value: cls?.gaze_priority },
+                                    ].filter(i => i.value).map(item => (
+                                        <ClassificationPill key={item.label} label={item.label} value={item.value!} />
+                                    ))}
+                                </div>
+                            )}
                         </div>
                         {cls?.visual_style && cls.visual_style.length > 0 && (
                             <div className="mb-3">
@@ -454,6 +473,66 @@ export default function ResultsView({
                             </div>
                         )}
                     </ResultsCard>
+
+                    {/* ── Persuasion Flow (Scan Path) ── */}
+                    {(ext as any)?.likely_scan_path && (
+                        <ResultsCard title="Likely Scan Path" variant="bullets" tooltip="The predicted chronological order in which a viewer processes visual and textual elements. Optimization here reduces cognitive friction.">
+                            <ScanPath path={(ext as any).likely_scan_path} />
+                        </ResultsCard>
+                    )}
+
+                    {/* ── Friction Diagnostics ── */}
+                    {(diag as any)?.friction_analysis && (
+                        <ResultsCard title="Creative Friction" variant="strategy" tooltip="Diagnostics on conversion blockers. Low scores indicate areas where the viewer is likely to drop off or experience confusion.">
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {Object.entries((diag as any).friction_analysis.scores).map(([key, score]) => (
+                                        <div key={key} className="space-y-1.5">
+                                            <div className="flex justify-between items-end">
+                                                <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-widest">{key.replace(/_/g, ' ')}</p>
+                                                <span className="text-[10px] font-bold text-[#141414]">{score as number}%</span>
+                                            </div>
+                                            <div className="h-1 bg-[#FBF7EF] rounded-full overflow-hidden border border-[#E7DED1]">
+                                                <div
+                                                    className="h-full bg-[#141414] rounded-full"
+                                                    style={{ width: `${score}%` }}
+                                                />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="pt-4 border-t border-[#E7DED1]">
+                                    <p className="text-[10px] font-bold text-[#141414]/40 uppercase tracking-[0.2em] mb-3">Top Recommended Fixes:</p>
+                                    <BulletList items={(diag as any).friction_analysis.top_fixes} color="accent" />
+                                </div>
+                            </div>
+                        </ResultsCard>
+                    )}
+
+                    {/* ── Platform Fitness ── */}
+                    {(diag as any)?.platform_fitness && (
+                        <ResultsCard
+                            title="Platform Fitness"
+                            variant="strategy"
+                            tooltip="Technical verification of the ad's formatting and UI compatibility across major social channels."
+                        >
+                            <PlatformFitness
+                                imageUrl={mediaUrl}
+                                fitnessData={(diag as any).platform_fitness}
+                            />
+                        </ResultsCard>
+                    )}
+
+                    {/* ── Regulatory Risk ── */}
+                    {(diag as any)?.risk_analysis && (
+                        <ResultsCard
+                            title="Regulatory Compliance"
+                            variant="pullquote"
+                            tooltip="Detection of potential policy violations based on Meta and Google advertising guidelines."
+                        >
+                            <RiskAnalysis riskData={(diag as any).risk_analysis} />
+                        </ResultsCard>
+                    )}
 
                     {/* ── Strategic Intelligence — BLUR on limited ── */}
                     <BlurGate locked={isLimited}>

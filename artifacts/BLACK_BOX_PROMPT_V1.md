@@ -33,7 +33,9 @@ D) **Psychological Trigger**: Choose trigger_mechanic and identify objection_dis
 E) **Competitive Advantage**: Explicitly identify the core "Unfair Advantage" or "Moat" claimed in the ad.
 F) **Visual Hierarchy**: Explain gaze_priority.
 G) **Temporal Genealogy**: Detect the "Aesthetic Year" (1950s-2010s) and map the strategic genealogy.
-H) **Output**: Generate strict JSON.
+H) **Evidence Layer (NEW)**: Provide visual/textual "Receipts" for every claim using normalized coordinates (0-1000).
+I) **Persuasion Stack (NEW)**: Weight triggers (0-100) and identify likely scan path.
+J) **Output**: Generate strict JSON.
 
 ---
 
@@ -215,7 +217,11 @@ Return exactly this JSON object:
     "visual_style": ["…"],
     "emotion_tone": ["…"],
     "cta_strength": "…",
-    "brand_association_values": ["string"]
+    "brand_association_values": ["string"],
+    "persuasion_stack": [
+      { "trigger": "trigger_mechanic_name", "weight": 70, "sequence": 1, "rationale": "string" }
+    ],
+    "stack_type_label": "string"
   },
   "audience_strategy": {
     "target_audience_segment": "string",
@@ -254,7 +260,13 @@ Return exactly this JSON object:
       "story_structure": "string",
       "cta_climax": "string",
       "arc_segments": [{ "t_ms": 0, "label": "string", "strategy_note": "string" }]
-    }
+    },
+    "evidence_receipts": [
+      { "type": "Visual|Text|Composition", "label": "string", "reason": "string", "area": { "x": 0, "y": 0, "w": 0, "h": 0 }, "content": "string" }
+    ],
+    "likely_scan_path": [
+      { "step": 1, "target": "string", "rationale": "string", "area": { "x": 0, "y": 0, "w": 0, "h": 0 } }
+    ]
   },
   "strategy": {
     "target_job_to_be_done": "string",
@@ -268,15 +280,18 @@ Return exactly this JSON object:
     "evidence_anchors": ["string"]
   },
   "diagnostics": {
-    "confidence": {
-      "overall": 0.0,
-      "trigger_mechanic": 0.0,
-      "secondary_trigger_mechanic": 0.0,
-      "narrative_framework": 0.0,
-      "copy_transcription": 0.0,
-      "color_extraction": 0.0,
-      "subtext": 0.0,
-      "objection": 0.0
+    "confidence": { "overall": 0.0, "trigger_mechanic": 0.0, "secondary_trigger_mechanic": 0.0, "narrative_framework": 0.0, "copy_transcription": 0.0, "color_extraction": 0.0, "subtext": 0.0, "objection": 0.0 },
+    "friction_analysis": {
+      "scores": { "offer_clarity": 0, "action_clarity": 0, "proof_density": 0, "brand_clarity": 0, "context_clarity": 0 },
+      "top_fixes": ["string"]
+    },
+    "platform_fitness": [
+      { "platform": "Facebook_Feed", "fitness_score": 95, "safe_zone_violation": false, "notes": "Safe." }
+    ],
+    "risk_analysis": {
+      "policy_flags": ["string"],
+      "risk_score": 0,
+      "explanation": "string"
     },
     "evidence_anchors": ["string"],
     "failure_modes": ["string"],

@@ -159,6 +159,26 @@ export const campaignCategorySchema = z.enum([
     "Other"
 ]);
 
+export const anchorTypeSchema = z.enum([
+    "Visual",
+    "Text",
+    "Composition"
+]);
+
+export const evidenceReceiptSchema = z.object({
+    type: anchorTypeSchema,
+    label: z.string(),
+    reason: z.string(),
+    /** Normalized coordinates 0-1000 */
+    area: z.object({
+        x: z.number(),
+        y: z.number(),
+        w: z.number(),
+        h: z.number()
+    }).optional(),
+    content: z.string().optional()
+});
+
 export const AdDigestSchema = z.object({
     meta: z.object({
         /** Version the digest contract so prompt/schema iterations don't silently break the UI. (v2.2: Trend Intelligence) */
@@ -188,6 +208,14 @@ export const AdDigestSchema = z.object({
         emotion_tone: z.array(emotionToneSchema.or(z.string())).max(2),
         cta_strength: ctaStrengthSchema.or(z.string()),
         brand_association_values: z.array(z.string()).optional(),
+        /** Weighted triggers for agency-grade analysis */
+        persuasion_stack: z.array(z.object({
+            trigger: triggerMechanicSchema.or(z.string()),
+            weight: z.number(), // 0-100
+            sequence: z.number(), // attention order
+            rationale: z.string()
+        })).optional(),
+        stack_type_label: z.string().optional(), // e.g. "Aspirational-soft sell"
     }),
     audience_strategy: z.object({
         target_audience_segment: z.string(),
@@ -259,6 +287,15 @@ export const AdDigestSchema = z.object({
             cut_cadence: z.enum(["Frenetic", "Fast", "Moderate", "Slow", "Hypnotic"]),
             total_cuts: z.number(),
         }).optional(),
+        /** Defensible visual/textual proof anchors */
+        evidence_receipts: z.array(evidenceReceiptSchema).optional(),
+        /** Estimated attention flow */
+        likely_scan_path: z.array(z.object({
+            step: z.number(),
+            target: z.string(),
+            rationale: z.string(),
+            area: z.object({ x: z.number(), y: z.number(), w: z.number(), h: z.number() }).optional()
+        })).optional(),
     }),
     strategy: z.object({
         target_job_to_be_done: z.string().optional(),
@@ -309,6 +346,22 @@ export const AdDigestSchema = z.object({
             subtext: z.number().optional(), // [NEW] Deep Decompiler
             objection: z.number().optional(), // [NEW] Deep Decompiler
         }),
+        /** Creative friction diagnostics (Phase 2 preview) */
+        friction_analysis: z.object({
+            scores: z.record(z.number()).describe("Friction scores (e.g. offer_clarity: 85)"),
+            top_fixes: z.array(z.string())
+        }).optional(),
+        platform_fitness: z.array(z.object({
+            platform: z.enum(['Instagram_Post', 'Instagram_Stories', 'TikTok', 'Facebook_Feed', 'LinkedIn_Ad']),
+            fitness_score: z.number().min(0).max(100),
+            safe_zone_violation: z.boolean(),
+            notes: z.string()
+        })).optional().describe("Platform-specific formatting/UI check"),
+        risk_analysis: z.object({
+            policy_flags: z.array(z.string()).describe("Meta/Google policy violations (e.g. 'Misleading Claim')"),
+            risk_score: z.number().min(0).max(100),
+            explanation: z.string()
+        }).optional().describe("Regulatory and policy risk assessment"),
         evidence_anchors: z.array(z.string()).optional(), // [NEW] moved/duplicated for safety
         failure_modes: z.array(z.string()).optional(),
         notes: z.string().nullable(),
