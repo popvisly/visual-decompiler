@@ -476,23 +476,41 @@ export default function ResultsView({
                         )}
                     </ResultsCard>
 
-                    {/* ── Persuasion Flow (Scan Path) ── */}
-                    {(ext as any)?.likely_scan_path && (
-                        <ResultsCard title="Likely Scan Path" variant="bullets" tooltip="The predicted chronological order in which a viewer processes visual and textual elements. Optimization here reduces cognitive friction.">
-                            <ScanPath path={(ext as any).likely_scan_path} />
+                    {/* ── Persuasion DNA ── */}
+                    {cls?.persuasion_stack && (
+                        <ResultsCard
+                            title="Persuasion Stack"
+                            variant="strategy"
+                            tooltip="Weight and sequence of persuasion triggers detected in the creative."
+                        >
+                            <PersuasionStack
+                                stack={cls.persuasion_stack}
+                                stackTypeLabel={cls.stack_type_label || 'Strategic Persuasion'}
+                            />
+                        </ResultsCard>
+                    )}
+
+                    {/* ── Likely Scan Path ── */}
+                    {ext?.likely_scan_path && (
+                        <ResultsCard
+                            title="Likely Scan Path"
+                            variant="strategy"
+                            tooltip="Predicted chronological sequence of element processing (foveal attention flow)."
+                        >
+                            <ScanPath path={ext.likely_scan_path} />
                         </ResultsCard>
                     )}
 
                     {/* ── Friction Diagnostics ── */}
-                    {(diag as any)?.friction_analysis && (
+                    {diag?.friction_analysis && (
                         <ResultsCard title="Creative Friction" variant="strategy" tooltip="Diagnostics on conversion blockers. Low scores indicate areas where the viewer is likely to drop off or experience confusion.">
                             <div className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {Object.entries((diag as any).friction_analysis.scores).map(([key, score]) => (
+                                    {Object.entries(diag.friction_analysis.scores).map(([key, score]) => (
                                         <div key={key} className="space-y-1.5">
                                             <div className="flex justify-between items-end">
                                                 <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-widest">{key.replace(/_/g, ' ')}</p>
-                                                <span className="text-[10px] font-bold text-[#141414]">{score as number}%</span>
+                                                <span className="text-[10px] font-bold text-[#141414]">{score}%</span>
                                             </div>
                                             <div className="h-1 bg-[#FBF7EF] rounded-full overflow-hidden border border-[#E7DED1]">
                                                 <div
@@ -503,16 +521,18 @@ export default function ResultsView({
                                         </div>
                                     ))}
                                 </div>
-                                <div className="pt-4 border-t border-[#E7DED1]">
-                                    <p className="text-[10px] font-bold text-[#141414]/40 uppercase tracking-[0.2em] mb-3">Top Recommended Fixes:</p>
-                                    <BulletList items={(diag as any).friction_analysis.top_fixes} color="accent" />
-                                </div>
+                                {diag.friction_analysis.top_fixes && (
+                                    <div className="pt-4 border-t border-[#E7DED1]">
+                                        <p className="text-[10px] font-bold text-[#141414]/40 uppercase tracking-[0.2em] mb-3">Top Recommended Fixes:</p>
+                                        <BulletList items={diag.friction_analysis.top_fixes} color="accent" />
+                                    </div>
+                                )}
                             </div>
                         </ResultsCard>
                     )}
 
                     {/* ── Platform Fitness ── */}
-                    {(diag as any)?.platform_fitness && (
+                    {diag?.platform_fitness && (
                         <ResultsCard
                             title="Platform Fitness"
                             variant="strategy"
@@ -520,19 +540,19 @@ export default function ResultsView({
                         >
                             <PlatformFitness
                                 imageUrl={mediaUrl}
-                                fitnessData={(diag as any).platform_fitness}
+                                fitnessData={diag.platform_fitness}
                             />
                         </ResultsCard>
                     )}
 
                     {/* ── Regulatory Risk ── */}
-                    {(diag as any)?.risk_analysis && (
+                    {diag?.risk_analysis && (
                         <ResultsCard
                             title="Regulatory Compliance"
                             variant="pullquote"
                             tooltip="Detection of potential policy violations based on Meta and Google advertising guidelines."
                         >
-                            <RiskAnalysis riskData={(diag as any).risk_analysis} />
+                            <RiskAnalysis riskData={diag.risk_analysis} />
                         </ResultsCard>
                     )}
 
@@ -560,27 +580,27 @@ export default function ResultsView({
                     </BlurGate>
 
                     {/* ── Test Plan Builder ── */}
-                    {(strat as any)?.test_plan && (
+                    {strat?.test_plan && (
                         <ResultsCard
                             title="14-Day Tactical Sprint"
                             variant="strategy"
                             tooltip="A production-ready testing roadmap to isolate and validate the ad's core conversion levers."
                         >
                             <TestPlanBuilder
-                                testPlan={(strat as any).test_plan}
-                                variants={(strat as any).variant_matrix || []}
+                                testPlan={strat.test_plan}
+                                variants={strat.variant_matrix || []}
                             />
                         </ResultsCard>
                     )}
 
                     {/* ── Competitive Intelligence ── */}
-                    {(strat as any)?.competitive_intelligence && (
+                    {strat?.competitive_intelligence && (
                         <ResultsCard
                             title="Competitor Pattern Map"
                             variant="strategy"
                             tooltip="Analysis of how this creative overlaps with competitors and the strategic moves required to achieve a unique brand posture."
                         >
-                            <CompetitorPatternMap intel={(strat as any).competitive_intelligence} />
+                            <CompetitorPatternMap intel={strat.competitive_intelligence} />
                         </ResultsCard>
                     )}
 
