@@ -3,8 +3,16 @@
 import React from 'react';
 import { BulletList } from './ResultsCard';
 
+type RiskFlag = {
+    id: string;
+    flag: string;
+    severity: 'Low' | 'Medium' | 'High';
+    why: string;
+    receipt_refs?: string[];
+};
+
 type RiskData = {
-    policy_flags: string[];
+    policy_flags: RiskFlag[];
     risk_score: number;
     explanation: string;
 };
@@ -50,17 +58,31 @@ export default function RiskAnalysis({ riskData }: Props) {
             </div>
 
             {riskData.policy_flags.length > 0 && (
-                <div className="space-y-3">
+                <div className="space-y-4">
                     <p className="text-[10px] font-bold text-[#141414]/40 uppercase tracking-[0.2em]">Detected Risk Flags:</p>
-                    <div className="flex flex-wrap gap-2">
-                        {riskData.policy_flags.map((flag) => (
-                            <span
-                                key={flag}
-                                className="px-3 py-1.5 rounded-xl bg-white border border-red-500/20 text-red-500 text-[10px] font-bold uppercase tracking-wide flex items-center gap-2"
+                    <div className="grid grid-cols-1 gap-3">
+                        {riskData.policy_flags.map((item) => (
+                            <div
+                                key={item.id}
+                                className={`p-4 rounded-xl border flex flex-col gap-2 transition-all hover:shadow-sm
+                                    ${item.severity === 'High' ? 'bg-red-50/30 border-red-200' : item.severity === 'Medium' ? 'bg-yellow-50/30 border-yellow-200' : 'bg-blue-50/30 border-blue-200'}
+                                `}
                             >
-                                <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                                {flag}
-                            </span>
+                                <div className="flex items-center justify-between">
+                                    <span className={`text-[10px] font-bold uppercase tracking-widest flex items-center gap-2
+                                        ${item.severity === 'High' ? 'text-red-600' : item.severity === 'Medium' ? 'text-yellow-600' : 'text-blue-600'}
+                                    `}>
+                                        <span className={`w-1.5 h-1.5 rounded-full ${item.severity === 'High' ? 'bg-red-600' : item.severity === 'Medium' ? 'bg-yellow-600' : 'bg-blue-600'}`} />
+                                        {item.flag}
+                                    </span>
+                                    <span className="text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-white/60 border border-black/5">
+                                        {item.severity} Risk
+                                    </span>
+                                </div>
+                                <p className="text-[11px] text-[#6B6B6B] leading-relaxed">
+                                    {item.why}
+                                </p>
+                            </div>
                         ))}
                     </div>
                 </div>

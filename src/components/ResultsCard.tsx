@@ -81,7 +81,10 @@ export function BulletList({ items, color = 'accent' }: { items: string[]; color
 }
 
 export function ConfidenceGauge({ label, value, description }: { label: string; value: number; description?: string }) {
-    const pct = Math.round(value * 100);
+    // Standardize to 0-100 if value is 0-1
+    const pct = value <= 1 ? Math.round(value * 100) : Math.round(value);
+    const decimalValue = value <= 1 ? value : value / 100;
+
     const color = pct >= 90 ? 'text-green-500' : pct >= 75 ? 'text-green-400' : pct >= 50 ? 'text-yellow-500' : 'text-red-500';
     const strokeColor = pct >= 90 ? '#10b981' : pct >= 75 ? '#34d399' : pct >= 50 ? '#f59e0b' : '#ef4444';
 
@@ -94,7 +97,7 @@ export function ConfidenceGauge({ label, value, description }: { label: string; 
 
     const statusLabel = getStatusLabel(pct);
     const circumference = 2 * Math.PI * 28;
-    const offset = circumference - (value * circumference);
+    const offset = circumference - (decimalValue * circumference);
 
     return (
         <div className="flex items-center gap-3">

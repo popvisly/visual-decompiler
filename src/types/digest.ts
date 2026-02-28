@@ -166,6 +166,7 @@ export const anchorTypeSchema = z.enum([
 ]);
 
 export const evidenceReceiptSchema = z.object({
+    id: z.string().describe("Stable ID for downstream linking"),
     type: anchorTypeSchema,
     label: z.string(),
     reason: z.string(),
@@ -384,7 +385,13 @@ export const AdDigestSchema = z.object({
             notes: z.string()
         })).optional().describe("Platform-specific formatting/UI check"),
         risk_analysis: z.object({
-            policy_flags: z.array(z.string()).describe("Meta/Google policy violations (e.g. 'Misleading Claim')"),
+            policy_flags: z.array(z.object({
+                id: z.string(),
+                flag: z.string(),
+                severity: z.enum(['Low', 'Medium', 'High']),
+                why: z.string(),
+                receipt_refs: z.array(z.string()).optional().describe("IDs of evidence receipts triggering this flag")
+            })).describe("Meta/Google policy violations (e.g. 'Misleading Claim')"),
             risk_score: z.number().min(0).max(100),
             explanation: z.string()
         }).optional().describe("Regulatory and policy risk assessment"),
