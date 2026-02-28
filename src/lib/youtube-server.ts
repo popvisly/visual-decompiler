@@ -114,6 +114,7 @@ export async function extractYouTubeMetadata(url: string) {
             cookies: cookie ? cookieFile : undefined,
             // v14: Bypass tokens
             extractorArgs: poToken ? `youtube:player-client=web,android;po_token=web+${poToken}` : undefined,
+            visitorData: visitorData || undefined,
             // v13/v14: Aggressive bypass flags
             forceIpv4: true,
             geoBypass: true,
