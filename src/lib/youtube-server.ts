@@ -90,9 +90,11 @@ export async function extractYouTubeMetadata(url: string) {
     }
 
     const cookieLength = cookie?.length || 0;
+    const poToken = process.env.YOUTUBE_PO_TOKEN;
+    const visitorData = process.env.YOUTUBE_VISITOR_DATA;
 
     try {
-        console.log(`[YouTube v13] Attempting bundled yt-dlp with Netscape cookie file (Length: ${cookieLength})`);
+        console.log(`[YouTube v14] Attempting bundled yt-dlp with PO_TOKEN & VisitorData (Length: ${cookieLength})`);
 
         // v13: Write cookie to a temp file for yt-dlp (more robust than header)
         const cookieFile = path.join('/tmp', `youtube-cookies-${Date.now()}.txt`);
@@ -110,7 +112,9 @@ export async function extractYouTubeMetadata(url: string) {
             youtubeSkipDashManifest: true,
             referer: 'https://www.google.com/',
             cookies: cookie ? cookieFile : undefined,
-            // v13: Aggressive bypass flags
+            // v14: Bypass tokens
+            extractorArgs: poToken ? `youtube:player-client=web,android;po_token=web+${poToken}` : undefined,
+            // v13/v14: Aggressive bypass flags
             forceIpv4: true,
             geoBypass: true,
             addHeader: [
@@ -122,13 +126,13 @@ export async function extractYouTubeMetadata(url: string) {
             ],
             userAgent: ua,
             format: 'best[ext=mp4]/best'
-        });
+        } as any);
 
         // Cleanup temp file
         if (fs.existsSync(cookieFile)) fs.unlinkSync(cookieFile);
 
         if (info && info.url) {
-            console.log(`[YouTube v13] Success via bundled yt-dlp!`);
+            console.log(`[YouTube v14] Success via bundled yt-dlp!`);
             return {
                 streamUrl: info.url,
                 title: info.title || 'YouTube Video',
@@ -140,10 +144,10 @@ export async function extractYouTubeMetadata(url: string) {
         throw new Error('yt-dlp returned no stream URL');
 
     } catch (ytdlError: any) {
-        console.error('[YouTube v13] yt-dlp error:', ytdlError.message || ytdlError);
+        console.error('[YouTube v14] yt-dlp error:', ytdlError.message || ytdlError);
 
         try {
-            console.log('[YouTube v13] Falling back to play-dl...');
+            console.log('[YouTube v14] Falling back to play-dl...');
             const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
             (play as any).user_agent = ua;
 
@@ -162,7 +166,7 @@ export async function extractYouTubeMetadata(url: string) {
                 throw new Error('No playable formats found in fallback');
             }
 
-            console.log(`[YouTube v13] play-dl Success! (Format: ${bestFormat.itag})`);
+            console.log(`[YouTube v14] play-dl Success! (Format: ${bestFormat.itag})`);
 
             return {
                 streamUrl: bestFormat.url,
@@ -172,7 +176,7 @@ export async function extractYouTubeMetadata(url: string) {
             };
         } catch (error: any) {
             console.error('[YouTube Extraction Error]', error);
-            throw new Error(`[v13] Final Extraction Failure. Vercel IP block remains. Error: ${error.message}`);
+            throw new Error(`[v14] Final Extraction Failure. Vercel IP block remains even with PO_TOKEN. Error: ${error.message}`);
         }
     }
 }
