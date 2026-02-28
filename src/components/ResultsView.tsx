@@ -125,7 +125,11 @@ export default function ResultsView({
             <div className="flex items-center justify-between mb-8 mt-4">
                 <div>
                     <h2 className="font-sans text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.4em]">
-                        Analysis Complete
+                        {status === 'success' || status === 'processed'
+                            ? 'Analysis Complete'
+                            : (d as any)?.error
+                                ? 'Analysis Failed'
+                                : 'Analyzing Ad'}
                     </h2>
                     {displayBrand && (
                         <div className="flex items-center gap-2 mt-1">
@@ -171,15 +175,36 @@ export default function ResultsView({
                 {!(status === 'processed' || status === 'success') && !d?.classification?.trigger_mechanic && (
                     <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#F6F1E7]/80 backdrop-blur-sm rounded-3xl">
                         <div className="text-center p-12 bg-white/50 border border-[#E7DED1] rounded-3xl shadow-xl max-w-sm mx-auto">
-                            <div className="w-12 h-12 border-4 border-[#141414] border-t-transparent rounded-full animate-spin mx-auto mb-6" />
-                            <h3 className="text-xl font-medium text-[#141414] mb-2 uppercase tracking-wide">
-                                {status === 'queued' ? 'Queued' : 'Analyzing Ad...'}
-                            </h3>
-                            <p className="text-[#6B6B6B] text-sm">
-                                {status === 'queued'
-                                    ? "This ad is in line for deconstruction. We'll start extracting intelligence in a moment."
-                                    : "Our agents are currently deconstructing this ad's semiotic layers and strategic machinery."}
-                            </p>
+                            {(d as any)?.error ? (
+                                <>
+                                    <div className="w-12 h-12 flex items-center justify-center rounded-full bg-red-100/50 border border-red-200 text-red-600 mx-auto mb-6">
+                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                        </svg>
+                                    </div>
+                                    <h3 className="text-xl font-medium text-[#141414] mb-2 uppercase tracking-wide">
+                                        Extraction Failed
+                                    </h3>
+                                    <p className="text-[#6B6B6B] text-sm mb-6 px-4">
+                                        {(d as any).error}
+                                    </p>
+                                    <button onClick={() => window.location.href = '/dashboard'} className="px-6 py-2.5 bg-[#141414] hover:bg-[#2A2A2A] transition-colors text-white rounded-full text-[11px] uppercase tracking-widest font-bold">
+                                        Return to Library
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="w-12 h-12 border-4 border-[#141414] border-t-transparent rounded-full animate-spin mx-auto mb-6" />
+                                    <h3 className="text-xl font-medium text-[#141414] mb-2 uppercase tracking-wide">
+                                        {status === 'queued' ? 'Queued' : 'Analyzing Ad...'}
+                                    </h3>
+                                    <p className="text-[#6B6B6B] text-sm">
+                                        {status === 'queued'
+                                            ? "This ad is in line for deconstruction. We'll start extracting intelligence in a moment."
+                                            : "Our agents are currently deconstructing this ad's semiotic layers and strategic machinery."}
+                                    </p>
+                                </>
+                            )}
                         </div>
                     </div>
                 )}

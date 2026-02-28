@@ -36,21 +36,31 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
 
     try {
         // Optimization: Download first 10MB to handle seeking issues in serverless
+        // ONLY if it's a remote URL. If it's a local path (from the worker), skip download.
+        const isRemote = videoUrl.startsWith('http');
         const localVideoPath = path.join(tempDir, 'source_buffer.mp4');
-        const downloadController = new AbortController();
-        const downloadTimeout = setTimeout(() => downloadController.abort(), 12000);
 
-        try {
-            const res = await fetch(videoUrl, {
-                signal: downloadController.signal,
-                headers: { 'Range': 'bytes=0-10485760' } // 10MB buffer
-            });
-            const buffer = await res.arrayBuffer();
-            fs.writeFileSync(localVideoPath, Buffer.from(buffer));
-        } catch (downloadErr) {
-            console.warn('[Video] Partial download failed, falling back to remote URL:', downloadErr);
-        } finally {
-            clearTimeout(downloadTimeout);
+        if (isRemote) {
+            const downloadController = new AbortController();
+            const downloadTimeout = setTimeout(() => downloadController.abort(), 12000);
+
+            try {
+                const res = await fetch(videoUrl, {
+                    signal: downloadController.signal,
+                    headers: { 'Range': 'bytes=0-10485760' } // 10MB buffer
+                });
+                const buffer = await res.arrayBuffer();
+                fs.writeFileSync(localVideoPath, Buffer.from(buffer));
+            } catch (downloadErr) {
+                console.warn('[Video] Partial download failed, falling back to remote URL:', downloadErr);
+            } finally {
+                clearTimeout(downloadTimeout);
+            }
+        } else {
+            // It's a local path already
+            if (fs.existsSync(videoUrl)) {
+                fs.copyFileSync(videoUrl, localVideoPath);
+            }
         }
 
         const inputSourceFallback = fs.existsSync(localVideoPath) ? localVideoPath : videoUrl;
@@ -91,7 +101,8 @@ export async function extractKeyframes(videoUrl: string, requests: KeyframeReque
             // ffmpeg parameters:
             // For remote URLs, -ss BEFORE -i (fast seeking/output seeking) is CRITICAL to avoid timeouts.
             // For local files, either is fine, but we'll stick to fast seeking for consistency.
-            const command = `"${resolvedFfmpegPath}" -hide_banner -loglevel error -rw_timeout 15000000 -ss ${timestampSeconds} -i "${finalInput}" -frames:v 1 -q:v 2 "${outputPath}" -y`;
+            const timeoutFlag = finalInput.startsWith('http') ? '-rw_timeout 15000000 ' : '';
+            const command = `"${resolvedFfmpegPath}" -hide_banner -loglevel error ${timeoutFlag}-ss ${timestampSeconds} -i "${finalInput}" -frames:v 1 -q:v 2 "${outputPath}" -y`;
 
             try {
                 const { stderr } = await execPromise(command);

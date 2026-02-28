@@ -125,6 +125,11 @@ export async function POST(req: Request) {
                 const res = await fetch(downloadUrl, fetchOpts);
                 if (!res.ok) throw new Error(`Failed to fetch media stream. Status: ${res.status}`);
 
+                const contentType = res.headers.get('content-type') || '';
+                if (contentType.includes('text/html')) {
+                    throw new Error('The URL provided appears to be a webpage, not a direct video/image file. Please provide a direct link to the media.');
+                }
+
                 const buffer = await res.arrayBuffer();
                 fs.writeFileSync(mediaPath, Buffer.from(buffer));
 
