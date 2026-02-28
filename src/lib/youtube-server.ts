@@ -58,13 +58,17 @@ export async function extractYouTubeMetadata(url: string) {
     }
 
     try {
+        // Attempt to bypass by setting a more "human" user-agent
+        // This is a global setting in play-dl for the process
+        (play as any).user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+
         const info = await play.video_info(url);
 
         // Find best merged MP4 (720p = itag 22, 360p = itag 18)
         const bestFormat = info.format.find(f => f.itag === 22) || info.format.find(f => f.itag === 18);
 
         if (!bestFormat?.url) {
-            throw new Error('Could not resolve a playable MP4 stream URL from YouTube (itags 18/22 missing)');
+            throw new Error('No playable itag 18/22 found (v2)');
         }
 
         const durationSecs = info.video_details.durationInSec || 0;
@@ -80,6 +84,7 @@ export async function extractYouTubeMetadata(url: string) {
         };
     } catch (error: any) {
         console.error('[YouTube Extraction Error]', error);
-        throw new Error(`YouTube Extraction Failed: ${error.message}`);
+        // Versioning the error to be 100% sure we are seeing the latest code
+        throw new Error(`[v2] YouTube Extraction Failed: ${error.message}`);
     }
 }
