@@ -74,9 +74,11 @@ export async function extractYouTubeMetadata(url: string) {
     const cookieEnd = cookie?.substring(Math.max(0, cookieLength - 20)) || 'NONE';
 
     try {
-        console.log(`[YouTube v10] Attempting yt-dlp extraction (Length: ${cookieLength}, Start: ${cookieStart}..., End: ...${cookieEnd})`);
+        console.log(`[YouTube v11] Attempting yt-dlp extraction (Length: ${cookieLength}, Start: ${cookieStart}..., End: ...${cookieEnd})`);
 
-        // v10 Headers: More realistic browser behavior
+        // v11 UA: Exactly matching the user's Chrome 145.0.0.0 session for perfect cookie alignment
+        const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
+
         const info: any = await youtubedl(url, {
             dumpSingleJson: true,
             noCheckCertificates: true,
@@ -92,13 +94,12 @@ export async function extractYouTubeMetadata(url: string) {
                 'Sec-Fetch-Site: none',
                 'Sec-Fetch-User: ?1'
             ] : undefined,
-            // v10 UA: Still guessing until user provides their real one
-            userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
+            userAgent: ua,
             format: 'best[ext=mp4]/best'
         });
 
         if (info && info.url) {
-            console.log(`[YouTube v10] Success via yt-dlp!`);
+            console.log(`[YouTube v11] Success via yt-dlp!`);
             return {
                 streamUrl: info.url,
                 title: info.title || 'YouTube Video',
@@ -111,13 +112,13 @@ export async function extractYouTubeMetadata(url: string) {
 
     } catch (ytdlError: any) {
         if (ytdlError.code === 'ENOENT') {
-            console.warn('[YouTube v10] yt-dlp binary missing. Falling back to play-dl...');
+            console.warn('[YouTube v11] yt-dlp binary missing. Falling back to play-dl...');
         } else {
-            console.error('[YouTube v10] yt-dlp error:', ytdlError.message || ytdlError);
+            console.error('[YouTube v11] yt-dlp error:', ytdlError.message || ytdlError);
         }
 
         try {
-            const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36';
+            const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
             (play as any).user_agent = ua;
 
             if (cookie) {
@@ -135,7 +136,7 @@ export async function extractYouTubeMetadata(url: string) {
                 throw new Error('No playable formats found in fallback');
             }
 
-            console.log(`[YouTube v10] play-dl Success! (Format: ${bestFormat.itag})`);
+            console.log(`[YouTube v11] play-dl Success! (Format: ${bestFormat.itag})`);
 
             return {
                 streamUrl: bestFormat.url,
@@ -145,7 +146,7 @@ export async function extractYouTubeMetadata(url: string) {
             };
         } catch (error: any) {
             console.error('[YouTube Extraction Error]', error);
-            throw new Error(`[v10] Extraction Failed. Length: ${cookieLength}. Error: ${error.message}`);
+            throw new Error(`[v11] Extraction Failed. Length: ${cookieLength}. Error: ${error.message}`);
         }
     }
 }
