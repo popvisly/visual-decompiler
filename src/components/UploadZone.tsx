@@ -130,7 +130,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
                                 Drag & drop an ad IMAGE here. (jpg, png)
                             </p>
                             <p className="text-[13px] text-[#6B6B6B] mt-1">
-                                or paste a URL below (YouTube: Beta)
+                                or paste an IMAGE URL below.
                             </p>
                         </div>
                     </div>

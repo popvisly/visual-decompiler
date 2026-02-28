@@ -212,11 +212,6 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
                     <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em]">
                         Deep psychological analysis in progress
                     </p>
-                    {extractYouTubeId(mediaUrl) && (
-                        <p className="mt-4 text-[9px] text-orange-500/70 font-bold uppercase tracking-[0.1em] max-w-[200px] mx-auto leading-relaxed italic">
-                            Experimental: YouTube extraction depends on site-wide token health
-                        </p>
-                    )}
                 </div>
 
                 {/* Progress bar */}
