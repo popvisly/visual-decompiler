@@ -61,7 +61,7 @@ export async function extractYouTubeMetadata(url: string) {
     const cookie = process.env.YOUTUBE_COOKIE;
 
     try {
-        console.log(`[YouTube v6] Attempting yt-dlp extraction (Cookie: ${cookie ? 'PRESENT' : 'MISSING'})`);
+        console.log(`[YouTube v7] Attempting yt-dlp extraction (Cookie length: ${cookie?.length || 0})`);
 
         // Pass the raw cookie string to yt-dlp via temporary header emulation or direct flag
         // youtube-dl-exec handles the binary execution
@@ -72,11 +72,13 @@ export async function extractYouTubeMetadata(url: string) {
             preferFreeFormats: true,
             youtubeSkipDashManifest: true,
             referer: 'https://www.google.com/',
-            addHeader: cookie ? [`Cookie: ${cookie}`] : undefined,
+            addHeader: cookie ? [`Cookie: ${cookie.trim()}`] : undefined,
+            userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
             format: 'best[ext=mp4]/best'
         });
 
         if (info && info.url) {
+            console.log(`[YouTube v7] yt-dlp Success! Title: ${info.title}`);
             return {
                 streamUrl: info.url,
                 title: info.title || 'YouTube Video',
@@ -88,13 +90,21 @@ export async function extractYouTubeMetadata(url: string) {
         throw new Error('yt-dlp returned no stream URL');
 
     } catch (ytdlError: any) {
-        console.warn('[YouTube v6] yt-dlp failed, falling back to play-dl...', ytdlError.message);
+        // LOG THE ACTUAL ERROR SO WE CAN SEE WHY IT FAILED IN 5MS
+        console.error('[YouTube v7] yt-dlp Crash Error:', ytdlError.message || ytdlError);
+        console.warn('[YouTube v7] falling back to play-dl...');
 
         try {
-            (play as any).user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
+            const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
+            (play as any).user_agent = ua;
 
             if (cookie) {
-                await play.setToken({ youtube: { cookie: cookie } });
+                // Ensure there are no hidden characters in the cookie string
+                await play.setToken({
+                    youtube: {
+                        cookie: cookie.trim()
+                    }
+                });
             }
 
             const info = await play.video_info(url);
@@ -104,6 +114,8 @@ export async function extractYouTubeMetadata(url: string) {
                 throw new Error('No playable itag 18/22 found in fallback');
             }
 
+            console.log(`[YouTube v7] play-dl Fallback Success! Title: ${info.video_details.title}`);
+
             return {
                 streamUrl: bestFormat.url,
                 title: info.video_details.title || 'YouTube Video',
@@ -112,7 +124,7 @@ export async function extractYouTubeMetadata(url: string) {
             };
         } catch (error: any) {
             console.error('[YouTube Extraction Error]', error);
-            throw new Error(`[v6] YouTube Extraction Failed: ${error.message} (Cookie bit: ${cookie ? 'PRESENT' : 'MISSING'})`);
+            throw new Error(`[v7] YouTube Extraction Failed: ${error.message} (Cookie bit: ${cookie ? 'PRESENT' : 'MISSING'})`);
         }
     }
 }
