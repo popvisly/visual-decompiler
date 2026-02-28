@@ -58,13 +58,17 @@ export async function extractYouTubeMetadata(url: string) {
         throw new Error('Not a valid YouTube URL');
     }
 
-    const cookie = process.env.YOUTUBE_COOKIE;
+    let cookie = process.env.YOUTUBE_COOKIE;
+
+    // v8 Fix: Many users copy the "cookie: " prefix by accident. Let's strip it.
+    if (cookie && cookie.toLowerCase().startsWith('cookie:')) {
+        cookie = cookie.substring(7).trim();
+    }
 
     try {
-        console.log(`[YouTube v7] Attempting yt-dlp extraction (Cookie length: ${cookie?.length || 0})`);
+        console.log(`[YouTube v8] Attempting yt-dlp extraction (Cookie length: ${cookie?.length || 0})`);
 
-        // Pass the raw cookie string to yt-dlp via temporary header emulation or direct flag
-        // youtube-dl-exec handles the binary execution
+        // v8 Note: yt-dlp often fails on Vercel due to missing binary in serverless context.
         const info: any = await youtubedl(url, {
             dumpSingleJson: true,
             noCheckCertificates: true,
@@ -78,7 +82,7 @@ export async function extractYouTubeMetadata(url: string) {
         });
 
         if (info && info.url) {
-            console.log(`[YouTube v7] yt-dlp Success! Title: ${info.title}`);
+            console.log(`[YouTube v8] Success via yt-dlp!`);
             return {
                 streamUrl: info.url,
                 title: info.title || 'YouTube Video',
@@ -90,16 +94,17 @@ export async function extractYouTubeMetadata(url: string) {
         throw new Error('yt-dlp returned no stream URL');
 
     } catch (ytdlError: any) {
-        // LOG THE ACTUAL ERROR SO WE CAN SEE WHY IT FAILED IN 5MS
-        console.error('[YouTube v7] yt-dlp Crash Error:', ytdlError.message || ytdlError);
-        console.warn('[YouTube v7] falling back to play-dl...');
+        if (ytdlError.code === 'ENOENT') {
+            console.warn('[YouTube v8] yt-dlp binary not found (ENOENT). Falling back to play-dl...');
+        } else {
+            console.error('[YouTube v8] yt-dlp error:', ytdlError.message || ytdlError);
+        }
 
         try {
             const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
             (play as any).user_agent = ua;
 
             if (cookie) {
-                // Ensure there are no hidden characters in the cookie string
                 await play.setToken({
                     youtube: {
                         cookie: cookie.trim()
@@ -108,13 +113,13 @@ export async function extractYouTubeMetadata(url: string) {
             }
 
             const info = await play.video_info(url);
-            const bestFormat = info.format.find(f => f.itag === 22) || info.format.find(f => f.itag === 18);
+            const bestFormat = info.format.find(f => f.itag === 22) || info.format.find(f => f.itag === 18) || info.format[0];
 
             if (!bestFormat?.url) {
-                throw new Error('No playable itag 18/22 found in fallback');
+                throw new Error('No playable formats found in fallback');
             }
 
-            console.log(`[YouTube v7] play-dl Fallback Success! Title: ${info.video_details.title}`);
+            console.log(`[YouTube v8] play-dl Success! Title: ${info.video_details.title}`);
 
             return {
                 streamUrl: bestFormat.url,
@@ -124,7 +129,7 @@ export async function extractYouTubeMetadata(url: string) {
             };
         } catch (error: any) {
             console.error('[YouTube Extraction Error]', error);
-            throw new Error(`[v7] YouTube Extraction Failed: ${error.message} (Cookie bit: ${cookie ? 'PRESENT' : 'MISSING'})`);
+            throw new Error(`[v8] Extraction Failed. Your cookie might be truncated or "Cookie:" was included. (Length: ${cookie?.length || 0}). Error: ${error.message}`);
         }
     }
 }
