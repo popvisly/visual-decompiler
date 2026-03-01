@@ -270,6 +270,7 @@ export async function POST(req: Request) {
                     success: true,
                     job_id: existing.id,
                     status: existing.status,
+                    code: 'DUPLICATE',
                     access_level: existing.access_level,
                     message: 'Ad already in the system.'
                 }, { status: 200 });

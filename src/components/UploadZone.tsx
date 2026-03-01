@@ -29,6 +29,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
     const [isDragOver, setIsDragOver] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [duplicateId, setDuplicateId] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleIngest = useCallback(async (mediaUrl: string) => {
@@ -42,6 +43,13 @@ export default function UploadZone({ onUploadComplete }: Props) {
             });
             const payload = await res.json().catch(() => null);
             if (!res.ok) throw new Error(payload?.error || `Ingestion failed (HTTP ${res.status})`);
+
+            if (payload?.code === 'DUPLICATE') {
+                setDuplicateId(payload.job_id);
+                setIsUploading(false);
+                return;
+            }
+
             onUploadComplete({ jobId: payload.job_id, mediaUrl: mediaUrl.trim(), accessLevel: payload.access_level });
         } catch (err: any) {
             setError(err?.message || 'Failed to analyze ad.');
@@ -180,6 +188,22 @@ export default function UploadZone({ onUploadComplete }: Props) {
                     </span>
                 ))}
             </div>
+
+            {/* Duplicate Notice */}
+            {duplicateId && (
+                <div className="mt-4 p-6 bg-[#BB9E7B]/10 border border-[#BB9E7B]/30 rounded-2xl flex flex-col items-center gap-4 animate-in fade-in slide-in-from-bottom-2">
+                    <div className="flex flex-col items-center gap-1 text-center">
+                        <p className="text-[13px] font-bold text-[#BB9E7B] uppercase tracking-widest">Ad Already Analyzed</p>
+                        <p className="text-[12px] text-[#6B6B6B]">This creative is already in your agency library.</p>
+                    </div>
+                    <a
+                        href={`/dashboard/${duplicateId}`}
+                        className="px-6 py-2.5 bg-[#BB9E7B] text-white rounded-xl text-[12px] font-bold uppercase tracking-widest hover:opacity-90 transition-all shadow-lg shadow-[#BB9E7B]/20"
+                    >
+                        View Deconstruction
+                    </a>
+                </div>
+            )}
 
             {/* Error */}
             {error && (

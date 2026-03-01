@@ -137,10 +137,51 @@ export function normalizeDigest(input: any): any {
         d.diagnostics.evidence_anchors = arr(d.diagnostics.evidence_anchors);
     }
 
-    // Confidence overall should be a number when present
-    if (typeof d.diagnostics.confidence.overall === 'string') {
-        const n = Number(d.diagnostics.confidence.overall);
-        if (!Number.isNaN(n)) d.diagnostics.confidence.overall = n;
+    // --- Forensic Evidence Layer Normalization ---
+    // If we have legacy anchors but no evidence_receipts, migrate them.
+    if ((d.extraction?.anchors || d.extraction?.evidence_anchors) && (!d.extraction?.evidence_receipts || d.extraction.evidence_receipts.length === 0)) {
+        const legacy = arr(d.extraction?.anchors || d.extraction?.evidence_anchors);
+        d.extraction.evidence_receipts = legacy.map((a: any, idx: number) => ({
+            id: a.id || `receipt-${idx}`,
+            type: a.type || 'Visual',
+            label: a.label || 'Evidence',
+            reason: a.reason || a.description || 'Strategic cue detected.',
+            area: a.area || a.coordinates || null,
+            content: a.content || a.text || null
+        }));
+    }
+
+    // Ensure all evidence_receipts have areas formatted correctly for the UI
+    if (d.extraction?.evidence_receipts) {
+        d.extraction.evidence_receipts = arr(d.extraction.evidence_receipts).map((r: any, idx: number) => {
+            const area = r.area || r.coordinates;
+            return {
+                ...r,
+                id: r.id || `rec-${idx}`,
+                area: area && typeof area === 'object' ? {
+                    x: Number(area.x || 0),
+                    y: Number(area.y || 0),
+                    w: Number(area.w || 0),
+                    h: Number(area.h || 0)
+                } : null
+            };
+        });
+    }
+
+    // Also migrate likely_scan_path coordinates
+    if (d.extraction?.likely_scan_path) {
+        d.extraction.likely_scan_path = arr(d.extraction.likely_scan_path).map((s: any) => {
+            const area = s.area || s.coordinates;
+            return {
+                ...s,
+                area: area && typeof area === 'object' ? {
+                    x: Number(area.x || 0),
+                    y: Number(area.y || 0),
+                    w: Number(area.w || 0),
+                    h: Number(area.h || 0)
+                } : null
+            };
+        });
     }
 
     return d;
