@@ -11,6 +11,7 @@ const PILLARS = [
     { key: 'library', label: 'Library', href: '/dashboard' },
     { key: 'boards', label: 'Boards', href: '/dashboard/boards' },
     { key: 'intelligence', label: 'Intelligence', href: '/intelligence' },
+    { key: 'pricing', label: 'Pricing', href: '/pricing' },
     { key: 'help', label: 'Help Center', href: '/docs' },
 ] as const;
 
