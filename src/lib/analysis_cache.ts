@@ -116,7 +116,7 @@ export async function getCacheStats(): Promise<{
         }
 
         const total_entries = data.length;
-        const total_hits = data.reduce((sum: number, entry) => sum + (entry.hit_count || 0), 0);
+        const total_hits = data.reduce((sum: number, entry: any) => sum + (entry.hit_count || 0), 0);
 
         // Assume $0.15 per Sonnet analysis
         const estimated_savings = total_hits * 0.15;
