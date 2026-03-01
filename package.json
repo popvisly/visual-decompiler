@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@anthropic-ai/sdk": "^0.78.0",
         "@clerk/nextjs": "^6.38.1",
         "@distube/ytdl-core": "^4.16.12",
         "@stripe/stripe-js": "^8.8.0",

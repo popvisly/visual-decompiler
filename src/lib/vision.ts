@@ -1,6 +1,7 @@
 import OpenAI from 'openai';
 import { BLACK_BOX_PROMPT_V1, BLACK_BOX_PROMPT_V2, BLACK_BOX_PROMPT_V3, BLACK_BOX_PROMPT_V4 } from './prompts';
 import fs from 'fs';
+import { getAnthropic, CLAUDE_MODEL } from './anthropic';
 
 let _openai: OpenAI | null = null;
 export function getOpenAI() {
@@ -23,7 +24,67 @@ export async function decompileAd(inputs: VisionInput[], version: string = 'V1')
     else if (version === 'V3') systemPrompt = BLACK_BOX_PROMPT_V3;
     else if (version === 'V4') systemPrompt = BLACK_BOX_PROMPT_V4;
 
-    // 2. Prepare content
+    const anthropic = getAnthropic();
+    const isClaude = !!anthropic;
+
+    if (isClaude) {
+        console.log(`[Vision] Using Claude 3.5 Sonnet engine for deconstruction (${version})`);
+        const messageContent: any[] = [
+            { type: "text", text: "Analyze this advertisement media and return a strict JSON digest. If multiple images are provided, they are keyframes from a single video." }
+        ];
+
+        for (const input of inputs) {
+            let base64Data: string;
+            let mimeType: string;
+
+            if (input.type === 'url') {
+                const imgRes = await fetch(input.url);
+                if (!imgRes.ok) throw new Error(`Failed to fetch image: ${imgRes.status}`);
+                const arrayBuffer = await imgRes.arrayBuffer();
+                const buffer = Buffer.from(arrayBuffer);
+                base64Data = buffer.toString('base64');
+                mimeType = imgRes.headers.get('content-type') || (input.url.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg');
+            } else {
+                base64Data = input.data;
+                mimeType = input.mimeType;
+            }
+
+            // Anthropic vision block
+            messageContent.push({
+                type: "image",
+                source: {
+                    type: "base64",
+                    media_type: mimeType as any,
+                    data: base64Data
+                }
+            });
+        }
+
+        const response = await anthropic.messages.create({
+            model: CLAUDE_MODEL,
+            max_tokens: 4096,
+            system: systemPrompt,
+            messages: [
+                { role: "user", content: messageContent }
+            ],
+        });
+
+        const contentBlock = response.content[0];
+        if (contentBlock.type !== 'text') throw new Error("Claude returned non-text response");
+
+        // Claude sometimes wraps JSON in triple backticks even if told not to
+        let text = contentBlock.text;
+        if (text.includes('```json')) {
+            text = text.split('```json')[1].split('```')[0].trim();
+        } else if (text.includes('```')) {
+            text = text.split('```')[1].split('```')[0].trim();
+        }
+
+        return JSON.parse(text);
+    }
+
+    // 2. OpenAI Fallback
+    console.log(`[Vision] Using OpenAI engine for deconstruction (${version})`);
     const userContent: OpenAI.Chat.Completions.ChatCompletionContentPart[] = [
         { type: "text", text: "Analyze this advertisement media and return a strict JSON digest. If multiple images are provided, they are keyframes from a single video." }
     ];
@@ -32,7 +93,6 @@ export async function decompileAd(inputs: VisionInput[], version: string = 'V1')
         if (input.type === 'url') {
             try {
                 // Fetch the image and convert it to base64 to bypass OpenAI URL download errors
-                console.log(`[Vision] Fetching remote image to convert to base64: ${input.url}`);
                 const imgRes = await fetch(input.url, {
                     headers: {
                         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
@@ -49,8 +109,6 @@ export async function decompileAd(inputs: VisionInput[], version: string = 'V1')
                 }
 
                 const base64Data = buffer.toString('base64');
-                console.log(`[Vision] Successfully converted to base64 (${Math.round(base64Data.length / 1024)}KB). Mime: ${mimeType}`);
-
                 userContent.push({
                     type: "image_url",
                     image_url: { url: `data:${mimeType};base64,${base64Data}` }

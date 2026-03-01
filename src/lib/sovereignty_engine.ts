@@ -2,6 +2,7 @@ import { supabaseAdmin } from './supabase';
 import { PredictionService } from './prediction_service';
 import { MeshService } from './mesh_service';
 import OpenAI from 'openai';
+import { getAnthropic, CLAUDE_MODEL } from './anthropic';
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
@@ -80,15 +81,10 @@ export class SovereigntyEngine {
     }
 
     /**
-     * Generates a high-level executive briefing using GPT-4o.
+     * Generates a high-level executive briefing using Claude 3.5 Sonnet or GPT-4o.
      */
     static async generateBriefing(metrics: AgencyMetrics): Promise<ExecutiveBriefing> {
-        const response = await openai.chat.completions.create({
-            model: "gpt-4o",
-            messages: [
-                {
-                    role: "system",
-                    content: `You are the Executive Command Intelligence of the Strategic Laboratory. 
+        const systemPrompt = `You are the Executive Command Intelligence of the Strategic Laboratory. 
                     Your task is to synthesize agency-wide metrics into actionable directives for the CEO.
                     
                     Metrics:
@@ -106,7 +102,35 @@ export class SovereigntyEngine {
                     - macroNarrative: A 2-sentence summary of the current market state.
                     - commandDirectives: 3-4 bullet-point executive orders.
                     - criticalRiskLevel: LOW, MEDIUM, or HIGH.
-                    - strategicMoat: 1 sentence on the agency's current competitive advantage.`
+                    - strategicMoat: 1 sentence on the agency's current competitive advantage.`;
+
+        const anthropic = getAnthropic();
+        if (anthropic) {
+            console.log("[Sovereignty] Using Claude for executive briefing");
+            const response = await anthropic.messages.create({
+                model: CLAUDE_MODEL,
+                max_tokens: 2048,
+                system: systemPrompt,
+                messages: [{ role: "user", content: "Generate the briefing." }],
+            });
+
+            const contentBlock = response.content[0];
+            if (contentBlock.type !== 'text') throw new Error("Claude returned non-text response for briefing");
+
+            let text = contentBlock.text;
+            if (text.includes('```json')) text = text.split('```json')[1].split('```')[0].trim();
+            else if (text.includes('```')) text = text.split('```')[1].split('```')[0].trim();
+
+            return JSON.parse(text) as ExecutiveBriefing;
+        }
+
+        console.log("[Sovereignty] Using OpenAI for executive briefing");
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o",
+            messages: [
+                {
+                    role: "system",
+                    content: systemPrompt
                 }
             ],
             response_format: { type: "json_object" }
