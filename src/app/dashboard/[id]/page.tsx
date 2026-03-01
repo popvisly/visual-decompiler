@@ -26,7 +26,8 @@ export default async function AdDetailPage({
 
     if (error || !ad) notFound();
 
-    const digest = ad.digest as AdDigest;
+    const { normalizeDigest } = await import('@/lib/digest_normalize');
+    const digest = normalizeDigest(ad.digest);
     const relatedAds = await getRelatedAds(id, userId, 4, orgId);
 
     // Fetch latest pulse for forecasting

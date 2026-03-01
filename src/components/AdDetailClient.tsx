@@ -82,7 +82,7 @@ export default function AdDetailClient({
     return (
         <div className={`py-12 space-y-16 ${isShared ? 'pt-0' : ''}`}>
             {showBanner && (
-                <div className="max-w-6xl mx-auto px-6 pt-8 animate-in fade-in slide-in-from-top-4 duration-1000">
+                <div className="max-w-[1400px] mx-auto px-6 pt-8 animate-in fade-in slide-in-from-top-4 duration-1000">
                     <div className="bg-[#141414] rounded-3xl p-6 md:p-8 flex items-center justify-between shadow-2xl shadow-black/20 border border-white/5 relative overflow-hidden group">
                         {/* Progress Glow */}
                         <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent" />
@@ -109,7 +109,7 @@ export default function AdDetailClient({
                 </div>
             )}
 
-            <div className="max-w-6xl mx-auto px-6">
+            <div className="max-w-[1400px] mx-auto px-6">
                 {/* Header - Editorial Style */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-10 pb-8 md:pb-16 border-b border-[#E7DED1] mb-12 md:mb-16">
                     <div>
@@ -155,7 +155,7 @@ export default function AdDetailClient({
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16">
                     {/* Left: media always visible */}
-                    <div className="lg:col-span-5 space-y-8 md:space-y-12">
+                    <div className="lg:col-span-4 space-y-8 md:space-y-12">
                         <div className="sticky top-12 space-y-6 md:space-y-8">
                             <div className="bg-white p-3 md:p-4 rounded-[2rem] md:rounded-[3.5rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)] overflow-hidden relative group">
                                 {ad.media_kind === 'video' ? (
@@ -165,11 +165,11 @@ export default function AdDetailClient({
                                         className="w-full aspect-[4/5] object-cover rounded-[1.5rem] md:rounded-[2.5rem]"
                                         controls muted playsInline preload="metadata"
                                     />
-                                ) : ((digest?.extraction as any)?.evidence_receipts?.length > 0 || (digest?.extraction as any)?.anchors?.length > 0) ? (
+                                ) : (digest?.extraction?.evidence_receipts?.length || 0) > 0 ? (
                                     <div className="rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden">
                                         <ForensicOverlay
                                             imageUrl={ad.media_url}
-                                            anchors={(digest?.extraction as any).evidence_receipts || (digest?.extraction as any).anchors}
+                                            anchors={digest.extraction?.evidence_receipts || []}
                                         />
                                     </div>
                                 ) : (
@@ -184,7 +184,7 @@ export default function AdDetailClient({
                     </div>
 
                     {/* Right: tabbed workspace */}
-                    <div className="lg:col-span-7 space-y-6 md:space-y-8">
+                    <div className="lg:col-span-8 space-y-6 md:space-y-8">
                         {!isShared && (
                             <div className="no-print">
                                 <div className="flex flex-wrap gap-2 rounded-[2rem] bg-white border border-[#E7DED1] p-1.5 shadow-sm">
@@ -241,8 +241,8 @@ export default function AdDetailClient({
 
                         {tab === 'forensics' && (
                             <div className="space-y-8">
-                                {/* ═══ SATURATION RISK ═══ */}
-                                <ResultsCard title="Saturation Risk" variant="gauge">
+                                {/* ═══ CATEGORY DENSITY / SATURATION ═══ */}
+                                <ResultsCard title="Category Density" variant="gauge">
                                     <div className="flex items-end gap-4 mb-6">
                                         <div>
                                             <span className="text-5xl font-bold text-[#141414] leading-none tracking-tight">{forecasting.saturationLevel}%</span>
@@ -250,12 +250,10 @@ export default function AdDetailClient({
                                         <div className="inline-flex items-center gap-2 px-4 py-2 mb-1 rounded-full" style={{ backgroundColor: forecasting.saturationLevel > 60 ? '#FEE2E2' : '#DCFCE7' }}>
                                             <span className={`w-2 h-2 rounded-full ${forecasting.saturationLevel > 60 ? 'bg-red-500 animate-pulse' : 'bg-green-500'}`} />
                                             <span className={`text-[10px] font-bold uppercase tracking-[0.15em] ${forecasting.saturationLevel > 60 ? 'text-red-700' : 'text-green-700'}`}>
-                                                {forecasting.saturationLevel > 80 ? 'Critical Saturation' : forecasting.saturationLevel > 60 ? 'High Competition' : forecasting.saturationLevel > 35 ? 'Moderate Space' : 'Blue Ocean'}
+                                                {forecasting.saturationLevel > 80 ? 'Critical Saturation' : forecasting.saturationLevel > 60 ? 'High Competition' : forecasting.saturationLevel > 35 ? 'Moderate Space' : 'Innovative'}
                                             </span>
                                         </div>
                                     </div>
-
-                                    {/* Segmented gauge bar — full width */}
                                     <div className="mb-6">
                                         <div className="flex gap-1.5 mb-2">
                                             {[20, 40, 60, 80, 100].map((threshold, i) => (
@@ -276,25 +274,21 @@ export default function AdDetailClient({
                                             <span>Crowded</span>
                                         </div>
                                     </div>
-
-                                    {/* Insight */}
                                     <p className="text-sm font-light text-[#141414] leading-relaxed italic border-l-[3px] border-[#141414] pl-6">
                                         {forecasting.saturationLevel > 60
-                                            ? 'High pattern density in this category. Differentiation through creative innovation is critical to cut through competitive noise.'
-                                            : 'Low competitive density detected. First-mover advantage is available — scaling this creative pattern now could establish category ownership.'}
+                                            ? 'Highly competitive tactical space. Creative innovation is required to bypass category blindspots.'
+                                            : 'Strategic blue ocean identified. Pattern resonance is exceptionally high for early-mover scale.'}
                                     </p>
                                 </ResultsCard>
 
-                                {/* ═══ PREDICTED LIFESPAN ═══ */}
-                                <ResultsCard title="Predicted Lifespan" variant="gauge">
+                                {/* ═══ TACTICAL WINDOW / LIFESPAN ═══ */}
+                                <ResultsCard title="Tactical Window" variant="gauge">
                                     <div className="flex items-end gap-4 mb-6">
                                         <div>
                                             <span className="text-5xl font-bold text-[#141414] leading-none tracking-tight">{forecasting.estimatedLifespanDays}</span>
                                         </div>
                                         <span className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-1.5">Days</span>
                                     </div>
-
-                                    {/* Decay Phase Timeline — full width */}
                                     <div className="mb-6">
                                         <div className="flex gap-0.5 mb-2">
                                             {[
@@ -318,27 +312,60 @@ export default function AdDetailClient({
                                             <span style={{ width: '10%', textAlign: 'right' }}>Fatigue</span>
                                         </div>
                                     </div>
-
-                                    {/* Insight */}
                                     <p className="text-sm font-light text-[#141414] leading-relaxed italic border-l-[3px] border-[#141414] pl-6">
                                         {forecasting.estimatedLifespanDays > 60
-                                            ? `Extended runway of ${forecasting.estimatedLifespanDays} days indicates strong creative durability. Low fatigue risk in the current category cycle.`
-                                            : `Short ${forecasting.estimatedLifespanDays}-day window suggests high trend velocity. Deploy rapidly and test variants within the first ${Math.round(forecasting.estimatedLifespanDays * 0.3)} days.`}
+                                            ? `Extended runway of ${forecasting.estimatedLifespanDays} days indicates strong creative durability and low fatigue risk.`
+                                            : `High trend velocity detected. Rapid deployment recommended for the initial ${Math.round(forecasting.estimatedLifespanDays * 0.3)}-day window.`}
                                     </p>
                                 </ResultsCard>
 
                                 <DeepAuditView digest={digest} />
 
-                                {digest.classification?.persuasion_stack && (
-                                    <ResultsCard title="Persuasion Stack" variant="strategy">
-                                        <PersuasionStack stack={digest.classification.persuasion_stack} />
+                                {digest.diagnostics?.friction_analysis && (
+                                    <ResultsCard title="Conversion Friction" variant="strategy">
+                                        <div className="space-y-6">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                {Object.entries(digest.diagnostics.friction_analysis.scores || {}).map(([key, score]: [string, any]) => (
+                                                    <div key={key} className="space-y-2">
+                                                        <div className="flex justify-between items-end">
+                                                            <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-widest">{key.replace(/_/g, ' ')}</p>
+                                                            <span className="text-xs font-bold text-[#141414]">{score}%</span>
+                                                        </div>
+                                                        <div className="h-1.5 w-full bg-[#E7DED1] rounded-full overflow-hidden">
+                                                            <div
+                                                                className="h-full bg-[#141414] rounded-full transition-all duration-1000"
+                                                                style={{ width: `${score}%` }}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            {digest.diagnostics.friction_analysis.top_fixes && (
+                                                <div className="pt-6 border-t border-[#E7DED1]">
+                                                    <p className="text-[10px] font-bold text-[#141414]/40 uppercase tracking-[0.2em] mb-4">Strategic Remedies:</p>
+                                                    <div className="space-y-3">
+                                                        {digest.diagnostics.friction_analysis.top_fixes.map((fix: string, i: number) => (
+                                                            <div key={i} className="flex items-start gap-3">
+                                                                <div className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 shrink-0" />
+                                                                <p className="text-[11px] font-medium text-[#141414] leading-relaxed">{fix}</p>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
                                     </ResultsCard>
                                 )}
 
+                                {digest.classification?.persuasion_stack && (
+                                    <PersuasionStack
+                                        stack={digest.classification.persuasion_stack}
+                                        stackTypeLabel={digest.classification.stack_type_label || 'Strategic Persuasion'}
+                                    />
+                                )}
+
                                 {digest.extraction?.likely_scan_path && (
-                                    <ResultsCard title="Attention Flow (Scan Path)" variant="gauge">
-                                        <ScanPath path={digest.extraction.likely_scan_path} />
-                                    </ResultsCard>
+                                    <ScanPath path={digest.extraction.likely_scan_path} />
                                 )}
                             </div>
                         )}

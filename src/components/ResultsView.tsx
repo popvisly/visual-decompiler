@@ -431,50 +431,76 @@ export default function ResultsView({
                         </ResultsCard>
                     </BlurGate>
 
-                    {/* ── Classification ── */}
-                    <ResultsCard title="Classification" variant="classification">
-                        <div className="space-y-6">
-                            {(cls as any)?.persuasion_stack ? (
-                                <PersuasionStack
-                                    stack={(cls as any).persuasion_stack}
-                                    stackTypeLabel={(cls as any).stack_type_label}
-                                />
-                            ) : (
-                                <div className="grid grid-cols-2 gap-3">
-                                    {[
-                                        { label: 'Trigger Mechanic', value: cls?.trigger_mechanic },
-                                        { label: 'Secondary Trigger', value: cls?.secondary_trigger_mechanic },
-                                        { label: 'Narrative Framework', value: cls?.narrative_framework },
-                                        { label: 'Claim Type', value: cls?.claim_type },
-                                        { label: 'Offer Type', value: cls?.offer_type },
-                                        { label: 'CTA Strength', value: cls?.cta_strength },
-                                        { label: 'Cognitive Load', value: cls?.cognitive_load },
-                                        { label: 'Gaze Priority', value: cls?.gaze_priority },
-                                    ].filter(i => i.value).map(item => (
-                                        <ClassificationPill key={item.label} label={item.label} value={item.value!} />
-                                    ))}
+                    {/* ── Classification & Strategic Intelligence Grid ── */}
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                        {/* ── Classification ── */}
+                        <ResultsCard title="Classification" variant="classification">
+                            <div className="space-y-6">
+                                {(cls as any)?.persuasion_stack ? (
+                                    <PersuasionStack
+                                        stack={(cls as any).persuasion_stack}
+                                        stackTypeLabel={(cls as any).stack_type_label}
+                                    />
+                                ) : (
+                                    <div className="grid grid-cols-2 gap-3">
+                                        {[
+                                            { label: 'Trigger Mechanic', value: cls?.trigger_mechanic },
+                                            { label: 'Secondary Trigger', value: cls?.secondary_trigger_mechanic },
+                                            { label: 'Narrative Framework', value: cls?.narrative_framework },
+                                            { label: 'Claim Type', value: cls?.claim_type },
+                                            { label: 'Offer Type', value: cls?.offer_type },
+                                            { label: 'CTA Strength', value: cls?.cta_strength },
+                                            { label: 'Cognitive Load', value: cls?.cognitive_load },
+                                            { label: 'Gaze Priority', value: cls?.gaze_priority },
+                                        ].filter(i => i.value).map(item => (
+                                            <ClassificationPill key={item.label} label={item.label} value={item.value!} />
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                            {cls?.visual_style && cls.visual_style.length > 0 && (
+                                <div className="mb-3">
+                                    <p className="text-txt-muted text-[10px] font-bold uppercase tracking-[0.15em] mb-2">Visual Style</p>
+                                    <TagRow items={cls.visual_style} />
                                 </div>
                             )}
-                        </div>
-                        {cls?.visual_style && cls.visual_style.length > 0 && (
-                            <div className="mb-3">
-                                <p className="text-txt-muted text-[10px] font-bold uppercase tracking-[0.15em] mb-2">Visual Style</p>
-                                <TagRow items={cls.visual_style} />
-                            </div>
-                        )}
-                        {cls?.emotion_tone && cls.emotion_tone.length > 0 && (
-                            <div>
-                                <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-2">Emotion / Tone</p>
-                                <div className="flex flex-wrap gap-1.5">
-                                    {cls.emotion_tone.map((e: string) => (
-                                        <span key={e} className="px-3 py-1.5 rounded-xl bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1] hover:border-accent/30 transition-colors">
-                                            {e.replace(/_/g, ' ')}
-                                        </span>
-                                    ))}
+                            {cls?.emotion_tone && cls.emotion_tone.length > 0 && (
+                                <div>
+                                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em] mb-2">Emotion / Tone</p>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {cls.emotion_tone.map((e: string) => (
+                                            <span key={e} className="px-3 py-1.5 rounded-xl bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1] hover:border-accent/30 transition-colors">
+                                                {e.replace(/_/g, ' ')}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                    </ResultsCard>
+                            )}
+                        </ResultsCard>
+
+                        {/* ── Strategic Intelligence — BLUR on limited ── */}
+                        <BlurGate locked={isLimited}>
+                            <ResultsCard title="Strategic Intelligence" variant="strategy">
+                                <div className="grid grid-cols-1 gap-y-5">
+                                    {strat?.target_job_to_be_done && (
+                                        <StrategyField label="Job-to-be-Done" value={strat.target_job_to_be_done} />
+                                    )}
+                                    {strat?.positioning_claim && (
+                                        <StrategyField label="Positioning Claim" value={strat.positioning_claim} />
+                                    )}
+                                    {strat?.differentiator_angle && (
+                                        <StrategyField label="Differentiator Angle" value={strat.differentiator_angle} />
+                                    )}
+                                    {strat?.behavioral_nudge && (
+                                        <StrategyField label="Behavioral Nudge" value={strat.behavioral_nudge} />
+                                    )}
+                                    {strat?.misdirection_or_friction_removed && (
+                                        <StrategyField label="Friction Removed" value={strat.misdirection_or_friction_removed} />
+                                    )}
+                                </div>
+                            </ResultsCard>
+                        </BlurGate>
+                    </div>
 
                     {/* ── Persuasion DNA ── */}
                     {cls?.persuasion_stack && (
@@ -501,35 +527,79 @@ export default function ResultsView({
                         </ResultsCard>
                     )}
 
-                    {/* ── Friction Diagnostics ── */}
-                    {diag?.friction_analysis && (
-                        <ResultsCard title="Creative Friction" variant="strategy" tooltip="Diagnostics on conversion blockers. Low scores indicate areas where the viewer is likely to drop off or experience confusion.">
-                            <div className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {Object.entries(diag.friction_analysis.scores).map(([key, score]) => (
-                                        <div key={key} className="space-y-1.5">
-                                            <div className="flex justify-between items-end">
-                                                <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-widest">{key.replace(/_/g, ' ')}</p>
-                                                <span className="text-[10px] font-bold text-[#141414]">{score}%</span>
+                    {/* ── Friction & Confidence Grid ── */}
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                        {/* ── Friction Diagnostics ── */}
+                        {diag?.friction_analysis && (
+                            <ResultsCard title="Creative Friction" variant="strategy" tooltip="Diagnostics on conversion blockers. Low scores indicate areas where the viewer is likely to drop off or experience confusion.">
+                                <div className="space-y-6">
+                                    <div className="grid grid-cols-1 gap-4">
+                                        {Object.entries(diag.friction_analysis.scores).map(([key, score]) => (
+                                            <div key={key} className="space-y-1.5">
+                                                <div className="flex justify-between items-end">
+                                                    <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-widest">{key.replace(/_/g, ' ')}</p>
+                                                    <span className="text-[10px] font-bold text-[#141414]">{score}%</span>
+                                                </div>
+                                                <div className="h-1 bg-[#FBF7EF] rounded-full overflow-hidden border border-[#E7DED1]">
+                                                    <div
+                                                        className="h-full bg-[#141414] rounded-full"
+                                                        style={{ width: `${score}%` }}
+                                                    />
+                                                </div>
                                             </div>
-                                            <div className="h-1 bg-[#FBF7EF] rounded-full overflow-hidden border border-[#E7DED1]">
-                                                <div
-                                                    className="h-full bg-[#141414] rounded-full"
-                                                    style={{ width: `${score}%` }}
-                                                />
-                                            </div>
+                                        ))}
+                                    </div>
+                                    {diag.friction_analysis.top_fixes && (
+                                        <div className="pt-4 border-t border-[#E7DED1]">
+                                            <p className="text-[10px] font-bold text-[#141414]/40 uppercase tracking-[0.2em] mb-3">Top Recommended Fixes:</p>
+                                            <BulletList items={diag.friction_analysis.top_fixes} color="accent" />
                                         </div>
-                                    ))}
+                                    )}
                                 </div>
-                                {diag.friction_analysis.top_fixes && (
-                                    <div className="pt-4 border-t border-[#E7DED1]">
-                                        <p className="text-[10px] font-bold text-[#141414]/40 uppercase tracking-[0.2em] mb-3">Top Recommended Fixes:</p>
-                                        <BulletList items={diag.friction_analysis.top_fixes} color="accent" />
+                            </ResultsCard>
+                        )}
+
+                        {/* ── Confidence / Diagnostics ── */}
+                        <ResultsCard title="Confidence Scores" variant="gauge">
+                            <div className="space-y-6">
+                                {/* Highlight Overall Score */}
+                                {diag?.confidence?.overall !== undefined && (
+                                    <div className="pb-4 border-b border-[#E7DED1]">
+                                        <ConfidenceGauge
+                                            label="System Confidence (Overall)"
+                                            value={diag.confidence.overall}
+                                            description="Aggregate probability across all semiotic and strategic layers."
+                                        />
                                     </div>
                                 )}
+
+                                <div className="grid grid-cols-1 gap-4">
+                                    {diag?.confidence && Object.entries(diag.confidence)
+                                        .filter(([key, val]) => typeof val === 'number' && key !== 'overall')
+                                        .map(([key, val]) => {
+                                            const descriptions: Record<string, string> = {
+                                                trigger_mechanic: "Detection of underlying psychological triggers.",
+                                                secondary_trigger_mechanic: "Secondary motivational drivers.",
+                                                narrative_framework: "Structural semiotic pattern alignment.",
+                                                copy_transcription: "OCR and manual copy accuracy.",
+                                                color_extraction: "Spectrum and palette precision.",
+                                                subtext: "Inferred semiotic and cultural subtext accuracy.",
+                                                objection: "Persuasion-logic dismantling confidence."
+                                            };
+                                            return (
+                                                <ConfidenceGauge
+                                                    key={key}
+                                                    label={key}
+                                                    value={val as number}
+                                                    description={descriptions[key] || "Component-level signal strength."}
+                                                />
+                                            );
+                                        })
+                                    }
+                                </div>
                             </div>
                         </ResultsCard>
-                    )}
+                    </div>
 
                     {/* ── Platform Fitness ── */}
                     {diag?.platform_fitness && (
@@ -556,28 +626,6 @@ export default function ResultsView({
                         </ResultsCard>
                     )}
 
-                    {/* ── Strategic Intelligence — BLUR on limited ── */}
-                    <BlurGate locked={isLimited}>
-                        <ResultsCard title="Strategic Intelligence" variant="strategy">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
-                                {strat?.target_job_to_be_done && (
-                                    <StrategyField label="Job-to-be-Done" value={strat.target_job_to_be_done} />
-                                )}
-                                {strat?.positioning_claim && (
-                                    <StrategyField label="Positioning Claim" value={strat.positioning_claim} />
-                                )}
-                                {strat?.differentiator_angle && (
-                                    <StrategyField label="Differentiator Angle" value={strat.differentiator_angle} />
-                                )}
-                                {strat?.behavioral_nudge && (
-                                    <StrategyField label="Behavioral Nudge" value={strat.behavioral_nudge} />
-                                )}
-                                {strat?.misdirection_or_friction_removed && (
-                                    <StrategyField label="Friction Removed" value={strat.misdirection_or_friction_removed} />
-                                )}
-                            </div>
-                        </ResultsCard>
-                    </BlurGate>
 
                     {/* ── Test Plan Builder ── */}
                     {strat?.test_plan && (
@@ -604,73 +652,36 @@ export default function ResultsView({
                         </ResultsCard>
                     )}
 
-                    {/* ── Evidence Anchors ── */}
-                    {((strat?.evidence_anchors?.length || 0) > 0 || (diag?.evidence_anchors?.length || 0) > 0) && (
-                        <ResultsCard title="Evidence Anchors" variant="bullets">
-                            <BulletList
-                                items={strat?.evidence_anchors || diag?.evidence_anchors || []}
-                            />
-                        </ResultsCard>
-                    )}
-
-                    {/* ── Visual Extraction ── */}
-                    <ResultsCard title="Visual Extraction" variant="tags">
-                        {ext?.composition_notes && (
-                            <p className="text-sm text-[#6B6B6B] leading-[1.5] mb-4">
-                                {ext.composition_notes}
-                            </p>
+                    {/* ── Evidence & Extraction Grid ── */}
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                        {/* ── Evidence Anchors ── */}
+                        {((strat?.evidence_anchors?.length || 0) > 0 || (diag?.evidence_anchors?.length || 0) > 0) && (
+                            <ResultsCard title="Evidence Anchors" variant="bullets">
+                                <BulletList
+                                    items={strat?.evidence_anchors || diag?.evidence_anchors || []}
+                                />
+                            </ResultsCard>
                         )}
-                        {(ext?.notable_visual_elements?.length || 0) > 0 && (
-                            <div className="flex flex-wrap gap-1.5">
-                                {ext.notable_visual_elements.map((el: string, i: number) => (
-                                    <span key={i} className="px-3 py-1.5 rounded-xl bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1] hover:border-accent/30 transition-colors">
-                                        {el}
-                                    </span>
-                                ))}
-                            </div>
-                        )}
-                    </ResultsCard>
 
-                    {/* ── Confidence / Diagnostics ── */}
-                    <ResultsCard title="Confidence Scores" variant="gauge">
-                        <div className="space-y-6">
-                            {/* Highlight Overall Score */}
-                            {diag?.confidence?.overall !== undefined && (
-                                <div className="pb-4 border-b border-[#E7DED1]">
-                                    <ConfidenceGauge
-                                        label="System Confidence (Overall)"
-                                        value={diag.confidence.overall}
-                                        description="Aggregate probability across all semiotic and strategic layers."
-                                    />
+                        {/* ── Visual Extraction ── */}
+                        <ResultsCard title="Visual Extraction" variant="tags">
+                            {ext?.composition_notes && (
+                                <p className="text-sm text-[#6B6B6B] leading-[1.5] mb-4">
+                                    {ext.composition_notes}
+                                </p>
+                            )}
+                            {(ext?.notable_visual_elements?.length || 0) > 0 && (
+                                <div className="flex flex-wrap gap-1.5">
+                                    {ext.notable_visual_elements.map((el: string, i: number) => (
+                                        <span key={i} className="px-3 py-1.5 rounded-xl bg-[#FBF7EF] text-[#6B6B6B] text-[10px] font-bold border border-[#E7DED1] hover:border-accent/30 transition-colors">
+                                            {el}
+                                        </span>
+                                    ))}
                                 </div>
                             )}
+                        </ResultsCard>
+                    </div>
 
-                            <div className="grid grid-cols-1 gap-4">
-                                {diag?.confidence && Object.entries(diag.confidence)
-                                    .filter(([key, val]) => typeof val === 'number' && key !== 'overall')
-                                    .map(([key, val]) => {
-                                        const descriptions: Record<string, string> = {
-                                            trigger_mechanic: "Detection of underlying psychological triggers.",
-                                            secondary_trigger_mechanic: "Secondary motivational drivers.",
-                                            narrative_framework: "Structural semiotic pattern alignment.",
-                                            copy_transcription: "OCR and manual copy accuracy.",
-                                            color_extraction: "Spectrum and palette precision.",
-                                            subtext: "Inferred semiotic and cultural subtext accuracy.",
-                                            objection: "Persuasion-logic dismantling confidence."
-                                        };
-                                        return (
-                                            <ConfidenceGauge
-                                                key={key}
-                                                label={key}
-                                                value={val as number}
-                                                description={descriptions[key] || "Component-level signal strength."}
-                                            />
-                                        );
-                                    })
-                                }
-                            </div>
-                        </div>
-                    </ResultsCard>
 
                     {/* ── Failure Modes ── */}
                     {(diag?.failure_modes?.length || 0) > 0 && (

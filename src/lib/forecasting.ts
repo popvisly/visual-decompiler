@@ -83,13 +83,19 @@ export class ForecastingService {
         const styles = ad.classification?.visual_style || [];
         const trigger = ad.classification?.trigger_mechanic || 'Unknown';
 
-        // Check for "Pulse Match" - is the style currently trending?
+        // 1. Check for explicit AI-driven metadata first
+        if (typeof (ad.meta as any)?.saturation_risk === 'number') {
+            return {
+                saturationLevel: (ad.meta as any).saturation_risk,
+                estimatedLifespanDays: (ad.meta as any).predicted_lifespan_days || 90
+            };
+        }
+
+        // 2. Fallback to Heuristic: if trending, it's popular but saturating faster.
         const trendingKeywords = ['minimalist', 'lo-fi', 'fast-cut', 'cinematic', 'ugc'];
         const hasTrendingStyle = styles.some(s => trendingKeywords.some(kw => s.toLowerCase().includes(kw)));
         const pulseMatch = pulseText.toLowerCase().includes(trigger.toLowerCase()) || hasTrendingStyle;
 
-        // Heuristic: If it's trending, it's popular (Higher resonance) but also saturating faster.
-        // If it's a "Status Prestige" or "Aspirational" ad, it typically has a longer shelf life but higher competition.
         let saturation = pulseMatch ? 72 : 28;
         let lifespan = pulseMatch ? 35 : 90;
 
@@ -97,7 +103,7 @@ export class ForecastingService {
         if (trigger === 'Status Prestige') {
             saturation += 10;
             lifespan += 30;
-        } else if (trigger === 'Fear of Missing Out') {
+        } else if (trigger === 'Fear of Missing Out' || trigger === 'FOMO_Scarcity') {
             saturation += 20;
             lifespan -= 20;
         }
