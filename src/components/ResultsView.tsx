@@ -417,28 +417,19 @@ export default function ResultsView({
 
                     {/* ── Classification + Trigger Mechanics ── */}
                     <ResultsCard title="Classification & Trigger Mechanics" variant="classification" tooltip="The tactical DNA of the ad - what psychological triggers and persuasion patterns are being deployed.">
-                        <div className="space-y-6">
-                            {(cls as any)?.persuasion_stack ? (
-                                <PersuasionStack
-                                    stack={(cls as any).persuasion_stack}
-                                    stackTypeLabel={(cls as any).stack_type_label}
-                                />
-                            ) : (
-                                <div className="grid grid-cols-2 gap-3">
-                                    {[
-                                        { label: 'Trigger Mechanic', value: cls?.trigger_mechanic },
-                                        { label: 'Secondary Trigger', value: cls?.secondary_trigger_mechanic },
-                                        { label: 'Narrative Framework', value: cls?.narrative_framework },
-                                        { label: 'Claim Type', value: cls?.claim_type },
-                                        { label: 'Offer Type', value: cls?.offer_type },
-                                        { label: 'CTA Strength', value: cls?.cta_strength },
-                                        { label: 'Cognitive Load', value: cls?.cognitive_load },
-                                        { label: 'Gaze Priority', value: cls?.gaze_priority },
-                                    ].filter(i => i.value).map(item => (
-                                        <ClassificationPill key={item.label} label={item.label} value={item.value!} />
-                                    ))}
-                                </div>
-                            )}
+                        <div className="grid grid-cols-2 gap-3">
+                            {[
+                                { label: 'Trigger Mechanic', value: cls?.trigger_mechanic },
+                                { label: 'Secondary Trigger', value: cls?.secondary_trigger_mechanic },
+                                { label: 'Narrative Framework', value: cls?.narrative_framework },
+                                { label: 'Claim Type', value: cls?.claim_type },
+                                { label: 'Offer Type', value: cls?.offer_type },
+                                { label: 'CTA Strength', value: cls?.cta_strength },
+                                { label: 'Cognitive Load', value: cls?.cognitive_load },
+                                { label: 'Gaze Priority', value: cls?.gaze_priority },
+                            ].filter(i => i.value).map(item => (
+                                <ClassificationPill key={item.label} label={item.label} value={item.value!} />
+                            ))}
                         </div>
                         {cls?.visual_style && cls.visual_style.length > 0 && (
                             <div className="mb-3 mt-6">
