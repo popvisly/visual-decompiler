@@ -140,8 +140,9 @@ async function performAnalysis(
             ],
         });
 
-        const contentBlock = response.content[0];
-        if (contentBlock.type !== 'text') throw new Error("Claude returned non-text response");
+        // Find the text block (skip thinking blocks from extended thinking)
+        const contentBlock = response.content.find((block: any) => block.type === 'text');
+        if (!contentBlock) throw new Error("Claude returned no text response");
 
         // Claude sometimes wraps JSON in triple backticks even if told not to
         let text = contentBlock.text;
