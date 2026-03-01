@@ -33,8 +33,8 @@ D) **Psychological Trigger**: Choose trigger_mechanic and identify objection_dis
 E) **Competitive Advantage**: Explicitly identify the core "Unfair Advantage" or "Moat" claimed in the ad.
 F) **Visual Hierarchy**: Explain gaze_priority.
 G) **Temporal Genealogy**: Detect the "Aesthetic Year" (1950s-2010s) and map the strategic genealogy.
-H) **Evidence Layer (NEW)**: Provide visual/textual "Receipts" for every claim using normalized coordinates (0-1000).
-I) **Persuasion Stack (NEW)**: Weight triggers (0-100) and identify likely scan path.
+H) **Evidence Layer (NEW & CRITICAL)**: Provide visual/textual "Receipts" for every claim using normalized coordinates (0-1000). Every claim MUST have an entry in `evidence_receipts` with an `area` object.
+I) **Persuasion Stack (NEW)**: Weight triggers (0-100) and identify likely scan path with coordinates.
 J) **Output**: Generate strict JSON.
 
 ---

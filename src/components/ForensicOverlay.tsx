@@ -59,9 +59,9 @@ export default function ForensicOverlay({ imageUrl, anchors }: Props) {
                         >
                             {/* Label Tag */}
                             <div className={`absolute -top-6 left-0 px-2 py-0.5 whitespace-nowrap rounded text-[10px] font-bold uppercase tracking-widest transition-opacity pointer-events-none
-                                ${isHovered ? 'bg-accent text-[#141414] opacity-100' : 'bg-[#141414]/60 text-white opacity-0'}
+                                ${isHovered ? 'bg-accent text-white opacity-100 shadow-sm' : 'bg-[#141414]/60 text-white opacity-0'}
                             `}>
-                                {anchor.label}
+                                {anchor.label || 'Evidence'}
                             </div>
                         </div>
                     );
