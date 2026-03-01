@@ -26,8 +26,8 @@ const DEMO_DIGEST: AdDigest = {
         emotion_tone: ["Confidence", "Desire"],
         cta_strength: "Direct",
         persuasion_stack: [
-            { id: "p1", trigger: "Mastery", weight: 65, sequence: 1, rationale: "Macro-focus on muscle tension establishes the 'Work' phase." },
-            { id: "p2", trigger: "Prestige", weight: 35, sequence: 2, rationale: "Slow-motion release and minimalist logo placement encodes luxury performance." }
+            { trigger: "Mastery", weight: 65, sequence: 1, rationale: "Macro-focus on muscle tension establishes the 'Work' phase." },
+            { trigger: "Prestige", weight: 35, sequence: 2, rationale: "Slow-motion release and minimalist logo placement encodes luxury performance." }
         ],
         stack_type_label: "Aspirational Grid"
     },
@@ -64,7 +64,9 @@ const DEMO_DIGEST: AdDigest = {
         variant_matrix: [
             { name: "The Grit", description: "Gritty, low-fi UGC style focusing on the struggle.", primary_lever: "Authenticity" },
             { name: "The Lab", description: "Hyper-clean, sci-fi lighting focusing on technical specs.", primary_lever: "Performance" }
-        ]
+        ],
+        misdirection_or_friction_removed: "Subconsciously neutralizes the 'effort' hurdle by aestheticizing the struggle.",
+        notes: "Strategic DNA is optimized for high-performance audience segments."
     },
     diagnostics: {
         confidence: { overall: 94, trigger_mechanic: 98, subtext: 91 },
