@@ -52,25 +52,39 @@ export async function POST(req: Request) {
                 });
         }
 
-        // 3. Create Checkout Session
+        // 3. Determine if this is a subscription or one-time payment
+        const isOneTime = planId === 'price_1T64V10LZZUO4xz4jug67wyT'; // $5 one-time analysis
+
+        // 4. Create Checkout Session
         try {
-            const session = await stripe.checkout.sessions.create({
+            const sessionConfig: any = {
                 customer: stripeCustomerId,
                 line_items: [
                     {
-                        price: planId, // This should be a Stripe Price ID (e.g., price_H5ggv...)
+                        price: planId,
                         quantity: 1,
                     },
                 ],
-                mode: 'subscription',
+                mode: isOneTime ? 'payment' : 'subscription',
                 success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard?billing=success`,
                 cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pricing?billing=cancel`,
-                subscription_data: {
+                metadata: {
+                    clerkId: userId,
+                    priceId: planId,
+                },
+            };
+
+            // Add subscription metadata only for recurring payments
+            if (!isOneTime) {
+                sessionConfig.subscription_data = {
                     metadata: {
                         clerkId: userId,
+                        priceId: planId,
                     },
-                },
-            });
+                };
+            }
+
+            const session = await stripe.checkout.sessions.create(sessionConfig);
 
             return NextResponse.json({ url: session.url });
         } catch (stripeErr: any) {

@@ -4,6 +4,10 @@ import type { NextConfig } from 'next';
 // Without this, Next's output file tracing can omit the binary and you'll see:
 // "No such file or directory" at runtime.
 const nextConfig: NextConfig = {
+  // Increase body size limit for Server Actions to support high-quality ad images
+  serverActions: {
+    bodySizeLimit: '20mb', // Supports ad creatives up to 20MB
+  },
   outputFileTracingIncludes: {
     // Route handlers
     '/api/ingest': ['./node_modules/ffmpeg-static/**'],

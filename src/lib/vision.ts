@@ -1,7 +1,8 @@
 import OpenAI from 'openai';
 import { BLACK_BOX_PROMPT_V1, BLACK_BOX_PROMPT_V2, BLACK_BOX_PROMPT_V3, BLACK_BOX_PROMPT_V4 } from './prompts';
 import fs from 'fs';
-import { getAnthropic, CLAUDE_MODEL } from './anthropic';
+import { getAnthropic, getClaudeModel } from './anthropic';
+import { getCachedAnalysis, setCachedAnalysis, hashImageData } from './analysis_cache';
 
 let _openai: OpenAI | null = null;
 export function getOpenAI() {
@@ -17,7 +18,12 @@ export type VisionInput =
     | { type: 'url'; url: string }
     | { type: 'base64'; data: string; mimeType: string };
 
-export async function decompileAd(inputs: VisionInput[], version: string = 'V1') {
+export async function decompileAd(
+    inputs: VisionInput[],
+    version: string = 'V1',
+    tier: 'free' | 'pro' | 'agency' = 'pro',
+    useCache: boolean = true
+) {
     // 1. Select the strict prompt (inlined at build time)
     let systemPrompt = BLACK_BOX_PROMPT_V1;
     if (version === 'V2') systemPrompt = BLACK_BOX_PROMPT_V2;
@@ -27,8 +33,60 @@ export async function decompileAd(inputs: VisionInput[], version: string = 'V1')
     const anthropic = getAnthropic();
     const isClaude = !!anthropic;
 
+    // 2. Check cache if enabled
+    if (useCache && inputs.length === 1) {
+        const firstInput = inputs[0];
+        let imageData: string;
+
+        if (firstInput.type === 'url') {
+            const imgRes = await fetch(firstInput.url);
+            if (imgRes.ok) {
+                const buffer = Buffer.from(await imgRes.arrayBuffer());
+                imageData = buffer.toString('base64');
+            } else {
+                imageData = firstInput.url; // fallback to URL as identifier
+            }
+        } else {
+            imageData = firstInput.data;
+        }
+
+        const imageHash = hashImageData(imageData);
+        const modelName = isClaude ? getClaudeModel(tier) : 'gpt-4o';
+
+        const cached = await getCachedAnalysis(imageHash, modelName, version);
+        if (cached) {
+            return cached;
+        }
+
+        // Continue with API call and cache result at the end
+        try {
+            const result = await performAnalysis(inputs, systemPrompt, anthropic, isClaude, tier, version, imageHash, modelName);
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    // No cache or multiple images - proceed directly
+    return performAnalysis(inputs, systemPrompt, anthropic, isClaude, tier, version);
+}
+
+async function performAnalysis(
+    inputs: VisionInput[],
+    systemPrompt: string,
+    anthropic: any,
+    isClaude: boolean,
+    tier: 'free' | 'pro' | 'agency',
+    version: string,
+    imageHash?: string,
+    modelName?: string
+) {
+
     if (isClaude) {
-        console.log(`[Vision] Using Claude 3.5 Sonnet engine for deconstruction (${version})`);
+        const selectedModel = getClaudeModel(tier);
+        const modelLabel = tier === 'free' ? 'Haiku (Fast)' : tier === 'agency' ? 'Opus (Premium)' : 'Sonnet (Pro)';
+        console.log(`[Vision] Using Claude ${modelLabel} for deconstruction (${version})`);
+
         const messageContent: any[] = [
             { type: "text", text: "Analyze this advertisement media and return a strict JSON digest. If multiple images are provided, they are keyframes from a single video." }
         ];
@@ -61,9 +119,22 @@ export async function decompileAd(inputs: VisionInput[], version: string = 'V1')
         }
 
         const response = await anthropic.messages.create({
-            model: CLAUDE_MODEL,
-            max_tokens: 4096,
-            system: systemPrompt,
+            model: selectedModel,
+            max_tokens: 8192, // Increased for extended thinking + JSON output
+            // Enable prompt caching to save 90% on input token costs
+            // The system prompt will be cached for 5 minutes
+            system: [
+                {
+                    type: "text",
+                    text: systemPrompt,
+                    cache_control: { type: "ephemeral" }
+                }
+            ],
+            // Extended thinking for complex strategic analysis (disabled for Haiku)
+            thinking: tier !== 'free' ? {
+                type: "enabled",
+                budget_tokens: tier === 'agency' ? 4000 : 2000
+            } : undefined,
             messages: [
                 { role: "user", content: messageContent }
             ],
@@ -80,7 +151,14 @@ export async function decompileAd(inputs: VisionInput[], version: string = 'V1')
             text = text.split('```')[1].split('```')[0].trim();
         }
 
-        return JSON.parse(text);
+        const result = JSON.parse(text);
+
+        // Cache the result if hash and model provided
+        if (imageHash && modelName) {
+            setCachedAnalysis(imageHash, modelName, version, result).catch(console.error);
+        }
+
+        return result;
     }
 
     // 2. OpenAI Fallback

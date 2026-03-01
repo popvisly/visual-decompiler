@@ -12,30 +12,57 @@ const PLANS = [
         price: '$0',
         description: 'Perfect for individual designers exploring the deconstruction methodology.',
         features: [
-            'Basic persistence',
-            'Strategic Laboratory access',
-            '3 deconstructions / month',
+            'Haiku 4.5 AI Engine (Fast)',
+            'Basic forensic analysis',
+            '5 deconstructions / month',
             'Community-level signals',
+            'Dashboard access',
         ],
-        cta: 'Current Plan',
+        cta: 'Start Free',
         highlight: false,
+        model: 'Haiku 4.5',
+        costPerAnalysis: '$0.01',
     },
     {
-        id: 'price_1T4BU70LZZUO4xz4b4A57HNV', // Real Stripe Price ID for Agency Sovereignty
+        id: 'price_1T64QL0LZZUO4xz44Cwvqdzk', // Pro tier Stripe Price ID
+        name: 'Strategic Unit',
+        price: '$49',
+        interval: '/mo',
+        description: 'Professional-grade deconstruction for brand strategists and creative leads.',
+        features: [
+            'Sonnet 4.5 AI Engine (Pro)',
+            'Extended thinking analysis',
+            '100 deconstructions / month',
+            'Advanced Trend Forensics',
+            'Evidence-based receipts',
+            'Export Strategic Dossiers',
+            'Priority support',
+        ],
+        cta: 'Upgrade to Pro',
+        highlight: true,
+        model: 'Sonnet 4.5',
+        costPerAnalysis: '$0.49',
+    },
+    {
+        id: 'price_1T64ct0LZZUO4xz4flNsI53d', // Agency Sovereignty (USD)
         name: 'Agency Sovereignty',
         price: '$199',
         interval: '/mo',
         description: 'Full-spectrum deconstruction for leadership and elite strategy units.',
         features: [
+            'Opus 4.6 AI Engine (Premium)',
             'Unlimited deconstructions',
             'White-label client portals',
-            'Advanced Trend Forensics',
+            'Deep semiotic analysis',
             'Priority Neural Processor',
             'Strategic Dossier exports',
             'ISO-27001 Security layer',
+            'Dedicated account manager',
         ],
         cta: 'Upgrade to Sovereignty',
-        highlight: true,
+        highlight: false,
+        model: 'Opus 4.6',
+        costPerAnalysis: 'Unlimited',
     },
 ];
 
@@ -105,7 +132,7 @@ export default function PricingPage() {
                     </div>
 
                     {/* Pricing Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
                         {PLANS.map((plan, idx) => (
                             <motion.div
                                 key={plan.id}
@@ -113,15 +140,15 @@ export default function PricingPage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.1 * idx + 0.4, duration: 0.8 }}
                                 className={`
-                                    relative p-10 md:p-16 rounded-[2.5rem] flex flex-col justify-between
+                                    relative p-8 md:p-12 rounded-[2.5rem] flex flex-col justify-between
                                     ${plan.highlight
-                                        ? 'bg-[#141414] text-[#FBF7EF] shadow-[0_40px_80px_rgba(20,20,20,0.15)]'
+                                        ? 'bg-[#141414] text-[#FBF7EF] shadow-[0_40px_80px_rgba(20,20,20,0.15)] scale-[1.02]'
                                         : 'bg-white border border-[#E7DED1] text-[#141414]'}
                                 `}
                             >
                                 {plan.highlight && (
-                                    <div className="absolute top-8 right-8 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[10px] font-bold tracking-widest uppercase">
-                                        Most Deployed
+                                    <div className="absolute top-6 right-6 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[9px] font-bold tracking-widest uppercase">
+                                        Most Popular
                                     </div>
                                 )}
 
@@ -173,6 +200,33 @@ export default function PricingPage() {
                         ))}
                     </div>
 
+                    {/* One-Time Analysis */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.7, duration: 0.8 }}
+                        className="mt-12 text-center"
+                    >
+                        <div className="inline-block bg-white border border-[#E7DED1] rounded-[2rem] p-8 md:p-10">
+                            <p className="text-[10px] font-bold tracking-[0.3em] uppercase mb-4 opacity-40">
+                                No Commitment Required
+                            </p>
+                            <h3 className="text-3xl md:text-4xl font-light mb-3">
+                                $5 <span className="text-lg opacity-40">per analysis</span>
+                            </h3>
+                            <p className="text-sm text-[#6B6B6B] font-light mb-6 max-w-sm">
+                                Perfect for one-off projects. Get instant Pro-tier (Sonnet 4.5) analysis without a subscription.
+                            </p>
+                            <button
+                                onClick={() => handleUpgrade('price_1T64V10LZZUO4xz4jug67wyT')}
+                                disabled={loading !== null}
+                                className="px-8 py-3 bg-[#141414] text-[#FBF7EF] rounded-full text-[11px] font-bold uppercase tracking-[0.2em] hover:shadow-[0_10px_30px_rgba(20,20,20,0.1)] transition-all active:scale-[0.98]"
+                            >
+                                Analyze Once
+                            </button>
+                        </div>
+                    </motion.div>
+
                     {/* ══════════════════════════════════════════════════════ */}
                     {/* UPGRADE TO SOVEREIGNTY */}
                     {/* ══════════════════════════════════════════════════════ */}
@@ -203,8 +257,8 @@ export default function PricingPage() {
                         </div>
 
                         {/* Comparison Table */}
-                        <div className="bg-white rounded-[2.5rem] border border-[#E7DED1] overflow-hidden shadow-[0_40px_80px_rgba(20,20,20,0.04)] mb-16">
-                            <div className="grid grid-cols-3 text-center border-b border-[#E7DED1]">
+                        <div className="bg-white rounded-[2.5rem] border border-[#E7DED1] overflow-hidden shadow-[0_40px_80px_rgba(20,20,20,0.04)] mb-16 overflow-x-auto">
+                            <div className="grid grid-cols-4 text-center border-b border-[#E7DED1] min-w-[800px]">
                                 <div className="p-6 md:p-8 text-left border-r border-[#E7DED1]">
                                     <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em]">Capability</p>
                                 </div>
@@ -212,27 +266,71 @@ export default function PricingPage() {
                                     <p className="text-[9px] font-bold text-[#6B6B6B]/50 uppercase tracking-[0.3em]">The Observer</p>
                                     <p className="text-lg font-light text-[#6B6B6B] mt-1">$0</p>
                                 </div>
-                                <div className="p-6 md:p-8 bg-[#141414]/[0.02]">
-                                    <p className="text-[9px] font-bold text-accent uppercase tracking-[0.3em]">Agency Sovereignty</p>
+                                <div className="p-6 md:p-8 border-r border-[#E7DED1] bg-[#141414]/[0.02]">
+                                    <p className="text-[9px] font-bold text-accent uppercase tracking-[0.3em]">Strategic Unit</p>
+                                    <p className="text-lg font-light text-[#141414] mt-1">$49<span className="text-[#6B6B6B] text-xs">/mo</span></p>
+                                </div>
+                                <div className="p-6 md:p-8">
+                                    <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em]">Agency Sovereignty</p>
                                     <p className="text-lg font-light text-[#141414] mt-1">$199<span className="text-[#6B6B6B] text-xs">/mo</span></p>
                                 </div>
                             </div>
                             {[
-                                { capability: 'Forensic Depth', observer: 'Basic persistence', sovereign: 'Full Intelligence Suite (Cognitive Load, Schema Autopsy, Neural Sentiment)' },
-                                { capability: 'Strategic Output', observer: 'Dashboard view only', sovereign: 'White-Label Strategic Dossiers (PDF Export)' },
-                                { capability: 'Identity Control', observer: 'Branded "V" Mark', sovereign: 'Full Agency Branding (Your logo, your colors, your authority)' },
-                                { capability: 'Security Layer', observer: 'Standard Access', sovereign: 'ISO-27001 Compliant Infrastructure (Audit-ready for Enterprise)' },
-                                { capability: 'Neural Priority', observer: 'Standard Queue', sovereign: 'Priority Processor Access (Sub-60s Deconstructions)' },
+                                {
+                                    capability: 'AI Model',
+                                    observer: 'Haiku 4.5 (Fast)',
+                                    pro: 'Sonnet 4.5 (Pro)',
+                                    sovereign: 'Opus 4.6 (Premium)'
+                                },
+                                {
+                                    capability: 'Monthly Limit',
+                                    observer: '5 analyses',
+                                    pro: '100 analyses',
+                                    sovereign: 'Unlimited'
+                                },
+                                {
+                                    capability: 'Analysis Depth',
+                                    observer: 'Basic forensics',
+                                    pro: 'Extended thinking + Evidence receipts',
+                                    sovereign: 'Deep semiotic analysis + Competitive intelligence'
+                                },
+                                {
+                                    capability: 'Strategic Output',
+                                    observer: 'Dashboard view',
+                                    pro: 'PDF Dossier exports',
+                                    sovereign: 'White-label Strategic Dossiers'
+                                },
+                                {
+                                    capability: 'Identity Control',
+                                    observer: 'Branded "V" Mark',
+                                    pro: 'Branded "V" Mark',
+                                    sovereign: 'Full Agency Branding (Your logo, colors, authority)'
+                                },
+                                {
+                                    capability: 'Security Layer',
+                                    observer: 'Standard Access',
+                                    pro: 'Standard Access',
+                                    sovereign: 'ISO-27001 Compliant Infrastructure'
+                                },
+                                {
+                                    capability: 'Processing Speed',
+                                    observer: 'Standard Queue',
+                                    pro: 'Priority Queue',
+                                    sovereign: 'Priority Processor (<60s)'
+                                },
                             ].map((row, idx) => (
-                                <div key={idx} className={`grid grid-cols-3 ${idx < 4 ? 'border-b border-[#E7DED1]' : ''}`}>
+                                <div key={idx} className={`grid grid-cols-4 min-w-[800px] ${idx < 6 ? 'border-b border-[#E7DED1]' : ''}`}>
                                     <div className="p-5 md:p-6 text-left border-r border-[#E7DED1]">
                                         <p className="text-[10px] font-bold text-[#141414] uppercase tracking-[0.15em]">{row.capability}</p>
                                     </div>
                                     <div className="p-5 md:p-6 border-r border-[#E7DED1]">
                                         <p className="text-[11px] text-[#6B6B6B]/60 font-light leading-relaxed">{row.observer}</p>
                                     </div>
-                                    <div className="p-5 md:p-6 bg-[#141414]/[0.02]">
-                                        <p className="text-[11px] text-[#141414] font-medium leading-relaxed">{row.sovereign}</p>
+                                    <div className="p-5 md:p-6 border-r border-[#E7DED1] bg-[#141414]/[0.02]">
+                                        <p className="text-[11px] text-[#141414] font-medium leading-relaxed">{row.pro}</p>
+                                    </div>
+                                    <div className="p-5 md:p-6">
+                                        <p className="text-[11px] text-[#141414] font-light leading-relaxed">{row.sovereign}</p>
                                     </div>
                                 </div>
                             ))}
@@ -367,7 +465,7 @@ export default function PricingPage() {
                             </p>
 
                             <button
-                                onClick={() => handleUpgrade('price_1T4BU70LZZUO4xz4b4A57HNV')}
+                                onClick={() => handleUpgrade('price_1T64ct0LZZUO4xz4flNsI53d')}
                                 disabled={loading !== null}
                                 className="px-14 py-6 bg-[#141414] hover:bg-black text-[#FBF7EF] font-bold text-[12px] uppercase tracking-[0.2em] rounded-full shadow-[0_20px_60px_rgba(20,20,20,0.2)] transition-all active:scale-[0.98]"
                             >
