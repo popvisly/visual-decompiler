@@ -22,6 +22,8 @@ import { ForecastingService } from '@/lib/forecasting';
 import { NeuralDeconstructionService } from '@/lib/neural_deconstruction_service';
 import AdAnalyticsTab from '@/components/AdAnalyticsTab';
 import ForensicOverlay from '@/components/ForensicOverlay';
+import PersuasionStack from '@/components/PersuasionStack';
+import ScanPath from '@/components/ScanPath';
 
 export default function AdDetailClient({
     ad,
@@ -163,11 +165,11 @@ export default function AdDetailClient({
                                         className="w-full aspect-[4/5] object-cover rounded-[1.5rem] md:rounded-[2.5rem]"
                                         controls muted playsInline preload="metadata"
                                     />
-                                ) : (tab === 'forensics' && (digest?.extraction as any)?.evidence_receipts?.length > 0) ? (
+                                ) : ((digest?.extraction as any)?.evidence_receipts?.length > 0 || (digest?.extraction as any)?.anchors?.length > 0) ? (
                                     <div className="rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden">
                                         <ForensicOverlay
                                             imageUrl={ad.media_url}
-                                            anchors={(digest?.extraction as any).evidence_receipts}
+                                            anchors={(digest?.extraction as any).evidence_receipts || (digest?.extraction as any).anchors}
                                         />
                                     </div>
                                 ) : (
@@ -326,6 +328,18 @@ export default function AdDetailClient({
                                 </ResultsCard>
 
                                 <DeepAuditView digest={digest} />
+
+                                {digest.classification?.persuasion_stack && (
+                                    <ResultsCard title="Persuasion Stack" variant="strategy">
+                                        <PersuasionStack stack={digest.classification.persuasion_stack} />
+                                    </ResultsCard>
+                                )}
+
+                                {digest.extraction?.likely_scan_path && (
+                                    <ResultsCard title="Attention Flow (Scan Path)" variant="gauge">
+                                        <ScanPath path={digest.extraction.likely_scan_path} />
+                                    </ResultsCard>
+                                )}
                             </div>
                         )}
 
