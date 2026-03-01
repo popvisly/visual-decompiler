@@ -79,33 +79,36 @@ export default function AdDetailClient({
 
     return (
         <div className={`py-12 space-y-16 ${isShared ? 'pt-0' : ''}`}>
-            {showBanner && (
-                <div className="max-w-[1400px] mx-auto px-6 pt-8 animate-in fade-in slide-in-from-top-4 duration-1000">
-                    <div className="bg-[#141414] rounded-3xl p-6 md:p-8 flex items-center justify-between shadow-2xl shadow-black/20 border border-white/5 relative overflow-hidden group">
-                        {/* Progress Glow */}
-                        <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent" />
+            {/* Fixed height container to prevent layout shift */}
+            <div className={`max-w-[1400px] mx-auto px-6 transition-all duration-300 ${showBanner ? 'pt-8 mb-0' : 'pt-0 mb-16'}`}>
+                {showBanner && (
+                    <div className="animate-in fade-in slide-in-from-top-4 duration-1000">
+                        <div className="bg-[#141414] rounded-3xl p-6 md:p-8 flex items-center justify-between shadow-2xl shadow-black/20 border border-white/5 relative overflow-hidden group">
+                            {/* Progress Glow */}
+                            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent" />
 
-                        <div className="flex items-center gap-6 relative z-10">
-                            <div className="w-12 h-12 rounded-2xl bg-accent/20 flex items-center justify-center text-accent shadow-inner">
-                                <CheckCircle2 className="w-6 h-6" />
+                            <div className="flex items-center gap-6 relative z-10">
+                                <div className="w-12 h-12 rounded-2xl bg-accent/20 flex items-center justify-center text-accent shadow-inner">
+                                    <CheckCircle2 className="w-6 h-6" />
+                                </div>
+                                <div>
+                                    <h3 className="text-white text-sm font-bold uppercase tracking-widest mb-1">Analysis Complete</h3>
+                                    <p className="text-white/50 text-[11px] font-medium tracking-wide">Deconstruction successfully merged into agency library.</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 className="text-white text-sm font-bold uppercase tracking-widest mb-1">Analysis Complete</h3>
-                                <p className="text-white/50 text-[11px] font-medium tracking-wide">Deconstruction successfully merged into agency library.</p>
-                            </div>
+
+                            <button
+                                onClick={() => setShowBanner(false)}
+                                className="p-2 text-white/30 hover:text-white transition-colors relative z-10"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+
+                            <div className="absolute -right-20 -top-20 w-64 h-64 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
                         </div>
-
-                        <button
-                            onClick={() => setShowBanner(false)}
-                            className="p-2 text-white/30 hover:text-white transition-colors relative z-10"
-                        >
-                            <X className="w-5 h-5" />
-                        </button>
-
-                        <div className="absolute -right-20 -top-20 w-64 h-64 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
                     </div>
-                </div>
-            )}
+                )}
+            </div>
 
             <div className="max-w-[1400px] mx-auto px-6">
                 {/* Header - Editorial Style */}
@@ -355,6 +358,26 @@ export default function AdDetailClient({
 
                         {tab === 'intelligence' && (
                             <div className="space-y-8">
+                                {/* Neural Thesis - Semiotic Deep Dive */}
+                                <ResultsCard title="Neural Thesis" variant="strategy">
+                                    <div className="space-y-6">
+                                        <div className="relative">
+                                            <span className="absolute -left-4 -top-3 text-5xl text-accent/10 font-serif leading-none italic select-none">"</span>
+                                            <p className="text-xl md:text-2xl font-light text-[#141414] leading-[1.4] italic tracking-tight pr-4 border-l-[3px] border-accent pl-6">
+                                                {digest.strategy?.semiotic_subtext || 'Calculating semiotic alignment...'}
+                                            </p>
+                                        </div>
+                                        {neuralData.strategic_verdict && (
+                                            <div className="pt-4 border-t border-[#E7DED1]">
+                                                <p className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest mb-2">Strategic Verdict</p>
+                                                <p className="text-sm font-medium text-[#141414] leading-relaxed">
+                                                    {neuralData.strategic_verdict}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </ResultsCard>
+
                                 <CognitiveLoadMap
                                     score={neuralData.cognitive_load_score}
                                     zones={neuralData.cognitive_load_zones}
