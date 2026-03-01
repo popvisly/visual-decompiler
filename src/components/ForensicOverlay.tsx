@@ -47,7 +47,7 @@ export default function ForensicOverlay({ imageUrl, anchors }: Props) {
                     return (
                         <div
                             key={idx}
-                            className={`absolute border-2 transition-all duration-300 pointer-events-auto cursor-help
+                            className={`absolute border-2 transition-all duration-300 pointer-events-auto cursor-crosshair
                                 ${isHovered
                                     ? 'border-accent bg-accent/10 shadow-[0_0_20px_rgba(187,158,123,0.4)] z-30 scale-105'
                                     : 'border-white/40 bg-white/5 opacity-40 hover:opacity-100 z-20 hover:border-white/80'
@@ -58,7 +58,7 @@ export default function ForensicOverlay({ imageUrl, anchors }: Props) {
                             onMouseLeave={() => setHoveredIdx(null)}
                         >
                             {/* Label Tag */}
-                            <div className={`absolute -top-6 left-0 px-2 py-0.5 whitespace-nowrap rounded text-[10px] font-bold uppercase tracking-widest transition-opacity
+                            <div className={`absolute -top-6 left-0 px-2 py-0.5 whitespace-nowrap rounded text-[10px] font-bold uppercase tracking-widest transition-opacity pointer-events-none
                                 ${isHovered ? 'bg-accent text-[#141414] opacity-100' : 'bg-[#141414]/60 text-white opacity-0'}
                             `}>
                                 {anchor.label}
@@ -70,7 +70,7 @@ export default function ForensicOverlay({ imageUrl, anchors }: Props) {
 
             {/* Hover Content Panel */}
             {hoveredIdx !== null && (
-                <div className="absolute bottom-4 inset-x-4 p-4 bg-[#141414]/90 backdrop-blur-md border border-white/20 rounded-2xl z-40 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <div className="absolute bottom-4 inset-x-4 p-4 bg-[#141414]/90 backdrop-blur-md border border-white/20 rounded-2xl z-40 animate-in fade-in slide-in-from-bottom-2 duration-300 pointer-events-none">
                     <div className="flex items-center gap-2 mb-2">
                         <span className="text-[10px] font-bold text-accent uppercase tracking-widest">Evidence Receipt</span>
                         <span className="px-1.5 py-0.5 rounded bg-white/10 text-white/60 text-[8px] font-bold uppercase">{validAnchors[hoveredIdx].type}</span>

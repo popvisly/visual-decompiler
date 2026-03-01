@@ -9,6 +9,15 @@ const nextConfig: NextConfig = {
     '/api/ingest': ['./node_modules/ffmpeg-static/**'],
     '/api/worker': ['./node_modules/ffmpeg-static/**', './artifacts/**'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/lexicon',
+        destination: '/docs',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

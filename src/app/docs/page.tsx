@@ -1,7 +1,20 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Layers, Tv, Target, Sparkles, ShieldCheck, BookOpen, Eye, Crosshair, Info } from 'lucide-react';
+import {
+    Brain,
+    Layers,
+    Tv,
+    Target,
+    Sparkles,
+    ShieldCheck,
+    BookOpen,
+    Eye,
+    Crosshair,
+    Info,
+    ArrowRight
+} from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import Link from 'next/link';
 
@@ -84,7 +97,53 @@ const DOSSIER_SECTIONS = [
     },
 ];
 
+const HELP_ARTICLES = [
+    {
+        title: "Visual Decompiler v1.0 (Agency‑Grade) — Overview",
+        slug: "v1-overview",
+        category: "Milestones",
+        desc: "Forensic, evidence-backed insights and an actionable production strategy.",
+        keywords: "v1.0, agency, overview, receipts, safe zone, survivability, risk flags, 14-day sprint, resultsview"
+    },
+    {
+        title: "Agency Handoff: Master the ResultsView",
+        slug: "user-guide",
+        category: "Guides",
+        desc: "Move from browsing insights to executing deconstruction.",
+        keywords: "user guide, walkthrough, forensic, resultsview, tactics, 14-day sprint"
+    },
+    {
+        title: "v1.0 QA Checklist: Agency-Grade Rigor",
+        slug: "qa-checklist",
+        category: "Technical",
+        desc: "Ensuring decompiler robustness across high-stakes agency use cases.",
+        keywords: "qa, checklist, testing, coordinates, ocr, survivability, risk"
+    },
+    {
+        title: "Schema Contract v1.0 Specification",
+        slug: "schema-contract",
+        category: "Technical",
+        desc: "Defining the formal data structure for the v1.0 forensic engine.",
+        keywords: "schema, contract, json, types, deterministic, risk, extraction"
+    },
+    {
+        title: "Release Notes: v1.0 Agency-Grade Update",
+        slug: "release-notes",
+        category: "Milestones",
+        desc: "Highlights and performance improvements in the v1.0 milestone.",
+        keywords: "release notes, v1.0, update, forensic, test planning, analysis"
+    }
+];
+
 export default function DocsPage() {
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredArticles = HELP_ARTICLES.filter(article =>
+        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.keywords.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <main className="bg-[#F6F1E7] min-h-screen">
             <UnifiedSovereignHeader />
@@ -92,8 +151,8 @@ export default function DocsPage() {
             <section className="pt-48 pb-32 px-6">
                 <div className="max-w-5xl mx-auto">
 
-                    {/* ── Hero ── */}
-                    <div className="max-w-3xl mb-32">
+                    {/* ── Help Center Hero ── */}
+                    <div className="max-w-4xl mb-32">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -101,7 +160,7 @@ export default function DocsPage() {
                         >
                             <div className="w-8 h-[1px] bg-[#141414]" />
                             <span className="text-[#141414] text-[11px] font-bold tracking-[0.4em] uppercase">
-                                Forensic Documentation
+                                Help Center / Lexicon
                             </span>
                         </motion.div>
 
@@ -109,22 +168,63 @@ export default function DocsPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                            className="text-[12vw] lg:text-[7vw] font-light leading-[0.85] tracking-tightest uppercase text-[#141414]"
+                            className="text-[12vw] lg:text-[7vw] font-light leading-[0.85] tracking-tightest uppercase text-[#141414] mb-12"
                         >
-                            The Sovereign<br />
-                            <span className="italic font-serif lowercase tracking-normal">Lexicon</span>
+                            Sovereign<br />
+                            <span className="italic font-serif lowercase tracking-normal">Central</span>
                         </motion.h1>
 
-                        <motion.p
+                        {/* Search Bar */}
+                        <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2, duration: 0.8 }}
-                            className="text-xl text-[#6B6B6B] mt-10 font-light leading-relaxed max-w-xl"
+                            className="relative max-w-2xl"
                         >
-                            Strategic intelligence support for elite units.
-                            Every term, module, and metric — defined with forensic precision.
-                        </motion.p>
+                            <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
+                                <Info className="w-5 h-5 text-[#6B6B6B]" />
+                            </div>
+                            <input
+                                type="text"
+                                placeholder="Search documentation, terms, and guides..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full bg-white border border-[#E7DED1] rounded-3xl py-6 pl-14 pr-8 text-lg font-light placeholder:text-[#6B6B6B]/40 focus:outline-none focus:border-accent/40 shadow-xl transition-all"
+                            />
+                        </motion.div>
                     </div>
+
+                    {/* ── Article Index ── */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        className="mb-40"
+                    >
+                        <h2 className="text-[10px] font-bold text-[#141414]/30 uppercase tracking-[0.3em] mb-8">Featured Articles</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {filteredArticles.map((article, idx) => (
+                                <Link
+                                    key={article.slug}
+                                    href={`/docs/${article.slug}`}
+                                    className="group p-8 bg-white border border-[#E7DED1] rounded-[2rem] hover:border-accent hover:shadow-2xl transition-all flex flex-col justify-between"
+                                >
+                                    <div>
+                                        <span className="text-[9px] font-bold text-accent uppercase tracking-widest mb-3 block">{article.category}</span>
+                                        <h3 className="text-sm font-bold text-[#141414] uppercase tracking-[0.1em] mb-4 group-hover:text-accent transition-colors leading-tight">
+                                            {article.title}
+                                        </h3>
+                                        <p className="text-[13px] text-[#6B6B6B] leading-relaxed font-light line-clamp-2">
+                                            {article.desc}
+                                        </p>
+                                    </div>
+                                    <div className="mt-8 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#141414]">
+                                        Read Article <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </motion.div>
 
                     {/* ═══════════════════════════════════════════════════ */}
                     {/* § 1 — INTELLIGENCE MODULES */}
