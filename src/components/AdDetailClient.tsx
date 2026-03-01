@@ -22,6 +22,7 @@ import { NeuralDeconstructionService } from '@/lib/neural_deconstruction_service
 import AdAnalyticsTab from '@/components/AdAnalyticsTab';
 import PersuasionStack from '@/components/PersuasionStack';
 import ScanPath from '@/components/ScanPath';
+import ForensicOverlay from '@/components/ForensicOverlay';
 
 export default function AdDetailClient({
     ad,
@@ -150,19 +151,24 @@ export default function AdDetailClient({
                     {/* Left: media always visible */}
                     <div className="lg:col-span-4 space-y-8 md:space-y-12">
                         <div className="sticky top-12 space-y-6 md:space-y-8">
-                            <div className="bg-white p-3 md:p-4 rounded-[2rem] md:rounded-[3.5rem] border border-[#E7DED1] shadow-[0_40px_100px_rgba(20,20,20,0.03)] overflow-hidden relative group">
+                            <div className="rounded-[2rem] md:rounded-[3.5rem] overflow-hidden shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
                                 {ad.media_kind === 'video' ? (
                                     <video
                                         ref={videoRef}
                                         src={ad.media_url}
-                                        className="w-full aspect-[4/5] object-cover rounded-[1.5rem] md:rounded-[2.5rem]"
+                                        className="w-full aspect-[4/5] object-cover"
                                         controls muted playsInline preload="metadata"
+                                    />
+                                ) : tab === 'forensics' && (digest?.extraction?.evidence_receipts?.length || 0) > 0 ? (
+                                    <ForensicOverlay
+                                        imageUrl={ad.media_url}
+                                        anchors={digest.extraction?.evidence_receipts || []}
                                     />
                                 ) : (
                                     <img
                                         src={ad.media_url}
                                         alt="Ad"
-                                        className="w-full aspect-[4/5] object-cover rounded-[1.5rem] md:rounded-[2.5rem]"
+                                        className="w-full aspect-[4/5] object-cover"
                                     />
                                 )}
                             </div>
