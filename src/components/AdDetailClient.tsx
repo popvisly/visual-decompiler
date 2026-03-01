@@ -21,6 +21,7 @@ import { AdDigest } from '@/types/digest';
 import { ForecastingService } from '@/lib/forecasting';
 import { NeuralDeconstructionService } from '@/lib/neural_deconstruction_service';
 import AdAnalyticsTab from '@/components/AdAnalyticsTab';
+import ForensicOverlay from '@/components/ForensicOverlay';
 
 export default function AdDetailClient({
     ad,
@@ -162,6 +163,13 @@ export default function AdDetailClient({
                                         className="w-full aspect-[4/5] object-cover rounded-[1.5rem] md:rounded-[2.5rem]"
                                         controls muted playsInline preload="metadata"
                                     />
+                                ) : (tab === 'forensics' && (digest?.extraction as any)?.evidence_receipts?.length > 0) ? (
+                                    <div className="rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden">
+                                        <ForensicOverlay
+                                            imageUrl={ad.media_url}
+                                            anchors={(digest?.extraction as any).evidence_receipts}
+                                        />
+                                    </div>
                                 ) : (
                                     <img
                                         src={ad.media_url}
