@@ -2,8 +2,7 @@
 
 import { useMemo, useState, useRef, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import { TrendingUp, Sparkles, Activity, ArrowLeft, Play, CheckCircle2, X, Dna, Users, Zap, Lock } from 'lucide-react';
+import { TrendingUp, Sparkles, Activity, Play, CheckCircle2, X, Dna, Users, Zap, Lock } from 'lucide-react';
 import BrandTag from '@/components/BrandTag';
 import ResultsView from '@/components/ResultsView';
 import ResultsCard from '@/components/ResultsCard';
@@ -21,7 +20,6 @@ import { AdDigest } from '@/types/digest';
 import { ForecastingService } from '@/lib/forecasting';
 import { NeuralDeconstructionService } from '@/lib/neural_deconstruction_service';
 import AdAnalyticsTab from '@/components/AdAnalyticsTab';
-import ForensicOverlay from '@/components/ForensicOverlay';
 import PersuasionStack from '@/components/PersuasionStack';
 import ScanPath from '@/components/ScanPath';
 
@@ -113,14 +111,6 @@ export default function AdDetailClient({
                 {/* Header - Editorial Style */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-10 pb-8 md:pb-16 border-b border-[#E7DED1] mb-12 md:mb-16">
                     <div>
-                        {!isShared && (
-                            <nav className="flex items-center gap-2 mb-8 md:mb-10 no-print">
-                                <Link href="/dashboard" className="text-[10px] md:text-[11px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em] hover:text-[#141414] flex items-center gap-2 transition-all group">
-                                    <ArrowLeft className="w-3 h-3 md:w-3.5 md:h-3.5 group-hover:-translate-x-1 transition-transform" />
-                                    Library
-                                </Link>
-                            </nav>
-                        )}
                         <h2 className="text-4xl md:text-7xl font-light text-[#141414] tracking-tightest uppercase leading-[0.9] md:leading-[0.85]">
                             {ad.brand || digest?.meta?.brand_guess || 'Competitive'}<br />
                             <span className="text-[#6B6B6B]/30 mb-4 md:mb-8 block">Deconstruction</span>
@@ -165,13 +155,6 @@ export default function AdDetailClient({
                                         className="w-full aspect-[4/5] object-cover rounded-[1.5rem] md:rounded-[2.5rem]"
                                         controls muted playsInline preload="metadata"
                                     />
-                                ) : (digest?.extraction?.evidence_receipts?.length || 0) > 0 ? (
-                                    <div className="rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden">
-                                        <ForensicOverlay
-                                            imageUrl={ad.media_url}
-                                            anchors={digest.extraction?.evidence_receipts || []}
-                                        />
-                                    </div>
                                 ) : (
                                     <img
                                         src={ad.media_url}

@@ -16,7 +16,6 @@ import { NeuralDeconstructionService } from '@/lib/neural_deconstruction_service
 import ForensicTooltip from './ForensicTooltip';
 import PersuasionStack from './PersuasionStack';
 import ScanPath from './ScanPath';
-import ForensicOverlay from './ForensicOverlay';
 import PlatformFitness from './PlatformFitness';
 import RiskAnalysis from './RiskAnalysis';
 import TestPlanBuilder from './TestPlanBuilder';
@@ -88,8 +87,17 @@ export default function ResultsView({
     const displayBrand = brand || d?.meta?.brand_guess;
 
     const [copied, setCopied] = useState(false);
+    const [showFullDescription, setShowFullDescription] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const neuralData = useMemo(() => NeuralDeconstructionService.resolve(d, forecasting ? { saturationLevel: forecasting.saturationLevel ?? 0, estimatedLifespanDays: forecasting.estimatedLifespanDays ?? 0 } : undefined), [d, forecasting]);
+
+    // Truncate long descriptions
+    const semioticText = strat?.semiotic_subtext || 'Calculating semiotic alignment...';
+    const MAX_DESCRIPTION_LENGTH = 120;
+    const shouldTruncate = semioticText.length > MAX_DESCRIPTION_LENGTH;
+    const displayedText = (shouldTruncate && !showFullDescription)
+        ? semioticText.substring(0, MAX_DESCRIPTION_LENGTH) + '...'
+        : semioticText;
 
     const handleShare = () => {
         if (!id) return;
@@ -227,11 +235,6 @@ export default function ResultsView({
                                         className="w-full aspect-[4/5] object-cover"
                                         controls muted playsInline preload="metadata"
                                     />
-                                ) : (ext as any)?.evidence_receipts?.length > 0 ? (
-                                    <ForensicOverlay
-                                        imageUrl={mediaUrl}
-                                        anchors={(ext as any).evidence_receipts}
-                                    />
                                 ) : (
                                     <img
                                         src={mediaUrl}
@@ -342,8 +345,16 @@ export default function ResultsView({
                                 <div className="relative">
                                     <span className="absolute -left-6 -top-4 text-6xl text-accent/10 font-serif leading-none italic select-none">"</span>
                                     <p className="text-2xl md:text-3xl font-light text-[#FBF7EF] leading-[1.3] italic tracking-tight pr-6">
-                                        {strat?.semiotic_subtext || 'Calculating semiotic alignment...'}
+                                        {displayedText}
                                     </p>
+                                    {shouldTruncate && (
+                                        <button
+                                            onClick={() => setShowFullDescription(!showFullDescription)}
+                                            className="mt-3 text-[10px] font-bold uppercase tracking-widest text-accent/60 hover:text-accent transition-colors"
+                                        >
+                                            {showFullDescription ? 'Show Less' : 'Read More'}
+                                        </button>
+                                    )}
                                 </div>
                                 {/* Strategic Verdict */}
                                 {neuralData.strategic_verdict && (
