@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
-import { withSentryConfig } from "@sentry/nextjs";
+// Sentry temporarily disabled for launch
+// import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
   // supports ad creatives up to 20MB
@@ -25,12 +26,11 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
-  // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options
+// Sentry wrapper temporarily disabled for launch
+export default nextConfig;
 
-  // Suppresses source map uploading logs during bundling
-  silent: true,
-  org: "paul-ikins",
-  project: "visual-decompiler",
-});
+// export default withSentryConfig(nextConfig, {
+//   silent: true,
+//   org: "paul-ikins",
+//   project: "visual-decompiler",
+// });
