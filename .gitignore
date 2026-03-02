@@ -28,6 +28,7 @@ dev_pid.txt
 *.txt
 *.html
 *.log
+.bin/
 !README.md
 !UPGRADE_NOTES.md
 !DEPLOYMENT.md
