@@ -30,13 +30,13 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
                 <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.3em]">Strategic Menu</p>
             </div>
 
-            {/* Strategic Filters Section */}
-            <div>
+            {/* Strategic Filters Section - TEMPORARILY DISABLED */}
+            {/* <div>
                 <p className="text-[#141414] text-[11px] font-bold uppercase tracking-[0.3em] mb-6 pl-1 border-l-2 border-accent">Filtering Logic</p>
                 <div className="bg-white rounded-[2rem] p-6 border border-[#E7DED1] shadow-[0_10px_40px_rgba(20,20,20,0.02)]">
                     <Filters currentFilters={searchParams} />
                 </div>
-            </div>
+            </div> */}
 
             {/* Market Pulse / Brands Section */}
             <div>
@@ -68,7 +68,7 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
             <div className="pt-8 border-t border-[#E7DED1] space-y-2">
                 <div className="flex items-center justify-between px-1 mb-4">
                     <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.3em] italic">Intelligence</p>
-                    <NotificationBell />
+                    {/* <NotificationBell /> */}
                 </div>
                 <Link
                     href="/dashboard/pulse"
