@@ -51,7 +51,7 @@ export default function ForensicOverlay({ imageUrl, anchors }: Props) {
                     return (
                         <div
                             key={idx}
-                            className={`absolute border-2 transition-all duration-300 cursor-crosshair
+                            className={`absolute border-2 transition-all duration-300 cursor-pointer pointer-events-auto
                                 ${isHovered
                                     ? 'border-accent bg-accent/10 shadow-[0_0_20px_rgba(187,158,123,0.4)] scale-105'
                                     : 'border-white/40 bg-transparent opacity-40 hover:opacity-100 hover:border-white/80'

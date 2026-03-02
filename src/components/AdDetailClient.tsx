@@ -48,6 +48,16 @@ export default function AdDetailClient({
     const [tab, setTab] = useState<TabKey>('report');
     const neuralData = useMemo(() => NeuralDeconstructionService.resolve(digest, forecasting), [digest, forecasting]);
 
+    // MS14: Defensive fallback for contaminated media_url (when it points to the OG card)
+    const effectiveMediaUrl = useMemo(() => {
+        const raw = ad.media_url;
+        if (raw?.includes('/api/og/')) {
+            const kf = digest?.extraction?.keyframes?.[0]?.image_url;
+            if (kf) return kf;
+        }
+        return raw;
+    }, [ad.media_url, digest]);
+
     const predictROI = async () => {
         try {
             const res = await fetch('/api/discovery/predict', {
@@ -150,19 +160,24 @@ export default function AdDetailClient({
                     {/* Left: media always visible */}
                     <div className="lg:col-span-4 space-y-8 md:space-y-12">
                         <div className="sticky top-12 space-y-6 md:space-y-8">
-                            <div className="rounded-[2rem] md:rounded-[3.5rem] overflow-hidden shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
-                                {tab === 'forensics' && (digest?.extraction?.evidence_receipts?.length || 0) > 0 ? (
-                                    <ForensicOverlay
-                                        imageUrl={ad.media_url}
-                                        anchors={digest.extraction?.evidence_receipts || []}
-                                    />
-                                ) : (
-                                    <img
-                                        src={ad.media_url}
-                                        alt="Ad"
-                                        className="w-full aspect-[4/5] object-cover"
-                                    />
-                                )}
+                            <div className={`transition-all duration-500 ${tab === 'report'
+                                ? 'p-3 bg-white rounded-[2.5rem] md:rounded-[4rem] shadow-[0_40px_100px_rgba(20,20,20,0.08)] border border-white/10'
+                                : 'rounded-[2rem] md:rounded-[3.5rem] overflow-hidden shadow-[0_40px_100px_rgba(20,20,20,0.03)]'
+                                }`}>
+                                <div className={`overflow-hidden ${tab === 'report' ? 'rounded-[1.5rem] md:rounded-[3rem]' : ''}`}>
+                                    {tab === 'forensics' && (digest?.extraction?.evidence_receipts?.length || 0) > 0 ? (
+                                        <ForensicOverlay
+                                            imageUrl={effectiveMediaUrl}
+                                            anchors={digest.extraction?.evidence_receipts || []}
+                                        />
+                                    ) : (
+                                        <img
+                                            src={effectiveMediaUrl}
+                                            alt="Ad"
+                                            className="w-full aspect-[4/5] object-cover text-transparent"
+                                        />
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -200,7 +215,7 @@ export default function AdDetailClient({
                         {tab === 'report' && (
                             <ResultsView
                                 id={ad.id}
-                                mediaUrl={ad.media_url}
+                                mediaUrl={effectiveMediaUrl}
                                 mediaKind={ad.media_kind}
                                 digest={digest}
                                 status={ad.status}

@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo, useState, useRef } from 'react';
 import { AdDigest } from '@/types/digest';
 import ResultsCard, {
     ClassificationPill,
@@ -10,7 +11,6 @@ import ResultsCard, {
     StrategyField,
 } from './ResultsCard';
 import { RotateCcw, Share, Check, Download, Activity, TrendingUp } from 'lucide-react';
-import { useState, useRef } from 'react';
 import BrandTag from './BrandTag';
 import ForensicTooltip from './ForensicTooltip';
 import PersuasionStack from './PersuasionStack';
@@ -82,6 +82,15 @@ export default function ResultsView({
     const strat = d?.strategy;
     const diag = d?.diagnostics;
     const copy = ext?.on_screen_copy;
+
+    // MS14: Fallback for contaminated media_url
+    const effectiveMediaUrl = useMemo(() => {
+        if (mediaUrl?.includes('/api/og/')) {
+            const kf = digest?.extraction?.keyframes?.[0]?.image_url;
+            if (kf) return kf;
+        }
+        return mediaUrl;
+    }, [mediaUrl, digest]);
 
     const displayBrand = brand || d?.meta?.brand_guess;
 
@@ -216,21 +225,23 @@ export default function ResultsView({
                 {showMedia && (
                     <div className="lg:col-span-2">
                         <div className="sticky top-24 space-y-4">
-                            <div className="bg-[#FBF7EF] rounded-2xl border border-[#E7DED1] shadow-sm overflow-hidden">
-                                {mediaKind === 'video' ? (
-                                    <video
-                                        ref={videoRef}
-                                        src={mediaUrl}
-                                        className="w-full aspect-[4/5] object-cover"
-                                        controls muted playsInline preload="metadata"
-                                    />
-                                ) : (
-                                    <img
-                                        src={mediaUrl}
-                                        alt={displayBrand || 'Ad'}
-                                        className="w-full aspect-[4/5] object-cover"
-                                    />
-                                )}
+                            <div className="p-3 bg-white rounded-[2.5rem] shadow-[0_40px_100px_rgba(20,20,20,0.08)] border border-white/50 overflow-hidden">
+                                <div className="rounded-[1.5rem] overflow-hidden">
+                                    {mediaKind === 'video' ? (
+                                        <video
+                                            ref={videoRef}
+                                            src={effectiveMediaUrl}
+                                            className="w-full aspect-[4/5] object-cover"
+                                            controls muted playsInline preload="metadata"
+                                        />
+                                    ) : (
+                                        <img
+                                            src={effectiveMediaUrl}
+                                            alt={displayBrand || 'Ad'}
+                                            className="w-full aspect-[4/5] object-cover text-transparent"
+                                        />
+                                    )}
+                                </div>
                             </div>
 
                             {/* Visual Timeline — Milestone 2 */}

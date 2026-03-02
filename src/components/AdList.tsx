@@ -84,111 +84,113 @@ export default async function AdList({ filters }: { filters: Record<string, stri
         }
 
         if (!ads || ads.length === 0) {
+            return (
+                <div className="text-center py-20 bg-white rounded-3xl border border-[#E7DED1] shadow-[0_10px_40px_rgba(20,20,20,0.02)]">
+                    <p className="text-[#141414] font-medium text-[15px] tracking-[-0.01em]">No ad digests match your filters.</p>
+                    <p className="text-[#6B6B6B] text-[13px] mt-1">Try adjusting your criteria or ingest new ads.</p>
+                </div>
+            );
+        }
+
         return (
-            <div className="text-center py-20 bg-white rounded-3xl border border-[#E7DED1] shadow-[0_10px_40px_rgba(20,20,20,0.02)]">
-                <p className="text-[#141414] font-medium text-[15px] tracking-[-0.01em]">No ad digests match your filters.</p>
-                <p className="text-[#6B6B6B] text-[13px] mt-1">Try adjusting your criteria or ingest new ads.</p>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                {ads.map((ad: any) => {
+                    const digest = ad.digest as AdDigest;
+                    return (
+                        <AdCardSelectable
+                            key={ad.id}
+                            ad={{
+                                id: ad.id,
+                                brand: ad.brand || digest?.meta?.brand_guess || '',
+                                mediaUrl: ad.media_url,
+                                mediaKind: ad.media_kind || 'image',
+                                digest,
+                            }}
+                        >
+                            <div
+                                className="group relative bg-white rounded-xl border border-[#E7DED1] overflow-hidden flex flex-col hover:border-[#D8CCBC] hover:shadow-[0_12px_40px_rgba(20,20,20,0.06)] hover:-translate-y-[2px] transition-all duration-300 shadow-[0_4px_20px_rgba(20,20,20,0.02)]"
+                            >
+                                <Link href={`/dashboard/${ad.id}`} className="absolute inset-0 z-10" aria-label={`View ${ad.brand} ad`} />
+
+                                {/* Media */}
+                                <div className="aspect-square bg-[#FBF7EF] relative overflow-hidden flex items-center justify-center border-b border-[#E7DED1]">
+                                    {ad.status === 'queued' || ad.status === 'processing' ? (
+                                        <div className="flex flex-col items-center gap-3 w-full h-full relative">
+                                            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 backdrop-blur-[2px]">
+                                                <div className="w-8 h-8 border-2 border-[#E7DED1] border-t-[#141414] rounded-full animate-spin shadow-sm" />
+                                                <span className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em]">{ad.status}...</span>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <img
+                                            src={ad.media_url?.includes('/api/og/') && digest?.extraction?.keyframes?.[0]?.image_url
+                                                ? digest.extraction.keyframes[0].image_url
+                                                : ad.media_url}
+                                            alt={ad.brand || digest?.meta?.brand_guess || 'Ad media'}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                                        />
+                                    )}
+
+                                    {/* Overlay badges */}
+                                    <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-20 pointer-events-none">
+                                        {ad.status !== 'queued' && ad.status !== 'processing' && (
+                                            <>
+                                                <span className="bg-white/80 backdrop-blur-md border border-[#E7DED1] px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.1em] text-[#141414] shadow-sm">
+                                                    {digest?.classification?.trigger_mechanic || 'Analyzing…'}
+                                                </span>
+                                                {digest?.meta?.campaign_category && (
+                                                    <span className="bg-white/80 backdrop-blur-md border border-[#E7DED1] px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.1em] text-[#6B6B6B] shadow-sm">
+                                                        {digest.meta.campaign_category}
+                                                    </span>
+                                                )}
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Info section */}
+                                <div className="p-3 flex-1 flex flex-col relative z-20 pointer-events-none">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <div className="pointer-events-auto">
+                                            <BrandTag
+                                                adId={ad.id}
+                                                brand={ad.brand ?? null}
+                                                brandGuess={digest?.meta?.brand_guess ?? null}
+                                            />
+                                        </div>
+                                        <span suppressHydrationWarning className="text-[#6B6B6B] text-[9px] uppercase tracking-[0.1em] font-medium">
+                                            {new Date(ad.created_at).toLocaleDateString()}
+                                        </span>
+                                    </div>
+
+                                    <h3 className="text-[13px] font-medium text-[#141414] mb-3 line-clamp-2 leading-[1.3] tracking-[-0.01em]">
+                                        {digest?.extraction?.on_screen_copy?.primary_headline
+                                            || (ad.brand || digest?.meta?.brand_guess ? `${ad.brand || digest?.meta?.brand_guess} — Untitled` : 'Untitled')}
+                                    </h3>
+
+                                    <div className="flex flex-wrap gap-1.5 mt-auto">
+                                        {ad.status === 'processed' || ad.status === 'needs_review' ? (
+                                            <>
+                                                <span className="px-2 py-0.5 rounded-md bg-[#FBF7EF] text-[#6B6B6B] text-[9px] font-bold border border-[#E7DED1]">
+                                                    {digest?.classification?.claim_type}
+                                                </span>
+                                                <span className="px-2 py-0.5 rounded-md bg-[#141414] text-[#FBF7EF] text-[9px] font-bold border border-[#141414]">
+                                                    {digest?.classification?.offer_type}
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <span className="px-2 py-0.5 rounded-md bg-[#FBF7EF] text-[#6B6B6B] text-[9px] font-bold border border-[#E7DED1] animate-pulse">
+                                                Harvesting Strategic Insights…
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </AdCardSelectable>
+                    );
+                })}
             </div>
         );
-    }
-
-    return (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {ads.map((ad: any) => {
-                const digest = ad.digest as AdDigest;
-                return (
-                    <AdCardSelectable
-                        key={ad.id}
-                        ad={{
-                            id: ad.id,
-                            brand: ad.brand || digest?.meta?.brand_guess || '',
-                            mediaUrl: ad.media_url,
-                            mediaKind: ad.media_kind || 'image',
-                            digest,
-                        }}
-                    >
-                        <div
-                            className="group relative bg-white rounded-xl border border-[#E7DED1] overflow-hidden flex flex-col hover:border-[#D8CCBC] hover:shadow-[0_12px_40px_rgba(20,20,20,0.06)] hover:-translate-y-[2px] transition-all duration-300 shadow-[0_4px_20px_rgba(20,20,20,0.02)]"
-                        >
-                            <Link href={`/dashboard/${ad.id}`} className="absolute inset-0 z-10" aria-label={`View ${ad.brand} ad`} />
-
-                            {/* Media */}
-                            <div className="aspect-square bg-[#FBF7EF] relative overflow-hidden flex items-center justify-center border-b border-[#E7DED1]">
-                                {ad.status === 'queued' || ad.status === 'processing' ? (
-                                    <div className="flex flex-col items-center gap-3 w-full h-full relative">
-                                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 backdrop-blur-[2px]">
-                                            <div className="w-8 h-8 border-2 border-[#E7DED1] border-t-[#141414] rounded-full animate-spin shadow-sm" />
-                                            <span className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em]">{ad.status}...</span>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <img
-                                        src={ad.media_url}
-                                        alt={ad.brand || digest?.meta?.brand_guess || 'Ad media'}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                                    />
-                                )}
-
-                                {/* Overlay badges */}
-                                <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-20 pointer-events-none">
-                                    {ad.status !== 'queued' && ad.status !== 'processing' && (
-                                        <>
-                                            <span className="bg-white/80 backdrop-blur-md border border-[#E7DED1] px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.1em] text-[#141414] shadow-sm">
-                                                {digest?.classification?.trigger_mechanic || 'Analyzing…'}
-                                            </span>
-                                            {digest?.meta?.campaign_category && (
-                                                <span className="bg-white/80 backdrop-blur-md border border-[#E7DED1] px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.1em] text-[#6B6B6B] shadow-sm">
-                                                    {digest.meta.campaign_category}
-                                                </span>
-                                            )}
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Info section */}
-                            <div className="p-3 flex-1 flex flex-col relative z-20 pointer-events-none">
-                                <div className="flex items-center justify-between mb-2">
-                                    <div className="pointer-events-auto">
-                                        <BrandTag
-                                            adId={ad.id}
-                                            brand={ad.brand ?? null}
-                                            brandGuess={digest?.meta?.brand_guess ?? null}
-                                        />
-                                    </div>
-                                    <span suppressHydrationWarning className="text-[#6B6B6B] text-[9px] uppercase tracking-[0.1em] font-medium">
-                                        {new Date(ad.created_at).toLocaleDateString()}
-                                    </span>
-                                </div>
-
-                                <h3 className="text-[13px] font-medium text-[#141414] mb-3 line-clamp-2 leading-[1.3] tracking-[-0.01em]">
-                                    {digest?.extraction?.on_screen_copy?.primary_headline
-                                        || (ad.brand || digest?.meta?.brand_guess ? `${ad.brand || digest?.meta?.brand_guess} — Untitled` : 'Untitled')}
-                                </h3>
-
-                                <div className="flex flex-wrap gap-1.5 mt-auto">
-                                    {ad.status === 'processed' || ad.status === 'needs_review' ? (
-                                        <>
-                                            <span className="px-2 py-0.5 rounded-md bg-[#FBF7EF] text-[#6B6B6B] text-[9px] font-bold border border-[#E7DED1]">
-                                                {digest?.classification?.claim_type}
-                                            </span>
-                                            <span className="px-2 py-0.5 rounded-md bg-[#141414] text-[#FBF7EF] text-[9px] font-bold border border-[#141414]">
-                                                {digest?.classification?.offer_type}
-                                            </span>
-                                        </>
-                                    ) : (
-                                        <span className="px-2 py-0.5 rounded-md bg-[#FBF7EF] text-[#6B6B6B] text-[9px] font-bold border border-[#E7DED1] animate-pulse">
-                                            Harvesting Strategic Insights…
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    </AdCardSelectable>
-                );
-            })}
-        </div>
-    );
     } catch (topLevelError: any) {
         console.error('[AdList] Top-level error:', topLevelError);
         return (
