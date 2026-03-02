@@ -18,7 +18,7 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 async function checkJobs() {
     const { data, error } = await supabase
         .from('ad_digests')
-        .select('id, status, media_url, created_at')
+        .select('id, status, media_url, created_at, digest')
         .order('created_at', { ascending: false })
         .limit(5);
 
@@ -26,7 +26,18 @@ async function checkJobs() {
         console.error('Error fetching jobs:', error);
     } else {
         console.log('Recent Jobs:');
-        console.table(data);
+        const displayData = data.map(job => ({
+            id: job.id,
+            status: job.status,
+            created_at: job.created_at,
+            error: job.status === 'needs_review' ? (job.digest?.error || 'No error field in digest') : 'N/A'
+        }));
+        console.table(displayData);
+
+        if (data.length > 0) {
+            console.log('\nFull Digest for most recent job:');
+            console.log(JSON.stringify(data[0].digest, null, 2));
+        }
     }
 }
 

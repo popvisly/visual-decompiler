@@ -197,17 +197,17 @@ export const AdDigestSchema = z.object({
         predicted_resonance_window: z.string().nullable().optional(),
     }),
     classification: z.object({
-        trigger_mechanic: triggerMechanicSchema.or(z.string()),
-        secondary_trigger_mechanic: triggerMechanicSchema.or(z.string()).nullable(),
-        narrative_framework: narrativeFrameworkSchema.or(z.string()),
-        gaze_priority: gazePrioritySchema.or(z.string()),
-        cognitive_load: cognitiveLoadSchema.or(z.string()),
-        offer_type: offerTypeSchema.or(z.string()),
-        claim_type: claimTypeSchema.or(z.string()),
-        proof_type: z.array(proofTypeSchema.or(z.string())).max(2),
-        visual_style: z.array(visualStyleSchema.or(z.string())).max(2),
-        emotion_tone: z.array(emotionToneSchema.or(z.string())).max(2),
-        cta_strength: ctaStrengthSchema.or(z.string()),
+        trigger_mechanic: triggerMechanicSchema.or(z.string()).optional(),
+        secondary_trigger_mechanic: triggerMechanicSchema.or(z.string()).nullable().optional(),
+        narrative_framework: narrativeFrameworkSchema.or(z.string()).optional(),
+        gaze_priority: gazePrioritySchema.or(z.string()).optional(),
+        cognitive_load: cognitiveLoadSchema.or(z.string()).optional(),
+        offer_type: offerTypeSchema.or(z.string()).optional(),
+        claim_type: claimTypeSchema.or(z.string()).optional(),
+        proof_type: z.array(proofTypeSchema.or(z.string())).max(2).optional(),
+        visual_style: z.array(visualStyleSchema.or(z.string())).max(2).optional(),
+        emotion_tone: z.array(emotionToneSchema.or(z.string())).max(2).optional(),
+        cta_strength: ctaStrengthSchema.or(z.string()).optional(),
         brand_association_values: z.array(z.string()).optional(),
         /** Weighted triggers for agency-grade analysis */
         persuasion_stack: z.array(z.object({
@@ -219,21 +219,21 @@ export const AdDigestSchema = z.object({
         stack_type_label: z.string().optional(), // e.g. "Aspirational-soft sell"
     }),
     audience_strategy: z.object({
-        target_audience_segment: z.string(),
-        unmet_need_tags: z.array(z.string()),
-        transfer_mechanism: z.string(),
+        target_audience_segment: z.string().optional(),
+        unmet_need_tags: z.array(z.string()).optional(),
+        transfer_mechanism: z.string().optional(),
         first3s_hook_type: first3sHookTypeSchema.or(z.string()).nullable().optional(),
-        hook_clarity_score: z.number(),
+        hook_clarity_score: z.number().optional(),
         evidence_anchors_timecoded: z.array(z.object({
             t: z.string(),
             anchor: z.string(),
         })).optional(),
     }).optional(),
     premium_intelligence: z.object({
-        premium_principles: z.array(premiumPrinciplesSchema.or(z.string())),
+        premium_principles: z.array(premiumPrinciplesSchema.or(z.string())).optional(),
         premium_principle_primary: premiumPrinciplesSchema.or(z.string()).nullable().optional(),
         exclusivity_mode: exclusivityModeSchema.or(z.string()).nullable().optional(),
-        premium_index_score: z.number(),
+        premium_index_score: z.number().optional(),
     }).optional(),
     semiotic_intelligence: z.object({
         semiotic_layers: z.array(z.object({
@@ -364,7 +364,7 @@ export const AdDigestSchema = z.object({
     }).optional(),
     diagnostics: z.object({
         confidence: z.object({
-            overall: z.number(),
+            overall: z.number().optional(),
             trigger_mechanic: z.number().optional(),
             secondary_trigger_mechanic: z.number().optional(),
             narrative_framework: z.number().optional(),

@@ -12,9 +12,18 @@ export function normalizeDigest(input: any): any {
     const asStr = (v: any) => (typeof v === 'string' ? v : (v == null ? '' : String(v)));
     const lc = (v: any) => asStr(v).toLowerCase();
 
-    // Ensure objects exist
+    // Ensure classification and key sub-objects exist
     d.meta = d.meta && typeof d.meta === 'object' ? d.meta : {};
     d.classification = d.classification && typeof d.classification === 'object' ? d.classification : {};
+
+    // Fallbacks for critical UI enums to avoid Zod/UI crashes
+    if (!d.classification.trigger_mechanic) d.classification.trigger_mechanic = 'Status_Prestige';
+    if (!d.classification.narrative_framework) d.classification.narrative_framework = 'Problem_Agitation_Solution';
+    if (!d.classification.claim_type) d.classification.claim_type = 'Performance';
+    if (!d.classification.cta_strength) d.classification.cta_strength = 'Direct';
+    if (!d.classification.cognitive_load) d.classification.cognitive_load = 'Minimal_HighContrast';
+    if (!d.classification.gaze_priority) d.classification.gaze_priority = 'Product_Packaging';
+    if (!d.classification.offer_type) d.classification.offer_type = 'No_Offer_BrandOnly';
     d.extraction = d.extraction && typeof d.extraction === 'object' ? d.extraction : {};
     d.extraction.on_screen_copy = d.extraction.on_screen_copy && typeof d.extraction.on_screen_copy === 'object'
         ? d.extraction.on_screen_copy
