@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import AdList from '@/components/AdList';
 import SelectionProvider from '@/components/SelectionProvider';
+import BulkActionsBar from '@/components/BulkActionsBar';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -15,6 +16,7 @@ export default async function DashboardPage({
 
     return (
         <SelectionProvider>
+            <BulkActionsBar />
             <div className="max-w-7xl mx-auto px-6 py-10">
                 <div className="flex-1 space-y-16 py-12">
                     {/* Page title */}
