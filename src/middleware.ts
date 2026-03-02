@@ -20,7 +20,7 @@ export default clerkMiddleware(async (auth, request) => {
     default-src 'self';
     script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.clerk.accounts.dev https://clerk.visualdecompiler.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://*.unsplash.com https://*.supabase.co https://*.stripe.com;
+    img-src 'self' blob: data: https://*.unsplash.com https://*.supabase.co https://*.stripe.com https://img.clerk.com;
     font-src 'self' data:;
     object-src 'none';
     base-uri 'self';
@@ -28,6 +28,7 @@ export default clerkMiddleware(async (auth, request) => {
     frame-ancestors 'none';
     frame-src 'self' https://checkout.stripe.com https://*.clerk.accounts.dev;
     connect-src 'self' https://*.supabase.co https://*.clerk.accounts.dev https://clerk.visualdecompiler.com https://api.anthropic.com https://api.openai.com https://monitoring.paul-ikins.sentry.io;
+    worker-src 'self' blob:;
     block-all-mixed-content;
     upgrade-insecure-requests;
   `.replace(/\s{2,}/g, ' ').trim();
