@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import { supabaseAdmin } from '@/lib/supabase';
 
-export async function DELETE(req: Request) {
+export async function POST(req: Request) {
     try {
         const { userId, orgId } = await auth();
 
@@ -30,7 +30,7 @@ export async function DELETE(req: Request) {
 
         return NextResponse.json({ success: true, deletedCount: ids.length });
     } catch (error) {
-        console.error('Error in bulk delete endpoint:', error);
+        console.error('Error in bulk delete action endpoint:', error);
         return new NextResponse('Internal Server Error', { status: 500 });
     }
 }

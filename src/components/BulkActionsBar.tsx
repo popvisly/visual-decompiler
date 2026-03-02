@@ -22,8 +22,8 @@ export default function BulkActionsBar() {
         setError(null);
 
         try {
-            const res = await fetch('/api/ads/bulk', {
-                method: 'DELETE',
+            const res = await fetch('/api/ads/actions/bulk-delete', {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ids: Array.from(selectedIds) }),
             });
