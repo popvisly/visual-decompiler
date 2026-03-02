@@ -15,11 +15,10 @@ export default clerkMiddleware(async (auth, request) => {
         await auth.protect();
     }
 
-    // CSP Headers
-    const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+    // CSP Headers (Relaxed for production restoration)
     const cspHeader = `
     default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://*.clerk.accounts.dev https://clerk.visualdecompiler.com;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.clerk.accounts.dev https://clerk.visualdecompiler.com;
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https://*.unsplash.com https://*.supabase.co https://*.stripe.com;
     font-src 'self' data:;
