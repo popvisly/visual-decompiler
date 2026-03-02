@@ -1,7 +1,7 @@
 'use client';
 
 import { useSelection, AdSummary } from './SelectionProvider';
-import { Check } from 'lucide-react';
+import { X } from 'lucide-react';
 
 type Props = {
     ad: AdSummary;
@@ -29,7 +29,7 @@ export default function AdCardSelectable({ ad, children }: Props) {
                     flex items-center justify-center
                     transition-all duration-200
                     ${isSelected
-                        ? 'bg-accent border-accent text-[#141414] scale-100 opacity-100'
+                        ? 'bg-[#141414] border-[#141414] text-white scale-100 opacity-100 shadow-[0_4px_12px_rgba(0,0,0,0.3)]'
                         : isSelecting
                             ? 'bg-white/80 backdrop-blur-sm border-[#E7DED1] text-transparent opacity-100 hover:border-accent/50'
                             : 'bg-white/80 backdrop-blur-sm border-[#E7DED1] text-transparent opacity-0 group-hover/select:opacity-100'
@@ -38,7 +38,7 @@ export default function AdCardSelectable({ ad, children }: Props) {
                 `}
                 aria-label={isSelected ? 'Deselect' : 'Select'}
             >
-                <Check className="w-3.5 h-3.5" strokeWidth={3} />
+                <X className="w-3 h-3" strokeWidth={4} />
             </button>
 
             {/* Selected glow ring */}
