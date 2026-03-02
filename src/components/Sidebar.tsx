@@ -9,15 +9,19 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
     const { userId } = await auth();
     if (!userId) return null;
 
-    // Gracefully handle brand loading errors
-    let brands: Awaited<ReturnType<typeof getAllBrands>> = [];
-    try {
-        brands = await getAllBrands(userId);
-    } catch (error) {
-        console.error('[Sidebar] Failed to load brands:', error);
-        // Continue with empty brands array
-    }
+    // Temporarily disable brand loading for debugging
+    // TODO: Re-enable after fixing the underlying database issue
+    const brands: any[] = [];
     const topBrands = brands.slice(0, 10);
+
+    // Original code (disabled):
+    // let brands: Awaited<ReturnType<typeof getAllBrands>> = [];
+    // try {
+    //     brands = await getAllBrands(userId);
+    // } catch (error) {
+    //     console.error('[Sidebar] Failed to load brands:', error);
+    // }
+    // const topBrands = brands.slice(0, 10);
 
     return (
         <aside className="w-full md:w-64 shrink-0 flex flex-col gap-12 sticky top-[104px] self-start max-h-[calc(100vh-120px)] overflow-y-auto hidden-scrollbar pt-10 pb-10 pr-2">
