@@ -3,11 +3,17 @@ import { Redis } from "@upstash/redis";
 
 // Create a new ratelimiter, that allows 10 requests per 1 minute
 // Gracefully handle missing credentials (disabled in development or if not configured)
-export const ratelimit = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+const upstashUrl = process.env.UPSTASH_REDIS_REST_URL;
+const upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+// Only initialize if we have valid HTTPS URLs (not placeholders like "disabled" or "placeholder")
+const isValidUpstashConfig = upstashUrl && upstashToken && upstashUrl.startsWith('https://');
+
+export const ratelimit = isValidUpstashConfig
     ? new Ratelimit({
         redis: new Redis({
-            url: process.env.UPSTASH_REDIS_REST_URL,
-            token: process.env.UPSTASH_REDIS_REST_TOKEN,
+            url: upstashUrl,
+            token: upstashToken,
         }),
         limiter: Ratelimit.slidingWindow(10, "1m"),
         analytics: true,
