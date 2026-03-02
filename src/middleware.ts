@@ -1,10 +1,20 @@
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
-export async function middleware(request: NextRequest) {
-    // Rate limiting temporarily disabled for launch - will re-enable after proper testing
+const isPublicRoute = createRouteMatcher([
+    '/',
+    '/sign-in(.*)',
+    '/sign-up(.*)',
+    '/api/webhooks(.*)',
+]);
 
-    // 2. CSP Headers
+export default clerkMiddleware(async (auth, request) => {
+    // Protect all routes except public ones
+    if (!isPublicRoute(request)) {
+        await auth.protect();
+    }
+
+    // CSP Headers
     const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
     const cspHeader = `
     default-src 'self';
@@ -35,7 +45,7 @@ export async function middleware(request: NextRequest) {
     response.headers.set('Content-Security-Policy', cspHeader);
 
     return response;
-}
+});
 
 export const config = {
     matcher: [
