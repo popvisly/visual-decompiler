@@ -3,8 +3,8 @@ import type { NextRequest } from 'next/server';
 import { ratelimit } from '@/lib/ratelimit';
 
 export async function middleware(request: NextRequest) {
-    // 1. Rate Limiting for API routes
-    if (request.nextUrl.pathname.startsWith('/api')) {
+    // 1. Rate Limiting for API routes (only if Upstash is configured)
+    if (request.nextUrl.pathname.startsWith('/api') && ratelimit) {
         const ip = request.headers.get('x-forwarded-for')?.split(',')[0] ?? (request as any).ip ?? '127.0.0.1';
         const { success } = await ratelimit.limit(ip);
 
