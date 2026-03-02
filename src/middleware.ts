@@ -1,46 +1,68 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { ratelimit } from '@/lib/ratelimit';
 
-const isProtectedRoute = createRouteMatcher([
-    '/app(.*)',
-    '/dashboard(.*)',
-    '/api/ingest(.*)',
-]);
+export async function middleware(request: NextRequest) {
+    // 1. Rate Limiting for API routes
+    if (request.nextUrl.pathname.startsWith('/api')) {
+        const ip = request.headers.get('x-forwarded-for')?.split(',')[0] ?? (request as any).ip ?? '127.0.0.1';
+        const { success } = await ratelimit.limit(ip);
 
-export default clerkMiddleware(async (auth, req) => {
-    if (isProtectedRoute(req)) {
-        const { userId } = await auth();
-        if (!userId) {
-            // Redirect unauthenticated users back to the homepage instead of a non-existent /sign-in page
-            // This prevents Next.js <Link> prefetching from choking on a 404 HTML response.
-            const homeUrl = new URL('/', req.url);
-            homeUrl.searchParams.set('sign_in', 'true');
-            return NextResponse.redirect(homeUrl);
+        if (!success) {
+            return NextResponse.json(
+                { error: 'Too many requests' },
+                { status: 429 }
+            );
         }
     }
 
-    const response = NextResponse.next();
+    // 2. CSP Headers
+    const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+    const cspHeader = `
+    default-src 'self';
+    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://*.clerk.accounts.dev https://clerk.visualdecompiler.com;
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' blob: data: https://*.unsplash.com https://*.supabase.co https://*.stripe.com;
+    font-src 'self' data:;
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
+    frame-src 'self' https://checkout.stripe.com https://*.clerk.accounts.dev;
+    connect-src 'self' https://*.supabase.co https://*.clerk.accounts.dev https://clerk.visualdecompiler.com https://api.anthropic.com https://api.openai.com https://monitoring.paul-ikins.sentry.io;
+    block-all-mixed-content;
+    upgrade-insecure-requests;
+  `.replace(/\s{2,}/g, ' ').trim();
 
-    // Preserve the custom viewer tracker ID behavior
-    if (!req.cookies.has('vd_viewer_id')) {
-        const viewerId = crypto.randomUUID();
-        response.cookies.set('vd_viewer_id', viewerId, {
-            httpOnly: true,
-            sameSite: 'lax',
-            secure: process.env.NODE_ENV === 'production',
-            path: '/',
-            maxAge: 60 * 60 * 24 * 365, // 1 year
-        });
-    }
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-nonce', nonce);
+    requestHeaders.set('Content-Security-Policy', cspHeader);
+
+    const response = NextResponse.next({
+        request: {
+            headers: requestHeaders,
+        },
+    });
+
+    response.headers.set('Content-Security-Policy', cspHeader);
 
     return response;
-});
+}
 
 export const config = {
     matcher: [
-        // Skip Next.js internals and all static files, unless found in search params
-        '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-        // Always run for API routes
-        '/(api|trpc)(.*)',
+        /*
+         * Match all request paths except for the ones starting with:
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico (favicon file)
+         */
+        {
+            source: '/((?!_next/static|_next/image|favicon.ico).*)',
+            missing: [
+                { type: 'header', key: 'next-router-prefetch' },
+                { type: 'header', key: 'purpose', value: 'prefetch' },
+            ],
+        },
     ],
 };

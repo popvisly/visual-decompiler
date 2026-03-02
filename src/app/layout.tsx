@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from '@clerk/nextjs';
 import { Inter } from 'next/font/google';
+import { CSPostHogProvider } from './providers';
 import "./globals.css";
 
 const inter = Inter({
@@ -28,7 +29,9 @@ export default function RootLayout({
         <ClerkProvider>
             <html lang="en" className={inter.variable}>
                 <body className="antialiased">
-                    {children}
+                    <CSPostHogProvider>
+                        {children}
+                    </CSPostHogProvider>
                 </body>
             </html>
         </ClerkProvider>

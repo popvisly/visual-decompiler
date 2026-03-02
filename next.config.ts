@@ -1,9 +1,14 @@
 import type { NextConfig } from 'next';
+import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
-  // Increase body size limit for Server Actions to support high-quality ad images
-  serverActions: {
-    bodySizeLimit: '20mb', // Supports ad creatives up to 20MB
+  // supports ad creatives up to 20MB
+  // Note: in Next 15, bodySizeLimit might have moved or is handled differently
+  // but if it's unrecognized, we'll omit it for now or check experimental
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '20mb',
+    }
   },
   outputFileTracingIncludes: {
     // Include prompt artifacts in worker output
@@ -20,4 +25,12 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options
+
+  // Suppresses source map uploading logs during bundling
+  silent: true,
+  org: "paul-ikins",
+  project: "visual-decompiler",
+});

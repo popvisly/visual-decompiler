@@ -7,6 +7,7 @@ import { normalizeDigest } from '@/lib/digest_normalize';
 import { hashFile } from '@/lib/hashing';
 import { generateEmbedding } from '@/lib/embeddings';
 import { RoutingService } from '@/lib/routing_service';
+import { sendDeconstructionEmail } from '@/lib/mail';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
@@ -260,7 +261,7 @@ export async function POST(req: Request) {
                 if (finalStatus === 'processed' && job.user_id) {
                     const { data: u } = await supabaseAdmin
                         .from('users')
-                        .select('usage_count')
+                        .select('usage_count, email')
                         .eq('id', job.user_id)
                         .single();
 
@@ -269,6 +270,12 @@ export async function POST(req: Request) {
                         .from('users')
                         .update({ usage_count: nextCount })
                         .eq('id', job.user_id);
+
+                    // 6.6 Send Email Notification (Launch Readiness)
+                    if (u?.email) {
+                        console.log(`[Worker Job ${job.id}] Sending completion email to ${u.email}`);
+                        await sendDeconstructionEmail(u.email, job.id, digestToPersist.meta?.brand_guess || 'New Ad');
+                    }
                 }
 
                 results.push({ id: job.id, status: finalStatus });
