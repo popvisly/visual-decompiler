@@ -1,6 +1,5 @@
 import type { NextConfig } from 'next';
-// Sentry temporarily disabled for launch
-// import { withSentryConfig } from "@sentry/nextjs";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
   // supports ad creatives up to 20MB
@@ -26,11 +25,8 @@ const nextConfig: NextConfig = {
   },
 };
 
-// Sentry wrapper temporarily disabled for launch
-export default nextConfig;
-
-// export default withSentryConfig(nextConfig, {
-//   silent: true,
-//   org: "paul-ikins",
-//   project: "visual-decompiler",
-// });
+export default withSentryConfig(nextConfig, {
+  silent: true,
+  org: "paul-ikins",
+  project: "visual-decompiler",
+});
