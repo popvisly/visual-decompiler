@@ -7,67 +7,83 @@ import { semanticSearch } from '@/lib/search';
 import AdCardSelectable from '@/components/AdCardSelectable';
 
 export default async function AdList({ filters }: { filters: Record<string, string | undefined> }) {
-    const { userId, orgId } = await auth();
-    if (!userId) return null;
+    try {
+        const { userId, orgId } = await auth();
+        if (!userId) return null;
 
-    let ads: any[] = [];
-    let error: any = null;
+        let ads: any[] = [];
+        let error: any = null;
 
-    if (filters.q) {
-        // Semantic Search path
-        ads = await semanticSearch(filters.q, userId, 50, orgId);
+        if (filters.q) {
+            // Semantic Search path
+            try {
+                ads = await semanticSearch(filters.q, userId, 50, orgId);
+            } catch (searchError: any) {
+                console.error('[AdList] Semantic search failed:', searchError);
+                return <div className="text-red-400 font-bold p-8 bg-red-500/10 rounded-2xl border border-red-500/20">Search error: {searchError.message}</div>;
+            }
 
-        // Post-filter the semantic results for other active filters
-        if (filters.trigger_mechanic) ads = ads.filter(a => a.trigger_mechanic === filters.trigger_mechanic);
-        if (filters.claim_type) ads = ads.filter(a => a.claim_type === filters.claim_type);
-        if (filters.offer_type) ads = ads.filter(a => a.offer_type === filters.offer_type);
-        if (filters.brand) {
-            const b = filters.brand.toLowerCase();
-            ads = ads.filter(a =>
-                (a.brand?.toLowerCase().includes(b)) ||
-                (a.brand_guess?.toLowerCase().includes(b))
-            );
+            // Post-filter the semantic results for other active filters
+            if (filters.trigger_mechanic) ads = ads.filter(a => a.trigger_mechanic === filters.trigger_mechanic);
+            if (filters.claim_type) ads = ads.filter(a => a.claim_type === filters.claim_type);
+            if (filters.offer_type) ads = ads.filter(a => a.offer_type === filters.offer_type);
+            if (filters.brand) {
+                const b = filters.brand.toLowerCase();
+                ads = ads.filter(a =>
+                    (a.brand?.toLowerCase().includes(b)) ||
+                    (a.brand_guess?.toLowerCase().includes(b))
+                );
+            }
+        } else {
+            // Standard SQL filter path
+            try {
+                let query = supabaseAdmin
+                    .from('ad_digests')
+                    .select('*')
+                    .or(`user_id.eq.${userId}${orgId ? `,org_id.eq.${orgId}` : ''}`)
+                    .order('created_at', { ascending: false });
+
+                if (filters.trigger_mechanic) query = query.eq('trigger_mechanic', filters.trigger_mechanic);
+                if (filters.claim_type) query = query.eq('claim_type', filters.claim_type);
+                if (filters.offer_type) query = query.eq('offer_type', filters.offer_type);
+                const res = await query;
+                ads = res.data || [];
+                error = res.error;
+
+                if (filters.brand) {
+                    const b = filters.brand.toLowerCase();
+                    ads = ads.filter(a =>
+                        (a.brand?.toLowerCase().includes(b)) ||
+                        (a.brand_guess?.toLowerCase().includes(b))
+                    );
+                }
+            } catch (dbError: any) {
+                console.error('[AdList] Database query failed:', dbError);
+                return <div className="text-red-400 font-bold p-8 bg-red-500/10 rounded-2xl border border-red-500/20">Database error: {dbError.message}</div>;
+            }
         }
-    } else {
-        // Standard SQL filter path
-        let query = supabaseAdmin
-            .from('ad_digests')
-            .select('*')
-            .or(`user_id.eq.${userId}${orgId ? `,org_id.eq.${orgId}` : ''}`)
-            .order('created_at', { ascending: false });
 
-        if (filters.trigger_mechanic) query = query.eq('trigger_mechanic', filters.trigger_mechanic);
-        if (filters.claim_type) query = query.eq('claim_type', filters.claim_type);
-        if (filters.offer_type) query = query.eq('offer_type', filters.offer_type);
-        const res = await query;
-        ads = res.data || [];
-        error = res.error;
+        // Handle board_id explicitly if provided (manual join for now)
+        if (filters.board_id) {
+            try {
+                const { data: boardItems } = await supabaseAdmin
+                    .from('board_items')
+                    .select('ad_id')
+                    .eq('board_id', filters.board_id);
 
-        if (filters.brand) {
-            const b = filters.brand.toLowerCase();
-            ads = ads.filter(a =>
-                (a.brand?.toLowerCase().includes(b)) ||
-                (a.brand_guess?.toLowerCase().includes(b))
-            );
+                const adIdsOnBoard = new Set(boardItems?.map((i: any) => i.ad_id) || []);
+                ads = ads.filter(ad => adIdsOnBoard.has(ad.id));
+            } catch (boardError: any) {
+                console.error('[AdList] Board query failed:', boardError);
+                // Don't fail entirely, just skip board filtering
+            }
         }
-    }
 
-    // Handle board_id explicitly if provided (manual join for now)
-    if (filters.board_id) {
-        const { data: boardItems } = await supabaseAdmin
-            .from('board_items')
-            .select('ad_id')
-            .eq('board_id', filters.board_id);
+        if (error) {
+            return <div className="text-red-400 font-bold p-8 bg-red-500/10 rounded-2xl border border-red-500/20">Error loading ads: {error.message}</div>;
+        }
 
-        const adIdsOnBoard = new Set(boardItems?.map((i: any) => i.ad_id) || []);
-        ads = ads.filter(ad => adIdsOnBoard.has(ad.id));
-    }
-
-    if (error) {
-        return <div className="text-red-400 font-bold p-8 bg-red-500/10 rounded-2xl border border-red-500/20">Error loading ads: {error.message}</div>;
-    }
-
-    if (!ads || ads.length === 0) {
+        if (!ads || ads.length === 0) {
         return (
             <div className="text-center py-20 bg-white rounded-3xl border border-[#E7DED1] shadow-[0_10px_40px_rgba(20,20,20,0.02)]">
                 <p className="text-[#141414] font-medium text-[15px] tracking-[-0.01em]">No ad digests match your filters.</p>
@@ -173,4 +189,13 @@ export default async function AdList({ filters }: { filters: Record<string, stri
             })}
         </div>
     );
+    } catch (topLevelError: any) {
+        console.error('[AdList] Top-level error:', topLevelError);
+        return (
+            <div className="text-red-400 font-bold p-8 bg-red-500/10 rounded-2xl border border-red-500/20">
+                <p className="mb-2">Failed to load ads</p>
+                <p className="text-sm font-normal">{topLevelError.message || 'Unknown error'}</p>
+            </div>
+        );
+    }
 }
