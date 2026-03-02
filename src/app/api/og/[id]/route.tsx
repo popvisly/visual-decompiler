@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 export const revalidate = 0; // Temporarily disable cache for debugging
 
 export async function GET(
