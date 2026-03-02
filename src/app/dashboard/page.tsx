@@ -1,8 +1,7 @@
 import { Suspense } from 'react';
 import AdList from '@/components/AdList';
 import SelectionProvider from '@/components/SelectionProvider';
-import BulkActionsBar from '@/components/BulkActionsBar';
-import Link from 'next/link';
+import LibraryActions from '@/components/LibraryActions';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -16,7 +15,6 @@ export default async function DashboardPage({
 
     return (
         <SelectionProvider>
-            <BulkActionsBar />
             <div className="max-w-7xl mx-auto px-6 py-10">
                 <div className="flex-1 space-y-16 py-12">
                     {/* Page title */}
@@ -30,12 +28,7 @@ export default async function DashboardPage({
                         </div>
 
                         <div className="md:pb-2 flex items-center gap-4">
-                            <Link
-                                href="/dashboard/settings"
-                                className="flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest bg-white border border-[#E7DED1] hover:border-[#141414] hover:text-[#141414] transition-all shadow-sm"
-                            >
-                                Settings
-                            </Link>
+                            <LibraryActions />
                         </div>
                     </div>
 

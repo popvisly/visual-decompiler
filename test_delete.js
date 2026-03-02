@@ -9,11 +9,11 @@ dotenv.config({ path: path.resolve(__dirname, '.env.local') });
 // But I can try to hit it and see if I get a 401 (expected) vs a 405 or 404.
 
 async function testDelete() {
-    const url = 'https://www.visualdecompiler.com/api/ads/bulk';
-    console.log(`Testing DELETE at ${url}...`);
+    const url = 'https://www.visualdecompiler.com/api/ads/actions/bulk-delete';
+    console.log(`Testing POST at ${url}...`);
     try {
         const res = await fetch(url, {
-            method: 'DELETE',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
                 // Missing Authorization/Cookie
