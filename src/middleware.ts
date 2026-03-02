@@ -34,7 +34,6 @@ export default clerkMiddleware(async (auth, request) => {
 
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('Content-Security-Policy', cspHeader);
-    @ts-ignore
 
     const response = NextResponse.next({
         request: {
