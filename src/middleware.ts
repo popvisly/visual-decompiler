@@ -1,20 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { ratelimit } from '@/lib/ratelimit';
 
 export async function middleware(request: NextRequest) {
-    // 1. Rate Limiting for API routes
-    if (request.nextUrl.pathname.startsWith('/api')) {
-        const ip = request.headers.get('x-forwarded-for')?.split(',')[0] ?? (request as any).ip ?? '127.0.0.1';
-        const { success } = await ratelimit.limit(ip);
-
-        if (!success) {
-            return NextResponse.json(
-                { error: 'Too many requests' },
-                { status: 429 }
-            );
-        }
-    }
+    // Rate limiting temporarily disabled for launch - will re-enable after proper testing
 
     // 2. CSP Headers
     const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
