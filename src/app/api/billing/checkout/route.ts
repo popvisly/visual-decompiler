@@ -53,7 +53,7 @@ export async function POST(req: Request) {
         }
 
         // 3. Determine if this is a subscription or one-time payment
-        const isOneTime = planId === 'price_1T64V10LZZUO4xz4jug67wyT'; // $5 one-time analysis
+        const isOneTime = planId === process.env.STRIPE_PRICE_PRO_ONETIME; // $5 one-time analysis
 
         // 4. Create Checkout Session
         try {

@@ -24,7 +24,7 @@ const PLANS = [
         costPerAnalysis: '$0.01',
     },
     {
-        id: 'price_1T64QL0LZZUO4xz44Cwvqdzk', // Pro tier Stripe Price ID
+        id: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY || 'price_1T64QL0LZZUO4xz44Cwvqdzk',
         name: 'Strategic Unit',
         price: '$49',
         interval: '/mo',
@@ -44,7 +44,7 @@ const PLANS = [
         costPerAnalysis: '$0.49',
     },
     {
-        id: 'price_1T64ct0LZZUO4xz4flNsI53d', // Agency Sovereignty (USD)
+        id: process.env.NEXT_PUBLIC_STRIPE_PRICE_AGENCY_MONTHLY || 'price_1T64ct0LZZUO4xz4flNsI53d',
         name: 'Agency Sovereignty',
         price: '$199',
         interval: '/mo',
@@ -218,7 +218,7 @@ export default function PricingPage() {
                                 Perfect for one-off projects. Get instant Pro-tier (Sonnet 4.5) analysis without a subscription.
                             </p>
                             <button
-                                onClick={() => handleUpgrade('price_1T64V10LZZUO4xz4jug67wyT')}
+                                onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_ONETIME || 'price_1T64V10LZZUO4xz4jug67wyT')}
                                 disabled={loading !== null}
                                 className="px-8 py-3 bg-[#141414] text-[#FBF7EF] rounded-full text-[11px] font-bold uppercase tracking-[0.2em] hover:shadow-[0_10px_30px_rgba(20,20,20,0.1)] transition-all active:scale-[0.98]"
                             >
@@ -465,7 +465,7 @@ export default function PricingPage() {
                             </p>
 
                             <button
-                                onClick={() => handleUpgrade('price_1T64ct0LZZUO4xz4flNsI53d')}
+                                onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_AGENCY_MONTHLY || 'price_1T64ct0LZZUO4xz4flNsI53d')}
                                 disabled={loading !== null}
                                 className="px-14 py-6 bg-[#141414] hover:bg-black text-[#FBF7EF] font-bold text-[12px] uppercase tracking-[0.2em] rounded-full shadow-[0_20px_60px_rgba(20,20,20,0.2)] transition-all active:scale-[0.98]"
                             >
