@@ -33,8 +33,8 @@ export default clerkMiddleware(async (auth, request) => {
   `.replace(/\s{2,}/g, ' ').trim();
 
     const requestHeaders = new Headers(request.headers);
-    requestHeaders.set('x-nonce', nonce);
     requestHeaders.set('Content-Security-Policy', cspHeader);
+    @ts-ignore
 
     const response = NextResponse.next({
         request: {
