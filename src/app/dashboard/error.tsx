@@ -29,9 +29,12 @@ export default function ErrorBoundary({
                             <strong>Error ID:</strong> {error.digest}
                         </>
                     )}
-                    {process.env.NODE_ENV === 'development' && error.stack && (
+                    {/* Temporarily show stack trace in production for debugging */}
+                    {error.stack && (
                         <>
                             {'\n\n'}
+                            <strong>Stack Trace:</strong>
+                            {'\n'}
                             {error.stack}
                         </>
                     )}
