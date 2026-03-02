@@ -10,10 +10,6 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '20mb',
     }
   },
-  outputFileTracingIncludes: {
-    // Include prompt artifacts in worker output
-    '/api/worker': ['./artifacts/**'],
-  },
   async redirects() {
     return [
       {

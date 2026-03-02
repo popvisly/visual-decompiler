@@ -20,3 +20,30 @@ dev_pid.txt
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+# Temp / Local test files
+*.png
+*.jpg
+*.jpeg
+*.txt
+*.html
+*.log
+!README.md
+!UPGRADE_NOTES.md
+!DEPLOYMENT.md
+!WALKTHROUGH.md
+!GUARDRAILS.md
+!AGENT_CONTEXT.md
+!COST_OPTIMIZATION_GUIDE.md
+!STRIPE_SETUP_GUIDE.md
+!CHECKOUT_SETUP_COMPLETE.md
+!*.ts
+!*.js
+!*.tsx
+!*.json
+!*.md
+!*.css
+!*.svg
+!*.ico
+!*.cjs
+!*.mjs
