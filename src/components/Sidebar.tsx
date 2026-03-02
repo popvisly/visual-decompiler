@@ -9,7 +9,14 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
     const { userId } = await auth();
     if (!userId) return null;
 
-    const brands = await getAllBrands(userId);
+    // Gracefully handle brand loading errors
+    let brands: Awaited<ReturnType<typeof getAllBrands>> = [];
+    try {
+        brands = await getAllBrands(userId);
+    } catch (error) {
+        console.error('[Sidebar] Failed to load brands:', error);
+        // Continue with empty brands array
+    }
     const topBrands = brands.slice(0, 10);
 
     return (
