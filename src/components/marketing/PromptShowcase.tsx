@@ -16,7 +16,7 @@ export default function PromptShowcase() {
     };
 
     return (
-        <section className="relative bg-[#F6F1E7] py-24 md:py-32 overflow-hidden border-t border-[#E7DED1]">
+        <section className="relative bg-[#F6F1E7] py-32 md:py-40 overflow-hidden border-t border-[#E7DED1]">
             {/* Background Mesh (Ultra-Subtle) */}
             <div className="absolute inset-0 opacity-[0.02] [background-image:linear-gradient(#1A1A18_1px,transparent_1px),linear-gradient(90deg,#1A1A18_1px,transparent_1px)] [background-size:64px_64px]" />
 

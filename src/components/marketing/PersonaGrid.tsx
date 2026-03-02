@@ -29,7 +29,7 @@ const PERSONAS = [
 
 export default function PersonaGrid() {
     return (
-        <section className="bg-[#F6F1E7] py-24 md:py-48 px-6">
+        <section className="bg-[#F6F1E7] py-32 md:py-40 px-6">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-24 md:mb-32 space-y-8">
                     <div className="flex flex-col items-center gap-4">

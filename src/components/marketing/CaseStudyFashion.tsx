@@ -11,7 +11,7 @@ type Props = {
 
 export default function CaseStudyFashion({ id, label, title, body, stageImage, cards }: Props) {
     return (
-        <section id={id} className="relative bg-[#FBF7EF] text-[#141414] py-32 md:py-48 overflow-hidden border-t border-[#E7DED1]">
+        <section id={id} className="relative bg-[#FBF7EF] text-[#141414] py-32 md:py-40 overflow-hidden border-t border-[#E7DED1]">
             <div className="max-w-7xl mx-auto px-6">
 
                 {/* Header Section */}

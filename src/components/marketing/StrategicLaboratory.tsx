@@ -26,7 +26,7 @@ export default function StrategicLaboratory() {
     ];
 
     return (
-        <section className="bg-[#F6F1E7] text-[#1A1A18] py-24 md:py-48 overflow-hidden relative border-t border-[#E7DED1]">
+        <section className="bg-[#F6F1E7] text-[#1A1A18] py-32 md:py-40 overflow-hidden relative border-t border-[#E7DED1]">
             {/* Fine architectural grid background */}
             <div className="absolute inset-0 opacity-[0.4] pointer-events-none [background-image:linear-gradient(#E7DED1_1px,transparent_1px),linear-gradient(90deg,#E7DED1_1px,transparent_1px)] [background-size:100px_100px]" />
 
