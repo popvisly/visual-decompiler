@@ -33,7 +33,7 @@ export default clerkMiddleware(async (auth, request) => {
   `.replace(/\s{2,}/g, ' ').trim();
 
     const requestHeaders = new Headers(request.headers);
-    // requestHeaders.set('Content-Security-Policy', cspHeader);
+    requestHeaders.set('Content-Security-Policy', cspHeader);
 
     const response = NextResponse.next({
         request: {
@@ -41,7 +41,7 @@ export default clerkMiddleware(async (auth, request) => {
         },
     });
 
-    // response.headers.set('Content-Security-Policy', cspHeader);
+    response.headers.set('Content-Security-Policy', cspHeader);
 
     return response;
 });
