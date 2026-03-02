@@ -1,4 +1,5 @@
 import SelectionProvider from '@/components/SelectionProvider';
+import Sidebar from '@/components/Sidebar';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -12,7 +13,8 @@ export default async function DashboardPage({
 
     return (
         <SelectionProvider>
-            <div className="max-w-7xl mx-auto px-6 py-10">
+            <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-10 w-full">
+                <Sidebar searchParams={params} />
                 <div className="flex-1 space-y-8">
                     <div>
                         <h2 className="text-7xl font-light text-[#141414] tracking-tightest uppercase leading-[0.85]">
@@ -25,11 +27,11 @@ export default async function DashboardPage({
                     </div>
 
                     <div className="bg-white p-12 rounded-3xl border border-[#E7DED1]">
-                        <h3 className="text-2xl font-bold mb-4">Step 1: SelectionProvider Added ✅</h3>
+                        <h3 className="text-2xl font-bold mb-4">Step 2: Sidebar Added ✅</h3>
                         <p className="text-[#6B6B6B]">
-                            If you see this, SelectionProvider works!
+                            If you see this AND the sidebar on the left, Sidebar works!
                         </p>
-                        <p className="mt-4 text-sm">Next: Adding Sidebar component...</p>
+                        <p className="mt-4 text-sm">Next: Adding AdList component (most likely culprit)...</p>
                     </div>
                 </div>
             </div>
