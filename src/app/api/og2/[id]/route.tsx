@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 export const revalidate = 86400; // Cache for 24 hours
 
 export async function GET(
