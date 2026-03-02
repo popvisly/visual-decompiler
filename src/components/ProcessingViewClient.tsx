@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
-import { extractYouTubeId } from '@/lib/youtube';
 
 const ANALYSIS_STEPS = [
     'Extracting visual elements…',
@@ -126,7 +125,6 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
         return () => { cancelled = true; clearTimeout(timeout); };
     }, [jobId, onComplete]);
 
-    const isVideo = mediaKind === 'video' || (mediaUrl ? /\.(mp4|mov|webm|avi)/i.test(mediaUrl) : false);
 
     return (
         <div className="w-full max-w-3xl mx-auto page-enter">
@@ -172,29 +170,11 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
 
                     {/* Media thumbnail */}
                     <div className="w-64 h-64 rounded-[20px] overflow-hidden border border-[#E7DED1] shadow-[0_20px_60px_rgba(20,20,20,0.08)] bg-white relative flex items-center justify-center">
-                        {extractYouTubeId(mediaUrl) ? (
-                            <img
-                                src={`https://img.youtube.com/vi/${extractYouTubeId(mediaUrl)}/maxresdefault.jpg`}
-                                alt="YouTube Thumbnail Placeholder"
-                                className="absolute inset-0 w-full h-full object-cover opacity-60"
-                            />
-                        ) : isVideo ? (
-                            <video
-                                src={mediaUrl}
-                                className="w-full h-full object-cover opacity-80"
-                                muted
-                                playsInline
-                                autoPlay
-                                loop
-                                preload="metadata"
-                            />
-                        ) : (
-                            <img
-                                src={mediaUrl}
-                                alt="Analyzing ad"
-                                className="w-full h-full object-cover opacity-80"
-                            />
-                        )}
+                        <img
+                            src={mediaUrl}
+                            alt="Analyzing ad"
+                            className="w-full h-full object-cover opacity-80"
+                        />
                         {/* Overlay */}
                         <div className="absolute inset-0 bg-[#FBF7EF]/30 flex items-center justify-center backdrop-blur-[2px]">
                             <div className="rounded-2xl p-4 bg-white/80 border border-[#E7DED1] shadow-sm backdrop-blur-md">

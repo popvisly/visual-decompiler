@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useRef, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { TrendingUp, Sparkles, Activity, Play, CheckCircle2, X, Dna, Users, Zap, Lock } from 'lucide-react';
 import BrandTag from '@/components/BrandTag';
@@ -47,7 +47,6 @@ export default function AdDetailClient({
     type TabKey = 'report' | 'forensics' | 'analytics' | 'prompt' | 'intelligence' | 'audience' | 'remix';
     const [tab, setTab] = useState<TabKey>('report');
     const neuralData = useMemo(() => NeuralDeconstructionService.resolve(digest, forecasting), [digest, forecasting]);
-    const videoRef = useRef<HTMLVideoElement>(null);
 
     const predictROI = async () => {
         try {
@@ -152,14 +151,7 @@ export default function AdDetailClient({
                     <div className="lg:col-span-4 space-y-8 md:space-y-12">
                         <div className="sticky top-12 space-y-6 md:space-y-8">
                             <div className="rounded-[2rem] md:rounded-[3.5rem] overflow-hidden shadow-[0_40px_100px_rgba(20,20,20,0.03)]">
-                                {ad.media_kind === 'video' ? (
-                                    <video
-                                        ref={videoRef}
-                                        src={ad.media_url}
-                                        className="w-full aspect-[4/5] object-cover"
-                                        controls muted playsInline preload="metadata"
-                                    />
-                                ) : tab === 'forensics' && (digest?.extraction?.evidence_receipts?.length || 0) > 0 ? (
+                                {tab === 'forensics' && (digest?.extraction?.evidence_receipts?.length || 0) > 0 ? (
                                     <ForensicOverlay
                                         imageUrl={ad.media_url}
                                         anchors={digest.extraction?.evidence_receipts || []}

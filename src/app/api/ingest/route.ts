@@ -3,18 +3,10 @@ import { auth } from '@clerk/nextjs/server';
 import { decompileAd, VisionInput } from '@/lib/vision';
 import { AdDigestSchema } from '@/types/digest';
 import { supabaseAdmin } from '@/lib/supabase';
-import { extractKeyframes, cleanupFrames } from '@/lib/video';
-import { isYouTubeUrl } from '@/lib/youtube';
 
-async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: string; type: 'image' | 'video' | null; contentType?: string | null; sizeMB?: number; finalUrl?: string }> {
+async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: string; type: 'image' | null; contentType?: string | null; sizeMB?: number; finalUrl?: string }> {
     if (!/^https?:\/\//i.test(mediaUrl)) {
         return { ok: false, reason: 'Please paste a full http(s) URL.', type: null };
-    }
-
-    // Heuristic: YouTube URLs (bypass network fetch totally)
-    if (isYouTubeUrl(mediaUrl)) {
-        console.log(`[Ingest] YouTube heuristic triggered (bypassing fetch)`);
-        return { ok: true, type: 'video', contentType: 'video/mp4' };
     }
 
     const tryDetect = async (url: string, useRange: boolean) => {
@@ -72,9 +64,6 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
         console.log(`[Ingest] HTTP Check: status=${res.status}, types=${types.join('|')}, url=${finalUrl}`);
 
         if (types.some(t => t.startsWith('image/'))) return { ok: true, type: 'image', contentType: types.find(t => t.startsWith('image/')) || 'image/jpeg', sizeMB, finalUrl };
-        if (types.some(t => t.startsWith('video/') || t.includes('mp4') || t.includes('mpeg'))) {
-            return { ok: true, type: 'video', contentType: types.find(t => t.startsWith('video/')) || 'video/mp4', sizeMB, finalUrl };
-        }
 
         // Heuristic: If it's Unsplash, it's almost certainly an image even if detection failed
         // Check both finalUrl and the original mediaUrl
@@ -90,7 +79,6 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
                 const urlPath = new URL(url).pathname;
                 const ext = urlPath.split('.').pop()?.toLowerCase() || '';
                 if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { type: 'image', ext };
-                if (['mp4', 'mov', 'webm'].includes(ext)) return { type: 'video', ext };
             } catch (e) { /* ignore */ }
             return null;
         };
@@ -107,7 +95,6 @@ async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: s
             const urlPath = new URL(mediaUrl).pathname;
             const ext = urlPath.split('.').pop()?.toLowerCase() || '';
             if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { ok: true, type: 'image', contentType: `image/${ext}` };
-            if (['mp4', 'mov', 'webm'].includes(ext)) return { ok: true, type: 'video', contentType: `video/${ext}` };
         } catch (urlErr) { /* ignore */ }
         return { ok: true, type: null, contentType: null };
     }
@@ -146,7 +133,6 @@ export async function POST(req: Request) {
         ipCache.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
     }
 
-    let tempDir: string | null = null;
     try {
         let { mediaUrl } = await req.json();
 
@@ -197,18 +183,11 @@ export async function POST(req: Request) {
             mediaUrl = info.finalUrl;
         }
 
-        // Production Guardrail: Max 50MB for videos
-        if (info.type === 'video' && info.sizeMB && info.sizeMB > 50) {
-            return NextResponse.json({
-                error: `Video file too large (${info.sizeMB.toFixed(1)}MB). Please use a file under 50MB for stable extraction.`
-            }, { status: 400 });
-        }
-
         const promptVersion = 'V4';
 
         if (info.type === null) {
             return NextResponse.json({
-                error: 'Could not detect media type. Please ensure the URL ends in a common image or video extension.',
+                error: 'Could not detect image type. Please ensure the URL is a valid image (jpg, png, webp, gif).',
                 debug: {
                     contentType: info.contentType,
                     detectedType: info.type
@@ -298,9 +277,5 @@ export async function POST(req: Request) {
     } catch (err: any) {
         console.error('Ingestion error:', err);
         return NextResponse.json({ error: err.message || 'Internal server error' }, { status: 500 });
-    } finally {
-        if (tempDir) {
-            cleanupFrames(tempDir);
-        }
     }
 }

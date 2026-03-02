@@ -4,10 +4,6 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { getOpenAI } from '@/lib/vision';
 import { VisualDNAService } from '@/lib/visual_dna';
 import { ForecastingService } from '@/lib/forecasting';
-import { extractKeyframes, cleanupFrames } from '@/lib/video';
-import fs from 'fs';
-import path from 'path';
-import os from 'os';
 
 export async function POST(req: Request) {
     const { userId, orgId } = await auth();
@@ -57,26 +53,15 @@ Strategic Anomaly: ${ad.is_anomaly ? 'YES - Significant Pivot Detected' : 'No'}
 
         for (const ad of topAds) {
             try {
-                if (ad.media_kind === 'video') {
-                    const extraction = await extractKeyframes(ad.media_url, [{ t_ms: 0, label: 'Hook' }]);
-                    const framePath = extraction.results[0].path;
-                    const base64 = fs.readFileSync(framePath, { encoding: 'base64' });
-                    visualContext.push({
-                        type: "image_url",
-                        image_url: { url: `data:image/jpeg;base64,${base64}` }
-                    });
-                    cleanupFrames(extraction.tempDir);
-                } else {
-                    // For images, we fetch and convert to base64
-                    const imgRes = await fetch(ad.media_url);
-                    const buffer = Buffer.from(await imgRes.arrayBuffer());
-                    const base64 = buffer.toString('base64');
-                    const mimeType = imgRes.headers.get('content-type') || 'image/jpeg';
-                    visualContext.push({
-                        type: "image_url",
-                        image_url: { url: `data:${mimeType};base64,${base64}` }
-                    });
-                }
+                // Fetch image and convert to base64
+                const imgRes = await fetch(ad.media_url);
+                const buffer = Buffer.from(await imgRes.arrayBuffer());
+                const base64 = buffer.toString('base64');
+                const mimeType = imgRes.headers.get('content-type') || 'image/jpeg';
+                visualContext.push({
+                    type: "image_url",
+                    image_url: { url: `data:${mimeType};base64,${base64}` }
+                });
             } catch (err) {
                 console.warn(`[Synthesis] Visual context extraction failed for ad ${ad.id}:`, err);
             }

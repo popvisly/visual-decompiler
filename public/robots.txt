@@ -1,0 +1,24 @@
+# robots.txt for Visual Decompiler
+
+# Allow all crawlers to access public content
+User-agent: *
+Allow: /
+Allow: /report/
+Allow: /intelligence/
+
+# Block private/sensitive routes
+Disallow: /dashboard
+Disallow: /app
+Disallow: /api/
+Disallow: /_next/
+Disallow: /share/private/
+
+# Block authentication routes
+Disallow: /*?sign_in=true
+Disallow: /*?sign_up=true
+
+# Sitemap location
+Sitemap: https://visualdecompiler.com/sitemap.xml
+
+# Crawl delay (optional - helps manage server load)
+Crawl-delay: 1
