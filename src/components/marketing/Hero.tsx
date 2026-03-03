@@ -84,14 +84,18 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     PDF export&nbsp;&nbsp;·&nbsp;&nbsp;Share-ready reports
                 </div>
 
-                {/* Mockup Title area */}
-                <div className="mt-12 mb-8 flex flex-col items-center gap-2">
-                    <div className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#141414]/40">
-                        Forensic Reconstruction
-                    </div>
-                    <div className="text-[11px] md:text-[12px] text-[#141414]/55 tracking-[-0.01em]">
-                        We deconstruct the ad into observable persuasion cues.
-                    </div>
+                {/* Mockup Title area (Sovereign Style) */}
+                <div className="mt-24 mb-16 flex flex-col items-center gap-6">
+                    <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#C1A67B]">
+                        Forensic Intelligence
+                    </span>
+                    <h2 className="text-4xl md:text-6xl font-semibold text-[#141414] tracking-tightest uppercase leading-[0.9]">
+                        Mechanism.<br />
+                        <span className="text-[#C1A67B]">Reconstructed.</span>
+                    </h2>
+                    <p className="text-[14px] md:text-[16px] text-[#141414]/55 max-w-xl leading-relaxed">
+                        We deconstruct the ad into observable persuasion cues to justify high-stakes strategy with forensic precision.
+                    </p>
                 </div>
 
                 {/* Hero Node Graph Visualization */}
