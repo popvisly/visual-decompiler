@@ -24,7 +24,7 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
   const signals = pills.slice(0, 6);
 
   return (
-    <section id={id} className="relative bg-[#F6F1E7] py-32 md:py-40 overflow-hidden">
+    <section id={id} className="relative bg-[#F6F1E7] pt-20 md:pt-28 pb-32 md:pb-40 overflow-hidden">
       {/* Background grid */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.45] [background-image:linear-gradient(rgba(20,20,20,0.024)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.024)_1px,transparent_1px)] [background-size:48px_48px]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(255,255,255,0.55)_0%,rgba(255,255,255,0)_65%)]" />

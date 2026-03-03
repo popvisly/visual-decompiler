@@ -18,7 +18,7 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
     const tileY = useTransform(scrollY, [0, 500], [0, 60]);
 
     return (
-        <section className="relative bg-[#F6F1E7] text-[#141414] min-h-[78vh] md:min-h-[82vh] flex flex-col justify-center pt-24 md:pt-28 pb-20 md:pb-24 overflow-hidden">
+        <section className="relative bg-[#F6F1E7] text-[#141414] min-h-[78vh] md:min-h-[82vh] flex flex-col justify-center pt-24 md:pt-28 pb-12 md:pb-16 overflow-hidden">
 
             {/* Bone Grid Background */}
             <div className="pointer-events-none absolute inset-0 opacity-[0.55] [background-image:linear-gradient(rgba(20,20,20,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.028)_1px,transparent_1px)] [background-size:48px_48px]" />
@@ -89,13 +89,15 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     <HeroNodeGraph stageImage={stageImage} />
                 </div>
 
-                {/* Caption line under plate */}
-                <div className="mt-6 text-[11px] md:text-[12px] text-[#141414]/55 tracking-[-0.01em]">
-                    We deconstruct the ad into observable persuasion cues.
+                {/* Caption area under mockup */}
+                <div className="mt-10 md:mt-12 flex flex-col items-center gap-2">
+                    <div className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#141414]/40">
+                        Forensic Reconstruction
+                    </div>
+                    <div className="text-[11px] md:text-[12px] text-[#141414]/55 tracking-[-0.01em]">
+                        We deconstruct the ad into observable persuasion cues.
+                    </div>
                 </div>
-
-                {/* Section divider (keeps the fine line anchored to the hero, so it doesn’t drift with content) */}
-                <div className="mt-14 w-full max-w-6xl h-px bg-[#141414]/10" />
 
             </div>
 
