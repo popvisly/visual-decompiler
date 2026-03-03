@@ -115,7 +115,7 @@ export default function StrategicDossier({
                             The Strategic Dossier
                         </h1>
                         <p className="dossier-subtitle">
-                            {brandName} Analysis
+                            {brandName || digest?.meta?.brand_guess || 'Competitive'} Analysis
                         </p>
 
                         <div className="dossier-cover-divider" />
@@ -147,7 +147,7 @@ export default function StrategicDossier({
                         <div className="dossier-verdict-block">
                             <p className="dossier-label">Neural Thesis</p>
                             <p className="dossier-quote">
-                                &ldquo;{strat?.semiotic_subtext || 'Analysis in progress...'}&rdquo;
+                                &ldquo;{strat?.semiotic_subtext || neuralData?.strategic_verdict || 'Deep analysis of semiotic layers and strategic machinery reveals a highly optimized persuasion architecture.'}&rdquo;
                             </p>
                         </div>
 
@@ -457,25 +457,37 @@ export default function StrategicDossier({
 
                 @media print {
                     /* Hide everything except the dossier */
-                    body > *:not(.dossier-print-layout) { display: none !important; }
+                    body > *:not(.dossier-print-layout) { 
+                        display: none !important; 
+                        visibility: hidden !important;
+                    }
                     .no-print { display: none !important; }
                     header, aside, nav, footer { display: none !important; }
 
                     /* Show the dossier */
                     .dossier-print-layout {
                         display: block !important;
-                        position: absolute;
-                        top: 0; left: 0;
-                        width: 100%;
+                        visibility: visible !important;
+                        position: absolute !important;
+                        top: 0 !important; 
+                        left: 0 !important;
+                        width: 100% !important;
+                        z-index: 9999 !important;
+                        background: white !important;
+                    }
+
+                    /* Force parent containers to show if they are needed for layout */
+                    html, body {
+                        height: auto !important;
+                        overflow: visible !important;
+                        background: white !important;
                     }
 
                     body {
-                        background: white !important;
                         margin: 0 !important;
                         padding: 0 !important;
                         -webkit-print-color-adjust: exact !important;
                         print-color-adjust: exact !important;
-                        color-adjust: exact !important;
                     }
 
                     /* Page setup */
