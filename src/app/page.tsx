@@ -9,31 +9,31 @@ import FooterStartNow from '@/components/marketing/FooterStartNow';
 import { Pill, PreviewCard, CaseCard } from '@/types/homepage';
 
 const PILLS: Pill[] = [
-    { key: "trigger", label: "Trigger Mechanics", micro: "Identify the behavioral lever being pulled.", x: 14, y: 28 },
-    { key: "semiotic", label: "Semiotic Subtext", micro: "Extract the implied promise beneath the surface.", x: 78, y: 34 },
-    { key: "narrative", label: "Narrative Framework", micro: "Map the persuasion arc and its sequencing.", x: 70, y: 18 },
-    { key: "evidence", label: "Evidence Anchors", micro: "Point to the concrete cues carrying the claim.", x: 22, y: 62 },
-    { key: "objections", label: "Objection Dismantling", micro: "Detect pre-emptive friction removal.", x: 82, y: 64 },
-    { key: "visual", label: "Visual Style", micro: "Classify the aesthetic strategy and its function.", x: 10, y: 50 },
-    { key: "nudge", label: "Behavioral Nudge", micro: "Name the action pressure being applied.", x: 60, y: 78 },
-    { key: "confidence", label: "Confidence Score", micro: "Quantify certainty based on observable signals.", x: 46, y: 12 },
+    { key: "craft", label: "Craftsmanship Authority", micro: "Isolate macro-texture as proof of artisanal value.", x: 14, y: 28 },
+    { key: "scarcity", label: "Scarcity Cues", micro: "Detect limitedness implied through composition.", x: 78, y: 34 },
+    { key: "legacy", label: "Legacy Framework", micro: "Map the asset-as-heirloom persuasion arc.", x: 70, y: 18 },
+    { key: "material", label: "Material Fidelity", micro: "Cite sapphire, gold, and leather as status anchors.", x: 22, y: 62 },
+    { key: "mechanical", label: "Mechanical Intimacy", micro: "Detect focus on internal horological complexity.", x: 82, y: 64 },
+    { key: "precision", label: "Precision Coding", micro: "Classify the mathematical symmetry of the dial.", x: 10, y: 50 },
+    { key: "value", label: "Value Shielding", micro: "Neutralize price friction through implicit premium.", x: 60, y: 78 },
+    { key: "confidence", label: "Confidence Score", micro: "Evidence density matches high-tier luxury codes.", x: 46, y: 12 },
 ];
 
 const REPORT_PREVIEW: PreviewCard[] = [
     {
         title: "Trigger Mechanic",
-        micro: "Locate the primary lever and how it’s operationalized.",
-        bullets: ["Scarcity / limitedness", "Authority transfer", "Status cueing"],
+        micro: "Asset-based signaling through material excellence.",
+        bullets: ["Artisanal proof", "Legacy projection", "Reflective status"],
     },
     {
         title: "Evidence Anchors",
-        micro: "Cite what the viewer can actually point to.",
-        bullets: ["Typography weight", "Composition hierarchy", "Claim placement"],
+        micro: "Tangible cues citing horological precision.",
+        bullets: ["Macro texture detail", "Symmetrical bezel dial", "Depth of field focus"],
     },
     {
         title: "Confidence Score",
-        micro: "Express certainty from observed signals.",
-        bullets: ["High confidence", "Evidence density: strong"],
+        micro: "Alignment with ultra-luxury visual codes.",
+        bullets: ["94% Certainty", "Evidence density: Exceptional"],
     },
 ];
 
@@ -76,7 +76,7 @@ export default function HomePage() {
 
             <DecompilePipeline
                 id="how"
-                stageImage={{ src: "/images/examples/perfume_ad_no_logo.jpg", alt: "Example ad" }}
+                stageImage={{ src: "/images/examples/watch_ad.jpg", alt: "Luxury watch ad" }}
                 pills={PILLS}
                 reportPreviewCards={REPORT_PREVIEW}
             />
