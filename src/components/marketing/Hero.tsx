@@ -85,7 +85,7 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                 </div>
 
                 {/* Mockup Title area (Sovereign Style) */}
-                <div className="mt-24 mb-16 flex flex-col items-center gap-6">
+                <div className="mt-24 mb-8 flex flex-col items-center gap-6">
                     <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#C1A67B]">
                         Forensic Intelligence
                     </span>

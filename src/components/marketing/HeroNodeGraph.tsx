@@ -19,7 +19,7 @@ export default function HeroNodeGraph({ stageImage }: Props) {
     };
 
     return (
-        <div className="w-full max-w-[1440px] mx-auto min-h-[600px] rounded-[32px] overflow-hidden border border-[#E7DED1] shadow-[0_30px_90px_rgba(20,20,20,0.08)] bg-[#F8F5EE] p-6 lg:p-10 my-10 relative flex flex-col xl:flex-row gap-8">
+        <div className="w-full max-w-[1440px] mx-auto min-h-[600px] rounded-[32px] overflow-hidden border border-[#E7DED1] shadow-[0_30px_90px_rgba(20,20,20,0.08)] bg-[#F8F5EE] p-6 lg:p-10 mt-5 mb-10 relative flex flex-col xl:flex-row gap-8">
 
             {/* Background grid for technical feel */}
             <div className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(rgba(20,20,20,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.04)_1px,transparent_1px)] [background-size:24px_24px]" />
