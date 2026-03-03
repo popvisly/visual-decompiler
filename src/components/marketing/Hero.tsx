@@ -84,19 +84,19 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     PDF export&nbsp;&nbsp;·&nbsp;&nbsp;Share-ready reports
                 </div>
 
-                {/* Hero Node Graph Visualization */}
-                <div className="w-full mt-4">
-                    <HeroNodeGraph stageImage={stageImage} />
-                </div>
-
-                {/* Caption area under mockup */}
-                <div className="mt-10 md:mt-12 flex flex-col items-center gap-2">
+                {/* Mockup Title area */}
+                <div className="mt-12 mb-8 flex flex-col items-center gap-2">
                     <div className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#141414]/40">
                         Forensic Reconstruction
                     </div>
                     <div className="text-[11px] md:text-[12px] text-[#141414]/55 tracking-[-0.01em]">
                         We deconstruct the ad into observable persuasion cues.
                     </div>
+                </div>
+
+                {/* Hero Node Graph Visualization */}
+                <div className="w-full">
+                    <HeroNodeGraph stageImage={stageImage} />
                 </div>
 
             </div>
