@@ -456,34 +456,32 @@ export default function StrategicDossier({
                 }
 
                 @media print {
-                    /* Hide everything except the dossier */
-                    body > *:not(.dossier-print-layout) { 
-                        display: none !important; 
+                    /* visibility:hidden on all body children — unlike display:none,
+                       this CAN be overridden by a deeply-nested child */
+                    body * {
                         visibility: hidden !important;
                     }
                     .no-print { display: none !important; }
-                    header, aside, nav, footer { display: none !important; }
 
-                    /* Show the dossier */
+                    /* Show the dossier and ALL its descendants */
                     .dossier-print-layout {
                         display: block !important;
                         visibility: visible !important;
-                        position: absolute !important;
+                        position: fixed !important;
                         top: 0 !important; 
                         left: 0 !important;
                         width: 100% !important;
                         z-index: 9999 !important;
                         background: white !important;
                     }
+                    .dossier-print-layout * {
+                        visibility: visible !important;
+                    }
 
-                    /* Force parent containers to show if they are needed for layout */
                     html, body {
                         height: auto !important;
                         overflow: visible !important;
                         background: white !important;
-                    }
-
-                    body {
                         margin: 0 !important;
                         padding: 0 !important;
                         -webkit-print-color-adjust: exact !important;
