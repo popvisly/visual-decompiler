@@ -177,12 +177,12 @@ export default function StrategicDossier({ digest, neuralData, brandName, agency
                             <table>
                                 <thead><tr><th>Signal</th><th>Confidence</th></tr></thead>
                                 <tbody>
-                                    {diag.confidence.overall != null && <tr><td className="bold">Overall</td><td>{pct(diag.confidence.overall)}</td></tr>}
-                                    {diag.confidence.trigger_mechanic != null && <tr><td>Trigger Mechanic</td><td>{pct(diag.confidence.trigger_mechanic)}</td></tr>}
-                                    {diag.confidence.narrative_framework != null && <tr><td>Narrative Framework</td><td>{pct(diag.confidence.narrative_framework)}</td></tr>}
-                                    {diag.confidence.color_extraction != null && <tr><td>Color Extraction</td><td>{pct(diag.confidence.color_extraction)}</td></tr>}
-                                    {diag.confidence.subtext != null && <tr><td>Semiotic Subtext</td><td>{pct(diag.confidence.subtext)}</td></tr>}
-                                    {diag.confidence.objection != null && <tr><td>Objection Analysis</td><td>{pct(diag.confidence.objection)}</td></tr>}
+                                    {diag.confidence.overall != null && <tr><td className="bold">Overall</td><td>{pct((diag.confidence.overall ?? 0) * 100)}</td></tr>}
+                                    {diag.confidence.trigger_mechanic != null && <tr><td>Trigger Mechanic</td><td>{pct((diag.confidence.trigger_mechanic ?? 0) * 100)}</td></tr>}
+                                    {diag.confidence.narrative_framework != null && <tr><td>Narrative Framework</td><td>{pct((diag.confidence.narrative_framework ?? 0) * 100)}</td></tr>}
+                                    {diag.confidence.color_extraction != null && <tr><td>Color Extraction</td><td>{pct((diag.confidence.color_extraction ?? 0) * 100)}</td></tr>}
+                                    {diag.confidence.subtext != null && <tr><td>Semiotic Subtext</td><td>{pct((diag.confidence.subtext ?? 0) * 100)}</td></tr>}
+                                    {diag.confidence.objection != null && <tr><td>Objection Analysis</td><td>{pct((diag.confidence.objection ?? 0) * 100)}</td></tr>}
                                 </tbody>
                             </table>
                         </div>
