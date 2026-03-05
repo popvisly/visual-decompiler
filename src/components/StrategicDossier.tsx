@@ -1,8 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-
-import { FileDown, Shield, Target, Activity, Layers, Tv, Brain } from 'lucide-react';
+import { FileDown } from 'lucide-react';
 import { AdDigest } from '@/types/digest';
 import { NeuralDeconstructionService, NeuralDeconstruction } from '@/lib/neural_deconstruction_service';
 
@@ -17,882 +16,623 @@ interface Props {
     tacticalWindow?: number;
 }
 
-/**
- * StrategicDossier — Print-only Sovereignty-tier export.
- * Renders a hidden document that becomes the full page on print.
- */
-export default function StrategicDossier({
-    digest,
-    neuralData,
-    brandName,
-    agencyName,
-    agencyLogo,
-    resonanceScore = 70,
-    saturationLevel = 30,
-    tacticalWindow = 60,
-}: Props) {
+const fmt = (s?: string | null) => s ? s.replace(/_/g, ' ') : '—';
+const pct = (n?: number | null) => n != null ? `${Math.round(n)}%` : '—';
+const score = (n?: number | null, suffix = '') => n != null ? `${Math.round(n)}${suffix}` : '—';
+const arr = (a?: string[] | null) => a?.length ? a.join(' · ') : '—';
 
+const DOSSIER_CSS = `
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Helvetica Neue', Arial, sans-serif; background: white; color: #141414; }
+@page { size: A4; margin: 0; }
+@media print { html, body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+.dp { width: 210mm; min-height: 297mm; padding: 20mm 24mm; box-sizing: border-box; page-break-after: always; position: relative; }
+.dp:last-child { page-break-after: auto; }
+.cover { background: #141414 !important; color: #FBF7EF !important; display: flex !important; align-items: center; justify-content: center; }
+.cover * { color: inherit; }
+.v-mark { display: inline-block; font-size: 48px; font-weight: 200; letter-spacing: 0.1em; border: 1px solid rgba(251,247,239,0.2); padding: 12px 28px; margin-bottom: 28px; }
+.cover-divider { width: 40px; height: 1px; background: rgba(251,247,239,0.15); margin: 24px auto; }
+.cover-title { font-size: 26px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+.cover-brand { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.5; }
+.cover-meta { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.3; margin-top: 6px; }
+.cover-footer { position: absolute; bottom: 20mm; left: 0; right: 0; text-align: center; font-size: 7px; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.15; }
+.pg-num { font-size: 8px; font-weight: 700; letter-spacing: 0.35em; text-transform: uppercase; color: #B5A99A; display: block; margin-bottom: 6px; }
+.pg-title { font-size: 22px; font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase; color: #141414; margin-bottom: 2px; }
+.pg-sub { font-size: 8px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: #8A8A8A; }
+.divider { height: 1px; background: #E7DED1; margin: 16px 0 20px; }
+.section { margin-bottom: 22px; }
+.lbl { font-size: 7px; font-weight: 700; letter-spacing: 0.32em; text-transform: uppercase; color: #8A8A8A; margin-bottom: 5px; }
+.val { font-size: 10px; line-height: 1.65; color: #141414; }
+.val-lg { font-size: 28px; font-weight: 300; color: #141414; }
+.val-sm { font-size: 8.5px; line-height: 1.6; color: #141414; }
+.italic { font-style: italic; }
+.quote { font-size: 12px; line-height: 1.65; font-style: italic; font-weight: 300; border-left: 2px solid #B5A99A; padding-left: 12px; }
+.cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.cols4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+.metrics { display: flex; gap: 28px; padding: 16px 0; border-top: 1px solid #E7DED1; border-bottom: 1px solid #E7DED1; margin: 14px 0; }
+.metric .lbl { margin-bottom: 2px; }
+.metric .val-lg { line-height: 1; }
+.metric .unit { font-size: 11px; font-weight: 400; color: #888; }
+table { width: 100%; border-collapse: collapse; font-size: 8.5px; margin-top: 6px; }
+th { text-align: left; font-size: 7px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #8A8A8A; padding: 5px 8px; border-bottom: 1px solid #141414; }
+td { padding: 5px 8px; border-bottom: 1px solid #E7DED1; color: #141414; line-height: 1.45; vertical-align: top; }
+td.bold { font-weight: 600; }
+td.muted { color: #888; }
+.chip { display: inline-block; background: #F4EFE6; border: 1px solid #E7DED1; padding: 2px 7px; border-radius: 3px; font-size: 8px; font-weight: 600; letter-spacing: 0.05em; margin: 2px 3px 2px 0; }
+.swatch { display: inline-block; width: 20px; height: 20px; border-radius: 3px; border: 1px solid #E7DED1; margin-right: 6px; vertical-align: middle; }
+.swatch-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.swatch-item { display: flex; align-items: center; font-size: 8px; color: #141414; }
+.box { border: 1px solid #E7DED1; border-radius: 6px; padding: 14px 16px; margin-top: 8px; }
+.risk-high { color: #C0392B; font-weight: 700; }
+.risk-med { color: #D68910; font-weight: 700; }
+.risk-low { color: #27AE60; font-weight: 700; }
+.pg-footer { position: absolute; bottom: 12mm; left: 24mm; right: 24mm; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #E7DED1; padding-top: 8px; }
+.pg-footer span { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: #C0B8AD; }
+`;
+
+export default function StrategicDossier({ digest, neuralData, brandName, agencyName, agencyLogo, resonanceScore = 70, saturationLevel = 30, tacticalWindow = 60 }: Props) {
     const dossierRef = useRef<HTMLDivElement>(null);
 
     const handleExport = () => {
         const el = dossierRef.current;
         if (!el) return;
-
         const popup = window.open('', '_blank', 'width=900,height=700');
         if (!popup) { alert('Please allow popups to export the dossier.'); return; }
-
-        popup.document.write(`<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>Strategic Dossier</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: white; }
-    @page { size: A4; margin: 0; }
-    @media print { html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
-
-    .dossier-page { width: 210mm; min-height: 297mm; padding: 24mm 28mm; box-sizing: border-box; page-break-after: always; position: relative; font-family: 'Helvetica Neue', Arial, sans-serif; }
-    .dossier-page:last-child { page-break-after: auto; }
-    .dossier-cover { display: flex !important; align-items: center; justify-content: center; background: #141414 !important; color: #FBF7EF !important; }
-    .dossier-cover-inner { text-align: center; max-width: 400px; }
-    .dossier-logo-block { margin-bottom: 32px; }
-    .dossier-agency-logo { max-height: 60px; max-width: 200px; object-fit: contain; }
-    .dossier-v-mark { display: inline-block; font-size: 48px; font-weight: 200; letter-spacing: 0.1em; color: #FBF7EF; border: 1px solid rgba(251,247,239,0.15); padding: 12px 24px; }
-    .dossier-cover-divider { width: 40px; height: 1px; background: rgba(251,247,239,0.15); margin: 28px auto; }
-    .dossier-title { font-size: 28px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin: 0 0 8px; color: #FBF7EF; }
-    .dossier-subtitle { font-size: 14px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(251,247,239,0.5); margin: 0; }
-    .dossier-confidential { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(251,247,239,0.35); margin: 0 0 6px; }
-    .dossier-date { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(251,247,239,0.2); margin: 0; }
-    .dossier-cover-footer { position: absolute; bottom: 28mm; left: 0; right: 0; text-align: center; }
-    .dossier-cover-footer p { font-size: 7px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(251,247,239,0.15); margin: 0 0 4px; }
-    .dossier-section-header { margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid #E7DED1; }
-    .dossier-section-number { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.4em; text-transform: uppercase; color: #B5A99A; margin-bottom: 8px; }
-    .dossier-section-title { font-size: 20px; font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase; color: #141414; margin: 0 0 4px; }
-    .dossier-section-subtitle { font-size: 9px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: #6B6B6B; margin: 0; }
-    .dossier-content { color: #141414; }
-    .dossier-label { font-size: 8px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: #6B6B6B; margin: 0 0 6px; }
-    .dossier-body { font-size: 10px; line-height: 1.7; color: #141414; margin: 0; }
-    .dossier-body-sm { font-size: 8px; color: #6B6B6B; margin: 0; }
-    .dossier-body-italic { font-size: 11px; line-height: 1.6; font-style: italic; color: #141414; margin: 0; }
-    .dossier-quote { font-size: 13px; line-height: 1.6; font-style: italic; font-weight: 300; color: #141414; border-left: 2px solid #B5A99A; padding-left: 12px; margin: 0; }
-    .dossier-verdict-block { padding: 16px 0; }
-    .dossier-metrics-row { display: flex; gap: 24px; padding: 20px 0; margin: 16px 0; border-top: 1px solid #E7DED1; border-bottom: 1px solid #E7DED1; }
-    .dossier-metric { flex: 1; }
-    .dossier-metric-label { font-size: 7px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: #6B6B6B; margin: 0 0 4px; }
-    .dossier-metric-value { font-size: 28px; font-weight: 300; color: #141414; margin: 0; }
-    .dossier-metric-unit { font-size: 11px; font-weight: 400; color: #6B6B6B; }
-    .dossier-detail-block { margin-top: 16px; }
-    .dossier-detail-item { margin-bottom: 16px; }
-    .dossier-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 9px; }
-    .dossier-table th { text-align: left; font-size: 7px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #6B6B6B; padding: 6px 8px; border-bottom: 1px solid #141414; }
-    .dossier-table td { padding: 6px 8px; border-bottom: 1px solid #E7DED1; color: #141414; line-height: 1.5; vertical-align: top; }
-    .dossier-table-bold { font-weight: 600; }
-    .dossier-color-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
-    .dossier-color-chip { display: flex; align-items: center; gap: 8px; }
-    .dossier-color-swatch { width: 24px; height: 24px; border-radius: 4px; border: 1px solid #E7DED1; }
-    .dossier-security-block { padding: 20px; border: 1px solid #E7DED1; border-radius: 8px; }
-    .dossier-security-details { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #E7DED1; }
-    .dossier-final-footer { margin-top: 60px; text-align: center; color: #B5A99A; }
-    .dossier-final-footer p { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; margin: 0 0 16px; }
-    .dossier-footer-logo { max-height: 30px; opacity: 0.4; }
-    .dossier-footer-mark { font-size: 8px; letter-spacing: 0.5em; text-transform: uppercase; color: #B5A99A; opacity: 0.3; margin: 0; }
-  </style>
-</head>
-<body>${el.innerHTML}</body>
-</html>`);
+        popup.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Strategic Dossier — ${brandName}</title><style>${DOSSIER_CSS}</style></head><body>${el.innerHTML}</body></html>`);
         popup.document.close();
-        popup.addEventListener('load', () => {
-            popup.focus();
-            popup.print();
-        });
-        // Fallback for browsers that fire load before document.close
+        popup.addEventListener('load', () => { popup.focus(); popup.print(); });
         setTimeout(() => { try { popup.focus(); popup.print(); } catch { } }, 800);
     };
 
-    // Compute Sovereign Score (resonance × inverse-saturation, weighted)
-    const sovereignScore = Math.round(
-        (resonanceScore * 0.5) + ((100 - saturationLevel) * 0.3) + (Math.min(tacticalWindow, 90) * 0.2)
-    );
-
+    const sovereignScore = Math.round((resonanceScore * 0.5) + ((100 - saturationLevel) * 0.3) + (Math.min(tacticalWindow, 90) * 0.2));
     const cls = digest.classification;
     const ext = digest.extraction;
     const strat = digest.strategy;
-    const category = digest.meta?.product_category_guess || 'Cross-Category';
+    const meta = digest.meta;
+    const aud = digest.audience_strategy;
+    const prem = digest.premium_intelligence;
+    const semi = digest.semiotic_intelligence;
+    const nd = neuralData;
+    const diag = digest.diagnostics;
     const dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-    // Color → emotion mapping
-    const colorEmotionMap: Record<string, string> = {
-        '0': 'Authority / Exclusivity', '1': 'Clarity / Minimalism', '2': 'Purity / Trust',
-        '3': 'Innovation / Growth', '4': 'Energy / Urgency', '5': 'Depth / Confidence',
-        '6': 'Luxury / Prestige', '7': 'Warmth / Belonging', '8': 'Stability / Corporate',
-        '9': 'Boldness / Disruption', 'A': 'Aspiration / Elevation', 'B': 'Calming / Serenity',
-        'C': 'Sophisticated / Premium', 'D': 'Fresh / Approachable', 'E': 'Alert / Action',
-        'F': 'Clean / High-End',
-    };
-
-    function getColorEmotion(hex: string | null): string {
-        if (!hex) return 'Not extracted';
-        const firstChar = hex.charAt(0).toUpperCase();
-        return colorEmotionMap[firstChar] || 'Complex / Multi-tonal';
-    }
-
-    // Generate strategic recommendation
-    function getStrategicRecommendation(): string {
-        const trigger = cls?.trigger_mechanic?.replace(/_/g, ' ') || 'engagement';
-        if (resonanceScore > 75 && saturationLevel < 40) {
-            return `Scale aggressively on high-intent channels; creative DNA is optimized for ${trigger.toLowerCase()} in an unsaturated market window.`;
-        } else if (resonanceScore > 60) {
-            return `Maintain current deployment with selective A/B testing on secondary platforms; ${trigger.toLowerCase()} mechanics are performing above category median.`;
-        } else {
-            return `Recommend creative refresh focused on strengthening the ${trigger.toLowerCase()} signal; the current execution underperforms category benchmarks.`;
-        }
-    }
-
-    // Primary persuasion objective
-    function getPersuasionObjective(): string {
-        const trigger = cls?.trigger_mechanic || '';
-        if (['Status_Prestige', 'Tribal_Belonging'].includes(trigger)) return 'Brand Authority';
-        if (['FOMO_Scarcity', 'Rebellion_Disruption'].includes(trigger)) return 'Category Disruption';
-        if (['Savings_Value', 'Convenience_Time'].includes(trigger)) return 'Immediate Conversion';
-        return 'Audience Engagement';
-    }
+    const PageFooter = ({ page }: { page: string }) => (
+        <div className="pg-footer">
+            <span>Strategic Dossier — {brandName}</span>
+            <span>{page}</span>
+            <span>Visual Decompiler</span>
+        </div>
+    );
 
     return (
         <>
-            {/* Export button — visible on screen */}
-            <button
-                onClick={handleExport}
-                className="no-print flex items-center gap-2 px-4 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] border border-[#E7DED1] rounded-xl hover:bg-[#FBF7EF] transition-all"
-            >
+            <button onClick={handleExport} className="no-print flex items-center gap-2 px-4 py-2 text-[10px] font-bold text-[#6B6B6B] hover:text-[#141414] uppercase tracking-[0.15em] border border-[#E7DED1] rounded-xl hover:bg-[#FBF7EF] transition-all">
                 <FileDown className="w-3.5 h-3.5" />
                 Export Strategic Dossier
             </button>
 
-            {/* Print-only Layout */}
             <div className="dossier-print-layout" ref={dossierRef}>
-                {/* ═══════════════════════════════════════════════════════════ */}
-                {/* COVER PAGE */}
-                {/* ═══════════════════════════════════════════════════════════ */}
-                <div className="dossier-page dossier-cover">
-                    <div className="dossier-cover-inner">
-                        {/* Logo */}
-                        <div className="dossier-logo-block">
-                            {agencyLogo ? (
-                                <img src={agencyLogo} alt="Agency Logo" className="dossier-agency-logo" />
-                            ) : (
-                                <div className="dossier-v-mark">V</div>
-                            )}
-                        </div>
 
-                        <div className="dossier-cover-divider" />
-
-                        <h1 className="dossier-title">
-                            The Strategic Dossier
-                        </h1>
-                        <p className="dossier-subtitle">
-                            {brandName || digest?.meta?.brand_guess || 'Competitive'} Analysis
-                        </p>
-
-                        <div className="dossier-cover-divider" />
-
-                        <p className="dossier-confidential">
-                            Confidential Forensic Audit for <strong>{agencyName || 'Internal Review'}</strong>
-                        </p>
-                        <p className="dossier-date">{dateStr}</p>
-
-                        <div className="dossier-cover-footer">
-                            <p>GENERATED BY VISUAL DECOMPILER — SOVEREIGNTY TIER</p>
-                            <p>visualdecompiler.com</p>
-                        </div>
+                {/* ── PAGE 1: COVER ── */}
+                <div className="dp cover">
+                    <div style={{ textAlign: 'center', maxWidth: 420 }}>
+                        <div className="v-mark">{agencyLogo ? <img src={agencyLogo} alt="" style={{ maxHeight: 56, maxWidth: 180, objectFit: 'contain' }} /> : 'V'}</div>
+                        <div className="cover-divider" />
+                        <p className="cover-title">The Strategic Dossier</p>
+                        <p className="cover-brand">{brandName || meta?.brand_guess || 'Brand'} Analysis</p>
+                        <p className="cover-meta">Confidential Forensic Audit &nbsp;·&nbsp; {dateStr}</p>
+                        <p className="cover-meta" style={{ marginTop: 4 }}>{fmt(meta?.campaign_category)} &nbsp;·&nbsp; {fmt(meta?.product_category_guess)}</p>
                     </div>
+                    <div className="cover-footer"><p>Generated by Visual Decompiler — Sovereignty Tier &nbsp;·&nbsp; visualdecompiler.com</p></div>
                 </div>
 
-                {/* ═══════════════════════════════════════════════════════════ */}
-                {/* § 1 — EXECUTIVE SUMMARY */}
-                {/* ═══════════════════════════════════════════════════════════ */}
-                <div className="dossier-page">
-                    <div className="dossier-section-header">
-                        <span className="dossier-section-number">01</span>
-                        <h2 className="dossier-section-title">Executive Summary</h2>
-                        <p className="dossier-section-subtitle">The Neural Verdict</p>
+                {/* ── PAGE 2: EXECUTIVE SUMMARY ── */}
+                <div className="dp">
+                    <span className="pg-num">01</span>
+                    <p className="pg-title">Executive Summary</p>
+                    <p className="pg-sub">Neural Verdict &amp; Sovereign Intelligence</p>
+                    <div className="divider" />
+
+                    {nd?.strategic_verdict && (
+                        <div className="section">
+                            <p className="lbl">Neural Thesis</p>
+                            <p className="quote">{nd.strategic_verdict}</p>
+                        </div>
+                    )}
+
+                    {strat?.positioning_claim && (
+                        <div className="section">
+                            <p className="lbl">Strategic Verdict</p>
+                            <p className="quote">{strat.positioning_claim}</p>
+                        </div>
+                    )}
+
+                    <div className="metrics">
+                        <div className="metric"><p className="lbl">Sovereign Score</p><p className="val-lg">{sovereignScore}<span className="unit">/100</span></p></div>
+                        <div className="metric"><p className="lbl">Market Resonance</p><p className="val-lg">{resonanceScore}<span className="unit">%</span></p></div>
+                        <div className="metric"><p className="lbl">Tactical Window</p><p className="val-lg">{Math.min(tacticalWindow, 90)}<span className="unit"> days</span></p></div>
+                        {nd?.percentile_estimate != null && <div className="metric"><p className="lbl">Category Percentile</p><p className="val-lg">{nd.percentile_estimate}<span className="unit">th</span></p></div>}
+                        {prem?.premium_index_score != null && <div className="metric"><p className="lbl">Premium Index</p><p className="val-lg">{prem.premium_index_score}<span className="unit">/100</span></p></div>}
                     </div>
 
-                    <div className="dossier-content">
-                        {/* Neural Thesis */}
-                        <div className="dossier-verdict-block">
-                            <p className="dossier-label">Neural Thesis</p>
-                            <p className="dossier-quote">
-                                &ldquo;{strat?.semiotic_subtext || neuralData?.strategic_verdict || 'Deep analysis of semiotic layers and strategic machinery reveals a highly optimized persuasion architecture.'}&rdquo;
-                            </p>
+                    <div className="cols2">
+                        <div>
+                            <p className="lbl">Brand &amp; Category</p>
+                            <p className="val">{meta?.brand_guess || brandName} &nbsp;·&nbsp; {fmt(meta?.product_category_guess)}</p>
+                            {meta?.aesthetic_year && <p className="val">Aesthetic Era: {meta.aesthetic_year}</p>}
+                            {meta?.adoption_tier && <p className="val">Adoption Tier: {fmt(meta.adoption_tier)}</p>}
+                            {meta?.predicted_resonance_window && <p className="val">Resonance Window: {meta.predicted_resonance_window}</p>}
                         </div>
+                        <div>
+                            <p className="lbl">Persuasion Objective</p>
+                            <p className="val">{strat?.target_job_to_be_done || fmt(cls?.trigger_mechanic)}</p>
 
-                        {/* Strategic Verdict */}
-                        <div className="dossier-verdict-block" style={{ marginTop: '16px' }}>
-                            <p className="dossier-label">Strategic Verdict</p>
-                            <p className="dossier-body-italic">
-                                &ldquo;{neuralData.strategic_verdict}&rdquo;
-                            </p>
-                        </div>
-
-                        {/* Key Metrics */}
-                        <div className="dossier-metrics-row">
-                            <div className="dossier-metric">
-                                <p className="dossier-metric-label">Sovereign Score</p>
-                                <p className="dossier-metric-value">{sovereignScore}<span className="dossier-metric-unit">/100</span></p>
-                            </div>
-                            <div className="dossier-metric">
-                                <p className="dossier-metric-label">Market Resonance</p>
-                                <p className="dossier-metric-value">{resonanceScore}<span className="dossier-metric-unit">%</span></p>
-                            </div>
-                            <div className="dossier-metric">
-                                <p className="dossier-metric-label">Tactical Window</p>
-                                <p className="dossier-metric-value">{tacticalWindow}<span className="dossier-metric-unit"> days</span></p>
-                            </div>
-                        </div>
-
-                        {/* Primary Objective + Recommendation */}
-                        <div className="dossier-detail-block">
-                            <div className="dossier-detail-item">
-                                <p className="dossier-label">Primary Persuasion Objective</p>
-                                <p className="dossier-body">{getPersuasionObjective()}</p>
-                            </div>
-                            <div className="dossier-detail-item">
-                                <p className="dossier-label">Strategic Recommendation</p>
-                                <p className="dossier-body">{getStrategicRecommendation()}</p>
-                            </div>
                         </div>
                     </div>
+
+                    {diag?.confidence && (
+                        <div className="section" style={{ marginTop: 20 }}>
+                            <p className="lbl">Confidence Indices</p>
+                            <table>
+                                <thead><tr><th>Signal</th><th>Confidence</th></tr></thead>
+                                <tbody>
+                                    {diag.confidence.overall != null && <tr><td className="bold">Overall</td><td>{pct(diag.confidence.overall)}</td></tr>}
+                                    {diag.confidence.trigger_mechanic != null && <tr><td>Trigger Mechanic</td><td>{pct(diag.confidence.trigger_mechanic)}</td></tr>}
+                                    {diag.confidence.narrative_framework != null && <tr><td>Narrative Framework</td><td>{pct(diag.confidence.narrative_framework)}</td></tr>}
+                                    {diag.confidence.color_extraction != null && <tr><td>Color Extraction</td><td>{pct(diag.confidence.color_extraction)}</td></tr>}
+                                    {diag.confidence.subtext != null && <tr><td>Semiotic Subtext</td><td>{pct(diag.confidence.subtext)}</td></tr>}
+                                    {diag.confidence.objection != null && <tr><td>Objection Analysis</td><td>{pct(diag.confidence.objection)}</td></tr>}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                    <PageFooter page="02 / Executive Summary" />
                 </div>
 
-                {/* ═══════════════════════════════════════════════════════════ */}
-                {/* § 2 — VISUAL ARCHITECTURE & HIERARCHY */}
-                {/* ═══════════════════════════════════════════════════════════ */}
-                <div className="dossier-page">
-                    <div className="dossier-section-header">
-                        <span className="dossier-section-number">02</span>
-                        <h2 className="dossier-section-title">Visual Architecture & Hierarchy</h2>
-                        <p className="dossier-section-subtitle">Cognitive Load Heatmap & Color DNA</p>
+                {/* ── PAGE 3: CLASSIFICATION INTELLIGENCE ── */}
+                <div className="dp">
+                    <span className="pg-num">02</span>
+                    <p className="pg-title">Classification Intelligence</p>
+                    <p className="pg-sub">Trigger Architecture &amp; Persuasion Stack</p>
+                    <div className="divider" />
+
+                    <div className="cols2" style={{ marginBottom: 20 }}>
+                        <div>
+                            <div className="section"><p className="lbl">Primary Trigger Mechanic</p><p className="val">{fmt(cls?.trigger_mechanic)}</p></div>
+                            {cls?.secondary_trigger_mechanic && <div className="section"><p className="lbl">Secondary Trigger</p><p className="val">{fmt(cls.secondary_trigger_mechanic)}</p></div>}
+                            <div className="section"><p className="lbl">Narrative Framework</p><p className="val">{fmt(cls?.narrative_framework)}</p></div>
+                            <div className="section"><p className="lbl">Gaze Priority</p><p className="val">{fmt(cls?.gaze_priority)}</p></div>
+                            <div className="section"><p className="lbl">Offer Type</p><p className="val">{fmt(cls?.offer_type)}</p></div>
+                        </div>
+                        <div>
+                            <div className="section"><p className="lbl">Visual Style</p><p className="val">{cls?.visual_style?.map(fmt).join(', ') || '—'}</p></div>
+                            <div className="section"><p className="lbl">Emotion Tone</p><p className="val">{cls?.emotion_tone?.map(fmt).join(', ') || '—'}</p></div>
+                            <div className="section"><p className="lbl">Cognitive Load</p><p className="val">{fmt(cls?.cognitive_load)}</p></div>
+                            <div className="section"><p className="lbl">CTA Strength</p><p className="val">{fmt(cls?.cta_strength)}</p></div>
+                            <div className="section"><p className="lbl">Claim Type</p><p className="val">{fmt(cls?.claim_type)}</p></div>
+                            <div className="section"><p className="lbl">Proof Type</p><p className="val">{cls?.proof_type?.map(fmt).join(', ') || '—'}</p></div>
+                        </div>
                     </div>
 
-                    <div className="dossier-content">
-                        {/* Cognitive Load Summary */}
-                        <div className="dossier-detail-block">
-                            <div className="dossier-detail-item">
-                                <p className="dossier-label">Cognitive Load Score</p>
-                                <p className="dossier-metric-value">{neuralData.cognitive_load_score}<span className="dossier-metric-unit">%</span></p>
-                                <p className="dossier-body" style={{ marginTop: '4px' }}>
-                                    {neuralData.cognitive_load_score < 40
-                                        ? 'Low friction composition — trigger mechanic lands without obstruction.'
-                                        : neuralData.cognitive_load_score < 65
-                                            ? 'Moderate demand — some signals may compete for viewer attention.'
-                                            : 'High cognitive load — risk of diluting the primary persuasion message.'}
-                                </p>
-                            </div>
+                    {cls?.brand_association_values?.length ? (
+                        <div className="section">
+                            <p className="lbl">Brand Association Values</p>
+                            <div style={{ marginTop: 6 }}>{cls.brand_association_values.map((v, i) => <span key={i} className="chip">{v}</span>)}</div>
                         </div>
+                    ) : null}
 
-                        {/* Zone Breakdown */}
-                        <p className="dossier-label" style={{ marginTop: '20px' }}>Friction Zone Analysis</p>
-                        <table className="dossier-table">
-                            <thead>
-                                <tr>
-                                    <th>Zone</th>
-                                    <th>Load</th>
-                                    <th>Assessment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {neuralData.cognitive_load_zones.map((z, i) => (
-                                    <tr key={i}>
-                                        <td className="dossier-table-bold">{z.zone}</td>
-                                        <td>{z.load}%</td>
-                                        <td>{z.note}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                    {cls?.stack_type_label && <div className="section"><p className="lbl">Stack Type</p><p className="val">{cls.stack_type_label}</p></div>}
 
-                        {/* Color DNA */}
-                        <div className="dossier-detail-block" style={{ marginTop: '24px' }}>
-                            <p className="dossier-label">Color DNA & Sentiment Correlation</p>
-                            <div className="dossier-color-row">
-                                {ext?.dominant_color_hex && (
-                                    <div className="dossier-color-chip">
-                                        <div className="dossier-color-swatch" style={{ backgroundColor: `#${ext.dominant_color_hex}` }} />
-                                        <div>
-                                            <p className="dossier-body"><strong>#{ext.dominant_color_hex}</strong></p>
-                                            <p className="dossier-body-sm">{getColorEmotion(ext.dominant_color_hex)}</p>
-                                        </div>
+                    {cls?.persuasion_stack?.length ? (
+                        <div className="section">
+                            <p className="lbl">Weighted Persuasion Stack</p>
+                            <table>
+                                <thead><tr><th>#</th><th>Trigger</th><th>Weight</th><th>Rationale</th></tr></thead>
+                                <tbody>
+                                    {cls.persuasion_stack.sort((a, b) => a.sequence - b.sequence).map((s, i) => (
+                                        <tr key={i}><td className="bold">{s.sequence}</td><td>{fmt(s.trigger as string)}</td><td>{s.weight}%</td><td className="muted">{s.rationale}</td></tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : null}
+
+                    {meta?.historical_genealogy && <div className="section"><p className="lbl">Historical Genealogy</p><p className="val italic">{meta.historical_genealogy}</p></div>}
+                    <PageFooter page="03 / Classification" />
+                </div>
+
+                {/* ── PAGE 4: FORENSIC EVIDENCE ── */}
+                <div className="dp">
+                    <span className="pg-num">03</span>
+                    <p className="pg-title">Forensic Evidence</p>
+                    <p className="pg-sub">Visual Architecture, Copy &amp; Evidence Anchors</p>
+                    <div className="divider" />
+
+                    <div className="cols2" style={{ marginBottom: 16 }}>
+                        <div>
+                            <p className="lbl">Composition Notes</p>
+                            <p className="val-sm">{ext?.composition_notes || '—'}</p>
+                        </div>
+                        <div>
+                            <p className="lbl">Notable Visual Elements</p>
+                            <p className="val-sm">{ext?.notable_visual_elements?.join(' · ') || '—'}</p>
+                        </div>
+                    </div>
+
+                    {ext?.on_screen_copy && (
+                        <div className="section">
+                            <p className="lbl">On-Screen Copy</p>
+                            <div className="cols2" style={{ marginTop: 6 }}>
+                                <div><p className="lbl">Primary Headline</p><p className="val">{ext.on_screen_copy.primary_headline || '—'}</p></div>
+                                <div><p className="lbl">CTA Text</p><p className="val">{ext.on_screen_copy.cta_text || '—'}</p></div>
+                            </div>
+                            {ext.on_screen_copy.supporting_copy?.length ? (
+                                <div style={{ marginTop: 8 }}>
+                                    <p className="lbl">Supporting Copy</p>
+                                    {ext.on_screen_copy.supporting_copy.map((c, i) => <p key={i} className="val-sm">· {c}</p>)}
+                                </div>
+                            ) : null}
+                        </div>
+                    )}
+
+                    <div className="cols2" style={{ marginTop: 14, marginBottom: 10 }}>
+                        <div>
+                            <p className="lbl">Color DNA</p>
+                            <div className="swatch-row">
+                                {ext?.palette_hex?.map((h, i) => (
+                                    <div key={i} className="swatch-item">
+                                        <div className="swatch" style={{ background: h.startsWith('#') ? h : `#${h}` }} />
+                                        <span>#{h.replace('#', '')}</span>
                                     </div>
-                                )}
-                                {((ext as any)?.palette_hex || []).slice(0, 4).map((hex: string, i: number) => (
-                                    <div key={i} className="dossier-color-chip">
-                                        <div className="dossier-color-swatch" style={{ backgroundColor: `#${hex}` }} />
-                                        <div>
-                                            <p className="dossier-body"><strong>#{hex}</strong></p>
-                                            <p className="dossier-body-sm">{getColorEmotion(hex)}</p>
+                                ))}
+                            </div>
+                        </div>
+                        <div>
+                            {aud?.hook_clarity_score != null && <div className="section"><p className="lbl">Hook Clarity Score</p><p className="val">{aud.hook_clarity_score}/10</p></div>}
+                            {aud?.first3s_hook_type && <div className="section"><p className="lbl">Hook Type</p><p className="val">{fmt(aud.first3s_hook_type)}</p></div>}
+                        </div>
+                    </div>
+
+                    {ext?.likely_scan_path?.length ? (
+                        <div className="section">
+                            <p className="lbl">Attention Scan Path</p>
+                            <table>
+                                <thead><tr><th>Step</th><th>Target</th><th>Rationale</th></tr></thead>
+                                <tbody>
+                                    {ext.likely_scan_path.map((s, i) => (
+                                        <tr key={i}><td className="bold">{s.step}</td><td>{s.target}</td><td className="muted">{s.rationale}</td></tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : null}
+
+                    {ext?.evidence_receipts?.length ? (
+                        <div className="section">
+                            <p className="lbl">Evidence Receipts</p>
+                            <table>
+                                <thead><tr><th>Type</th><th>Label</th><th>Reason</th></tr></thead>
+                                <tbody>
+                                    {ext.evidence_receipts.map((e, i) => (
+                                        <tr key={i}><td className="muted">{e.type}</td><td className="bold">{e.label}</td><td>{e.reason}</td></tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : null}
+
+                    {strat?.evidence_anchors?.length ? (
+                        <div className="section"><p className="lbl">Strategic Evidence Anchors</p><p className="val">{strat.evidence_anchors.join(' · ')}</p></div>
+                    ) : null}
+                    <PageFooter page="04 / Forensic Evidence" />
+                </div>
+
+                {/* ── PAGE 5: SEMIOTIC & AUDIENCE ── */}
+                <div className="dp">
+                    <span className="pg-num">04</span>
+                    <p className="pg-title">Semiotic &amp; Audience Intelligence</p>
+                    <p className="pg-sub">Subtext Layers, Audience Strategy &amp; Premium Index</p>
+                    <div className="divider" />
+
+                    {semi?.semiotic_layers?.length ? (
+                        <div className="section">
+                            <p className="lbl">Semiotic Layers</p>
+                            <table>
+                                <thead><tr><th>Layer</th><th>Cues</th><th>Claim</th></tr></thead>
+                                <tbody>
+                                    {semi.semiotic_layers.map((l, i) => (
+                                        <tr key={i}><td className="bold">{l.layer_name}</td><td className="muted">{l.cues.join(', ')}</td><td>{l.claim}</td></tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : null}
+
+                    {semi?.semiotic_tensions?.length ? (
+                        <div className="section">
+                            <p className="lbl">Semiotic Tensions</p>
+                            {semi.semiotic_tensions.map((t, i) => <p key={i} className="val-sm">· {t}</p>)}
+                        </div>
+                    ) : null}
+
+                    {semi?.possible_readings?.length ? (
+                        <div className="section">
+                            <p className="lbl">Possible Audience Readings</p>
+                            {semi.possible_readings.map((r, i) => (
+                                <div key={i} style={{ marginBottom: 8 }}>
+                                    <p className="val">{r.reading}</p>
+                                    <p className="val-sm">{r.support.join(' · ')}</p>
+                                    {r.note && <p className="val-sm italic">{r.note}</p>}
+                                </div>
+                            ))}
+                        </div>
+                    ) : null}
+
+                    {strat?.semiotic_subtext && <div className="section"><p className="lbl">Semiotic Subtext</p><p className="quote">{strat.semiotic_subtext}</p></div>}
+
+                    <div className="divider" />
+
+                    {prem && (
+                        <div className="cols3">
+                            <div><p className="lbl">Premium Principle</p><p className="val">{fmt(prem.premium_principle_primary)}</p></div>
+                            <div><p className="lbl">Exclusivity Mode</p><p className="val">{fmt(prem.exclusivity_mode)}</p></div>
+                            <div><p className="lbl">Premium Index</p><p className="val">{score(prem.premium_index_score)}/100</p></div>
+                        </div>
+                    )}
+
+                    {aud && (
+                        <>
+                            <div className="divider" />
+                            <div className="cols2">
+                                <div>
+                                    <p className="lbl">Target Audience Segment</p>
+                                    <p className="val">{aud.target_audience_segment || '—'}</p>
+                                    {aud.unmet_need_tags?.length ? (
+                                        <div style={{ marginTop: 10 }}>
+                                            <p className="lbl">Unmet Need Tags</p>
+                                            {aud.unmet_need_tags.map((t, i) => <span key={i} className="chip">{t}</span>)}
                                         </div>
-                                    </div>
-                                ))}
+                                    ) : null}
+                                </div>
+                                <div>
+                                    <p className="lbl">Transfer Mechanism</p>
+                                    <p className="val">{aud.transfer_mechanism || '—'}</p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </>
+                    )}
+                    <PageFooter page="05 / Semiotic & Audience" />
                 </div>
 
-                {/* ═══════════════════════════════════════════════════════════ */}
-                {/* § 3 — SCHEMA AUTOPSY */}
-                {/* ═══════════════════════════════════════════════════════════ */}
-                <div className="dossier-page">
-                    <div className="dossier-section-header">
-                        <span className="dossier-section-number">03</span>
-                        <h2 className="dossier-section-title">The Schema Autopsy</h2>
-                        <p className="dossier-section-subtitle">Timeline Deconstruction</p>
-                    </div>
+                {/* ── PAGE 6: STRATEGY ── */}
+                <div className="dp">
+                    <span className="pg-num">05</span>
+                    <p className="pg-title">Strategic Intelligence</p>
+                    <p className="pg-sub">Positioning, Behavioral Architecture &amp; Competitive Mapping</p>
+                    <div className="divider" />
 
-                    <div className="dossier-content">
-                        {/* 3-Second Hook Audit */}
-                        <div className="dossier-detail-block">
-                            <div className="dossier-detail-item">
-                                <p className="dossier-label">3-Second Hook Audit</p>
-                                <p className="dossier-body">
-                                    <strong>Hook Type:</strong> {digest.audience_strategy?.first3s_hook_type || cls?.narrative_framework?.replace(/_/g, ' ') || 'Not classified'}
-                                </p>
-                                {digest.audience_strategy?.hook_clarity_score !== undefined && (
-                                    <p className="dossier-body">
-                                        <strong>Hook Clarity:</strong> {digest.audience_strategy.hook_clarity_score}/10
-                                        {digest.audience_strategy.hook_clarity_score >= 8 ? ' — High-conviction entry point.' : digest.audience_strategy.hook_clarity_score >= 5 ? ' — Moderate clarity.' : ' — Weak hook, high skip risk.'}
-                                    </p>
-                                )}
-                            </div>
+                    <div className="cols2" style={{ marginBottom: 16 }}>
+                        <div>
+                            <div className="section"><p className="lbl">Target Job to Be Done</p><p className="val">{strat?.target_job_to_be_done || '—'}</p></div>
+                            <div className="section"><p className="lbl">Positioning Claim</p><p className="val">{strat?.positioning_claim || '—'}</p></div>
+                            <div className="section"><p className="lbl">Differentiator Angle</p><p className="val">{strat?.differentiator_angle || '—'}</p></div>
                         </div>
-
-                        {/* Sequence Mapping */}
-                        <p className="dossier-label" style={{ marginTop: '20px' }}>Persuasion Sequence Mapping</p>
-                        <table className="dossier-table">
-                            <thead>
-                                <tr>
-                                    <th>Phase</th>
-                                    <th>Timing</th>
-                                    <th>Mechanic</th>
-                                    <th>Strategic Note</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {neuralData.schema_segments.map((seg, i) => (
-                                    <tr key={i}>
-                                        <td className="dossier-table-bold">{seg.label}</td>
-                                        <td>{seg.duration_hint}</td>
-                                        <td>{seg.trigger_used}</td>
-                                        <td>{seg.note}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-
-                        {/* Objection Dismantling */}
-                        {strat?.objection_tackle && (
-                            <div className="dossier-detail-block" style={{ marginTop: '20px' }}>
-                                <div className="dossier-detail-item">
-                                    <p className="dossier-label">Objection Dismantling Logic</p>
-                                    <p className="dossier-body-italic">&ldquo;{strat.objection_tackle}&rdquo;</p>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* ═══════════════════════════════════════════════════════════ */}
-                {/* § 4 — TACTICAL INTELLIGENCE & PLACEMENT */}
-                {/* ═══════════════════════════════════════════════════════════ */}
-                <div className="dossier-page">
-                    <div className="dossier-section-header">
-                        <span className="dossier-section-number">04</span>
-                        <h2 className="dossier-section-title">Tactical Intelligence & Placement</h2>
-                        <p className="dossier-section-subtitle">Benchmark & Platform Alignment</p>
-                    </div>
-
-                    <div className="dossier-content">
-                        {/* Benchmark */}
-                        <div className="dossier-detail-block">
-                            <div className="dossier-detail-item">
-                                <p className="dossier-label">Market Resonance Percentile</p>
-                                <p className="dossier-body">
-                                    This creative operates at the <strong>{neuralData.percentile_estimate}th percentile</strong> within {category} —
-                                    {neuralData.percentile_estimate >= 90
-                                        ? ' an elite-tier asset that outperforms the vast majority of category competitors.'
-                                        : neuralData.percentile_estimate >= 75
-                                            ? ' a strong performer positioned well above median. Minor refinements could push into the top decile.'
-                                            : ' a solid foundation with clear pathways for optimization.'}
-                                </p>
-                            </div>
+                        <div>
+                            <div className="section"><p className="lbl">Behavioral Nudge</p><p className="val">{strat?.behavioral_nudge || '—'}</p></div>
+                            <div className="section"><p className="lbl">Objection Tackle</p><p className="val">{strat?.objection_tackle || '—'}</p></div>
+                            <div className="section"><p className="lbl">Friction Removed</p><p className="val">{strat?.misdirection_or_friction_removed || '—'}</p></div>
                         </div>
-
-                        {/* Platform Alignment */}
-                        <p className="dossier-label" style={{ marginTop: '20px' }}>Platform Alignment & Deployment</p>
-                        <table className="dossier-table">
-                            <thead>
-                                <tr>
-                                    <th>Platform</th>
-                                    <th>Fit Score</th>
-                                    <th>Rationale</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {neuralData.platform_affinity.map((p, i) => (
-                                    <tr key={i}>
-                                        <td className="dossier-table-bold">{p.platform}</td>
-                                        <td>{p.fit_score}%</td>
-                                        <td>{p.rationale}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-
-                        {/* Emotional Architecture */}
-                        <p className="dossier-label" style={{ marginTop: '24px' }}>Emotional Architecture</p>
-                        <table className="dossier-table">
-                            <thead>
-                                <tr>
-                                    <th>Driver</th>
-                                    <th>Intensity</th>
-                                    <th>Source Signal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {neuralData.emotional_drivers.map((d, i) => (
-                                    <tr key={i}>
-                                        <td className="dossier-table-bold">{d.driver}</td>
-                                        <td>{d.intensity}%</td>
-                                        <td>{d.source}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                {/* ═══════════════════════════════════════════════════════════ */}
-                {/* § 5 — SECURITY & INFRASTRUCTURE */}
-                {/* ═══════════════════════════════════════════════════════════ */}
-                <div className="dossier-page">
-                    <div className="dossier-section-header">
-                        <span className="dossier-section-number">05</span>
-                        <h2 className="dossier-section-title">Security & Infrastructure Verification</h2>
-                        <p className="dossier-section-subtitle">Data Sovereignty Notice</p>
                     </div>
 
-                    <div className="dossier-content">
-                        <div className="dossier-security-block">
-                            <p className="dossier-label">Data Sovereignty</p>
-                            <p className="dossier-body">
-                                This dossier was generated on ISO-27001 compliant infrastructure and is the exclusive
-                                intellectual property of <strong>{agencyName || 'the authorizing organization'}</strong>.
-                                Distribution outside designated stakeholders is prohibited without written consent.
-                            </p>
+                    {strat?.competitive_advantage && <div className="section"><p className="lbl">Competitive Advantage</p><p className="quote">{strat.competitive_advantage}</p></div>}
 
-                            <div className="dossier-security-details">
+                    {strat?.competitive_intelligence && (
+                        <>
+                            <div className="divider" />
+                            <p className="lbl">Competitive Intelligence</p>
+                            <div className="cols2" style={{ marginTop: 8 }}>
                                 <div>
-                                    <p className="dossier-label">Classification</p>
-                                    <p className="dossier-body">Confidential — Strategic</p>
+                                    <p className="lbl">Pattern Overlaps</p>
+                                    {strat.competitive_intelligence.pattern_overlaps.map((p, i) => <p key={i} className="val-sm">· {p}</p>)}
                                 </div>
                                 <div>
-                                    <p className="dossier-label">Generated</p>
-                                    <p className="dossier-body">{dateStr}</p>
-                                </div>
-                                <div>
-                                    <p className="dossier-label">Prompt Version</p>
-                                    <p className="dossier-body">{(digest.meta as any)?.prompt_version || 'V1'}</p>
-                                </div>
-                                <div>
-                                    <p className="dossier-label">Confidence Index</p>
-                                    <p className="dossier-body">{Math.round((digest.diagnostics?.confidence?.overall || 0.75) * 100)}%</p>
+                                    <p className="lbl">Differentiation Levers</p>
+                                    {strat.competitive_intelligence.differentiation_levers.map((d, i) => <p key={i} className="val-sm">· {d}</p>)}
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="dossier-final-footer">
-                            <p>— End of Dossier —</p>
-                            {agencyLogo ? (
-                                <img src={agencyLogo} alt="" className="dossier-footer-logo" />
-                            ) : (
-                                <p className="dossier-footer-mark">VISUAL DECOMPILER</p>
+                            {strat.competitive_intelligence.strategic_shift && (
+                                <div style={{ marginTop: 12 }}>
+                                    <p className="lbl">Strategic Shift Target: {strat.competitive_intelligence.strategic_shift.target_posture}</p>
+                                    {strat.competitive_intelligence.strategic_shift.moves.map((m, i) => <p key={i} className="val-sm">· {m}</p>)}
+                                </div>
                             )}
+                        </>
+                    )}
+
+                    {strat?.reconstruction_prompt && (
+                        <>
+                            <div className="divider" />
+                            <div className="section">
+                                <p className="lbl">DNA Reconstruction Prompt</p>
+                                <div className="box"><p className="val-sm">{strat.reconstruction_prompt}</p></div>
+                            </div>
+                        </>
+                    )}
+                    <PageFooter page="06 / Strategic Intelligence" />
+                </div>
+
+                {/* ── PAGE 7: SCHEMA AUTOPSY & NEURAL ── */}
+                <div className="dp">
+                    <span className="pg-num">06</span>
+                    <p className="pg-title">Schema Autopsy &amp; Neural Map</p>
+                    <p className="pg-sub">Timeline Deconstruction, Narrative Arc &amp; Emotional Drivers</p>
+                    <div className="divider" />
+
+                    {nd?.schema_segments?.length ? (
+                        <div className="section">
+                            <p className="lbl">Schema Segments</p>
+                            <table>
+                                <thead><tr><th>Segment</th><th>Duration</th><th>Trigger</th><th>Strategic Note</th></tr></thead>
+                                <tbody>
+                                    {nd.schema_segments.map((s, i) => (
+                                        <tr key={i}><td className="bold">{s.label}</td><td className="muted">{s.duration_hint}</td><td>{fmt(s.trigger_used)}</td><td className="muted">{s.note}</td></tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : null}
+
+                    {ext?.narrative_arc && (
+                        <div className="section">
+                            <p className="lbl">Narrative Arc Analysis</p>
+                            <div className="cols2" style={{ marginTop: 8 }}>
+                                <div><p className="lbl">Hook Analysis</p><p className="val-sm">{ext.narrative_arc.hook_analysis}</p></div>
+                                <div><p className="lbl">Retention Mechanics</p><p className="val-sm">{ext.narrative_arc.retention_mechanics}</p></div>
+                            </div>
+                            <div className="cols2" style={{ marginTop: 10 }}>
+                                <div><p className="lbl">Story Structure</p><p className="val-sm">{ext.narrative_arc.story_structure}</p></div>
+                                <div><p className="lbl">CTA Climax</p><p className="val-sm">{ext.narrative_arc.cta_climax}</p></div>
+                            </div>
+                        </div>
+                    )}
+
+                    {nd?.emotional_drivers?.length ? (
+                        <div className="section">
+                            <p className="lbl">Emotional Drivers</p>
+                            <table>
+                                <thead><tr><th>Driver</th><th>Intensity</th><th>Source Signal</th></tr></thead>
+                                <tbody>
+                                    {nd.emotional_drivers.map((d, i) => (
+                                        <tr key={i}><td className="bold">{d.driver}</td><td>{pct(d.intensity)}</td><td className="muted">{d.source}</td></tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : null}
+
+                    {strat?.test_plan && (
+                        <div className="section">
+                            <p className="lbl">14-Day A/B Test Blueprint — {strat.test_plan.hypothesis}</p>
+                            <table>
+                                <thead><tr><th>Lever</th><th>Change</th><th>Impact</th><th>Rationale</th></tr></thead>
+                                <tbody>
+                                    {strat.test_plan.test_cells.map((t, i) => (
+                                        <tr key={i}><td className="bold">{fmt(t.lever)}</td><td>{t.change}</td><td>{t.predicted_impact}</td><td className="muted">{t.rationale}</td></tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+
+                    {strat?.variant_matrix?.length ? (
+                        <div className="section">
+                            <p className="lbl">Variant Matrix</p>
+                            <table>
+                                <thead><tr><th>Variant</th><th>Primary Lever</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    {strat.variant_matrix.map((v, i) => (
+                                        <tr key={i}><td className="bold">{v.name}</td><td className="muted">{v.primary_lever}</td><td>{v.description}</td></tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : null}
+                    <PageFooter page="07 / Schema Autopsy" />
+                </div>
+
+                {/* ── PAGE 8: PLATFORM & RISK ── */}
+                <div className="dp">
+                    <span className="pg-num">07</span>
+                    <p className="pg-title">Platform &amp; Risk Intelligence</p>
+                    <p className="pg-sub">Deployment Affinity, Diagnostics &amp; Policy Risk</p>
+                    <div className="divider" />
+
+                    {nd?.platform_affinity?.length ? (
+                        <div className="section">
+                            <p className="lbl">Platform Affinity Map</p>
+                            <table>
+                                <thead><tr><th>Platform</th><th>Fit Score</th><th>Rationale</th></tr></thead>
+                                <tbody>
+                                    {nd.platform_affinity.sort((a, b) => b.fit_score - a.fit_score).map((p, i) => (
+                                        <tr key={i}><td className="bold">{p.platform}</td><td>{pct(p.fit_score)}</td><td className="muted">{p.rationale}</td></tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : null}
+
+                    {diag?.friction_analysis && (
+                        <div className="section">
+                            <p className="lbl">Creative Friction Analysis</p>
+                            <div className="cols3" style={{ marginTop: 8 }}>
+                                {Object.entries(diag.friction_analysis.scores).map(([k, v], i) => (
+                                    <div key={i}><p className="lbl">{fmt(k)}</p><p className="val">{v}/100</p></div>
+                                ))}
+                            </div>
+                            {diag.friction_analysis.top_fixes?.length ? (
+                                <div style={{ marginTop: 10 }}>
+                                    <p className="lbl">Top Fixes</p>
+                                    {diag.friction_analysis.top_fixes.map((f, i) => <p key={i} className="val-sm">· {f}</p>)}
+                                </div>
+                            ) : null}
+                        </div>
+                    )}
+
+                    {diag?.risk_analysis && (
+                        <div className="section">
+                            <p className="lbl">Policy Risk Assessment — Overall Risk Score: {diag.risk_analysis.risk_score}/100</p>
+                            <p className="val-sm" style={{ marginBottom: 8 }}>{diag.risk_analysis.explanation}</p>
+                            {diag.risk_analysis.policy_flags?.length ? (
+                                <table>
+                                    <thead><tr><th>Flag</th><th>Severity</th><th>Reason</th></tr></thead>
+                                    <tbody>
+                                        {diag.risk_analysis.policy_flags.map((f, i) => (
+                                            <tr key={i}>
+                                                <td className="bold">{f.flag}</td>
+                                                <td className={f.severity === 'High' ? 'risk-high' : f.severity === 'Medium' ? 'risk-med' : 'risk-low'}>{f.severity}</td>
+                                                <td className="muted">{f.why}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            ) : null}
+                        </div>
+                    )}
+
+                    {diag?.failure_modes?.length ? (
+                        <div className="section"><p className="lbl">Failure Modes</p>{diag.failure_modes.map((f, i) => <p key={i} className="val-sm">· {f}</p>)}</div>
+                    ) : null}
+                    <PageFooter page="08 / Platform & Risk" />
+                </div>
+
+                {/* ── PAGE 9: SECURITY & CLOSE ── */}
+                <div className="dp">
+                    <span className="pg-num">08</span>
+                    <p className="pg-title">Security &amp; Infrastructure</p>
+                    <p className="pg-sub">Data Sovereignty Notice</p>
+                    <div className="divider" />
+
+                    <div className="box">
+                        <p className="lbl">Data Sovereignty</p>
+                        <p className="val" style={{ marginTop: 6 }}>This dossier was generated on ISO-27001 compliant infrastructure and is the exclusive intellectual property of the authorizing organization. Distribution outside designated stakeholders is prohibited without written consent.</p>
+                        <div className="cols4" style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid #E7DED1' }}>
+                            <div><p className="lbl">Classification</p><p className="val-sm">Confidential — Strategic</p></div>
+                            <div><p className="lbl">Generated</p><p className="val-sm">{dateStr}</p></div>
+                            <div><p className="lbl">Schema Version</p><p className="val-sm">{meta?.schema_version || 'V4'}</p></div>
+                            <div><p className="lbl">Confidence Index</p><p className="val-sm">{pct(diag?.confidence?.overall) || `${sovereignScore}%`}</p></div>
                         </div>
                     </div>
+
+                    <div style={{ marginTop: 60, textAlign: 'center', color: '#B5A99A' }}>
+                        <p style={{ fontSize: 9, letterSpacing: '0.3em', textTransform: 'uppercase', marginBottom: 16 }}>— End of Dossier —</p>
+                        {agencyLogo ? <img src={agencyLogo} alt="" style={{ maxHeight: 30, opacity: 0.4 }} /> : <p style={{ fontSize: 8, letterSpacing: '0.5em', textTransform: 'uppercase', opacity: 0.3 }}>Visual Decompiler</p>}
+                    </div>
                 </div>
+
             </div>
 
-            {/* ═══════════════════════════════════════════════════════════ */}
-            {/* PRINT STYLESHEET */}
-            {/* ═══════════════════════════════════════════════════════════ */}
-            <style>{`
-                .dossier-print-layout { display: none; }
-
-                @media print {
-                    /* visibility:hidden on all body children — unlike display:none,
-                       this CAN be overridden by a deeply-nested child */
-                    body * {
-                        visibility: hidden !important;
-                    }
-                    .no-print { display: none !important; }
-
-                    /* Show the dossier and ALL its descendants */
-                    .dossier-print-layout {
-                        display: block !important;
-                        visibility: visible !important;
-                        position: fixed !important;
-                        top: 0 !important; 
-                        left: 0 !important;
-                        width: 100% !important;
-                        z-index: 9999 !important;
-                        background: white !important;
-                    }
-                    .dossier-print-layout * {
-                        visibility: visible !important;
-                    }
-
-                    html, body {
-                        height: auto !important;
-                        overflow: visible !important;
-                        background: white !important;
-                        margin: 0 !important;
-                        padding: 0 !important;
-                        -webkit-print-color-adjust: exact !important;
-                        print-color-adjust: exact !important;
-                    }
-
-                    /* Page setup */
-                    @page {
-                        size: A4;
-                        margin: 0;
-                    }
-
-                    .dossier-page {
-                        width: 210mm;
-                        min-height: 297mm;
-                        padding: 24mm 28mm;
-                        box-sizing: border-box;
-                        page-break-after: always;
-                        position: relative;
-                        font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-                    }
-
-                    .dossier-page:last-child {
-                        page-break-after: auto;
-                    }
-
-                    /* ── Cover ── */
-                    .dossier-cover {
-                        display: flex !important;
-                        align-items: center;
-                        justify-content: center;
-                        background: #141414 !important;
-                        color: #FBF7EF !important;
-                    }
-
-                    .dossier-cover-inner {
-                        text-align: center;
-                        max-width: 400px;
-                    }
-
-                    .dossier-logo-block { margin-bottom: 32px; }
-
-                    .dossier-agency-logo {
-                        max-height: 60px;
-                        max-width: 200px;
-                        object-fit: contain;
-                    }
-
-                    .dossier-v-mark {
-                        display: inline-block;
-                        font-size: 48px;
-                        font-weight: 200;
-                        letter-spacing: 0.1em;
-                        color: #FBF7EF;
-                        border: 1px solid rgba(251, 247, 239, 0.15);
-                        padding: 12px 24px;
-                    }
-
-                    .dossier-cover-divider {
-                        width: 40px;
-                        height: 1px;
-                        background: rgba(251, 247, 239, 0.15);
-                        margin: 28px auto;
-                    }
-
-                    .dossier-title {
-                        font-size: 28px;
-                        font-weight: 300;
-                        letter-spacing: 0.15em;
-                        text-transform: uppercase;
-                        margin: 0 0 8px;
-                        color: #FBF7EF;
-                    }
-
-                    .dossier-subtitle {
-                        font-size: 14px;
-                        font-weight: 400;
-                        letter-spacing: 0.1em;
-                        text-transform: uppercase;
-                        color: rgba(251, 247, 239, 0.5);
-                        margin: 0;
-                    }
-
-                    .dossier-confidential {
-                        font-size: 10px;
-                        letter-spacing: 0.2em;
-                        text-transform: uppercase;
-                        color: rgba(251, 247, 239, 0.35);
-                        margin: 0 0 6px;
-                    }
-
-                    .dossier-date {
-                        font-size: 9px;
-                        letter-spacing: 0.15em;
-                        text-transform: uppercase;
-                        color: rgba(251, 247, 239, 0.2);
-                        margin: 0;
-                    }
-
-                    .dossier-cover-footer {
-                        position: absolute;
-                        bottom: 28mm;
-                        left: 0; right: 0;
-                        text-align: center;
-                    }
-
-                    .dossier-cover-footer p {
-                        font-size: 7px;
-                        letter-spacing: 0.3em;
-                        text-transform: uppercase;
-                        color: rgba(251, 247, 239, 0.15);
-                        margin: 0 0 4px;
-                    }
-
-                    /* ── Section Headers ── */
-                    .dossier-section-header {
-                        margin-bottom: 28px;
-                        padding-bottom: 16px;
-                        border-bottom: 1px solid #E7DED1;
-                    }
-
-                    .dossier-section-number {
-                        display: block;
-                        font-size: 9px;
-                        font-weight: 700;
-                        letter-spacing: 0.4em;
-                        text-transform: uppercase;
-                        color: #B5A99A;
-                        margin-bottom: 8px;
-                    }
-
-                    .dossier-section-title {
-                        font-size: 20px;
-                        font-weight: 300;
-                        letter-spacing: 0.05em;
-                        text-transform: uppercase;
-                        color: #141414;
-                        margin: 0 0 4px;
-                    }
-
-                    .dossier-section-subtitle {
-                        font-size: 9px;
-                        font-weight: 600;
-                        letter-spacing: 0.25em;
-                        text-transform: uppercase;
-                        color: #6B6B6B;
-                        margin: 0;
-                    }
-
-                    /* ── Content Typography ── */
-                    .dossier-content { color: #141414; }
-
-                    .dossier-label {
-                        font-size: 8px;
-                        font-weight: 700;
-                        letter-spacing: 0.3em;
-                        text-transform: uppercase;
-                        color: #6B6B6B;
-                        margin: 0 0 6px;
-                    }
-
-                    .dossier-body {
-                        font-size: 10px;
-                        line-height: 1.7;
-                        color: #141414;
-                        margin: 0;
-                    }
-
-                    .dossier-body-sm {
-                        font-size: 8px;
-                        color: #6B6B6B;
-                        margin: 0;
-                    }
-
-                    .dossier-body-italic {
-                        font-size: 11px;
-                        line-height: 1.6;
-                        font-style: italic;
-                        color: #141414;
-                        margin: 0;
-                    }
-
-                    .dossier-quote {
-                        font-size: 13px;
-                        line-height: 1.6;
-                        font-style: italic;
-                        font-weight: 300;
-                        color: #141414;
-                        border-left: 2px solid #B5A99A;
-                        padding-left: 12px;
-                        margin: 0;
-                    }
-
-                    /* ── Verdict Block ── */
-                    .dossier-verdict-block {
-                        padding: 16px 0;
-                    }
-
-                    /* ── Metrics Row ── */
-                    .dossier-metrics-row {
-                        display: flex;
-                        gap: 24px;
-                        padding: 20px 0;
-                        margin: 16px 0;
-                        border-top: 1px solid #E7DED1;
-                        border-bottom: 1px solid #E7DED1;
-                    }
-
-                    .dossier-metric { flex: 1; }
-
-                    .dossier-metric-label {
-                        font-size: 7px;
-                        font-weight: 700;
-                        letter-spacing: 0.3em;
-                        text-transform: uppercase;
-                        color: #6B6B6B;
-                        margin: 0 0 4px;
-                    }
-
-                    .dossier-metric-value {
-                        font-size: 28px;
-                        font-weight: 300;
-                        color: #141414;
-                        margin: 0;
-                    }
-
-                    .dossier-metric-unit {
-                        font-size: 11px;
-                        font-weight: 400;
-                        color: #6B6B6B;
-                    }
-
-                    /* ── Detail Block ── */
-                    .dossier-detail-block {
-                        margin-top: 16px;
-                    }
-
-                    .dossier-detail-item {
-                        margin-bottom: 16px;
-                    }
-
-                    /* ── Tables ── */
-                    .dossier-table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 8px;
-                        font-size: 9px;
-                    }
-
-                    .dossier-table th {
-                        text-align: left;
-                        font-size: 7px;
-                        font-weight: 700;
-                        letter-spacing: 0.2em;
-                        text-transform: uppercase;
-                        color: #6B6B6B;
-                        padding: 6px 8px;
-                        border-bottom: 1px solid #141414;
-                    }
-
-                    .dossier-table td {
-                        padding: 6px 8px;
-                        border-bottom: 1px solid #E7DED1;
-                        color: #141414;
-                        line-height: 1.5;
-                        vertical-align: top;
-                    }
-
-                    .dossier-table-bold {
-                        font-weight: 600;
-                    }
-
-                    /* ── Color Chips ── */
-                    .dossier-color-row {
-                        display: flex;
-                        flex-wrap: wrap;
-                        gap: 12px;
-                        margin-top: 8px;
-                    }
-
-                    .dossier-color-chip {
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                    }
-
-                    .dossier-color-swatch {
-                        width: 24px;
-                        height: 24px;
-                        border-radius: 4px;
-                        border: 1px solid #E7DED1;
-                    }
-
-                    /* ── Security Block ── */
-                    .dossier-security-block {
-                        padding: 20px;
-                        border: 1px solid #E7DED1;
-                        border-radius: 8px;
-                    }
-
-                    .dossier-security-details {
-                        display: grid;
-                        grid-template-columns: 1fr 1fr 1fr 1fr;
-                        gap: 16px;
-                        margin-top: 20px;
-                        padding-top: 16px;
-                        border-top: 1px solid #E7DED1;
-                    }
-
-                    /* ── Final Footer ── */
-                    .dossier-final-footer {
-                        margin-top: 60px;
-                        text-align: center;
-                        color: #B5A99A;
-                    }
-
-                    .dossier-final-footer p {
-                        font-size: 9px;
-                        letter-spacing: 0.3em;
-                        text-transform: uppercase;
-                        margin: 0 0 16px;
-                    }
-
-                    .dossier-footer-logo {
-                        max-height: 30px;
-                        opacity: 0.4;
-                    }
-
-                    .dossier-footer-mark {
-                        font-size: 8px;
-                        letter-spacing: 0.5em;
-                        text-transform: uppercase;
-                        color: #B5A99A;
-                        opacity: 0.3;
-                        margin: 0;
-                    }
-                }
-            `}</style>
+            <style>{`.dossier-print-layout { display: none; }`}</style>
         </>
     );
 }
