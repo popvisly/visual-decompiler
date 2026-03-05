@@ -89,6 +89,7 @@ export async function POST(req: Request) {
                 break;
             }
             let tempDir: string | null = null;
+            let digestSaved = false;
             try {
                 // Job is already 'processing' thanks to the RPC
                 let visionInputs: VisionInput[] = [];
@@ -255,6 +256,7 @@ export async function POST(req: Request) {
                     .eq('id', job.id);
 
                 if (updateErr) throw updateErr;
+                digestSaved = true;
 
                 // Increment usage only when a job is truly processed.
                 // (Queueing/retries should not consume quota.)
@@ -340,12 +342,15 @@ export async function POST(req: Request) {
 
             } catch (jobErr: any) {
                 console.error(`[Worker Job ${job.id}] Failed:`, jobErr);
+                const failUpdate: any = { status: 'needs_review' };
+                // Only wipe digest if we never successfully saved it — prevents post-processing
+                // failures (email, webhooks, deep hooks) from destroying a valid digest.
+                if (!digestSaved) {
+                    failUpdate.digest = { error: jobErr.message || 'Worker processing failed' };
+                }
                 await supabaseAdmin
                     .from('ad_digests')
-                    .update({
-                        status: 'needs_review',
-                        digest: { error: jobErr.message || 'Worker processing failed' }
-                    })
+                    .update(failUpdate)
                     .eq('id', job.id);
                 results.push({ id: job.id, status: 'error', error: jobErr.message });
             } finally {

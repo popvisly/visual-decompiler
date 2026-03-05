@@ -138,7 +138,7 @@ export default function ResultsView({
             <div className="flex items-center justify-between mb-8 mt-4">
                 <div>
                     <h2 className="font-sans text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.4em]">
-                        {status === 'success' || status === 'processed'
+                        {(status === 'success' || status === 'processed' || cls?.trigger_mechanic != null)
                             ? 'Analysis Complete'
                             : (d as any)?.error
                                 ? 'Analysis Failed'
