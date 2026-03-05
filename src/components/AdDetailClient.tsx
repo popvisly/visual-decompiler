@@ -129,7 +129,10 @@ export default function AdDetailClient({
                             <span className="text-[#6B6B6B]/30 mb-4 md:mb-8 block">Deconstruction</span>
                         </h2>
                         <h1 className="text-xl md:text-2xl font-light text-[#141414] tracking-tight mt-6 md:mt-8 border-l-[2px] md:border-l-[3px] border-accent pl-4 md:pl-6 py-2 max-w-3xl leading-snug lg:text-3xl">
-                            {digest?.extraction?.on_screen_copy?.primary_headline || 'Untitled'}
+                            {digest?.extraction?.on_screen_copy?.primary_headline
+                                || digest?.extraction?.on_screen_copy?.ocr_text?.[0]
+                                || (digest?.meta?.brand_guess ? `${digest.meta.brand_guess} Campaign` : 'Untitled')}
+
                         </h1>
                         {digest?.meta?.campaign_category && (
                             <p className="text-[10px] font-bold text-[#6B6B6B] uppercase tracking-[0.2em] mt-4 ml-4 md:ml-6">
