@@ -70,7 +70,7 @@ export default function HomePage() {
                 headline={["Advertising intelligence.", "Deconstructed."]}
                 subhead="The sovereign infrastructure for elite agencies. Understand & comprehend the architecture of persuasion to justify high-stakes strategy with forensic precision."
                 ctaPrimary={{ label: "Start now", href: "/app" }}
-                ctaSecondary={{ label: "View example report", href: "#case-study" }}
+                ctaSecondary={{ label: "Analyse an Ad", href: "/app" }}
                 stageImage={{ src: "/images/examples/perfume_ad_no_logo.jpg", alt: "Luxury perfume ad" }}
             />
 

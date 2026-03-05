@@ -56,9 +56,10 @@ export const config = {
          * - _next/static (static files)
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
+         * - images/ (public static images — CDN serves these on Vercel, need explicit exclusion in dev)
          */
         {
-            source: '/((?!_next/static|_next/image|favicon.ico).*)',
+            source: '/((?!_next/static|_next/image|favicon.ico|images/).*)',
             missing: [
                 { type: 'header', key: 'next-router-prefetch' },
                 { type: 'header', key: 'purpose', value: 'prefetch' },

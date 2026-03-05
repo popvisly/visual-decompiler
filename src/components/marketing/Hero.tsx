@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { LinkCta, StageImage } from '@/types/homepage';
 import HeroNodeGraph from '@/components/marketing/HeroNodeGraph';
+import NeuralParticleHero from '@/components/marketing/NeuralParticleHero';
 
 type Props = {
     headline: string[];
@@ -79,9 +80,9 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     </a>
                 </motion.div>
 
-                {/* Proof line (print-ad style) */}
-                <div className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.22em] text-[#141414]/45 mb-10">
-                    PDF export&nbsp;&nbsp;·&nbsp;&nbsp;Share-ready reports
+                {/* Neural Intelligence Hero */}
+                <div className="w-full">
+                    <NeuralParticleHero />
                 </div>
 
                 {/* Mockup Title area (Sovereign Style) */}
