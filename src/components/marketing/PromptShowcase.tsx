@@ -93,7 +93,7 @@ export default function PromptShowcase() {
                                 </button>
                             </div>
 
-                            <blockquote className="text-sm md:text-base leading-relaxed text-[#1A1A18]/80 line-clamp-6 group-hover:line-clamp-none transition-all duration-500 font-medium">
+                            <blockquote className="text-sm md:text-base leading-relaxed text-[#1A1A18]/80 font-medium">
                                 "{prompt}"
                             </blockquote>
 
