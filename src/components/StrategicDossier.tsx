@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef } from 'react';
+
 import { FileDown, Shield, Target, Activity, Layers, Tv, Brain } from 'lucide-react';
 import { AdDigest } from '@/types/digest';
 import { NeuralDeconstructionService, NeuralDeconstruction } from '@/lib/neural_deconstruction_service';
@@ -30,8 +32,82 @@ export default function StrategicDossier({
     tacticalWindow = 60,
 }: Props) {
 
+    const dossierRef = useRef<HTMLDivElement>(null);
+
     const handleExport = () => {
-        window.print();
+        const el = dossierRef.current;
+        if (!el) return;
+
+        const popup = window.open('', '_blank', 'width=900,height=700');
+        if (!popup) { alert('Please allow popups to export the dossier.'); return; }
+
+        popup.document.write(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Strategic Dossier</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: white; }
+    @page { size: A4; margin: 0; }
+    @media print { html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+
+    .dossier-page { width: 210mm; min-height: 297mm; padding: 24mm 28mm; box-sizing: border-box; page-break-after: always; position: relative; font-family: 'Helvetica Neue', Arial, sans-serif; }
+    .dossier-page:last-child { page-break-after: auto; }
+    .dossier-cover { display: flex !important; align-items: center; justify-content: center; background: #141414 !important; color: #FBF7EF !important; }
+    .dossier-cover-inner { text-align: center; max-width: 400px; }
+    .dossier-logo-block { margin-bottom: 32px; }
+    .dossier-agency-logo { max-height: 60px; max-width: 200px; object-fit: contain; }
+    .dossier-v-mark { display: inline-block; font-size: 48px; font-weight: 200; letter-spacing: 0.1em; color: #FBF7EF; border: 1px solid rgba(251,247,239,0.15); padding: 12px 24px; }
+    .dossier-cover-divider { width: 40px; height: 1px; background: rgba(251,247,239,0.15); margin: 28px auto; }
+    .dossier-title { font-size: 28px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; margin: 0 0 8px; color: #FBF7EF; }
+    .dossier-subtitle { font-size: 14px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(251,247,239,0.5); margin: 0; }
+    .dossier-confidential { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(251,247,239,0.35); margin: 0 0 6px; }
+    .dossier-date { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(251,247,239,0.2); margin: 0; }
+    .dossier-cover-footer { position: absolute; bottom: 28mm; left: 0; right: 0; text-align: center; }
+    .dossier-cover-footer p { font-size: 7px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(251,247,239,0.15); margin: 0 0 4px; }
+    .dossier-section-header { margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid #E7DED1; }
+    .dossier-section-number { display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.4em; text-transform: uppercase; color: #B5A99A; margin-bottom: 8px; }
+    .dossier-section-title { font-size: 20px; font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase; color: #141414; margin: 0 0 4px; }
+    .dossier-section-subtitle { font-size: 9px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: #6B6B6B; margin: 0; }
+    .dossier-content { color: #141414; }
+    .dossier-label { font-size: 8px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: #6B6B6B; margin: 0 0 6px; }
+    .dossier-body { font-size: 10px; line-height: 1.7; color: #141414; margin: 0; }
+    .dossier-body-sm { font-size: 8px; color: #6B6B6B; margin: 0; }
+    .dossier-body-italic { font-size: 11px; line-height: 1.6; font-style: italic; color: #141414; margin: 0; }
+    .dossier-quote { font-size: 13px; line-height: 1.6; font-style: italic; font-weight: 300; color: #141414; border-left: 2px solid #B5A99A; padding-left: 12px; margin: 0; }
+    .dossier-verdict-block { padding: 16px 0; }
+    .dossier-metrics-row { display: flex; gap: 24px; padding: 20px 0; margin: 16px 0; border-top: 1px solid #E7DED1; border-bottom: 1px solid #E7DED1; }
+    .dossier-metric { flex: 1; }
+    .dossier-metric-label { font-size: 7px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: #6B6B6B; margin: 0 0 4px; }
+    .dossier-metric-value { font-size: 28px; font-weight: 300; color: #141414; margin: 0; }
+    .dossier-metric-unit { font-size: 11px; font-weight: 400; color: #6B6B6B; }
+    .dossier-detail-block { margin-top: 16px; }
+    .dossier-detail-item { margin-bottom: 16px; }
+    .dossier-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 9px; }
+    .dossier-table th { text-align: left; font-size: 7px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #6B6B6B; padding: 6px 8px; border-bottom: 1px solid #141414; }
+    .dossier-table td { padding: 6px 8px; border-bottom: 1px solid #E7DED1; color: #141414; line-height: 1.5; vertical-align: top; }
+    .dossier-table-bold { font-weight: 600; }
+    .dossier-color-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+    .dossier-color-chip { display: flex; align-items: center; gap: 8px; }
+    .dossier-color-swatch { width: 24px; height: 24px; border-radius: 4px; border: 1px solid #E7DED1; }
+    .dossier-security-block { padding: 20px; border: 1px solid #E7DED1; border-radius: 8px; }
+    .dossier-security-details { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #E7DED1; }
+    .dossier-final-footer { margin-top: 60px; text-align: center; color: #B5A99A; }
+    .dossier-final-footer p { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; margin: 0 0 16px; }
+    .dossier-footer-logo { max-height: 30px; opacity: 0.4; }
+    .dossier-footer-mark { font-size: 8px; letter-spacing: 0.5em; text-transform: uppercase; color: #B5A99A; opacity: 0.3; margin: 0; }
+  </style>
+</head>
+<body>${el.innerHTML}</body>
+</html>`);
+        popup.document.close();
+        popup.addEventListener('load', () => {
+            popup.focus();
+            popup.print();
+        });
+        // Fallback for browsers that fire load before document.close
+        setTimeout(() => { try { popup.focus(); popup.print(); } catch { } }, 800);
     };
 
     // Compute Sovereign Score (resonance × inverse-saturation, weighted)
@@ -94,7 +170,7 @@ export default function StrategicDossier({
             </button>
 
             {/* Print-only Layout */}
-            <div className="dossier-print-layout">
+            <div className="dossier-print-layout" ref={dossierRef}>
                 {/* ═══════════════════════════════════════════════════════════ */}
                 {/* COVER PAGE */}
                 {/* ═══════════════════════════════════════════════════════════ */}
@@ -449,11 +525,8 @@ export default function StrategicDossier({
             {/* ═══════════════════════════════════════════════════════════ */}
             {/* PRINT STYLESHEET */}
             {/* ═══════════════════════════════════════════════════════════ */}
-            <style jsx global>{`
-                /* Hide dossier on screen */
-                .dossier-print-layout {
-                    display: none;
-                }
+            <style>{`
+                .dossier-print-layout { display: none; }
 
                 @media print {
                     /* visibility:hidden on all body children — unlike display:none,
