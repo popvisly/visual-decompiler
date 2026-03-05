@@ -28,7 +28,8 @@ export async function decompileAd(
     let systemPrompt = BLACK_BOX_PROMPT_V1;
     if (version === 'V2') systemPrompt = BLACK_BOX_PROMPT_V2;
     else if (version === 'V3') systemPrompt = BLACK_BOX_PROMPT_V3;
-    else if (version === 'V4') systemPrompt = BLACK_BOX_PROMPT_V4;
+    else if (version === 'V4' || version === 'V4.1') systemPrompt = BLACK_BOX_PROMPT_V4;
+
 
     const anthropic = getAnthropic();
     const isClaude = !!anthropic;

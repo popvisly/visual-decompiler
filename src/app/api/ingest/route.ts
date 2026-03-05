@@ -183,7 +183,8 @@ export async function POST(req: Request) {
             mediaUrl = info.finalUrl;
         }
 
-        const promptVersion = 'V4';
+        const promptVersion = 'V4.1';
+
 
         if (info.type === null) {
             return NextResponse.json({

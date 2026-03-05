@@ -2,17 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Loader2 } from 'lucide-react';
+import { Library } from 'lucide-react';
 
 const ANALYSIS_STEPS = [
-    'Extracting visual elements…',
-    'Analyzing trigger mechanics…',
-    'Decoding semiotic subtext…',
-    'Mapping narrative framework…',
-    'Identifying evidence anchors…',
-    'Evaluating persuasion strategy…',
-    'Computing confidence scores…',
-    'Assembling intelligence report…',
+    'Extracting visual elements',
+    'Analyzing trigger mechanics',
+    'Decoding semiotic subtext',
+    'Mapping narrative framework',
+    'Identifying evidence anchors',
+    'Evaluating persuasion strategy',
+    'Computing confidence scores',
+    'Assembling intelligence report',
 ];
 
 const ORBIT_PILLS = [
@@ -30,69 +30,59 @@ type Props = {
 export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jobId, onComplete }: Props) {
     const router = useRouter();
     const [step, setStep] = useState(0);
-    const [dots, setDots] = useState('');
-    const [progress, setProgress] = useState(0); // 0..95 (we reserve the last 5% for completion)
-    // Fire-and-forget worker kick — DON'T await the response.
-    // The worker takes ~3 min for Vision API; we poll job status separately.
+    const [progress, setProgress] = useState(0);
+    const [scanY, setScanY] = useState(0);
+
     const kickWorkerOnce = () => {
         fetch('/api/worker', {
             method: 'POST',
-            headers: {
-                'Authorization': 'Bearer OPEN',
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Authorization': 'Bearer OPEN', 'Content-Type': 'application/json' },
             body: JSON.stringify({}),
-        }).catch(() => { /* ignore — fire and forget */ });
+        }).catch(() => { });
     };
 
-    // Progress text cycling (keeps the page feeling alive)
+    // Step cycling
     useEffect(() => {
-        const interval = setInterval(() => {
-            setStep((s) => (s + 1) % ANALYSIS_STEPS.length);
-        }, 3000);
+        const interval = setInterval(() => setStep((s) => (s + 1) % ANALYSIS_STEPS.length), 3000);
         return () => clearInterval(interval);
     }, []);
 
-    // Monotonic progress bar (never goes backwards)
+    // Progress
     useEffect(() => {
         const interval = setInterval(() => {
             setProgress((p) => {
                 if (p >= 95) return 95;
-                // Ease forward in small, slightly random increments.
-                const bump = 2 + Math.floor(Math.random() * 4); // 2..5
-                return Math.min(95, p + bump);
+                return Math.min(95, p + 2 + Math.floor(Math.random() * 4));
             });
         }, 1800);
         return () => clearInterval(interval);
     }, []);
 
-    // Dots animation
+    // Scan line animation
     useEffect(() => {
-        const interval = setInterval(() => {
-            setDots((d) => (d.length >= 3 ? '' : d + '.'));
-        }, 500);
-        return () => clearInterval(interval);
+        let frame: number;
+        let start: number | null = null;
+        const animate = (ts: number) => {
+            if (!start) start = ts;
+            const t = ((ts - start) % 2400) / 2400;
+            setScanY(t * 100);
+            frame = requestAnimationFrame(animate);
+        };
+        frame = requestAnimationFrame(animate);
+        return () => cancelAnimationFrame(frame);
     }, []);
 
     // Poll for completion
     useEffect(() => {
         let cancelled = false;
         let attempts = 0;
-        const maxAttempts = 60; // 5 min max
+        const maxAttempts = 60;
 
         const poll = async () => {
             try {
-                // Auto-kick the worker so the processing page actually completes.
-                // The worker endpoint is throttled server-side to prevent abuse.
-                // You can disable this by setting NEXT_PUBLIC_ALLOW_CLIENT_WORKER_KICK="false".
-                const allowWorkerKick =
-                    process.env.NEXT_PUBLIC_ALLOW_CLIENT_WORKER_KICK !== 'false';
+                const allowWorkerKick = process.env.NEXT_PUBLIC_ALLOW_CLIENT_WORKER_KICK !== 'false';
+                if (allowWorkerKick && (attempts === 0 || attempts % 4 === 0)) kickWorkerOnce();
 
-                if (allowWorkerKick && (attempts === 0 || attempts % 4 === 0)) {
-                    kickWorkerOnce(); // fire-and-forget — no await
-                }
-
-                // Then check the job status
                 const res = await fetch(`/api/digests/${jobId}`);
                 if (res.ok) {
                     const data = await res.json();
@@ -111,55 +101,51 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
                         return;
                     }
                 }
-            } catch (e) {
-                // continue polling
-            }
-
+            } catch (e) { }
             attempts++;
-            if (attempts < maxAttempts && !cancelled) {
-                setTimeout(poll, 5000);
-            }
+            if (attempts < maxAttempts && !cancelled) setTimeout(poll, 5000);
         };
 
         const timeout = setTimeout(poll, 2000);
         return () => { cancelled = true; clearTimeout(timeout); };
     }, [jobId, onComplete]);
 
-
     return (
-        <div className="w-full max-w-3xl mx-auto page-enter">
-            <div className="flex flex-col items-center gap-16">
-                {/* Media preview with orbit pills */}
-                <div className="relative mb-10">
-                    {/* Orbiting pills */}
+        <div className="w-full min-h-screen bg-[#0D0D0D] flex items-center justify-center px-6 py-16">
+            <div className="w-full max-w-lg flex flex-col items-center gap-12">
+
+                {/* Header */}
+                <div className="text-center">
+                    <p className="text-[9px] font-bold uppercase tracking-[0.5em] text-[#00F0FF]/60 mb-3">
+                        Visual Decompiler
+                    </p>
+                    <h1 className="text-[11px] font-bold uppercase tracking-[0.35em] text-white/90">
+                        Intelligence Extraction
+                    </h1>
+                </div>
+
+                {/* Ad image with scan effect */}
+                <div className="relative w-72 h-72">
+                    {/* Orbit pills */}
                     <div className="absolute -inset-16 pointer-events-none">
                         {ORBIT_PILLS.map((pill, i) => {
-                            // Place pills around the square canvas.
-                            // We also add a small per-pill offset so they don't collide with buttons below.
                             const angle = (i / ORBIT_PILLS.length) * 360;
-                            let radius = 92;
-                            let dx = 0;
-                            let dy = 0;
-
-                            // Nudge the "Subtext" pill upward/left a bit so it doesn't overlap the action buttons.
-                            if (pill.toLowerCase() === 'subtext') {
-                                radius = 104;
-                                dx = -10;
-                                dy = -22;
-                            }
-
+                            const radius = 96;
                             const top = 50 + Math.sin((angle * Math.PI) / 180) * radius;
                             const left = 50 + Math.cos((angle * Math.PI) / 180) * radius;
-
                             return (
                                 <span
                                     key={pill}
-                                    className="float-pill absolute px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.12em] text-[#6B6B6B] border border-[#E7DED1] bg-[#FBF7EF]/90 shadow-sm whitespace-nowrap backdrop-blur"
+                                    className="float-pill absolute px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-[0.12em] border whitespace-nowrap"
                                     style={{
-                                        top: `calc(${top}% + ${dy}px)`,
-                                        left: `calc(${left}% + ${dx}px)`,
+                                        top: `calc(${top}% )`,
+                                        left: `calc(${left}% )`,
                                         transform: 'translate(-50%, -50%)',
                                         animationDelay: `${i * -0.4}s`,
+                                        color: '#00F0FF',
+                                        borderColor: 'rgba(0,240,255,0.2)',
+                                        backgroundColor: 'rgba(0,240,255,0.05)',
+                                        textShadow: '0 0 12px rgba(0,240,255,0.4)',
                                     }}
                                 >
                                     {pill}
@@ -168,47 +154,121 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
                         })}
                     </div>
 
-                    {/* Media thumbnail */}
-                    <div className="w-64 h-64 rounded-[20px] overflow-hidden border border-[#E7DED1] shadow-[0_20px_60px_rgba(20,20,20,0.08)] bg-white relative flex items-center justify-center">
+                    {/* Image frame */}
+                    <div
+                        className="w-full h-full rounded-2xl overflow-hidden relative"
+                        style={{
+                            border: '1px solid rgba(0,240,255,0.15)',
+                            boxShadow: '0 0 60px rgba(0,240,255,0.06), inset 0 0 40px rgba(0,0,0,0.4)',
+                        }}
+                    >
                         <img
                             src={mediaUrl}
                             alt="Analyzing ad"
-                            className="w-full h-full object-cover opacity-80"
+                            className="w-full h-full object-cover"
+                            style={{ filter: 'brightness(0.6) saturate(0.8)' }}
                         />
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-[#FBF7EF]/30 flex items-center justify-center backdrop-blur-[2px]">
-                            <div className="rounded-2xl p-4 bg-white/80 border border-[#E7DED1] shadow-sm backdrop-blur-md">
-                                <Loader2 className="w-8 h-8 text-[#141414] animate-spin" />
-                            </div>
-                        </div>
+
+                        {/* Scan line */}
+                        <div
+                            className="absolute inset-x-0 pointer-events-none"
+                            style={{
+                                top: `${scanY}%`,
+                                height: '2px',
+                                background: 'linear-gradient(90deg, transparent, rgba(0,240,255,0.8), transparent)',
+                                boxShadow: '0 0 12px rgba(0,240,255,0.6)',
+                                transition: 'none',
+                            }}
+                        />
+
+                        {/* Dark overlay with grid */}
+                        <div
+                            className="absolute inset-0"
+                            style={{
+                                background: 'rgba(0,0,0,0.25)',
+                                backgroundImage: 'linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px)',
+                                backgroundSize: '24px 24px',
+                            }}
+                        />
+
+                        {/* Corner brackets */}
+                        {([
+                            { style: { top: '8px', left: '8px', borderTopWidth: '1.5px', borderLeftWidth: '1.5px', borderRightWidth: '0', borderBottomWidth: '0' } as React.CSSProperties },
+                            { style: { top: '8px', right: '8px', borderTopWidth: '1.5px', borderRightWidth: '1.5px', borderLeftWidth: '0', borderBottomWidth: '0' } as React.CSSProperties },
+                            { style: { bottom: '8px', left: '8px', borderBottomWidth: '1.5px', borderLeftWidth: '1.5px', borderTopWidth: '0', borderRightWidth: '0' } as React.CSSProperties },
+                            { style: { bottom: '8px', right: '8px', borderBottomWidth: '1.5px', borderRightWidth: '1.5px', borderTopWidth: '0', borderLeftWidth: '0' } as React.CSSProperties },
+                        ] as { style: React.CSSProperties }[]).map((corner, i) => (
+                            <div
+                                key={i}
+                                className="absolute w-5 h-5 pointer-events-none"
+                                style={{
+                                    ...corner.style,
+                                    borderColor: 'rgba(0,240,255,0.5)',
+                                    borderStyle: 'solid',
+                                }}
+                            />
+                        ))}
+
                     </div>
                 </div>
 
-                {/* Status text */}
-                <div className="text-center">
-                    <p className="text-[14px] font-medium text-[#141414] mb-1.5">
-                        {ANALYSIS_STEPS[step]}{dots}
-                    </p>
-                    <p className="text-[#6B6B6B] text-[10px] font-bold uppercase tracking-[0.15em]">
+                {/* Status */}
+                <div className="text-center space-y-3 w-full">
+                    <div className="flex items-center justify-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#00F0FF] animate-pulse" />
+                        <p className="text-[13px] font-light text-white/80 tracking-wide">
+                            {ANALYSIS_STEPS[step]}
+                        </p>
+                    </div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/20">
                         Deep psychological analysis in progress
                     </p>
+
+                    {/* Progress bar */}
+                    <div className="w-full h-px bg-white/10 rounded-full overflow-hidden mt-4">
+                        <div
+                            className="h-full rounded-full transition-all duration-[3000ms] ease-linear"
+                            style={{
+                                width: `${progress}%`,
+                                background: 'linear-gradient(90deg, rgba(0,240,255,0.4), rgba(0,240,255,0.9))',
+                                boxShadow: '0 0 8px rgba(0,240,255,0.4)',
+                            }}
+                        />
+                    </div>
+                    <div className="flex justify-between text-[8px] font-mono text-white/20 pt-1">
+                        <span>INIT</span>
+                        <span>{progress}%</span>
+                        <span>COMPLETE</span>
+                    </div>
                 </div>
 
-                {/* Progress bar */}
-                <div className="w-64 h-1.5 rounded-full bg-[#E7DED1] overflow-hidden shadow-inner">
-                    <div
-                        className="h-full bg-[#141414] rounded-full transition-all duration-[3000ms] ease-linear"
-                        style={{ width: `${progress}%` }}
-                    />
-                </div>
-
-                <div className="mt-6 flex flex-col items-center gap-3">
+                {/* Return to Library */}
+                <div className="flex flex-col items-center gap-4 pt-2">
                     <a
                         href="/dashboard"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium text-[#141414]/70 border border-[#E7DED1] bg-white/50 hover:bg-white hover:border-[#D8CCBC] hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)] transition-all"
+                        className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] transition-all"
+                        style={{
+                            color: 'rgba(255,255,255,0.6)',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            background: 'rgba(255,255,255,0.04)',
+                        }}
+                        onMouseEnter={(e) => {
+                            (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.9)';
+                            (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,240,255,0.3)';
+                            (e.currentTarget as HTMLElement).style.background = 'rgba(0,240,255,0.06)';
+                        }}
+                        onMouseLeave={(e) => {
+                            (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.6)';
+                            (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.1)';
+                            (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)';
+                        }}
                     >
+                        <Library className="w-3.5 h-3.5" />
                         Return to Library
                     </a>
+                    <p className="text-[10px] text-white/30 text-center max-w-[260px] leading-relaxed">
+                        Analysis takes roughly 2–3 minutes. You can browse your library and the completed report will be waiting for you when you return.
+                    </p>
                 </div>
             </div>
         </div>
