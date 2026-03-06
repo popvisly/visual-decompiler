@@ -92,7 +92,8 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     </span>
                     <h2 className="text-4xl md:text-6xl font-semibold text-[#141414] tracking-tight uppercase leading-[0.9]">
                         Mechanism.<br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-cyan-500">Reconstructed.</span>
+                        <span className="text-[#C1A67B]">Reconstructed.</span>
+
                     </h2>
                     <p className="text-[14px] md:text-[16px] text-[#141414]/55 max-w-xl leading-relaxed">
                         We deconstruct the target asset into observable persuasion cues—giving you the raw psychological framework to justify high-stakes strategy with forensic precision.
