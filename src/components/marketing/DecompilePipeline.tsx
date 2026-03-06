@@ -48,47 +48,47 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
           </div>
         </motion.div>
 
-        {/* ─── Unified Dark Deconstruction Map ─── */}
-        <div className="w-full max-w-[1440px] mx-auto rounded-[32px] overflow-hidden border border-[rgba(0,240,255,0.12)] shadow-[0_30px_90px_rgba(0,0,0,0.4)] bg-[#0D0D0D] p-6 lg:p-10 relative">
-          {/* Forensic Grid */}
+        {/* ─── Unified Decompilation Process ─── */}
+        <div className="w-full max-w-[1440px] mx-auto rounded-[32px] overflow-hidden border border-[#E7DED1] shadow-[0_20px_60px_rgba(0,0,0,0.08)] bg-[#FBF7EF] p-8 lg:p-12 xl:p-16 relative">
+          {/* Subtle Grid */}
           <div
-            className="pointer-events-none absolute inset-0 opacity-40 mix-blend-screen"
+            className="pointer-events-none absolute inset-0 opacity-30"
             style={{
-              backgroundImage: 'linear-gradient(rgba(0,240,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.04) 1px, transparent 1px)',
+              backgroundImage: 'linear-gradient(rgba(193,166,123,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(193,166,123,0.03) 1px, transparent 1px)',
               backgroundSize: '32px 32px'
             }}
           />
 
-          <div className="relative z-10 w-full flex flex-col lg:grid lg:grid-cols-3 gap-8 lg:gap-10">
+          <div className="relative z-10 w-full flex flex-col lg:grid lg:grid-cols-[1fr_1.3fr_1fr] gap-10 lg:gap-12 xl:gap-16">
             {/* ── PHASE 01 — INPUT ── */}
             <motion.div
               initial="hidden" whileInView="visible" viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }} variants={fadeUp}
-              className="flex flex-col gap-5"
+              className="flex flex-col gap-6 md:gap-8"
             >
               <div className="flex items-baseline gap-3">
-                <span className="text-[40px] font-bold text-white/[0.04] leading-none tracking-tighter select-none">01</span>
+                <span className="text-[40px] font-bold text-[#141414]/[0.04] leading-none tracking-tighter select-none">01</span>
                 <div>
-                  <div className="text-[9px] font-bold tracking-[0.3em] text-[#00F0FF]/60 uppercase">Phase 01</div>
-                  <div className="text-[10px] font-bold tracking-[0.2em] text-white/30 uppercase">Input</div>
+                  <div className="text-[10px] font-bold tracking-[0.2em] text-[#C1A67B] uppercase">Phase 01</div>
+                  <div className="text-xs tracking-wider text-[#6B6B6B] uppercase">Input</div>
                 </div>
               </div>
-              <div className="text-[15px] leading-[1.25] text-white/80 font-medium tracking-tight">Single asset in.<br />Full reconstruction out.</div>
+              <div className="text-2xl md:text-3xl leading-tight text-[#141414] font-semibold tracking-tight">Single asset in.<br />Full reconstruction out.</div>
 
               {/* Watch Image — Dark Frame */}
-              <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-[#141414] border border-[#00F0FF]/15 shadow-[0_0_30px_rgba(0,240,255,0.04)]">
+              <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-[#141414] border-0 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_48px_rgba(193,166,123,0.15)] transition-all duration-300">
                 <img src={stageImage.src} alt={stageImage.alt} className="absolute inset-0 w-full h-full object-cover" style={{ filter: 'brightness(0.85) contrast(1.05)' }} />
 
                 {/* Corner brackets */}
-                <div className="absolute top-2 left-2 w-5 h-5 border-l-[1.5px] border-t-[1.5px] border-[#00F0FF]/40 pointer-events-none" />
-                <div className="absolute top-2 right-2 w-5 h-5 border-r-[1.5px] border-t-[1.5px] border-[#00F0FF]/40 pointer-events-none" />
-                <div className="absolute bottom-2 left-2 w-5 h-5 border-l-[1.5px] border-b-[1.5px] border-[#00F0FF]/40 pointer-events-none" />
-                <div className="absolute bottom-2 right-2 w-5 h-5 border-r-[1.5px] border-b-[1.5px] border-[#00F0FF]/40 pointer-events-none" />
+                <div className="absolute top-2 left-2 w-5 h-5 border-l-[1.5px] border-t-[1.5px] border-[#C1A67B]/40 pointer-events-none" />
+                <div className="absolute top-2 right-2 w-5 h-5 border-r-[1.5px] border-t-[1.5px] border-[#C1A67B]/40 pointer-events-none" />
+                <div className="absolute bottom-2 left-2 w-5 h-5 border-l-[1.5px] border-b-[1.5px] border-[#C1A67B]/40 pointer-events-none" />
+                <div className="absolute bottom-2 right-2 w-5 h-5 border-r-[1.5px] border-b-[1.5px] border-[#C1A67B]/40 pointer-events-none" />
 
                 {/* Header bar */}
-                <div className="absolute top-0 left-0 right-0 bg-[#00F0FF]/5 border-b border-[#00F0FF]/10 text-[#00F0FF] text-[8px] font-bold tracking-[0.2em] px-3 py-2 uppercase flex justify-between items-center z-10">
+                <div className="absolute top-0 left-0 right-0 bg-black/20 backdrop-blur-sm border-0 text-white/70 text-[8px] font-bold tracking-[0.2em] px-3 py-2 uppercase flex justify-between items-center z-10">
                   <span className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_6px_rgba(74,222,128,0.5)]" />
+                    <span className="w-1.5 h-1.5 bg-[#C1A67B] rounded-full animate-pulse shadow-[0_0_6px_rgba(193,166,123,0.5)]" />
                     Input Target
                   </span>
                   <span className="text-white/20 font-mono">ASSET_01</span>
@@ -100,58 +100,58 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
             <motion.div
               initial="hidden" whileInView="visible" viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }} variants={fadeUp}
-              className="flex flex-col gap-5"
+              className="flex flex-col gap-6 md:gap-8"
             >
               <div className="flex items-baseline gap-3">
-                <span className="text-[40px] font-bold text-white/[0.04] leading-none tracking-tighter select-none">02</span>
+                <span className="text-[40px] font-bold text-[#141414]/[0.04] leading-none tracking-tighter select-none">02</span>
                 <div>
-                  <div className="text-[9px] font-bold tracking-[0.3em] text-[#00F0FF]/60 uppercase">Phase 02</div>
-                  <div className="text-[10px] font-bold tracking-[0.2em] text-white/30 uppercase">Signals</div>
+                  <div className="text-[10px] font-bold tracking-[0.2em] text-[#C1A67B] uppercase">Phase 02</div>
+                  <div className="text-xs tracking-wider text-[#6B6B6B] uppercase">Signals</div>
                 </div>
               </div>
-              <div className="text-[15px] leading-[1.25] text-white/80 font-medium tracking-tight">Mechanics extracted.<br />Evidence attached.</div>
+              <div className="text-2xl md:text-3xl leading-tight text-[#141414] font-semibold tracking-tight">Mechanics extracted.<br />Evidence attached.</div>
 
               {/* Palette Logic — Watch: Navy, Rose Gold, Amber */}
-              <div className="bg-[#141414]/80 backdrop-blur-md rounded-xl border border-white/5 p-4 hover:border-[#00F0FF]/20 transition-colors">
-                <div className="text-[9px] font-bold tracking-[0.2em] text-[#00F0FF]/60 uppercase mb-2">Palette Logic</div>
-                <div className="flex w-full h-5 rounded overflow-hidden mb-2 border border-white/5">
+              <div className="bg-white rounded-xl border-0 p-6 md:p-8 hover:shadow-lg transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
+                <div className="text-[9px] font-bold tracking-[0.2em] text-[#9a9a94] uppercase mb-3">Palette Logic</div>
+                <div className="flex w-full h-5 rounded overflow-hidden mb-3 border-0 shadow-sm">
                   <div className="w-[30%] bg-[#1B2A4A]" />
                   <div className="w-[25%] bg-[#B8860B]" />
                   <div className="w-[20%] bg-[#C9A96E]" />
                   <div className="w-[15%] bg-[#2C3E50]" />
                   <div className="w-[10%] bg-[#F5E6CC]" />
                 </div>
-                <p className="text-[10px] text-white/50 leading-relaxed">Deep navy and rose-gold tones encode authority, precision, and legacy-tier positioning.</p>
+                <p className="text-[11px] text-[#6B6B6B] leading-relaxed">Deep navy and rose-gold tones encode authority, precision, and legacy-tier positioning.</p>
               </div>
 
               {/* Trigger Mechanic */}
-              <div className="bg-[#141414]/80 backdrop-blur-md rounded-xl border border-[#00F0FF]/15 p-4 shadow-[0_0_15px_rgba(0,240,255,0.04)]">
-                <div className="text-[9px] font-bold tracking-[0.2em] text-[#00F0FF] uppercase mb-2">Trigger Mechanic</div>
-                <div className="bg-[#00F0FF]/5 border border-[#00F0FF]/15 rounded px-3 py-1.5 text-[11px] text-white font-medium mb-2">
+              <div className="bg-white rounded-xl border border-[#C1A67B]/20 p-6 md:p-8 shadow-[0_4px_20px_rgba(193,166,123,0.12)] hover:shadow-[0_8px_32px_rgba(193,166,123,0.2)] transition-all duration-300">
+                <div className="text-[9px] font-bold tracking-[0.2em] text-[#C1A67B] uppercase mb-3">Trigger Mechanic</div>
+                <div className="bg-[#C1A67B]/10 border-0 rounded px-4 py-2 text-sm text-[#141414] font-semibold mb-3">
                   Craftsmanship Authority
                 </div>
-                <p className="text-[10px] text-white/50 leading-relaxed">Macro-detail of horological complexity signals artisanal mastery as proof of value.</p>
+                <p className="text-[11px] text-[#6B6B6B] leading-relaxed">Macro-detail of horological complexity signals artisanal mastery as proof of value.</p>
               </div>
 
               {/* Semiotics */}
-              <div className="bg-[#141414]/80 backdrop-blur-md rounded-xl border border-white/5 p-4 hover:border-[#00F0FF]/20 transition-colors">
-                <div className="text-[9px] font-bold tracking-[0.2em] text-[#00F0FF]/60 uppercase mb-2">Semiotics</div>
-                <p className="text-[10px] text-white/80 leading-relaxed border-l-2 border-[#00F0FF]/30 pl-3 mb-2">
+              <div className="bg-white rounded-xl border-0 p-6 md:p-8 hover:shadow-lg transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
+                <div className="text-[9px] font-bold tracking-[0.2em] text-[#9a9a94] uppercase mb-3">Semiotics</div>
+                <p className="text-[11px] text-[#141414] leading-relaxed border-l-2 border-[#C1A67B]/40 pl-3 mb-3">
                   <strong>Precision as Legacy.</strong><br />
-                  <span className="text-white/40">Diamond indices and sapphire crystal map to generational permanence.</span>
+                  <span className="text-[#6B6B6B]">Diamond indices and sapphire crystal map to generational permanence.</span>
                 </p>
-                <p className="text-[10px] text-white/80 leading-relaxed border-l-2 border-[#00F0FF]/30 pl-3">
+                <p className="text-[11px] text-[#141414] leading-relaxed border-l-2 border-[#C1A67B]/40 pl-3">
                   <strong>Material Fidelity.</strong><br />
-                  <span className="text-white/40">Rose gold bezel + deep navy dial encode exclusionary pricing without stating it.</span>
+                  <span className="text-[#6B6B6B]">Rose gold bezel + deep navy dial encode exclusionary pricing without stating it.</span>
                 </p>
               </div>
 
               {/* Signal Cards Grid */}
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-3 md:gap-4">
                 {signals.slice(0, 4).map((p) => (
-                  <div key={p.key} className="bg-[#141414]/60 rounded-lg border border-white/5 p-3 hover:border-[#00F0FF]/15 transition-colors">
-                    <div className="text-[8px] font-bold tracking-[0.15em] text-[#00F0FF]/40 uppercase mb-1 font-mono">{p.label}</div>
-                    <div className="text-[10px] leading-[1.4] text-white/50">{p.micro}</div>
+                  <div key={p.key} className="bg-[#F6F1E7] rounded-lg border-0 p-4 hover:bg-white hover:shadow-md transition-all duration-300 shadow-sm">
+                    <div className="text-[8px] font-bold tracking-[0.15em] text-[#9a9a94] uppercase mb-1.5 font-mono">{p.label}</div>
+                    <div className="text-[10px] leading-[1.4] text-[#6B6B6B]">{p.micro}</div>
                   </div>
                 ))}
               </div>
@@ -161,33 +161,33 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
             <motion.div
               initial="hidden" whileInView="visible" viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }} variants={fadeUp}
-              className="flex flex-col gap-5"
+              className="flex flex-col gap-6 md:gap-8"
             >
               <div className="flex items-baseline gap-3">
-                <span className="text-[40px] font-bold text-white/[0.04] leading-none tracking-tighter select-none">03</span>
+                <span className="text-[40px] font-bold text-[#141414]/[0.04] leading-none tracking-tighter select-none">03</span>
                 <div>
-                  <div className="text-[9px] font-bold tracking-[0.3em] text-[#00F0FF]/60 uppercase">Phase 03</div>
-                  <div className="text-[10px] font-bold tracking-[0.2em] text-white/30 uppercase">Output</div>
+                  <div className="text-[10px] font-bold tracking-[0.2em] text-[#C1A67B] uppercase">Phase 03</div>
+                  <div className="text-xs tracking-wider text-[#6B6B6B] uppercase">Output</div>
                 </div>
               </div>
-              <div className="text-[15px] leading-[1.25] text-white/80 font-medium tracking-tight">A report you can<br />defend in a room.</div>
+              <div className="text-2xl md:text-3xl leading-tight text-[#141414] font-semibold tracking-tight">A report you can<br />defend in a room.</div>
 
               {/* Intelligence Report Panel */}
-              <div className="rounded-2xl bg-[#0A0A0A] border border-[#00F0FF]/25 shadow-[0_0_40px_rgba(0,240,255,0.06)] p-6 space-y-4 flex-1">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="w-2 h-2 rounded-sm bg-[#00F0FF] shadow-[0_0_10px_#00F0FF]" />
-                  <span className="text-[10px] font-bold tracking-[0.22em] text-white/50 uppercase">Intelligence Report</span>
+              <div className="rounded-2xl bg-white border-0 shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-8 space-y-6 flex-1">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="w-2 h-2 rounded-sm bg-[#C1A67B] shadow-[0_0_8px_rgba(193,166,123,0.4)]" />
+                  <span className="text-[10px] font-bold tracking-[0.22em] text-[#9a9a94] uppercase">Intelligence Report</span>
                 </div>
 
                 {reportPreviewCards.map((card, i) => (
-                  <div key={i} className="rounded-xl border border-white/8 bg-white/[0.02] p-4 hover:bg-white/[0.05] transition-colors">
-                    <h4 className="text-[12px] font-semibold text-white mb-1">{card.title}</h4>
-                    <p className="text-[10px] text-white/40 leading-[1.4] mb-2">{card.micro}</p>
+                  <div key={i} className="rounded-xl border-0 bg-[#F6F1E7] p-5 hover:bg-[#f0f0ec] transition-all duration-300 shadow-sm">
+                    <h4 className="text-sm font-semibold text-[#141414] mb-2">{card.title}</h4>
+                    <p className="text-[11px] text-[#6B6B6B] leading-[1.5] mb-3">{card.micro}</p>
                     {card.bullets && (
-                      <ul className="space-y-1">
+                      <ul className="space-y-1.5">
                         {card.bullets.map((b, bi) => (
-                          <li key={bi} className="text-[10px] text-white/60 flex gap-2">
-                            <span className="text-[#00F0FF]/60">•</span> {b}
+                          <li key={bi} className="text-[11px] text-[#6B6B6B] flex gap-2">
+                            <span className="text-[#C1A67B]">•</span> {b}
                           </li>
                         ))}
                       </ul>
@@ -195,16 +195,18 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
                   </div>
                 ))}
 
-                {/* Confidence Score */}
-                <div className="text-center pt-4 border-t border-white/5">
-                  <div className="text-[8px] text-[#00F0FF]/50 uppercase tracking-widest mb-1 font-mono">[CERTAINTY_INDEX]</div>
-                  <div className="text-[36px] tracking-tight font-light text-white leading-none">94%</div>
-                  <div className="text-[9px] text-[#00F0FF] mt-2 uppercase tracking-widest py-1 border border-[#00F0FF]/25 rounded bg-[#00F0FF]/5 w-fit mx-auto px-3">High Confidence</div>
+                {/* Confidence Score — PROMINENT */}
+                <div className="text-center pt-8 pb-4 border-t border-[#E7DED1]">
+                  <div className="text-[8px] text-[#9a9a94] uppercase tracking-widest mb-3 font-mono">[CERTAINTY_INDEX]</div>
+                  <div className="text-6xl md:text-7xl font-bold text-[#141414] leading-none mb-3 tracking-tight">94%</div>
+                  <div className="inline-flex items-center gap-2 text-sm font-semibold text-[#C1A67B] uppercase tracking-wide py-2 px-5 border-0 rounded-full bg-[#C1A67B]/10">
+                    High Confidence
+                  </div>
                 </div>
 
-                <div className="pt-3 flex items-center justify-center gap-3">
-                  <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/20 border border-white/8 rounded-full px-3 py-1">PDF Export</span>
-                  <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/20 border border-white/8 rounded-full px-3 py-1">Share-Ready</span>
+                <div className="pt-4 flex items-center justify-center gap-3">
+                  <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#9a9a94] border-0 rounded-full px-4 py-1.5 hover:text-[#6B6B6B] bg-[#F6F1E7] hover:bg-[#f0f0ec] transition-all cursor-pointer">PDF Export</span>
+                  <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#9a9a94] border-0 rounded-full px-4 py-1.5 hover:text-[#6B6B6B] bg-[#F6F1E7] hover:bg-[#f0f0ec] transition-all cursor-pointer">Share-Ready</span>
                 </div>
               </div>
             </motion.div>
