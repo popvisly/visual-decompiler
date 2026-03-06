@@ -2,7 +2,6 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { LinkCta, StageImage } from '@/types/homepage';
-import HeroNodeGraph from '@/components/marketing/HeroNodeGraph';
 import NeuralParticleHero from '@/components/marketing/NeuralParticleHero';
 
 type Props = {
@@ -15,7 +14,6 @@ type Props = {
 
 export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stageImage }: Props) {
     const { scrollY } = useScroll();
-    // Subtle parallax for the main tile
     const tileY = useTransform(scrollY, [0, 500], [0, 60]);
 
     return (
@@ -27,7 +25,7 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
 
             <div className="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col items-center text-center">
 
-                {/* Headline (Upward Fade) */}
+                {/* Headline */}
                 <motion.h1
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -83,26 +81,6 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                 {/* Neural Intelligence Hero */}
                 <div className="w-full">
                     <NeuralParticleHero />
-                </div>
-
-                {/* Forensics Bridge into Dark Mode Map */}
-                <div className="mt-28 mb-12 flex flex-col items-center gap-6 relative z-10 w-full rounded-t-[40px] pt-16">
-                    <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#141414]/50 border border-[#141414]/10 rounded-full px-4 py-1.5 bg-[#141414]/[0.02]">
-                        Tactical Extraction
-                    </span>
-                    <h2 className="text-4xl md:text-6xl font-semibold text-[#141414] tracking-tight uppercase leading-[0.9]">
-                        Mechanism.<br />
-                        <span className="text-[#C1A67B]">Reconstructed.</span>
-
-                    </h2>
-                    <p className="text-[14px] md:text-[16px] text-[#141414]/55 max-w-xl leading-relaxed">
-                        We deconstruct the target asset into observable persuasion cues—giving you the raw psychological framework to justify high-stakes strategy with forensic precision.
-                    </p>
-                </div>
-
-                {/* Cybernetic Node Graph Visualization */}
-                <div className="w-full relative z-20">
-                    <HeroNodeGraph stageImage={stageImage} />
                 </div>
 
             </div>

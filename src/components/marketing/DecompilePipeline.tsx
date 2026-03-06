@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { Pill, PreviewCard, StageImage } from '@/types/homepage';
+import HeroNodeGraph from '@/components/marketing/HeroNodeGraph';
 
 type Props = {
   id?: string;
@@ -13,7 +14,6 @@ type Props = {
 function SignalCard({ title, micro }: { title: string; micro: string }) {
   return (
     <div className="group rounded-xl border border-[#E7DED1] bg-white/80 backdrop-blur px-5 py-4 shadow-[0_8px_30px_rgba(20,20,20,0.04)] hover:shadow-[0_16px_50px_rgba(20,20,20,0.08)] hover:-translate-y-[2px] transition-all duration-300 relative overflow-hidden">
-      {/* Left accent bar */}
       <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#C1A67B] rounded-l-xl" />
       <div className="text-[9px] font-bold tracking-[0.2em] text-[#141414]/40 uppercase mb-1.5 font-mono">{title}</div>
       <div className="text-[12px] leading-[1.45] text-[#141414]/80">{micro}</div>
@@ -46,7 +46,7 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
           className="relative"
         >
           {/* Section Header */}
-          <div className="text-center w-full mx-auto mb-16 lg:mb-24 px-4 overflow-visible">
+          <div className="text-center w-full mx-auto mb-16 lg:mb-20 px-4 overflow-visible">
             <div className="flex flex-col items-center gap-4">
               <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#C1A67B]">
                 How It Works
@@ -61,17 +61,13 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
             </p>
           </div>
 
-          <div className="relative mt-8">
-            {/* Connector lines (desktop only) */}
-            <svg aria-hidden="true" className="hidden lg:block pointer-events-none absolute inset-0 w-full h-full z-0" preserveAspectRatio="none" style={{ top: '80px' }}>
-              {/* Input → Signals flow line */}
-              <line x1="33%" y1="45%" x2="36%" y2="45%" stroke="#C1A67B" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.35" />
-              <polygon points="0,-4 8,0 0,4" fill="#C1A67B" opacity="0.35" transform="translate(36%, 45%) rotate(0)">
-              </polygon>
-              {/* Signals → Output flow line */}
-              <line x1="66%" y1="45%" x2="69%" y2="45%" stroke="#C1A67B" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.35" />
-            </svg>
+          {/* ─── Dark Forensic Deconstruction Map ─── */}
+          <div className="mb-24">
+            <HeroNodeGraph stageImage={stageImage} />
+          </div>
 
+          {/* ─── Three-Phase Pipeline Breakdown ─── */}
+          <div className="relative mt-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12 items-start relative z-10">
 
               {/* ── PHASE 01 — INPUT ── */}

@@ -1,7 +1,7 @@
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import Hero from '@/components/marketing/Hero';
 import DecompilePipeline from '@/components/marketing/DecompilePipeline';
-import StrategicLaboratory from '@/components/marketing/StrategicLaboratory';
+
 import CaseStudyFashion from '@/components/marketing/CaseStudyFashion';
 import PersonaGrid from '@/components/marketing/PersonaGrid';
 import PromptShowcase from '@/components/marketing/PromptShowcase';
@@ -90,10 +90,8 @@ export default function HomePage() {
                 cards={FASHION_CARDS}
             />
 
-            <PersonaGrid />
             <PromptShowcase />
-
-            <StrategicLaboratory />
+            <PersonaGrid />
 
             <FooterStartNow />
 
