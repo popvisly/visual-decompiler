@@ -19,192 +19,141 @@ export default function HeroNodeGraph({ stageImage }: Props) {
     };
 
     return (
-        <div className="w-full max-w-[1440px] mx-auto min-h-[600px] rounded-[32px] overflow-hidden border border-[#E7DED1] shadow-[0_30px_90px_rgba(20,20,20,0.08)] bg-[#F8F5EE] p-6 lg:p-10 mt-5 mb-10 relative flex flex-col xl:flex-row gap-8">
+        <div className="w-full max-w-[1440px] mx-auto min-h-[600px] rounded-[32px] overflow-hidden border border-[rgba(0,240,255,0.15)] shadow-[0_30px_90px_rgba(0,0,0,0.4)] bg-[#0D0D0D] p-6 lg:p-12 mt-8 mb-16 relative flex flex-col gap-8">
+            {/* Background Grid - Dark/Cyan Forensic Style */}
+            <div
+                className="pointer-events-none absolute inset-0 opacity-40 mix-blend-screen"
+                style={{
+                    backgroundImage: 'linear-gradient(rgba(0,240,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.05) 1px, transparent 1px)',
+                    backgroundSize: '32px 32px'
+                }}
+            />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(0,240,255,0.03)_0%,transparent_100%)]" />
 
-            {/* Background grid for technical feel */}
-            <div className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(rgba(20,20,20,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.04)_1px,transparent_1px)] [background-size:24px_24px]" />
-
-            {/* Global Ingest Stream (Anti-Pigeonhole Queue) */}
-            <div className="relative z-10 hidden xl:flex flex-col justify-center w-[160px] shrink-0 border-r border-[#141414]/10 pr-6">
-                <div className="text-[10px] font-mono tracking-[0.15em] text-[#141414]/60 uppercase mb-8">
-                    Ingest Queue
-                </div>
-                <div className="flex flex-col gap-5">
-                    <div className="flex items-center gap-2 opacity-30">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
-                        <span className="text-[9px] font-mono truncate">AUTO_SUV_Q3.mp4</span>
-                    </div>
-                    <div className="flex items-center gap-2 opacity-40">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
-                        <span className="text-[9px] font-mono truncate">FMCG_Snack.jpg</span>
-                    </div>
-                    <div className="flex items-center gap-2 opacity-60">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
-                        <span className="text-[9px] font-mono truncate">B2B_SaaS_Hero.mp4</span>
-                    </div>
-
-                    {/* Active Processing Target */}
-                    <div className="flex items-center gap-2 opacity-100 bg-white/80 p-2 rounded border border-[#141414]/10 shadow-[0_4px_12px_rgba(20,20,20,0.05)] relative -ml-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-[pulse_1.5s_ease-in-out_infinite] shadow-[0_0_5px_rgba(34,197,94,0.5)]" />
-                        <span className="text-[9px] font-mono font-bold truncate">LUX_FRAGR.jpeg</span>
-
-                        {/* Connection Line to Grid */}
-                        <div className="absolute right-[-24px] top-1/2 -translate-y-1/2 w-[24px] h-px bg-[#141414]/10 border-b border-[#141414]/10 border-dashed" />
-                    </div>
-
-                    <div className="flex items-center gap-2 opacity-20">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#141414]" />
-                        <span className="text-[9px] font-mono truncate">TECH_Launch.mov</span>
-                    </div>
-                </div>
+            {/* SVG Connecting Lines (Absolute behind cards) */}
+            <div className="hidden lg:block absolute inset-0 pointer-events-none z-0">
+                <svg className="w-full h-full opacity-30" style={{ filter: 'drop-shadow(0 0 4px rgba(0,240,255,0.5))' }}>
+                    {/* Horizontal Main Spine */}
+                    <path d="M 30% 50% L 70% 50%" stroke="#00F0FF" strokeWidth="1" strokeDasharray="4 4" fill="none" className="animate-[dash_30s_linear_infinite]" />
+                    {/* Vertical Branches to Top/Bottom cards */}
+                    <path d="M 50% 50% V 25%" stroke="#00F0FF" strokeWidth="1" strokeDasharray="4 4" fill="none" />
+                    <path d="M 50% 50% V 75%" stroke="#00F0FF" strokeWidth="1" strokeDasharray="4 4" fill="none" />
+                </svg>
             </div>
 
-            {/* Faint Horizontal Joining Lines */}
-            <div className="pointer-events-none absolute inset-0 hidden xl:block" style={{ zIndex: 1 }}>
-                <div className="absolute top-[22%] left-[230px] w-[calc(100%-270px)] h-px bg-[#141414]/10 border-b border-[#141414]/5 border-dashed" />
-                <div className="absolute top-[48%] left-[230px] w-[calc(100%-270px)] h-px bg-[#141414]/10 border-b border-[#141414]/5 border-dashed" />
-                <div className="absolute top-[75%] left-[230px] w-[calc(100%-270px)] h-px bg-[#141414]/10 border-b border-[#141414]/5 border-dashed" />
-            </div>
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                @keyframes dash {
+                    to { stroke-dashoffset: -1000; }
+                }
+            `}} />
 
-            {/* Evidence Board Grid */}
-            <div className="relative z-10 w-full flex flex-col md:grid md:grid-cols-4 gap-4 md:gap-6 flex-1">
-
-                {/* COLUMN 1: MACRO ASSET */}
-                <div className="flex flex-col gap-4 md:gap-6">
+            {/* Neural Network Layout */}
+            <div className="relative z-10 w-full flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-10">
+                {/* COLUMN 1: INPUT ASSET */}
+                <div className="flex flex-col gap-6 justify-center">
                     <motion.div custom={1} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-white rounded-xl shadow-[0_15px_40px_rgba(20,20,20,0.1)] overflow-hidden border border-[#E7DED1] flex flex-col relative aspect-[4/5] w-full"
+                        className="bg-[#141414]/90 backdrop-blur-md rounded-2xl overflow-hidden border border-[#00F0FF]/20 shadow-[0_0_30px_rgba(0,240,255,0.05)] flex flex-col relative aspect-[4/5] w-full"
                     >
-                        <div className="bg-[#141414] text-white text-[9px] font-bold tracking-[0.2em] px-3 py-2.5 uppercase flex justify-between items-center z-10 absolute top-0 left-0 right-0">
-                            <span>Input Asset</span>
-                            <span className="text-white/50 tracking-widest font-mono">RAW</span>
-                        </div>
-                        <img src={stageImage.src} alt="Main Ad" className="w-full h-full object-cover absolute inset-0 pt-8 bg-[#141414]" />
-                    </motion.div>
+                        {/* Brackets */}
+                        <div className="absolute top-0 left-0 w-4 h-4 border-l border-t border-[#00F0FF]/50 m-2 z-20 pointer-events-none" />
+                        <div className="absolute top-0 right-0 w-4 h-4 border-r border-t border-[#00F0FF]/50 m-2 z-20 pointer-events-none" />
 
+                        <div className="bg-[#00F0FF]/5 border-b border-[#00F0FF]/10 text-[#00F0FF] text-[9px] font-bold tracking-[0.2em] px-4 py-3 uppercase flex justify-between items-center z-10 relative">
+                            <span className="flex items-center gap-2">
+                                <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_8px_#00F0FF]" />
+                                Input Target
+                            </span>
+                            <span className="text-white/30 tracking-widest font-mono">ASSET_01</span>
+                        </div>
+                        <img src={stageImage.src} alt="Main Ad" className="w-full h-full object-cover absolute inset-0 pt-10" style={{ filter: 'brightness(0.85) contrast(1.1)' }} />
+                    </motion.div>
+                </div>
+
+                {/* COLUMN 2: DECONSTRUCTION NODES (MIDDLE) */}
+                <div className="flex flex-col gap-6 justify-center">
+                    {/* Node 1: Palette */}
                     <motion.div custom={2} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-[#E7DED1] p-5 flex flex-col justify-center"
+                        className="bg-[#141414]/80 backdrop-blur-md rounded-xl border border-white/5 shadow-2xl p-5 flex flex-col relative group hover:border-[#00F0FF]/30 transition-colors"
                     >
-                        <div className="text-[10px] font-bold tracking-[0.2em] text-[#141414]/40 uppercase mb-3 text-center">Trigger Mechanic</div>
-                        <div className="bg-[#F6F1E7] border border-[#E7DED1] rounded-lg px-4 py-2 text-xs font-semibold text-[#141414] text-center mx-auto shadow-sm w-full">
-                            Status Signaling
+                        <div className="absolute top-3 right-3 text-[8px] font-mono text-white/20">[HEX_EXTRACT]</div>
+                        <div className="text-[10px] font-bold tracking-[0.2em] text-[#00F0FF]/70 uppercase mb-3 flex items-center gap-2">
+                            Palette Logic
                         </div>
-                        <p className="text-[11px] text-[#6B6B6B] mt-3 leading-snug text-center">
-                            Viewer elevates perceived self-worth through subliminal association with austere aesthetics.
-                        </p>
-                    </motion.div>
-
-                    <motion.div custom={3} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-[#E7DED1] p-5 flex flex-col justify-center text-center flex-1 min-h-[140px]"
-                    >
-                        <div className="text-[10px] font-bold tracking-[0.2em] text-[#141414]/40 uppercase mb-2">Archetype</div>
-                        <p className="text-[11px] text-[#141414] leading-snug">
-                            <strong>The Sovereign.</strong> Appeals aggressively to desires for control, admiration, and exclusionary status.
-                        </p>
-                    </motion.div>
-                </div>
-
-                {/* COLUMN 2: MICRO CROPS */}
-                <div className="flex flex-col gap-4 md:gap-6">
-                    <motion.div custom={4} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-white rounded-xl shadow-[0_15px_30px_rgba(20,20,20,0.08)] overflow-hidden border border-[#E7DED1] aspect-[2/1] relative group"
-                    >
-                        <div className="absolute font-mono text-[9px] bg-white/90 backdrop-blur px-1.5 py-0.5 bottom-2 right-2 text-[#141414]/60 rounded z-10 shadow-sm border border-[#E7DED1]">CROP_A</div>
-                        <img src="/images/examples/eyes.jpg" alt="Eyes Crop" className="w-full h-full absolute inset-0 object-cover object-[center_30%] group-hover:scale-105 transition-transform duration-700" />
-                    </motion.div>
-
-                    <motion.div custom={5} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-white rounded-xl shadow-[0_15px_30px_rgba(20,20,20,0.08)] overflow-hidden border border-[#E7DED1] aspect-[2/1] relative group"
-                    >
-                        <div className="absolute font-mono text-[9px] bg-white/90 backdrop-blur px-1.5 py-0.5 bottom-2 right-2 text-[#141414]/60 rounded z-10 shadow-sm border border-[#E7DED1]">CROP_B</div>
-                        <img src="/images/examples/mouth.jpg" alt="Mouth Crop" className="w-full h-full absolute inset-0 object-cover object-[center_10%] group-hover:scale-105 transition-transform duration-700" />
-                    </motion.div>
-
-                    <motion.div custom={6} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-white rounded-xl shadow-lg border border-[#E7DED1] p-1.5 flex flex-col justify-center flex-1 relative min-h-[300px] group"
-                    >
-                        <div className="absolute font-mono text-[9px] bg-white/90 backdrop-blur px-1.5 py-0.5 bottom-3 right-3 text-[#141414]/60 rounded z-20 shadow-sm border border-[#E7DED1]">CROP_C</div>
-                        <div className="w-full h-full rounded-lg overflow-hidden relative border border-[#E7DED1]/50 bg-[#F6F1E7]">
-                            <img src="/images/examples/perfume.jpg" alt="Perfume Crop" className="absolute inset-0 w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-700" />
-                        </div>
-                    </motion.div>
-                </div>
-
-                {/* COLUMN 3: DIRECT ANALYSIS */}
-                <div className="flex flex-col gap-4 md:gap-6">
-                    <motion.div custom={7} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-[#E7DED1] p-5 flex flex-col justify-center lg:aspect-[2/1] min-h-[140px] text-center"
-                    >
-                        <div className="text-[10px] font-bold tracking-[0.2em] text-[#141414]/40 uppercase mb-2">Palette Logic</div>
-                        <div className="flex w-full h-4 rounded-md overflow-hidden mb-3 shadow-inner">
+                        <div className="flex w-full h-5 rounded overflow-hidden mb-3 border border-white/5">
                             <div className="w-1/3 bg-[#2B2132]" />
                             <div className="w-1/4 bg-[#7D5A7B]" />
                             <div className="w-1/4 bg-[#AF8D9E]" />
                             <div className="w-1/6 bg-[#E6D4D3]" />
                         </div>
-                        <p className="text-[11px] text-[#6B6B6B] leading-snug">Muted deep tones trigger associations with mystery, elegance, and exclusivity.</p>
+                        <p className="text-[11px] text-white/60 leading-relaxed font-light">Muted deep tones trigger associations with mystery, elegance, and high-status exclusivity.</p>
                     </motion.div>
 
-                    <motion.div custom={8} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-[#E7DED1] p-5 flex flex-col justify-center lg:aspect-[2/1] min-h-[140px] text-center"
+                    {/* Node 2: Trigger Mechanic */}
+                    <motion.div custom={3} initial="hidden" animate="visible" variants={nodeVariants}
+                        className="bg-[#141414]/80 backdrop-blur-md rounded-xl border border-[#00F0FF]/20 shadow-[0_0_20px_rgba(0,240,255,0.05)] p-5 flex flex-col relative"
                     >
-                        <div className="text-[10px] font-bold tracking-[0.2em] text-[#141414]/40 uppercase mb-2">Sensual Cue</div>
-                        <p className="text-[11px] text-[#141414] leading-snug">
-                            Parted lips indicate openness, functioning as a primal driver for audience capture.
+                        <div className="absolute top-3 right-3 text-[8px] font-mono text-[#00F0FF]/30">[CORE_DRIVE]</div>
+                        <div className="text-[10px] font-bold tracking-[0.2em] text-[#00F0FF] uppercase mb-3">Trigger Mechanic</div>
+                        <div className="bg-[#00F0FF]/5 border border-[#00F0FF]/20 rounded px-4 py-2 text-[12px] text-white font-medium mb-3 shadow-[0_0_10px_rgba(0,240,255,0.1)_inset]">
+                            Status Signaling
+                        </div>
+                        <p className="text-[11px] text-white/60 leading-relaxed font-light mt-1">
+                            Viewer elevates perceived self-worth through subliminal association with austere aesthetics.
                         </p>
                     </motion.div>
 
-                    <motion.div custom={9} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-[#E7DED1] p-5 flex flex-col justify-center flex-1 min-h-[300px] text-center"
+                    {/* Node 3: Semiotics */}
+                    <motion.div custom={4} initial="hidden" animate="visible" variants={nodeVariants}
+                        className="bg-[#141414]/80 backdrop-blur-md rounded-xl border border-white/5 shadow-2xl p-5 flex flex-col relative hover:border-[#00F0FF]/30 transition-colors"
                     >
-                        <div className="text-[10px] font-bold tracking-[0.2em] text-[#141414]/40 uppercase mb-3">Semiotics</div>
-                        <p className="text-[11px] text-[#141414] leading-relaxed mb-4">
-                            <strong>Restraint as Status.</strong> The absence of aggressive claims implies undeniable legacy power.
-                            <br /><br />
-                            <strong>Physical Prominence.</strong> The refraction of light through the glass intersecting the Z-axis highlights product tangibility over subject identity.
+                        <div className="absolute top-3 right-3 text-[8px] font-mono text-white/20">[SUBTEXT]</div>
+                        <div className="text-[10px] font-bold tracking-[0.2em] text-[#00F0FF]/70 uppercase mb-3">Semiotics</div>
+                        <p className="text-[11px] text-white/90 leading-relaxed font-light mb-2 border-l-2 border-[#00F0FF]/40 pl-3">
+                            <strong>Restraint as Status.</strong><br />
+                            <span className="text-white/50">The absence of aggressive claims implies undeniable legacy power.</span>
+                        </p>
+                        <p className="text-[11px] text-white/90 leading-relaxed font-light border-l-2 border-[#00F0FF]/40 pl-3">
+                            <strong>Physical Prominence.</strong><br />
+                            <span className="text-white/50">Glass intersection highlights product tangibility over subject identity.</span>
                         </p>
                     </motion.div>
                 </div>
 
-                {/* COLUMN 4: SYNTHESIS */}
-                <div className="flex flex-col gap-4 md:gap-6">
-                    <motion.div custom={10} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-[#E7DED1] p-5 flex flex-col justify-center lg:aspect-[2/1] min-h-[140px] text-center"
+                {/* COLUMN 3: OUTPUT / INTELLIGENCE */}
+                <div className="flex flex-col gap-6 justify-center h-full pt-4 lg:pt-0">
+                    <motion.div custom={5} initial="hidden" animate="visible" variants={nodeVariants}
+                        className="bg-[#0D0D0D] text-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-[#00F0FF]/30 p-8 flex flex-col justify-center relative overflow-hidden h-[400px]"
                     >
-                        <div className="text-[10px] font-bold tracking-[0.2em] text-[#141414]/40 uppercase mb-2">Gaze Vector</div>
-                        <p className="text-[11px] text-[#141414] leading-snug">
-                            Direct engagement establishes dominant power dynamic typical of high luxury branding.
-                        </p>
-                    </motion.div>
+                        {/* Scanning beam effect inside card */}
+                        <div className="absolute inset-x-0 h-[2px] bg-[#00F0FF] opacity-50 shadow-[0_0_15px_#00F0FF] animate-[scan_3s_ease-in-out_infinite_alternate]" />
+                        <style dangerouslySetInnerHTML={{
+                            __html: `
+                            @keyframes scan {
+                                0% { top: 0%; opacity: 0; }
+                                10% { opacity: 0.5; }
+                                90% { opacity: 0.5; }
+                                100% { top: 100%; opacity: 0; }
+                            }
+                        `}} />
 
-                    <motion.div custom={11} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-[#E7DED1] p-5 flex flex-col justify-center lg:aspect-[2/1] min-h-[140px] text-center"
-                    >
-                        <div className="text-[10px] font-bold tracking-[0.2em] text-[#141414]/40 uppercase mb-2">Materiality</div>
-                        <p className="text-[11px] text-[#141414] leading-snug">
-                            Heavy metallic accents consistently signal a premium positioning tier, separating it from mass-market visual codes.
-                        </p>
-                    </motion.div>
-
-                    <motion.div custom={12} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-[#141414] text-white rounded-xl shadow-[0_20px_50px_rgba(20,20,20,0.3)] border border-[#333] p-6 flex flex-col justify-center flex-1 min-h-[300px]"
-                    >
-                        <div className="flex items-center gap-2 mb-6 justify-center">
-                            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.5)]" />
-                            <span className="text-[9px] font-bold tracking-[0.2em] text-white/50 uppercase">Intelligence Extracted</span>
+                        <div className="flex items-center gap-3 mb-8 justify-center relative z-10">
+                            <span className="w-2 h-2 rounded-sm bg-[#00F0FF] shadow-[0_0_12px_#00F0FF]" />
+                            <span className="text-[11px] font-bold tracking-[0.3em] text-white uppercase">Neural Extraction</span>
                         </div>
 
-                        <div className="space-y-6 text-center">
+                        <div className="space-y-10 text-center relative z-10">
                             <div>
-                                <div className="text-[8px] text-white/40 uppercase tracking-widest mb-1.5 font-mono">Confidence Score</div>
-                                <div className="text-[32px] tracking-tight font-light text-white leading-none">94%</div>
-                                <div className="text-[11px] text-green-400 opacity-80 mt-1 uppercase max-w-[60%] mx-auto py-1 border border-green-400/20 rounded bg-green-400/10 hidden lg:block">High Confidence</div>
+                                <div className="text-[9px] text-[#00F0FF]/60 uppercase tracking-widest mb-2 font-mono">[CERTAINTY_INDEX]</div>
+                                <div className="text-[54px] tracking-tight font-light text-white leading-none drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">94%</div>
+                                <div className="text-[10px] text-[#00F0FF] mt-3 uppercase tracking-widest py-1.5 border border-[#00F0FF]/30 rounded bg-[#00F0FF]/5 w-fit mx-auto px-4">High Confidence</div>
                             </div>
 
-                            <div className="h-px w-[60%] mx-auto bg-[#333]" />
+                            <div className="h-px w-full bg-gradient-to-r from-transparent via-[#00F0FF]/30 to-transparent" />
 
                             <div>
-                                <div className="text-[8px] text-white/40 uppercase tracking-widest mb-1.5 font-mono">Primary Vector</div>
-                                <div className="text-[14px] text-white/90 font-medium tracking-wide">Aesthetic Authority</div>
+                                <div className="text-[9px] text-[#00F0FF]/60 uppercase tracking-widest mb-2 font-mono">[DOMINANT_VECTOR]</div>
+                                <div className="text-[16px] text-white font-medium tracking-wide">Aesthetic Authority</div>
                             </div>
                         </div>
                     </motion.div>

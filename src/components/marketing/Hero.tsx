@@ -85,28 +85,26 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     <NeuralParticleHero />
                 </div>
 
-                {/* Mockup Title area (Sovereign Style) */}
-                <div className="mt-24 mb-8 flex flex-col items-center gap-6">
-                    <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#C1A67B]">
-                        Forensic Intelligence
+                {/* Forensics Bridge into Dark Mode Map */}
+                <div className="mt-28 mb-12 flex flex-col items-center gap-6 relative z-10 w-full rounded-t-[40px] pt-16">
+                    <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#141414]/50 border border-[#141414]/10 rounded-full px-4 py-1.5 bg-[#141414]/[0.02]">
+                        Tactical Extraction
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-semibold text-[#141414] tracking-tightest uppercase leading-[0.9]">
+                    <h2 className="text-4xl md:text-6xl font-semibold text-[#141414] tracking-tight uppercase leading-[0.9]">
                         Mechanism.<br />
-                        <span className="text-[#C1A67B]">Reconstructed.</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-cyan-500">Reconstructed.</span>
                     </h2>
                     <p className="text-[14px] md:text-[16px] text-[#141414]/55 max-w-xl leading-relaxed">
-                        We deconstruct the ad into observable persuasion cues to justify high-stakes strategy with forensic precision.
+                        We deconstruct the target asset into observable persuasion cues—giving you the raw psychological framework to justify high-stakes strategy with forensic precision.
                     </p>
                 </div>
 
-                {/* Hero Node Graph Visualization */}
-                <div className="w-full">
+                {/* Cybernetic Node Graph Visualization */}
+                <div className="w-full relative z-20">
                     <HeroNodeGraph stageImage={stageImage} />
                 </div>
 
             </div>
-
-
         </section>
     );
 }
