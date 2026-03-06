@@ -193,7 +193,7 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
                                     <span className="ml-auto text-[8px] font-mono text-[#C1A67B] tracking-wider">PROCESSING</span>
                                 )}
                                 {i < activeNode && (
-                                    <span className="ml-auto text-[8px] font-mono text-[#141414]/30 tracking-wider">COMPLETE</span>
+                                    <span className="ml-auto text-[8px] font-mono text-[#C1A67B]/50 tracking-wider">ANALYSING</span>
                                 )}
                             </div>
                         ))}
