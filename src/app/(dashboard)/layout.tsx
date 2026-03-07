@@ -42,7 +42,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                                 <Link
                                     key={item.href}
                                     href={item.href}
-                                    className={`flex items-center gap-4 group transition-colors ${isActive ? 'text-white' : 'text-neutral-500 hover:text-white'
+                                    className={`flex items-center gap-4 pl-4 py-2 -ml-4 group transition-all duration-300 border-l ${isActive ? 'text-white border-white bg-white/5 shadow-[inset_1px_0_10px_rgba(255,255,255,0.05)] select-none' : 'text-neutral-500 border-transparent hover:text-white hover:border-neutral-800'
                                         }`}
                                 >
                                     <Icon className="w-4 h-4 stroke-[1.5px]" />

@@ -29,12 +29,12 @@ export default function SidebarFooter() {
 
     return (
         <div className="pt-8 border-t border-neutral-800 flex flex-col gap-4">
-            <span className="font-mono text-[9px] text-neutral-500 truncate" title={email}>
+            <span className="font-mono text-[9px] text-white opacity-40 hover:opacity-100 transition-opacity duration-300 truncate cursor-default" title={email}>
                 {email}
             </span>
             <button
                 onClick={handleDisconnect}
-                className="font-sans text-[9px] font-bold tracking-[0.25em] text-neutral-600 uppercase hover:text-white transition-colors text-left"
+                className="font-sans text-[9px] font-bold tracking-[0.25em] text-white opacity-40 hover:opacity-100 transition-opacity duration-300 uppercase text-left"
             >
                 [ DISCONNECT ]
             </button>

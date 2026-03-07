@@ -48,7 +48,7 @@ interface BlueprintData {
     };
 }
 
-export default function AssetWorkspace({ initialAsset }: { initialAsset: WorkspaceAsset }) {
+export default function AssetWorkspace({ initialAsset, isSovereign }: { initialAsset: WorkspaceAsset, isSovereign: boolean }) {
     const [asset, setAsset] = useState(initialAsset);
     const [activeTab, setActiveTab] = useState<'EXTRACTION' | 'PACING' | 'BLUEPRINT'>('EXTRACTION');
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
@@ -85,9 +85,10 @@ export default function AssetWorkspace({ initialAsset }: { initialAsset: Workspa
     // Handle Generate Blueprint (Targeting /api/blueprint)
     const handleGenerateBlueprint = async () => {
         // TIER CHECK INTERCEPT
-        // For Phase 2 Demo, we actively block Blueprint generation to showcase the monetization gate
-        setShowGatekeeper(true);
-        return;
+        if (!isSovereign) {
+            setShowGatekeeper(true);
+            return;
+        }
 
         setIsGeneratingBlueprint(true);
         try {

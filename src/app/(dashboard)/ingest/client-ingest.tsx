@@ -6,7 +6,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 
-export default function IngestClient() {
+export default function IngestClient({ isSovereign }: { isSovereign: boolean }) {
     const router = useRouter();
     const [isDragging, setIsDragging] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
@@ -33,9 +33,10 @@ export default function IngestClient() {
         if (!files || files.length === 0) return;
 
         // TIER CHECK INTERCEPT
-        // For Phase 2 Demo, we actively block ingestion to showcase the monetization gate
-        setShowGatekeeper(true);
-        return;
+        if (!isSovereign) {
+            setShowGatekeeper(true);
+            return;
+        }
 
         // Grab first file for now (supporting CAROUSEL uploads would loop this)
         const file = files[0];
