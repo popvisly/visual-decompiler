@@ -1,6 +1,23 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// Helper to decode JWT in Edge Runtime without external libraries
+function isTokenExpired(token: string) {
+    try {
+        const payloadBase64 = token.split('.')[1];
+        // Decode base64url to base64
+        const normalizedBase64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+        const decodedJson = atob(normalizedBase64);
+        const payload = JSON.parse(decodedJson);
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+
+        // Add a 5 minute buffer to prevent edge cases during request logic
+        return payload.exp < (currentTimestamp + 300);
+    } catch (e) {
+        return true; 
+    }
+}
+
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
@@ -15,8 +32,13 @@ export function middleware(request: NextRequest) {
     if (isDashboardRoute) {
         // Our custom cookie set during login
         const token = request.cookies.get('sb-access-token')?.value;
-        if (!token) {
-            return NextResponse.redirect(new URL('/login', request.url));
+        
+        // If no token, or token is expired
+        if (!token || isTokenExpired(token)) {
+            const response = NextResponse.redirect(new URL('/login', request.url));
+            // Force the browser to delete the dead cookie
+            response.cookies.delete('sb-access-token');
+            return response;
         }
     }
 

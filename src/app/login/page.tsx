@@ -28,7 +28,8 @@ export default function LoginPage() {
 
             if (data.session) {
                 // Explicitly set a cookie so Next.js middleware can read the session
-                document.cookie = `sb-access-token=${data.session.access_token}; path=/; max-age=86400; SameSite=Lax; secure`;
+                const expiresIn = data.session.expires_in || 3600;
+                document.cookie = `sb-access-token=${data.session.access_token}; path=/; max-age=${expiresIn}; SameSite=Lax; secure`;
                 router.push('/vault');
                 // Force refresh to ensure middleware picks up the new cookie and renders layouts correctly
                 router.refresh();
