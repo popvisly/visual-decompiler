@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
+import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
 
 export async function POST(req: Request) {
     try {
@@ -65,6 +66,91 @@ export async function POST(req: Request) {
         }).select().single();
 
         if (insertError) throw insertError;
+
+        // 5. Trigger Claude Deconstruction
+        const anthropic = getAnthropic();
+        const model = getClaudeModel('agency');
+
+        const systemPrompt = `You are an elite forensic advertising strategist. Analyze the given asset and extract its core semiotic DNA.
+CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact schema:
+{
+  "confidence_score": 95,
+  "primary_mechanic": "Status Signaling via Negative Space",
+  "visual_style": "Brutalist Minimalism",
+  "color_palette": ["#000000", "#FFFFFF", "#FF0000"],
+  "evidence_anchors": [
+    {
+      "claim": "string",
+      "evidence_vector": "string",
+      "confidence_score": 90,
+      "visual_anchor": "string"
+    }
+  ],
+  "dna_prompt": "A single sentence summary combining style and mechanic"
+}
+
+Analyze the image provided. Stay clinical, elite, and forensic in your tone. Keep explanations concise.`;
+
+        // Fetch the newly uploaded public URL to encode to base64 for Anthropic
+        const imgRes = await fetch(publicUrl);
+        if (!imgRes.ok) throw new Error("Failed to fetch uploaded image for Claude processing");
+
+        const arrayBuffer = await imgRes.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        const base64Data = buffer.toString('base64');
+        const mimeType = imgRes.headers.get('content-type') || 'image/png';
+
+        type AuthImageMedia = "image/jpeg" | "image/png" | "image/webp" | "image/gif";
+        type ContentBlock =
+            | { type: "text"; text: string }
+            | { type: "image"; source: { type: "base64"; media_type: AuthImageMedia; data: string } };
+
+        const userContent: ContentBlock[] = [
+            { type: "text", text: "Analyze this asset and provide the forensic extraction." },
+            {
+                type: "image",
+                source: {
+                    type: "base64",
+                    media_type: mimeType as AuthImageMedia,
+                    data: base64Data
+                }
+            }
+        ];
+
+        const response = await anthropic!.messages.create({
+            model,
+            max_tokens: 4096,
+            system: systemPrompt,
+            messages: [{ role: 'user', content: userContent }],
+        });
+
+        const contentBlock = response.content.find((block) => block.type === 'text');
+        if (!contentBlock) throw new Error("Claude returned no text response");
+
+        let text = contentBlock.text;
+        if (text.includes('```json')) {
+            text = text.split('```json')[1].split('```')[0].trim();
+        } else if (text.includes('```')) {
+            text = text.split('```')[1].split('```')[0].trim();
+        }
+
+        const extractionResult = JSON.parse(text);
+
+        // 6. Save extraction to Intelligence Vault extractions table
+        const { error: extractionError } = await supabaseAdmin.from('extractions').insert({
+            asset_id: assetData.id,
+            confidence_score: extractionResult.confidence_score,
+            primary_mechanic: extractionResult.primary_mechanic,
+            visual_style: extractionResult.visual_style,
+            color_palette: extractionResult.color_palette,
+            evidence_anchors: extractionResult.evidence_anchors,
+            dna_prompt: extractionResult.dna_prompt
+        });
+
+        if (extractionError) {
+            console.error('[Extraction DB Error]:', extractionError);
+            throw new Error('Failed to save extraction to database');
+        }
 
         return NextResponse.json({ success: true, assetId: assetData.id });
 
