@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
-import { v4 as uuidv4 } from 'uuid';
+import crypto from 'crypto';
+import sharp from 'sharp';
 import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
 
 export async function POST(req: Request) {
@@ -30,26 +31,47 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Only images are supported for Ingestion currently.' }, { status: 400 });
         }
 
-        // 1. Upload to Supabase Storage Bucket 'vault-assets'
+        // 1. Process & Compress Image locally
         const fileExt = file.name.split('.').pop() || 'png';
-        const fileName = `${uuidv4()}.${fileExt}`;
+        const arrayBuffer = await file.arrayBuffer();
+        let buffer: Buffer = Buffer.from(new Uint8Array(arrayBuffer));
+
+        // Compress image to max 1024px longest side
+        buffer = await sharp(buffer)
+            .resize({ width: 1024, height: 1024, fit: 'inside', withoutEnlargement: true })
+            .toBuffer();
+
+        // 2. Semantic Hash Check (Deduplication)
+        const fileHash = crypto.createHash('sha256').update(buffer).digest('hex');
+        const fileName = `${fileHash}.${fileExt}`;
         const filePath = `ingestions/${fileName}`;
 
+        const { data: existingAssets } = await supabaseAdmin.from('assets')
+            .select('id')
+            .ilike('file_url', `%${fileHash}%`)
+            .limit(1);
+
+        if (existingAssets && existingAssets.length > 0) {
+            console.log(`[Ingest] Semantic hit for hash ${fileHash}. Bypassing Claude.`);
+            return NextResponse.json({ success: true, assetId: existingAssets[0].id, cached: true });
+        }
+
+        // 3. Upload to Supabase Storage Bucket 'vault-assets'
         // supabaseAdmin uses process.env.SUPABASE_SERVICE_ROLE_KEY
         const { error: uploadError } = await supabaseAdmin.storage
             .from('vault-assets')
-            .upload(filePath, file, { contentType: file.type });
+            .upload(filePath, buffer, { contentType: file.type });
 
         if (uploadError) throw uploadError;
 
-        // 2. Retrieve Public URL
+        // 4. Retrieve Public URL
         const { data: publicUrlData } = supabaseAdmin.storage
             .from('vault-assets')
             .getPublicUrl(filePath);
 
         const publicUrl = publicUrlData.publicUrl;
 
-        // 3. Fallback Brand (System Dummy or 'Unassigned' logic)
+        // 5. Fallback Brand (System Dummy or 'Unassigned' logic)
         let targetBrandId = null;
         const { data: brands } = await supabaseAdmin.from('brands').select('id').limit(1);
         if (brands && brands.length > 0) {
@@ -58,7 +80,7 @@ export async function POST(req: Request) {
             throw new Error("No Brands found in Intelligence Vault to attach asset to.");
         }
 
-        // 4. Create new Asset in database
+        // 6. Create new Asset in database
         const { data: assetData, error: insertError } = await supabaseAdmin.from('assets').insert({
             brand_id: targetBrandId,
             type: 'STATIC',
@@ -67,7 +89,7 @@ export async function POST(req: Request) {
 
         if (insertError) throw insertError;
 
-        // 5. Trigger Claude Deconstruction
+        // 7. Trigger Claude Deconstruction
         const anthropic = getAnthropic();
         const model = getClaudeModel('agency');
 
@@ -89,16 +111,11 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
   "dna_prompt": "A single sentence summary combining style and mechanic"
 }
 
-Analyze the image provided. Stay clinical, elite, and forensic in your tone. Keep explanations concise.`;
+Analyze the image provided. Stay clinical, elite, and forensic in your tone. Keep explanations extremely concise and brief to minimize token usage.`;
 
-        // Fetch the newly uploaded public URL to encode to base64 for Anthropic
-        const imgRes = await fetch(publicUrl);
-        if (!imgRes.ok) throw new Error("Failed to fetch uploaded image for Claude processing");
-
-        const arrayBuffer = await imgRes.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
+        // We already have the buffer, no need to re-fetch!
         const base64Data = buffer.toString('base64');
-        const mimeType = imgRes.headers.get('content-type') || 'image/png';
+        const mimeType = file.type;
 
         type AuthImageMedia = "image/jpeg" | "image/png" | "image/webp" | "image/gif";
         type ContentBlock =
@@ -119,7 +136,7 @@ Analyze the image provided. Stay clinical, elite, and forensic in your tone. Kee
 
         const response = await anthropic!.messages.create({
             model,
-            max_tokens: 4096,
+            max_tokens: 800,
             system: systemPrompt,
             messages: [{ role: 'user', content: userContent }],
         });

@@ -30,7 +30,7 @@ export default async function BoardsPage() {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {safeBoards.map((board) => (
+                    {safeBoards.map((board: any) => (
                         <Link
                             key={board.id}
                             href={`/boards/${board.id}`}

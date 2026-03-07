@@ -39,7 +39,7 @@ export function getClaudeModel(tier: 'free' | 'pro' | 'agency' = 'pro'): string 
         case 'pro':
             return CLAUDE_MODELS.SONNET;
         case 'agency':
-            return CLAUDE_MODELS.OPUS;
+            return CLAUDE_MODELS.SONNET;
         default:
             return CLAUDE_MODELS.SONNET;
     }
