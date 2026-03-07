@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { SovereignPrintHeader, SovereignPrintFooter } from '@/components/SovereignDossierParts';
-import { FileDown } from 'lucide-react';
+import { FileDown, Code } from 'lucide-react';
 
 interface WorkspaceAsset {
     id: string;
@@ -64,6 +64,7 @@ export default function AssetWorkspace({
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
     const [isGeneratingBlueprint, setIsGeneratingBlueprint] = useState(false);
     const [showGatekeeper, setShowGatekeeper] = useState(false);
+    const [showCopiedToast, setShowCopiedToast] = useState(false);
 
     // We'll store dynamically generated results here if they aren't strictly persisted in the rigid Phase 2 schema
     const [sequenceData, setSequenceData] = useState<SequenceData | null>(null);
@@ -115,6 +116,14 @@ export default function AssetWorkspace({
         } finally {
             setIsGeneratingBlueprint(false);
         }
+    };
+
+    const handleCopyEmbed = () => {
+        const embedCode = `<iframe src="https://www.visualdecompiler.com/embed/${asset.id}" width="100%" height="600px" style="border: 1px solid #141414; border-radius: 8px;"></iframe>`;
+        navigator.clipboard.writeText(embedCode).then(() => {
+            setShowCopiedToast(true);
+            setTimeout(() => setShowCopiedToast(false), 3000);
+        });
     };
 
     // Safe parsing of arrays from strings if needed
@@ -192,15 +201,30 @@ export default function AssetWorkspace({
                                 <h1 className="text-2xl font-light tracking-tightest text-white uppercase">{asset.brand?.name}</h1>
                                 <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-neutral-500">{asset.brand?.market_sector}</span>
                             </div>
-                            <div className="flex flex-col items-end gap-2">
+                            <div className="flex flex-col items-end gap-2 relative">
                                 <span className="text-[9px] font-mono tracking-widest text-neutral-600">ID: {asset.id.split('-')[0]}</span>
-                                <button
-                                    onClick={() => window.print()}
-                                    className="no-print flex items-center gap-2 px-3 py-1.5 bg-white text-black text-[9px] font-bold tracking-widest uppercase hover:bg-neutral-200 transition-colors"
-                                >
-                                    <FileDown className="w-3 h-3" />
-                                    Export Dossier
-                                </button>
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        onClick={handleCopyEmbed}
+                                        className="no-print flex items-center gap-2 px-3 py-1.5 bg-neutral-900 border border-neutral-800 text-white text-[9px] font-bold tracking-widest uppercase hover:bg-neutral-800 transition-colors"
+                                    >
+                                        <Code className="w-3 h-3" />
+                                        Copy Embed Widget
+                                    </button>
+                                    <button
+                                        onClick={() => window.print()}
+                                        className="no-print flex items-center gap-2 px-3 py-1.5 bg-white text-black text-[9px] font-bold tracking-widest uppercase hover:bg-neutral-200 transition-colors"
+                                    >
+                                        <FileDown className="w-3 h-3" />
+                                        Export Dossier
+                                    </button>
+                                </div>
+                                {/* Simple Toast Notification */}
+                                {showCopiedToast && (
+                                    <div className="absolute top-full mt-2 right-0 bg-white text-black text-[9px] font-bold tracking-widest uppercase px-3 py-1.5 shadow-lg animate-in fade-in slide-in-from-top-2 duration-200 z-50">
+                                        Embed Code Copied
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

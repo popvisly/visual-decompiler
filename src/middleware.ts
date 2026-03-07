@@ -39,13 +39,31 @@ export function middleware(request: NextRequest) {
   `.replace(/\s{2,}/g, ' ').trim();
 
     const requestHeaders = new Headers(request.headers);
-    requestHeaders.set('Content-Security-Policy', cspHeader);
+    let finalCspHeader = cspHeader;
+    
+    // Phase 2 PLG: iFrame Embed system
+    if (pathname.startsWith('/embed/')) {
+        finalCspHeader = cspHeader.replace(
+            "frame-ancestors 'none';", 
+            "frame-ancestors https://*.notion.so https://*.figma.com https://*.pitch.com;"
+        );
+        // Ensure X-Frame-Options is not blocking
+        requestHeaders.delete('X-Frame-Options');
+    }
+
+    requestHeaders.set('Content-Security-Policy', finalCspHeader);
 
     const response = NextResponse.next({
         request: {
             headers: requestHeaders,
         },
     });
+
+    response.headers.set('Content-Security-Policy', finalCspHeader);
+    if (pathname.startsWith('/embed/')) {
+        response.headers.delete('X-Frame-Options');
+    }
+
 
     response.headers.set('Content-Security-Policy', cspHeader);
     return response;
