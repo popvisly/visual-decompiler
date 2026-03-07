@@ -73,7 +73,7 @@ export default async function HomePage() {
                 headline={["Advertising intelligence.", "Deconstructed."]}
                 subhead="The sovereign infrastructure for elite agencies. Understand & comprehend the architecture of persuasion to justify high-stakes strategy with forensic precision."
                 ctaPrimary={{
-                    label: userId ? "[ INGEST ASSET ]" : "[ ACCESS OS ]",
+                    label: userId ? "[ INGEST AD ASSET ]" : "[ ACCESS OS ]",
                     href: userId ? "/ingest" : "/login"
                 }}
                 ctaSecondary={{ 

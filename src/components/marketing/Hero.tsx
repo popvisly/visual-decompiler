@@ -51,12 +51,12 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                    className="flex flex-col sm:flex-row items-center gap-6 mb-5"
+                    className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-5 w-full"
                 >
                     <a
                         href={ctaPrimary.href}
                         className="
-                            inline-flex items-center justify-center
+                            inline-flex items-center justify-center w-full sm:w-auto
                             rounded-full border border-[#E7DED1]
                             bg-[#FBF7EF] backdrop-blur
                             px-8 py-3.5
@@ -68,11 +68,20 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                             hover:shadow-[0_16px_40px_rgba(20,20,20,0.10)]
                         "
                     >
-                        {ctaPrimary.label} &rarr;
+                        {ctaPrimary.label}
                     </a>
                     <a
                         href={ctaSecondary.href}
-                        className="text-[13px] font-medium text-[#6B6B6B] hover:text-[#141414] transition-colors uppercase tracking-[0.1em]"
+                        className="
+                            inline-flex items-center justify-center w-full sm:w-auto
+                            rounded-full border border-[#141414]
+                            bg-[#141414] text-[#FBF7EF]
+                            px-8 py-3.5 text-[14px] font-medium tracking-tight
+                            transition-all duration-300
+                            hover:-translate-y-[1px]
+                            hover:bg-black
+                            hover:shadow-[0_12px_24px_rgba(20,20,20,0.3)]
+                        "
                     >
                         {ctaSecondary.label}
                     </a>
