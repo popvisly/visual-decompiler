@@ -12,6 +12,16 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Unauthorized: No active sovereign session found.' }, { status: 401 });
         }
 
+        // Upsert user to ensure they exist in our tracking and satisfy foreign keys
+        const { error: userErr } = await supabaseAdmin
+            .from('users')
+            .upsert({ id: session.userId, email: session.email || '' }, { onConflict: 'id' });
+
+        if (userErr) {
+            console.error('[Ingest] User sync failed:', userErr);
+            return NextResponse.json({ error: 'Failed to verify account status' }, { status: 500 });
+        }
+
         // Enforce Server-Side checking with strictly parsed strings
         const { data: agency, error: agencyError } = await supabaseAdmin.from('agencies').select('tier').limit(1).single();
         if (agencyError || !agency) {
