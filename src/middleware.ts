@@ -1,35 +1,37 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-const isPublicRoute = createRouteMatcher([
-    '/',
-    '/app',
-    '/sign-in(.*)',
-    '/sign-up(.*)',
-    '/api/webhooks(.*)',
-    '/api/worker(.*)',
-    '/api/ads/actions/(.*)',
-]);
+export function middleware(request: NextRequest) {
+    const { pathname } = request.nextUrl;
 
-export default clerkMiddleware(async (auth, request) => {
-    // Protect all routes except public ones
-    if (!isPublicRoute(request)) {
-        await auth.protect();
+    // Phase 2: Protect any route in the Agency OS (dashboard)
+    const isDashboardRoute =
+        pathname.startsWith('/vault') ||
+        pathname.startsWith('/ingest') ||
+        pathname.startsWith('/compare') ||
+        pathname.match(/^\/asset(\/.*)?$/);
+
+    if (isDashboardRoute) {
+        // Our custom cookie set during login
+        const token = request.cookies.get('sb-access-token')?.value;
+        if (!token) {
+            return NextResponse.redirect(new URL('/login', request.url));
+        }
     }
 
-    // CSP Headers (Restored after Vercel outage)
+    // Preserve the CSP headers from the system
     const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.clerk.accounts.dev https://clerk.visualdecompiler.com https://*.posthog.com;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.posthog.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://*.unsplash.com https://*.supabase.co https://*.stripe.com https://img.clerk.com https://*.posthog.com;
+    img-src 'self' blob: data: https://*.unsplash.com https://*.supabase.co https://*.stripe.com https://*.posthog.com;
     font-src 'self' data:;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
-    frame-src 'self' https://checkout.stripe.com https://*.clerk.accounts.dev;
-    connect-src 'self' https://*.supabase.co https://*.clerk.accounts.dev https://clerk.visualdecompiler.com https://api.anthropic.com https://api.openai.com https://*.sentry.io https://*.posthog.com;
+    frame-src 'self' https://checkout.stripe.com;
+    connect-src 'self' https://*.supabase.co https://api.anthropic.com https://api.openai.com https://*.sentry.io https://*.posthog.com;
     worker-src 'self' blob:;
     block-all-mixed-content;
     upgrade-insecure-requests;
@@ -45,25 +47,11 @@ export default clerkMiddleware(async (auth, request) => {
     });
 
     response.headers.set('Content-Security-Policy', cspHeader);
-
     return response;
-});
+}
 
 export const config = {
     matcher: [
-        /*
-         * Match all request paths except for the ones starting with:
-         * - _next/static (static files)
-         * - _next/image (image optimization files)
-         * - favicon.ico (favicon file)
-         * - images/ (public static images — CDN serves these on Vercel, need explicit exclusion in dev)
-         */
-        {
-            source: '/((?!_next/static|_next/image|favicon.ico|images/).*)',
-            missing: [
-                { type: 'header', key: 'next-router-prefetch' },
-                { type: 'header', key: 'purpose', value: 'prefetch' },
-            ],
-        },
+        '/((?!_next/static|_next/image|favicon.ico|images/).*)',
     ],
 };

@@ -1,0 +1,43 @@
+"use client";
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabaseClient } from '@/lib/supabase-client';
+
+export default function SidebarFooter() {
+    const router = useRouter();
+    const [email, setEmail] = useState<string>('Authenticating...');
+
+    useEffect(() => {
+        async function fetchSession() {
+            const { data } = await supabaseClient.auth.getUser();
+            if (data?.user?.email) {
+                setEmail(data.user.email);
+            } else {
+                setEmail('Unknown Intel Agent');
+            }
+        }
+        fetchSession();
+    }, []);
+
+    const handleDisconnect = async () => {
+        await supabaseClient.auth.signOut();
+        document.cookie = 'sb-access-token=; path=/; max-age=0;';
+        router.push('/login');
+        router.refresh(); // Clear layout traces
+    };
+
+    return (
+        <div className="pt-8 border-t border-neutral-800 flex flex-col gap-4">
+            <span className="font-mono text-[9px] text-neutral-500 truncate" title={email}>
+                {email}
+            </span>
+            <button
+                onClick={handleDisconnect}
+                className="font-sans text-[9px] font-bold tracking-[0.25em] text-neutral-600 uppercase hover:text-white transition-colors text-left"
+            >
+                [ DISCONNECT ]
+            </button>
+        </div>
+    );
+}
