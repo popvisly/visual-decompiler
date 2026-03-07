@@ -3,9 +3,15 @@ import { supabaseAdmin } from '@/lib/supabase';
 import crypto from 'crypto';
 import sharp from 'sharp';
 import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
+import { getServerSession } from '@/lib/auth-server';
 
 export async function POST(req: Request) {
     try {
+        const session = await getServerSession();
+        if (!session.userId) {
+            return NextResponse.json({ error: 'Unauthorized: No active sovereign session found.' }, { status: 401 });
+        }
+
         // Enforce Server-Side checking with strictly parsed strings
         const { data: agency, error: agencyError } = await supabaseAdmin.from('agencies').select('tier').limit(1).single();
         if (agencyError || !agency) {
@@ -83,6 +89,7 @@ export async function POST(req: Request) {
         // 6. Create new Asset in database
         const { data: assetData, error: insertError } = await supabaseAdmin.from('assets').insert({
             brand_id: targetBrandId,
+            user_id: session.userId,
             type: 'STATIC',
             file_url: publicUrl
         }).select().single();
