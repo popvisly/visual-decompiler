@@ -2,13 +2,13 @@ import Link from 'next/link';
 import { supabaseAdmin } from '@/lib/supabase';
 import { AdDigest } from '@/types/digest';
 import BrandTag from '@/components/BrandTag';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { semanticSearch } from '@/lib/search';
 import AdCardSelectable from '@/components/AdCardSelectable';
 
 export default async function AdList({ filters }: { filters: Record<string, string | undefined> }) {
     try {
-        const { userId, orgId } = await auth();
+        const { userId, orgId } = await getServerSession();
         if (!userId) return null;
 
         let ads: any[] = [];

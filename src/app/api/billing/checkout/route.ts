@@ -1,14 +1,13 @@
 import { NextResponse } from 'next/server';
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { stripe } from '@/lib/stripe';
 import { getSupabaseAdmin } from '@/lib/supabase';
 
 export async function POST(req: Request) {
     try {
-        const { userId } = await auth();
-        const user = await currentUser();
+        const { userId, email } = await getServerSession();
 
-        if (!userId || !user) {
+        if (!userId) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
@@ -35,9 +34,9 @@ export async function POST(req: Request) {
         // 2. Create Stripe customer if they don't exist
         if (!stripeCustomerId) {
             const customer = await stripe.customers.create({
-                email: user.emailAddresses[0].emailAddress,
+                email: email || '',
                 metadata: {
-                    clerkId: userId,
+                    supabaseId: userId,
                 },
             });
             stripeCustomerId = customer.id;
@@ -47,7 +46,7 @@ export async function POST(req: Request) {
                 .from('users')
                 .upsert({
                     id: userId,
-                    email: user.emailAddresses[0].emailAddress,
+                    email: email || '',
                     stripe_customer_id: stripeCustomerId,
                 });
         }
@@ -69,7 +68,7 @@ export async function POST(req: Request) {
                 success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard?billing=success`,
                 cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pricing?billing=cancel`,
                 metadata: {
-                    clerkId: userId,
+                    supabaseId: userId,
                     priceId: planId,
                 },
             };
@@ -78,7 +77,7 @@ export async function POST(req: Request) {
             if (!isOneTime) {
                 sessionConfig.subscription_data = {
                     metadata: {
-                        clerkId: userId,
+                        supabaseId: userId,
                         priceId: planId,
                     },
                 };

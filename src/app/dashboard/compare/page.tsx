@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { getComparisonData } from '@/lib/analytics';
 import { getAllBrands } from '@/lib/brands';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import CompareClient from '@/components/CompareClient';
 import { BarChart3 } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -11,7 +11,7 @@ export default async function ComparePage({
 }: {
     searchParams: Promise<{ brandA?: string; brandB?: string }>;
 }) {
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) return null;
 
     const params = await searchParams;

@@ -43,13 +43,13 @@ export async function POST(req: Request) {
         switch (event.type) {
             case 'checkout.session.completed': {
                 const session = event.data.object as Stripe.Checkout.Session;
-                const clerkId = session.metadata?.clerkId;
+                const userId = session.metadata?.supabaseId || session.metadata?.clerkId;
                 const priceId = session.metadata?.priceId;
                 const customerId = session.customer as string;
                 const subscriptionId = session.subscription as string;
 
-                if (!clerkId) {
-                    console.warn('[Stripe Webhook] No clerkId in checkout session');
+                if (!userId) {
+                    console.warn('[Stripe Webhook] No userId in checkout session metadata');
                     break;
                 }
 
@@ -65,9 +65,9 @@ export async function POST(req: Request) {
                         tier: tier,
                         updated_at: new Date().toISOString(),
                     })
-                    .eq('id', clerkId);
+                    .eq('id', userId);
 
-                console.log(`[Stripe Webhook] Checkout completed for ${clerkId}: ${tier} tier`);
+                console.log(`[Stripe Webhook] Checkout completed for ${userId}: ${tier} tier`);
                 break;
             }
 

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import AdList from '@/components/AdList';
 import { getBrandStats } from '@/lib/brands';
 import { Loader2 } from 'lucide-react';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import Sidebar from '@/components/Sidebar';
 
 export default async function BrandProfilePage({
@@ -12,7 +12,7 @@ export default async function BrandProfilePage({
 }) {
     const { name: encodedName } = await params;
     const name = decodeURIComponent(encodedName);
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) return null;
 
     const stats = await getBrandStats(name, userId, orgId);

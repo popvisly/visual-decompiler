@@ -6,6 +6,15 @@
 - [x] Implement database-level usage tracking and paywalls.
 - [x] Verify 5/6 usage limit gauntlet and paywall UI.
 
+## Step 14: Legacy Dependency Purge (Clerk) (Completed)
+
+    - [x] De-Clerk UI Components (Sidebar, Header, Nav)
+    - [x] Migration API Routes to Supabase Auth
+    - [x] Refactor Billing & Stripe Webhook Metadata
+    - [x] Remove `@clerk/nextjs` package
+    - [x] Clean up redundant `/dashboard` (Legacy) routes
+    - [x] Verify production build
+
 ## Milestone 6: Competitor Libraries (Completed)
 
 - [x] Brand tagging (confirm AI guess or edit).

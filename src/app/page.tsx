@@ -1,5 +1,6 @@
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import Hero from '@/components/marketing/Hero';
+import IntelligenceEcosystem from '@/components/marketing/IntelligenceEcosystem';
 import DecompilePipeline from '@/components/marketing/DecompilePipeline';
 
 import CaseStudyFashion from '@/components/marketing/CaseStudyFashion';
@@ -7,6 +8,7 @@ import PersonaGrid from '@/components/marketing/PersonaGrid';
 import PromptShowcase from '@/components/marketing/PromptShowcase';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 import { Pill, PreviewCard, CaseCard } from '@/types/homepage';
+import { getServerSession } from '@/lib/auth-server';
 
 const PILLS: Pill[] = [
     { key: "craft", label: "Craftsmanship Authority", micro: "Isolate macro-texture as proof of artisanal value.", x: 14, y: 28 },
@@ -60,7 +62,9 @@ const FASHION_CARDS: CaseCard[] = [
     },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+    const { userId } = await getServerSession();
+
     return (
         <main className="bg-[#F6F1E7]">
             <UnifiedSovereignHeader />
@@ -69,10 +73,15 @@ export default function HomePage() {
             <Hero
                 headline={["Advertising intelligence.", "Deconstructed."]}
                 subhead="The sovereign infrastructure for elite agencies. Understand & comprehend the architecture of persuasion to justify high-stakes strategy with forensic precision."
-                ctaPrimary={{ label: "Start now", href: "/app" }}
-                ctaSecondary={{ label: "Analyse an Ad", href: "/app" }}
+                ctaPrimary={{
+                    label: userId ? "[ ENTER VAULT ]" : "[ ACCESS OS ]",
+                    href: userId ? "/vault" : "/login"
+                }}
+                ctaSecondary={{ label: "Enter Intelligence Vault", href: "/vault" }}
                 stageImage={{ src: "/images/examples/perfume_ad_no_logo.jpg", alt: "Luxury perfume ad" }}
             />
+
+            <IntelligenceEcosystem />
 
             <DecompilePipeline
                 id="how"

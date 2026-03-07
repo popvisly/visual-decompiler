@@ -12,7 +12,7 @@ const PILLARS = [
     { key: 'boards', label: 'Workspace', href: '/boards' },
     { key: 'intelligence', label: 'Analytics', href: '/compare' },
     { key: 'pricing', label: 'Pricing', href: '/pricing' },
-    { key: 'help', label: 'Help Center', href: '/docs' },
+    { key: 'help', label: 'Help Center', href: '/help' },
 ] as const;
 
 function isActive(pathname: string, href: string): boolean {

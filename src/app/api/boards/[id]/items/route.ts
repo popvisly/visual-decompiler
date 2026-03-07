@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 
 export async function POST(
@@ -7,7 +7,7 @@ export async function POST(
     { params }: { params: Promise<{ id: string }> }
 ) {
     const { id: boardId } = await params;
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {
@@ -43,7 +43,7 @@ export async function DELETE(
     { params }: { params: Promise<{ id: string }> }
 ) {
     const { id: boardId } = await params;
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {

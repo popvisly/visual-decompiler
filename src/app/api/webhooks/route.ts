@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 
 export async function GET() {
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {
@@ -23,7 +23,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const { searchParams } = new URL(req.url);

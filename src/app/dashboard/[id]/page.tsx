@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { supabaseAdmin } from '@/lib/supabase';
 import { AdDigest } from '@/types/digest';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { getRelatedAds } from '@/lib/search';
 import AdDetailClient from '@/components/AdDetailClient';
 
@@ -14,7 +14,7 @@ export default async function AdDetailPage({
 }) {
     const { id } = await params;
 
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) notFound();
 
     const { data: ad, error } = await supabaseAdmin

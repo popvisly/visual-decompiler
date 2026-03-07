@@ -53,6 +53,10 @@ const INTELLIGENCE_MODULES = [
 
 const STRATEGIC_TERMS = [
     {
+        term: 'Asset Hash Integrity',
+        definition: 'The SHA-256 system that prevents redundant deconstructions and preserves neural credits by identifying unique asset fingerprints. Ensures the OS never processes the same forensic target twice.',
+    },
+    {
         term: 'Market Resonance',
         definition: 'A quantitative measure of how well the creative DNA aligns with current high-performing industry benchmarks and cultural sentiment within a specific category. A high resonance score indicates the creative is operating within proven engagement corridors.',
     },
@@ -70,7 +74,7 @@ const STRATEGIC_TERMS = [
     },
     {
         term: 'Sovereign Score',
-        definition: 'A proprietary aggregate metric combining Market Resonance and Tactical Window into a single intelligence index. Represents the strategic durability and competitive advantage of a creative asset.',
+        definition: 'A proprietary aggregate metric combining Market Resonance and Tactical Window into a single intelligence index. Derived using the Claude 3.5 Sonnet neural pipeline for maximum forensic fidelity.',
     },
     {
         term: 'Neural Verdict',
@@ -80,8 +84,8 @@ const STRATEGIC_TERMS = [
 
 const DOSSIER_SECTIONS = [
     {
-        title: 'White-Labeling',
-        content: 'Agencies can upload their visual identity in Settings → Visual Identity. The Agency Logo replaces the "V" mark on all forensic exports, and the Agency Name appears in the confidential audit header and security footer.',
+        title: 'White-Labeling (Sovereignty Tier)',
+        content: 'Agencies can lock in their visual identity in Settings → Agency. The Primary Hex code dynamically styles all dossier accents, and the Agency Logo replaces system branding for pixel-perfect exports.',
     },
     {
         title: 'The Neural Verdict',
@@ -92,46 +96,46 @@ const DOSSIER_SECTIONS = [
         content: 'The proprietary aggregate that powers the Executive Summary. Combines Market Resonance (creative alignment), Category Density (competitive saturation), and Tactical Window (effectiveness lifespan) into a single strategic index.',
     },
     {
-        title: 'ISO-27001 Compliance',
-        content: 'All intelligence and data contained within the Strategic Dossier is processed on Vercel-hosted infrastructure adhering to enterprise-grade security protocols. Each export includes a Data Sovereignty notice and classification footer.',
+        title: 'Privacy & Sovereignty',
+        content: 'All intelligence is processed via the Claude 3.5 Sonnet pipeline on infrastructure secured by Supabase Sovereign Auth. Each export includes a Data Sovereignty notice and SHA-256 integrity fingerprint.',
     },
 ];
 
 const HELP_ARTICLES = [
     {
-        title: "Visual Decompiler v1.0 (Agency‑Grade) — Overview",
+        title: "Visual Decompiler v2.0 (Sovereign Intelligence) — Overview",
         slug: "v1-overview",
         category: "Milestones",
-        desc: "Forensic, evidence-backed insights and an actionable production strategy.",
-        keywords: "v1.0, agency, overview, receipts, safe zone, survivability, risk flags, 14-day sprint, resultsview"
+        desc: "Forensic, evidence-backed insights powered by the Claude 3.5 Sonnet neural pipeline.",
+        keywords: "v2.0, sovereign, intelligence, overview, receipts, safe zone, survivability, risk flags, sonnet"
     },
     {
-        title: "Agency Handoff: Master the ResultsView",
+        title: "Agency Handoff: Master the ResultsView v2.0",
         slug: "user-guide",
         category: "Guides",
-        desc: "Move from browsing insights to executing deconstruction.",
-        keywords: "user guide, walkthrough, forensic, resultsview, tactics, 14-day sprint"
+        desc: "Move from browsing insights to executing deconstruction in the Sovereign era.",
+        keywords: "user guide, walkthrough, forensic, resultsview, tactics, v2.0"
     },
     {
-        title: "v1.0 QA Checklist: Agency-Grade Rigor",
+        title: "v2.0 QA Checklist: Agency-Grade Rigor",
         slug: "qa-checklist",
         category: "Technical",
         desc: "Ensuring decompiler robustness across high-stakes agency use cases.",
-        keywords: "qa, checklist, testing, coordinates, ocr, survivability, risk"
+        keywords: "qa, checklist, testing, coordinates, v2.0, sovereign, sonnet"
     },
     {
-        title: "Schema Contract v1.0 Specification",
+        title: "Schema Contract v2.0 Specification",
         slug: "schema-contract",
         category: "Technical",
-        desc: "Defining the formal data structure for the v1.0 forensic engine.",
-        keywords: "schema, contract, json, types, deterministic, risk, extraction"
+        desc: "Defining the formal data structure for the v2.0 forensic engine.",
+        keywords: "schema, contract, json, types, v2.0, hash, integrity"
     },
     {
-        title: "Release Notes: v1.0 Agency-Grade Update",
+        title: "Release Notes: v2.0 Sovereign Intelligence",
         slug: "release-notes",
         category: "Milestones",
-        desc: "Highlights and performance improvements in the v1.0 milestone.",
-        keywords: "release notes, v1.0, update, forensic, test planning, analysis"
+        desc: "Highlights and performance improvements in the Sovereign Intelligence update.",
+        keywords: "release notes, v2.0, update, forensic, sonnet, supabase"
     }
 ];
 

@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 
 export async function POST(req: Request) {
-    const { orgId } = await auth();
+    const { orgId } = await getServerSession();
     if (!orgId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {

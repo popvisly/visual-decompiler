@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import IngestForm from './IngestForm';
 import Logo from './Logo';
-import { UserButton } from '@clerk/nextjs';
 
 export default function Header({ activeTab }: { activeTab?: 'dashboard' | 'analytics' | 'boards' | 'pulse' }) {
     return (
@@ -49,8 +48,6 @@ export default function Header({ activeTab }: { activeTab?: 'dashboard' | 'analy
 
                 <div className="flex items-center gap-4">
                     <IngestForm />
-                    <div className="h-6 w-px bg-[#E7DED1]" />
-                    <UserButton afterSignOutUrl="/" />
                 </div>
             </div>
         </header>

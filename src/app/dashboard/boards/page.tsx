@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { supabaseAdmin } from '@/lib/supabase';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { LayoutGrid, Folder, Plus, ArrowRight, Loader2 } from 'lucide-react';
 import CreateBoardButton from '@/components/CreateBoardButton';
 import DeleteBoardCardButton from '@/components/DeleteBoardCardButton';
@@ -9,7 +9,7 @@ import DeleteBoardCardButton from '@/components/DeleteBoardCardButton';
 export const dynamic = 'force-dynamic';
 
 async function BoardsList() {
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) return null;
 
     const { data: boards, error } = await supabaseAdmin

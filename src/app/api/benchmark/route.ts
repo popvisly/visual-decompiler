@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { BenchmarkService } from '@/lib/benchmark_service';
 import { getOpenAI } from '@/lib/vision';
 
@@ -7,7 +7,7 @@ export async function GET(
     req: Request
 ) {
     try {
-        const { userId } = await auth();
+        const { userId } = await getServerSession();
         if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
         const searchParams = new URL(req.url).searchParams;

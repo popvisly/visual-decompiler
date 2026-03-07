@@ -10,7 +10,7 @@ const SECTIONS = [
     {
         title: "The Forensic Mindset",
         icon: <Scan className="w-5 h-5 text-accent" />,
-        content: "The v1.0 dashboard is no longer just a summary; it is an auditable evidence base. Every claim now has a \"Receipt.\"",
+        content: "The v2.0 dashboard is no longer just a summary; it is an auditable evidence base powered by the Claude 3.5 Sonnet engine.",
         subsections: [
             {
                 subtitle: "1. Unified Persuasion Stack",
@@ -44,10 +44,10 @@ const SECTIONS = [
 ];
 
 const RELATED_ARTICLES = [
-    { title: "Visual Decompiler v1.0 Overview", href: "/docs/v1-overview" },
+    { title: "Visual Decompiler v2.0 Overview", href: "/docs/v1-overview" },
     { title: "QA Checklist", href: "/docs/qa-checklist" },
     { title: "Schema Contract v1.0", href: "/docs/schema-contract" },
-    { title: "v1.0 Release Notes", href: "/docs/release-notes" }
+    { title: "v2.0 Release Notes", href: "/docs/release-notes" }
 ];
 
 export default function UserGuidePage() {
@@ -65,7 +65,7 @@ export default function UserGuidePage() {
                     <div className="mb-20">
                         <h1 className="text-5xl font-light tracking-tightest text-[#141414] mb-6 uppercase">
                             Agency Handoff: <br />
-                            <span className="italic font-serif lowercase tracking-normal">Master the ResultsView v1.0</span>
+                            <span className="italic font-serif lowercase tracking-normal">Master the ResultsView v2.0</span>
                         </h1>
                         <p className="text-xl text-[#6B6B6B] font-light leading-relaxed max-w-2xl">
                             Welcome to the new standard in advertising intelligence. Move from browsing insights to executing deconstruction.

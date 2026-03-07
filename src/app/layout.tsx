@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ClerkProvider } from '@clerk/nextjs';
 import { Inter } from 'next/font/google';
 import { CSPostHogProvider } from './providers';
 import "./globals.css";
@@ -26,14 +25,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <ClerkProvider>
-            <html lang="en" className={inter.variable}>
-                <body className="antialiased">
-                    <CSPostHogProvider>
-                        {children}
-                    </CSPostHogProvider>
-                </body>
-            </html>
-        </ClerkProvider>
+        <html lang="en">
+            <body className={`${inter.className} bg-[#FBF7EF] text-[#141414] antialiased selection:bg-[#141414] selection:text-[#FBF7EF]`}>
+                {children}
+            </body>
+        </html>
     );
 }

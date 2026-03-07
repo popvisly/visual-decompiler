@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { getOpenAI } from '@/lib/vision';
 import { VisualDNAService } from '@/lib/visual_dna';
 import { ForecastingService } from '@/lib/forecasting';
 
 export async function POST(req: Request) {
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {

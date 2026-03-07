@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { decompileAd, VisionInput } from '@/lib/vision';
 import { AdDigestSchema } from '@/types/digest';
 import { supabaseAdmin } from '@/lib/supabase';
@@ -143,7 +143,7 @@ export async function POST(req: Request) {
         mediaUrl = normalizeUrl(mediaUrl);
 
         // ── Auth & Rate Limit Gate ──
-        const { userId, orgId } = await auth();
+        const { userId, orgId } = await getServerSession();
 
         if (!userId) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

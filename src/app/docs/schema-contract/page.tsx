@@ -15,10 +15,10 @@ const SCHEMA_LAYERS = [
 ];
 
 const RELATED_ARTICLES = [
-    { title: "Visual Decompiler v1.0 Overview", href: "/docs/v1-overview" },
+    { title: "Visual Decompiler v2.0 Overview", href: "/docs/v1-overview" },
     { title: "ResultsView User Guide", href: "/docs/user-guide" },
     { title: "QA Checklist", href: "/docs/qa-checklist" },
-    { title: "v1.0 Release Notes", href: "/docs/release-notes" }
+    { title: "v2.0 Release Notes", href: "/docs/release-notes" }
 ];
 
 export default function SchemaContractPage() {
@@ -35,12 +35,12 @@ export default function SchemaContractPage() {
 
                     <div className="mb-20">
                         <h1 className="text-5xl font-light tracking-tightest text-white mb-6 uppercase">
-                            Schema Contract v1.0 <br />
-                            <span className="italic font-serif lowercase tracking-normal text-accent">Agency-Grade Specification</span>
+                            Schema Contract v2.0 <br />
+                            <span className="italic font-serif lowercase tracking-normal text-accent">Sovereign Intelligence SPEC</span>
                         </h1>
                         <p className="text-xl text-white/50 font-light leading-relaxed max-w-2xl">
-                            Defining the formal data structure for the v1.0 forensic engine.
-                            Strictly typed for operational stability.
+                            Defining the formal data structure for the v2.0 forensic engine.
+                            Powered by Claude 3.5 Sonnet and SHA-256 hash integrity.
                         </p>
                     </div>
 
@@ -63,10 +63,10 @@ export default function SchemaContractPage() {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                             <div>
-                                <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent mb-4">Deterministic IDs</h3>
+                                <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent mb-4">Asset Hash Integrity</h3>
                                 <p className="text-sm text-white/60 leading-relaxed font-light">
-                                    All IDs for Evidence Receipts and Risk Flags must be deterministic (e.g., content hashes).
-                                    Rerunning an asset must yield identical IDs to prevent broken links.
+                                    All assets are fingerprinted via SHA-256 hashing.
+                                    The engine will automatically bypass processing if a matching hash is detected in the vault.
                                 </p>
                             </div>
                             <div>
@@ -93,7 +93,7 @@ export default function SchemaContractPage() {
                             <div>
                                 <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent mb-4">API Synchronization</h3>
                                 <p className="text-[13px] text-white/50 font-light leading-relaxed">
-                                    Ensure all frontend diagnostic components (`ResultsView`, `PlatformFitness`) are scoped to the `v1.0` namespace to maintain backwards compatibility.
+                                    Ensure all frontend diagnostic components (`ResultsView`, `PlatformFitness`) are scoped to the `v2.0` namespace for Sovereign Intelligence compatibility.
                                 </p>
                             </div>
                         </div>

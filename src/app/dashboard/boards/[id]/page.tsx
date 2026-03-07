@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { supabaseAdmin } from '@/lib/supabase';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { ArrowLeft, Share2, Loader2, Play, Sparkles } from 'lucide-react';
 import AdList from '@/components/AdList';
 import ShareBoard from '@/components/ShareBoard';
@@ -23,7 +23,7 @@ export default async function BoardDetailPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) notFound();
 
     const { data: board, error: boardError } = await supabaseAdmin

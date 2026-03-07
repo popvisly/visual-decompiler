@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 
 export async function GET() {
-    const { orgId } = await auth();
+    const { orgId } = await getServerSession();
     if (!orgId) return NextResponse.json({ error: 'Org context required' }, { status: 400 });
 
     try {
@@ -20,7 +20,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-    const { orgId, userId } = await auth();
+    const { orgId, userId } = await getServerSession();
     if (!orgId || !userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     try {

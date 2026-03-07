@@ -39,7 +39,7 @@ const QA_SECTIONS = [
         icon: <Settings className="w-5 h-5 text-accent" />,
         items: [
             "Strict Typing: verify zero 'any' types in pipeline.",
-            "Versioning: ensure schema_version matches v2.2."
+            "Versioning: ensure schema_version matches v2.0."
         ]
     }
 ];
@@ -48,7 +48,7 @@ const RELATED_ARTICLES = [
     { title: "Visual Decompiler v1.0 Overview", href: "/docs/v1-overview" },
     { title: "ResultsView User Guide", href: "/docs/user-guide" },
     { title: "Schema Contract v1.0", href: "/docs/schema-contract" },
-    { title: "v1.0 Release Notes", href: "/docs/release-notes" }
+    { title: "v2.0 Release Notes", href: "/docs/release-notes" }
 ];
 
 export default function QAChecklistPage() {
@@ -65,8 +65,8 @@ export default function QAChecklistPage() {
 
                     <div className="mb-20">
                         <h1 className="text-5xl font-light tracking-tightest text-[#141414] mb-6 uppercase">
-                            v1.0 QA Checklist: <br />
-                            <span className="italic font-serif lowercase tracking-normal text-accent">Agency-Grade Rigor</span>
+                            v2.0 QA Checklist: <br />
+                            <span className="italic font-serif lowercase tracking-normal text-accent">Sovereign Intelligence Rigor</span>
                         </h1>
                         <p className="text-xl text-[#6B6B6B] font-light leading-relaxed max-w-2xl">
                             Ensuring the decompiler remains robust across high-stakes agency use cases.
@@ -109,7 +109,7 @@ export default function QAChecklistPage() {
                             <div>
                                 <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#141414] mb-4">Regression Testing</h3>
                                 <p className="text-[13px] text-[#6B6B6B] font-light leading-relaxed">
-                                    When the Forensic Engine updates, rerun the Golden Path asset and compare the JSON output against the Schema Contract.
+                                    When the Sovereign Engine updates, rerun the Golden Path asset and compare the JSON output against the V2.0 Schema Contract.
                                 </p>
                             </div>
                         </div>

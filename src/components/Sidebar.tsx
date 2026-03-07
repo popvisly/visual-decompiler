@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import { getAllBrands } from '@/lib/brands';
 import Filters from './Filters';
-import { auth } from '@clerk/nextjs/server';
 import { Settings, Globe, Activity, Zap, Compass, Share2 } from 'lucide-react';
 import NotificationBell from './NotificationBell';
 
 export default async function Sidebar({ searchParams }: { searchParams: any }) {
-    const { userId } = await auth();
-    if (!userId) return null;
+    // Phase 2: Sidebar is purely navigatonal, security is handled at the page/route level.
+    const params = await searchParams;
 
     // Temporarily disable brand loading for debugging
     // TODO: Re-enable after fixing the underlying database issue

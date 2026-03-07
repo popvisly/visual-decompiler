@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, BarChart3, TrendingUp } from 'lucide-react';
 import { getAnalyticsData } from '@/lib/analytics';
-import { auth } from '@clerk/nextjs/server';
+import { getServerSession } from '@/lib/auth-server';
 import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
@@ -48,7 +48,7 @@ export default async function AnalyticsPage({
 }: {
     searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-    const { userId, orgId } = await auth();
+    const { userId, orgId } = await getServerSession();
     if (!userId) {
         redirect('/');
     }

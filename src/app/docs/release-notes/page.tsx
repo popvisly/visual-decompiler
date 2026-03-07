@@ -10,7 +10,7 @@ const HIGHLIGHTS = [
     {
         title: "Forensic Evidence Infrastructure",
         icon: <ShieldCheck className="w-5 h-5 text-accent" />,
-        items: ["Coordinates-as-Code (0-1000 scale)", "Deep OCR extraction for brand copy"]
+        items: ["Sovereign Ingestion (SHA-256 Hashing)", "Deep Claude 3.5 Sonnet extraction"]
     },
     {
         title: "Operational Test Planning",
@@ -20,20 +20,20 @@ const HIGHLIGHTS = [
     {
         title: "Platform & Compliance",
         icon: <Rocket className="w-5 h-5 text-accent" />,
-        items: ["Interactive Safe Zones", "Explainable Risk Analysis flags"]
+        items: ["Interactive Safe Zones", "Supabase Sovereign Auth Integration"]
     },
     {
         title: "Competitive Intelligence",
         icon: <TrendingUp className="w-5 h-5 text-accent" />,
-        items: ["Nearest-Neighbor Analysis", "Strategic Shift roadmaps"]
+        items: ["Strategic Dossier (White-Label PDF)", "Hex & Logo Injection"]
     }
 ];
 
 const RELATED_ARTICLES = [
-    { title: "Visual Decompiler v1.0 Overview", href: "/docs/v1-overview" },
+    { title: "Visual Decompiler v2.0 Overview", href: "/docs/v1-overview" },
     { title: "ResultsView User Guide", href: "/docs/user-guide" },
     { title: "QA Checklist", href: "/docs/qa-checklist" },
-    { title: "Schema Contract v1.0", href: "/docs/schema-contract" }
+    { title: "Schema Contract v2.0", href: "/docs/schema-contract" }
 ];
 
 export default function ReleaseNotesPage() {
@@ -50,14 +50,14 @@ export default function ReleaseNotesPage() {
 
                     <div className="mb-20">
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="px-3 py-1 bg-accent/20 border border-accent/30 rounded-full text-accent text-[9px] font-bold uppercase tracking-widest">v1.0 — Agency-Grade</div>
+                            <div className="px-3 py-1 bg-accent/20 border border-accent/30 rounded-full text-accent text-[9px] font-bold uppercase tracking-widest">v2.0 — Sovereign Intelligence</div>
                         </div>
                         <h1 className="text-5xl font-light tracking-tightest text-[#141414] mb-6 uppercase">
                             Milestone Update: <br />
                             <span className="italic font-serif lowercase tracking-normal text-accent">The Forensic Shift</span>
                         </h1>
                         <p className="text-xl text-[#6B6B6B] font-light leading-relaxed max-w-2xl">
-                            Transforming the Visual Decompiler from research tool into an auditable forensic execution engine.
+                            Transforming the Visual Decompiler into a session-aware, sovereign-grade execution engine for elite agencies.
                         </p>
                     </div>
 
@@ -84,9 +84,9 @@ export default function ReleaseNotesPage() {
 
                     <div className="mt-32 pt-16 border-t border-[#E7DED1] flex flex-col items-center text-center">
                         <Sparkles className="w-10 h-10 text-accent mb-6" />
-                        <h2 className="text-2xl font-light uppercase tracking-tight text-[#141414] mb-4">Stable Standard v2.2</h2>
+                        <h2 className="text-2xl font-light uppercase tracking-tight text-[#141414] mb-4">Stable Standard v2.0</h2>
                         <p className="text-sm text-[#6B6B6B] font-light mb-8 max-w-lg">
-                            This release formalizes the AdDigest schema (v2.2) and integrates strict typing across the entire tactical dashboard.
+                            This release formalizes the Sovereign Intelligence architecture and integrates Claude 3.5 Sonnet across the entire tactical dashboard.
                         </p>
                         <Link href="/docs/schema-contract" className="text-[10px] font-bold uppercase tracking-widest text-[#141414] border-b-2 border-[#141414]/10 hover:border-accent transition-all pb-1">
                             View technical specification

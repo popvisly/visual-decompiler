@@ -64,8 +64,8 @@ const GLOSSARY = [
 const RELATED_ARTICLES = [
     { title: "ResultsView Reading Guide", href: "/docs/user-guide" },
     { title: "QA Checklist", href: "/docs/qa-checklist" },
-    { title: "Schema Contract v1.0", href: "/docs/schema-contract" },
-    { title: "v1.0 Release Notes", href: "/docs/release-notes" }
+    { title: "Schema Contract v2.0", href: "/docs/schema-contract" },
+    { title: "v2.0 Release Notes", href: "/docs/release-notes" }
 ];
 
 export default function AgencyOverviewPage() {
@@ -80,7 +80,7 @@ export default function AgencyOverviewPage() {
                     <div className="flex items-center gap-2 mb-12 text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B6B6B]">
                         <Link href="/docs" className="hover:text-[#141414] transition-colors">Help Center</Link>
                         <ArrowRight className="w-3 h-3" />
-                        <span className="text-[#141414]">v1.0 Overview</span>
+                        <span className="text-[#141414]">v2.0 Overview</span>
                     </div>
 
                     {/* ── Header ── */}
@@ -90,14 +90,14 @@ export default function AgencyOverviewPage() {
                             animate={{ opacity: 1, y: 0 }}
                             className="text-5xl lg:text-6xl font-light leading-tight tracking-tightest text-[#141414] mb-8"
                         >
-                            Visual Decompiler v1.0 <br />
-                            <span className="italic font-serif">(Agency‑Grade)</span> — Overview
+                            Visual Decompiler v2.0 <br />
+                            <span className="italic font-serif">(Sovereign Intelligence)</span> — Overview
                         </motion.h1>
 
                         <div className="p-8 bg-white border border-[#E7DED1] rounded-[2.5rem] shadow-[0_20px_60px_rgba(20,20,20,0.03)]">
-                            <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-[#141414] mb-4">What is Visual Decompiler?</h2>
+                            <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-[#141414] mb-4">What is Sovereign Intelligence?</h2>
                             <p className="text-lg text-[#6B6B6B] font-light leading-relaxed">
-                                Visual Decompiler v1.0 is an enterprise-grade system that transforms a single ad creative into forensic, evidence-backed insights and an actionable production strategy. It standardizes how teams move from “opinions about creative” to auditable proof, platform diagnostics, compliance clarity, and a 14‑day testing plan.
+                                Visual Decompiler v2.0 is the Sovereign Intelligence OS. Powered by Claude 3.5 Sonnet and secured by Supabase, it transforms creative assets into forensic insights. It standardizes how elite agencies move from subjective interpretation to auditable proof, SHA-256 asset integrity, and white-labeled strategic dossiers.
                             </p>
                         </div>
                     </div>
@@ -125,12 +125,12 @@ export default function AgencyOverviewPage() {
                     {/* ── Guarantees ── */}
                     <div className="mb-24 p-12 bg-[#141414] rounded-[3rem] text-white relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                        <h2 className="text-2xl font-light uppercase tracking-[0.1em] mb-10 relative z-10">The v1.0 “Agency‑Grade” guarantees</h2>
+                        <h2 className="text-2xl font-light uppercase tracking-[0.1em] mb-10 relative z-10">The v2.0 “Sovereign Intelligence” guarantees</h2>
                         <ul className="space-y-6 relative z-10">
                             {GUARANTEES.map((g, idx) => (
                                 <li key={idx} className="flex gap-4 items-start border-l border-accent/30 pl-6 py-1">
                                     <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                                    <p className="text-sm text-white/70 font-light leading-relaxed">{g}</p>
+                                    <p className="text-sm text-white/70 font-light leading-relaxed">{g.replace("Receipts", "Forensic Receipts")}</p>
                                 </li>
                             ))}
                         </ul>
