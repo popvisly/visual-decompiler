@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { SignInButton, UserButton, SignedIn, SignedOut } from '@clerk/nextjs';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Logo from '@/components/Logo';
+import { supabaseClient } from '@/lib/supabase-client';
 
 const PILLARS = [
     { key: 'library', label: 'Library', href: '/dashboard' },
@@ -23,6 +23,23 @@ function isActive(pathname: string, href: string): boolean {
 export default function UnifiedSovereignHeader({ forceDark = false }: { forceDark?: boolean } = {}) {
     const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data } = await supabaseClient.auth.getSession();
+            setIsAuthenticated(!!data.session);
+        };
+        checkSession();
+
+        const { data: authListener } = supabaseClient.auth.onAuthStateChange((_event, session) => {
+            setIsAuthenticated(!!session);
+        });
+
+        return () => {
+            authListener.subscription.unsubscribe();
+        };
+    }, []);
 
     return (
         <header className="fixed top-0 inset-x-0 z-50 pointer-events-none px-4 md:px-6">
@@ -32,12 +49,12 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                         pointer-events-auto
                         flex items-center justify-between
                         px-5 py-3
-                        rounded-2xl
+                        rounded-none
                         border
                         shadow-[0_8px_32px_rgba(20,20,20,0.06)]
                         ${forceDark
-                            ? 'bg-[#141414]/80 backdrop-blur-2xl border-white/10'
-                            : 'bg-white/80 backdrop-blur-2xl border-[#E7DED1]'
+                            ? 'bg-[#141414]/90 backdrop-blur-2xl border-white/20'
+                            : 'bg-white/90 backdrop-blur-2xl border-black/20'
                         }
                     `}
                 >
@@ -54,16 +71,16 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                                         key={p.key}
                                         href={p.href}
                                         className={`
-                                            px-3 py-1.5 rounded-lg
+                                            px-3 py-1.5 rounded-none border border-transparent
                                             text-[10px] font-bold uppercase tracking-[0.15em]
                                             transition-all
                                             ${active
                                                 ? forceDark
-                                                    ? 'bg-white/10 text-white shadow-sm border border-white/10'
-                                                    : 'bg-[#FBF7EF] text-[#141414] shadow-sm border border-[#E7DED1]'
+                                                    ? 'text-white border-white bg-white/5'
+                                                    : 'text-[#141414] border-black bg-black/5'
                                                 : forceDark
-                                                    ? 'text-white/60 hover:text-white hover:bg-white/5'
-                                                    : 'text-[#6B6B6B] hover:text-[#141414] hover:bg-[#FBF7EF]/50'
+                                                    ? 'text-white/60 hover:text-white hover:border-white/30'
+                                                    : 'text-[#6B6B6B] hover:text-[#141414] hover:border-black/30'
                                             }
                                         `}
                                     >
@@ -76,60 +93,46 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
 
                     {/* ── Right: Utility Bar ── */}
                     <div className="flex items-center gap-4">
-                        {/* Direct App Link — signed in only, desktop */}
-                        <SignedIn>
-                            <Link
-                                href="/app"
-                                className={`
-                                    hidden lg:flex items-center gap-1.5 px-5 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest
-                                    hover:-translate-y-[1px] shadow-[0_4px_12px_rgba(20,20,20,0.15)] hover:shadow-[0_6px_16px_rgba(20,20,20,0.2)]
-                                    transition-all
-                                    ${forceDark ? 'bg-accent text-[#141414] hover:bg-white' : 'bg-[#141414] text-[#FBF7EF] hover:bg-black'}
-                                `}
-                            >
-                                <ArrowUpRight className="w-3.5 h-3.5" />
-                                Decompile
-                            </Link>
-                            <div className={`hidden lg:block h-6 w-px ${forceDark ? 'bg-white/20' : 'bg-[#E7DED1]'}`} />
-                            <UserButton afterSignOutUrl="/" />
-                        </SignedIn>
-
-                        {/* Signed out — CTA cluster */}
-                        <SignedOut>
-                            <SignInButton forceRedirectUrl="/dashboard" signUpForceRedirectUrl="/dashboard">
-                                <button
+                        <div className="hidden md:block">
+                            {isAuthenticated ? (
+                                <Link
+                                    href="/vault"
                                     className={`
-                                        hidden sm:inline-flex items-center justify-center
-                                        text-[10px] font-bold uppercase tracking-[0.15em]
-                                        transition
-                                        ${forceDark ? 'text-white/60 hover:text-white' : 'text-[#6B6B6B] hover:text-[#141414]'}
+                                        inline-flex items-center justify-center
+                                        rounded-none border px-6 py-2.5
+                                        text-[10px] font-bold tracking-[0.2em] uppercase
+                                        transition-all duration-300
+                                        ${forceDark
+                                            ? 'bg-white text-black border-white hover:bg-neutral-200'
+                                            : 'bg-black text-white hover:bg-neutral-800 border-black'
+                                        }
                                     `}
                                 >
-                                    Inbound
-                                </button>
-                            </SignInButton>
-                            <Link
-                                href="/dashboard"
-                                className={`
-                                    inline-flex items-center justify-center
-                                    rounded-full
-                                    px-5 py-2
-                                    text-[10px] font-bold tracking-[0.1em] uppercase
-                                    transition-all hover:-translate-y-[1px]
-                                    ${forceDark
-                                        ? 'bg-accent text-[#141414] hover:bg-white shadow-[0_16px_32px_rgba(187,158,123,0.12)] hover:shadow-[0_20px_40px_rgba(187,158,123,0.18)]'
-                                        : 'bg-[#141414] text-[#FBF7EF] hover:bg-[#2A2A2A] shadow-[0_16px_32px_rgba(20,20,20,0.12)] hover:shadow-[0_20px_40px_rgba(20,20,20,0.18)]'}
-                                    active:scale-95
-                                `}
-                            >
-                                Dashboard
-                            </Link>
-                        </SignedOut>
+                                    [ ENTER VAULT ]
+                                </Link>
+                            ) : (
+                                <Link
+                                    href="/login"
+                                    className={`
+                                        inline-flex items-center justify-center
+                                        rounded-none border px-6 py-2.5
+                                        text-[10px] font-bold tracking-[0.2em] uppercase
+                                        transition-all duration-300
+                                        ${forceDark
+                                            ? 'bg-transparent text-white border-neutral-700 hover:border-white hover:bg-white/10'
+                                            : 'bg-transparent text-black border-neutral-300 hover:border-black hover:bg-black/5'
+                                        }
+                                    `}
+                                >
+                                    [ ACCESS OS ]
+                                </Link>
+                            )}
+                        </div>
 
                         {/* Mobile hamburger */}
                         <button
                             onClick={() => setMobileOpen(!mobileOpen)}
-                            className="md:hidden p-1.5 rounded-lg text-[#6B6B6B] hover:text-[#141414] hover:bg-[#FBF7EF] transition-all"
+                            className="md:hidden p-1.5 text-[#6B6B6B] hover:text-[#141414] transition-all"
                             aria-label="Toggle menu"
                         >
                             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -139,7 +142,7 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
 
                 {/* ── Mobile Menu ── */}
                 {mobileOpen && (
-                    <div className="pointer-events-auto md:hidden mt-2 rounded-2xl bg-white/95 backdrop-blur-2xl border border-[#E7DED1] shadow-[0_16px_48px_rgba(20,20,20,0.1)] p-4 space-y-1 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="pointer-events-auto md:hidden mt-2 rounded-none bg-black border border-neutral-800 shadow-xl p-4 space-y-2 animate-in fade-in slide-in-from-top-2 duration-200">
                         {PILLARS.map((p) => {
                             const active = isActive(pathname, p.href);
                             return (
@@ -148,12 +151,12 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                                     href={p.href}
                                     onClick={() => setMobileOpen(false)}
                                     className={`
-                                        block px-4 py-3 rounded-xl
+                                        block px-4 py-3 border border-transparent
                                         text-[11px] font-bold uppercase tracking-[0.2em]
                                         transition-all
                                         ${active
-                                            ? 'bg-[#FBF7EF] text-[#141414] border border-[#E7DED1]'
-                                            : 'text-[#6B6B6B] hover:text-[#141414] hover:bg-[#FBF7EF]/50'
+                                            ? 'text-white border-neutral-800 bg-white/5'
+                                            : 'text-neutral-500 hover:text-white hover:border-neutral-800'
                                         }
                                     `}
                                 >
@@ -162,19 +165,26 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                             );
                         })}
 
-                        {/* Mobile Direct App Link */}
-                        <SignedIn>
-                            <div className="pt-2 border-t border-[#E7DED1] mt-2">
+                        {/* Mobile Direct Access */}
+                        <div className="pt-4 mt-2 border-t border-neutral-800">
+                            {isAuthenticated ? (
                                 <Link
-                                    href="/app"
+                                    href="/vault"
                                     onClick={() => setMobileOpen(false)}
-                                    className="flex w-full items-center justify-center gap-1.5 px-4 py-3 rounded-xl text-[11px] font-bold uppercase tracking-widest bg-[#141414] text-[#FBF7EF] hover:bg-black transition-all"
+                                    className="block text-center w-full px-4 py-3 border border-white bg-white text-black text-[11px] font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors"
                                 >
-                                    <ArrowUpRight className="w-3.5 h-3.5" />
-                                    Decompile
+                                    [ ENTER VAULT ]
                                 </Link>
-                            </div>
-                        </SignedIn>
+                            ) : (
+                                <Link
+                                    href="/login"
+                                    onClick={() => setMobileOpen(false)}
+                                    className="block text-center w-full px-4 py-3 border border-neutral-700 text-white text-[11px] font-bold uppercase tracking-widest hover:border-white transition-colors"
+                                >
+                                    [ ACCESS OS ]
+                                </Link>
+                            )}
+                        </div>
                     </div>
                 )}
             </div>
