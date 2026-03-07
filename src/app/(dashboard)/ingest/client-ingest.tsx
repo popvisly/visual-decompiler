@@ -2,8 +2,6 @@
 
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabaseAdmin } from '@/lib/supabase';
-import { v4 as uuidv4 } from 'uuid';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 
 export default function IngestClient({ isSovereign }: { isSovereign: boolean }) {
@@ -48,45 +46,23 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
         setIsProcessing(true);
 
         try {
-            // 1. Upload to Supabase Storage Bucket 'vault-assets'
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${uuidv4()}.${fileExt}`;
-            const filePath = `ingestions/${fileName}`;
+            // 1. Execute Server-Side Ingestion and Upload via Secure Route
+            const formData = new FormData();
+            formData.append('file', file);
 
-            const { error: uploadError } = await supabaseAdmin.storage
-                .from('vault-assets')
-                .upload(filePath, file);
+            const res = await fetch('/api/vault-ingest', {
+                method: 'POST',
+                body: formData
+            });
 
-            if (uploadError) throw uploadError;
+            const data = await res.json();
 
-            // 2. Retrieve Public URL
-            const { data: publicUrlData } = supabaseAdmin.storage
-                .from('vault-assets')
-                .getPublicUrl(filePath);
-
-            const publicUrl = publicUrlData.publicUrl;
-
-            // 3. Fallback Brand (System Dummy or 'Unassigned' logic)
-            // We will look for a default brand or just pick the first one from db for testing
-            let targetBrandId = null;
-            const { data: brands } = await supabaseAdmin.from('brands').select('id').limit(1);
-            if (brands && brands.length > 0) {
-                targetBrandId = brands[0].id;
-            } else {
-                throw new Error("No Brands found in Intelligence Vault to attach asset to.");
+            if (!res.ok) {
+                throw new Error(data.error || 'Failed to securely upload asset');
             }
 
-            // 4. Create new Asset in database
-            const { data: assetData, error: insertError } = await supabaseAdmin.from('assets').insert({
-                brand_id: targetBrandId,
-                type: 'STATIC', // Could derive from multiple drops -> CAROUSEL
-                file_url: publicUrl
-            }).select().single();
-
-            if (insertError) throw insertError;
-
             // 5. Automatic Hand-off / Routing to the Forensic Workspace
-            router.push(`/asset/${assetData.id}`);
+            router.push(`/asset/${data.assetId}`);
 
         } catch (e) {
             const error = e as Error;
