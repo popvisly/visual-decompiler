@@ -50,8 +50,20 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
             const formData = new FormData();
             formData.append('file', file);
 
+            // Fetch cookie locally to pass explicit auth header
+            const getCookie = (name: string) => {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop()?.split(';').shift();
+                return '';
+            };
+            const token = getCookie('sb-access-token');
+
             const res = await fetch('/api/vault-ingest', {
                 method: 'POST',
+                headers: {
+                    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                },
                 body: formData
             });
 

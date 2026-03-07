@@ -1,11 +1,22 @@
 import { cookies } from 'next/headers';
 import { createClient } from '@supabase/supabase-js';
 
-export async function getServerSession() {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('sb-access-token')?.value;
+export async function getServerSession(req?: Request) {
+    let tokenStr = '';
 
-    if (!token) {
+    if (req) {
+        const authHeader = req.headers.get('authorization');
+        if (authHeader?.startsWith('Bearer ')) {
+             tokenStr = authHeader.split(' ')[1];
+        }
+    }
+
+    if (!tokenStr) {
+        const cookieStore = await cookies();
+        tokenStr = cookieStore.get('sb-access-token')?.value || '';
+    }
+
+    if (!tokenStr) {
         return { userId: null, orgId: null };
     }
 
@@ -17,9 +28,10 @@ export async function getServerSession() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
 
-    const { data: { user }, error } = await supabase.auth.getUser(token);
+    const { data: { user }, error } = await supabase.auth.getUser(tokenStr);
 
     if (error || !user) {
+        console.error('[Auth Server] Failed to verify token:', error);
         return { userId: null, orgId: null };
     }
 

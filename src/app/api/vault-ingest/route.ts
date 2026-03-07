@@ -7,7 +7,7 @@ import { getServerSession } from '@/lib/auth-server';
 
 export async function POST(req: Request) {
     try {
-        const session = await getServerSession();
+        const session = await getServerSession(req);
         if (!session.userId) {
             return NextResponse.json({ error: 'Unauthorized: No active sovereign session found.' }, { status: 401 });
         }
