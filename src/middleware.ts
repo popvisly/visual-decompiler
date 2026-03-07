@@ -7,6 +7,7 @@ export function middleware(request: NextRequest) {
     // Phase 2: Protect any route in the Agency OS (dashboard)
     const isDashboardRoute =
         pathname.startsWith('/vault') ||
+        pathname.startsWith('/boards') ||
         pathname.startsWith('/ingest') ||
         pathname.startsWith('/compare') ||
         pathname.match(/^\/asset(\/.*)?$/);

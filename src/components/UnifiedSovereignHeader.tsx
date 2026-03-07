@@ -8,9 +8,9 @@ import Logo from '@/components/Logo';
 import { supabaseClient } from '@/lib/supabase-client';
 
 const PILLARS = [
-    { key: 'library', label: 'Library', href: '/dashboard' },
-    { key: 'boards', label: 'Boards', href: '/dashboard/boards' },
-    { key: 'intelligence', label: 'Intelligence', href: '/intelligence' },
+    { key: 'library', label: 'Vault', href: '/vault' },
+    { key: 'boards', label: 'Workspace', href: '/boards' },
+    { key: 'intelligence', label: 'Analytics', href: '/compare' },
     { key: 'pricing', label: 'Pricing', href: '/pricing' },
     { key: 'help', label: 'Help Center', href: '/docs' },
 ] as const;
