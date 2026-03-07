@@ -34,7 +34,8 @@ export default async function EmbedPage({ params }: { params: Promise<{ id: stri
 
     return (
         <div className="min-h-screen bg-black text-white p-8">
-            <style jsx global>{`
+            <style dangerouslySetInnerHTML={{
+                __html: `
                 body {
                     background: #000;
                     margin: 0;
@@ -53,7 +54,7 @@ export default async function EmbedPage({ params }: { params: Promise<{ id: stri
                 ::-webkit-scrollbar-thumb:hover {
                     background: #555;
                 }
-            `}</style>
+            `}} />
             
             {/* Header / Branding */}
             <div className="flex flex-col items-center justify-center w-full pb-8 border-b border-neutral-800 mb-8" style={{ borderBottomColor: isSovereign && agency?.primary_hex ? agency.primary_hex : '#262626' }}>
