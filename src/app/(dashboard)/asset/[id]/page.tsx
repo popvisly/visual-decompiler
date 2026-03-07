@@ -25,11 +25,11 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
         );
     }
 
-    // Standardize gating logic
-    const { data: agency } = await supabaseAdmin.from('agencies').select('tier').limit(1).single();
+    // Standardize gating logic & Branding
+    const { data: agency } = await supabaseAdmin.from('agencies').select('name, whitelabel_logo, primary_hex, tier').limit(1).single();
     const rawTier = agency?.tier || '';
     const isSovereign = rawTier === 'Agency Sovereignty' || rawTier === 'pro';
 
     // Pass down to the interactive forensic console
-    return <AssetWorkspace initialAsset={asset} isSovereign={isSovereign} />;
+    return <AssetWorkspace initialAsset={asset} isSovereign={isSovereign} agency={agency} />;
 }

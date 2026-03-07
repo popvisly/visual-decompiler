@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
+import { SovereignPrintHeader, SovereignPrintFooter } from '@/components/SovereignDossierParts';
+import { FileDown } from 'lucide-react';
 
 interface WorkspaceAsset {
     id: string;
@@ -48,7 +50,15 @@ interface BlueprintData {
     };
 }
 
-export default function AssetWorkspace({ initialAsset, isSovereign }: { initialAsset: WorkspaceAsset, isSovereign: boolean }) {
+export default function AssetWorkspace({
+    initialAsset,
+    isSovereign,
+    agency
+}: {
+    initialAsset: WorkspaceAsset,
+    isSovereign: boolean,
+    agency: any
+}) {
     const [asset, setAsset] = useState(initialAsset);
     const [activeTab, setActiveTab] = useState<'EXTRACTION' | 'PACING' | 'BLUEPRINT'>('EXTRACTION');
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
@@ -116,6 +126,36 @@ export default function AssetWorkspace({ initialAsset, isSovereign }: { initialA
 
     return (
         <>
+            <style jsx global>{`
+                @media print {
+                    .no-print { display: none !important; }
+                    body { 
+                        background: white !important; 
+                        color: #141414 !important;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                        padding: 20mm !important;
+                    }
+                    .md\\:h-screen { height: auto !important; }
+                    .md\\:sticky { position: relative !important; }
+                    .bg-black { background: white !important; }
+                    .bg-neutral-950 { background: #fafafa !important; }
+                    .text-white { color: #141414 !important; }
+                    .text-neutral-500 { color: #666 !important; }
+                    .border-neutral-800 { border-color: #eee !important; }
+                    
+                    /* Force grid on print */
+                    .flex-col { display: block !important; }
+                    .md\\:flex-row { display: block !important; }
+                    .w-full { width: 100% !important; }
+                    
+                    /* Tabs management */
+                    .sticky { position: relative !important; background: transparent !important; }
+                    
+                    /* Accent Color Injection */
+                    h2, .text-white { color: ${agency?.primary_hex || '#141414'} !important; }
+                }
+            `}</style>
             <GatekeeperIntercept isVisible={showGatekeeper} onClose={() => setShowGatekeeper(false)} />
             <div className="flex flex-col md:flex-row min-h-screen bg-black text-white">
 
@@ -152,7 +192,16 @@ export default function AssetWorkspace({ initialAsset, isSovereign }: { initialA
                                 <h1 className="text-2xl font-light tracking-tightest text-white uppercase">{asset.brand?.name}</h1>
                                 <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-neutral-500">{asset.brand?.market_sector}</span>
                             </div>
-                            <span className="text-[9px] font-mono tracking-widest text-neutral-600">ID: {asset.id.split('-')[0]}</span>
+                            <div className="flex flex-col items-end gap-2">
+                                <span className="text-[9px] font-mono tracking-widest text-neutral-600">ID: {asset.id.split('-')[0]}</span>
+                                <button
+                                    onClick={() => window.print()}
+                                    className="no-print flex items-center gap-2 px-3 py-1.5 bg-white text-black text-[9px] font-bold tracking-widest uppercase hover:bg-neutral-200 transition-colors"
+                                >
+                                    <FileDown className="w-3 h-3" />
+                                    Export Dossier
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -179,6 +228,8 @@ export default function AssetWorkspace({ initialAsset, isSovereign }: { initialA
 
                     {/* Tab Content Area */}
                     <div className="p-8 md:p-12">
+                        {/* Sovereign PDF Header */}
+                        <SovereignPrintHeader agency={agency} />
 
                         {/* TAB 1: EXTRACTION */}
                         {activeTab === 'EXTRACTION' && (
@@ -383,6 +434,8 @@ export default function AssetWorkspace({ initialAsset, isSovereign }: { initialA
                             </div>
                         )}
 
+                        {/* Sovereign PDF Footer */}
+                        <SovereignPrintFooter agency={agency} assetId={asset.id} />
                     </div>
                 </div>
             </div>
