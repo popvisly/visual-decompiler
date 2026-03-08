@@ -4,8 +4,8 @@ import Logo from './Logo';
 
 export default function Header({ activeTab }: { activeTab?: 'dashboard' | 'analytics' | 'boards' | 'pulse' }) {
     return (
-        <header className="sticky top-6 z-50 w-full px-6 flex justify-center pointer-events-none">
-            <div className="pointer-events-auto flex items-center justify-between px-4 py-3 rounded-2xl bg-white/80 backdrop-blur-md border border-[#E7DED1] shadow-[0_8px_32px_rgba(20,20,20,0.06)] w-full max-w-7xl">
+        <header className="sticky top-8 z-50 w-full px-8 flex justify-center pointer-events-none">
+            <div className="pointer-events-auto flex items-center justify-between px-8 py-4 rounded-full bg-white/90 backdrop-blur-xl border border-[#D4A574]/20 shadow-[0_12px_48px_rgba(212,165,116,0.12)] w-full max-w-7xl">
                 <div className="flex items-center gap-8">
                     <Logo href="/" sublabel="Strategic Library" />
 

@@ -32,7 +32,7 @@ export default function CircularGauge({ value, label, sublabel }: Props) {
                     cy="50"
                     r={radius}
                     fill="transparent"
-                    stroke="#2A2A2A"
+                    stroke="#D4A57422"
                     strokeWidth="8"
                 />
                 {/* Progress track */}
@@ -41,7 +41,7 @@ export default function CircularGauge({ value, label, sublabel }: Props) {
                     cy="50"
                     r={radius}
                     fill="transparent"
-                    stroke="#BB9E7B"
+                    stroke="#D4A574"
                     strokeWidth="8"
                     strokeDasharray={circumference}
                     strokeDashoffset={strokeDashoffset}
@@ -51,7 +51,7 @@ export default function CircularGauge({ value, label, sublabel }: Props) {
             </svg>
             {/* Center text */}
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-xl font-light text-txt-on-dark">{Math.round(animatedValue)}%</span>
+                <span className="text-xl font-light text-[#FFFFFF]">{Math.round(animatedValue)}%</span>
             </div>
         </div>
     );

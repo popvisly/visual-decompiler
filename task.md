@@ -1,28 +1,16 @@
-# Task Checklist - Auth & Competitor Libraries
+# Visual Decompiler: High-Contrast Aesthetic Finalization
 
-## Milestone 5: Auth & Rate Limits (Completed)
+## Milestone 7: Luxury Realism Aesthetic Finalization [ACTIVE]
 
-- [x] Integrate Clerk or Auth0 for user management.
-- [x] Implement database-level usage tracking and paywalls.
-- [x] Verify 5/6 usage limit gauntlet and paywall UI.
-
-## Step 14: Legacy Dependency Purge (Clerk) (Completed)
-
-    - [x] De-Clerk UI Components (Sidebar, Header, Nav)
-    - [x] Migration API Routes to Supabase Auth
-    - [x] Refactor Billing & Stripe Webhook Metadata
-    - [x] Remove `@clerk/nextjs` package
-    - [x] Clean up redundant `/dashboard` (Legacy) routes
-    - [x] Verify production build
-
-## Milestone 6: Competitor Libraries (Completed)
-
-- [x] Brand tagging (confirm AI guess or edit).
-- [x] Integrate BrandTag into ResultsView (detail page).
-- [x] Sidebar filters for competitor brands.
-- [x] Premium theme update for Brand Profile pages.
-
-## Engine & UI Fixes (Completed)
-
-- [x] YouTube ingestion heuristic fix (bypass fetch).
-- [x] Input contrast normalization (light/dark theme).
+- [x] Global Canvas: Force #FBFBF6 Bone-White & 2.5% Geometric Grid opacity
+- [x] Modular Tiles: Revert to #1A1A1A Deep Charcoal with #D4A574 Tan borders (24px radius)
+- [x] Typography: Sync Tan/Dark Brown hierarchy across all modules
+- [x] Menubar: Implement Curved/Floating aesthetic with rounded-full
+- [x] Asset Workspace Fixes:
+    - [x] Fix missing `div` syntax error in Psychology tab
+    - [x] Initialize Market Pulse tab with AdAnalytics component
+- [x] Ad Analytics Reskin:
+    - [x] Reskin AdAnalyticsTab to Charcoal/Tan theme
+    - [x] Update CircularGauge & RadarChart for dark background contrast
+- [x] Vault Reskin: Apply high-contrast tiles to vault cards
+- [x] Production Verification: Trigger forced redeploy and verify all components

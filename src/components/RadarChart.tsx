@@ -67,7 +67,7 @@ export default function RadarChart({ data, forceLight = false }: Props) {
                         key={level}
                         points={generateGridPolygon(level)}
                         fill="transparent"
-                        stroke={forceLight ? "#D4A57433" : "#2A2A2A"}
+                        stroke={forceLight ? "#D4A57444" : "#D4A57422"}
                         strokeWidth="1"
                     />
                 ))}
@@ -82,7 +82,7 @@ export default function RadarChart({ data, forceLight = false }: Props) {
                             y1={center}
                             x2={center + Math.cos(angle) * radius}
                             y2={center + Math.sin(angle) * radius}
-                            stroke={forceLight ? "#D4A57433" : "#2A2A2A"}
+                            stroke={forceLight ? "#D4A57444" : "#D4A57422"}
                             strokeWidth="1"
                         />
                     );
@@ -91,8 +91,8 @@ export default function RadarChart({ data, forceLight = false }: Props) {
                 {/* Draw Data Polygon */}
                 <polygon
                     points={dataPolygon}
-                    fill={forceLight ? "rgba(212, 165, 116, 0.2)" : "rgba(187, 158, 123, 0.2)"}
-                    stroke={forceLight ? "#D4A574" : "#BB9E7B"}
+                    fill="rgba(212, 165, 116, 0.25)"
+                    stroke="#D4A574"
                     strokeWidth="1.5"
                     className="transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
                 />
@@ -106,7 +106,7 @@ export default function RadarChart({ data, forceLight = false }: Props) {
                             cx={x}
                             cy={y}
                             r={3}
-                            fill="#FBF7EF"
+                            fill="#FBFBF6"
                             className="transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
                         />
                     );
@@ -134,7 +134,7 @@ export default function RadarChart({ data, forceLight = false }: Props) {
                             key={`label-${i}`}
                             x={x}
                             y={y}
-                            fill={forceLight ? "#D4A574" : "#6B6B6B"}
+                            fill="#D4A574"
                             fontSize="8"
                             fontWeight="bold"
                             textAnchor={textAnchor}

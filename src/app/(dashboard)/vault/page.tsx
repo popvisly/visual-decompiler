@@ -87,25 +87,25 @@ function VaultCard({ asset }: { asset: VaultAsset }) {
 
     return (
         <Link href={`/asset/${asset.id}`} className="group block focus:outline-none">
-            <div className="bg-white border border-[#E5E5E1] transition-all duration-500 hover:border-[#D4A574] hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] flex flex-col h-full rounded-3xl overflow-hidden">
+            <div className="bg-[#1A1A1A] border border-[#D4A574]/30 transition-all duration-500 hover:border-[#D4A574] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] flex flex-col h-full rounded-3xl overflow-hidden">
 
                 {/* Brutalist Image Top - STRICT RECTANGLULAR INSIDE */}
-                <div className="aspect-[4/5] w-full overflow-hidden bg-neutral-100 border-b border-[#E5E5E1] relative">
+                <div className="aspect-[4/5] w-full overflow-hidden bg-[#1A1A1A] border-b border-[#D4A574]/20 relative">
                     <img
                         src={asset.file_url}
                         alt={brandName}
                         className="w-full h-full object-cover transition-all duration-700 ease-out scale-100 group-hover:scale-110 rounded-none"
                     />
 
-                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm border border-[#E5E5E1] px-3 py-1 rounded-full">
-                        <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A]">
+                    <div className="absolute top-4 left-4 bg-[#1A1A1A]/90 backdrop-blur-sm border border-[#D4A574]/40 px-3 py-1 rounded-none">
+                        <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#D4A574]">
                             {asset.type}
                         </span>
                     </div>
 
                     {isAnalyzed && (
-                        <div className="absolute bottom-4 right-4 bg-[#8B4513] px-3 py-1 rounded-full">
-                            <span className="text-[8px] font-bold tracking-[0.1em] uppercase text-white">
+                        <div className="absolute bottom-4 right-4 bg-[#D4A574] px-3 py-1 rounded-none">
+                            <span className="text-[8px] font-bold tracking-[0.1em] uppercase text-[#1A1A1A]">
                                 Forensic Secured
                             </span>
                         </div>
@@ -115,19 +115,19 @@ function VaultCard({ asset }: { asset: VaultAsset }) {
                 {/* Stark Data Block underneath */}
                 <div className="p-8 flex-1 flex flex-col justify-between">
                     <div>
-                        <h3 className="text-xl font-light tracking-tight text-[#1A1A1A] mb-1 uppercase group-hover:text-[#8B4513] transition-colors">
+                        <h3 className="text-xl font-light tracking-tight text-[#FFFFFF] mb-1 uppercase group-hover:text-[#D4A574] transition-colors">
                             {brandName}
                         </h3>
-                        <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4A574] mb-8 border-l border-[#E5E5E1] pl-3">
+                        <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4A574] mb-8 border-l border-[#D4A574]/30 pl-3">
                             {sector}
                         </p>
                     </div>
 
-                    <div className="pt-6 border-t border-[#E5E5E1]">
-                        <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-[#4A4A4A]/40 mb-2">
+                    <div className="pt-6 border-t border-[#D4A574]/20">
+                        <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-[#D4A574]/40 mb-2">
                             Structural Logic
                         </p>
-                        <p className={`text-sm font-medium leading-snug ${isAnalyzed ? 'text-[#1A1A1A]' : 'text-[#4A4A4A]/40 italic'}`}>
+                        <p className={`text-sm font-medium leading-snug ${isAnalyzed ? 'text-[#FFFFFF]' : 'text-[#FFFFFF]/40 italic'}`}>
                             {mechanic}
                         </p>
                     </div>
