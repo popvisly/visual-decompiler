@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { SovereignPrintHeader, SovereignPrintFooter } from '@/components/SovereignDossierParts';
+import AdAnalyticsTab from '@/components/AdAnalyticsTab';
 import { FileDown, Code } from 'lucide-react';
 
 interface WorkspaceAsset {
@@ -60,7 +61,7 @@ export default function AssetWorkspace({
     agency: any
 }) {
     const [asset, setAsset] = useState(initialAsset);
-    const [activeTab, setActiveTab] = useState<'EXTRACTION' | 'PACING' | 'BLUEPRINT'>('EXTRACTION');
+    const [activeTab, setActiveTab] = useState<'EXTRACTION' | 'PACING' | 'BLUEPRINT' | 'ANALYTICS'>('EXTRACTION');
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
     const [isGeneratingBlueprint, setIsGeneratingBlueprint] = useState(false);
     const [showGatekeeper, setShowGatekeeper] = useState(false);
@@ -235,7 +236,7 @@ export default function AssetWorkspace({
 
                     {/* Minimalist Segmented Controls */}
                     <div className="sticky top-0 z-10 bg-black/95 backdrop-blur-md border-b border-neutral-800 px-8 pt-8 md:pt-12 pb-0 flex gap-8">
-                        {(['EXTRACTION', 'PACING', 'BLUEPRINT'] as const).map(tab => (
+                        {(['EXTRACTION', 'ANALYTICS', 'PACING', 'BLUEPRINT'] as const).map(tab => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
@@ -270,7 +271,7 @@ export default function AssetWorkspace({
                                             <div className="pl-8 border-l border-neutral-800 flex flex-col justify-center">
                                                 <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-2">System Confidence</span>
                                                 <div className="text-4xl font-mono text-white tracking-tighter">
-                                                    {extraction.confidence_score}<span className="text-neutral-600">%</span>
+                                                    {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-neutral-600">%</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -301,6 +302,13 @@ export default function AssetWorkspace({
                                 ) : (
                                     <div className="text-neutral-500 text-xs tracking-widest uppercase">No forensic extraction linked to this asset.</div>
                                 )}
+                            </div>
+                        )}
+
+                        {/* NEW TAB: ANALYTICS */}
+                        {activeTab === 'ANALYTICS' && (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <AdAnalyticsTab brand={asset.brand?.name} />
                             </div>
                         )}
 

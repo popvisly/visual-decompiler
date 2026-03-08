@@ -69,6 +69,8 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
     const rawTier = agency?.tier || '';
     const isSovereign = rawTier === 'Agency Sovereignty' || rawTier === 'pro';
 
+    console.log("MAPPED WORKSPACE ASSET:", JSON.stringify(asset, null, 2));
+
     // Pass down to the interactive forensic console
     return <AssetWorkspace initialAsset={asset} isSovereign={isSovereign} agency={agency} />;
 }
