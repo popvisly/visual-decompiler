@@ -21,12 +21,26 @@ create table if not exists public.shared_links (
 -- Enable RLS
 alter table public.shared_links enable row level security;
 
+-- Ensure profiles table exists for the policy
+create table if not exists public.profiles (
+    user_id text primary key, -- Clerk User ID
+    org_id text references public.org_settings(org_id),
+    email text,
+    name text,
+    role text default 'member', -- 'admin' or 'member'
+    avatar_url text,
+    created_at timestamptz not null default now(),
+    updated_at timestamptz not null default now()
+);
+
 -- Policies for shared_links
+drop policy if exists "Anyone with a slug can read a shared link" on public.shared_links;
 create policy "Anyone with a slug can read a shared link"
     on public.shared_links for select
     to anon, authenticated
     using (true);
 
+drop policy if exists "Org members can manage their shared links" on public.shared_links;
 create policy "Org members can manage their shared links"
     on public.shared_links for all
     to authenticated
@@ -39,6 +53,7 @@ create policy "Org members can manage their shared links"
 -- We use a function or a specific policy check for this.
 
 -- Update ad_digests RLS for shared access
+drop policy if exists "Anon can read shared ad digests" on public.ad_digests;
 create policy "Anon can read shared ad digests"
     on public.ad_digests for select
     to anon, authenticated
@@ -49,12 +64,13 @@ create policy "Anon can read shared ad digests"
             or exists (
                 select 1 from public.board_items 
                 where board_items.board_id = shared_links.board_id 
-                and board_items.ad_digest_id = ad_digests.id
+                and board_items.ad_id = ad_digests.id
             )
         )
     );
 
 -- Update boards RLS for shared access
+drop policy if exists "Anon can read shared boards" on public.boards;
 create policy "Anon can read shared boards"
     on public.boards for select
     to anon, authenticated

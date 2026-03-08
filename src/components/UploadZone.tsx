@@ -36,6 +36,10 @@ export default function UploadZone({ onUploadComplete }: Props) {
     const handleIngest = useCallback(async (mediaUrl: string) => {
         setIsUploading(true);
         setError(null);
+        
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
+        
         try {
             // Dynamically fetch the cryptographic truth from Supabase client at execution time
             const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
@@ -46,24 +50,32 @@ export default function UploadZone({ onUploadComplete }: Props) {
             const res = await fetch('/api/vault-ingest', {
                 method: 'POST',
                 credentials: 'same-origin',
+                signal: controller.signal,
                 headers: { 
                     'Content-Type': 'application/json',
                     ...(token ? { 'Authorization': `Bearer ${token}` } : {})
                 },
                 body: JSON.stringify({ mediaUrl: mediaUrl.trim() }),
             });
+            clearTimeout(timeoutId);
+            
             const payload = await res.json().catch(() => null);
             if (!res.ok) throw new Error(payload?.error || `Ingestion failed (HTTP ${res.status})`);
 
             if (payload?.code === 'DUPLICATE') {
-                setDuplicateId(payload.job_id);
+                setDuplicateId(payload.assetId || payload.job_id);
                 setIsUploading(false);
                 return;
             }
 
-            onUploadComplete({ jobId: payload.job_id, mediaUrl: mediaUrl.trim(), accessLevel: payload.access_level });
+            onUploadComplete({ jobId: payload.assetId || payload.job_id, mediaUrl: mediaUrl.trim(), accessLevel: payload.access_level });
         } catch (err: any) {
-            setError(err?.message || 'Failed to analyze ad.');
+            clearTimeout(timeoutId);
+            if (err.name === 'AbortError') {
+                setError('Analysis timed out after 60 seconds. The asset may be too complex or the network is slow. Please try again.');
+            } else {
+                setError(err?.message || 'Failed to analyze ad.');
+            }
             setIsUploading(false);
         }
     }, [onUploadComplete]);

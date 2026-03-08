@@ -20,6 +20,7 @@ CREATE INDEX IF NOT EXISTS idx_ad_digests_user_id ON ad_digests(user_id);
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 
 -- Allow service role full access (Next.js server uses this)
+DROP POLICY IF EXISTS "Service role has full access to users" ON users;
 CREATE POLICY "Service role has full access to users"
     ON users
     FOR ALL

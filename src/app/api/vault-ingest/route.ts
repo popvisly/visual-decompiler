@@ -48,7 +48,20 @@ export async function POST(req: Request) {
                 return NextResponse.json({ error: 'No mediaUrl provided.' }, { status: 400 });
             }
             
-            const fetchRes = await fetch(mediaUrl);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            let fetchRes;
+            try {
+                fetchRes = await fetch(mediaUrl, { signal: controller.signal });
+                clearTimeout(timeoutId);
+            } catch (err: any) {
+                clearTimeout(timeoutId);
+                if (err.name === 'AbortError') {
+                    return NextResponse.json({ error: 'Image retrieval timed out. Does this URL allow public hotlinking?' }, { status: 408 });
+                }
+                return NextResponse.json({ error: 'Failed to fetch media from URL.' }, { status: 400 });
+            }
+
             if (!fetchRes.ok) {
                 return NextResponse.json({ error: 'Failed to fetch media from URL.' }, { status: 400 });
             }

@@ -36,7 +36,7 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
             }
             setUrl('');
             // alert('Ad queued for decompilation! It will appear in the dashboard shortly.');
-            router.push(`/asset/${payload.job_id}?new=true`);
+            router.push(`/asset/${payload.assetId || payload.job_id}?new=true`);
         } catch (err: any) {
             console.error(err);
             setErrorObj({ message: err?.message || 'Failed to ingest ad.', code: err?.code });

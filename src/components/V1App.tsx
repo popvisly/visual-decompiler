@@ -20,10 +20,11 @@ export default function V1App() {
     const [state, setState] = useState<AppState>({ phase: 'upload' });
 
     const handleUploadComplete = useCallback(
-        ({ jobId, mediaUrl, accessLevel }: { jobId: string; mediaUrl: string; accessLevel?: AccessLevel }) => {
-            setState({ phase: 'processing', jobId, mediaUrl, accessLevel: accessLevel || 'full' });
+        ({ jobId }: { jobId: string; mediaUrl: string; accessLevel?: AccessLevel }) => {
+            // Bypass V1 processing view and drop directly into Phase 2 Workspace
+            router.push(`/asset/${jobId}?new=true`);
         },
-        []
+        [router]
     );
 
 

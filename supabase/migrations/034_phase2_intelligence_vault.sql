@@ -53,79 +53,96 @@ ALTER TABLE assets ENABLE ROW LEVEL SECURITY;
 ALTER TABLE extractions ENABLE ROW LEVEL SECURITY;
 
 -- AGENCIES: Authenticated users can view agencies. Service role has full access.
+DROP POLICY IF EXISTS "Authenticated users can read agencies" ON agencies;
 CREATE POLICY "Authenticated users can read agencies"
   ON agencies FOR SELECT
   USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Service role has full access to agencies" ON agencies;
 CREATE POLICY "Service role has full access to agencies"
   ON agencies FOR ALL
   USING (true)
   WITH CHECK (true);
 
 -- BRANDS: Authenticated users can view and manage brands.
+DROP POLICY IF EXISTS "Authenticated users can read brands" ON brands;
 CREATE POLICY "Authenticated users can read brands"
   ON brands FOR SELECT
   USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Authenticated users can insert brands" ON brands;
 CREATE POLICY "Authenticated users can insert brands"
   ON brands FOR INSERT
   WITH CHECK (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Authenticated users can update brands" ON brands;
 CREATE POLICY "Authenticated users can update brands"
   ON brands FOR UPDATE
   USING (auth.role() = 'authenticated')
   WITH CHECK (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Authenticated users can delete brands" ON brands;
 CREATE POLICY "Authenticated users can delete brands"
   ON brands FOR DELETE
   USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Service role has full access to brands" ON brands;
 CREATE POLICY "Service role has full access to brands"
   ON brands FOR ALL
   USING (true)
   WITH CHECK (true);
 
 -- ASSETS: Authenticated users can view and manage assets.
+DROP POLICY IF EXISTS "Authenticated users can read assets" ON assets;
 CREATE POLICY "Authenticated users can read assets"
   ON assets FOR SELECT
   USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Authenticated users can insert assets" ON assets;
 CREATE POLICY "Authenticated users can insert assets"
   ON assets FOR INSERT
   WITH CHECK (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Authenticated users can update assets" ON assets;
 CREATE POLICY "Authenticated users can update assets"
   ON assets FOR UPDATE
   USING (auth.role() = 'authenticated')
   WITH CHECK (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Authenticated users can delete assets" ON assets;
 CREATE POLICY "Authenticated users can delete assets"
   ON assets FOR DELETE
   USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Service role has full access to assets" ON assets;
 CREATE POLICY "Service role has full access to assets"
   ON assets FOR ALL
   USING (true)
   WITH CHECK (true);
 
 -- EXTRACTIONS: Authenticated users can view and manage extractions.
+DROP POLICY IF EXISTS "Authenticated users can read extractions" ON extractions;
 CREATE POLICY "Authenticated users can read extractions"
   ON extractions FOR SELECT
   USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Authenticated users can insert extractions" ON extractions;
 CREATE POLICY "Authenticated users can insert extractions"
   ON extractions FOR INSERT
   WITH CHECK (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Authenticated users can update extractions" ON extractions;
 CREATE POLICY "Authenticated users can update extractions"
   ON extractions FOR UPDATE
   USING (auth.role() = 'authenticated')
   WITH CHECK (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Authenticated users can delete extractions" ON extractions;
 CREATE POLICY "Authenticated users can delete extractions"
   ON extractions FOR DELETE
   USING (auth.role() = 'authenticated');
 
+DROP POLICY IF EXISTS "Service role has full access to extractions" ON extractions;
 CREATE POLICY "Service role has full access to extractions"
   ON extractions FOR ALL
   USING (true)

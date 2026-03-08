@@ -18,17 +18,7 @@ export async function generateEmbedding(text: string): Promise<number[]> {
     if (!text || text.trim().length === 0) {
         return new Array(1536).fill(0);
     }
-
-    try {
-        const openai = getOpenAI();
-        const response = await openai.embeddings.create({
-            model: "text-embedding-3-small",
-            input: text.replace(/\n/g, ' '), // Recommended pre-processing
-        });
-
-        return response.data[0].embedding;
-    } catch (err: any) {
-        console.error('[Embeddings] Error generating embedding:', err);
-        throw new Error(`Embedding generation failed: ${err.message}`);
-    }
+    // OpenAI Lobotomized for Phase 2: Vector search disabled
+    console.log('[Embeddings] OpenAI generation bypassed. Returning zero-vector.');
+    return new Array(1536).fill(0);
 }

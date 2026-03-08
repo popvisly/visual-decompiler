@@ -16,6 +16,7 @@ create table if not exists public.profiles (
 alter table public.profiles enable row level security;
 
 -- Policies
+drop policy if exists "Users can read profiles in their organization" on public.profiles;
 create policy "Users can read profiles in their organization"
     on public.profiles
     for select
@@ -26,6 +27,7 @@ create policy "Users can read profiles in their organization"
         )
     );
 
+drop policy if exists "Users can update their own profile" on public.profiles;
 create policy "Users can update their own profile"
     on public.profiles
     for update
@@ -33,6 +35,7 @@ create policy "Users can update their own profile"
     using (user_id = auth.uid()::text);
 
 -- Grant access to service role
+drop policy if exists "Service role has full access to profiles" on public.profiles;
 create policy "Service role has full access to profiles"
     on public.profiles
     for all
