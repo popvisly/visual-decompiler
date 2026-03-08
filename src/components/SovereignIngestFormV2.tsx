@@ -94,14 +94,14 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                             className={`w-56 px-3 py-1.5 text-xs rounded-lg focus:outline-none focus:ring-2 transition-all font-medium ${forceDark
-                                ? 'bg-white/10 text-white placeholder-white/30 border-white/10 focus:ring-white/20'
-                                : 'bg-black/5 text-[#141414] placeholder-[#141414]/40 border-black/10 focus:ring-black/20'}`}
+                                ? 'bg-[#F5F5DC]/10 text-[#F5F5DC] placeholder-[#F5F5DC]/30 border-[#F5F5DC]/10 focus:ring-[#F5F5DC]/20'
+                                : 'bg-[#F5F5DC] text-[#1A1A1A] placeholder-[#8B4513]/40 border border-[#D4A574] focus:ring-[#8B4513]/20'}`}
                             required
                         />
                         <button
                             type="submit"
                             disabled={isIngesting}
-                            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-bold hover:-translate-y-[1px] shadow-[0_4px_12px_rgba(20,20,20,0.15)] hover:shadow-[0_6px_16px_rgba(20,20,20,0.2)] transition-all disabled:opacity-50 disabled:hover:translate-y-0 ${forceDark ? 'bg-accent text-[#141414] hover:bg-white' : 'bg-[#141414] text-[#FBF7EF]'}`}
+                            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-bold hover:-translate-y-[1px] shadow-[0_4px_12px_rgba(139,69,19,0.15)] hover:shadow-[0_6px_16px_rgba(139,69,19,0.2)] transition-all disabled:opacity-50 disabled:hover:translate-y-0 ${forceDark ? 'bg-[#D4A574] text-[#1A1A1A] hover:bg-white' : 'bg-[#8B4513] text-[#F5F5DC]'}`}
                         >
                             {isIngesting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                             {isIngesting ? 'Ingesting…' : 'Decompile'}

@@ -9,9 +9,10 @@ type DataPoint = {
 
 type Props = {
     data: DataPoint[];
+    forceLight?: boolean;
 };
 
-export default function RadarChart({ data }: Props) {
+export default function RadarChart({ data, forceLight = false }: Props) {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -66,7 +67,7 @@ export default function RadarChart({ data }: Props) {
                         key={level}
                         points={generateGridPolygon(level)}
                         fill="transparent"
-                        stroke="#2A2A2A"
+                        stroke={forceLight ? "#D4A57433" : "#2A2A2A"}
                         strokeWidth="1"
                     />
                 ))}
@@ -81,7 +82,7 @@ export default function RadarChart({ data }: Props) {
                             y1={center}
                             x2={center + Math.cos(angle) * radius}
                             y2={center + Math.sin(angle) * radius}
-                            stroke="#2A2A2A"
+                            stroke={forceLight ? "#D4A57433" : "#2A2A2A"}
                             strokeWidth="1"
                         />
                     );
@@ -90,8 +91,8 @@ export default function RadarChart({ data }: Props) {
                 {/* Draw Data Polygon */}
                 <polygon
                     points={dataPolygon}
-                    fill="rgba(187, 158, 123, 0.2)"
-                    stroke="#BB9E7B"
+                    fill={forceLight ? "rgba(212, 165, 116, 0.2)" : "rgba(187, 158, 123, 0.2)"}
+                    stroke={forceLight ? "#D4A574" : "#BB9E7B"}
                     strokeWidth="1.5"
                     className="transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
                 />
@@ -133,7 +134,7 @@ export default function RadarChart({ data }: Props) {
                             key={`label-${i}`}
                             x={x}
                             y={y}
-                            fill="#6B6B6B"
+                            fill={forceLight ? "#D4A574" : "#6B6B6B"}
                             fontSize="8"
                             fontWeight="bold"
                             textAnchor={textAnchor}

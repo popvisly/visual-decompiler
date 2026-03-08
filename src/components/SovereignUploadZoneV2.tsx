@@ -128,7 +128,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
         <div className="w-full max-w-2xl mx-auto page-enter">
             {/* Upload zone */}
             <div
-                className={`rounded-[24px] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-center cursor-pointer transition-all ${isDragOver ? 'border-[#141414] shadow-md bg-white' : 'hover:border-[#D8CCBC] hover:shadow-[0_10px_30px_rgba(20,20,20,0.05)]'}`}
+                className={`rounded-[24px] border border-[#D4A574] bg-[#F5F5DC] p-12 text-center cursor-pointer transition-all ${isDragOver ? 'border-[#8B4513] shadow-md bg-white/50' : 'hover:border-[#8B4513]/30 hover:shadow-[0_10px_30px_rgba(212,165,116,0.1)]'}`}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -147,15 +147,15 @@ export default function UploadZone({ onUploadComplete }: Props) {
 
                 {isUploading ? (
                     <div className="flex flex-col items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-[#F6F1E7] border border-[#E7DED1] flex items-center justify-center">
-                            <Loader2 className="w-6 h-6 text-[#141414] animate-spin" />
+                        <div className="w-14 h-14 rounded-2xl bg-[#F5F5DC] border border-[#D4A574] flex items-center justify-center">
+                            <Loader2 className="w-6 h-6 text-[#8B4513] animate-spin" />
                         </div>
                         <p className="text-[13px] font-medium text-[#6B6B6B]">Queuing for analysis…</p>
                     </div>
                 ) : (
                     <div className="flex flex-col items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-[#F6F1E7] border border-[#E7DED1] flex items-center justify-center shadow-sm">
-                            <Upload className="w-6 h-6 text-[#6B6B6B]" />
+                        <div className="w-14 h-14 rounded-2xl bg-[#F5F5DC] border border-[#D4A574] flex items-center justify-center shadow-sm">
+                            <Upload className="w-6 h-6 text-[#8B4513]/60" />
                         </div>
                         <div>
                             <p className="text-[15px] font-medium text-[#141414]">
@@ -179,14 +179,14 @@ export default function UploadZone({ onUploadComplete }: Props) {
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                             placeholder="https://example.com/ad-creative.jpg"
-                            className="w-full pl-11 pr-4 py-3.5 text-[14px] bg-[#FBF7EF] text-[#141414] placeholder-[#6B6B6B]/60 border border-[#E7DED1] rounded-[16px] focus:outline-none focus:border-[#141414] focus:ring-1 focus:ring-[#141414] transition-all"
+                            className="w-full pl-11 pr-4 py-3.5 text-[14px] bg-[#F5F5DC] text-[#1A1A1A] placeholder-[#8B4513]/40 border border-[#D4A574] rounded-[16px] focus:outline-none focus:border-[#8B4513] focus:ring-1 focus:ring-[#8B4513] transition-all"
                             disabled={isUploading}
                         />
                     </div>
                     <button
                         type="submit"
                         disabled={isUploading || !url.trim()}
-                        className="px-6 py-3.5 bg-[#141414] text-[#FBF7EF] rounded-[16px] text-[14px] font-medium hover:-translate-y-[1px] hover:shadow-[0_10px_30px_rgba(20,20,20,0.15)] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                        className="px-6 py-3.5 bg-[#8B4513] text-[#F5F5DC] rounded-[16px] text-[14px] font-medium hover:-translate-y-[1px] hover:shadow-[0_10px_30px_rgba(139,69,19,0.15)] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
                     >
                         {isUploading ? 'Analyzing…' : 'Analyze'}
                     </button>

@@ -346,26 +346,26 @@ export default function AssetWorkspace({
                                                 
                                                 {/* Narrative & Subtext Cards */}
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                    <div className="border border-[#D4A574] bg-[#F5F5DC] p-6 flex flex-col hover:border-[#D4A574] transition-colors">
-                                                        <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 mb-4 border-b border-[#D4A574]/50 pb-2">Narrative Framework</span>
-                                                        <p className="text-sm text-[#1A1A1A] leading-relaxed font-light">{extraction.full_dossier.narrative_framework}</p>
+                                                    <div className="border border-[#D4A574] bg-[#1A1A1A] p-6 flex flex-col hover:border-[#D4A574] transition-colors">
+                                                        <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/30 pb-2">Narrative Framework</span>
+                                                        <p className="text-sm text-[#F5F5DC] leading-relaxed font-light">{extraction.full_dossier.narrative_framework}</p>
                                                     </div>
-                                                    <div className="border border-[#D4A574] bg-[#F5F5DC] p-6 flex flex-col hover:border-[#D4A574] transition-colors">
-                                                        <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 mb-4 border-b border-[#D4A574]/50 pb-2">Semiotic Subtext</span>
-                                                        <p className="text-sm text-[#1A1A1A] leading-relaxed font-light">{extraction.full_dossier.semiotic_subtext}</p>
+                                                    <div className="border border-[#D4A574] bg-[#1A1A1A] p-6 flex flex-col hover:border-[#D4A574] transition-colors">
+                                                        <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/30 pb-2">Semiotic Subtext</span>
+                                                        <p className="text-sm text-[#F5F5DC] leading-relaxed font-light">{extraction.full_dossier.semiotic_subtext}</p>
                                                     </div>
                                                 </div>
 
                                                 {/* Plausible Readings Card */}
                                                 {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
-                                                    <div className="border border-[#D4A574] bg-[#F5F5DC] p-6">
-                                                       <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 mb-6 border-b border-[#D4A574]/50 pb-2">Plausible Readings</span>
+                                                    <div className="border border-[#D4A574] bg-[#1A1A1A] p-6">
+                                                       <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/30 pb-2">Plausible Readings</span>
                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                             {extraction.full_dossier.possible_readings.map((reading, i) => (
-                                                                <div key={i} className="bg-[#F5F5DC] border border-[#D4A574] p-5">
-                                                                    <p className="text-sm font-medium text-[#1A1A1A] mb-3">{reading.reading}</p>
-                                                                    <div className="flex items-start gap-2 text-xs text-[#1A1A1A]/80">
-                                                                        <span className="text-[#8B4513]/50 mt-0.5">↳</span>
+                                                                <div key={i} className="bg-[#1A1A1A] border border-[#D4A574]/30 p-5">
+                                                                    <p className="text-sm font-medium text-[#F5F5DC] mb-3">{reading.reading}</p>
+                                                                    <div className="flex items-start gap-2 text-xs text-[#F5F5DC]/70">
+                                                                        <span className="text-[#D4A574]/50 mt-0.5">↳</span>
                                                                         <span className="leading-relaxed">{reading.support.join(" • ")}</span>
                                                                     </div>
                                                                 </div>
@@ -376,23 +376,23 @@ export default function AssetWorkspace({
 
                                                 {/* Strategic Archetype & Objections Cards */}
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                    <div className="border border-[#D4A574] bg-[#F5F5DC] p-6">
-                                                        <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 mb-4 border-b border-[#D4A574]/50 pb-2">Archetype Posture</span>
-                                                        <p className="text-base text-[#1A1A1A] tracking-tight">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
+                                                    <div className="border border-[#D4A574] bg-[#1A1A1A] p-6">
+                                                        <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/30 pb-2">Archetype Posture</span>
+                                                        <p className="text-base text-[#F5F5DC] tracking-tight">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
                                                         {(extraction.full_dossier.archetype_mapping as any)?.strategic_moves && (
-                                                            <div className="mt-6 space-y-3 p-4 bg-[#F5F5DC] border border-[#D4A574]/50">
+                                                            <div className="mt-6 space-y-3 p-4 bg-[#1A1A1A] border border-[#D4A574]/20">
                                                                 {(extraction.full_dossier.archetype_mapping as any).strategic_moves.map((move: string, i: number) => (
-                                                                    <div key={i} className="flex gap-3 text-sm text-[#8B4513]/80 leading-relaxed group">
-                                                                        <div className="w-1.5 h-1.5 bg-[#8B4513]/40 rounded-none mt-1 shrink-0" />
+                                                                    <div key={i} className="flex gap-3 text-sm text-[#F5F5DC]/80 leading-relaxed group">
+                                                                        <div className="w-1.5 h-1.5 bg-[#D4A574]/40 rounded-none mt-1 shrink-0" />
                                                                         <span>{move}</span>
                                                                     </div>
                                                                 ))}
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <div className="border border-[#D4A574] bg-[#F5F5DC] p-6">
-                                                        <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 mb-4 border-b border-[#D4A574]/50 pb-2">Objection Dismantled</span>
-                                                        <p className="text-sm text-[#1A1A1A] leading-relaxed font-light">{extraction.full_dossier.objection_dismantling}</p>
+                                                    <div className="border border-[#D4A574] bg-[#1A1A1A] p-6">
+                                                        <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/30 pb-2">Objection Dismantled</span>
+                                                        <p className="text-sm text-[#F5F5DC] leading-relaxed font-light">{extraction.full_dossier.objection_dismantling}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -416,54 +416,42 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     {/* Trigger Distribution Radar */}
-                                    <div className="border border-[#D4A574] bg-[#F5F5DC] p-8 flex flex-col items-center justify-center">
-                                        <div className="w-full mb-6">
-                                            <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 border-b border-[#D4A574]/50 pb-2">Trigger Distribution</span>
-                                        </div>
-                                        <div className="w-full max-w-[300px]">
-                                            <RadarChart
-                                                data={[
-                                                    { label: 'Visual Appeal', value: extraction?.primary_mechanic?.includes('Aesthetic') ? 95 : 70 },
-                                                    { label: 'Status / Prestige', value: extraction?.primary_mechanic?.includes('Status') ? 90 : 60 },
-                                                    { label: 'Trust / Legacy', value: extraction?.full_dossier?.archetype_mapping?.target_posture?.includes('Authority') ? 85 : 55 },
-                                                    { label: 'Intellectual', value: extraction?.primary_mechanic?.includes('Minimalism') ? 80 : 40 },
-                                                    { label: 'Urgency', value: extraction?.full_dossier?.objection_dismantling?.includes('Time') ? 75 : 30 }
-                                                ]}
+                                    <div className="border border-[#D4A574] bg-[#1A1A1A] p-8 flex flex-col items-center">
+                                        <h3 className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.2em] mb-8 self-start w-full border-b border-[#D4A574]/30 pb-4">
+                                            Trigger Distribution Map
+                                        </h3>
+                                        <div className="w-full max-w-[320px]">
+                                            <RadarChart 
+                                                data={Object.entries((extraction?.full_dossier as any)?.archetype_mapping?.trigger_distribution || {}).map(([label, value]) => ({ label, value: value as number }))}
+                                                forceLight={true}
                                             />
                                         </div>
                                     </div>
 
                                     {/* Emotional DNA Heatmap (Placeholder/Text Metric) */}
-                                    <div className="border border-[#D4A574] bg-[#F5F5DC] p-8 flex flex-col">
+                                    <div className="border border-[#D4A574] bg-[#1A1A1A] p-8 flex flex-col">
                                         <div className="w-full mb-6">
-                                            <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 border-b border-[#D4A574]/50 pb-2">Emotional DNA</span>
+                                            <h3 className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.2em] border-b border-[#D4A574]/30 pb-4">
+                                                Emotional DNA Heatmap
+                                            </h3>
                                         </div>
-                                        <div className="flex-1 flex flex-col justify-center space-y-6">
+                                        <div className="flex-1 space-y-4">
                                             <div>
-                                                <div className="flex justify-between text-[10px] text-[#1A1A1A]/80 font-bold uppercase tracking-widest mb-2">
-                                                    <span>Aspirational Gap</span>
-                                                    <span className="text-[#1A1A1A]">High</span>
+                                                <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-1">
+                                                    <span className="text-[#D4A574]/60">Persuasion Density</span>
+                                                    <span className="text-[#F5F5DC]">Max</span>
                                                 </div>
-                                                <div className="w-full bg-[#F5F5DC] h-1.5 border border-[#D4A574]">
-                                                    <div className="h-full bg-[#BB9E7B] w-[85%]" />
+                                                <div className="w-full bg-[#1A1A1A] h-1.5 border border-[#D4A574]/30">
+                                                <div className="h-full bg-[#D4A574] w-[95%]" />
                                                 </div>
                                             </div>
                                             <div>
-                                                <div className="flex justify-between text-[10px] text-[#1A1A1A]/80 font-bold uppercase tracking-widest mb-2">
-                                                    <span>Accessibility Friction</span>
-                                                    <span className="text-[#1A1A1A]">Max</span>
+                                                <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-1">
+                                                    <span className="text-[#D4A574]/60">Cognitive Friction</span>
+                                                    <span className="text-[#F5F5DC]">Low</span>
                                                 </div>
-                                                <div className="w-full bg-[#F5F5DC] h-1.5 border border-[#D4A574]">
-                                                <div className="h-full bg-[#8B4513]/60 w-[95%]" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="flex justify-between text-[10px] text-[#1A1A1A]/80 font-bold uppercase tracking-widest mb-2">
-                                                    <span>Rational Justification</span>
-                                                    <span className="text-[#1A1A1A]">Low</span>
-                                                </div>
-                                                <div className="w-full bg-[#F5F5DC] h-1.5 border border-[#D4A574]">
-                                                <div className="h-full bg-[#8B4513]/90 w-[30%]" />
+                                                <div className="w-full bg-[#1A1A1A] h-1.5 border border-[#D4A574]/30">
+                                                <div className="h-full bg-[#D4A574]/40 w-[30%]" />
                                                 </div>
                                             </div>
                                         </div>
