@@ -10,10 +10,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     const pathname = usePathname();
 
     const navItems = [
-        { name: 'New Ingestion', href: '/ingest', icon: Plus },
-        { name: 'The Intelligence Vault', href: '/vault', icon: Database },
-        { name: 'Differential Diagnostics', href: '/compare', icon: Activity },
-        { name: 'Settings', href: '/settings', icon: Settings },
+        { name: 'Discovery', href: '/ingest', icon: Plus },
+        { name: 'Intelligence Vault', href: '/vault', icon: Database },
+        { name: 'Intelligence Pulse', href: '/compare', icon: Activity },
+        { name: 'Agency Settings', href: '/settings', icon: Settings },
     ];
 
     return (
@@ -45,7 +45,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                                     className={`flex items-center gap-4 pl-4 py-2 -ml-4 group transition-all duration-300 border-l ${isActive ? 'text-[#8B4513] border-[#8B4513] bg-[#8B4513]/5 select-none' : 'text-[#4A4A4A]/60 border-transparent hover:text-[#1A1A1A] hover:border-[#E5E5E1]'
                                         }`}
                                 >
-                                    <Icon className="w-4 h-4 stroke-[1.5px]" />
+                                    <Icon className="w-4 h-4 stroke-[1px]" />
                                     <span className="font-sans text-[10px] font-bold tracking-[0.2em] uppercase">
                                         {item.name}
                                     </span>

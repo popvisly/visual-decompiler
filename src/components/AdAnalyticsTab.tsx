@@ -74,7 +74,7 @@ export default function AdAnalyticsTab({ brand }: { brand?: string | null }) {
         <div className="space-y-12">
             <div className="flex items-center justify-between pb-4 border-b border-[#D4A574]/20">
                 <div>
-                    <h2 className="text-3xl font-light text-[#1A1A1A] tracking-tight uppercase leading-[0.85] select-none">
+                    <h2 className="text-2xl font-light text-[#1A1A1A] tracking-tight uppercase leading-[0.85] select-none">
                         Market Pulse
                     </h2>
                     <p className="text-[10px] text-[#8B4513] mt-2 font-bold tracking-[0.3em] uppercase">Sovereign Intelligence Dashboard</p>
@@ -84,35 +84,35 @@ export default function AdAnalyticsTab({ brand }: { brand?: string | null }) {
             {/* 1. The Sovereign Market Pulse (Top Row) */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Saturation Gauge */}
-                <div className="bg-[#1A1A1A] p-8 rounded-3xl border border-[#D4A574]/20 shadow-sm flex flex-col justify-between h-[280px]">
+                <div className="bg-[#1A1A1A] p-5 rounded-3xl border border-[#D4A574]/20 shadow-sm flex flex-col justify-between h-[260px]">
                     <div>
-                        <div className="mb-6 flex justify-between items-start w-full">
-                            <Activity className="w-5 h-5 text-[#D4A574]" />
-                            <div className="w-2 h-2 rounded-full bg-[#D4A574]/40 animate-pulse mt-1.5" />
+                        <div className="mb-4 flex justify-between items-start w-full">
+                            <Activity className="w-4 h-4 text-[#D4A574]" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#D4A574]/40 animate-pulse mt-1" />
                         </div>
-                        <h3 className="text-xs font-bold text-[#D4A574] uppercase tracking-widest mb-1">Market Saturation</h3>
-                        <p className="text-[10px] text-[#FFFFFF]/50 font-medium uppercase tracking-tight">Category Density Index</p>
+                        <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-1">Market Saturation</h3>
+                        <p className="text-[9px] text-[#FFFFFF]/40 font-bold uppercase tracking-tight">Category Density Index</p>
                     </div>
-                    <div className="mt-6 flex flex-col items-center">
+                    <div className="mt-4 flex flex-col items-center">
                         <CircularGauge value={saturationPercentage} label="Market Saturation" sublabel="Category Density Index" />
                     </div>
                 </div>
 
                 {/* Dominant Schema */}
-                <div className="bg-[#1A1A1A] p-8 rounded-3xl border border-[#D4A574]/20 shadow-sm flex flex-col justify-between h-[280px]">
+                <div className="bg-[#1A1A1A] p-5 rounded-3xl border border-[#D4A574]/20 shadow-sm flex flex-col justify-between h-[260px]">
                     <div>
-                        <div className="mb-6">
-                            <Zap className="w-5 h-5 text-[#D4A574]" />
+                        <div className="mb-4">
+                            <Zap className="w-4 h-4 text-[#D4A574]" />
                         </div>
-                        <h3 className="text-xs font-bold text-[#D4A574] uppercase tracking-widest mb-1">Dominant Schema</h3>
-                        <p className="text-[10px] text-[#FFFFFF]/50 font-medium uppercase tracking-tight">Top Trigger Mechanic</p>
+                        <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-1">Dominant Schema</h3>
+                        <p className="text-[9px] text-[#FFFFFF]/40 font-bold uppercase tracking-tight">Top Trigger Mechanic</p>
                     </div>
-                    <div className="mt-6 flex flex-col gap-1">
-                        <span className="text-2xl font-light text-[#FFFFFF] capitalize tracking-tight">
+                    <div className="mt-4 flex flex-col gap-1">
+                        <span className="text-xl font-light text-[#FFFFFF] capitalize tracking-tight">
                             {dominantTrigger ? dominantTrigger.label.replace(/_/g, ' ') : 'N/A'}
                         </span>
                         {dominantTrigger && (
-                            <span className="text-[11px] font-bold text-[#D4A574] tracking-wide">
+                            <span className="text-[10px] font-bold text-[#D4A574] tracking-wide">
                                 +{dominantTrigger.count} Deployments
                             </span>
                         )}
@@ -120,7 +120,7 @@ export default function AdAnalyticsTab({ brand }: { brand?: string | null }) {
                 </div>
 
                 {/* Tactical Window */}
-                <div className="bg-[#1A1A1A] p-8 rounded-3xl border border-[#D4A574]/20 shadow-sm flex flex-col justify-between relative overflow-hidden h-[280px]">
+                <div className="bg-[#1A1A1A] p-5 rounded-3xl border border-[#D4A574]/20 shadow-sm flex flex-col justify-between relative overflow-hidden h-[260px]">
                     {/* decorative background graph line */}
                     <div className="absolute bottom-0 left-0 right-0 h-1/2 opacity-10 pointer-events-none">
                         <svg viewBox="0 0 100 50" preserveAspectRatio="none" className="w-full h-full text-[#D4A574]">
@@ -128,14 +128,14 @@ export default function AdAnalyticsTab({ brand }: { brand?: string | null }) {
                         </svg>
                     </div>
                     <div>
-                        <div className="mb-6 relative z-10">
-                            <Clock className="w-5 h-5 text-[#D4A574]" />
+                        <div className="mb-4 relative z-10">
+                            <Clock className="w-4 h-4 text-[#D4A574]" />
                         </div>
-                        <h3 className="text-xs font-bold text-[#D4A574] uppercase tracking-widest mb-1 relative z-10">Predictive Window</h3>
-                        <p className="text-[10px] text-[#FFFFFF]/50 font-medium uppercase tracking-tight relative z-10">Creative Longevity</p>
+                        <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-1 relative z-10">Predictive Window</h3>
+                        <p className="text-[9px] text-[#FFFFFF]/40 font-bold uppercase tracking-tight relative z-10">Creative Longevity</p>
                     </div>
-                    <div className="mt-6 relative z-10">
-                        <span className="text-2xl font-light text-[#FFFFFF] tracking-tight">
+                    <div className="mt-4 relative z-10">
+                        <span className="text-xl font-light text-[#FFFFFF] tracking-tight">
                             Fatigue at Day 32
                         </span>
                     </div>
@@ -145,18 +145,18 @@ export default function AdAnalyticsTab({ brand }: { brand?: string | null }) {
             {/* 2. Forensic Trend Mapping (Middle Row) */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Trigger Radar */}
-                <div className="bg-[#1A1A1A] p-8 rounded-3xl border border-[#D4A574]/20 shadow-sm flex flex-col items-center">
-                    <h3 className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.2em] mb-8 self-start w-full border-b border-[#D4A574]/10 pb-4">
+                <div className="bg-[#1A1A1A] p-5 rounded-3xl border border-[#D4A574]/20 shadow-sm flex flex-col items-center">
+                    <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-6 self-start w-full border-b border-[#D4A574]/10 pb-4">
                         Trigger Distribution Map
                     </h3>
-                    <div className="w-full max-w-[320px]">
+                    <div className="w-full max-w-[300px]">
                         <RadarChart data={triggerMechanics.map((t: any) => ({ label: t.label, value: t.count }))} />
                     </div>
                 </div>
 
                 {/* Emotional Heatmap (Blocks) */}
-                <div className="bg-[#1A1A1A] p-8 rounded-3xl border border-[#D4A574]/20 shadow-sm flex flex-col">
-                    <h3 className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.2em] mb-8 border-b border-[#D4A574]/10 pb-4">
+                <div className="bg-[#1A1A1A] p-5 rounded-3xl border border-[#D4A574]/20 shadow-sm flex flex-col">
+                    <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-6 border-b border-[#D4A574]/10 pb-4">
                         Emotional DNA Heatmap
                     </h3>
                     <div className="flex-1 grid grid-cols-2 gap-3">

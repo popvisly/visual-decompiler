@@ -184,7 +184,7 @@ export default function AssetWorkspace({
                 <div className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6]">
                     <div className="md:sticky md:top-0 h-[50vh] md:h-screen p-8 flex flex-col justify-center items-center">
 
-                        <div className="w-full relative h-[80%] flex items-center justify-center overflow-hidden border border-[#D4A574] bg-[#1A1A1A] group rounded-none">
+                        <div className="w-full relative h-[80%] flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl">
                             {/* If multiple images, render a horizontal CSS scroll snap setup */}
                             <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide">
                                 {fileUrls.map((url, idx) => (
@@ -278,93 +278,89 @@ export default function AssetWorkspace({
                                         {/* Primary Mechanic & Confidence */}
                                         <div className="grid grid-cols-2 border-b border-[#E5E5E1] pb-12">
                                             <div>
-                                                <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 mb-2">Primary Mechanic</span>
-                                                <h2 className="text-3xl font-light leading-tight text-[#8B4513]">{extraction.primary_mechanic}</h2>
+                                                <span className="block text-[12px] uppercase tracking-widest font-bold text-[#D4A574] mb-3">Primary Mechanic</span>
+                                                <h2 className="text-[13px] font-bold uppercase tracking-[0.3em] text-[#8B4513]">{extraction.primary_mechanic}</h2>
                                             </div>
                                             <div className="pl-8 border-l border-[#E5E5E1] flex flex-col justify-center">
-                                                <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 mb-2">System Confidence</span>
+                                                <span className="block text-[12px] uppercase tracking-widest font-bold text-[#D4A574] mb-2">System Confidence</span>
                                                 <div className="text-4xl font-mono text-[#1A1A1A] tracking-tighter">
                                                     {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-[#8B4513]/50">%</span>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        {/* Visual Style */}
-                                        <div>
-                                            <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 mb-2">Synthesized Visual Style</span>
-                                            <p className="text-lg text-[#1A1A1A]">{extraction.visual_style}</p>
-                                        </div>
-
-                                        {/* Color Palette Grid */}
-                                        <div>
-                                            <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 mb-6 font-bold">Dominant Chromatic Base</span>
-                                            {extraction.color_palette && extraction.color_palette.length > 0 ? (
-                                                <div className="flex flex-wrap gap-4">
-                                                    {extraction.color_palette.map((hex: string, i: number) => (
-                                                        <div key={i} className="group border border-[#D4A574]/30 p-2 bg-[#1A1A1A] flex items-center gap-4 min-w-[140px] rounded-full">
-                                                            <div className="w-8 h-8 flex-shrink-0 border border-[#D4A574]/20 rounded-full" style={{ backgroundColor: hex }} />
-                                                            <span className="text-[10px] font-mono tracking-widest text-[#FFFFFF]/80 group-hover:text-[#D4A574] transition-colors">{hex}</span>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <div className="text-[10px] font-mono text-[#D4A574]/50">NO PALETTE DETECTED.</div>
-                                            )}
-                                        </div>
-
-                                        {/* DEEP SEMIOTIC DOSSIER */}
-                                        {extraction.full_dossier && (
-                                            <div className="pt-12 border-t border-[#D4A574]/20 space-y-6">
-                                                
-                                                {/* Narrative & Subtext Cards */}
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm">
-                                                        <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 font-bold">Narrative Framework</span>
-                                                        <p className="text-sm text-[#FFFFFF] leading-relaxed font-light">{extraction.full_dossier.narrative_framework}</p>
+                                        {/* Visual Style & Color Palette Grid */}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-b border-[#E5E5E1] pb-12">
+                                            <div>
+                                                <span className="block text-[12px] uppercase tracking-widest font-bold text-[#D4A574] mb-3">Synthesized Visual Style</span>
+                                                <p className="text-sm font-medium text-[#1A1A1A] leading-relaxed uppercase tracking-[0.1em]">{extraction.visual_style}</p>
+                                            </div>
+                                            <div className="pl-8 border-l border-[#E5E5E1]">
+                                                <span className="block text-[12px] uppercase tracking-widest font-bold text-[#D4A574] mb-6">Dominant Chromatic Base</span>
+                                                {extraction.color_palette && extraction.color_palette.length > 0 ? (
+                                                    <div className="flex flex-wrap gap-3">
+                                                        {extraction.color_palette.map((hex: string, i: number) => (
+                                                            <div key={i} className="group border border-[#D4A574]/30 p-1.5 bg-[#1A1A1A] flex items-center gap-2 rounded-full pr-3">
+                                                                <div className="w-5 h-5 flex-shrink-0 border border-[#D4A574]/20 rounded-full" style={{ backgroundColor: hex }} />
+                                                                <span className="text-[9px] font-mono tracking-tight text-[#FFFFFF]/80 group-hover:text-[#D4A574] transition-colors">{hex}</span>
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm">
-                                                        <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 font-bold">Semiotic Subtext</span>
-                                                        <p className="text-sm text-[#FFFFFF] leading-relaxed font-light">{extraction.full_dossier.semiotic_subtext}</p>
-                                                    </div>
-                                                </div>
-
-                                                {/* Plausible Readings Card */}
-                                                {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 rounded-3xl shadow-sm">
-                                                       <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2 font-bold">Plausible Readings</span>
-                                                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                            {extraction.full_dossier.possible_readings.map((reading, i) => (
-                                                                <div key={i} className="bg-[#1A1A1A]/50 border border-[#D4A574]/10 p-5 rounded-2xl">
-                                                                    <p className="text-sm font-medium text-[#D4A574] mb-3">{reading.reading}</p>
-                                                                    <div className="flex items-start gap-2 text-xs text-[#FFFFFF]/70">
-                                                                        <span className="text-[#D4A574]/50 mt-0.5">↳</span>
-                                                                        <span className="leading-relaxed">{reading.support.join(" • ")}</span>
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                       </div>
-                                                    </div>
+                                                ) : (
+                                                    <div className="text-[10px] font-mono text-[#D4A574]/50 uppercase tracking-widest">No Palette Detected.</div>
                                                 )}
+                                            </div>
+                                        </div>
 
-                                                {/* Strategic Archetype & Objections Cards */}
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 rounded-3xl shadow-sm">
-                                                        <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 font-bold">Archetype Posture</span>
-                                                        <p className="text-base text-[#FFFFFF] tracking-tight">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
+                                        {/* DEEP SEMIOTIC DOSSIER -> 3-COLUMN ELITE GRID */}
+                                        {extraction.full_dossier && (
+                                            <div className="pt-12 border-t border-[#D4A574]/20 space-y-8">
+                                                
+                                                {/* The Core 3-Column Grid: Narrative, Semiotics, Archetype */}
+                                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px]">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Narrative Framework</span>
+                                                        <p className="text-xs text-[#FFFFFF] leading-relaxed font-light">{extraction.full_dossier.narrative_framework}</p>
+                                                    </div>
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px]">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Semiotic Subtext</span>
+                                                        <p className="text-xs text-[#FFFFFF] leading-relaxed font-light">{extraction.full_dossier.semiotic_subtext}</p>
+                                                    </div>
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px]">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Archetype Posture</span>
+                                                        <p className="text-sm text-[#FFFFFF] tracking-tight mb-4">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
                                                         {(extraction.full_dossier.archetype_mapping as any)?.strategic_moves && (
-                                                            <div className="mt-6 space-y-3 p-4 bg-[#FBFBF6]/5 border border-[#D4A574]/10 rounded-2xl">
-                                                                {(extraction.full_dossier.archetype_mapping as any).strategic_moves.map((move: string, i: number) => (
-                                                                    <div key={i} className="flex gap-3 text-sm text-[#FFFFFF]/80 leading-relaxed group">
-                                                                        <div className="w-1.5 h-1.5 bg-[#D4A574]/40 rounded-full mt-1.5 shrink-0" />
+                                                            <div className="space-y-1.5 p-3 bg-white/5 border border-[#D4A574]/10 rounded-xl mt-auto">
+                                                                {(extraction.full_dossier.archetype_mapping as any).strategic_moves.slice(0, 2).map((move: string, i: number) => (
+                                                                    <div key={i} className="flex gap-2 text-[10px] text-[#FFFFFF]/70 leading-tight">
+                                                                        <div className="w-1 h-1 bg-[#D4A574]/40 rounded-full mt-1.5 shrink-0" />
                                                                         <span>{move}</span>
                                                                     </div>
                                                                 ))}
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 rounded-3xl shadow-sm">
-                                                        <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 font-bold">Objection Dismantled</span>
-                                                        <p className="text-sm text-[#FFFFFF] leading-relaxed font-light">{extraction.full_dossier.objection_dismantling}</p>
+                                                </div>
+
+                                                {/* Secondary Row: Readings and Objections */}
+                                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                                     {/* Plausible Readings Card */}
+                                                    {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
+                                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm">
+                                                           <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Plausible Readings</span>
+                                                           <div className="grid grid-cols-1 gap-4">
+                                                                {extraction.full_dossier.possible_readings.slice(0, 2).map((reading, i) => (
+                                                                    <div key={i} className="bg-[#1A1A1A]/50 border border-[#D4A574]/10 p-4 rounded-2xl">
+                                                                        <p className="text-xs font-medium text-[#D4A574] mb-2">{reading.reading}</p>
+                                                                        <p className="text-[10px] text-[#FFFFFF]/60 leading-relaxed italic">{reading.support.join(" • ")}</p>
+                                                                    </div>
+                                                                ))}
+                                                           </div>
+                                                        </div>
+                                                    )}
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm flex flex-col justify-center">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Objection Dismantled</span>
+                                                        <p className="text-sm text-[#FFFFFF] leading-relaxed font-light italic border-l-2 border-[#D4A574]/30 pl-4">{extraction.full_dossier.objection_dismantling}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -388,8 +384,8 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     {/* Trigger Distribution Radar */}
-                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 flex flex-col items-center rounded-3xl shadow-sm">
-                                        <h3 className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.2em] mb-8 self-start w-full border-b border-[#D4A574]/20 pb-4">
+                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col items-center rounded-3xl shadow-sm">
+                                        <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-8 self-start w-full border-b border-[#D4A574]/20 pb-4">
                                             Trigger Distribution Map
                                         </h3>
                                         <div className="w-full max-w-[320px]">
@@ -401,9 +397,9 @@ export default function AssetWorkspace({
                                     </div>
 
                                     {/* Emotional DNA Heatmap (Placeholder/Text Metric) */}
-                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 flex flex-col rounded-3xl shadow-sm">
+                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col rounded-3xl shadow-sm">
                                         <div className="w-full mb-6">
-                                            <h3 className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.2em] border-b border-[#D4A574]/20 pb-4">
+                                            <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest border-b border-[#D4A574]/20 pb-4">
                                                 Emotional DNA Heatmap
                                             </h3>
                                         </div>
@@ -436,7 +432,7 @@ export default function AssetWorkspace({
                         {activeTab === 'BLUEPRINT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {!blueprintData ? (
-                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-16 flex flex-col items-center justify-center text-center rounded-3xl shadow-sm">
+                                <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-10 flex flex-col items-center justify-center text-center rounded-3xl shadow-sm">
                                         <h3 className="text-[#D4A574] text-lg font-light mb-2">Production Blueprint Uninitialized</h3>
                                         <p className="text-[#FFFFFF]/70 text-sm max-w-sm mb-8">Synthesize the extraction data into elite execution constraints.</p>
                                         <button
@@ -453,14 +449,14 @@ export default function AssetWorkspace({
                                         {/* Iteration Test Plan (Remixing) */}
                                         {extraction?.full_dossier?.test_plan && (
                                             <div>
-                                                <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 font-bold">Iteration & Test Plan</span>
+                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Iteration & Test Plan</span>
                                                 <p className="text-sm text-[#FFFFFF] mb-6 border-l-2 border-[#D4A574] pl-4 italic">{extraction.full_dossier.test_plan.hypothesis}</p>
                                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                                     {extraction.full_dossier.test_plan.test_cells.map((cell: any, i: number) => (
-                                                        <div key={i} className="border border-[#D4A574]/20 p-8 bg-[#1A1A1A] flex flex-col rounded-3xl shadow-sm">
-                                                            <span className="text-[10px] font-bold tracking-widest text-[#D4A574] uppercase block mb-3 font-bold">{cell.lever}</span>
+                                                        <div key={i} className="border border-[#D4A574]/20 p-5 bg-[#1A1A1A] flex flex-col rounded-3xl shadow-sm">
+                                                            <span className="text-[11px] font-bold tracking-[0.2em] text-[#D4A574] uppercase block mb-3">{cell.lever}</span>
                                                             <p className="text-sm text-[#FFFFFF] font-light mb-4 leading-relaxed">{cell.change}</p>
-                                                            <p className="text-[9px] text-[#D4A574]/60 uppercase tracking-widest mt-auto border-t border-[#D4A574]/10 pt-4 font-bold">{cell.rationale}</p>
+                                                            <p className="text-[9px] text-[#D4A574]/60 uppercase tracking-[0.2em] mt-auto border-t border-[#D4A574]/10 pt-4 font-bold">{cell.rationale}</p>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -469,10 +465,10 @@ export default function AssetWorkspace({
 
                                         {/* DNA Prompt Code Block */}
                                         <div>
-                                            <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 font-bold">Verified DNA Prompt (Midjourney Native)</span>
+                                            <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Verified DNA Prompt (Midjourney Native)</span>
                                             <div className="relative group">
                                                 <div className="absolute top-4 right-4 text-[8px] font-bold text-[#D4A574] uppercase tracking-widest opacity-40">Forensic Copy</div>
-                                                <pre className="p-8 bg-[#1A1A1A] border border-[#D4A574]/30 text-[#FFFFFF] text-xs font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap rounded-3xl">
+                                                <pre className="p-5 bg-[#1A1A1A] border border-[#D4A574]/30 text-[#FFFFFF] text-xs font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap rounded-3xl">
                                                     {blueprintData.verified_dna_prompt}
                                                 </pre>
                                                 <button
@@ -486,12 +482,12 @@ export default function AssetWorkspace({
 
                                          {/* Execution Constraints Checklist */}
                                          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                             <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 rounded-3xl shadow-sm">
-                                                 <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 font-bold">Primary Trigger</span>
+                                             <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm">
+                                                 <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Primary Trigger</span>
                                                  <p className="text-xl text-[#FFFFFF] font-light leading-snug">{blueprintData.execution_constraints.primary_trigger}</p>
                                              </div>
-                                             <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 rounded-3xl shadow-sm">
-                                                 <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 font-bold">Technical Specs</span>
+                                             <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm">
+                                                 <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Technical Specs</span>
                                                  <ul className="space-y-4 text-sm text-[#FFFFFF]/80">
                                                      <li className="flex flex-col gap-1"><span className="text-[#D4A574] uppercase text-[9px] font-bold tracking-widest opacity-60">Lighting Architecture</span> <span className="text-sm">{blueprintData.technical_specs.lighting_architecture}</span></li>
                                                      <li className="flex flex-col gap-1"><span className="text-[#D4A574] uppercase text-[9px] font-bold tracking-widest opacity-60">Gaze Vector</span> <span className="text-sm">{blueprintData.technical_specs.gaze_vector}</span></li>
@@ -501,8 +497,8 @@ export default function AssetWorkspace({
                                          </div>
 
                                         {/* Brutalist [+] / [-] constraints */}
-                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 rounded-3xl shadow-sm">
-                                            <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2 font-bold">Strict Inclusion/Exclusion Constraints</span>
+                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm">
+                                            <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Strict Inclusion/Exclusion Constraints</span>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono text-xs">
                                                 <div className="space-y-4">
                                                     <span className="block text-[8px] font-bold text-[#D4A574] mb-2 uppercase tracking-[0.2em]">[+] Positive Benchmarks</span>
