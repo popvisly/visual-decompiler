@@ -195,7 +195,7 @@ export default function NeuralParticleHero() {
                 // Label
                 const fs = n.ring === 'inner' ? 10 : 8.5;
                 ctx.font = `${n.ring === 'inner' ? 600 : 400} ${fs}px "Inter",sans-serif`;
-                ctx.fillStyle = n.ring === 'inner' ? 'rgba(251,247,239,0.8)' : 'rgba(200,190,175,0.55)';
+                ctx.fillStyle = n.ring === 'inner' ? 'rgba(251,251,246,0.8)' : 'rgba(200,190,175,0.55)';
                 const off = n.radius * pulse + 7;
                 ctx.textAlign = n.x > W / 2 ? 'right' : 'left';
                 ctx.fillText(n.label, n.x > W / 2 ? n.x - off : n.x + off, n.y + fs * 0.35);
@@ -211,7 +211,7 @@ export default function NeuralParticleHero() {
 
     return (
         <div className="w-full max-w-[1200px] mx-auto mt-10 mb-4">
-            <div className="rounded-[28px] overflow-hidden bg-[#141414] border border-[#2A2A2A] shadow-[0_32px_100px_rgba(0,0,0,0.35)] flex flex-col lg:flex-row" style={{ minHeight: '440px' }}>
+            <div className="rounded-[28px] overflow-hidden bg-[#1A1A1A] border border-[#D4A574]/20 shadow-[0_32px_100px_rgba(0,0,0,0.35)] flex flex-col lg:flex-row" style={{ minHeight: '440px' }}>
 
                 {/* ── Left Panel: Title + Analysis Sections ── */}
                 <div className="lg:w-[320px] shrink-0 flex flex-col justify-center px-10 py-12 border-b lg:border-b-0 lg:border-r border-white/5">
@@ -252,10 +252,10 @@ export default function NeuralParticleHero() {
                             >
                                 <div className="w-px h-full bg-[#C1A67B]/20 shrink-0 mt-1" style={{ minHeight: '14px' }} />
                                 <div>
-                                    <span className="text-[13px] font-semibold text-[#FBF7EF]/70 tracking-wide group-hover:text-[#C1A67B] transition-colors duration-300">
+                                    <span className="text-[13px] font-semibold text-[#FBFBF6]/70 tracking-wide group-hover:text-[#C1A67B] transition-colors duration-300">
                                         {s.label}
                                     </span>
-                                    <p className="text-[10px] text-[#FBF7EF]/25 mt-0.5 leading-snug">{s.desc}</p>
+                                    <p className="text-[10px] text-[#FBFBF6]/25 mt-0.5 leading-snug">{s.desc}</p>
                                 </div>
                             </motion.div>
                         ))}
@@ -263,7 +263,7 @@ export default function NeuralParticleHero() {
 
                     {/* Bottom label */}
                     <div className="mt-10 pt-8 border-t border-white/5">
-                        <p className="text-[8px] font-mono text-[#FBF7EF]/15 uppercase tracking-[0.25em]">
+                        <p className="text-[8px] font-mono text-[#FBFBF6]/15 uppercase tracking-[0.25em]">
                             Visual Decompiler — Sovereignty Tier
                         </p>
                     </div>
@@ -274,7 +274,7 @@ export default function NeuralParticleHero() {
                     {/* Top label */}
                     <div className="absolute top-4 left-5 z-10 flex items-center gap-2">
                         <span className="w-1 h-1 rounded-full bg-[#C1A67B]/50 animate-pulse" />
-                        <span className="text-[8px] font-mono text-[#FBF7EF]/20 uppercase tracking-[0.25em]">
+                        <span className="text-[8px] font-mono text-[#FBFBF6]/20 uppercase tracking-[0.25em]">
                             Neural Map — Live
                         </span>
                     </div>

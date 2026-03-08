@@ -42,19 +42,19 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
     }, []);
 
     return (
-        <header className="fixed top-0 inset-x-0 z-50 pointer-events-none px-4 md:px-6">
-            <div className="mx-auto max-w-7xl mt-5">
+        <header className="fixed top-8 inset-x-0 z-50 pointer-events-none px-4 md:px-8">
+            <div className="mx-auto max-w-7xl">
                 <div
                     className={`
                         pointer-events-auto
                         flex items-center justify-between
-                        px-5 py-3
-                        rounded-none
+                        px-8 py-4
+                        rounded-full
                         border
-                        shadow-[0_8px_32px_rgba(20,20,20,0.06)]
+                        shadow-[0_12px_48px_rgba(212,165,116,0.12)]
                         ${forceDark
-                            ? 'bg-[#141414]/90 backdrop-blur-2xl border-white/20'
-                            : 'bg-white/90 backdrop-blur-2xl border-black/20'
+                            ? 'bg-[#1A1A1A]/95 backdrop-blur-2xl border-[#D4A574]/20'
+                            : 'bg-white/90 backdrop-blur-2xl border-[#D4A574]/10'
                         }
                     `}
                 >

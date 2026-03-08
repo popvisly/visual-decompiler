@@ -13,4 +13,8 @@
     - [x] Reskin AdAnalyticsTab to Charcoal/Tan theme
     - [x] Update CircularGauge & RadarChart for dark background contrast
 - [x] Vault Reskin: Apply high-contrast tiles to vault cards
-- [x] Production Verification: Trigger forced redeploy and verify all components
+- [x] Global Branding Fixes:
+    - [x] Update `UnifiedSovereignHeader` to curved/floating design
+    - [x] Force `Hero.tsx` background to Bone-White (#FBFBF6)
+    - [x] Realign `NeuralParticleHero` colors to Bone-White/Charcoal
+- [x] Final Consistency Audit & Deployment
