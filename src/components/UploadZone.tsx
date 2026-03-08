@@ -208,7 +208,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
                         <p className="text-[12px] text-[#6B6B6B]">This creative is already in your agency library.</p>
                     </div>
                     <a
-                        href={`/dashboard/${duplicateId}`}
+                        href={`/asset/${duplicateId}`}
                         className="px-6 py-2.5 bg-[#BB9E7B] text-white rounded-xl text-[12px] font-bold uppercase tracking-widest hover:opacity-90 transition-all shadow-lg shadow-[#BB9E7B]/20"
                     >
                         View Deconstruction

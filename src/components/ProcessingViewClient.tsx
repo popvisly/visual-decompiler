@@ -77,14 +77,14 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
                     if ((data.status === 'processed' || data.status === 'needs_review') && data.digest) {
                         if (!cancelled) {
                             if (onComplete) onComplete(data);
-                            else router.push(`/dashboard/${jobId}?new=true`);
+                            else router.push(`/asset/${jobId}?new=true`);
                         }
                         return;
                     }
                     if (data.status === 'failed') {
                         if (!cancelled) {
                             if (onComplete) onComplete({ ...data, _error: 'Analysis failed. Please try again.' });
-                            else router.push('/dashboard?error=analysis_failed');
+                            else router.push('/vault?error=analysis_failed');
                         }
                         return;
                     }
@@ -232,7 +232,7 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
                 {/* Return to Library */}
                 <div className="flex flex-col items-center gap-4 pt-2">
                     <a
-                        href="/dashboard"
+                        href="/vault"
                         className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-[11px] font-bold uppercase tracking-[0.2em] text-[#141414]/60 border border-[#E7DED1] bg-white/50 hover:bg-white hover:border-[#C1A67B]/40 hover:text-[#141414] hover:shadow-[0_10px_30px_rgba(20,20,20,0.06)] transition-all"
                     >
                         <Library className="w-3.5 h-3.5" />

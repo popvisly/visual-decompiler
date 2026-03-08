@@ -30,7 +30,7 @@ export default function V1App() {
 
     const handleProcessingComplete = useCallback((data: any) => {
         const id = data.id || ('jobId' in state ? (state as any).jobId : '');
-        router.push(`/dashboard/${id}?new=true`);
+        router.push(`/asset/${id}?new=true`);
     }, [router, state]);
 
     const handleReset = useCallback(() => {
