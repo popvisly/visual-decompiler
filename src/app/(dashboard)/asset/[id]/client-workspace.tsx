@@ -5,6 +5,7 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianG
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { SovereignPrintHeader, SovereignPrintFooter } from '@/components/SovereignDossierParts';
 import AdAnalyticsTab from '@/components/AdAnalyticsTab';
+import RadarChart from '@/components/RadarChart';
 import { FileDown, Code } from 'lucide-react';
 
 interface WorkspaceAsset {
@@ -96,7 +97,7 @@ export default function AssetWorkspace({
     agency: any
 }) {
     const [asset, setAsset] = useState(initialAsset);
-    const [activeTab, setActiveTab] = useState<'EXTRACTION' | 'PACING' | 'BLUEPRINT' | 'ANALYTICS'>('EXTRACTION');
+    const [activeTab, setActiveTab] = useState<'INTELLIGENCE' | 'MARKET PULSE' | 'PSYCHOLOGY' | 'BLUEPRINT'>('INTELLIGENCE');
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
     const [isGeneratingBlueprint, setIsGeneratingBlueprint] = useState(false);
     const [showGatekeeper, setShowGatekeeper] = useState(false);
@@ -276,14 +277,14 @@ export default function AssetWorkspace({
 
                     {/* Minimalist Segmented Controls */}
                     <div className="sticky top-0 z-10 bg-black/95 backdrop-blur-md border-b border-neutral-800 px-8 pt-8 md:pt-12 pb-0 flex gap-8">
-                        {(['EXTRACTION', 'ANALYTICS', 'PACING', 'BLUEPRINT'] as const).map(tab => (
+                        {(['INTELLIGENCE', 'MARKET PULSE', 'PSYCHOLOGY', 'BLUEPRINT'] as const).map(tab => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
                                 className={`pb-4 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors relative ${activeTab === tab ? 'text-white' : 'text-neutral-600 hover:text-neutral-400'
                                     }`}
                             >
-                                {tab === 'PACING' ? 'PACING / FUNNEL' : tab}
+                                {tab}
                                 {activeTab === tab && (
                                     <div className="absolute bottom-0 left-0 w-full h-[2px] bg-white" />
                                 )}
@@ -296,8 +297,8 @@ export default function AssetWorkspace({
                         {/* Sovereign PDF Header */}
                         <SovereignPrintHeader agency={agency} />
 
-                        {/* TAB 1: EXTRACTION */}
-                        {activeTab === 'EXTRACTION' && (
+                        {/* TAB 1: INTELLIGENCE */}
+                        {activeTab === 'INTELLIGENCE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
                                     <div className="space-y-12">
@@ -341,31 +342,31 @@ export default function AssetWorkspace({
 
                                         {/* DEEP SEMIOTIC DOSSIER */}
                                         {extraction.full_dossier && (
-                                            <div className="pt-12 border-t border-neutral-800 space-y-12">
+                                            <div className="pt-12 border-t border-neutral-800 space-y-6">
                                                 
-                                                {/* Narrative & Subtext */}
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                                    <div>
-                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-2">Narrative Framework</span>
-                                                        <p className="text-sm text-neutral-300 leading-relaxed">{extraction.full_dossier.narrative_framework}</p>
+                                                {/* Narrative & Subtext Cards */}
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    <div className="border border-neutral-800 bg-neutral-950 p-6 flex flex-col hover:border-neutral-700 transition-colors">
+                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-4 border-b border-neutral-800/50 pb-2">Narrative Framework</span>
+                                                        <p className="text-sm text-neutral-300 leading-relaxed font-light">{extraction.full_dossier.narrative_framework}</p>
                                                     </div>
-                                                    <div>
-                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-2">Semiotic Subtext</span>
-                                                        <p className="text-sm text-neutral-300 leading-relaxed">{extraction.full_dossier.semiotic_subtext}</p>
+                                                    <div className="border border-neutral-800 bg-neutral-950 p-6 flex flex-col hover:border-neutral-700 transition-colors">
+                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-4 border-b border-neutral-800/50 pb-2">Semiotic Subtext</span>
+                                                        <p className="text-sm text-neutral-300 leading-relaxed font-light">{extraction.full_dossier.semiotic_subtext}</p>
                                                     </div>
                                                 </div>
 
-                                                {/* Possible Readings (If Ambiguous) */}
+                                                {/* Plausible Readings Card */}
                                                 {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
-                                                    <div>
-                                                       <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-4">Plausible Readings</span>
-                                                       <div className="space-y-4">
+                                                    <div className="border border-neutral-800 bg-neutral-950 p-6">
+                                                       <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-6 border-b border-neutral-800/50 pb-2">Plausible Readings</span>
+                                                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                             {extraction.full_dossier.possible_readings.map((reading, i) => (
-                                                                <div key={i} className="border border-neutral-800 p-6 bg-neutral-950">
-                                                                    <p className="text-sm font-medium text-white mb-2">{reading.reading}</p>
+                                                                <div key={i} className="bg-black border border-neutral-800 p-5">
+                                                                    <p className="text-sm font-medium text-white mb-3">{reading.reading}</p>
                                                                     <div className="flex items-start gap-2 text-xs text-neutral-400">
                                                                         <span className="text-neutral-600 mt-0.5">↳</span>
-                                                                        <span>{reading.support.join(" • ")}</span>
+                                                                        <span className="leading-relaxed">{reading.support.join(" • ")}</span>
                                                                     </div>
                                                                 </div>
                                                             ))}
@@ -373,45 +374,27 @@ export default function AssetWorkspace({
                                                     </div>
                                                 )}
 
-                                                {/* Strategic Archetype & Objections */}
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-neutral-950 border border-neutral-800 p-8">
-                                                    <div>
-                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-2">Archetype Posture</span>
+                                                {/* Strategic Archetype & Objections Cards */}
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    <div className="border border-neutral-800 bg-neutral-950 p-6">
+                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-4 border-b border-neutral-800/50 pb-2">Archetype Posture</span>
                                                         <p className="text-base text-white tracking-tight">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
                                                         {extraction.full_dossier.archetype_mapping?.strategic_moves && (
-                                                            <div className="mt-4 space-y-2">
+                                                            <div className="mt-6 space-y-3 p-4 bg-black border border-neutral-800/50">
                                                                 {extraction.full_dossier.archetype_mapping.strategic_moves.map((move, i) => (
-                                                                    <div key={i} className="text-xs text-neutral-400 flex items-start gap-2">
-                                                                        <div className="w-1 h-1 bg-neutral-600 rounded-full mt-1.5 shrink-0" />
-                                                                        <span>{move}</span>
+                                                                    <div key={i} className="text-xs text-neutral-400 flex items-start gap-3">
+                                                                        <div className="w-1.5 h-1.5 bg-neutral-600 rounded-none mt-1 shrink-0" />
+                                                                        <span className="leading-tight">{move}</span>
                                                                     </div>
                                                                 ))}
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <div>
-                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-2">Objection Dismantled</span>
-                                                        <p className="text-sm text-neutral-300 leading-relaxed">{extraction.full_dossier.objection_dismantling}</p>
+                                                    <div className="border border-neutral-800 bg-neutral-950 p-6">
+                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-4 border-b border-neutral-800/50 pb-2">Objection Dismantled</span>
+                                                        <p className="text-sm text-neutral-300 leading-relaxed font-light">{extraction.full_dossier.objection_dismantling}</p>
                                                     </div>
                                                 </div>
-
-                                                {/* Iteration Test Plan */}
-                                                {extraction.full_dossier.test_plan && (
-                                                    <div>
-                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-4">Iteration & Test Plan</span>
-                                                        <p className="text-sm text-neutral-300 mb-6 border-l-2 border-neutral-800 pl-4">{extraction.full_dossier.test_plan.hypothesis}</p>
-                                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                                            {extraction.full_dossier.test_plan.test_cells.map((cell, i) => (
-                                                                <div key={i} className="border border-neutral-800 p-4 bg-black">
-                                                                    <span className="text-[10px] font-bold tracking-widest text-neutral-300 uppercase block mb-2">{cell.lever}</span>
-                                                                    <p className="text-xs text-white break-words mb-2">{cell.change}</p>
-                                                                    <p className="text-[10px] text-neutral-500 uppercase tracking-widest">{cell.rationale}</p>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-
                                             </div>
                                         )}
                                     </div>
@@ -421,94 +404,75 @@ export default function AssetWorkspace({
                             </div>
                         )}
 
-                        {/* NEW TAB: ANALYTICS */}
-                        {activeTab === 'ANALYTICS' && (
+                        {/* NEW TAB: MARKET PULSE */}
+                        {activeTab === 'MARKET PULSE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <AdAnalyticsTab brand={asset.brand?.name} />
                             </div>
                         )}
 
-                        {/* TAB 2: PACING / FUNNEL */}
-                        {activeTab === 'PACING' && (
+                        {/* TAB 3: PSYCHOLOGY */}
+                        {activeTab === 'PSYCHOLOGY' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                {!isCarousel ? (
-                                    <div className="border border-neutral-800 border-dashed p-12 text-center text-neutral-500 text-[10px] uppercase tracking-[0.2em] font-bold">
-                                        Pacing analysis unavailable. Sequence diagnostics require multi-frame Carousel format.
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    {/* Trigger Distribution Radar */}
+                                    <div className="border border-neutral-800 bg-neutral-950 p-8 flex flex-col items-center justify-center">
+                                        <div className="w-full mb-6">
+                                            <span className="block text-[9px] uppercase tracking-widest text-neutral-500 border-b border-neutral-800/50 pb-2">Trigger Distribution</span>
+                                        </div>
+                                        <div className="w-full max-w-[300px]">
+                                            <RadarChart
+                                                data={[
+                                                    { label: 'Visual Appeal', value: extraction?.primary_mechanic?.includes('Aesthetic') ? 95 : 70 },
+                                                    { label: 'Status / Prestige', value: extraction?.primary_mechanic?.includes('Status') ? 90 : 60 },
+                                                    { label: 'Trust / Legacy', value: extraction?.full_dossier?.archetype_mapping?.target_posture?.includes('Authority') ? 85 : 55 },
+                                                    { label: 'Intellectual', value: extraction?.primary_mechanic?.includes('Minimalism') ? 80 : 40 },
+                                                    { label: 'Urgency', value: extraction?.full_dossier?.objection_dismantling?.includes('Time') ? 75 : 30 }
+                                                ]}
+                                            />
+                                        </div>
                                     </div>
-                                ) : (
-                                    <div className="space-y-12">
-                                        {!sequenceData ? (
-                                            <div className="border border-neutral-800 bg-neutral-950 p-12 flex flex-col items-center justify-center text-center">
-                                                <h3 className="text-white text-lg font-light mb-2">Sequential Architecture Dormant</h3>
-                                                <p className="text-neutral-500 text-sm max-w-sm mb-8">Execute the neural sequence analysis to generate the tension graph and map funnel friction.</p>
-                                                <button
-                                                    onClick={handleGenerateSequence}
-                                                    disabled={isGeneratingPacing}
-                                                    className="bg-white text-black px-6 py-3 text-[10px] font-bold tracking-widest uppercase hover:bg-neutral-300 transition-colors disabled:opacity-50"
-                                                >
-                                                    {isGeneratingPacing ? 'Analyzing Sequence...' : 'Generate Sequence Analysis'}
-                                                </button>
-                                            </div>
-                                        ) : (
-                                            <div className="space-y-12">
-                                                {/* Tension Graph */}
-                                                <div>
-                                                    <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase text-neutral-500 mb-8 border-b border-neutral-800 pb-4">
-                                                        Narrative Tension Graph
-                                                    </h3>
-                                                    <div className="w-full h-[300px] relative">
-                                                        <ResponsiveContainer width="100%" height="100%">
-                                                            <LineChart data={sequenceData.tension_graph.labels.map((lbl: string, i: number) => ({
-                                                                name: lbl,
-                                                                cognitive: sequenceData.tension_graph.cognitive_load_scores[i],
-                                                                retention: sequenceData.tension_graph.aesthetic_retention_scores[i]
-                                                            }))}>
-                                                                <CartesianGrid stroke="#1a1a1a" vertical={false} />
-                                                                <XAxis dataKey="name" stroke="#555" tick={{ fontSize: 10, fill: '#888' }} axisLine={false} tickLine={false} />
-                                                                <YAxis stroke="#555" tick={{ fontSize: 10, fill: '#888' }} axisLine={false} tickLine={false} domain={[0, 100]} />
-                                                                <Tooltip
-                                                                    contentStyle={{ backgroundColor: '#000', border: '1px solid #333', borderRadius: 0, textTransform: 'uppercase', fontSize: '10px', letterSpacing: '0.1em' }}
-                                                                    itemStyle={{ color: '#fff' }}
-                                                                />
-                                                                <Line type="monotone" dataKey="cognitive" name="Cognitive Load" stroke="#444" strokeWidth={1} dot={{ r: 3, fill: '#000', stroke: '#444' }} />
-                                                                <Line type="monotone" dataKey="retention" name="Aesthetic Retention" stroke="#fff" strokeWidth={1} dot={{ r: 3, fill: '#000', stroke: '#fff' }} />
-                                                            </LineChart>
-                                                        </ResponsiveContainer>
-                                                    </div>
+                                    
+                                    {/* Emotional DNA Heatmap (Placeholder/Text Metric) */}
+                                    <div className="border border-neutral-800 bg-neutral-950 p-8 flex flex-col">
+                                        <div className="w-full mb-6">
+                                            <span className="block text-[9px] uppercase tracking-widest text-neutral-500 border-b border-neutral-800/50 pb-2">Emotional DNA</span>
+                                        </div>
+                                        <div className="flex-1 flex flex-col justify-center space-y-6">
+                                            <div>
+                                                <div className="flex justify-between text-[10px] text-neutral-400 font-bold uppercase tracking-widest mb-2">
+                                                    <span>Aspirational Gap</span>
+                                                    <span className="text-white">High</span>
                                                 </div>
-
-                                                {/* Frames Data */}
-                                                <div>
-                                                    <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase text-neutral-500 mb-6 border-b border-neutral-800 pb-4">
-                                                        Frame Friction Diagnosis
-                                                    </h3>
-                                                    <div className="space-y-4">
-                                                        {sequenceData.frames.map((frame: SequenceData['frames'][0], i: number) => (
-                                                            <div key={i} className="border border-neutral-800 bg-neutral-950 p-4 flex flex-col gap-2">
-                                                                <div className="flex items-center gap-4 mb-2">
-                                                                    <div className="bg-white text-black text-[9px] font-bold px-2 py-0.5 tracking-widest">F_{frame.frame_index}</div>
-                                                                    <span className="text-white text-sm uppercase tracking-wider">{frame.role}</span>
-                                                                </div>
-                                                                <p className="text-sm text-neutral-400">{frame.visual_mechanic}</p>
-                                                                {frame.friction_warnings && frame.friction_warnings.length > 0 && (
-                                                                    <div className="mt-2 text-[10px] tracking-wide text-neutral-500 uppercase list-disc list-inside">
-                                                                        {frame.friction_warnings.map((w: string, j: number) => (
-                                                                            <div key={j} className="text-red-900/80">[-] {w}</div>
-                                                                        ))}
-                                                                    </div>
-                                                                )}
-                                                            </div>
-                                                        ))}
-                                                    </div>
+                                                <div className="w-full bg-black h-1.5 border border-neutral-800">
+                                                    <div className="h-full bg-[#BB9E7B] w-[85%]" />
                                                 </div>
                                             </div>
-                                        )}
+                                            <div>
+                                                <div className="flex justify-between text-[10px] text-neutral-400 font-bold uppercase tracking-widest mb-2">
+                                                    <span>Accessibility Friction</span>
+                                                    <span className="text-white">Max</span>
+                                                </div>
+                                                <div className="w-full bg-black h-1.5 border border-neutral-800">
+                                                    <div className="h-full bg-neutral-400 w-[95%]" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="flex justify-between text-[10px] text-neutral-400 font-bold uppercase tracking-widest mb-2">
+                                                    <span>Rational Justification</span>
+                                                    <span className="text-white">Low</span>
+                                                </div>
+                                                <div className="w-full bg-black h-1.5 border border-neutral-800">
+                                                    <div className="h-full bg-neutral-700 w-[30%]" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                )}
+                                </div>
                             </div>
                         )}
 
-                        {/* TAB 3: BLUEPRINT */}
+                        {/* TAB 4: BLUEPRINT */}
                         {activeTab === 'BLUEPRINT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {!blueprintData ? (
@@ -525,6 +489,23 @@ export default function AssetWorkspace({
                                     </div>
                                 ) : (
                                     <div className="space-y-12">
+
+                                        {/* Iteration Test Plan (Remixing) */}
+                                        {extraction?.full_dossier?.test_plan && (
+                                            <div>
+                                                <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-4 border-b border-neutral-800 pb-2">Iteration & Test Plan</span>
+                                                <p className="text-sm text-neutral-300 mb-6 border-l-2 border-[#BB9E7B] pl-4">{extraction.full_dossier.test_plan.hypothesis}</p>
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                                    {extraction.full_dossier.test_plan.test_cells.map((cell: any, i: number) => (
+                                                        <div key={i} className="border border-neutral-800 p-6 bg-neutral-950 flex flex-col">
+                                                            <span className="text-[10px] font-bold tracking-widest text-[#BB9E7B] uppercase block mb-3">{cell.lever}</span>
+                                                            <p className="text-sm text-white font-light mb-4">{cell.change}</p>
+                                                            <p className="text-[9px] text-neutral-500 uppercase tracking-widest mt-auto border-t border-neutral-800/50 pt-3">{cell.rationale}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
 
                                         {/* DNA Prompt Code Block */}
                                         <div>
