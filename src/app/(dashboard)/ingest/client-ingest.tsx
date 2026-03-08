@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
+import { supabaseClient } from '@/lib/supabase-client';
 
 export default function IngestClient({ isSovereign }: { isSovereign: boolean }) {
     const router = useRouter();
@@ -50,14 +51,9 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
             const formData = new FormData();
             formData.append('file', file);
 
-            // Fetch cookie locally to pass explicit auth header
-            const getCookie = (name: string) => {
-                const value = `; ${document.cookie}`;
-                const parts = value.split(`; ${name}=`);
-                if (parts.length === 2) return parts.pop()?.split(';').shift();
-                return '';
-            };
-            const token = getCookie('sb-access-token');
+            // Fetch fresh session token dynamically
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            const token = session?.access_token;
 
             const res = await fetch('/api/vault-ingest', {
                 method: 'POST',

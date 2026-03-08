@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { Upload, Link as LinkIcon, Loader2 } from 'lucide-react';
 import { uploadAdMedia } from '@/lib/storage';
+import { supabaseClient } from '@/lib/supabase-client';
 
 type UploadResult = {
     jobId: string;
@@ -36,13 +37,8 @@ export default function UploadZone({ onUploadComplete }: Props) {
         setIsUploading(true);
         setError(null);
         try {
-            const getCookie = (name: string) => {
-                const value = `; ${document.cookie}`;
-                const parts = value.split(`; ${name}=`);
-                if (parts.length === 2) return parts.pop()?.split(';').shift();
-                return '';
-            };
-            const token = getCookie('sb-access-token');
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            const token = session?.access_token;
 
             const res = await fetch('/api/ingest', {
                 method: 'POST',
