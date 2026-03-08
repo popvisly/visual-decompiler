@@ -66,7 +66,7 @@ export default async function HomePage() {
     const { userId } = await getServerSession();
 
     return (
-        <main className="bg-[#F6F1E7]">
+        <main className="bg-[#F5F5DC]">
             <UnifiedSovereignHeader />
 
             <Hero
