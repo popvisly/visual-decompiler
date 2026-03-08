@@ -35,22 +35,51 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Agency Sovereignty Tier Required' }, { status: 403 });
         }
 
-        // Parse FormData
-        const formData = await req.formData();
-        const file = formData.get('file') as File | null;
+        // Handle both FormData (file) and JSON (mediaUrl)
+        const contentType = req.headers.get('content-type') || '';
+        let buffer: Buffer;
+        let fileExt = 'png';
+        let mimeType = 'image/jpeg';
 
-        if (!file) {
-            return NextResponse.json({ error: 'No file uploaded.' }, { status: 400 });
+        if (contentType.includes('application/json')) {
+            const body = await req.json();
+            const mediaUrl = body.mediaUrl;
+            if (!mediaUrl) {
+                return NextResponse.json({ error: 'No mediaUrl provided.' }, { status: 400 });
+            }
+            
+            const fetchRes = await fetch(mediaUrl);
+            if (!fetchRes.ok) {
+                return NextResponse.json({ error: 'Failed to fetch media from URL.' }, { status: 400 });
+            }
+            
+            mimeType = fetchRes.headers.get('content-type') || 'image/jpeg';
+            if (!mimeType.startsWith('image/')) {
+                return NextResponse.json({ error: 'Only images are supported for Ingestion currently.' }, { status: 400 });
+            }
+            
+            const arrayBuffer = await fetchRes.arrayBuffer();
+            buffer = Buffer.from(new Uint8Array(arrayBuffer));
+            fileExt = mimeType.split('/')[1] || 'png';
+        } else if (contentType.includes('multipart/form-data')) {
+            const formData = await req.formData();
+            const file = formData.get('file') as File | null;
+
+            if (!file) {
+                return NextResponse.json({ error: 'No file uploaded.' }, { status: 400 });
+            }
+
+            if (!file.type.startsWith('image/')) {
+                return NextResponse.json({ error: 'Only images are supported for Ingestion currently.' }, { status: 400 });
+            }
+
+            fileExt = file.name.split('.').pop() || 'png';
+            mimeType = file.type;
+            const arrayBuffer = await file.arrayBuffer();
+            buffer = Buffer.from(new Uint8Array(arrayBuffer));
+        } else {
+            return NextResponse.json({ error: 'Unsupported Content-Type. Use multipart/form-data or application/json.' }, { status: 400 });
         }
-
-        if (!file.type.startsWith('image/')) {
-            return NextResponse.json({ error: 'Only images are supported for Ingestion currently.' }, { status: 400 });
-        }
-
-        // 1. Process & Compress Image locally
-        const fileExt = file.name.split('.').pop() || 'png';
-        const arrayBuffer = await file.arrayBuffer();
-        let buffer: Buffer = Buffer.from(new Uint8Array(arrayBuffer));
 
         // Compress image to max 1024px longest side
         buffer = await sharp(buffer)
@@ -76,7 +105,7 @@ export async function POST(req: Request) {
         // supabaseAdmin uses process.env.SUPABASE_SERVICE_ROLE_KEY
         const { error: uploadError } = await supabaseAdmin.storage
             .from('vault-assets')
-            .upload(filePath, buffer, { contentType: file.type });
+            .upload(filePath, buffer, { contentType: mimeType });
 
         if (uploadError) throw uploadError;
 
@@ -133,7 +162,6 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
 Analyze the media provided. Stay clinical, elite, and forensic in your tone.`;
 
         const base64Data = buffer.toString('base64');
-        const mimeType = file.type;
 
         type AuthImageMedia = "image/jpeg" | "image/png" | "image/webp" | "image/gif";
         type ContentBlock =
