@@ -446,40 +446,50 @@ export default function AssetWorkspace({
                                 {extraction ? (
                                     <div className="space-y-12">
 
-                                        {/* Primary Mechanic & Confidence */}
-                                        <div className="grid grid-cols-2 border-b border-[#E5E5E1] pb-12">
-                                            <div>
-                                                <span className="block text-[12px] uppercase tracking-widest font-bold text-[#D4A574] mb-3">Primary Mechanic</span>
-                                                <h2 className="text-[13px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">{extraction.primary_mechanic}</h2>
+                                        {/* Top 4 Extraction Metrics as Intelligence Cards */}
+                                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-2">
+                                            
+                                            {/* Primary Mechanic */}
+                                            <div className="col-span-1 lg:col-span-2 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-3xl p-6 shadow-sm flex flex-col justify-center min-h-[140px]">
+                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 self-start w-full">Primary Mechanic</span>
+                                                <h2 className="text-lg lg:text-xl font-light uppercase tracking-[0.2em] text-[#FFFFFF] leading-snug mt-2">
+                                                    {extraction.primary_mechanic}
+                                                </h2>
                                             </div>
-                                            <div className="pl-8 border-l border-[#E5E5E1] flex flex-col justify-center">
-                                                <span className="block text-[12px] uppercase tracking-widest font-bold text-[#D4A574] mb-2">System Confidence</span>
-                                                <div className="text-4xl font-mono text-[#1A1A1A] tracking-tighter">
-                                                    {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-[#8B4513]/50">%</span>
+
+                                            {/* System Confidence */}
+                                            <div className="col-span-1 border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[140px]">
+                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 self-start w-full">System Confidence</span>
+                                                <div className="text-5xl font-mono text-[#FFFFFF] tracking-tighter mt-auto self-end">
+                                                    {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-[#D4A574]/50">%</span>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        {/* Visual Style & Color Palette Grid */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-b border-[#E5E5E1] pb-12">
-                                            <div>
-                                                <span className="block text-[12px] uppercase tracking-widest font-bold text-[#D4A574] mb-3">Synthesized Visual Style</span>
-                                                <p className="text-sm font-medium text-[#1A1A1A] leading-relaxed uppercase tracking-[0.1em]">{extraction.visual_style}</p>
+                                            {/* Visual Style */}
+                                            <div className="col-span-1 lg:col-span-2 border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-6 shadow-sm flex flex-col min-h-[140px]">
+                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 self-start w-full">Synthesized Visual Style</span>
+                                                <p className="text-sm text-[#FFFFFF] font-light leading-relaxed uppercase tracking-[0.15em] mt-2">
+                                                    {extraction.visual_style}
+                                                </p>
                                             </div>
-                                            <div className="pl-8 border-l border-[#E5E5E1]">
-                                                <span className="block text-[12px] uppercase tracking-widest font-bold text-[#D4A574] mb-6">Dominant Chromatic Base</span>
-                                                {extraction.color_palette && extraction.color_palette.length > 0 ? (
-                                                    <div className="flex flex-wrap gap-3">
-                                                        {extraction.color_palette.map((hex: string, i: number) => (
-                                                            <div key={i} className="group border border-[#D4A574]/30 p-1.5 bg-[#1A1A1A] flex items-center gap-2 rounded-full pr-3">
-                                                                <div className="w-5 h-5 flex-shrink-0 border border-[#D4A574]/20 rounded-full" style={{ backgroundColor: hex }} />
-                                                                <span className="text-[9px] font-mono tracking-tight text-[#FFFFFF]/80 group-hover:text-[#D4A574] transition-colors">{hex}</span>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                ) : (
-                                                    <div className="text-[10px] font-mono text-[#D4A574]/50 uppercase tracking-widest">No Palette Detected.</div>
-                                                )}
+
+                                            {/* Color Palette */}
+                                            <div className="col-span-1 border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-6 shadow-sm flex flex-col min-h-[140px]">
+                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 self-start w-full">Chromatic Base</span>
+                                                <div className="mt-auto">
+                                                    {extraction.color_palette && extraction.color_palette.length > 0 ? (
+                                                        <div className="flex flex-wrap gap-2">
+                                                            {extraction.color_palette.map((hex: string, i: number) => (
+                                                                <div key={i} className="group border border-[#D4A574]/30 p-1.5 bg-[#1A1A1A]/80 flex items-center gap-2 rounded-full pr-3 relative hover:scale-[1.02] transition-transform">
+                                                                    <div className="w-4 h-4 flex-shrink-0 border border-[#D4A574]/20 rounded-full" style={{ backgroundColor: hex }} />
+                                                                    <span className="text-[8px] font-mono tracking-widest text-[#FFFFFF]/70 group-hover:text-[#D4A574] transition-colors">{hex}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-[10px] font-mono text-[#D4A574]/50 uppercase tracking-widest">No Palette Detected.</div>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
 
