@@ -570,7 +570,7 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     {/* Trigger Distribution Radar */}
-                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col items-center rounded-3xl shadow-sm">
+                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col items-center rounded-3xl shadow-sm self-start">
                                         <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-8 self-start w-full border-b border-[#D4A574]/20 pb-4">
                                             Trigger Distribution Map
                                         </h3>
