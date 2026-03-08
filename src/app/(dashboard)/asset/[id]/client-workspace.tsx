@@ -111,11 +111,16 @@ const ANALYSIS_STEPS = [
     'Assembling intelligence report',
 ];
 
+const SIGNAL_NODES = [
+    'Trigger', 'Narrative', 'Evidence',
+    'Subtext', 'Archetype', 'Confidence',
+];
+
 function SovereignProcessingView({ assetId }: { assetId: string }) {
     const [step, setStep] = useState(0);
     const [progress, setProgress] = useState(0);
+    const [activeNode, setActiveNode] = useState(0);
 
-    // Hardcode some typing logic for react hooks from 'react' that are already imported at top of file
     useEffect(() => {
         const interval = setInterval(() => setStep((s) => (s + 1) % ANALYSIS_STEPS.length), 3000);
         return () => clearInterval(interval);
@@ -128,6 +133,11 @@ function SovereignProcessingView({ assetId }: { assetId: string }) {
                 return Math.min(95, p + 2 + Math.floor(Math.random() * 4));
             });
         }, 1800);
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => setActiveNode((n) => (n + 1) % SIGNAL_NODES.length), 2200);
         return () => clearInterval(interval);
     }, []);
 
@@ -147,38 +157,91 @@ function SovereignProcessingView({ assetId }: { assetId: string }) {
     }, [assetId]);
 
     return (
-        <div className="flex flex-col items-center justify-center py-20 animate-in fade-in duration-1000">
-            <div className="w-16 h-16 rounded-full border border-[#D4A574]/30 flex items-center justify-center mb-8 bg-[#1A1A1A] relative shadow-2xl">
-                <div className="absolute inset-0 border border-[#D4A574] rounded-full animate-ping opacity-20" />
-                <div className="w-2 h-2 rounded-full bg-[#D4A574] animate-pulse shadow-[0_0_10px_rgba(212,165,116,0.8)]" />
-            </div>
-            
-            <h3 className="text-[14px] font-bold uppercase tracking-[0.3em] text-[#8B4513] mb-4">
-                Forensic Analysis Active
-            </h3>
-            
-            <div className="flex items-center gap-3 mb-10">
-                <p className="text-[12px] font-medium text-[#1A1A1A]/70 tracking-widest uppercase">
-                    {ANALYSIS_STEPS[step]}
+        <div className="flex flex-col items-center justify-center py-12 animate-in fade-in duration-1000">
+            {/* Header branding placeholder */}
+            <div className="text-center mb-12">
+                <p className="text-[9px] font-bold uppercase tracking-[0.5em] text-[#D4A574] mb-3">
+                    Visual Decompiler
                 </p>
-                <div className="flex gap-1">
-                    <span className="w-1 h-1 bg-[#1A1A1A]/40 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-1 h-1 bg-[#1A1A1A]/40 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-1 h-1 bg-[#1A1A1A]/40 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                </div>
+                <h1 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#1A1A1A]/80">
+                    Intelligence Extraction In Progress
+                </h1>
             </div>
 
-            <div className="w-full max-w-sm">
-                <div className="w-full h-[2px] bg-[#E5E5E1] rounded-full overflow-hidden">
+            {/* Signal Nodes — horizontal cycle like screenshot or vertical list */}
+            <div className="w-full max-w-sm space-y-3 mb-12">
+                {SIGNAL_NODES.map((node, i) => (
                     <div
-                        className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full transition-all duration-1000"
+                        key={node}
+                        className="flex items-center gap-4 px-5 py-4 rounded-2xl border transition-all duration-700"
+                        style={{
+                            borderColor: i === activeNode ? 'rgba(212,165,116,0.3)' : 'rgba(26,26,26,0.04)',
+                            backgroundColor: i === activeNode ? 'rgba(212,165,116,0.04)' : 'transparent',
+                            boxShadow: i === activeNode ? '0 10px 30px rgba(212,165,116,0.06)' : 'none',
+                        }}
+                    >
+                        <div
+                            className="w-1.5 h-1.5 rounded-full transition-all duration-700 flex-shrink-0"
+                            style={{
+                                backgroundColor: i < activeNode ? '#D4A574' : i === activeNode ? '#8B4513' : 'rgba(26,26,26,0.1)',
+                                boxShadow: i === activeNode ? '0 0 10px rgba(139,69,19,0.4)' : 'none',
+                            }}
+                        />
+                        <span
+                            className="text-[10px] font-bold uppercase tracking-[0.2em] transition-colors duration-700"
+                            style={{
+                                color: i === activeNode ? '#8B4513' : i < activeNode ? '#1A1A1A' : 'rgba(26,26,26,0.2)',
+                            }}
+                        >
+                            {node}
+                        </span>
+                        {i === activeNode && (
+                            <span className="ml-auto text-[8px] font-mono text-[#D4A574] tracking-widest animate-pulse">PROCESSING</span>
+                        )}
+                        {i < activeNode && (
+                            <span className="ml-auto text-[8px] font-mono text-[#D4A574]/40 tracking-widest">ANALYZED</span>
+                        )}
+                    </div>
+                ))}
+            </div>
+            
+            <div className="text-center space-y-5 w-full max-w-sm">
+                <div className="flex items-center justify-center gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#D4A574] animate-pulse" />
+                    <p className="text-[12px] font-medium text-[#1A1A1A]/70 tracking-widest uppercase">
+                        {ANALYSIS_STEPS[step]}
+                    </p>
+                </div>
+                
+                <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-[#1A1A1A]/20">
+                    Deep psychological analysis in progress
+                </p>
+
+                {/* Performance Progress Bar */}
+                <div className="w-full h-[1px] bg-[#E5E5E1] rounded-full overflow-hidden">
+                    <div
+                        className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-1000 ease-linear"
                         style={{ width: `${progress}%` }}
                     />
                 </div>
-                <div className="flex justify-between text-[9px] font-mono text-[#1A1A1A]/40 pt-3 uppercase tracking-widest">
-                    <span>Initiated</span>
+                <div className="flex justify-between text-[8px] font-mono text-[#1A1A1A]/30 pt-1 uppercase tracking-widest">
+                    <span>Init</span>
                     <span>{progress}%</span>
+                    <span>Complete</span>
                 </div>
+            </div>
+
+            {/* Return to Library */}
+            <div className="mt-12 flex flex-col items-center gap-6">
+                <a
+                    href="/vault"
+                    className="px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest text-[#1A1A1A]/50 border border-[#E5E5E1] hover:bg-white hover:text-[#8B4513] transition-all"
+                >
+                    Return to Library
+                </a>
+                <p className="text-[10px] text-[#1A1A1A]/40 text-center max-w-[280px] leading-relaxed italic">
+                    Analysis takes roughly 2–3 minutes. Your report will be waiting here when complete.
+                </p>
             </div>
         </div>
     );
