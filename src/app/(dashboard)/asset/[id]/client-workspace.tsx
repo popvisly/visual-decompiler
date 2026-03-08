@@ -464,13 +464,13 @@ export default function AssetWorkspace({
                         {activeTab === 'BLUEPRINT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {!blueprintData ? (
-                                    <div className="border border-[#D4A574] bg-[#F5F5DC] p-12 flex flex-col items-center justify-center text-center">
-                                        <h3 className="text-[#8B4513] text-lg font-light mb-2">Production Blueprint Uninitialized</h3>
-                                        <p className="text-[#8B4513]/70 text-sm max-w-sm mb-8">Synthesize the extraction data into elite execution constraints.</p>
+                                    <div className="border border-[#D4A574] bg-[#1A1A1A] p-12 flex flex-col items-center justify-center text-center">
+                                        <h3 className="text-[#D4A574] text-lg font-light mb-2">Production Blueprint Uninitialized</h3>
+                                        <p className="text-[#F5F5DC]/70 text-sm max-w-sm mb-8">Synthesize the extraction data into elite execution constraints.</p>
                                         <button
                                             onClick={handleGenerateBlueprint}
                                             disabled={isGeneratingBlueprint || !extraction}
-                                            className="bg-[#8B4513] text-[#F5F5DC] px-6 py-3 text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] transition-colors disabled:opacity-50"
+                                            className="bg-[#D4A574] text-[#1A1A1A] px-6 py-3 text-[10px] font-bold tracking-widest uppercase hover:bg-[#F5F5DC] transition-colors disabled:opacity-50"
                                         >
                                             {isGeneratingBlueprint ? 'Synthesizing Blueprint...' : 'Generate Blueprint'}
                                         </button>
@@ -481,14 +481,14 @@ export default function AssetWorkspace({
                                         {/* Iteration Test Plan (Remixing) */}
                                         {extraction?.full_dossier?.test_plan && (
                                             <div>
-                                                <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 mb-4 border-b border-[#D4A574] pb-2">Iteration & Test Plan</span>
-                                                <p className="text-sm text-[#1A1A1A] mb-6 border-l-2 border-[#BB9E7B] pl-4">{extraction.full_dossier.test_plan.hypothesis}</p>
+                                                <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/30 pb-2">Iteration & Test Plan</span>
+                                                <p className="text-sm text-[#F5F5DC] mb-6 border-l-2 border-[#D4A574] pl-4">{extraction.full_dossier.test_plan.hypothesis}</p>
                                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                                     {extraction.full_dossier.test_plan.test_cells.map((cell: any, i: number) => (
-                                                        <div key={i} className="border border-[#D4A574] p-6 bg-[#F5F5DC] flex flex-col">
-                                                            <span className="text-[10px] font-bold tracking-widest text-[#BB9E7B] uppercase block mb-3">{cell.lever}</span>
-                                                            <p className="text-sm text-[#1A1A1A] font-light mb-4">{cell.change}</p>
-                                                            <p className="text-[9px] text-[#8B4513]/70 uppercase tracking-widest mt-auto border-t border-[#D4A574]/50 pt-3">{cell.rationale}</p>
+                                                        <div key={i} className="border border-[#D4A574] p-6 bg-[#1A1A1A] flex flex-col">
+                                                            <span className="text-[10px] font-bold tracking-widest text-[#D4A574] uppercase block mb-3">{cell.lever}</span>
+                                                            <p className="text-sm text-[#F5F5DC] font-light mb-4">{cell.change}</p>
+                                                            <p className="text-[9px] text-[#F5F5DC]/60 uppercase tracking-widest mt-auto border-t border-[#D4A574]/20 pt-3">{cell.rationale}</p>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -497,13 +497,14 @@ export default function AssetWorkspace({
 
                                         {/* DNA Prompt Code Block */}
                                         <div>
-                                            <span className="block text-[9px] uppercase tracking-widest text-[#8B4513]/70 mb-4 border-b border-[#D4A574] pb-2">Verified DNA Prompt (Midjourney Native)</span>
-                                            <div className="bg-[#F5F5DC] border border-[#D4A574] p-6 relative group">
-                                                <code className="text-[#1A1A1A] font-mono text-xs leading-relaxed break-all">
+                                            <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/30 pb-2">Verified DNA Prompt (Midjourney Native)</span>
+                                            <div className="relative group">
+                                                <div className="absolute top-4 right-4 text-[8px] font-bold text-[#D4A574] uppercase tracking-widest opacity-40">Forensic Copy</div>
+                                                <pre className="p-8 bg-[#1A1A1A] border border-[#D4A574] text-[#F5F5DC] text-xs font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap">
                                                     {blueprintData.verified_dna_prompt}
-                                                </code>
+                                                </pre>
                                                 <button
-                                                    className="absolute top-4 right-4 text-[9px] font-bold tracking-widest uppercase text-[#8B4513]/50 hover:text-[#1A1A1A] transition-colors"
+                                                    className="absolute bottom-4 right-4 text-[9px] font-bold tracking-widest uppercase text-[#D4A574]/50 hover:text-[#D4A574] transition-colors"
                                                     onClick={() => navigator.clipboard.writeText(blueprintData.verified_dna_prompt)}
                                                 >
                                                     Copy

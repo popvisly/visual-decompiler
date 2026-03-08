@@ -38,7 +38,7 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
 
         if (digestError || !digestRow) {
             return (
-                <div className="min-h-screen bg-black flex items-center justify-center font-sans tracking-widest text-xs uppercase text-neutral-500">
+                <div className="min-h-screen bg-[#F5F5DC] flex items-center justify-center font-sans tracking-widest text-xs uppercase text-[#8B4513]/50">
                     Asset not found in the Intelligence Vault.
                 </div>
             );
