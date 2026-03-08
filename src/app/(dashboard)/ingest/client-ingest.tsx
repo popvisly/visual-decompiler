@@ -51,13 +51,16 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
             const formData = new FormData();
             formData.append('file', file);
 
-            // Robust cookie extraction because Supabase JS client loses state on hard-refresh
-            const match = document.cookie.match(new RegExp('(^| )sb-access-token=([^;]+)'));
-            const token = match ? match[2] : null;
+            // Dynamically fetch the cryptographic truth from Supabase client at execution time
+            const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+            if (sessionError) console.warn('[IngestClient] Session fetch error:', sessionError);
+            
+            const token = session?.access_token;
 
             const res = await fetch('/api/vault-ingest', {
                 method: 'POST',
-                headers: {
+                credentials: 'same-origin',
+                headers: { 
                     ...(token ? { 'Authorization': `Bearer ${token}` } : {})
                 },
                 body: formData

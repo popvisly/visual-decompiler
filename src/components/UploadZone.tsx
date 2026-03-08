@@ -37,12 +37,15 @@ export default function UploadZone({ onUploadComplete }: Props) {
         setIsUploading(true);
         setError(null);
         try {
-            // Robust cookie extraction because Supabase JS client loses state on hard-refresh
-            const match = document.cookie.match(new RegExp('(^| )sb-access-token=([^;]+)'));
-            const token = match ? match[2] : null;
+            // Dynamically fetch the cryptographic truth from Supabase client at execution time
+            const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+            if (sessionError) console.warn('[UploadZone] Session fetch error:', sessionError);
+            
+            const token = session?.access_token;
 
             const res = await fetch('/api/ingest', {
                 method: 'POST',
+                credentials: 'same-origin',
                 headers: { 
                     'Content-Type': 'application/json',
                     ...(token ? { 'Authorization': `Bearer ${token}` } : {})
