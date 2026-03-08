@@ -16,7 +16,7 @@ const PILLARS = [
 ] as const;
 
 function isActive(pathname: string, href: string): boolean {
-    if (href === '/dashboard') return pathname === '/dashboard' || pathname === '/dashboard/';
+    if (href === '/vault') return pathname === '/vault';
     return pathname.startsWith(href);
 }
 

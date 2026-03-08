@@ -70,7 +70,7 @@ export default function NewsAggregatorFooter() {
                 </div>
 
                 <div className="mt-12 text-center">
-                    <Link href="/dashboard" className="inline-flex items-center gap-2 text-[10px] font-bold text-white/40 hover:text-accent uppercase tracking-[0.2em] transition-colors">
+                    <Link href="/vault" className="inline-flex items-center gap-2 text-[10px] font-bold text-white/40 hover:text-accent uppercase tracking-[0.2em] transition-colors">
                         Run a Forensic Deconstruction on your own campaigns <ArrowRight className="w-3 h-3" />
                     </Link>
                 </div>

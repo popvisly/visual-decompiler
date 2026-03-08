@@ -24,7 +24,7 @@ export default function SovereignCTA() {
 
                 <div className="shrink-0">
                     <Link
-                        href="/dashboard"
+                        href="/vault"
                         className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-accent text-[#141414] font-bold text-[10px] uppercase tracking-widest transition-all hover:bg-white hover:-translate-y-[1px] shadow-lg shadow-accent/10"
                     >
                         Decompile an Ad <ArrowRight className="w-3.5 h-3.5" />

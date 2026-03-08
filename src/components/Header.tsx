@@ -11,7 +11,7 @@ export default function Header({ activeTab }: { activeTab?: 'dashboard' | 'analy
 
                     <nav className="flex items-center gap-2">
                         <Link
-                            href="/dashboard"
+                            href="/vault"
                             className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-[0.15em] transition-all ${activeTab === 'dashboard'
                                 ? 'bg-[#FBF7EF] text-[#141414] shadow-sm border border-[#E7DED1]'
                                 : 'text-[#6B6B6B] hover:text-[#141414] hover:bg-white/50'
@@ -20,7 +20,7 @@ export default function Header({ activeTab }: { activeTab?: 'dashboard' | 'analy
                             Library
                         </Link>
                         <Link
-                            href="/dashboard/boards"
+                            href="/boards"
                             className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-[0.15em] transition-all ${activeTab === 'boards'
                                 ? 'bg-[#FBF7EF] text-[#141414] shadow-sm border border-[#E7DED1]'
                                 : 'text-[#6B6B6B] hover:text-[#141414] hover:bg-white/50'
@@ -29,7 +29,7 @@ export default function Header({ activeTab }: { activeTab?: 'dashboard' | 'analy
                             Boards
                         </Link>
                         <Link
-                            href="/dashboard/analytics"
+                            href="/compare"
                             className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-[0.15em] transition-all ${activeTab === 'analytics'
                                 ? 'bg-[#FBF7EF] text-[#141414] shadow-sm border border-[#E7DED1]'
                                 : 'text-[#6B6B6B] hover:text-[#141414] hover:bg-white/50'

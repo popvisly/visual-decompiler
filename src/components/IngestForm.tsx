@@ -23,7 +23,7 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
         setErrorObj(null);
         setIsIngesting(true);
         try {
-            const res = await fetch('/api/ingest', {
+            const res = await fetch('/api/vault-ingest', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ mediaUrl: url.trim() }),
@@ -36,7 +36,7 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
             }
             setUrl('');
             // alert('Ad queued for decompilation! It will appear in the dashboard shortly.');
-            router.push(`/dashboard/processing/${payload.job_id}`);
+            router.push(`/asset/${payload.job_id}?new=true`);
         } catch (err: any) {
             console.error(err);
             setErrorObj({ message: err?.message || 'Failed to ingest ad.', code: err?.code });
@@ -60,7 +60,7 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
         for (let i = 0; i < items.length; i++) {
             setBatchItems(prev => prev.map((item, idx) => idx === i ? { ...item, status: 'queuing' } : item));
             try {
-                const res = await fetch('/api/ingest', {
+                const res = await fetch('/api/vault-ingest', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ mediaUrl: items[i].url }),
