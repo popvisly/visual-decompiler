@@ -8,7 +8,7 @@ type Props = {
     headline: string[];
     subhead: string;
     ctaPrimary: LinkCta;
-    ctaSecondary: LinkCta;
+    ctaSecondary?: LinkCta;
     stageImage: StageImage;
 };
 
@@ -70,21 +70,23 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     >
                         {ctaPrimary.label}
                     </a>
-                    <a
-                        href={ctaSecondary.href}
-                        className="
-                            inline-flex items-center justify-center w-full sm:w-auto
-                            rounded-full border border-[#141414]
-                            bg-[#141414] text-[#FBF7EF]
-                            px-8 py-3.5 text-[14px] font-medium tracking-tight
-                            transition-all duration-300
-                            hover:-translate-y-[1px]
-                            hover:bg-black
-                            hover:shadow-[0_12px_24px_rgba(20,20,20,0.3)]
-                        "
-                    >
-                        {ctaSecondary.label}
-                    </a>
+                    {ctaSecondary && (
+                        <a
+                            href={ctaSecondary.href}
+                            className="
+                                inline-flex items-center justify-center w-full sm:w-auto
+                                rounded-full border border-[#141414]
+                                bg-[#141414] text-[#FBF7EF]
+                                px-8 py-3.5 text-[14px] font-medium tracking-tight
+                                transition-all duration-300
+                                hover:-translate-y-[1px]
+                                hover:bg-black
+                                hover:shadow-[0_12px_24px_rgba(20,20,20,0.3)]
+                            "
+                        >
+                            {ctaSecondary.label}
+                        </a>
+                    )}
                 </motion.div>
 
                 {/* Neural Intelligence Hero */}

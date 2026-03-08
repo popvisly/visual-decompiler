@@ -74,11 +74,7 @@ export default async function HomePage() {
                 subhead="The sovereign infrastructure for elite agencies. Understand & comprehend the architecture of persuasion to justify high-stakes strategy with forensic precision."
                 ctaPrimary={{
                     label: userId ? "[ INGEST AD ASSET ]" : "[ ACCESS OS ]",
-                    href: userId ? "/ingest" : "/login"
-                }}
-                ctaSecondary={{ 
-                    label: userId ? "NEW FORENSIC ANALYSIS" : "START INGESTION", 
-                    href: userId ? "/ingest" : "/login" 
+                    href: userId ? "/app" : "/login"
                 }}
                 stageImage={{ src: "/images/examples/perfume_ad_no_logo.jpg", alt: "Luxury perfume ad" }}
             />

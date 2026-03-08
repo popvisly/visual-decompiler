@@ -93,23 +93,28 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
 
                     {/* ── Right: Utility Bar ── */}
                     <div className="flex items-center gap-4">
-                        <div className="hidden md:block">
+                        <div className="hidden md:flex items-center gap-4">
                             {isAuthenticated ? (
-                                <Link
-                                    href="/vault"
-                                    className={`
-                                        inline-flex items-center justify-center
-                                        rounded-none border px-6 py-2.5
-                                        text-[10px] font-bold tracking-[0.2em] uppercase
-                                        transition-all duration-300
-                                        ${forceDark
-                                            ? 'bg-white text-black border-white hover:bg-neutral-200'
-                                            : 'bg-black text-white hover:bg-neutral-800 border-black'
-                                        }
-                                    `}
-                                >
-                                    [ ENTER VAULT ]
-                                </Link>
+                                <>
+                                    <span className={`text-[9px] font-bold tracking-[0.2em] uppercase hidden lg:block ${forceDark ? 'text-white/60' : 'text-neutral-500'}`}>
+                                        ENTER THE VAULT FOR FURTHER FORENSIC ANALYSIS &gt;
+                                    </span>
+                                    <Link
+                                        href="/vault"
+                                        className={`
+                                            inline-flex items-center justify-center
+                                            rounded-none border px-6 py-2.5
+                                            text-[10px] font-bold tracking-[0.2em] uppercase
+                                            transition-all duration-300
+                                            ${forceDark
+                                                ? 'bg-white text-black border-white hover:bg-neutral-200'
+                                                : 'bg-black text-white hover:bg-neutral-800 border-black'
+                                            }
+                                        `}
+                                    >
+                                        [ ENTER VAULT ]
+                                    </Link>
+                                </>
                             ) : (
                                 <Link
                                     href="/login"
