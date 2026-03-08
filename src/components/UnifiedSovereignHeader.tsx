@@ -96,9 +96,10 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                         <div className="hidden md:block">
                             {isAuthenticated ? (
                                 <div className="flex items-center justify-end gap-3">
-                                    <span className={`text-xs font-medium hidden lg:block ${forceDark ? 'text-gray-400' : 'text-[#141414]/60'}`}>
-                                        ENTER THE VAULT FOR FURTHER FORENSIC ANALYSIS &gt;
-                                    </span>
+                                    <div className={`flex flex-col items-end text-[9px] font-bold tracking-[0.2em] uppercase hidden lg:flex ${forceDark ? 'text-gray-400' : 'text-[#141414]/60'}`}>
+                                        <span>ENTER THE VAULT FOR</span>
+                                        <span>FURTHER FORENSIC ANALYSIS &gt;</span>
+                                    </div>
                                     <Link
                                         href="/vault"
                                         className={`
