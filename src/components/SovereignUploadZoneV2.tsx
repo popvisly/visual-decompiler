@@ -49,7 +49,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
             
             const token = session?.access_token;
 
-            const res = await fetch('/api/vault-ingest', {
+            const res = await fetch('/api/vault-init', {
                 method: 'POST',
                 credentials: 'same-origin',
                 signal: controller.signal,

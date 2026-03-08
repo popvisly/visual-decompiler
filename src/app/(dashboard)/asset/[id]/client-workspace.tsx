@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { SovereignPrintHeader, SovereignPrintFooter } from '@/components/SovereignDossierParts';
@@ -100,6 +100,90 @@ interface BlueprintData {
     }[];
 }
 
+const ANALYSIS_STEPS = [
+    'Extracting visual elements',
+    'Analyzing trigger mechanics',
+    'Decoding semiotic subtext',
+    'Mapping narrative framework',
+    'Identifying evidence anchors',
+    'Evaluating persuasion strategy',
+    'Computing confidence scores',
+    'Assembling intelligence report',
+];
+
+function SovereignProcessingView({ assetId }: { assetId: string }) {
+    const [step, setStep] = useState(0);
+    const [progress, setProgress] = useState(0);
+
+    // Hardcode some typing logic for react hooks from 'react' that are already imported at top of file
+    useEffect(() => {
+        const interval = setInterval(() => setStep((s) => (s + 1) % ANALYSIS_STEPS.length), 3000);
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setProgress((p) => {
+                if (p >= 95) return 95;
+                return Math.min(95, p + 2 + Math.floor(Math.random() * 4));
+            });
+        }, 1800);
+        return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+        let isMounted = true;
+        fetch('/api/vault-extract', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ assetId })
+        }).then(res => res.json()).then(data => {
+            if (isMounted && data.success) {
+                setProgress(100);
+                setTimeout(() => window.location.reload(), 1000);
+            }
+        }).catch(() => {});
+        return () => { isMounted = false; };
+    }, [assetId]);
+
+    return (
+        <div className="flex flex-col items-center justify-center py-20 animate-in fade-in duration-1000">
+            <div className="w-16 h-16 rounded-full border border-[#D4A574]/30 flex items-center justify-center mb-8 bg-[#1A1A1A] relative shadow-2xl">
+                <div className="absolute inset-0 border border-[#D4A574] rounded-full animate-ping opacity-20" />
+                <div className="w-2 h-2 rounded-full bg-[#D4A574] animate-pulse shadow-[0_0_10px_rgba(212,165,116,0.8)]" />
+            </div>
+            
+            <h3 className="text-[14px] font-bold uppercase tracking-[0.3em] text-[#8B4513] mb-4">
+                Forensic Analysis Active
+            </h3>
+            
+            <div className="flex items-center gap-3 mb-10">
+                <p className="text-[12px] font-medium text-[#1A1A1A]/70 tracking-widest uppercase">
+                    {ANALYSIS_STEPS[step]}
+                </p>
+                <div className="flex gap-1">
+                    <span className="w-1 h-1 bg-[#1A1A1A]/40 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="w-1 h-1 bg-[#1A1A1A]/40 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="w-1 h-1 bg-[#1A1A1A]/40 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
+            </div>
+
+            <div className="w-full max-w-sm">
+                <div className="w-full h-[2px] bg-[#E5E5E1] rounded-full overflow-hidden">
+                    <div
+                        className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full transition-all duration-1000"
+                        style={{ width: `${progress}%` }}
+                    />
+                </div>
+                <div className="flex justify-between text-[9px] font-mono text-[#1A1A1A]/40 pt-3 uppercase tracking-widest">
+                    <span>Initiated</span>
+                    <span>{progress}%</span>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export default function AssetWorkspace({
     initialAsset,
     isSovereign,
@@ -191,69 +275,70 @@ export default function AssetWorkspace({
     return (
         <>
             <GatekeeperIntercept isVisible={showGatekeeper} onClose={() => setShowGatekeeper(false)} />
-            <div className="flex flex-col md:flex-row min-h-screen bg-[#FBFBF6] text-[#1A1A1A]">
+            <div className="w-full bg-[#FBFBF6] min-h-screen flex justify-center">
+                <div className="flex flex-col md:flex-row min-h-screen w-full max-w-[1440px] bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
 
-                {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                <div className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6]">
-                    <div className="md:sticky md:top-0 h-[50vh] md:h-screen p-8 flex flex-col justify-center items-center">
+                    {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
+                    <div className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6]">
+                        <div className="md:sticky md:top-0 h-[50vh] md:h-screen p-8 flex flex-col justify-center items-center">
 
-                        <div className="w-full relative h-[80%] flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl">
-                            {/* If multiple images, render a horizontal CSS scroll snap setup */}
-                            <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide">
-                                {fileUrls.map((url, idx) => (
-                                    <img
-                                        key={idx}
-                                        src={url}
-                                        alt={`Asset frame ${idx}`}
-                                        className="w-full h-full object-contain shrink-0 snap-center transition-all duration-700"
-                                    />
-                                ))}
-                            </div>
-                            {fileUrls.length > 1 && (
-                                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 border border-[#E5E5E1] px-3 py-1 flex gap-2 rounded-full">
-                                    {fileUrls.map((_, i) => (
-                                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#8B4513]/30" />
+                            <div className="w-full relative h-[80%] flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl">
+                                {/* If multiple images, render a horizontal CSS scroll snap setup */}
+                                <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+                                    {fileUrls.map((url, idx) => (
+                                        <img
+                                            key={idx}
+                                            src={url}
+                                            alt={`Asset frame ${idx}`}
+                                            className="w-full h-full object-contain shrink-0 snap-center transition-all duration-700"
+                                        />
                                     ))}
                                 </div>
-                            )}
-                            <div className="absolute top-4 left-4 bg-[#1A1A1A]/90 border border-[#D4A574]/40 px-3 py-1 backdrop-blur-sm rounded-none">
-                                <span className="text-[9px] uppercase tracking-widest text-[#D4A574]">{asset.type}</span>
-                            </div>
-                        </div>
-
-                        <div className="w-full mt-6 flex justify-between items-end border-b border-[#D4A574]/20 pb-4">
-                            <div>
-                                <h1 className="text-2xl font-light tracking-tightest text-[#8B4513] uppercase">{asset.brand?.name}</h1>
-                                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#D4A574]">{asset.brand?.market_sector}</span>
-                            </div>
-                            <div className="flex flex-col items-end gap-2 relative">
-                                <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
-                                <div className="flex items-center gap-2">
-                                    <button
-                                        onClick={handleCopyEmbed}
-                                        className="no-print flex items-center gap-2 px-4 py-2 bg-[#1A1A1A] border border-[#D4A574]/30 text-[#D4A574] text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A]/80 rounded-full transition-all"
-                                    >
-                                        <Code className="w-3 h-3" />
-                                        Copy Embed Widget
-                                    </button>
-                                    <button
-                                        onClick={() => window.print()}
-                                        className="no-print flex items-center gap-2 px-4 py-2 bg-[#8B4513] text-white text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] rounded-full transition-all"
-                                    >
-                                        <FileDown className="w-3 h-3" />
-                                        Export Dossier
-                                    </button>
-                                </div>
-                                {/* Simple Toast Notification */}
-                                {showCopiedToast && (
-                                    <div className="absolute top-full mt-2 right-0 bg-[#8B4513] text-[#F5F5DC] text-[9px] font-bold tracking-widest uppercase px-3 py-1.5 shadow-lg animate-in fade-in slide-in-from-top-2 duration-200 z-50">
-                                        Embed Code Copied
+                                {fileUrls.length > 1 && (
+                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 border border-[#E5E5E1] px-3 py-1 flex gap-2 rounded-full">
+                                        {fileUrls.map((_, i) => (
+                                            <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#8B4513]/30" />
+                                        ))}
                                     </div>
                                 )}
+                                <div className="absolute top-4 left-4 bg-[#1A1A1A]/90 border border-[#D4A574]/40 px-3 py-1 backdrop-blur-sm rounded-none">
+                                    <span className="text-[9px] uppercase tracking-widest text-[#D4A574]">{asset.type}</span>
+                                </div>
+                            </div>
+
+                            <div className="w-full mt-6 flex justify-between items-end border-b border-[#D4A574]/20 pb-4">
+                                <div>
+                                    <h1 className="text-2xl font-light tracking-tightest text-[#8B4513] uppercase">{asset.brand?.name}</h1>
+                                    <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#D4A574]">{asset.brand?.market_sector}</span>
+                                </div>
+                                <div className="flex flex-col items-end gap-2 relative">
+                                    <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            onClick={handleCopyEmbed}
+                                            className="no-print flex items-center gap-2 px-4 py-2 bg-[#1A1A1A] border border-[#D4A574]/30 text-[#D4A574] text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A]/80 rounded-full transition-all"
+                                        >
+                                            <Code className="w-3 h-3" />
+                                            Copy Embed Widget
+                                        </button>
+                                        <button
+                                            onClick={() => window.print()}
+                                            className="no-print flex items-center gap-2 px-4 py-2 bg-[#8B4513] text-white text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] rounded-full transition-all"
+                                        >
+                                            <FileDown className="w-3 h-3" />
+                                            Export Dossier
+                                        </button>
+                                    </div>
+                                    {/* Simple Toast Notification */}
+                                    {showCopiedToast && (
+                                        <div className="absolute top-full mt-2 right-0 bg-[#8B4513] text-[#F5F5DC] text-[9px] font-bold tracking-widest uppercase px-3 py-1.5 shadow-lg animate-in fade-in slide-in-from-top-2 duration-200 z-50">
+                                            Embed Code Copied
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
                 {/* RIGHT COLUMN: Scrollable Forensic Console (55%) */}
                 <div className="w-full md:w-[55%] bg-[#FBFBF6] min-h-screen relative">
@@ -329,19 +414,23 @@ export default function AssetWorkspace({
                                         {extraction.full_dossier && (
                                             <div className="pt-12 border-t border-[#D4A574]/20 space-y-8">
                                                 
-                                                {/* The Core 3-Column Grid: Narrative, Semiotics, Archetype */}
+                                                {/* The Core 2-Column Grid: Narrative, Semiotics */}
+                                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px] max-h-[600px] overflow-y-auto dark-scroll">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 flex-shrink-0 sticky top-0 bg-[#1A1A1A] z-10">Narrative Framework</span>
+                                                        <p className="text-[13px] text-[#FFFFFF] leading-[1.625] font-light whitespace-pre-wrap mt-2">{extraction.full_dossier.narrative_framework}</p>
+                                                    </div>
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px] max-h-[600px] overflow-y-auto dark-scroll">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 flex-shrink-0 sticky top-0 bg-[#1A1A1A] z-10">Semiotic Subtext</span>
+                                                        <p className="text-[13px] text-[#FFFFFF] leading-[1.625] font-light whitespace-pre-wrap mt-2">{extraction.full_dossier.semiotic_subtext}</p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Secondary Row: Archetypes, Readings and Objections */}
                                                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                                     <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px]">
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Narrative Framework</span>
-                                                        <p className="text-xs text-[#FFFFFF] leading-relaxed font-light whitespace-pre-wrap mt-2">{extraction.full_dossier.narrative_framework}</p>
-                                                    </div>
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px]">
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Semiotic Subtext</span>
-                                                        <p className="text-xs text-[#FFFFFF] leading-relaxed font-light whitespace-pre-wrap mt-2">{extraction.full_dossier.semiotic_subtext}</p>
-                                                    </div>
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px]">
                                                         <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Archetype Posture</span>
-                                                        <p className="text-sm text-[#FFFFFF] tracking-tight mb-4">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
+                                                        <p className="text-[13px] text-[#FFFFFF] leading-[1.625] tracking-tight mb-4">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
                                                         {(extraction.full_dossier.archetype_mapping as any)?.strategic_moves && (
                                                             <div className="space-y-1.5 p-3 bg-white/5 border border-[#D4A574]/10 rounded-xl mt-auto">
                                                                 {(extraction.full_dossier.archetype_mapping as any).strategic_moves.slice(0, 2).map((move: string, i: number) => (
@@ -353,10 +442,6 @@ export default function AssetWorkspace({
                                                             </div>
                                                         )}
                                                     </div>
-                                                </div>
-
-                                                {/* Secondary Row: Readings and Objections */}
-                                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                                      {/* Plausible Readings Card */}
                                                     {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
                                                         <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm">
@@ -365,22 +450,22 @@ export default function AssetWorkspace({
                                                                 {extraction.full_dossier.possible_readings.slice(0, 2).map((reading, i) => (
                                                                     <div key={i} className="bg-[#1A1A1A]/50 border border-[#D4A574]/10 p-4 rounded-2xl">
                                                                         <p className="text-xs font-medium text-[#D4A574] mb-2">{reading.reading}</p>
-                                                                        <p className="text-[10px] text-[#FFFFFF]/60 leading-relaxed italic">{reading.support.join(" • ")}</p>
+                                                                        <p className="text-[10px] text-[#FFFFFF]/60 leading-[1.625] italic">{reading.support.join(" • ")}</p>
                                                                     </div>
                                                                 ))}
                                                            </div>
                                                         </div>
                                                     )}
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm flex flex-col justify-center">
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm flex flex-col">
                                                         <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Objection Dismantled</span>
-                                                        <p className="text-sm text-[#FFFFFF] leading-relaxed font-light italic border-l-2 border-[#D4A574]/30 pl-4">{extraction.full_dossier.objection_dismantling}</p>
+                                                        <p className="text-[13px] text-[#FFFFFF] leading-[1.625] font-light italic border-l-2 border-[#D4A574]/30 pl-4 py-1">{extraction.full_dossier.objection_dismantling}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         )}
                                     </div>
                                 ) : (
-                                    <div className="text-[#8B4513]/70 text-xs tracking-widest uppercase">No forensic extraction linked to this asset.</div>
+                                    <SovereignProcessingView assetId={asset.id} />
                                 )}
                             </div>
                         )}
@@ -614,6 +699,7 @@ export default function AssetWorkspace({
                         {/* Sovereign PDF Footer */}
                         <SovereignPrintFooter agency={agency} assetId={asset.id} />
                     </div>
+                </div>
                 </div>
             </div>
         </div>

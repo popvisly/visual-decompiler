@@ -1,9 +1,8 @@
-import { createClient } from '@supabase/supabase-js';
-import * as dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' });
-const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
-async function main() {
-    const { data: cols } = await supabaseAdmin.rpc('get_columns', { table_name: 'extractions' });
-    console.log("Extractions Columns:", cols);
+import { supabaseAdmin } from './src/lib/supabase';
+
+async function test() {
+   const res = await supabaseAdmin.from('extractions').select('*').order('created_at', { ascending: false }).limit(2);
+   console.log(JSON.stringify(res.data, null, 2));
 }
-main();
+
+test();
