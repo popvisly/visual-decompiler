@@ -9,11 +9,13 @@ create index if not exists relay_messages_created_at_idx on relay_messages (crea
 
 alter table relay_messages enable row level security;
 
+drop policy if exists "Enable insert for authenticated users only" on relay_messages;
 create policy "Enable insert for authenticated users only" 
 on relay_messages for insert 
 to service_role 
 with check (true);
 
+drop policy if exists "Enable read for authenticated users only" on relay_messages;
 create policy "Enable read for authenticated users only" 
 on relay_messages for select 
 to service_role 

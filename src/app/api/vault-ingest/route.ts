@@ -91,8 +91,9 @@ export async function POST(req: Request) {
         const anthropic = getAnthropic();
         const model = getClaudeModel('agency');
 
-        const systemPrompt = `You are an elite forensic advertising strategist. Analyze the given asset and extract its core semiotic DNA.
-CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact schema:
+        const systemPrompt = `You are an elite forensic advertising strategist, creative director, and semiotician. Analyze the given asset (static image or video frame) and extract its core strategic and semiotic DNA.
+CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact schema. Do NOT omit any keys. Keep all textual values concise and punchy (1-2 sentences maximum per string field).
+
 {
   "brand_name_guess": "Brand Name",
   "market_sector_guess": "Industry Category",
@@ -108,10 +109,28 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
       "visual_anchor": "string"
     }
   ],
-  "dna_prompt": "A single sentence summary combining style and mechanic"
+  "dna_prompt": "A single sentence summary combining style and mechanic",
+  "full_dossier": {
+    "narrative_framework": "Detailed explanation of the core storytelling device (e.g. Problem/Agitation/Solution, Before/After, Product-as-Hero).",
+    "semiotic_subtext": "What is the unsaid, psychological subtext being communicated through symbols, colors, or casting?",
+    "possible_readings": [
+      { "reading": "string", "support": ["string"], "note": "string|null" }
+    ],
+    "objection_dismantling": "What specific customer friction or objection does this ad attempt to neutralize?",
+    "archetype_mapping": {
+      "target_posture": "The overarching strategic posture (e.g. 'Disruptor', 'Premium Authority')",
+      "strategic_moves": ["string", "string"]
+    },
+    "test_plan": {
+      "hypothesis": "string: what makes this ad work, and what can be iterated?",
+      "test_cells": [
+        { "lever": "Hook|CTA|Visual|Copy", "change": "string", "rationale": "string" }
+      ]
+    }
+  }
 }
 
-Analyze the image provided. Stay clinical, elite, and forensic in your tone. Keep explanations extremely concise and brief to minimize token usage.`;
+Analyze the media provided. Stay clinical, elite, and forensic in your tone.`;
 
         const base64Data = buffer.toString('base64');
         const mimeType = file.type;
@@ -122,7 +141,7 @@ Analyze the image provided. Stay clinical, elite, and forensic in your tone. Kee
             | { type: "image"; source: { type: "base64"; media_type: AuthImageMedia; data: string } };
 
         const userContent: ContentBlock[] = [
-            { type: "text", text: "Analyze this asset and provide the forensic extraction." },
+            { type: "text", text: "Analyze this asset and provide the full 5-page forensic extraction dossier." },
             {
                 type: "image",
                 source: {
@@ -135,7 +154,7 @@ Analyze the image provided. Stay clinical, elite, and forensic in your tone. Kee
 
         const response = await anthropic!.messages.create({
             model,
-            max_tokens: 1000,
+            max_tokens: 8192,
             system: systemPrompt,
             messages: [{ role: 'user', content: userContent }],
         });
@@ -199,7 +218,8 @@ Analyze the image provided. Stay clinical, elite, and forensic in your tone. Kee
             visual_style: extractionResult.visual_style,
             color_palette: extractionResult.color_palette,
             evidence_anchors: extractionResult.evidence_anchors,
-            dna_prompt: extractionResult.dna_prompt
+            dna_prompt: extractionResult.dna_prompt,
+            full_dossier: extractionResult.full_dossier
         });
 
         if (extractionError) {

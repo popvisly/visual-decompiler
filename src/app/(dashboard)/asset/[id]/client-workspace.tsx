@@ -20,6 +20,20 @@ interface WorkspaceAsset {
         color_palette: string[];
         evidence_anchors: string[] | Record<string, unknown>[];
         dna_prompt: string;
+        full_dossier?: {
+            narrative_framework?: string;
+            semiotic_subtext?: string;
+            possible_readings?: { reading: string; support: string[]; note: string | null }[];
+            objection_dismantling?: string;
+            archetype_mapping?: {
+                target_posture: string;
+                strategic_moves: string[];
+            };
+            test_plan?: {
+                hypothesis: string;
+                test_cells: { lever: string; change: string; rationale: string }[];
+            };
+        };
     } | {
         primary_mechanic: string;
         visual_style: string;
@@ -27,6 +41,20 @@ interface WorkspaceAsset {
         color_palette: string[];
         evidence_anchors: string[] | Record<string, unknown>[];
         dna_prompt: string;
+        full_dossier?: {
+            narrative_framework?: string;
+            semiotic_subtext?: string;
+            possible_readings?: { reading: string; support: string[]; note: string | null }[];
+            objection_dismantling?: string;
+            archetype_mapping?: {
+                target_posture: string;
+                strategic_moves: string[];
+            };
+            test_plan?: {
+                hypothesis: string;
+                test_cells: { lever: string; change: string; rationale: string }[];
+            };
+        };
     }[];
 }
 
@@ -310,6 +338,82 @@ export default function AssetWorkspace({
                                                 <div className="text-[10px] font-mono text-neutral-600">NO PALETTE DETECTED.</div>
                                             )}
                                         </div>
+
+                                        {/* DEEP SEMIOTIC DOSSIER */}
+                                        {extraction.full_dossier && (
+                                            <div className="pt-12 border-t border-neutral-800 space-y-12">
+                                                
+                                                {/* Narrative & Subtext */}
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                                    <div>
+                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-2">Narrative Framework</span>
+                                                        <p className="text-sm text-neutral-300 leading-relaxed">{extraction.full_dossier.narrative_framework}</p>
+                                                    </div>
+                                                    <div>
+                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-2">Semiotic Subtext</span>
+                                                        <p className="text-sm text-neutral-300 leading-relaxed">{extraction.full_dossier.semiotic_subtext}</p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Possible Readings (If Ambiguous) */}
+                                                {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
+                                                    <div>
+                                                       <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-4">Plausible Readings</span>
+                                                       <div className="space-y-4">
+                                                            {extraction.full_dossier.possible_readings.map((reading, i) => (
+                                                                <div key={i} className="border border-neutral-800 p-6 bg-neutral-950">
+                                                                    <p className="text-sm font-medium text-white mb-2">{reading.reading}</p>
+                                                                    <div className="flex items-start gap-2 text-xs text-neutral-400">
+                                                                        <span className="text-neutral-600 mt-0.5">↳</span>
+                                                                        <span>{reading.support.join(" • ")}</span>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                       </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Strategic Archetype & Objections */}
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-neutral-950 border border-neutral-800 p-8">
+                                                    <div>
+                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-2">Archetype Posture</span>
+                                                        <p className="text-base text-white tracking-tight">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
+                                                        {extraction.full_dossier.archetype_mapping?.strategic_moves && (
+                                                            <div className="mt-4 space-y-2">
+                                                                {extraction.full_dossier.archetype_mapping.strategic_moves.map((move, i) => (
+                                                                    <div key={i} className="text-xs text-neutral-400 flex items-start gap-2">
+                                                                        <div className="w-1 h-1 bg-neutral-600 rounded-full mt-1.5 shrink-0" />
+                                                                        <span>{move}</span>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                    <div>
+                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-2">Objection Dismantled</span>
+                                                        <p className="text-sm text-neutral-300 leading-relaxed">{extraction.full_dossier.objection_dismantling}</p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Iteration Test Plan */}
+                                                {extraction.full_dossier.test_plan && (
+                                                    <div>
+                                                        <span className="block text-[9px] uppercase tracking-widest text-neutral-500 mb-4">Iteration & Test Plan</span>
+                                                        <p className="text-sm text-neutral-300 mb-6 border-l-2 border-neutral-800 pl-4">{extraction.full_dossier.test_plan.hypothesis}</p>
+                                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                            {extraction.full_dossier.test_plan.test_cells.map((cell, i) => (
+                                                                <div key={i} className="border border-neutral-800 p-4 bg-black">
+                                                                    <span className="text-[10px] font-bold tracking-widest text-neutral-300 uppercase block mb-2">{cell.lever}</span>
+                                                                    <p className="text-xs text-white break-words mb-2">{cell.change}</p>
+                                                                    <p className="text-[10px] text-neutral-500 uppercase tracking-widest">{cell.rationale}</p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                            </div>
+                                        )}
                                     </div>
                                 ) : (
                                     <div className="text-neutral-500 text-xs tracking-widest uppercase">No forensic extraction linked to this asset.</div>
