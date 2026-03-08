@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { Upload, Link as LinkIcon, Loader2 } from 'lucide-react';
 import { uploadAdMedia } from '@/lib/storage';
 import { supabaseClient } from '@/lib/supabase-client';
@@ -25,6 +26,7 @@ const CATEGORY_PILLS = [
 ];
 
 export default function UploadZone({ onUploadComplete }: Props) {
+    const router = useRouter();
     const [mode, setMode] = useState<'drop' | 'url'>('drop');
     const [url, setUrl] = useState('');
     const [isDragOver, setIsDragOver] = useState(false);
@@ -63,12 +65,11 @@ export default function UploadZone({ onUploadComplete }: Props) {
             if (!res.ok) throw new Error(payload?.error || `Ingestion failed (HTTP ${res.status})`);
 
             if (payload?.code === 'DUPLICATE') {
-                setDuplicateId(payload.assetId || payload.job_id);
-                setIsUploading(false);
+                router.push(`/asset/${payload.assetId || payload.job_id}`);
                 return;
             }
 
-            onUploadComplete({ jobId: payload.assetId || payload.job_id, mediaUrl: mediaUrl.trim(), accessLevel: payload.access_level });
+            router.push(`/asset/${payload.assetId || payload.job_id}`);
         } catch (err: any) {
             clearTimeout(timeoutId);
             if (err.name === 'AbortError') {
@@ -78,7 +79,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
             }
             setIsUploading(false);
         }
-    }, [onUploadComplete]);
+    }, [router]);
 
     const handleUrlSubmit = (e: React.FormEvent) => {
         e.preventDefault();

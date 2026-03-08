@@ -73,7 +73,7 @@ function VaultCard({ asset }: { asset: VaultAsset }) {
     const mechanic = asset.extraction?.[0]?.primary_mechanic || 'Pending Analysis';
 
     return (
-        <Link href={`/ asset / ${asset.id}`} className="group block focus:outline-none">
+        <Link href={`/asset/${asset.id}`} className="group block focus:outline-none">
             <div className="bg-neutral-950 border border-neutral-800 transition-all duration-300 hover:border-neutral-600 hover:bg-neutral-900 flex flex-col h-full rounded-none">
 
                 {/* Brutalist Image Top */}
