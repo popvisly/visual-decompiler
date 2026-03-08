@@ -310,37 +310,34 @@
 }
 
 :root {
-    /* Pure Swiss / Weavy.ai Inspiration */
+    /* Luxury Realism - Bone White Palette */
 
     /* Canvas */
-    --canvas: #F6F1E7;
-    /* Bone */
-    --canvas-alt: #f0f0ec;
+    --canvas: #FBFBF6;
+    /* Pure Bone */
+    --canvas-alt: #f1f1ee;
 
     /* Surfaces */
-    --surface: #FBF7EF;
-    /* Ivory */
+    --surface: #FFFFFF;
+    /* Pure White */
     --surface-raised: #FFFFFF;
-    --surface-overlay: rgba(246, 241, 231, 0.85);
+    --surface-overlay: rgba(251, 251, 246, 0.85);
     /* Bone overlay */
 
     /* Text */
-    --text-primary: #141414;
-    /* Ink */
-    --text-secondary: #6b6b6b;
-    /* Muted */
+    --text-primary: #1A1A1A;
+    /* Deep Charcoal */
+    --text-secondary: #4A4A4A;
+    /* Soft Charcoal */
     --text-muted: #9a9a94;
-    --text-on-dark: #f5f5f0;
-    --text-on-dark-muted: rgba(245, 245, 240, 0.5);
 
-    /* Accent — Ink Highlight (use opacity for soft variants) */
-    --accent: #141414;
-    --accent-muted: rgba(20, 20, 20, 0.06);
-    --accent-glow: rgba(20, 20, 20, 0.12);
+    /* Accent */
+    --accent: #8B4513; /* Original Brown */
+    --accent-tan: #D4A574; /* Original Tan */
 
     /* Borders */
-    --border: #E7DED1;
-    /* Warm Line */
+    --border: #E5E5E1;
+    /* Light Gray */
     --border-dark: rgba(255, 255, 255, 0.08);
     --border-dark-hover: rgba(255, 255, 255, 0.15);
 

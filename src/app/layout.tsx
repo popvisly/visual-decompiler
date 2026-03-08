@@ -26,8 +26,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${inter.className} bg-[#FBF7EF] text-[#141414] antialiased selection:bg-[#141414] selection:text-[#FBF7EF]`}>
-                {children}
+            <body className={`${inter.className} bg-[#FBFBF6] text-[#1A1A1A] antialiased selection:bg-[#1A1A1A] selection:text-[#FBFBF6] relative`}>
+                {/* Global Geometric Grid - Subtle 2.5% opacity */}
+                <div className="pointer-events-none fixed inset-0 z-0 opacity-[0.025] [background-image:linear-gradient(rgba(26,26,26,1)_1px,transparent_1px),linear-gradient(90deg,rgba(26,26,26,1)_1px,transparent_1px)] [background-size:48px_48px]" />
+                <div className="relative z-10 w-full min-h-screen">
+                    {children}
+                </div>
             </body>
         </html>
     );

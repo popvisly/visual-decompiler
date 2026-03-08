@@ -86,22 +86,22 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
     return (
         <div className="flex items-center gap-4">
             {!bulkMode ? (
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                     <form onSubmit={handleSubmit} className="flex gap-2">
                         <input
                             type="url"
-                            placeholder="Paste an ad IMAGE link (jpg, png)…"
+                            placeholder="Paste an ad IMAGE link…"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
-                            className={`w-56 px-3 py-1.5 text-xs rounded-lg focus:outline-none focus:ring-2 transition-all font-medium ${forceDark
-                                ? 'bg-[#F5F5DC]/10 text-[#F5F5DC] placeholder-[#F5F5DC]/30 border-[#F5F5DC]/10 focus:ring-[#F5F5DC]/20'
-                                : 'bg-[#F5F5DC] text-[#1A1A1A] placeholder-[#8B4513]/40 border border-[#D4A574] focus:ring-[#8B4513]/20'}`}
+                            className={`w-64 px-4 py-2 text-xs rounded-full focus:outline-none focus:ring-1 transition-all font-medium border shadow-sm ${forceDark
+                                ? 'bg-white/10 text-white placeholder-white/30 border-white/10 focus:ring-white/20'
+                                : 'bg-white text-[#1A1A1A] placeholder-[#1A1A1A]/30 border-[#E5E5E1] focus:ring-[#D4A574]/50 focus:border-[#D4A574]'}`}
                             required
                         />
                         <button
                             type="submit"
                             disabled={isIngesting}
-                            className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-bold hover:-translate-y-[1px] shadow-[0_4px_12px_rgba(139,69,19,0.15)] hover:shadow-[0_6px_16px_rgba(139,69,19,0.2)] transition-all disabled:opacity-50 disabled:hover:translate-y-0 ${forceDark ? 'bg-[#D4A574] text-[#1A1A1A] hover:bg-white' : 'bg-[#8B4513] text-[#F5F5DC]'}`}
+                            className={`flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold hover:-translate-y-[1px] shadow-sm hover:shadow-md transition-all disabled:opacity-50 disabled:hover:translate-y-0 ${forceDark ? 'bg-white text-[#1A1A1A] hover:bg-neutral-200' : 'bg-[#8B4513] text-white'}`}
                         >
                             {isIngesting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                             {isIngesting ? 'Ingesting…' : 'Decompile'}
@@ -109,17 +109,17 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
                     </form>
                     <button
                         onClick={(e) => { e.preventDefault(); setBulkMode(true); }}
-                        className={`flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.15em] transition-colors ${forceDark ? 'text-white/40 hover:text-white' : 'text-[#141414]/40 hover:text-[#141414]'}`}
+                        className={`flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.15em] transition-colors ${forceDark ? 'text-white/40 hover:text-white' : 'text-[#1A1A1A]/40 hover:text-[#1A1A1A]'}`}
                     >
                         <List className="w-3 h-3" />
                         Bulk Mode
                     </button>
                 </div>
             ) : (
-                <div className={`w-[30rem] border shadow-[0_10px_30px_rgba(20,20,20,0.06)] backdrop-blur-xl rounded-2xl p-5 space-y-4 ${forceDark ? 'bg-black/40 border-white/10 text-white' : 'bg-black/5 border-black/10'}`}>
+                <div className={`w-[32rem] border shadow-[0_20px_40px_rgba(0,0,0,0.04)] backdrop-blur-xl rounded-[24px] p-6 space-y-4 ${forceDark ? 'bg-black/80 border-white/10 text-white' : 'bg-white border-[#E5E5E1]'}`}>
                     <div className="flex items-center justify-between">
-                        <h3 className={`text-[10px] font-bold uppercase tracking-[0.15em] ${forceDark ? 'text-white/40' : 'text-[#141414]/40'}`}>Bulk Ingest</h3>
-                        <button onClick={(e) => { e.preventDefault(); setBulkMode(false); setBatchItems([]); setErrorObj(null); }} className={`transition-colors ${forceDark ? 'text-white/40 hover:text-white' : 'text-[#141414]/40 hover:text-[#141414]'}`}>
+                        <h3 className={`text-[10px] font-bold uppercase tracking-[0.2em] ${forceDark ? 'text-white/40' : 'text-[#8B4513]'}`}>Bulk Ingest Pipeline</h3>
+                        <button onClick={(e) => { e.preventDefault(); setBulkMode(false); setBatchItems([]); setErrorObj(null); }} className={`transition-colors ${forceDark ? 'text-white/40 hover:text-white' : 'text-[#4A4A4A]/40 hover:text-[#4A4A4A]'}`}>
                             <X className="w-4 h-4" />
                         </button>
                     </div>

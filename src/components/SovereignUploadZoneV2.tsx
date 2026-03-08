@@ -128,7 +128,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
         <div className="w-full max-w-2xl mx-auto page-enter">
             {/* Upload zone */}
             <div
-                className={`rounded-[24px] border border-[#D4A574] bg-[#F5F5DC] p-12 text-center cursor-pointer transition-all ${isDragOver ? 'border-[#8B4513] shadow-md bg-white/50' : 'hover:border-[#8B4513]/30 hover:shadow-[0_10px_30px_rgba(212,165,116,0.1)]'}`}
+                className={`rounded-[32px] border border-[#E5E5E1] bg-white p-12 text-center cursor-pointer transition-all ${isDragOver ? 'border-[#8B4513] shadow-md bg-[#FBFBF6]' : 'hover:border-[#D4A574]/50 hover:shadow-[0_20px_40px_rgba(0,0,0,0.03)]'}`}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -147,22 +147,22 @@ export default function UploadZone({ onUploadComplete }: Props) {
 
                 {isUploading ? (
                     <div className="flex flex-col items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-[#F5F5DC] border border-[#D4A574] flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-full bg-[#FBFBF6] border border-[#E5E5E1] flex items-center justify-center">
                             <Loader2 className="w-6 h-6 text-[#8B4513] animate-spin" />
                         </div>
-                        <p className="text-[13px] font-medium text-[#6B6B6B]">Queuing for analysis…</p>
+                        <p className="text-[13px] font-medium text-[#1A1A1A]">Queuing for analysis…</p>
                     </div>
                 ) : (
-                    <div className="flex flex-col items-center gap-4">
-                        <div className="w-14 h-14 rounded-2xl bg-[#F5F5DC] border border-[#D4A574] flex items-center justify-center shadow-sm">
+                    <div className="flex flex-col items-center gap-6">
+                        <div className="w-16 h-16 rounded-full bg-[#FBFBF6] border border-[#E5E5E1] flex items-center justify-center shadow-sm">
                             <Upload className="w-6 h-6 text-[#8B4513]/60" />
                         </div>
                         <div>
-                            <p className="text-[15px] font-medium text-[#141414]">
-                                Drag & drop an ad IMAGE here. (jpg, png)
+                            <p className="text-[16px] font-medium text-[#1A1A1A] tracking-tight">
+                                Drag & drop an ad IMAGE here.
                             </p>
-                            <p className="text-[13px] text-[#6B6B6B] mt-1">
-                                or paste an IMAGE URL below.
+                            <p className="text-[13px] text-[#1A1A1A]/60 mt-1">
+                                or paste an IMAGE URL below to initiate.
                             </p>
                         </div>
                     </div>
@@ -170,23 +170,23 @@ export default function UploadZone({ onUploadComplete }: Props) {
             </div>
 
             {/* URL input */}
-            <form onSubmit={handleUrlSubmit} className="mt-4 flex flex-col gap-3">
-                <div className="flex gap-2">
+            <form onSubmit={handleUrlSubmit} className="mt-6 flex flex-col gap-3">
+                <div className="flex gap-3">
                     <div className="relative flex-1">
-                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6B6B6B]" />
+                        <LinkIcon className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#4A4A4A]/40" />
                         <input
                             type="url"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                             placeholder="https://example.com/ad-creative.jpg"
-                            className="w-full pl-11 pr-4 py-3.5 text-[14px] bg-[#F5F5DC] text-[#1A1A1A] placeholder-[#8B4513]/40 border border-[#D4A574] rounded-[16px] focus:outline-none focus:border-[#8B4513] focus:ring-1 focus:ring-[#8B4513] transition-all"
+                            className="w-full pl-12 pr-6 py-4 text-[14px] bg-white text-[#1A1A1A] placeholder-[#1A1A1A]/30 border border-[#E5E5E1] rounded-full focus:outline-none focus:border-[#D4A574] focus:ring-1 focus:ring-[#D4A574] transition-all shadow-sm"
                             disabled={isUploading}
                         />
                     </div>
                     <button
                         type="submit"
                         disabled={isUploading || !url.trim()}
-                        className="px-6 py-3.5 bg-[#8B4513] text-[#F5F5DC] rounded-[16px] text-[14px] font-medium hover:-translate-y-[1px] hover:shadow-[0_10px_30px_rgba(139,69,19,0.15)] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                        className="px-8 py-4 bg-[#8B4513] text-white rounded-full text-[14px] font-medium hover:-translate-y-[1px] hover:shadow-[0_12px_24px_rgba(139,69,19,0.2)] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
                     >
                         {isUploading ? 'Analyzing…' : 'Analyze'}
                     </button>
@@ -195,16 +195,16 @@ export default function UploadZone({ onUploadComplete }: Props) {
             </form>
 
             {/* Floating category pills */}
-            <div className="flex flex-wrap justify-center gap-2 mt-6 mb-6">
+            <div className="flex flex-wrap justify-center gap-2 mt-8 mb-8">
                 {CATEGORY_PILLS.map((pill) => (
                     <span
                         key={pill}
                         className="
                             inline-flex items-center gap-2
-                            rounded-full border border-[#E7DED1]
-                            bg-[#FBF7EF]/90 backdrop-blur
-                            px-4 py-2
-                            text-[12px] font-medium tracking-[-0.01em] text-[#141414]/80
+                            rounded-full border border-[#E5E5E1]
+                            bg-white/80 backdrop-blur
+                            px-5 py-2.5
+                            text-[12px] font-medium tracking-tight text-[#1A1A1A]/80
                             shadow-sm
                         "
                     >

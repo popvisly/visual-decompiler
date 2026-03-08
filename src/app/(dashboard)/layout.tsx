@@ -17,9 +17,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     ];
 
     return (
-        <div className="flex min-h-screen bg-[#F5F5DC] text-[#1A1A1A]">
+        <div className="flex min-h-screen bg-[#FBFBF6] text-[#1A1A1A]">
             {/* Global Sidebar - Minimalist, 1px geometric borders */}
-            <aside className="w-64 border-r border-[#D4A574] flex flex-col justify-between py-8 px-6 hidden md:flex">
+            <aside className="w-64 border-r border-[#E5E5E1] flex flex-col justify-between py-8 px-6 hidden md:flex bg-white/40 backdrop-blur-sm">
 
                 <div>
                     {/* Logo / Brand Mark */}
@@ -42,7 +42,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                                 <Link
                                     key={item.href}
                                     href={item.href}
-                                    className={`flex items-center gap-4 pl-4 py-2 -ml-4 group transition-all duration-300 border-l ${isActive ? 'text-[#8B4513] border-[#8B4513] bg-[#8B4513]/5 shadow-[inset_1px_0_10px_rgba(139,69,19,0.05)] select-none' : 'text-[#8B4513]/60 border-transparent hover:text-[#1A1A1A] hover:border-[#D4A574]'
+                                    className={`flex items-center gap-4 pl-4 py-2 -ml-4 group transition-all duration-300 border-l ${isActive ? 'text-[#8B4513] border-[#8B4513] bg-[#8B4513]/5 select-none' : 'text-[#4A4A4A]/60 border-transparent hover:text-[#1A1A1A] hover:border-[#E5E5E1]'
                                         }`}
                                 >
                                     <Icon className="w-4 h-4 stroke-[1.5px]" />
@@ -60,8 +60,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </aside>
 
             {/* Main Content Area */}
-            <main className="flex-1 h-screen overflow-y-auto bg-[#F5F5DC]">
-                {children}
+            <main className="flex-1 relative overflow-y-auto">
+                {/* Content Container */}
+                <div className="relative z-10">
+                    {children}
+                </div>
             </main>
         </div>
     );
