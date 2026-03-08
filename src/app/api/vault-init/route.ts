@@ -105,9 +105,36 @@ export async function POST(req: Request) {
 
         const publicUrl = publicUrlData.publicUrl;
 
-        // Shell asset created instantly
+        // 4. Resolve a Brand ID (Constraint satisfaction)
+        let placeholderBrandId = null;
+        const { data: existingPending } = await supabaseAdmin.from('brands')
+            .select('id')
+            .eq('name', 'PENDING EXTRACTION')
+            .maybeSingle();
+
+        if (existingPending) {
+            placeholderBrandId = existingPending.id;
+        } else {
+            const { data: agency } = await supabaseAdmin.from('agencies').select('id').limit(1).single();
+            if (agency) {
+                const { data: newBrand } = await supabaseAdmin.from('brands').insert({
+                    name: 'PENDING EXTRACTION',
+                    market_sector: 'Processing...',
+                    agency_id: agency.id
+                }).select('id').single();
+                if (newBrand) placeholderBrandId = newBrand.id;
+            }
+        }
+
+        if (!placeholderBrandId) {
+            // Fallback to any existing brand if we can't create one
+            const { data: anyBrand } = await supabaseAdmin.from('brands').select('id').limit(1).single();
+            placeholderBrandId = anyBrand?.id;
+        }
+
+        // 5. Shell asset created with placeholder brand
         const { data: assetData, error: insertError } = await supabaseAdmin.from('assets').insert({
-            brand_id: null,
+            brand_id: placeholderBrandId,
             user_id: session.userId,
             type: 'STATIC',
             file_url: publicUrl

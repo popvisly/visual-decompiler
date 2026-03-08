@@ -157,37 +157,34 @@ Analyze the media provided. Stay clinical, elite, and provide maximum depth. Ens
 
         const extractionResult = JSON.parse(text);
 
-        // 4. Dynamic Brand Binding (if brand_id is null on the asset)
-        let targetBrandId = assetData.brand_id;
-        
-        if (!targetBrandId) {
-            const brandName = extractionResult.brand_name_guess || 'Unknown Brand';
-            const marketSector = extractionResult.market_sector_guess || 'Uncategorized';
+        // 4. Dynamic Brand Binding (Identify and update the asset's brand)
+        let targetBrandId = null;
+        const brandName = extractionResult.brand_name_guess || 'Unknown Brand';
+        const marketSector = extractionResult.market_sector_guess || 'Uncategorized';
 
-            const { data: existingBrand } = await supabaseAdmin.from('brands')
-                .select('id')
-                .ilike('name', brandName)
-                .limit(1)
-                .maybeSingle();
+        const { data: existingBrand } = await supabaseAdmin.from('brands')
+            .select('id')
+            .ilike('name', brandName)
+            .limit(1)
+            .maybeSingle();
 
-            if (existingBrand) {
-                targetBrandId = existingBrand.id;
-            } else {
-                const { data: agencies } = await supabaseAdmin.from('agencies').select('id').limit(1).single();
-                if (agencies) {
-                    const { data: newBrand } = await supabaseAdmin.from('brands').insert({
-                        name: brandName,
-                        market_sector: marketSector,
-                        agency_id: agencies.id
-                    }).select('id').maybeSingle();
-                    if (newBrand) targetBrandId = newBrand.id;
-                }
+        if (existingBrand) {
+            targetBrandId = existingBrand.id;
+        } else {
+            const { data: agencies } = await supabaseAdmin.from('agencies').select('id').limit(1).single();
+            if (agencies) {
+                const { data: newBrand } = await supabaseAdmin.from('brands').insert({
+                    name: brandName,
+                    market_sector: marketSector,
+                    agency_id: agencies.id
+                }).select('id').single();
+                if (newBrand) targetBrandId = newBrand.id;
             }
+        }
 
-            // Update the asset with the located or created brand_id
-            if (targetBrandId) {
-                await supabaseAdmin.from('assets').update({ brand_id: targetBrandId }).eq('id', assetId);
-            }
+        // Always update the asset with the located or created brand_id
+        if (targetBrandId) {
+            await supabaseAdmin.from('assets').update({ brand_id: targetBrandId }).eq('id', assetId);
         }
 
         // 5. Save extraction to Intelligence Vault extractions table
