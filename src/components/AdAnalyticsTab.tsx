@@ -46,8 +46,15 @@ export default function AdAnalyticsTab({ brand }: { brand?: string | null }) {
 
     if (!data || data.summary.total === 0) {
         return (
-            <div className="text-center py-20 bg-[#141414] rounded-[2.5rem] md:rounded-[4rem] border border-[#E7DED1]/10 shadow-sm mt-8">
-                <p className="text-[#6B6B6B] font-medium text-sm">No categorical analysis found for the selected competitive set.</p>
+            <div className="text-center py-20 bg-[#141414] rounded-[24px] border border-[#E7DED1]/10 shadow-sm mt-8">
+                <div className="flex flex-col items-center justify-center space-y-4">
+                    <Activity className="w-8 h-8 text-[#BB9E7B]/50" />
+                    <p className="text-[#E7DED1] font-medium text-sm tracking-tight">Insufficient data for statistical significance.</p>
+                    <p className="text-[#6B6B6B] font-bold text-[10px] max-w-md uppercase tracking-[0.2em] leading-relaxed">
+                        Market Analytics require a broader competitive set. 
+                        Ingest more assets for {brand ? <span className="text-[#BB9E7B]">{brand}</span> : <span className="text-[#BB9E7B]">this category</span>} to unlock saturation metrics.
+                    </p>
+                </div>
             </div>
         );
     }
