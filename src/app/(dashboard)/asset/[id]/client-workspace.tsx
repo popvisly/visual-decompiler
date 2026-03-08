@@ -120,6 +120,7 @@ function SovereignProcessingView({ assetId }: { assetId: string }) {
     const [step, setStep] = useState(0);
     const [progress, setProgress] = useState(0);
     const [activeNode, setActiveNode] = useState(0);
+    const [checkTrigger, setCheckTrigger] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => setStep((s) => (s + 1) % ANALYSIS_STEPS.length), 3000);
@@ -141,8 +142,16 @@ function SovereignProcessingView({ assetId }: { assetId: string }) {
         return () => clearInterval(interval);
     }, []);
 
+    // Polling trigger: increment checkTrigger every 10 seconds
+    useEffect(() => {
+        const interval = setInterval(() => setCheckTrigger(prev => prev + 1), 10000);
+        return () => clearInterval(interval);
+    }, []);
+
     useEffect(() => {
         let isMounted = true;
+        
+        // Initial trigger and occasional poll check
         fetch('/api/vault-extract', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -150,11 +159,12 @@ function SovereignProcessingView({ assetId }: { assetId: string }) {
         }).then(res => res.json()).then(data => {
             if (isMounted && data.success) {
                 setProgress(100);
-                setTimeout(() => window.location.reload(), 1000);
+                setTimeout(() => window.location.reload(), 800);
             }
         }).catch(() => {});
+        
         return () => { isMounted = false; };
-    }, [assetId]);
+    }, [assetId, checkTrigger]);
 
     return (
         <div className="flex flex-col items-center justify-center py-12 animate-in fade-in duration-1000">
@@ -163,7 +173,7 @@ function SovereignProcessingView({ assetId }: { assetId: string }) {
                 <p className="text-[9px] font-bold uppercase tracking-[0.5em] text-[#D4A574] mb-3">
                     Visual Decompiler
                 </p>
-                <h1 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#1A1A1A]/80">
+                <h1 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#D4A574]/80">
                     Intelligence Extraction In Progress
                 </h1>
             </div>
@@ -190,7 +200,7 @@ function SovereignProcessingView({ assetId }: { assetId: string }) {
                         <span
                             className="text-[10px] font-bold uppercase tracking-[0.2em] transition-colors duration-700"
                             style={{
-                                color: i === activeNode ? '#8B4513' : i < activeNode ? '#1A1A1A' : 'rgba(26,26,26,0.2)',
+                                color: i === activeNode ? '#D4A574' : i < activeNode ? '#1A1A1A' : 'rgba(26,26,26,0.2)',
                             }}
                         >
                             {node}
@@ -235,7 +245,7 @@ function SovereignProcessingView({ assetId }: { assetId: string }) {
             <div className="mt-12 flex flex-col items-center gap-6">
                 <a
                     href="/vault"
-                    className="px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest text-[#1A1A1A]/50 border border-[#E5E5E1] hover:bg-white hover:text-[#8B4513] transition-all"
+                    className="px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest text-[#1A1A1A]/50 border border-[#E5E5E1] hover:bg-white hover:text-[#D4A574] transition-all"
                 >
                     Return to Library
                 </a>
@@ -371,7 +381,7 @@ export default function AssetWorkspace({
 
                             <div className="w-full mt-6 flex justify-between items-end border-b border-[#D4A574]/20 pb-4">
                                 <div>
-                                    <h1 className="text-2xl font-light tracking-tightest text-[#8B4513] uppercase">{asset.brand?.name}</h1>
+                                    <h1 className="text-2xl font-light tracking-tightest text-[#D4A574] uppercase">{asset.brand?.name}</h1>
                                     <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#D4A574]">{asset.brand?.market_sector}</span>
                                 </div>
                                 <div className="flex flex-col items-end gap-2 relative">
@@ -386,7 +396,7 @@ export default function AssetWorkspace({
                                         </button>
                                         <button
                                             onClick={() => window.print()}
-                                            className="no-print flex items-center gap-2 px-4 py-2 bg-[#8B4513] text-white text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] rounded-full transition-all"
+                                            className="no-print flex items-center gap-2 px-4 py-2 bg-[#4A4A4A] text-white text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] rounded-full transition-all"
                                         >
                                             <FileDown className="w-3 h-3" />
                                             Export Dossier
@@ -440,7 +450,7 @@ export default function AssetWorkspace({
                                         <div className="grid grid-cols-2 border-b border-[#E5E5E1] pb-12">
                                             <div>
                                                 <span className="block text-[12px] uppercase tracking-widest font-bold text-[#D4A574] mb-3">Primary Mechanic</span>
-                                                <h2 className="text-[13px] font-bold uppercase tracking-[0.3em] text-[#8B4513]">{extraction.primary_mechanic}</h2>
+                                                <h2 className="text-[13px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">{extraction.primary_mechanic}</h2>
                                             </div>
                                             <div className="pl-8 border-l border-[#E5E5E1] flex flex-col justify-center">
                                                 <span className="block text-[12px] uppercase tracking-widest font-bold text-[#D4A574] mb-2">System Confidence</span>
@@ -544,7 +554,7 @@ export default function AssetWorkspace({
                                         <span className="text-[#D4A574] font-bold tracking-[0.3em] uppercase text-[10px] mb-2">Sovereign Feature</span>
                                         <h3 className="text-[#FFFFFF] text-xl font-light mb-4 tracking-tight">Market Pulse Locked</h3>
                                         <p className="text-[#FFFFFF]/60 text-xs mb-8 max-w-xs leading-relaxed">Cross-asset statistical aggregation and category saturation density mapping is restricted to Enterprise tiers.</p>
-                                        <button className="bg-[#D4A574] text-[#1A1A1A] px-8 py-3 rounded-full text-[10px] uppercase font-bold tracking-widest hover:bg-[#8B4513] hover:text-white transition-colors">
+                                        <button className="bg-[#D4A574] text-[#1A1A1A] px-8 py-3 rounded-full text-[10px] uppercase font-bold tracking-widest hover:bg-[#1A1A1A] hover:text-white transition-colors">
                                             Premium Unlock
                                         </button>
                                     </div>
@@ -638,7 +648,7 @@ export default function AssetWorkspace({
                                         <button
                                             onClick={handleGenerateBlueprint}
                                             disabled={isGeneratingBlueprint || !extraction}
-                                            className="bg-[#D4A574] text-[#1A1A1A] px-8 py-3.5 text-[10px] font-bold tracking-widest uppercase hover:bg-[#8B4513] hover:text-white rounded-full transition-all disabled:opacity-50"
+                                            className="bg-[#D4A574] text-[#1A1A1A] px-8 py-3.5 text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] hover:text-white rounded-full transition-all disabled:opacity-50"
                                         >
                                             {isGeneratingBlueprint ? 'Synthesizing Blueprint...' : 'Generate Blueprint'}
                                         </button>

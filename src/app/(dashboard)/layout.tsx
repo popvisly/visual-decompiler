@@ -25,8 +25,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     {/* Logo / Brand Mark */}
                     <div className="mb-12">
                         <Link href="/" className="group flex items-center gap-2">
-                            <div className="w-4 h-4 bg-[#8B4513] rounded-sm group-hover:bg-[#1A1A1A] transition-colors" />
-                            <span className="font-sans text-[11px] font-bold tracking-[0.3em] uppercase opacity-90 group-hover:opacity-100 transition-opacity text-[#8B4513] group-hover:text-[#1A1A1A]">
+                            <div className="w-4 h-4 bg-[#1A1A1A] rounded-sm group-hover:bg-[#D4A574] transition-colors" />
+                            <span className="font-sans text-[11px] font-bold tracking-[0.3em] uppercase opacity-90 group-hover:opacity-100 transition-opacity text-[#1A1A1A] group-hover:text-[#D4A574]">
                                 Decompiler
                             </span>
                         </Link>
