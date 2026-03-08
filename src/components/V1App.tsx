@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
-import UploadZone from '@/components/UploadZone';
+import UploadZone from '@/components/SovereignUploadZoneV2';
 import ProcessingViewClient from '@/components/ProcessingViewClient';
 import ResultsView from '@/components/ResultsView';
 

@@ -222,7 +222,7 @@ export default function AssetWorkspace({
                                         key={idx}
                                         src={url}
                                         alt={`Asset frame ${idx}`}
-                                        className="w-full h-full object-contain shrink-0 snap-center grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+                                        className="w-full h-full object-contain shrink-0 snap-center transition-all duration-700"
                                     />
                                 ))}
                             </div>

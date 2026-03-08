@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import IngestForm from './IngestForm';
+import IngestForm from './SovereignIngestFormV2';
 import Logo from './Logo';
 
 export default function Header({ activeTab }: { activeTab?: 'dashboard' | 'analytics' | 'boards' | 'pulse' }) {
