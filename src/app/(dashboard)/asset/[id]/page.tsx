@@ -34,12 +34,33 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
         }
 
         // Map V1 digest schema to Phase 2 Sovereign Workspace format
+        let parsedDigest = digestRow.digest || {};
+        try {
+            if (typeof parsedDigest === 'string') {
+                parsedDigest = JSON.parse(parsedDigest);
+            }
+        } catch (e) {
+            parsedDigest = {};
+        }
+
         asset = {
             id: digestRow.id,
             type: digestRow.media_kind?.toUpperCase() || 'STATIC',
             file_url: digestRow.media_url,
-            brand: { name: digestRow.brand || 'Unknown', market_sector: 'Uncategorized' },
-            extraction: digestRow.digest && Object.keys(digestRow.digest).length > 0 ? [digestRow.digest] : []
+            brand: { 
+                name: digestRow.brand || parsedDigest?.meta?.brand_guess || 'Unknown', 
+                market_sector: parsedDigest?.meta?.product_category_guess || 'Uncategorized' 
+            },
+            extraction: Object.keys(parsedDigest).length > 0 ? [{
+                primary_mechanic: parsedDigest.classification?.trigger_mechanic || 'Unknown',
+                visual_style: Array.isArray(parsedDigest.classification?.visual_style) 
+                    ? parsedDigest.classification.visual_style[0] 
+                    : (parsedDigest.classification?.visual_style || 'Unknown'),
+                confidence_score: parsedDigest.diagnostics?.confidence?.overall || 0,
+                color_palette: parsedDigest.extraction?.palette_hex?.map((hex: string) => hex.startsWith('#') ? hex : `#${hex}`) || [],
+                evidence_anchors: parsedDigest.strategy?.evidence_anchors || [],
+                dna_prompt: parsedDigest.strategy?.reconstruction_prompt || parsedDigest.meta?.brand_guess || 'DNA sequence unavailable.'
+            }] : []
         };
     }
 
