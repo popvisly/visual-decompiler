@@ -38,7 +38,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
         setError(null);
         
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
+        const timeoutId = setTimeout(() => controller.abort(), 300000); // 300s timeout (matches Vercel maxDuration)
         
         try {
             // Dynamically fetch the cryptographic truth from Supabase client at execution time
@@ -72,7 +72,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
         } catch (err: any) {
             clearTimeout(timeoutId);
             if (err.name === 'AbortError') {
-                setError('Analysis timed out after 60 seconds. The asset may be too complex or the network is slow. Please try again.');
+                setError('Analysis timed out after 5 minutes. The asset may be too complex or the network is slow. Please try again.');
             } else {
                 setError(err?.message || 'Failed to analyze ad.');
             }

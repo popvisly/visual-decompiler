@@ -5,6 +5,9 @@ import sharp from 'sharp';
 import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
 import { getServerSession } from '@/lib/auth-server';
 
+export const maxDuration = 300; // 5 minutes max function duration for Pro/Enterprise tier
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
     try {
         const session = await getServerSession(req);
@@ -134,7 +137,7 @@ export async function POST(req: Request) {
         const model = getClaudeModel('agency');
 
         const systemPrompt = `You are an elite forensic advertising strategist, creative director, and semiotician. Analyze the given asset (static image or video frame) and extract its core strategic and semiotic DNA.
-CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact schema. Do NOT omit any keys. Keep all textual values concise and punchy (1-2 sentences maximum per string field).
+CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact schema. Do NOT omit any keys. Keep all textual values extremely concise but dense. Provide 1 sentence maximum per string field. Do NOT write paragraphs.
 
 {
   "brand_name_guess": "Brand Name",
@@ -153,18 +156,18 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
   ],
   "dna_prompt": "A single sentence summary combining style and mechanic",
   "full_dossier": {
-    "narrative_framework": "Detailed explanation of the core storytelling device (e.g. Problem/Agitation/Solution, Before/After, Product-as-Hero).",
-    "semiotic_subtext": "What is the unsaid, psychological subtext being communicated through symbols, colors, or casting?",
+    "narrative_framework": "1-sentence explanation of the core storytelling device.",
+    "semiotic_subtext": "1-sentence of the psychological subtext.",
     "possible_readings": [
       { "reading": "string", "support": ["string"], "note": "string|null" }
     ],
-    "objection_dismantling": "What specific customer friction or objection does this ad attempt to neutralize?",
+    "objection_dismantling": "1-sentence on the customer friction neutralized.",
     "archetype_mapping": {
-      "target_posture": "The overarching strategic posture (e.g. 'Disruptor', 'Premium Authority')",
+      "target_posture": "The overarching strategic posture",
       "strategic_moves": ["string", "string"]
     },
     "test_plan": {
-      "hypothesis": "string: what makes this ad work, and what can be iterated?",
+      "hypothesis": "1-sentence hypothesis.",
       "test_cells": [
         { "lever": "Hook|CTA|Visual|Copy", "change": "string", "rationale": "string" }
       ]
@@ -172,7 +175,7 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
   }
 }
 
-Analyze the media provided. Stay clinical, elite, and forensic in your tone.`;
+Analyze the media provided. Stay clinical, elite, and exceedingly concise.`;
 
         const base64Data = buffer.toString('base64');
 
@@ -195,7 +198,7 @@ Analyze the media provided. Stay clinical, elite, and forensic in your tone.`;
 
         const response = await anthropic!.messages.create({
             model,
-            max_tokens: 8192,
+            max_tokens: 3000,
             system: systemPrompt,
             messages: [{ role: 'user', content: userContent }],
         });
