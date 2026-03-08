@@ -1,7 +1,9 @@
 'use client';
 
+import { useEffect } from 'react';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
+import { supabaseClient } from '@/lib/supabase-client';
 
 if (typeof window !== 'undefined') {
     const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
@@ -19,6 +21,21 @@ if (typeof window !== 'undefined') {
 }
 
 export function CSPostHogProvider({ children }: { children: React.ReactNode }) {
+    useEffect(() => {
+        const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(
+            (event, session) => {
+                if (session) {
+                    const expiresIn = session.expires_in || 3600;
+                    document.cookie = `sb-access-token=${session.access_token}; path=/; max-age=${expiresIn}; SameSite=Lax; secure`;
+                } else {
+                    document.cookie = 'sb-access-token=; path=/; max-age=0; SameSite=Lax; secure';
+                }
+            }
+        );
+
+        return () => subscription.unsubscribe();
+    }, []);
+
     return (
         <PostHogProvider client={posthog}>
             {children}

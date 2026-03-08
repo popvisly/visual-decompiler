@@ -23,7 +23,9 @@ export default function LoginPage() {
             });
 
             if (error) {
-                throw error;
+                setStatus('idle');
+                setErrorMsg(error.message);
+                return;
             }
 
             if (data.session) {
@@ -34,12 +36,14 @@ export default function LoginPage() {
                 // Force refresh to ensure middleware picks up the new cookie and renders layouts correctly
                 router.refresh();
             } else {
-                throw new Error("No session generated");
+                setStatus('idle');
+                setErrorMsg("No session generated");
+                return;
             }
         } catch (e) {
             const error = e as Error;
             setErrorMsg(error.message || 'Authentication failed. Please check your credentials.');
-            setStatus('error');
+            setStatus('idle');
         }
     };
 
