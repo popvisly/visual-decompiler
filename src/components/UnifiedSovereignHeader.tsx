@@ -93,10 +93,10 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
 
                     {/* ── Right: Utility Bar ── */}
                     <div className="flex items-center gap-4">
-                        <div className="hidden md:flex items-center gap-4">
+                        <div className="hidden md:block">
                             {isAuthenticated ? (
                                 <>
-                                    <span className={`text-[9px] font-bold tracking-[0.2em] uppercase hidden lg:block ${forceDark ? 'text-white/60' : 'text-neutral-500'}`}>
+                                    <span className={`text-[9px] font-bold tracking-[0.2em] uppercase hidden lg:inline-block mr-6 transistion-all ${forceDark ? 'text-white/40' : 'text-neutral-400'}`}>
                                         ENTER THE VAULT FOR FURTHER FORENSIC ANALYSIS &gt;
                                     </span>
                                     <Link
