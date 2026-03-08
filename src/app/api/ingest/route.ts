@@ -143,7 +143,7 @@ export async function POST(req: Request) {
         mediaUrl = normalizeUrl(mediaUrl);
 
         // ── Auth & Rate Limit Gate ──
-        const { userId, orgId } = await getServerSession();
+        const { userId, orgId } = await getServerSession(req);
 
         if (!userId) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
