@@ -17,6 +17,14 @@ export interface ProductionBlueprintResponse {
         material_cues: string[];
         gaze_vector: string;
     };
+    ad_copy_remixes: {
+        angle: string;
+        copy: string;
+    }[];
+    visual_variant_prompts: {
+        concept: string;
+        prompt: string;
+    }[];
 }
 
 export async function POST(req: Request) {
@@ -63,7 +71,19 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
     "lighting_architecture": "string",
     "material_cues": ["string"],
     "gaze_vector": "string"
-  }
+  },
+  "ad_copy_remixes": [
+    {
+      "angle": "Status Pivot",
+      "copy": "string"
+    }
+  ],
+  "visual_variant_prompts": [
+    {
+      "concept": "Minimalist Iteration",
+      "prompt": "string"
+    }
+  ]
 }`;
 
         const userMessage = `Based on the following Forensic Extraction from our Intelligence Vault, synthesize a highly actionable, premium Production Blueprint. Keep language clinical, forensic, and elite.

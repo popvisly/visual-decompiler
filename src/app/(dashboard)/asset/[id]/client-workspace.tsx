@@ -55,6 +55,11 @@ interface WorkspaceAsset {
                 hypothesis: string;
                 test_cells: { lever: string; change: string; rationale: string }[];
             };
+            persuasion_metrics?: {
+                predictive_longevity: string;
+                cognitive_friction: number;
+                persuasion_density: number;
+            };
         };
     }[];
 }
@@ -85,6 +90,14 @@ interface BlueprintData {
         gaze_vector: string;
         material_cues: string[];
     };
+    ad_copy_remixes?: {
+        angle: string;
+        copy: string;
+    }[];
+    visual_variant_prompts?: {
+        concept: string;
+        prompt: string;
+    }[];
 }
 
 export default function AssetWorkspace({
@@ -97,7 +110,7 @@ export default function AssetWorkspace({
     agency: any
 }) {
     const [asset, setAsset] = useState(initialAsset);
-    const [activeTab, setActiveTab] = useState<'INTELLIGENCE' | 'MARKET PULSE' | 'PSYCHOLOGY' | 'BLUEPRINT'>('INTELLIGENCE');
+    const [activeTab, setActiveTab] = useState<'INTELLIGENCE' | 'PSYCHOLOGY' | 'BLUEPRINT' | 'MARKET PULSE'>('INTELLIGENCE');
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
     const [isGeneratingBlueprint, setIsGeneratingBlueprint] = useState(false);
     const [showGatekeeper, setShowGatekeeper] = useState(false);
@@ -249,7 +262,7 @@ export default function AssetWorkspace({
 
                     {/* Minimalist Segmented Controls */}
                     <div className="sticky top-0 z-20 bg-[#FBFBF6]/95 backdrop-blur-md border-b border-[#D4A574]/20 px-8 pt-8 md:pt-12 pb-0 flex gap-8">
-                        {(['INTELLIGENCE', 'MARKET PULSE', 'PSYCHOLOGY', 'BLUEPRINT'] as const).map(tab => (
+                        {(['INTELLIGENCE', 'PSYCHOLOGY', 'BLUEPRINT', 'MARKET PULSE'] as const).map(tab => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
@@ -320,11 +333,11 @@ export default function AssetWorkspace({
                                                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                                     <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px]">
                                                         <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Narrative Framework</span>
-                                                        <p className="text-xs text-[#FFFFFF] leading-relaxed font-light">{extraction.full_dossier.narrative_framework}</p>
+                                                        <p className="text-xs text-[#FFFFFF] leading-relaxed font-light whitespace-pre-wrap mt-2">{extraction.full_dossier.narrative_framework}</p>
                                                     </div>
                                                     <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px]">
                                                         <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Semiotic Subtext</span>
-                                                        <p className="text-xs text-[#FFFFFF] leading-relaxed font-light">{extraction.full_dossier.semiotic_subtext}</p>
+                                                        <p className="text-xs text-[#FFFFFF] leading-relaxed font-light whitespace-pre-wrap mt-2">{extraction.full_dossier.semiotic_subtext}</p>
                                                     </div>
                                                     <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px]">
                                                         <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Archetype Posture</span>
@@ -372,10 +385,25 @@ export default function AssetWorkspace({
                             </div>
                         )}
 
-                        {/* NEW TAB: MARKET PULSE */}
+                        {/* MARKET PULSE (Locked / Last) */}
                         {activeTab === 'MARKET PULSE' && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <AdAnalyticsTab brand={asset.brand?.name} />
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
+                                <div className="absolute inset-0 z-10 backdrop-blur-md bg-[#FBFBF6]/60 flex items-center justify-center rounded-3xl">
+                                    <div className="bg-[#1A1A1A] border border-[#D4A574]/40 p-8 rounded-3xl text-center shadow-2xl flex flex-col items-center">
+                                        <div className="w-12 h-12 rounded-full bg-[#D4A574]/10 flex items-center justify-center border border-[#D4A574]/30 mb-4">
+                                            <svg className="w-5 h-5 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                                        </div>
+                                        <span className="text-[#D4A574] font-bold tracking-[0.3em] uppercase text-[10px] mb-2">Sovereign Feature</span>
+                                        <h3 className="text-[#FFFFFF] text-xl font-light mb-4 tracking-tight">Market Pulse Locked</h3>
+                                        <p className="text-[#FFFFFF]/60 text-xs mb-8 max-w-xs leading-relaxed">Cross-asset statistical aggregation and category saturation density mapping is restricted to Enterprise tiers.</p>
+                                        <button className="bg-[#D4A574] text-[#1A1A1A] px-8 py-3 rounded-full text-[10px] uppercase font-bold tracking-widest hover:bg-[#8B4513] hover:text-white transition-colors">
+                                            Premium Unlock
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="opacity-40 pointer-events-none select-none filter blur-[2px]">
+                                    <AdAnalyticsTab brand={asset.brand?.name} />
+                                </div>
                             </div>
                         )}
 
@@ -396,33 +424,57 @@ export default function AssetWorkspace({
                                         </div>
                                     </div>
 
-                                    {/* Emotional DNA Heatmap (Placeholder/Text Metric) */}
-                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col rounded-3xl shadow-sm">
-                                        <div className="w-full mb-6">
+                                    {/* Emotional DNA Heatmap replaced with Persuasion Metrics if available */}
+                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col justify-between rounded-3xl shadow-sm h-full">
+                                        <div className="w-full mb-8">
                                             <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest border-b border-[#D4A574]/20 pb-4">
-                                                Emotional DNA Heatmap
+                                                Persuasion Metrics
                                             </h3>
                                         </div>
-                                        <div className="flex-1 space-y-4">
-                                            <div>
-                                                <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-1">
-                                                    <span className="text-[#D4A574]/60">Persuasion Density</span>
-                                                    <span className="text-[#D4A574]">Max</span>
+                                        
+                                        {(extraction?.full_dossier as any)?.persuasion_metrics ? (
+                                             <div className="flex-1 space-y-8 flex flex-col justify-center">
+                                                <div>
+                                                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
+                                                        <span className="text-[#D4A574]/60">Persuasion Density</span>
+                                                        <span className="text-[#D4A574]">{((extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density as number)}%</span>
+                                                    </div>
+                                                    <div className="w-full bg-[#1A1A1A] h-2 border border-[#D4A574]/20 rounded-full overflow-hidden">
+                                                        <div 
+                                                            className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full transition-all duration-1000" 
+                                                            style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density}%` }}
+                                                        />
+                                                    </div>
                                                 </div>
-                                                <div className="w-full bg-[#1A1A1A] h-1.5 border border-[#D4A574]/20 rounded-full overflow-hidden">
-                                                    <div className="h-full bg-[#D4A574] rounded-full w-[95%]" />
+                                                <div>
+                                                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
+                                                        <span className="text-[#D4A574]/60">Cognitive Friction</span>
+                                                        <span className="text-[#8B4513]">{((extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction as number)}%</span>
+                                                    </div>
+                                                    <div className="w-full bg-[#1A1A1A] h-2 border border-[#D4A574]/20 rounded-full overflow-hidden">
+                                                        <div 
+                                                            className="h-full bg-[#8B4513]/40 rounded-full transition-all duration-1000" 
+                                                            style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction}%` }}
+                                                        />
+                                                    </div>
                                                 </div>
+                                                <div className="mt-8 pt-6 border-t border-[#D4A574]/10">
+                                                    <div className="flex gap-3 items-center">
+                                                        <div className="w-8 h-8 rounded-full border border-[#D4A574]/30 flex items-center justify-center shrink-0 bg-[#D4A574]/5">
+                                                            <svg className="w-3 h-3 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                        </div>
+                                                        <div>
+                                                            <span className="block text-[8px] font-bold text-[#D4A574]/50 mb-1 uppercase tracking-[0.2em]">Predictive Longevity</span>
+                                                            <span className="text-xs text-[#FFFFFF] tracking-tight">{((extraction?.full_dossier as any)?.persuasion_metrics?.predictive_longevity as string)}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                             </div>
+                                        ) : (
+                                            <div className="flex-1 flex items-center justify-center">
+                                                <div className="text-[10px] uppercase font-bold tracking-widest text-[#D4A574]/30">Legacy Asset - No Depth Metrics Available</div>
                                             </div>
-                                            <div>
-                                                <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-1">
-                                                    <span className="text-[#D4A574]/60">Cognitive Friction</span>
-                                                    <span className="text-[#8B4513]">Low</span>
-                                                </div>
-                                                <div className="w-full bg-[#1A1A1A] h-1.5 border border-[#D4A574]/20 rounded-full overflow-hidden">
-                                                    <div className="h-full bg-[#8B4513]/40 rounded-full w-[30%]" />
-                                                </div>
-                                            </div>
-                                        </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -520,6 +572,39 @@ export default function AssetWorkspace({
                                                 </div>
                                             </div>
                                         </div>
+
+                                        {/* REMIXES AND VARIANTS */}
+                                        {blueprintData.ad_copy_remixes && blueprintData.ad_copy_remixes.length > 0 && (
+                                            <div>
+                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Forensic Copy Remixes</span>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    {blueprintData.ad_copy_remixes.map((remix: any, i: number) => (
+                                                        <div key={i} className="bg-[#1A1A1A] border border-[#D4A574]/20 p-5 rounded-3xl shadow-sm relative group">
+                                                            <div className="absolute -top-3 left-4 bg-[#8B4513] text-[#F5F5DC] px-3 py-1 text-[8px] font-bold tracking-widest uppercase rounded">
+                                                                {remix.angle}
+                                                            </div>
+                                                            <p className="text-sm text-[#FFFFFF] font-light mt-2 leading-relaxed whitespace-pre-wrap">{remix.copy}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {blueprintData.visual_variant_prompts && blueprintData.visual_variant_prompts.length > 0 && (
+                                            <div>
+                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Visual Concept Variants</span>
+                                                <div className="space-y-6">
+                                                    {blueprintData.visual_variant_prompts.map((variant: any, i: number) => (
+                                                        <div key={i} className="bg-[#1A1A1A] border border-[#D4A574]/20 p-5 rounded-3xl shadow-sm relative">
+                                                            <span className="block text-[10px] font-bold uppercase tracking-widest text-[#D4A574] mb-3">{variant.concept}</span>
+                                                            <pre className="p-4 bg-black/40 border border-[#D4A574]/10 text-[#FFFFFF]/80 text-xs font-mono leading-relaxed whitespace-pre-wrap rounded-2xl">
+                                                                {variant.prompt}
+                                                            </pre>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
 
                                     </div>
                                 )}

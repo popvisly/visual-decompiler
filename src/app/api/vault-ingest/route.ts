@@ -137,7 +137,7 @@ export async function POST(req: Request) {
         const model = getClaudeModel('agency');
 
         const systemPrompt = `You are an elite forensic advertising strategist, creative director, and semiotician. Analyze the given asset (static image or video frame) and extract its core strategic and semiotic DNA.
-CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact schema. Do NOT omit any keys. Keep all textual values extremely concise but dense. Provide 1 sentence maximum per string field. Do NOT write paragraphs.
+CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact schema. Do NOT omit any keys. Provide forensic, multi-paragraph deep-dives for Narrative, Semiotics, and Archetypes. Maintain an elite, clinical, and highly specialized tone.
 
 {
   "brand_name_guess": "Brand Name",
@@ -156,18 +156,30 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
   ],
   "dna_prompt": "A single sentence summary combining style and mechanic",
   "full_dossier": {
-    "narrative_framework": "1-sentence explanation of the core storytelling device.",
-    "semiotic_subtext": "1-sentence of the psychological subtext.",
+    "narrative_framework": "Multi-paragraph deep-dive explanation of the core storytelling device.",
+    "semiotic_subtext": "Multi-paragraph deep-dive into the psychological subtext.",
     "possible_readings": [
       { "reading": "string", "support": ["string"], "note": "string|null" }
     ],
-    "objection_dismantling": "1-sentence on the customer friction neutralized.",
+    "objection_dismantling": "Detailed explanation of the customer friction neutralized.",
     "archetype_mapping": {
       "target_posture": "The overarching strategic posture",
-      "strategic_moves": ["string", "string"]
+      "strategic_moves": ["string", "string"],
+      "trigger_distribution": {
+        "Status": 85,
+        "Scarcity": 10,
+        "Utility": 0,
+        "Authority": 90,
+        "Social Proof": 20
+      }
+    },
+    "persuasion_metrics": {
+      "predictive_longevity": "Fatigue at Day 32 (Estimate creative exhaustion window)",
+      "cognitive_friction": 15,
+      "persuasion_density": 92
     },
     "test_plan": {
-      "hypothesis": "1-sentence hypothesis.",
+      "hypothesis": "Detailed hypothesis for testing.",
       "test_cells": [
         { "lever": "Hook|CTA|Visual|Copy", "change": "string", "rationale": "string" }
       ]
@@ -175,7 +187,7 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
   }
 }
 
-Analyze the media provided. Stay clinical, elite, and exceedingly concise.`;
+Analyze the media provided. Stay clinical, elite, and provide maximum depth. Ensure the 'trigger_distribution' keys (Status, Scarcity, Utility, Authority, Social Proof) map to integers 0-100. Similarly 'cognitive_friction' and 'persuasion_density' should be integers 0-100.`;
 
         const base64Data = buffer.toString('base64');
 
@@ -198,7 +210,7 @@ Analyze the media provided. Stay clinical, elite, and exceedingly concise.`;
 
         const response = await anthropic!.messages.create({
             model,
-            max_tokens: 3000,
+            max_tokens: 8192,
             system: systemPrompt,
             messages: [{ role: 'user', content: userContent }],
         });
