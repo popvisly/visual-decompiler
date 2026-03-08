@@ -20,6 +20,13 @@ interface WorkspaceAsset {
         color_palette: string[];
         evidence_anchors: string[] | Record<string, unknown>[];
         dna_prompt: string;
+    } | {
+        primary_mechanic: string;
+        visual_style: string;
+        confidence_score: number;
+        color_palette: string[];
+        evidence_anchors: string[] | Record<string, unknown>[];
+        dna_prompt: string;
     }[];
 }
 
@@ -71,7 +78,12 @@ export default function AssetWorkspace({
     const [sequenceData, setSequenceData] = useState<SequenceData | null>(null);
     const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(null);
 
-    const extraction = asset.extraction?.[0] || null;
+    // Normalize extraction payload (V1 array vs V2 object)
+    const extraction = Array.isArray(asset.extraction) ? asset.extraction[0] : asset.extraction;
+    
+    // Parse visual style string if it's stringified JSON
+    let parsedStyle = extraction?.visual_style;
+
     const isCarousel = asset.type === 'CAROUSEL';
 
     // Handle Generate Sequence Analysis (Targeting /api/extract/sequence)

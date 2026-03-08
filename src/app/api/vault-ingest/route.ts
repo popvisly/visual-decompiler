@@ -87,32 +87,15 @@ export async function POST(req: Request) {
 
         const publicUrl = publicUrlData.publicUrl;
 
-        // 5. Fallback Brand (System Dummy or 'Unassigned' logic)
-        let targetBrandId = null;
-        const { data: brands } = await supabaseAdmin.from('brands').select('id').limit(1);
-        if (brands && brands.length > 0) {
-            targetBrandId = brands[0].id;
-        } else {
-            throw new Error("No Brands found in Intelligence Vault to attach asset to.");
-        }
-
-        // 6. Create new Asset in database
-        const { data: assetData, error: insertError } = await supabaseAdmin.from('assets').insert({
-            brand_id: targetBrandId,
-            user_id: session.userId,
-            type: 'STATIC',
-            file_url: publicUrl
-        }).select().single();
-
-        if (insertError) throw insertError;
-
-        // 7. Trigger Claude Deconstruction
+        // 5. Trigger Claude Deconstruction FIRST to get Brand Intelligence
         const anthropic = getAnthropic();
         const model = getClaudeModel('agency');
 
         const systemPrompt = `You are an elite forensic advertising strategist. Analyze the given asset and extract its core semiotic DNA.
 CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact schema:
 {
+  "brand_name_guess": "Brand Name",
+  "market_sector_guess": "Industry Category",
   "confidence_score": 95,
   "primary_mechanic": "Status Signaling via Negative Space",
   "visual_style": "Brutalist Minimalism",
@@ -130,7 +113,6 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
 
 Analyze the image provided. Stay clinical, elite, and forensic in your tone. Keep explanations extremely concise and brief to minimize token usage.`;
 
-        // We already have the buffer, no need to re-fetch!
         const base64Data = buffer.toString('base64');
         const mimeType = file.type;
 
@@ -153,7 +135,7 @@ Analyze the image provided. Stay clinical, elite, and forensic in your tone. Kee
 
         const response = await anthropic!.messages.create({
             model,
-            max_tokens: 800,
+            max_tokens: 1000,
             system: systemPrompt,
             messages: [{ role: 'user', content: userContent }],
         });
@@ -170,7 +152,46 @@ Analyze the image provided. Stay clinical, elite, and forensic in your tone. Kee
 
         const extractionResult = JSON.parse(text);
 
-        // 6. Save extraction to Intelligence Vault extractions table
+        // 6. Dynamic Brand Binding
+        let targetBrandId = null;
+        const brandName = extractionResult.brand_name_guess || 'Unknown Brand';
+        const marketSector = extractionResult.market_sector_guess || 'Uncategorized';
+
+        // Check if brand exists in Intelligence Vault
+        const { data: existingBrand } = await supabaseAdmin.from('brands')
+            .select('id')
+            .ilike('name', brandName)
+            .limit(1)
+            .maybeSingle();
+
+        if (existingBrand) {
+            targetBrandId = existingBrand.id;
+        } else {
+            // Need an agency context to create a new Brand
+            const { data: agencies } = await supabaseAdmin.from('agencies').select('id').limit(1).single();
+            if (!agencies) throw new Error("No Agency found to anchor new Brand.");
+            
+            const { data: newBrand, error: newBrandError } = await supabaseAdmin.from('brands').insert({
+                name: brandName,
+                market_sector: marketSector,
+                agency_id: agencies.id
+            }).select('id').single();
+
+            if (newBrandError) throw newBrandError;
+            targetBrandId = newBrand.id;
+        }
+
+        // 7. Create new Asset in database
+        const { data: assetData, error: insertError } = await supabaseAdmin.from('assets').insert({
+            brand_id: targetBrandId,
+            user_id: session.userId,
+            type: 'STATIC',
+            file_url: publicUrl
+        }).select().single();
+
+        if (insertError) throw insertError;
+
+        // 8. Save extraction to Intelligence Vault extractions table
         const { error: extractionError } = await supabaseAdmin.from('extractions').insert({
             asset_id: assetData.id,
             confidence_score: extractionResult.confidence_score,
