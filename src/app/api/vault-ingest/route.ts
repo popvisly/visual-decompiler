@@ -196,9 +196,9 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
   }
 }
 
-CRITICAL: The 'narrative_framework' MUST use the 'ACT I: [TITLE]' format and the 'semiotic_subtext' MUST use the 'CHANNEL 1: [TITLE]' format so the forensic UI correctly parses and renders the multi-layered neural frequencies.
+CRITICAL: The 'narrative_framework' MUST use the 'ACT I: [TITLE]' format and the 'semiotic_subtext' MUST use the 'CHANNEL 1: [TITLE]' format.
 
-Analyze the media provided. Stay clinical, elite, and provide maximum depth. Ensure the 'trigger_distribution' keys (Status, Scarcity, Utility, Authority, Social Proof) map to integers 0-100. Similarly 'cognitive_friction' and 'persuasion_density' should be integers 0-100.`;
+STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive fluff to ensure the entire JSON payload fits within the 8,192 token window. Ensure 'trigger_distribution' keys (Status, Scarcity, Utility, Authority, Social Proof) map to integers 0-100. Similarly 'cognitive_friction' and 'persuasion_density' should be integers 0-100.`;
 
         const base64Data = buffer.toString('base64');
 
@@ -230,13 +230,36 @@ Analyze the media provided. Stay clinical, elite, and provide maximum depth. Ens
         if (!contentBlock) throw new Error("Claude returned no text response");
 
         let text = contentBlock.text;
-        if (text.includes('```json')) {
-            text = text.split('```json')[1].split('```')[0].trim();
-        } else if (text.includes('```')) {
-            text = text.split('```')[1].split('```')[0].trim();
-        }
+        const responseLength = text.length;
+        const stopReason = response.stop_reason;
 
-        const extractionResult = JSON.parse(text);
+        console.log(`[Ingest] Claude Response Length: ${responseLength}, Stop Reason: ${stopReason}`);
+
+        if (text.includes('```json')) {
+            text = text.split('```json')[1];
+            if (text.includes('```')) {
+                text = text.split('```')[0];
+            }
+        } else if (text.includes('```')) {
+            text = text.split('```')[1];
+            if (text.includes('```')) {
+                text = text.split('```')[0];
+            }
+        }
+        text = text.trim();
+
+        let extractionResult;
+        try {
+            extractionResult = JSON.parse(text);
+        } catch (jsonError: any) {
+            console.error(`[Ingest] JSON Parse Error at length ${responseLength}. Stop Reason: ${stopReason}`);
+            console.error(`[Ingest] Last 100 chars of response: ${text.slice(-100)}`);
+            
+            if (stopReason === 'max_tokens') {
+                throw new Error(`The forensic dossier exceeded the maximum allowed depth (8,192 tokens) and was truncated. Try a simpler asset or retry to see if the engine provides a more concise deconstruction.`);
+            }
+            throw new Error(`Forensic data corruption (Invalid JSON). Technical: ${jsonError.message}`);
+        }
 
         // 6. Dynamic Brand Binding
         let targetBrandId = null;
