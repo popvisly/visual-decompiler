@@ -3,15 +3,8 @@
 import { useState, useEffect } from 'react';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 import { supabaseAdmin } from '@/lib/supabase';
-
-interface Asset {
-    id: string;
-    file_url: string;
-    brand: { name: string };
-    extractions?: {
-        primary_mechanic: string;
-    };
-}
+import { Asset } from '@/lib/intelligence_service';
+import IntelligenceArchiveDrawer from '@/components/IntelligenceArchiveDrawer';
 
 // API Response Type mapping
 interface DifferentialDiagnosticResponse {
@@ -91,6 +84,8 @@ export default function DifferentialDiagnosticsPage() {
         fetchAssets();
     }, []);
 
+    const [drawerState, setDrawerState] = useState<{ open: boolean, target: 'A' | 'B' | null }>({ open: false, target: null });
+
     const handleAnalyze = async () => {
         if (!assetA || !assetB) return;
         setStatus('analyzing');
@@ -146,8 +141,7 @@ export default function DifferentialDiagnosticsPage() {
                     <AssetSelectorPanel
                         label="CONTROL (ASSET A)"
                         selected={assetA}
-                        onSelect={(a) => setAssetA(a)}
-                        availableAssets={vaultAssets}
+                        onOpenDrawer={() => setDrawerState({ open: true, target: 'A' })}
                     />
                     
                     {/* Central Command Hub Action */}
@@ -167,8 +161,19 @@ export default function DifferentialDiagnosticsPage() {
                     <AssetSelectorPanel
                         label="PROPOSED (ASSET B)"
                         selected={assetB}
-                        onSelect={(a) => setAssetB(a)}
-                        availableAssets={vaultAssets}
+                        onOpenDrawer={() => setDrawerState({ open: true, target: 'B' })}
+                    />
+
+                    {/* New Forensic Archive Drawer */}
+                    <IntelligenceArchiveDrawer 
+                        isOpen={drawerState.open}
+                        label={drawerState.target === 'A' ? 'CONTROL (ASSET A)' : 'PROPOSED (ASSET B)'}
+                        onClose={() => setDrawerState({ open: false, target: null })}
+                        onSelect={(asset) => {
+                            if (drawerState.target === 'A') setAssetA(asset);
+                            else setAssetB(asset);
+                            setDrawerState({ open: false, target: null });
+                        }}
                     />
                 </div>
 
@@ -432,16 +437,12 @@ export default function DifferentialDiagnosticsPage() {
 function AssetSelectorPanel({
     label,
     selected,
-    onSelect,
-    availableAssets
+    onOpenDrawer
 }: {
     label: string,
     selected: Asset | null,
-    onSelect: (a: Asset) => void,
-    availableAssets: Asset[]
+    onOpenDrawer: () => void
 }) {
-    const [open, setOpen] = useState(false);
-
     return (
         <div className="flex-1 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-[2.5rem] overflow-hidden min-h-[450px] relative transition-all duration-500 hover:border-[#D4A574]/50 group shadow-2xl">
             {/* Background Media View */}
@@ -473,7 +474,7 @@ function AssetSelectorPanel({
                 <div className="flex justify-center">
                     <div className="relative w-full max-w-[260px]">
                         <button
-                            onClick={() => setOpen(true)}
+                            onClick={onOpenDrawer}
                             className="w-full bg-transparent border border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-[#D4A574]/5 py-4 transition-all text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574] rounded-full"
                         >
                             {selected ? '[ CHANGE ASSET ]' : '[ SELECT ASSET FROM ARCHIVE ]'}
@@ -481,64 +482,6 @@ function AssetSelectorPanel({
                     </div>
                 </div>
             </div>
-
-            {/* Selection Drawer (Modal Over Right Side) */}
-            {open && (
-                <div className="fixed inset-0 z-[100] flex justify-end animate-in fade-in duration-300">
-                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
-                    <div className="relative w-full max-w-md bg-[#FBFBF6] h-screen shadow-2xl animate-in slide-in-from-right duration-500 flex flex-col">
-                        <div className="p-8 border-b border-[#1A1A1A]/10 flex justify-between items-center bg-[#1A1A1A]">
-                            <div className="space-y-1">
-                                <h2 className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#D4A574]">INTELLIGENCE ARCHIVE</h2>
-                                <p className="text-[9px] text-[#D4A574]/50 font-mono tracking-[0.2em] uppercase transition-opacity">Select forensic footprint</p>
-                            </div>
-                            <button 
-                                onClick={() => setOpen(false)}
-                                className="text-[#D4A574] hover:scale-110 transition-transform p-2 border border-[#D4A574]/20 rounded-full"
-                            >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-
-                        <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-hide">
-                            {availableAssets.map(a => (
-                                <button
-                                    key={a.id}
-                                    onClick={() => { onSelect(a); setOpen(false); }}
-                                    className="w-full group/item flex items-center gap-6 p-4 bg-white border border-[#1A1A1A]/5 rounded-2xl hover:border-[#D4A574] hover:shadow-lg transition-all"
-                                >
-                                    <div className="w-16 h-16 bg-[#1A1A1A] rounded-xl overflow-hidden shrink-0 border border-[#1A1A1A]/10">
-                                        <img src={a.file_url} className="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition-all duration-500" />
-                                    </div>
-                                    <div className="flex flex-col text-left">
-                                        <span className="text-[11px] font-bold uppercase tracking-widest text-[#1A1A1A] group-hover/item:text-[#D4A574] transition-colors">{a.brand?.name || 'Unknown'}</span>
-                                        <span className="text-[9px] font-bold text-[#D4A574] uppercase tracking-[0.2em] mt-1">
-                                            {a.extractions?.primary_mechanic || 'ANALYSIS PENDING'}
-                                        </span>
-                                        <span className="text-[9px] font-mono text-[#1A1A1A]/40 uppercase tracking-tighter mt-1">Footprint ID: {a.id.split('-')[0]}</span>
-                                    </div>
-                                    <div className="ml-auto opacity-0 group-hover/item:opacity-100 transition-opacity">
-                                        <div className="w-6 h-6 border border-[#D4A574] rounded-full flex items-center justify-center">
-                                            <div className="w-2 h-2 bg-[#D4A574] rounded-full" />
-                                        </div>
-                                    </div>
-                                </button>
-                            ))}
-                        </div>
-                        
-                        <div className="p-8 border-t border-[#1A1A1A]/5 bg-white/50">
-                            <button 
-                                onClick={() => setOpen(false)}
-                                className="w-full py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]/40 hover:text-[#1A1A1A] transition-colors"
-                            >
-                                [ CANCEL SELECTION ]
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
 
             {/* Corner Accents */}
             <div className="absolute top-8 left-8 w-4 h-4 border-t border-l border-[#D4A574]/20" />
