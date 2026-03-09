@@ -724,25 +724,31 @@ export default function AssetWorkspace({
                                         {/* Top 4 Extraction Metrics as Intelligence Cards */}
                                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-2">
                                             
-                                            {/* Primary Mechanic */}
-                                            <div className="col-span-1 lg:col-span-2 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-3xl p-6 shadow-sm flex flex-col justify-center min-h-[140px]">
-                                                <div className="flex justify-between items-center mb-4 border-b border-[#D4A574]/20 pb-2">
-                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Primary Mechanic</span>
-                                                    <InfoButton section="PRIMARY_MECHANIC" />
+                                            {/* Unified Primary Intelligence Metric */}
+                                            <div className="col-span-1 lg:col-span-3 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-3xl p-6 shadow-sm flex flex-col lg:flex-row lg:items-center gap-6 min-h-[140px]">
+                                                {/* Left: Primary Mechanic */}
+                                                <div className="flex-1">
+                                                    <div className="flex justify-between items-center mb-4 border-b border-[#D4A574]/20 pb-2">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Primary Mechanic</span>
+                                                        <InfoButton section="PRIMARY_MECHANIC" />
+                                                    </div>
+                                                    <h2 className="text-xl lg:text-2xl font-light uppercase tracking-[0.2em] text-[#FFFFFF] leading-snug">
+                                                        {extraction.primary_mechanic}
+                                                    </h2>
                                                 </div>
-                                                <h2 className="text-lg lg:text-xl font-light uppercase tracking-[0.2em] text-[#FFFFFF] leading-snug mt-2">
-                                                    {extraction.primary_mechanic}
-                                                </h2>
-                                            </div>
 
-                                            {/* System Confidence */}
-                                            <div className="col-span-1 border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[140px]">
-                                                <div className="flex justify-between items-center mb-4 border-b border-[#D4A574]/20 pb-2">
-                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">System Confidence</span>
-                                                    <InfoButton section="SYSTEM_CONFIDENCE" />
-                                                </div>
-                                                <div className="text-5xl font-mono text-[#FFFFFF] tracking-tighter mt-auto self-end">
-                                                    {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-[#D4A574]/50">%</span>
+                                                {/* Vertical Divider (Desktop Only) */}
+                                                <div className="hidden lg:block w-[1px] h-24 bg-[#D4A574]/20 mx-4" />
+
+                                                {/* Right: System Confidence */}
+                                                <div className="w-full lg:w-48 flex flex-col">
+                                                    <div className="flex justify-between items-center mb-4 border-b border-[#D4A574]/20 pb-2">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Confidence</span>
+                                                        <InfoButton section="SYSTEM_CONFIDENCE" />
+                                                    </div>
+                                                    <div className="text-5xl font-mono text-[#FFFFFF] tracking-tighter mt-auto lg:text-right">
+                                                        {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-[#D4A574]/50">%</span>
+                                                    </div>
                                                 </div>
                                             </div>
 
