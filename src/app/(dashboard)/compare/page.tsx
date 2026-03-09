@@ -8,6 +8,9 @@ interface Asset {
     id: string;
     file_url: string;
     brand: { name: string };
+    extractions?: {
+        primary_mechanic: string;
+    };
 }
 
 // API Response Type mapping
@@ -40,8 +43,20 @@ export default function DifferentialDiagnosticsPage() {
 
     useEffect(() => {
         async function fetchAssets() {
-            const { data } = await supabaseAdmin.from('assets').select('id, file_url, brand:brands(name)').limit(10);
-            if (data) setVaultAssets(data as unknown as Asset[]);
+            // Updated query to fetch brand and primary mechanic
+            const { data } = await supabaseAdmin
+                .from('assets')
+                .select('id, file_url, brand:brands(name), extractions(primary_mechanic)')
+                .limit(20);
+            
+            if (data) {
+                // Formatting data to match interface
+                const formatted = data.map((item: any) => ({
+                    ...item,
+                    extractions: item.extractions?.[0] || item.extractions // Handle potential array return
+                }));
+                setVaultAssets(formatted as Asset[]);
+            }
         }
         fetchAssets();
     }, []);
@@ -72,8 +87,22 @@ export default function DifferentialDiagnosticsPage() {
         fullMark: 100,
     })) || [];
 
+    const isReady = assetA && assetB && status !== 'analyzing';
+
     return (
         <div className="min-h-screen bg-[#FBFBF6] text-[#1A1A1A] relative overflow-hidden">
+            {/* pulse animation for button */}
+            <style jsx global>{`
+                @keyframes tanPulse {
+                    0% { box-shadow: 0 0 30px rgba(212,165,116,0.3); }
+                    50% { box-shadow: 0 0 60px rgba(212,165,116,0.6); }
+                    100% { box-shadow: 0 0 30px rgba(212,165,116,0.3); }
+                }
+                .tan-pulse {
+                    animation: tanPulse 2s infinite ease-in-out;
+                }
+            `}</style>
+
             {/* 2.5% Geometric Grid Overlay */}
             <div className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:40px_40px]" />
 
@@ -91,8 +120,8 @@ export default function DifferentialDiagnosticsPage() {
                     <div className="flex items-center justify-center lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 z-20">
                         <button
                             onClick={handleAnalyze}
-                            disabled={!assetA || !assetB || status === 'analyzing'}
-                            className="group relative px-8 py-5 bg-[#D4A574] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full shadow-[0_0_30px_rgba(212,165,116,0.3)] hover:shadow-[0_0_50px_rgba(212,165,116,0.5)] hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:grayscale"
+                            disabled={!isReady}
+                            className={`group relative px-8 py-5 bg-[#D4A574] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all disabled:opacity-50 disabled:grayscale ${isReady ? 'tan-pulse hover:scale-105 active:scale-95' : ''}`}
                         >
                             <span className="relative z-10">
                                 {status === 'analyzing' ? 'Processing Delta...' : 'Initiate Differential Diagnostic'}
@@ -313,6 +342,9 @@ function AssetSelectorPanel({
                                     </div>
                                     <div className="flex flex-col text-left">
                                         <span className="text-[11px] font-bold uppercase tracking-widest text-[#1A1A1A] group-hover/item:text-[#D4A574] transition-colors">{a.brand?.name || 'Unknown'}</span>
+                                        <span className="text-[9px] font-bold text-[#D4A574] uppercase tracking-[0.2em] mt-1">
+                                            {a.extractions?.primary_mechanic || 'ANALYSIS PENDING'}
+                                        </span>
                                         <span className="text-[9px] font-mono text-[#1A1A1A]/40 uppercase tracking-tighter mt-1">Footprint ID: {a.id.split('-')[0]}</span>
                                     </div>
                                     <div className="ml-auto opacity-0 group-hover/item:opacity-100 transition-opacity">
