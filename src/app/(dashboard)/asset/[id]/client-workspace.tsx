@@ -420,6 +420,8 @@ function SovereignProcessingView({ assetId, agency }: { assetId: string, agency?
         return () => clearInterval(interval);
     }, []);
 
+    const [error, setError] = useState<string | null>(null);
+
     useEffect(() => {
         let isMounted = true;
         
@@ -429,14 +431,39 @@ function SovereignProcessingView({ assetId, agency }: { assetId: string, agency?
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ assetId })
         }).then(res => res.json()).then(data => {
-            if (isMounted && data.success) {
+            if (!isMounted) return;
+            if (data.success) {
                 setProgress(100);
                 setTimeout(() => window.location.reload(), 800);
+            } else if (data.error) {
+                setError(data.error);
             }
-        }).catch(() => {});
+        }).catch((err) => {
+            if (isMounted) setError("Extraction engine timeout or network failure. This usually happens with very complex forensic dossiers.");
+        });
         
         return () => { isMounted = false; };
     }, [assetId, checkTrigger]);
+
+    if (error) {
+        return (
+            <div className="flex flex-col items-center justify-center py-20 animate-in fade-in duration-700 bg-rose-50/10 rounded-[3rem] border border-rose-500/10 mb-12">
+                <div className="w-16 h-16 rounded-full bg-rose-500/10 flex items-center justify-center mb-6">
+                    <svg className="w-8 h-8 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                </div>
+                <h2 className="text-[14px] font-bold text-rose-900 uppercase tracking-widest mb-3">Intelligence Extraction Failed</h2>
+                <p className="text-[11px] text-[#1A1A1A]/60 text-center max-w-[320px] leading-relaxed mb-8 px-4 font-medium uppercase tracking-tighter">
+                    {error}
+                </p>
+                <button
+                    onClick={() => setCheckTrigger(prev => prev + 1)}
+                    className="px-10 py-4 bg-[#1A1A1A] text-white text-[10px] font-bold uppercase tracking-widest hover:bg-[#8B4513] transition-all rounded-full"
+                >
+                    Re-Trigger Forensic Scan
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div className="flex flex-col items-center justify-center py-12 animate-in fade-in duration-1000">

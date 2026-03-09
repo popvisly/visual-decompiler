@@ -113,8 +113,17 @@ export async function POST(req: Request) {
             .limit(1);
 
         if (existingAssets && existingAssets.length > 0) {
+            const existingAsset = existingAssets[0];
             console.log(`[Ingest] Semantic hit for hash ${fileHash}. Bypassing Claude.`);
-            return NextResponse.json({ success: true, assetId: existingAssets[0].id, cached: true });
+            
+            // Check ownership and claim if unowned (legacy/test asset)
+            const { data: assetCheck } = await supabaseAdmin.from('assets').select('user_id').eq('id', existingAsset.id).single();
+            if (assetCheck && !assetCheck.user_id) {
+                console.log(`[Ingest] Claiming unowned asset ${existingAsset.id} for user ${session.userId}`);
+                await supabaseAdmin.from('assets').update({ user_id: session.userId }).eq('id', existingAsset.id);
+            }
+            
+            return NextResponse.json({ success: true, assetId: existingAsset.id, cached: true });
         }
 
         // 3. Upload to Supabase Storage Bucket 'vault-assets'
