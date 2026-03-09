@@ -12,7 +12,7 @@ export default function CompareClient({ data, allBrands }: { data: ComparisonDat
 
     const handleCompare = () => {
         if (brandA && brandB) {
-            router.push(`/dashboard/compare?brandA=${encodeURIComponent(brandA)}&brandB=${encodeURIComponent(brandB)}`);
+            router.push(`/compare?brandA=${encodeURIComponent(brandA)}&brandB=${encodeURIComponent(brandB)}`);
         }
     };
 

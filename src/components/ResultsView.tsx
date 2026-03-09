@@ -201,7 +201,7 @@ export default function ResultsView({
                                     <p className="text-[#6B6B6B] text-sm mb-6 px-4">
                                         {(d as any).error}
                                     </p>
-                                    <button onClick={() => window.location.href = '/dashboard'} className="px-6 py-2.5 bg-[#141414] hover:bg-[#2A2A2A] transition-colors text-white rounded-full text-[11px] uppercase tracking-widest font-bold">
+                                    <button onClick={() => window.location.href = '/vault'} className="px-6 py-2.5 bg-[#141414] hover:bg-[#2A2A2A] transition-colors text-white rounded-full text-[11px] uppercase tracking-widest font-bold">
                                         Return to Library
                                     </button>
                                 </>

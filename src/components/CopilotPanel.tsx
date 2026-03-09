@@ -118,7 +118,7 @@ export default function CopilotPanel({ boardId }: { boardId?: string }) {
                                         <p className="text-[9px] font-bold text-accent uppercase tracking-widest">Retrieved Intel</p>
                                         <div className="grid grid-cols-1 gap-2">
                                             {m.sources.map(s => (
-                                                <Link key={s.id} href={`/dashboard/${s.id}`} className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/5 hover:border-accent/40 transition-all group">
+                                                <Link key={s.id} href={`/asset/${s.id}`} className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/5 hover:border-accent/40 transition-all group">
                                                     <Bookmark className="w-3 h-3 text-txt-on-dark-muted group-hover:text-accent" />
                                                     <span className="text-[10px] text-txt-on-dark-muted truncate font-medium">
                                                         <span className="text-txt-on-dark mr-1">{s.brand}:</span> {s.headline}

@@ -60,7 +60,7 @@ export async function POST(req: Request) {
                         org_id: link.org_id,
                         title: `${typeLabel} from ${clientName}`,
                         message: content.substring(0, 100) + (content.length > 100 ? '...' : ''),
-                        link: link.board_id ? `/dashboard/boards/${link.board_id}` : `/dashboard/discovery`
+                        link: link.board_id ? `/boards/${link.board_id}` : `/ingest`
                     });
             }
         } catch (notifyErr) {

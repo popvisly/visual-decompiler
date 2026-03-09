@@ -65,7 +65,7 @@ export async function POST(req: Request) {
                     },
                 ],
                 mode: isOneTime ? 'payment' : 'subscription',
-                success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard?billing=success`,
+                success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/vault?billing=success`,
                 cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pricing?billing=cancel`,
                 metadata: {
                     supabaseId: userId,

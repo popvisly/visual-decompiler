@@ -16,7 +16,7 @@ export default function BriefIngest({ boardId, initialBrief = '' }: BriefIngestP
     const handleSave = async () => {
         setSaving(true);
         try {
-            const res = await fetch(`/api/dashboard/boards/${boardId}/brief`, {
+            const res = await fetch(`/api/boards/${boardId}/brief`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ briefText })

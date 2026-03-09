@@ -31,7 +31,7 @@ export default function FooterStartNow() {
                         {/* Right: CTA */}
                         <div className="flex-shrink-0">
                             <motion.a
-                                href="/app"
+                                href="/ingest"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 className="inline-flex items-center gap-3 bg-[#C1A67B] text-[#141414] px-10 py-5 rounded-full text-lg font-semibold shadow-xl hover:bg-[#D4B88A] transition-colors"
@@ -62,7 +62,7 @@ export default function FooterStartNow() {
                     <div className="flex flex-wrap justify-center gap-6 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#FBF7EF]/35">
                         <a href="/pricing" className="hover:text-[#C1A67B] transition-colors">Pricing</a>
                         <a href="/intelligence" className="hover:text-[#C1A67B] transition-colors">Intelligence</a>
-                        <a href="/app" className="hover:text-[#C1A67B] transition-colors">Login</a>
+                        <a href="/ingest" className="hover:text-[#C1A67B] transition-colors">Login</a>
                     </div>
 
                     {/* Legal */}

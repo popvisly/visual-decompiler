@@ -71,7 +71,7 @@ export default function Filters({ currentFilters }: { currentFilters: Record<str
             ))}
 
             <button
-                onClick={() => { setBrandInput(''); setSearchInput(''); router.push('/dashboard'); }}
+                onClick={() => { setBrandInput(''); setSearchInput(''); router.push('/vault'); }}
                 className="w-full py-2.5 text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.15em] border border-dashed border-[#E7DED1] rounded-xl hover:border-[#141414]/30 hover:text-[#141414] hover:bg-white transition-all shadow-sm"
             >
                 Clear All Filters

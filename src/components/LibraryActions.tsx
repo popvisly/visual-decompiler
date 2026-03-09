@@ -102,7 +102,7 @@ export default function LibraryActions() {
 
             {/* Agency Settings */}
             <Link
-                href="/dashboard/settings"
+                href="/settings"
                 className="flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-bold text-[#6B6B6B] uppercase tracking-widest bg-white border border-[#E7DED1] hover:border-[#141414] hover:text-[#141414] transition-all shadow-sm group"
             >
                 <Settings className="w-3.5 h-3.5 group-hover:rotate-45 transition-transform duration-500" />

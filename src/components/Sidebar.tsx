@@ -47,7 +47,7 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
                     {topBrands.length > 0 ? topBrands.map((brand) => (
                         <Link
                             key={brand.name}
-                            href={`/dashboard/brand/${encodeURIComponent(brand.name)}`}
+                            href={`/vault`}
                             className="flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-[#8B4513]/5 border border-transparent hover:border-[#D4A574] group transition-all duration-300"
                         >
                             <span className="text-[12px] font-bold text-[#8B4513]/60 group-hover:text-[#8B4513] transition-colors truncate max-w-[140px] uppercase tracking-tight">
@@ -70,21 +70,21 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
                     {/* <NotificationBell /> */}
                 </div>
                 <Link
-                    href="/dashboard/pulse"
+                    href="/compare"
                     className="flex items-center gap-3 px-4 py-3 text-[10px] font-bold text-[#8B4513]/60 hover:text-[#8B4513] hover:bg-[#8B4513]/5 rounded-2xl border border-transparent hover:border-[#D4A574] uppercase tracking-[0.3em] transition-all group"
                 >
                     <Activity className="w-4 h-4 text-[#8B4513] transition-transform group-hover:rotate-12" />
                     Strategic Pulse
                 </Link>
                 <Link
-                    href="/dashboard/discovery"
+                    href="/ingest"
                     className="flex items-center gap-3 px-4 py-3 text-[10px] font-bold text-[#8B4513]/60 hover:text-[#8B4513] hover:bg-[#8B4513]/5 rounded-2xl border border-transparent hover:border-[#D4A574] uppercase tracking-[0.3em] transition-all group"
                 >
                     <Compass className="w-4 h-4 text-[#8B4513]/40 group-hover:text-[#8B4513] transition-colors" />
-                    Discovery
+                    [ ANALYZE AD ASSET ]
                 </Link>
                 <Link
-                    href="/dashboard/settings"
+                    href="/settings"
                     className="flex items-center gap-3 px-4 py-3 text-[10px] font-bold text-[#8B4513]/60 hover:text-[#8B4513] hover:bg-[#8B4513]/5 rounded-2xl border border-transparent hover:border-[#D4A574] uppercase tracking-[0.3em] transition-all group"
                 >
                     <Settings className="w-4 h-4 text-[#8B4513]/40 group-hover:text-[#8B4513] transition-colors" />

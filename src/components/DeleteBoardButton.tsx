@@ -16,7 +16,7 @@ export default function DeleteBoardButton({ boardId, boardName }: { boardId: str
                 method: 'DELETE',
             });
             if (res.ok) {
-                router.push('/dashboard/boards');
+                router.push('/boards');
                 router.refresh();
             } else {
                 console.error("Failed to delete board");
