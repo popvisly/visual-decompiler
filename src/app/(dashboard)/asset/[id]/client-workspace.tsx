@@ -177,40 +177,25 @@ const InfoButton = ({ section }: { section: keyof typeof INTELLIGENCE_DEFINITION
         </div>
     );
 };
-const TensionMap = ({ acts }: { acts: string[] }) => {
+const MiniTensionMap = ({ index }: { index: number }) => {
+    const paths = [
+        "M 0 40 Q 15 5 30 25 T 60 10 T 100 0", // Act I: Sharp ascending
+        "M 0 20 Q 10 0 20 20 T 40 10 T 60 25 T 80 5 T 100 20", // Act II: Oscillating
+        "M 0 5 Q 30 5 60 35 T 100 45", // Act III: Resolving
+    ];
+    
     return (
-        <div className="w-full h-24 relative mb-12 group">
-            {/* The Curve */}
+        <div className="w-24 h-8 relative opacity-60 group-hover:opacity-100 transition-opacity">
             <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#D4A574" stopOpacity="0.2" />
-                        <stop offset="50%" stopColor="#D4A574" stopOpacity="1" />
-                        <stop offset="100%" stopColor="#8B4513" stopOpacity="0.6" />
-                    </linearGradient>
-                </defs>
                 <path 
-                    d="M 0 80 Q 20 20 40 50 T 70 30 T 100 60" 
+                    d={paths[index] || paths[0]} 
                     fill="none" 
-                    stroke="url(#curveGradient)" 
-                    strokeWidth="2"
-                    className="vector-path h-full w-full"
+                    stroke="#D4A574" 
+                    strokeWidth="1.5"
                     vectorEffect="non-scaling-stroke"
+                    className="vector-path"
                 />
-                {/* ACT Markers */}
-                <circle cx="0%" cy="80" r="3" fill="#D4A574" />
-                <circle cx="33%" cy="35" r="3" fill="#D4A574" />
-                <circle cx="66%" cy="45" r="3" fill="#D4A574" />
-                <circle cx="100%" cy="60" r="3" fill="#8B4513" />
             </svg>
-            <div className="absolute inset-0 flex justify-between items-end px-2">
-                <span className="text-[8px] font-bold text-[#D4A574]/40 uppercase tracking-widest">Act I: Disruption</span>
-                <span className="text-[8px] font-bold text-[#D4A574]/80 uppercase tracking-widest translate-x-[-50%]">Act II: Escalation</span>
-                <span className="text-[8px] font-bold text-[#8B4513]/60 uppercase tracking-widest">Act III: Resolution</span>
-            </div>
-            <div className="absolute top-0 right-0 py-1 px-3 bg-[#D4A574]/10 border border-[#D4A574]/20 rounded-full">
-                <span className="text-[7px] font-mono text-[#D4A574] uppercase tracking-widest">Tension Coefficient: 0.84</span>
-            </div>
         </div>
     );
 };
@@ -242,27 +227,34 @@ const DossierGrid = ({ title, content, type }: { title: string, content: string,
                     <span className="text-[10px] font-mono text-[#D4A574]/30 uppercase tracking-widest">Forensic Map v2.0</span>
                 </div>
 
-                {type === 'ACT' && <TensionMap acts={matches} />}
-
                 {overture && (
-                    <div className="mb-12 max-w-2xl">
-                        <p className="text-[15px] text-white/90 leading-relaxed font-light italic border-l-2 border-[#D4A574]/30 pl-6 py-2">
+                    <div className="mb-12 max-w-4xl">
+                        <p className="text-[15px] text-white/90 leading-relaxed font-light italic border-l-2 border-[#D4A574] pl-6 py-2">
                             {overture}
                         </p>
                     </div>
                 )}
 
-                <div className={`grid grid-cols-1 md:grid-cols-${blocks.length || 3} gap-12`}>
+                <div className="space-y-16">
                     {blocks.map((block, i) => (
-                        <div key={i} className="space-y-4">
-                            <div className="flex items-center gap-3">
-                                <div className="w-1.5 h-1.5 rounded-full bg-[#D4A574]" />
-                                <span className="text-[10px] font-bold text-[#D4A574]/60 uppercase tracking-[0.3em]">{block.label}</span>
+                        <div key={i} className="group/block relative">
+                            {/* Vertical Marker */}
+                            <div className="absolute -left-10 top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#D4A574]/40 via-[#D4A574]/10 to-transparent" />
+                            
+                            <div className="flex flex-col gap-6">
+                                <div className="flex justify-between items-center border-b border-[#D4A574]/10 pb-4">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-2 h-2 rounded-full bg-[#D4A574] shadow-[0_0_10px_#D4A574]" />
+                                        <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.4em]">{block.label}</span>
+                                        <h4 className="text-[16px] font-bold text-white uppercase tracking-[0.1em] ml-2 block">{block.title}</h4>
+                                    </div>
+                                    {type === 'ACT' && <MiniTensionMap index={i} />}
+                                </div>
+                                
+                                <p className="text-[14px] text-white/70 leading-[1.8] font-light max-w-5xl">
+                                    {block.text}
+                                </p>
                             </div>
-                            <h4 className="text-[12px] font-bold text-white uppercase tracking-wider">{block.title}</h4>
-                            <p className="text-[13px] text-white/70 leading-[1.8] font-light">
-                                {block.text}
-                            </p>
                         </div>
                     ))}
                 </div>
