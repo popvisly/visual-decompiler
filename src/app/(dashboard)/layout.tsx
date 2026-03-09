@@ -1,13 +1,27 @@
 "use client";
 
-import { ReactNode } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Plus, Database, Activity, Settings } from 'lucide-react';
 import SidebarFooter from './sidebar-footer';
+import { supabaseClient } from '@/lib/supabase-client';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
     const pathname = usePathname();
+    const [agency, setAgency] = useState<{ name: string; is_whitelabel_active: boolean } | null>(null);
+
+    useEffect(() => {
+        const fetchAgency = async () => {
+            const { data } = await supabaseClient
+                .from('agencies')
+                .select('name, is_whitelabel_active')
+                .limit(1)
+                .single();
+            if (data) setAgency(data);
+        };
+        fetchAgency();
+    }, []);
 
     const navItems = [
         { name: 'Discovery', href: '/ingest', icon: Plus },
@@ -16,18 +30,20 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         { name: 'Agency Settings', href: '/settings', icon: Settings },
     ];
 
+    const displayBrandName = agency?.is_whitelabel_active ? (agency.name || 'Decompiler') : 'Decompiler';
+
     return (
         <div className="flex min-h-screen bg-[#FBFBF6] text-[#1A1A1A]">
             {/* Global Sidebar - Minimalist, 1px geometric borders */}
-            <aside className="w-64 border-r border-[#E5E5E1] flex flex-col justify-between py-8 px-6 hidden md:flex bg-white/40 backdrop-blur-sm">
+            <aside className="w-64 border-r border-[#E5E5E1] flex flex-col justify-between py-8 px-6 hidden md:flex bg-white/40 backdrop-blur-sm relative z-50">
 
-                <div>
+                <div className="relative z-10">
                     {/* Logo / Brand Mark */}
                     <div className="mb-12">
                         <Link href="/" className="group flex items-center gap-2">
-                            <div className="w-4 h-4 bg-[#1A1A1A] rounded-sm group-hover:bg-[#D4A574] transition-colors" />
-                            <span className="font-sans text-[11px] font-bold tracking-[0.3em] uppercase opacity-90 group-hover:opacity-100 transition-opacity text-[#1A1A1A] group-hover:text-[#D4A574]">
-                                Decompiler
+                            <div className="w-4 h-4 bg-[#1A1A1A] rounded-sm group-hover:bg-[#D4A574] transition-colors flex-shrink-0" />
+                            <span className="font-sans text-[11px] font-bold tracking-[0.3em] uppercase opacity-90 group-hover:opacity-100 transition-opacity text-[#1A1A1A] group-hover:text-[#D4A574] truncate">
+                                {displayBrandName}
                             </span>
                         </Link>
                     </div>

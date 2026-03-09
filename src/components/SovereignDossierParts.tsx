@@ -7,6 +7,7 @@ interface Agency {
     whitelabel_logo?: string;
     primary_hex?: string;
     tier?: string;
+    is_whitelabel_active?: boolean;
 }
 
 export const SovereignPrintHeader = ({ agency }: { agency: Agency | null }) => {
@@ -38,7 +39,7 @@ export const SovereignPrintFooter = ({ agency, assetId }: { agency: Agency | nul
                 </div>
 
                 <div className="text-right">
-                    {!isSovereignTier && (
+                    {!isSovereignTier && !agency?.is_whitelabel_active && (
                         <p className="text-[8px] font-bold tracking-[0.2em] uppercase text-neutral-300 mb-2">Powered By Visual Decompiler</p>
                     )}
                     <p className="text-[8px] font-mono text-neutral-400 uppercase">Generated: {date}</p>

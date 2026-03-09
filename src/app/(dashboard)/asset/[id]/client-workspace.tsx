@@ -179,7 +179,7 @@ const InfoButton = ({ section }: { section: keyof typeof INTELLIGENCE_DEFINITION
 };
 
 
-function SovereignProcessingView({ assetId }: { assetId: string }) {
+function SovereignProcessingView({ assetId, agency }: { assetId: string, agency?: any }) {
     const [step, setStep] = useState(0);
     const [progress, setProgress] = useState(0);
     const [activeNode, setActiveNode] = useState(0);
@@ -234,7 +234,7 @@ function SovereignProcessingView({ assetId }: { assetId: string }) {
             {/* Header branding placeholder */}
             <div className="text-center mb-12">
                 <p className="text-[9px] font-bold uppercase tracking-[0.5em] text-[#D4A574] mb-3">
-                    Visual Decompiler
+                    {agency?.is_whitelabel_active ? (agency.name || 'Visual Decompiler') : 'Visual Decompiler'}
                 </p>
                 <h1 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#D4A574]/80">
                     Intelligence Extraction In Progress
@@ -508,6 +508,7 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
                                     <div className="space-y-12">
+                                        {!extraction.primary_mechanic && <SovereignProcessingView assetId={asset.id} agency={agency} />}
 
                                         {/* Top 4 Extraction Metrics as Intelligence Cards */}
                                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-2">
