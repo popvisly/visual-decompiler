@@ -76,7 +76,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </aside>
 
             {/* Main Content Area */}
-            <main className="flex-1 relative overflow-y-auto">
+            <main className="flex-1 relative">
                 {/* Content Container */}
                 <div className="relative z-10">
                     {children}

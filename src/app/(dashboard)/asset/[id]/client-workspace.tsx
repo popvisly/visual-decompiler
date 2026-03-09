@@ -651,8 +651,8 @@ export default function AssetWorkspace({
                 <div className="flex flex-col md:flex-row md:items-start min-h-screen w-full max-w-[1440px] bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    <aside className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6] md:sticky md:top-0 h-auto self-stretch">
-                        <div className="md:sticky md:top-24 p-8 flex flex-col justify-center items-center">
+                    <aside className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6] md:sticky md:top-24 z-10">
+                        <div className="p-8 flex flex-col justify-center items-center">
 
                             <div className="w-full relative h-[80%] flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl">
                                 {/* If multiple images, render a horizontal CSS scroll snap setup */}
