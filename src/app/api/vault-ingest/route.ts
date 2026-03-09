@@ -148,7 +148,7 @@ export async function POST(req: Request) {
         const anthropic = getAnthropic();
         const model = getClaudeModel('agency');
 
-        const systemPrompt = `You are an elite forensic advertising strategist, creative director, and semiotician. Analyze the given asset (static image or video frame) and extract its core strategic and semiotic DNA.
+        const systemPrompt = `You are an elite forensic advertising strategist, creative director, and semiotician. Analyse the given asset (static image or video frame) and extract its core strategic and semiotic DNA.
 CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact schema. Do NOT omit any keys. Provide forensic, multi-paragraph deep-dives for Narrative, Semiotics, and Archetypes. Maintain an elite, clinical, and highly specialized tone.
 
 {
@@ -211,7 +211,7 @@ STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive 
             | { type: "image"; source: { type: "base64"; media_type: AuthImageMedia; data: string } };
 
         const userContent: ContentBlock[] = [
-            { type: "text", text: "Analyze this asset and provide the full 5-page forensic extraction dossier." },
+            { type: "text", text: "Analyse this asset and provide the full 5-page forensic extraction dossier." },
             {
                 type: "image",
                 source: {

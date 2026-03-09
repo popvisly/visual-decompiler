@@ -8,7 +8,7 @@ const PILLARS = [
         icon: <Database className="w-6 h-6" />,
         subtext: "Sovereign Memory & Hashing",
         title: "The Intelligence Vault",
-        copy: "A private, searchable database where your agency indexes all parsed assets. Powered by SHA-256 deduplication to ensure you never burn neural credits analyzing the exact same asset twice."
+        copy: "A private, searchable database where your agency indexes all parsed assets. Powered by SHA-256 deduplication to ensure you never burn neural credits analysing the exact same asset twice."
     },
     {
         icon: <Search className="w-6 h-6" />,
@@ -20,7 +20,7 @@ const PILLARS = [
         icon: <Layout className="w-6 h-6" />,
         subtext: "Execution Ready",
         title: "Production Blueprints",
-        copy: "Don't just analyze the past; build the future. The OS automatically generates verified DNA prompts and structural pacing guides to eliminate subjective interpretation for your art directors."
+        copy: "Don't just analyse the past; build the future. The OS automatically generates verified DNA prompts and structural pacing guides to eliminate subjective interpretation for your art directors."
     },
     {
         icon: <FileText className="w-6 h-6" />,

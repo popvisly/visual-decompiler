@@ -36,7 +36,7 @@ export class PredictionService {
             ${clusters.map(c => `- Title: ${c.title}, Description: ${c.description}, Dimension: ${c.dominantDimension}`).join('\n')}
 
             TASK:
-            1. Analyze the "Aesthetic Exhaustion" of these trends.
+            1. Analyse the "Aesthetic Exhaustion" of these trends.
             2. Predict the next logical "Counter-Trend" (e.g., if clusters show 'Hyper-Maximalism', predict the pivot to 'Brutal Minimalism').
             3. Project the Strategic Radar dna (0-1) for this new trend.
             4. Assign a confidence score (0-100).

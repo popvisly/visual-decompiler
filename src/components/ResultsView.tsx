@@ -142,7 +142,7 @@ export default function ResultsView({
                             ? 'Analysis Complete'
                             : (d as any)?.error
                                 ? 'Analysis Failed'
-                                : 'Analyzing Ad'}
+                                : 'Analysing Ad'}
                     </h2>
                     {displayBrand && (
                         <div className="flex items-center gap-2 mt-1">
@@ -209,7 +209,7 @@ export default function ResultsView({
                                 <>
                                     <div className="w-12 h-12 border-4 border-[#141414] border-t-transparent rounded-full animate-spin mx-auto mb-6" />
                                     <h3 className="text-xl font-medium text-[#141414] mb-2 uppercase tracking-wide">
-                                        {status === 'queued' ? 'Queued' : 'Analyzing Ad...'}
+                                        {status === 'queued' ? 'Queued' : 'Analysing Ad...'}
                                     </h3>
                                     <p className="text-[#6B6B6B] text-sm">
                                         {status === 'queued'

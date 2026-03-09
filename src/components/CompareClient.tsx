@@ -54,7 +54,7 @@ export default function CompareClient({ data, allBrands }: { data: ComparisonDat
                         disabled={!brandA || !brandB || brandA === brandB}
                         className="h-[52px] px-8 bg-[#141414] text-[#FBF7EF] rounded-2xl text-sm font-bold shadow-[0_12px_24px_rgba(20,20,20,0.15)] hover:-translate-y-0.5 transition-all disabled:opacity-30 self-end"
                     >
-                        Analyze Gap
+                        Analyse Gap
                     </button>
                 </div>
             </div>

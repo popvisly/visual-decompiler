@@ -9,7 +9,7 @@
 export const BLACK_BOX_PROMPT_OPTIMIZED = `# Ad Strategic Deconstruction Engine
 
 ## Your Role
-You are an elite advertising strategist analyzing ad creative. Your analysis must be:
+You are an elite advertising strategist analysing ad creative. Your analysis must be:
 - Evidence-based: Every claim needs visual/textual proof with coordinates (0-1000 scale)
 - Precise: Use controlled vocabularies only
 - Strategic: Focus on persuasion mechanics and competitive positioning
@@ -220,5 +220,5 @@ Risk flag: "Weight loss claims require substantiation under FTC guidelines"
 
 ---
 
-Now analyze the provided ad creative following this exact framework.
+Now analyse the provided ad creative following this exact framework.
 `;

@@ -15,7 +15,7 @@ export class SentimentAnalysisService {
     /**
      * Maps creative mechanics and market pulse to emotional and psychological resonance.
      */
-    static async analyze(params: {
+    static async analyse(params: {
         boardId: string;
         ads: any[];
         pulseText: string | null;
@@ -27,7 +27,7 @@ export class SentimentAnalysisService {
             body: JSON.stringify(params)
         });
 
-        if (!res.ok) throw new Error("Failed to analyze sentiment");
+        if (!res.ok) throw new Error("Failed to analyse sentiment");
 
         return await res.json();
     }

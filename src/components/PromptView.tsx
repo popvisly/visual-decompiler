@@ -24,8 +24,8 @@ export default function PromptView({ digest }: { digest: AdDigest }) {
                 </div>
                 <h3 className="text-sm font-bold uppercase tracking-widest text-[#141414]">No prompt available</h3>
                 <p className="text-xs text-[#6B6B6B] max-w-xs mx-auto leading-relaxed">
-                    This ad was analyzed before the high-fidelity reconstruction engine was active.
-                    Re-analyze to generate a creative prompt.
+                    This ad was analysed before the high-fidelity reconstruction engine was active.
+                    Re-analyse to generate a creative prompt.
                 </p>
             </div>
         );
@@ -82,7 +82,7 @@ export default function PromptView({ digest }: { digest: AdDigest }) {
                         <div>
                             <p className="text-[#141414]/70 text-[10px] font-bold uppercase tracking-[0.15em] mb-2">Lighting & Atmosphere</p>
                             <p className="text-xs text-[#141414] leading-relaxed">
-                                {digest.extraction?.composition_notes || "Analyze the visual extraction for specific lighting cues."}
+                                {digest.extraction?.composition_notes || "Analyse the visual extraction for specific lighting cues."}
                             </p>
                         </div>
                         <div>

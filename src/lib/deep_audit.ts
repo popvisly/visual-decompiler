@@ -241,9 +241,9 @@ function derivePaletteFromDominant(hex: string): string[] {
 
 export class DeepAuditService {
     /**
-     * Analyzes the narrative arc and pacing segments.
+     * Analyses the narrative arc and pacing segments.
      */
-    static analyzePacing(digest: any): PacingAudit {
+    static analysePacing(digest: any): PacingAudit {
         const segments = digest.extraction?.narrative_arc?.arc_segments || [];
         const totalDuration = segments.length > 0 ? segments[segments.length - 1].t_ms : 0;
 
@@ -294,7 +294,7 @@ export class DeepAuditService {
      * Maps hex codes to psychological and category intelligence.
      * Now uses the full palette from the digest.
      */
-    static analyzeColor(digest: any): ColorAudit {
+    static analyseColor(digest: any): ColorAudit {
         const dominantHex = (digest.extraction?.dominant_color_hex || '141414').replace('#', '').toUpperCase();
         const paletteHex: string[] = Array.isArray(digest.extraction?.palette_hex)
             ? digest.extraction.palette_hex.map((h: string) => h.replace('#', '').toUpperCase())
@@ -339,7 +339,7 @@ export class DeepAuditService {
     /**
      * Extracts semiotic meanings from visual and narrative cues.
      */
-    static analyzeSemiotics(digest: any): SemioticAudit {
+    static analyseSemiotics(digest: any): SemioticAudit {
         const visualElements = digest.extraction?.notable_visual_elements || [];
         const subtext = digest.strategy?.semiotic_subtext || '';
 
@@ -353,7 +353,7 @@ export class DeepAuditService {
     /**
      * Maps aesthetic years to strategic archetypes.
      */
-    static analyzeTemporal(digest: any): TemporalAudit {
+    static analyseTemporal(digest: any): TemporalAudit {
         const year = digest.meta?.aesthetic_year || 'Modern';
         const genealogy = digest.meta?.historical_genealogy || 'Strategic lineage not detected.';
 
@@ -380,7 +380,7 @@ export class DeepAuditService {
     /**
      * Extracts trend intelligence from the digest meta.
      */
-    static analyzeTrend(digest: any): TrendAudit {
+    static analyseTrend(digest: any): TrendAudit {
         return {
             adoptionTier: digest.meta?.adoption_tier || 'Trendy',
             momentum: digest.meta?.trend_momentum ?? 50,
@@ -393,11 +393,11 @@ export class DeepAuditService {
      */
     static perform(digest: any): DeepAuditResult {
         return {
-            pacing: this.analyzePacing(digest),
-            color: this.analyzeColor(digest),
-            semiotics: this.analyzeSemiotics(digest),
-            temporal: this.analyzeTemporal(digest),
-            trend: this.analyzeTrend(digest)
+            pacing: this.analysePacing(digest),
+            color: this.analyseColor(digest),
+            semiotics: this.analyseSemiotics(digest),
+            temporal: this.analyseTemporal(digest),
+            trend: this.analyseTrend(digest)
         };
     }
 }

@@ -22,7 +22,7 @@ export async function POST(req: Request) {
                     Tone: Professional, clinical, evidentiary, and highly authoritative.
                     
                     Structure:
-                    1. CATEGORY INERTIA: Analyze the current state of the category based on competitive deconstructions and market velocity.
+                    1. CATEGORY INERTIA: Analyse the current state of the category based on competitive deconstructions and market velocity.
                     2. THE PSYCHOLOGICAL BREACH: Detailing where current strategies are failing to address the audience's latent emotional needs (using Sentiment Mirror data).
                     3. STRATEGIC SOVEREIGNTY: Outlining the exact "Answer" and why it represents a dominant move in the category.
                     

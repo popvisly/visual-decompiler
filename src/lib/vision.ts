@@ -89,7 +89,7 @@ async function performAnalysis(
         console.log(`[Vision] Using Claude ${modelLabel} for deconstruction (${version})`);
 
         const messageContent: any[] = [
-            { type: "text", text: "Analyze this advertisement media and return a strict JSON digest. If multiple images are provided, they are keyframes from a single video." }
+            { type: "text", text: "Analyse this advertisement media and return a strict JSON digest. If multiple images are provided, they are keyframes from a single video." }
         ];
 
         for (const input of inputs) {
@@ -166,7 +166,7 @@ async function performAnalysis(
     // 2. OpenAI Fallback
     console.log(`[Vision] Using OpenAI engine for deconstruction (${version})`);
     const userContent: OpenAI.Chat.Completions.ChatCompletionContentPart[] = [
-        { type: "text", text: "Analyze this advertisement media and return a strict JSON digest. If multiple images are provided, they are keyframes from a single video." }
+        { type: "text", text: "Analyse this advertisement media and return a strict JSON digest. If multiple images are provided, they are keyframes from a single video." }
     ];
 
     for (const input of inputs) {

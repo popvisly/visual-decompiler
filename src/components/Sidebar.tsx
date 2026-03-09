@@ -81,7 +81,7 @@ export default async function Sidebar({ searchParams }: { searchParams: any }) {
                     className="flex items-center gap-3 px-4 py-3 text-[10px] font-bold text-[#8B4513]/60 hover:text-[#8B4513] hover:bg-[#8B4513]/5 rounded-2xl border border-transparent hover:border-[#D4A574] uppercase tracking-[0.3em] transition-all group"
                 >
                     <Compass className="w-4 h-4 text-[#8B4513]/40 group-hover:text-[#8B4513] transition-colors" />
-                    [ ANALYZE AD ASSET ]
+                    [ ANALYSE AD ASSET ]
                 </Link>
                 <Link
                     href="/settings"

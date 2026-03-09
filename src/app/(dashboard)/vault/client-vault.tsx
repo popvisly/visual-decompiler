@@ -166,8 +166,8 @@ function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelec
     const sector = asset.brand?.market_sector || 'Unclassified';
     
     const extraction = asset.extraction?.[0];
-    const isAnalyzed = !!extraction?.full_dossier;
-    const mechanic = isAnalyzed ? extraction?.primary_mechanic : 'Awaiting Forensic Deep-Dive';
+    const isAnalysed = !!extraction?.full_dossier;
+    const mechanic = isAnalysed ? extraction?.primary_mechanic : 'Awaiting Forensic Deep-Dive';
 
     return (
         <div className="group relative">
@@ -210,7 +210,7 @@ function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelec
                             </div>
                         )}
 
-                        {isAnalyzed && (
+                        {isAnalysed && (
                             <div className="absolute bottom-4 right-4 bg-[#D4A574] px-3 py-1 rounded-none">
                                 <span className="text-[8px] font-bold tracking-[0.1em] uppercase text-[#1A1A1A]">
                                     Forensic Secured
@@ -238,7 +238,7 @@ function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelec
                             <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-[#D4A574]/40 mb-2">
                                 Structural Logic
                             </p>
-                            <p className={`text-sm font-medium leading-snug ${isAnalyzed ? (isSelected ? 'text-[#FFFFFF]/80' : 'text-[#FFFFFF]') : 'text-[#FFFFFF]/40 italic'}`}>
+                            <p className={`text-sm font-medium leading-snug ${isAnalysed ? (isSelected ? 'text-[#FFFFFF]/80' : 'text-[#FFFFFF]') : 'text-[#FFFFFF]/40 italic'}`}>
                                 {mechanic}
                             </p>
                         </div>

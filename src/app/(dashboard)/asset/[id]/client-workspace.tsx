@@ -102,7 +102,7 @@ interface BlueprintData {
 
 const ANALYSIS_STEPS = [
     'Extracting visual elements',
-    'Analyzing trigger mechanics',
+    'Analysing trigger mechanics',
     'Decoding semiotic subtext',
     'Mapping narrative framework',
     'Identifying evidence anchors',
@@ -508,7 +508,7 @@ function SovereignProcessingView({ assetId, agency }: { assetId: string, agency?
                             <span className="ml-auto text-[8px] font-mono text-[#D4A574] tracking-widest animate-pulse">PROCESSING</span>
                         )}
                         {i < activeNode && (
-                            <span className="ml-auto text-[8px] font-mono text-[#D4A574]/40 tracking-widest">ANALYZED</span>
+                            <span className="ml-auto text-[8px] font-mono text-[#D4A574]/40 tracking-widest">ANALYSED</span>
                         )}
                     </div>
                 ))}
@@ -549,7 +549,7 @@ function SovereignProcessingView({ assetId, agency }: { assetId: string, agency?
                     Return to Library
                 </a>
                 <p className="text-[10px] text-[#1A1A1A]/40 text-center max-w-[280px] leading-relaxed italic">
-                    Analysis takes roughly 2–3 minutes. Your report will be waiting here when complete.
+                    Analysing takes roughly 2–3 minutes. Your report will be waiting here when complete.
                 </p>
             </div>
         </div>
@@ -648,11 +648,11 @@ export default function AssetWorkspace({
         <>
             <GatekeeperIntercept isVisible={showGatekeeper} onClose={() => setShowGatekeeper(false)} />
             <div className="w-full bg-[#FBFBF6] min-h-screen flex justify-center">
-                <div className="flex flex-col md:flex-row min-h-screen w-full max-w-[1440px] bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
+                <div className="flex flex-col md:flex-row md:items-start min-h-screen w-full max-w-[1440px] bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    <div className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6]">
-                        <div className="md:sticky md:top-24 h-[50vh] md:h-auto p-8 flex flex-col justify-center items-center">
+                    <aside className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6] md:sticky md:top-0 h-auto self-stretch">
+                        <div className="md:sticky md:top-24 p-8 flex flex-col justify-center items-center">
 
                             <div className="w-full relative h-[80%] flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl">
                                 {/* If multiple images, render a horizontal CSS scroll snap setup */}
@@ -712,7 +712,7 @@ export default function AssetWorkspace({
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </aside>
 
                 {/* RIGHT COLUMN: Scrollable Forensic Console (55%) */}
                 <div className="w-full md:w-[55%] bg-[#FBFBF6] min-h-screen relative">

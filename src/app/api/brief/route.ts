@@ -28,7 +28,7 @@ export async function POST(req: Request) {
             .eq('board_id', boardId);
 
         const ads = items?.map((i: any) => i.ad_digests) || [];
-        if (ads.length === 0) throw new Error('Board has no ads to analyze');
+        if (ads.length === 0) throw new Error('Board has no ads to analyse');
 
         // 2. Prepare Synthesis Context
         const adsContext = ads.map((ad: any) => {
@@ -77,7 +77,7 @@ Strategic Anomaly: ${ad.is_anomaly ? 'YES - Significant Pivot Detected' : 'No'}
 
         // 3.5 Run Forecasting Analysis
         const pulseText = latestPulse?.report_text || '';
-        const forecasting = ForecastingService.analyze(ads.map((as: any) => as.digest), pulseText);
+        const forecasting = ForecastingService.analyse(ads.map((as: any) => as.digest), pulseText);
 
         // 4. Generate Neural Answer with GPT-4o
         const openai = getOpenAI();
@@ -98,7 +98,7 @@ Strategic Anomaly: ${ad.is_anomaly ? 'YES - Significant Pivot Detected' : 'No'}
                     ${visualDNAPatterns}
 
                     Instructions:
-                    1. FIND THE GAP: Analyze where the competitive ads (provided as text data AND visual frames) are failing to address the objectives in the Client Brief.
+                    1. FIND THE GAP: Analyse where the competitive ads (provided as text data AND visual frames) are failing to address the objectives in the Client Brief.
                     2. VISUAL VERIFICATION: Use the provided images to verify the "Aesthetic DNA." If the metadata says "Minimalist" but you see "Chaotic," prioritize your visual observation.
                     3. MARKET FORECASTING: Use the provided Velocity Metrics to advise on timing. If saturation is over 70%, suggest a rapid pivot. If lifespan is > 100 days, suggest scaling.
                     4. THE SYNTHETIC HOOK: Provide a mechanical, 3-second hook that beats current competitor patterns.

@@ -101,7 +101,7 @@ export class ExecutiveCommandService {
     /**
      * Aggregate trigger mechanic distribution across selected assets.
      */
-    static analyzeTriggers(profiles: AssetProfile[]): TriggerDistribution[] {
+    static analyseTriggers(profiles: AssetProfile[]): TriggerDistribution[] {
         const triggerMap = new Map<string, string[]>();
 
         for (const p of profiles) {
@@ -205,7 +205,7 @@ export class ExecutiveCommandService {
      */
     static generateCategoryAudit(ads: AdSummary[]): CategoryAudit {
         const profiles = ads.map(a => this.buildProfile(a));
-        const triggers = this.analyzeTriggers(profiles);
+        const triggers = this.analyseTriggers(profiles);
         const gaps = this.identifyGaps(profiles);
         const recs = this.generateRecommendations(profiles, triggers, gaps);
 

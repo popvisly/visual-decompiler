@@ -222,7 +222,7 @@ export default function PricingPage() {
                                 disabled={loading !== null}
                                 className="px-8 py-3 bg-[#141414] text-[#FBF7EF] rounded-full text-[11px] font-bold uppercase tracking-[0.2em] hover:shadow-[0_10px_30px_rgba(20,20,20,0.1)] transition-all active:scale-[0.98]"
                             >
-                                Analyze Once
+                                Analyse Once
                             </button>
                         </div>
                     </motion.div>

@@ -33,7 +33,7 @@ export async function GET(
         const digest = ad.digest as any;
         const brand = ad.brand || digest?.meta?.brand_guess || 'Unassigned';
         const headline = digest?.extraction?.on_screen_copy?.primary_headline || 'Advertising deconstructed.';
-        const mechanic = digest?.classification?.trigger_mechanic || 'Analyzing...';
+        const mechanic = digest?.classification?.trigger_mechanic || 'Analysing...';
 
         return new ImageResponse(
             (

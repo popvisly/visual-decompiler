@@ -98,7 +98,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                     {/* Page Title Protocol */}
                     <div className="text-center mb-16 border-b border-[#D4A574]/20 pb-8 w-full">
                         <h1 className="text-[12px] font-bold tracking-[0.5em] uppercase text-[#D4A574]">
-                            [ ANALYZE AD ASSET ]
+                            [ ANALYSE AD ASSET ]
                         </h1>
                         <p className="mt-4 text-[9px] font-mono tracking-[0.3em] uppercase text-[#1A1A1A]/30">
                             Neural Ingestion & Extraction Protocol v2.5
@@ -175,7 +175,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                             className="flex items-center gap-6 px-12 py-5 bg-[#4A4A4A] text-white text-[11px] font-bold tracking-[0.4em] uppercase rounded-full shadow-xl hover:bg-[#1A1A1A] hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
                         >
                             <div className="w-1.5 h-1.5 rounded-full bg-[#D4A574]" />
-                            [ ANALYZE ]
+                            [ ANALYSE ]
                         </button>
                     </div>
                 </div>

@@ -122,7 +122,7 @@ export async function GET() {
             messages: [
                 {
                     role: "system",
-                    content: `Analyze these recent ad deconstructions and summarize the week's strategic landscape. 
+                    content: `Analyse these recent ad deconstructions and summarize the week's strategic landscape. 
                     Identify:
                     1. Dominant Psychological Triggers & Macro Surges.
                     2. Creative Convergence (where competitors are doing the same thing).

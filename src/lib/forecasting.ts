@@ -10,11 +10,11 @@ export type VelocityMetrics = {
 
 export class ForecastingService {
     /**
-     * Analyzes a collection of ads against macro-trend data to determine velocity and saturation.
+     * Analyses a collection of ads against macro-trend data to determine velocity and saturation.
      * In a real implementation, this would involve complex vector distance analysis against pulse history.
      * For this milestone, we implement the high-IQ heuristic logic.
      */
-    static analyze(ads: AdDigest[], pulseText: string): VelocityMetrics {
+    static analyse(ads: AdDigest[], pulseText: string): VelocityMetrics {
         const adCount = ads.length;
         if (adCount === 0) {
             return {
@@ -78,7 +78,7 @@ export class ForecastingService {
         };
     }
 
-    static analyzeAd(ad: AdDigest, pulseText: string): Pick<VelocityMetrics, 'saturationLevel' | 'estimatedLifespanDays'> {
+    static analyseAd(ad: AdDigest, pulseText: string): Pick<VelocityMetrics, 'saturationLevel' | 'estimatedLifespanDays'> {
         // High-IQ heuristic for single ad
         const styles = ad.classification?.visual_style || [];
         const trigger = ad.classification?.trigger_mechanic || 'Unknown';

@@ -75,7 +75,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
             if (err.name === 'AbortError') {
                 setError('Analysis timed out after 5 minutes. The asset may be too complex or the network is slow. Please try again.');
             } else {
-                setError(err?.message || 'Failed to analyze ad.');
+                setError(err?.message || 'Failed to analyse ad.');
             }
             setIsUploading(false);
         }
@@ -188,7 +188,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
                         disabled={isUploading || !url.trim()}
                         className="px-8 py-4 bg-[#8B4513] text-white rounded-full text-[14px] font-medium hover:-translate-y-[1px] hover:shadow-[0_12px_24px_rgba(139,69,19,0.2)] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
                     >
-                        {isUploading ? 'Analyzing…' : 'Analyze'}
+                        {isUploading ? 'Analysing…' : 'Analyse'}
                     </button>
                 </div>
 
@@ -217,7 +217,7 @@ export default function UploadZone({ onUploadComplete }: Props) {
             {duplicateId && (
                 <div className="mt-4 p-6 bg-[#BB9E7B]/10 border border-[#BB9E7B]/30 rounded-2xl flex flex-col items-center gap-4 animate-in fade-in slide-in-from-bottom-2">
                     <div className="flex flex-col items-center gap-1 text-center">
-                        <p className="text-[13px] font-bold text-[#BB9E7B] uppercase tracking-widest">Ad Already Analyzed</p>
+                        <p className="text-[13px] font-bold text-[#BB9E7B] uppercase tracking-widest">Ad Already Analysed</p>
                         <p className="text-[12px] text-[#6B6B6B]">This creative is already in your agency library.</p>
                     </div>
                     <a

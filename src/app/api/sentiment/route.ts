@@ -24,7 +24,7 @@ Semiotic Subtext: ${d.str_logic?.semiotic_subtext}
             messages: [
                 {
                     role: 'system',
-                    content: `You are a Psychological Creative Strategist. Your task is to analyze a collection of advertising creatives and map their "Emotional Velocity" and "Psychological Footprint" against current market sentiment.
+                    content: `You are a Psychological Creative Strategist. Your task is to analyse a collection of advertising creatives and map their "Emotional Velocity" and "Psychological Footprint" against current market sentiment.
                     
                     Focus on:
                     1. Psychological Resonance (Trust, Urgency, Aspiration, Fear, Belonging).
@@ -46,7 +46,7 @@ Semiotic Subtext: ${d.str_logic?.semiotic_subtext}
                 },
                 {
                     role: 'user',
-                    content: `Market Pulse Context: ${pulseText || 'General luxury/high-fashion market'}\n\nAnalyzed Collection:\n${adsContext}`
+                    content: `Market Pulse Context: ${pulseText || 'General luxury/high-fashion market'}\n\nAnalysed Collection:\n${adsContext}`
                 }
             ],
             response_format: { type: "json_object" }

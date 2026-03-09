@@ -37,7 +37,7 @@ export default function AdDetailClient({
     isShared?: boolean,
     pulseText?: string
 }) {
-    const forecasting = useMemo(() => ForecastingService.analyzeAd(digest, pulseText || ''), [digest, pulseText]);
+    const forecasting = useMemo(() => ForecastingService.analyseAd(digest, pulseText || ''), [digest, pulseText]);
     const searchParams = useSearchParams();
     const isNew = searchParams.get('new') === 'true';
     const [showBanner, setShowBanner] = useState(isNew);

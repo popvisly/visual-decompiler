@@ -71,7 +71,7 @@ export default function DossierMultiExport({ agencyName, agencyLogo }: { agencyN
                     <div className="audit-kpi-row">
                         <div className="audit-kpi">
                             <span className="audit-kpi-value">{audit.assetCount}</span>
-                            <span className="audit-kpi-label">Assets Analyzed</span>
+                            <span className="audit-kpi-label">Assets Analysed</span>
                         </div>
                         <div className="audit-kpi">
                             <span className="audit-kpi-value">{audit.avgSovereignScore}</span>

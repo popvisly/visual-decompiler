@@ -6,7 +6,7 @@ import { Library } from 'lucide-react';
 
 const ANALYSIS_STEPS = [
     'Extracting visual elements',
-    'Analyzing trigger mechanics',
+    'Analysing trigger mechanics',
     'Decoding semiotic subtext',
     'Mapping narrative framework',
     'Identifying evidence anchors',
@@ -128,7 +128,7 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
                             <div className="bg-[#141414] text-[9px] font-bold tracking-[0.2em] px-4 py-2.5 uppercase flex justify-between items-center">
                                 <span className="flex items-center gap-2 text-[#C1A67B]">
                                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse shadow-[0_0_6px_rgba(74,222,128,0.5)]" />
-                                    Analyzing
+                                    Analysing
                                 </span>
                                 <span className="text-white/20 font-mono text-[8px]">ASSET_01</span>
                             </div>
@@ -137,7 +137,7 @@ export default function ProcessingViewClient({ mediaUrl, mediaKind = 'image', jo
                             <div className="relative">
                                 <img
                                     src={mediaUrl}
-                                    alt="Analyzing ad"
+                                    alt="Analysing ad"
                                     className="w-full h-auto max-h-[420px] object-contain bg-[#0D0D0D]"
                                 />
 

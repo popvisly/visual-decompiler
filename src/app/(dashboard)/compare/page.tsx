@@ -50,7 +50,7 @@ export default function DifferentialDiagnosticsPage() {
     const [vaultAssets, setVaultAssets] = useState<Asset[]>([]);
     const [assetA, setAssetA] = useState<Asset | null>(null);
     const [assetB, setAssetB] = useState<Asset | null>(null);
-    const [status, setStatus] = useState<'idle' | 'analyzing' | 'success' | 'error'>('idle');
+    const [status, setStatus] = useState<'idle' | 'analysing' | 'success' | 'error'>('idle');
     const [result, setResult] = useState<DifferentialDiagnosticResponse | null>(null);
     const [agency, setAgency] = useState<{ name: string; is_whitelabel_active: boolean } | null>(null);
 
@@ -112,9 +112,9 @@ export default function DifferentialDiagnosticsPage() {
 
     const [drawerState, setDrawerState] = useState<{ open: boolean, target: 'A' | 'B' | null }>({ open: false, target: null });
 
-    const handleAnalyze = async () => {
+    const handleAnalyse = async () => {
         if (!assetA || !assetB) return;
-        setStatus('analyzing');
+        setStatus('analysing');
         setResult(null);
         try {
             const res = await fetch('/api/compare', {
@@ -122,7 +122,7 @@ export default function DifferentialDiagnosticsPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ assetAId: assetA.id, assetBId: assetB.id })
             });
-            if (!res.ok) throw new Error("Analysis failed");
+            if (!res.ok) throw new Error("Analyse failed");
             const data = await res.json();
             setResult(data);
             setStatus('success');
@@ -150,11 +150,11 @@ export default function DifferentialDiagnosticsPage() {
         fullMark: 100,
     })) || [];
 
-    const isReady = assetA && assetB && status !== 'analyzing';
+    const isReady = assetA && assetB && status !== 'analysing';
     
     // Check if current assets already match cached results
     const hasCachedResults = result && assetA && assetB; // Simplification: any result counts as "cached" if assets are present
-    const buttonLabel = status === 'analyzing' 
+    const buttonLabel = status === 'analysing' 
         ? 'Processing Delta...' 
         : hasCachedResults 
             ? '[ RE-RUN DIFFERENTIAL ]' 
@@ -206,7 +206,7 @@ export default function DifferentialDiagnosticsPage() {
                     {/* Central Command Hub Action */}
                     <div className="flex items-center justify-center lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 z-20">
                         <button
-                            onClick={handleAnalyze}
+                            onClick={handleAnalyse}
                             disabled={!isReady}
                             className={`group relative px-8 py-5 bg-[#D4A574] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all disabled:opacity-50 disabled:grayscale ${isReady ? 'tan-pulse hover:scale-105 active:scale-95' : ''}`}
                         >
@@ -257,7 +257,7 @@ export default function DifferentialDiagnosticsPage() {
                         </div>
                     )}
 
-                    {status === 'analyzing' && (
+                    {status === 'analysing' && (
                         <div className="flex flex-col items-center justify-center py-32 space-y-12 animate-in fade-in duration-500">
                             <div className="relative w-32 h-32">
                                 <div className="absolute inset-0 border-[1.5px] border-[#D4A574]/40 animate-[spin_4s_linear_infinite]" />

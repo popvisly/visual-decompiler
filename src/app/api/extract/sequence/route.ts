@@ -27,7 +27,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'assetId and an array of fileUrls are required' }, { status: 400 });
         }
 
-        // 1. Prepare Claude API call to analyze Carousel sequence
+        // 1. Prepare Claude API call to analyse Carousel sequence
         const anthropic = getAnthropic();
         const model = getClaudeModel('agency');
 
@@ -51,7 +51,7 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
   ]
 }
 
-Analyze the narrative arc, cognitive load, and visual hooks across the frames. Keep your textual explanations concise (1-2 sentences max).`;
+Analyse the narrative arc, cognitive load, and visual hooks across the frames. Keep your textual explanations concise (1-2 sentences max).`;
 
         type AuthImageMedia = "image/jpeg" | "image/png" | "image/webp" | "image/gif";
         type ContentBlock =
@@ -60,7 +60,7 @@ Analyze the narrative arc, cognitive load, and visual hooks across the frames. K
 
         // Map each image URL to Anthropics image block
         const userContent: ContentBlock[] = [
-            { type: "text", text: "Analyze this image sequence for Sequential Architecture:" }
+            { type: "text", text: "Analyse this image sequence for Sequential Architecture:" }
         ];
 
         for (const url of fileUrls) {
