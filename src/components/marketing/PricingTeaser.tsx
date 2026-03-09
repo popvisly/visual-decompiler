@@ -77,7 +77,7 @@ export default function PricingTeaser() {
                 {/* CTA */}
                 <div className="text-center">
                     <Link
-                        href="/app"
+                        href="/ingest"
                         className="inline-block bg-txt-primary text-surface px-10 py-4 rounded-full text-[15px] font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
                     >
                         Start Now — Free

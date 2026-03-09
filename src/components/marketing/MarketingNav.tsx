@@ -35,13 +35,13 @@ export default function MarketingNav() {
                 {/* CTA */}
                 <div className="flex items-center gap-3">
                     <Link
-                        href="/app"
+                        href="/ingest"
                         className="text-[13px] font-medium text-[#6b6b6b] hover:text-[#1a1a1a] transition-colors hidden sm:inline"
                     >
                         Sign In
                     </Link>
                     <Link
-                        href="/app"
+                        href="/ingest"
                         className="bg-accent-cta px-5 py-2 rounded-full text-[13px] font-bold"
                     >
                         Start Now

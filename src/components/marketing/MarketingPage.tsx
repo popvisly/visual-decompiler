@@ -62,7 +62,7 @@ export default function MarketingPage() {
                         <div>
                             <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[rgba(255,255,255,0.3)] mb-4">Get Started</p>
                             <Link
-                                href="/app"
+                                href="/ingest"
                                 className="inline-block bg-accent-cta px-6 py-2.5 rounded-full text-[13px] font-bold"
                             >
                                 Start Now

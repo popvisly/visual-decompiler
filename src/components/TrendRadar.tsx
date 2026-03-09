@@ -109,7 +109,7 @@ export default function TrendRadar({ category, days = 30, top = 6 }: { category?
                                     {block.rising[0].exemplarsRecent.slice(0, 6).map((ex: any) => (
                                         <Link
                                             key={ex.id}
-                                            href={`/dashboard/${ex.id}`}
+                                            href={`/asset/${ex.id}`}
                                             className="group flex items-center gap-2 rounded-2xl bg-white border border-[#E7DED1] hover:border-[#141414] transition-colors p-2"
                                             title="Open ad"
                                         >

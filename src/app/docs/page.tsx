@@ -388,7 +388,7 @@ export default function DocsPage() {
                                 Upgrade to Sovereignty
                             </Link>
                             <Link
-                                href="/dashboard/settings"
+                                href="/settings"
                                 className="px-10 py-5 bg-white border border-[#E7DED1] hover:border-accent text-[#141414] font-bold text-[11px] uppercase tracking-widest rounded-full shadow-xl transition-all active:scale-95"
                             >
                                 Configure Agency Identity

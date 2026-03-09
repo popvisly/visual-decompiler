@@ -21,7 +21,7 @@ export async function sendDeconstructionEmail(email: string, adId: string, adTit
     const mailClient = getResend();
     if (!mailClient) return null;
 
-    const reportUrl = `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${adId}`;
+    const reportUrl = `${process.env.NEXT_PUBLIC_APP_URL}/asset/${adId}`;
 
     try {
         const data = await mailClient.emails.send({

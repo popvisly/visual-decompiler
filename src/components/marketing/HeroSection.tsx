@@ -39,7 +39,7 @@ export default function HeroSection() {
                 {/* CTA */}
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24 z-10 relative">
                     <Link
-                        href="/app"
+                        href="/ingest"
                         className="bg-txt-primary text-surface px-8 py-3.5 rounded-full text-[15px] font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
                     >
                         Start Analyzing — Free
