@@ -65,24 +65,50 @@ export default function DifferentialDiagnosticsPage() {
         }
         fetchAgency();
 
+        // Load Persistent Workspace
+        const savedA = localStorage.getItem('pulse_asset_a');
+        const savedB = localStorage.getItem('pulse_asset_b');
+        const savedResults = localStorage.getItem('pulse_results');
+
+        if (savedA) setAssetA(JSON.parse(savedA));
+        if (savedB) setAssetB(JSON.parse(savedB));
+        if (savedResults) {
+            setResult(JSON.parse(savedResults));
+            setStatus('success');
+        }
+
         async function fetchAssets() {
-            // Updated query to fetch brand and primary mechanic
             const { data } = await supabaseAdmin
                 .from('assets')
                 .select('id, file_url, brand:brands(name), extractions(primary_mechanic)')
                 .limit(20);
             
             if (data) {
-                // Formatting data to match interface
                 const formatted = data.map((item: any) => ({
                     ...item,
-                    extractions: item.extractions?.[0] || item.extractions // Handle potential array return
+                    extractions: item.extractions?.[0] || item.extractions
                 }));
                 setVaultAssets(formatted as Asset[]);
             }
         }
         fetchAssets();
     }, []);
+
+    // Sync state to localStorage
+    useEffect(() => {
+        if (assetA) localStorage.setItem('pulse_asset_a', JSON.stringify(assetA));
+        else localStorage.removeItem('pulse_asset_a');
+    }, [assetA]);
+
+    useEffect(() => {
+        if (assetB) localStorage.setItem('pulse_asset_b', JSON.stringify(assetB));
+        else localStorage.removeItem('pulse_asset_b');
+    }, [assetB]);
+
+    useEffect(() => {
+        if (result) localStorage.setItem('pulse_results', JSON.stringify(result));
+        else localStorage.removeItem('pulse_results');
+    }, [result]);
 
     const [drawerState, setDrawerState] = useState<{ open: boolean, target: 'A' | 'B' | null }>({ open: false, target: null });
 
@@ -105,6 +131,18 @@ export default function DifferentialDiagnosticsPage() {
         }
     };
 
+    const handleReset = () => {
+        if (confirm("CLEAR ALL ACTIVE DIAGNOSTICS? [ YES ]")) {
+            setAssetA(null);
+            setAssetB(null);
+            setResult(null);
+            setStatus('idle');
+            localStorage.removeItem('pulse_asset_a');
+            localStorage.removeItem('pulse_asset_b');
+            localStorage.removeItem('pulse_results');
+        }
+    };
+
     const chartData = result?.radar_metrics.axes.map((axis, i) => ({
         subject: axis,
         A: result.radar_metrics.asset_a_scores[i],
@@ -113,6 +151,14 @@ export default function DifferentialDiagnosticsPage() {
     })) || [];
 
     const isReady = assetA && assetB && status !== 'analyzing';
+    
+    // Check if current assets already match cached results
+    const hasCachedResults = result && assetA && assetB; // Simplification: any result counts as "cached" if assets are present
+    const buttonLabel = status === 'analyzing' 
+        ? 'Processing Delta...' 
+        : hasCachedResults 
+            ? '[ RE-RUN DIFFERENTIAL ]' 
+            : 'Initiate Differential Diagnostic';
 
     return (
         <div className="min-h-screen bg-[#FBFBF6] text-[#1A1A1A] relative overflow-hidden">
@@ -136,6 +182,19 @@ export default function DifferentialDiagnosticsPage() {
             <div className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:40px_40px]" />
 
             <div className="relative z-10 p-8 md:p-12 lg:p-16 max-w-[1600px] mx-auto">
+                {/* Header Actions */}
+                <div className="flex justify-end mb-8">
+                    <button 
+                        onClick={handleReset}
+                        className="group flex items-center gap-3 px-6 py-3 border border-[#1A1A1A]/10 hover:border-[#D4A574]/40 rounded-full transition-all bg-white/40 backdrop-blur-sm"
+                    >
+                        <div className="w-1.5 h-1.5 bg-[#D4A574]/40 group-hover:bg-[#D4A574] rounded-full transition-colors" />
+                        <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A]/40 group-hover:text-[#D4A574] transition-colors">
+                            [ RESET LABORATORY ]
+                        </span>
+                    </button>
+                </div>
+
                 {/* Lab Panels Section */}
                 <div className="flex flex-col lg:flex-row gap-8 mb-12 relative">
                     <AssetSelectorPanel
@@ -152,7 +211,7 @@ export default function DifferentialDiagnosticsPage() {
                             className={`group relative px-8 py-5 bg-[#D4A574] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all disabled:opacity-50 disabled:grayscale ${isReady ? 'tan-pulse hover:scale-105 active:scale-95' : ''}`}
                         >
                             <span className="relative z-10">
-                                {status === 'analyzing' ? 'Processing Delta...' : 'Initiate Differential Diagnostic'}
+                                {buttonLabel}
                             </span>
                             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity rounded-full" />
                         </button>
