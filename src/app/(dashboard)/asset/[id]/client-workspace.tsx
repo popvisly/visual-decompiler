@@ -468,9 +468,36 @@ export default function AssetWorkspace({
                                             {/* Visual Style */}
                                             <div className="col-span-1 lg:col-span-2 border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-6 shadow-sm flex flex-col min-h-[140px]">
                                                 <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 self-start w-full">Synthesized Visual Style</span>
-                                                <p className="text-sm text-[#FFFFFF] font-light leading-relaxed uppercase tracking-[0.15em] mt-2">
-                                                    {extraction.visual_style}
-                                                </p>
+                                                <div className="flex flex-col h-full">
+                                                    <p className="text-sm text-[#FFFFFF] font-light leading-relaxed uppercase tracking-[0.15em] mt-2 mb-8">
+                                                        {extraction.visual_style}
+                                                    </p>
+
+                                                    {/* Aesthetic Signature Matrix */}
+                                                    <div className="mt-auto pt-6 border-t border-[#D4A574]/10 space-y-4">
+                                                        <div className="flex items-center gap-4">
+                                                            <span className="text-[8px] font-bold text-[#D4A574]/40 uppercase tracking-[0.2em] w-12">Luma</span>
+                                                            <div className="flex-1 h-[1px] bg-[#D4A574]/5 rounded-full overflow-hidden">
+                                                                <div className="h-full bg-[#D4A574]/40 rounded-full w-[72%] animate-pulse" />
+                                                            </div>
+                                                            <span className="text-[8px] font-mono text-[#D4A574]/30">0.82V</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-4">
+                                                            <span className="text-[8px] font-bold text-[#D4A574]/40 uppercase tracking-[0.2em] w-12">Chromat</span>
+                                                            <div className="flex-1 h-[1px] bg-[#D4A574]/5 rounded-full overflow-hidden">
+                                                                <div className="h-full bg-[#D4A574]/30 rounded-full w-[45%] animate-pulse [animation-delay:200ms]" />
+                                                            </div>
+                                                            <span className="text-[8px] font-mono text-[#D4A574]/30">0.44Δ</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-4">
+                                                            <span className="text-[8px] font-bold text-[#D4A574]/40 uppercase tracking-[0.2em] w-12">Vector</span>
+                                                            <div className="flex-1 h-[1px] bg-[#D4A574]/5 rounded-full overflow-hidden">
+                                                                <div className="h-full bg-[#D4A574]/20 rounded-full w-[89%] animate-pulse [animation-delay:400ms]" />
+                                                            </div>
+                                                            <span className="text-[8px] font-mono text-[#D4A574]/30">0.91Λ</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             {/* Color Palette */}
