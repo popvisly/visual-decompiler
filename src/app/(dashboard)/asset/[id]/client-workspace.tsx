@@ -6,7 +6,7 @@ import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { SovereignPrintHeader, SovereignPrintFooter } from '@/components/SovereignDossierParts';
 import AdAnalyticsTab from '@/components/AdAnalyticsTab';
 import RadarChart from '@/components/RadarChart';
-import { FileDown, Code } from 'lucide-react';
+import { FileDown, Code, Info } from 'lucide-react';
 
 interface WorkspaceAsset {
     id: string;
@@ -115,6 +115,69 @@ const SIGNAL_NODES = [
     'Trigger', 'Narrative', 'Evidence',
     'Subtext', 'Archetype', 'Confidence',
 ];
+
+const INTELLIGENCE_DEFINITIONS = {
+    PRIMARY_MECHANIC: {
+        title: "Primary Mechanic",
+        description: "The core psychological or strategic engine driving the ad's effectiveness. It identifies the fundamental 'how' behind the creative execution."
+    },
+    SYSTEM_CONFIDENCE: {
+        title: "System Confidence",
+        description: "The mathematical certainty of the extraction. Scores above 90% indicate high architectural alignment between the visual data and semantic analysis."
+    },
+    VISUAL_STYLE: {
+        title: "Synthesized Visual Style",
+        description: "A forensic breakdown of the asset's aesthetic DNA. It tracks the marriage of lighting, color, and composition.",
+        breakdown: [
+            { label: "LUMA", text: "Lighting intensity and exposure curves. High scores imply high-contrast, dramatic lighting architecture." },
+            { label: "CHROMAT", text: "Color saturation and vibrance levels. Measures the intensity of the brand's 'Chromatic Punctuation'." },
+            { label: "VECTOR", text: "Structural eyeflow and composition. Measures 'Visual Hierarchy' and lead-in lines toward the product." }
+        ]
+    },
+    CHROMATIC_BASE: {
+        title: "Chromatic Base",
+        description: "The dominant color palette detected in the frame. These colors form the foundational 'mood' and brand identity anchors."
+    }
+};
+
+const InfoButton = ({ section }: { section: keyof typeof INTELLIGENCE_DEFINITIONS }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const def = INTELLIGENCE_DEFINITIONS[section];
+
+    return (
+        <div className="relative">
+            <button 
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-1 hover:bg-[#D4A574]/10 rounded-full transition-colors group flex items-center justify-center"
+                aria-label="Information"
+            >
+                <Info className={`w-3.5 h-3.5 ${isOpen ? 'text-[#D4A574]' : 'text-[#D4A574]/40 group-hover:text-[#D4A574]'}`} />
+            </button>
+            
+            {isOpen && (
+                <>
+                    <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
+                    <div className="absolute right-0 top-8 w-64 p-5 bg-[#F5F5DC] border border-[#1A1A1A]/20 rounded-2xl shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-200 origin-top-right">
+                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-[#1A1A1A] mb-2 border-b border-[#1A1A1A]/10 pb-2">{def.title}</h4>
+                        <p className="text-[11px] text-[#1A1A1A]/80 leading-relaxed font-medium">{def.description}</p>
+                        
+                        {'breakdown' in def && (
+                            <div className="mt-4 space-y-3 pt-4 border-t border-[#1A1A1A]/10">
+                                {def.breakdown.map((item, i) => (
+                                    <div key={i}>
+                                        <span className="block text-[9px] font-bold text-[#1A1A1A] uppercase tracking-tighter mb-0.5">{item.label}</span>
+                                        <p className="text-[10px] text-[#1A1A1A]/70 leading-tight italic">{item.text}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </>
+            )}
+        </div>
+    );
+};
+
 
 function SovereignProcessingView({ assetId }: { assetId: string }) {
     const [step, setStep] = useState(0);
@@ -451,7 +514,10 @@ export default function AssetWorkspace({
                                             
                                             {/* Primary Mechanic */}
                                             <div className="col-span-1 lg:col-span-2 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-3xl p-6 shadow-sm flex flex-col justify-center min-h-[140px]">
-                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 self-start w-full">Primary Mechanic</span>
+                                                <div className="flex justify-between items-center mb-4 border-b border-[#D4A574]/20 pb-2">
+                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Primary Mechanic</span>
+                                                    <InfoButton section="PRIMARY_MECHANIC" />
+                                                </div>
                                                 <h2 className="text-lg lg:text-xl font-light uppercase tracking-[0.2em] text-[#FFFFFF] leading-snug mt-2">
                                                     {extraction.primary_mechanic}
                                                 </h2>
@@ -459,7 +525,10 @@ export default function AssetWorkspace({
 
                                             {/* System Confidence */}
                                             <div className="col-span-1 border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[140px]">
-                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 self-start w-full">System Confidence</span>
+                                                <div className="flex justify-between items-center mb-4 border-b border-[#D4A574]/20 pb-2">
+                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">System Confidence</span>
+                                                    <InfoButton section="SYSTEM_CONFIDENCE" />
+                                                </div>
                                                 <div className="text-5xl font-mono text-[#FFFFFF] tracking-tighter mt-auto self-end">
                                                     {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-[#D4A574]/50">%</span>
                                                 </div>
@@ -467,7 +536,10 @@ export default function AssetWorkspace({
 
                                             {/* Visual Style */}
                                             <div className="col-span-1 lg:col-span-2 border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-6 shadow-sm flex flex-col min-h-[140px]">
-                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 self-start w-full">Synthesized Visual Style</span>
+                                                <div className="flex justify-between items-center mb-4 border-b border-[#D4A574]/20 pb-2">
+                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Synthesized Visual Style</span>
+                                                    <InfoButton section="VISUAL_STYLE" />
+                                                </div>
                                                 <div className="flex flex-col h-full">
                                                     <p className="text-sm text-[#FFFFFF] font-light leading-relaxed uppercase tracking-[0.15em] mt-2 mb-8">
                                                         {extraction.visual_style}
@@ -502,7 +574,10 @@ export default function AssetWorkspace({
 
                                             {/* Color Palette */}
                                             <div className="col-span-1 border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-6 shadow-sm flex flex-col min-h-[140px]">
-                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 self-start w-full">Chromatic Base</span>
+                                                <div className="flex justify-between items-center mb-4 border-b border-[#D4A574]/20 pb-2">
+                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Chromatic Base</span>
+                                                    <InfoButton section="CHROMATIC_BASE" />
+                                                </div>
                                                 <div className="mt-auto">
                                                     {extraction.color_palette && extraction.color_palette.length > 0 ? (
                                                         <div className="flex flex-wrap gap-2">
