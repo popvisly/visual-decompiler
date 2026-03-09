@@ -844,7 +844,7 @@ export default function AssetWorkspace({
                                                             <svg className="w-3.5 h-3.5 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                                             <span className="text-[13px] font-bold text-[#D4A574] uppercase tracking-[0.3em]">Predictive Longevity</span>
                                                         </div>
-                                                        <p className="text-[11px] text-[#FFFFFF]/80 leading-relaxed font-light pl-[22px] border-l border-[#D4A574]/20">
+                                                        <p className="text-[13px] text-[#FFFFFF]/80 leading-relaxed font-light pl-[22px] border-l border-[#D4A574]/20">
                                                             {((extraction?.full_dossier as any)?.persuasion_metrics?.predictive_longevity as string)}
                                                         </p>
                                                     </div>
