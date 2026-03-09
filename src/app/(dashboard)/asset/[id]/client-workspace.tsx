@@ -177,40 +177,77 @@ const InfoButton = ({ section }: { section: keyof typeof INTELLIGENCE_DEFINITION
         </div>
     );
 };
-const MicroRadarMap = ({ index }: { index: number }) => {
-    // Unique "strategic footprints" for each act
-    const actShapes = [
-        "M 50 10 L 85 45 L 65 85 L 35 85 L 15 45 Z", // Act I: Aggressive/Upward
-        "M 50 15 L 75 25 L 90 50 L 75 75 L 50 85 L 25 75 L 10 50 L 25 25 Z", // Act II: Complex/Oscillating
-        "M 50 25 L 70 50 L 50 75 L 30 50 Z", // Act III: Balanced/Resolving
+const AnalyticWaveMap = ({ index }: { index: number }) => {
+    // Multi-layered "Neural Frequency" waves for each act
+    const waves = [
+        {
+            paths: [
+                "M 0 40 Q 20 10 40 50 Q 60 0 80 30 T 100 10 L 100 60 L 0 60 Z",
+                "M 0 45 Q 25 20 50 55 Q 75 10 100 40 L 100 60 L 0 60 Z",
+                "M 0 50 Q 30 35 60 65 Q 90 20 100 50 L 100 60 L 0 60 Z"
+            ],
+            color: "#D4A574"
+        },
+        {
+            paths: [
+                "M 0 30 Q 10 60 20 30 T 40 40 T 60 20 T 80 50 T 100 30 L 100 60 L 0 60 Z",
+                "M 0 35 Q 15 65 30 35 T 50 45 T 70 25 T 90 55 T 100 35 L 100 60 L 0 60 Z",
+                "M 0 40 Q 20 70 40 40 T 60 50 T 80 30 T 100 60 L 0 60 Z"
+            ],
+            color: "#8B4513"
+        },
+        {
+            paths: [
+                "M 0 50 Q 50 50 100 50 L 100 60 L 0 60 Z",
+                "M 0 45 Q 50 55 100 45 L 100 60 L 0 60 Z",
+                "M 0 55 Q 50 45 100 55 L 100 60 L 0 60 Z"
+            ],
+            color: "#D4A574"
+        }
     ];
+
+    const currentWaves = waves[index] || waves[0];
     
     return (
-        <div className="w-16 h-16 relative opacity-80 group-hover:opacity-100 transition-opacity">
-            <svg className="w-full h-full p-2" viewBox="0 0 100 100">
-                {/* Background Grid */}
-                <circle cx="50" cy="50" r="40" fill="none" stroke="#D4A574" strokeWidth="0.5" strokeOpacity="0.2" />
-                <circle cx="50" cy="50" r="25" fill="none" stroke="#D4A574" strokeWidth="0.5" strokeOpacity="0.1" />
-                <line x1="50" y1="10" x2="50" y2="90" stroke="#D4A574" strokeWidth="0.5" strokeOpacity="0.2" />
-                <line x1="10" y1="50" x2="90" y2="50" stroke="#D4A574" strokeWidth="0.5" strokeOpacity="0.2" />
+        <div className="w-48 h-16 relative opacity-60 group-hover:opacity-100 transition-all duration-700">
+            <svg className="w-full h-full" viewBox="0 0 100 60" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id={`grad-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor={currentWaves.color} stopOpacity="0.4" />
+                        <stop offset="100%" stopColor={currentWaves.color} stopOpacity="0" />
+                    </linearGradient>
+                </defs>
                 
-                {/* Analytic Shape */}
-                <path 
-                    d={actShapes[index] || actShapes[0]} 
-                    fill="#D4A574" 
-                    fillOpacity="0.2"
-                    stroke="#D4A574" 
-                    strokeWidth="1.5"
-                    strokeLinejoin="round"
-                    className="vector-path"
-                />
-                
-                {/* Strategic Points */}
-                {actShapes[index]?.split(/[MLZ]/).filter(p => p.trim()).map((p, i) => {
-                    const [x, y] = p.trim().split(' ');
-                    return <circle key={i} cx={x} cy={y} r="1.5" fill="#D4A574" />;
-                })}
+                {/* Layered Waves */}
+                {currentWaves.paths.map((p, i) => (
+                    <path 
+                        key={i}
+                        d={p} 
+                        fill={`url(#grad-${index})`}
+                        stroke={currentWaves.color} 
+                        strokeWidth="0.5"
+                        strokeOpacity={0.8 - (i * 0.2)}
+                        className="vector-path"
+                        style={{ 
+                            transform: `translateY(${i * 2}px)`,
+                            opacity: 1 - (i * 0.2)
+                        }}
+                    />
+                ))}
+
+                {/* Vertical Step Markers */}
+                <line x1="25%" y1="0" x2="25%" y2="60" stroke="#D4A574" strokeWidth="0.5" strokeDasharray="2 2" strokeOpacity="0.1" />
+                <line x1="50%" y1="0" x2="50%" y2="60" stroke="#D4A574" strokeWidth="0.5" strokeDasharray="2 2" strokeOpacity="0.1" />
+                <line x1="75%" y1="0" x2="75%" y2="60" stroke="#D4A574" strokeWidth="0.5" strokeDasharray="2 2" strokeOpacity="0.1" />
             </svg>
+            
+            {/* Legend Labels */}
+            <div className="absolute -bottom-1 left-0 right-0 flex justify-between px-1">
+                <div className="w-1 h-1 bg-[#D4A574]/20 rounded-full" />
+                <div className="w-1 h-1 bg-[#D4A574]/20 rounded-full" />
+                <div className="w-1 h-1 bg-[#D4A574]/20 rounded-full" />
+                <div className="w-1 h-1 bg-[#8B4513]/20 rounded-full" />
+            </div>
         </div>
     );
 };
@@ -263,7 +300,7 @@ const DossierGrid = ({ title, content, type }: { title: string, content: string,
                                         <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.4em]">{block.label}</span>
                                         <h4 className="text-[16px] font-bold text-white uppercase tracking-[0.1em] ml-2 block">{block.title}</h4>
                                     </div>
-                                    {type === 'ACT' && <MicroRadarMap index={i} />}
+                                    {type === 'ACT' && <AnalyticWaveMap index={i} />}
                                 </div>
                                 
                                 <div className="space-y-6 max-w-5xl">
