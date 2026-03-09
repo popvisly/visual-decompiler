@@ -15,6 +15,7 @@ export interface DifferentialDiagnosticResponse {
         winning_variant: {
             label: string;
             rationale: string;
+            winner: 'a' | 'b';
         };
         psychological_edge: {
             trigger: string;

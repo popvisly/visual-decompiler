@@ -25,6 +25,7 @@ interface DifferentialDiagnosticResponse {
         winning_variant: {
             label: string;
             rationale: string;
+            winner: 'a' | 'b';
         };
         psychological_edge: {
             trigger: string;
@@ -58,8 +59,19 @@ export default function DifferentialDiagnosticsPage() {
     const [assetB, setAssetB] = useState<Asset | null>(null);
     const [status, setStatus] = useState<'idle' | 'analyzing' | 'success' | 'error'>('idle');
     const [result, setResult] = useState<DifferentialDiagnosticResponse | null>(null);
+    const [agency, setAgency] = useState<{ name: string; is_whitelabel_active: boolean } | null>(null);
 
     useEffect(() => {
+        async function fetchAgency() {
+            const { data } = await supabaseAdmin
+                .from('agencies')
+                .select('name, is_whitelabel_active')
+                .limit(1)
+                .single();
+            if (data) setAgency(data);
+        }
+        fetchAgency();
+
         async function fetchAssets() {
             // Updated query to fetch brand and primary mechanic
             const { data } = await supabaseAdmin
@@ -118,6 +130,10 @@ export default function DifferentialDiagnosticsPage() {
                 }
                 .tan-pulse {
                     animation: tanPulse 2s infinite ease-in-out;
+                }
+                @keyframes loading {
+                    0% { transform: translateX(-100%); }
+                    100% { transform: translateX(300%); }
                 }
             `}</style>
 
@@ -178,11 +194,23 @@ export default function DifferentialDiagnosticsPage() {
                     )}
 
                     {status === 'analyzing' && (
-                        <div className="flex h-full items-center justify-center py-32">
-                            <div className="relative w-24 h-24">
-                                <div className="absolute inset-0 border-[1.5px] border-[#D4A574]/40 animate-[spin_3s_linear_infinite]" />
-                                <div className="absolute inset-2 border-[1px] border-[#8B4513]/20 rotate-45 animate-[spin_4s_linear_infinite_reverse]" />
-                                <div className="absolute inset-4 bg-[#D4A574] animate-pulse" />
+                        <div className="flex flex-col items-center justify-center py-32 space-y-12 animate-in fade-in duration-500">
+                            <div className="relative w-32 h-32">
+                                <div className="absolute inset-0 border-[1.5px] border-[#D4A574]/40 animate-[spin_4s_linear_infinite]" />
+                                <div className="absolute inset-4 border-[1px] border-[#D4A574]/20 -rotate-45 animate-[spin_6s_linear_infinite_reverse]" />
+                                <div className="absolute inset-8 bg-[#D4A574] animate-pulse rounded-sm" />
+                            </div>
+                            
+                            <div className="w-full max-w-md space-y-4">
+                                <div className="flex justify-between items-end">
+                                    <span className="text-[10px] font-bold tracking-[0.5em] uppercase text-[#D4A574] animate-pulse">
+                                        CALIBRATING PERSUASION DELTA...
+                                    </span>
+                                    <span className="text-[9px] font-mono text-[#D4A574]/40">EST_LOAD: 8.2s</span>
+                                </div>
+                                <div className="h-[1px] w-full bg-[#1A1A1A]/5 relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-[#D4A574] w-1/3 animate-[loading_3s_ease-in-out_infinite]" />
+                                </div>
                             </div>
                         </div>
                     )}
@@ -268,7 +296,7 @@ export default function DifferentialDiagnosticsPage() {
                             <div className="mt-24 space-y-16">
                                 <div className="border-t border-[#D4A574]/10 pt-16">
                                     <h3 className="text-[10px] font-bold tracking-[0.5em] uppercase text-[#1A1A1A]/40 mb-12 text-center">
-                                        COMPARISON MATRIX
+                                        {agency?.is_whitelabel_active ? (agency.name || 'DECOMPILER') : 'VISUAL DECOMPILER'} COMPARISON MATRIX
                                     </h3>
                                     
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -277,7 +305,18 @@ export default function DifferentialDiagnosticsPage() {
                                             <div className="absolute top-0 right-0 p-4">
                                                 <div className="w-2 h-2 bg-[#D4A574] rounded-full animate-pulse" />
                                             </div>
-                                            <h4 className="text-[9px] font-bold tracking-[0.3em] uppercase text-[#D4A574]/60 mb-6">Winning Variant</h4>
+                                            
+                                            {/* Winning Asset Thumbnail with Glow */}
+                                            <div className="mb-6 relative h-20 w-full overflow-hidden rounded-xl border border-[#D4A574]/10">
+                                                <img 
+                                                    src={result.matrix_cubes.winning_variant.winner === 'a' ? assetA?.file_url : assetB?.file_url} 
+                                                    className="w-full h-full object-cover grayscale opacity-40" 
+                                                    style={{ boxShadow: '0 0 20px rgba(212,165,116,0.4)' }}
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] to-transparent" />
+                                            </div>
+
+                                            <h4 className="text-[9px] font-bold tracking-[0.3em] uppercase text-[#D4A574]/60 mb-2">Winning Variant</h4>
                                             <div className="text-2xl font-light tracking-tight text-white mb-4 uppercase">
                                                 {result.matrix_cubes.winning_variant.label}
                                             </div>
