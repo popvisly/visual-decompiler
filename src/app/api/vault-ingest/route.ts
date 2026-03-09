@@ -165,8 +165,8 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
   ],
   "dna_prompt": "A single sentence summary combining style and mechanic",
   "full_dossier": {
-    "narrative_framework": "Multi-paragraph deep-dive explanation of the core storytelling device.",
-    "semiotic_subtext": "Multi-paragraph deep-dive into the psychological subtext.",
+    "narrative_framework": "[OVERTURE] A brief one-paragraph intro. \n\nACT I: THE HOOK — Multi-paragraph forensic deconstruction. \n\nACT II: THE CONFLICT — Multi-paragraph strategic deconstruction. \n\nACT III: THE RESOLUTION — Multi-paragraph resolution deconstruction.",
+    "semiotic_subtext": "[OVERTURE] A brief intro. \n\nCHANNEL 1: VISUAL GRAMMAR — Analysis. \n\nCHANNEL 2: CULTURAL SEMIOTICS — Analysis. \n\nCHANNEL 3: PSYCHOLOGICAL TRIGGERS — Analysis.",
     "possible_readings": [
       { "reading": "string", "support": ["string"], "note": "string|null" }
     ],
@@ -195,6 +195,8 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
     }
   }
 }
+
+CRITICAL: The 'narrative_framework' MUST use the 'ACT I: [TITLE]' format and the 'semiotic_subtext' MUST use the 'CHANNEL 1: [TITLE]' format so the forensic UI correctly parses and renders the multi-layered neural frequencies.
 
 Analyze the media provided. Stay clinical, elite, and provide maximum depth. Ensure the 'trigger_distribution' keys (Status, Scarcity, Utility, Authority, Social Proof) map to integers 0-100. Similarly 'cognitive_friction' and 'persuasion_density' should be integers 0-100.`;
 
