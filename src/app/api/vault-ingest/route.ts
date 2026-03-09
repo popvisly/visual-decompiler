@@ -130,7 +130,10 @@ export async function POST(req: Request) {
         // supabaseAdmin uses process.env.SUPABASE_SERVICE_ROLE_KEY
         const { error: uploadError } = await supabaseAdmin.storage
             .from('vault-assets')
-            .upload(filePath, buffer, { contentType: mimeType });
+            .upload(filePath, buffer, { 
+                contentType: mimeType,
+                upsert: true 
+            });
 
         if (uploadError) throw uploadError;
 
