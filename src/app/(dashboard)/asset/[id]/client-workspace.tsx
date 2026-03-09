@@ -182,25 +182,25 @@ const AnalyticWaveMap = ({ index }: { index: number }) => {
     const waves = [
         {
             paths: [
-                "M 0 40 Q 20 10 40 50 Q 60 0 80 30 T 100 10 L 100 60 L 0 60 Z",
-                "M 0 45 Q 25 20 50 55 Q 75 10 100 40 L 100 60 L 0 60 Z",
-                "M 0 50 Q 30 35 60 65 Q 90 20 100 50 L 100 60 L 0 60 Z"
+                "M 0 50 Q 20 10 40 60 Q 60 0 80 40 T 100 20 L 100 80 L 0 80 Z",
+                "M 0 55 Q 25 25 50 65 Q 75 10 100 50 L 100 80 L 0 80 Z",
+                "M 0 60 Q 30 45 60 75 Q 90 25 100 60 L 100 80 L 0 80 Z"
             ],
             color: "#D4A574"
         },
         {
             paths: [
-                "M 0 30 Q 10 60 20 30 T 40 40 T 60 20 T 80 50 T 100 30 L 100 60 L 0 60 Z",
-                "M 0 35 Q 15 65 30 35 T 50 45 T 70 25 T 90 55 T 100 35 L 100 60 L 0 60 Z",
-                "M 0 40 Q 20 70 40 40 T 60 50 T 80 30 T 100 60 L 0 60 Z"
+                "M 0 40 Q 10 70 20 40 T 40 50 T 60 30 T 80 60 T 100 40 L 100 80 L 0 80 Z",
+                "M 0 45 Q 15 75 30 45 T 50 55 T 70 35 T 90 65 T 100 45 L 100 80 L 0 80 Z",
+                "M 0 50 Q 20 80 40 50 T 60 60 T 80 40 T 100 70 L 100 80 L 0 80 Z"
             ],
             color: "#8B4513"
         },
         {
             paths: [
-                "M 0 50 Q 50 50 100 50 L 100 60 L 0 60 Z",
-                "M 0 45 Q 50 55 100 45 L 100 60 L 0 60 Z",
-                "M 0 55 Q 50 45 100 55 L 100 60 L 0 60 Z"
+                "M 0 60 Q 50 60 100 60 L 100 80 L 0 80 Z",
+                "M 0 55 Q 50 65 100 55 L 100 80 L 0 80 Z",
+                "M 0 65 Q 50 55 100 65 L 100 80 L 0 80 Z"
             ],
             color: "#D4A574"
         }
@@ -209,8 +209,8 @@ const AnalyticWaveMap = ({ index }: { index: number }) => {
     const currentWaves = waves[index] || waves[0];
     
     return (
-        <div className="w-48 h-16 relative opacity-60 group-hover:opacity-100 transition-all duration-700">
-            <svg className="w-full h-full" viewBox="0 0 100 60" preserveAspectRatio="none">
+        <div className="w-60 h-24 relative opacity-60 group-hover:opacity-100 transition-all duration-700">
+            <svg className="w-full h-full" viewBox="0 0 100 80" preserveAspectRatio="none">
                 <defs>
                     <linearGradient id={`grad-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" stopColor={currentWaves.color} stopOpacity="0.4" />
@@ -236,9 +236,9 @@ const AnalyticWaveMap = ({ index }: { index: number }) => {
                 ))}
 
                 {/* Vertical Step Markers */}
-                <line x1="25%" y1="0" x2="25%" y2="60" stroke="#D4A574" strokeWidth="0.5" strokeDasharray="2 2" strokeOpacity="0.1" />
-                <line x1="50%" y1="0" x2="50%" y2="60" stroke="#D4A574" strokeWidth="0.5" strokeDasharray="2 2" strokeOpacity="0.1" />
-                <line x1="75%" y1="0" x2="75%" y2="60" stroke="#D4A574" strokeWidth="0.5" strokeDasharray="2 2" strokeOpacity="0.1" />
+                <line x1="25" y1="0" x2="25" y2="80" stroke="#D4A574" strokeWidth="0.5" strokeDasharray="2 2" strokeOpacity="0.1" />
+                <line x1="50" y1="0" x2="50" y2="80" stroke="#D4A574" strokeWidth="0.5" strokeDasharray="2 2" strokeOpacity="0.1" />
+                <line x1="75" y1="0" x2="75" y2="80" stroke="#D4A574" strokeWidth="0.5" strokeDasharray="2 2" strokeOpacity="0.1" />
             </svg>
             
             {/* Legend Labels */}
@@ -294,13 +294,30 @@ const DossierGrid = ({ title, content, type }: { title: string, content: string,
                             <div className="absolute -left-10 top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#D4A574]/40 via-[#D4A574]/10 to-transparent" />
                             
                             <div className="flex flex-col gap-6">
-                                <div className="flex justify-between items-center border-b border-[#D4A574]/10 pb-4">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-2 h-2 rounded-full bg-[#D4A574] shadow-[0_0_10px_#D4A574]" />
-                                        <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.4em]">{block.label}</span>
-                                        <h4 className="text-[16px] font-bold text-white uppercase tracking-[0.1em] ml-2 block">{block.title}</h4>
+                                <div className="flex justify-between items-start border-b border-[#D4A574]/10 pb-6 relative">
+                                    <div className="flex flex-col gap-2">
+                                        <div className="flex items-center gap-3 mb-1">
+                                            <div className="w-2 h-2 rounded-full bg-[#D4A574] shadow-[0_0_10px_#D4A574]" />
+                                            <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.4em]">{block.label}</span>
+                                        </div>
+                                        <h4 className="text-[20px] font-bold text-white uppercase tracking-[0.1em]">{block.title}</h4>
                                     </div>
-                                    {type === 'ACT' && <AnalyticWaveMap index={i} />}
+                                    <div className="flex items-center gap-6">
+                                        {type === 'ACT' && <AnalyticWaveMap index={i} />}
+                                        <div className="group/info relative cursor-help pt-2">
+                                            <svg className="w-4 h-4 text-[#D4A574]/40 group-hover/info:text-[#D4A574] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <div className="absolute top-full right-0 mt-4 w-64 bg-[#1A1A1A] border border-[#D4A574]/30 p-4 rounded-xl shadow-2xl opacity-0 translate-y-2 group-hover/info:opacity-100 group-hover/info:translate-y-0 transition-all z-50 pointer-events-none">
+                                                <p className="text-[10px] uppercase tracking-widest font-bold text-[#D4A574] mb-2">Forensic Protocol {block.label}</p>
+                                                <p className="text-[12px] text-white/70 leading-relaxed font-light">
+                                                    {type === 'ACT' 
+                                                        ? "Monitors the neural 'Neural Frequency' across this strategic act. The wave density indicates persuasion pressure and cognitive resonance." 
+                                                        : "Isolated semiotic channel audit. Cross-referencing visual signals with underlying brand machinery."}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 
                                 <div className="space-y-6 max-w-5xl">
