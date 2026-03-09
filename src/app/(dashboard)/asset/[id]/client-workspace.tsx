@@ -708,11 +708,11 @@ export default function AssetWorkspace({
                                         {(extraction?.full_dossier as any)?.persuasion_metrics ? (
                                              <div className="flex-1 space-y-8 flex flex-col justify-center">
                                                 <div>
-                                                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
-                                                        <span className="text-[#D4A574]/60">Persuasion Density</span>
-                                                        <span className="text-[#D4A574]">{((extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density as number)}%</span>
+                                                    <div className="flex justify-between items-end mb-3">
+                                                        <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">Persuasion Density</span>
+                                                        <span className="text-[11px] font-mono text-[#D4A574]/80">{((extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density as number)}%</span>
                                                     </div>
-                                                    <div className="w-full bg-[#1A1A1A] h-2 border border-[#D4A574]/20 rounded-full overflow-hidden">
+                                                    <div className="w-full bg-white/5 h-1.5 border border-[#D4A574]/10 rounded-full overflow-hidden">
                                                         <div 
                                                             className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full transition-all duration-1000" 
                                                             style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density}%` }}
@@ -720,11 +720,11 @@ export default function AssetWorkspace({
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest mb-2">
-                                                        <span className="text-[#D4A574]/60">Cognitive Friction</span>
-                                                        <span className="text-[#8B4513]">{((extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction as number)}%</span>
+                                                    <div className="flex justify-between items-end mb-3">
+                                                        <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Cognitive Friction</span>
+                                                        <span className="text-[11px] font-mono text-[#8B4513]">{((extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction as number)}%</span>
                                                     </div>
-                                                    <div className="w-full bg-[#1A1A1A] h-2 border border-[#D4A574]/20 rounded-full overflow-hidden">
+                                                    <div className="w-full bg-white/5 h-1.5 border border-[#D4A574]/10 rounded-full overflow-hidden">
                                                         <div 
                                                             className="h-full bg-[#8B4513]/40 rounded-full transition-all duration-1000" 
                                                             style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction}%` }}
@@ -732,14 +732,14 @@ export default function AssetWorkspace({
                                                     </div>
                                                 </div>
                                                 <div className="mt-8 pt-6 border-t border-[#D4A574]/10">
-                                                    <div className="flex gap-3 items-center">
-                                                        <div className="w-8 h-8 rounded-full border border-[#D4A574]/30 flex items-center justify-center shrink-0 bg-[#D4A574]/5">
-                                                            <svg className="w-3 h-3 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                    <div className="flex flex-col gap-3">
+                                                        <div className="flex items-center gap-2">
+                                                            <svg className="w-3.5 h-3.5 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                            <span className="text-[13px] font-bold text-[#D4A574] uppercase tracking-[0.3em]">Predictive Longevity</span>
                                                         </div>
-                                                        <div>
-                                                            <span className="block text-[8px] font-bold text-[#D4A574]/50 mb-1 uppercase tracking-[0.2em]">Predictive Longevity</span>
-                                                            <span className="text-xs text-[#FFFFFF] tracking-tight">{((extraction?.full_dossier as any)?.persuasion_metrics?.predictive_longevity as string)}</span>
-                                                        </div>
+                                                        <p className="text-[11px] text-[#FFFFFF]/80 leading-relaxed font-light pl-[22px] border-l border-[#D4A574]/20">
+                                                            {((extraction?.full_dossier as any)?.persuasion_metrics?.predictive_longevity as string)}
+                                                        </p>
                                                     </div>
                                                 </div>
                                              </div>
