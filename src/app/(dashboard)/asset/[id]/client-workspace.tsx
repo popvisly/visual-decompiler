@@ -177,6 +177,99 @@ const InfoButton = ({ section }: { section: keyof typeof INTELLIGENCE_DEFINITION
         </div>
     );
 };
+const TensionMap = ({ acts }: { acts: string[] }) => {
+    return (
+        <div className="w-full h-24 relative mb-12 group">
+            {/* The Curve */}
+            <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#D4A574" stopOpacity="0.2" />
+                        <stop offset="50%" stopColor="#D4A574" stopOpacity="1" />
+                        <stop offset="100%" stopColor="#8B4513" stopOpacity="0.6" />
+                    </linearGradient>
+                </defs>
+                <path 
+                    d="M 0 80 Q 20 20 40 50 T 70 30 T 100 60" 
+                    fill="none" 
+                    stroke="url(#curveGradient)" 
+                    strokeWidth="2"
+                    className="vector-path h-full w-full"
+                    vectorEffect="non-scaling-stroke"
+                />
+                {/* ACT Markers */}
+                <circle cx="0%" cy="80" r="3" fill="#D4A574" />
+                <circle cx="33%" cy="35" r="3" fill="#D4A574" />
+                <circle cx="66%" cy="45" r="3" fill="#D4A574" />
+                <circle cx="100%" cy="60" r="3" fill="#8B4513" />
+            </svg>
+            <div className="absolute inset-0 flex justify-between items-end px-2">
+                <span className="text-[8px] font-bold text-[#D4A574]/40 uppercase tracking-widest">Act I: Disruption</span>
+                <span className="text-[8px] font-bold text-[#D4A574]/80 uppercase tracking-widest translate-x-[-50%]">Act II: Escalation</span>
+                <span className="text-[8px] font-bold text-[#8B4513]/60 uppercase tracking-widest">Act III: Resolution</span>
+            </div>
+            <div className="absolute top-0 right-0 py-1 px-3 bg-[#D4A574]/10 border border-[#D4A574]/20 rounded-full">
+                <span className="text-[7px] font-mono text-[#D4A574] uppercase tracking-widest">Tension Coefficient: 0.84</span>
+            </div>
+        </div>
+    );
+};
+
+const DossierGrid = ({ title, content, type }: { title: string, content: string, type: 'ACT' | 'CHANNEL' }) => {
+    if (!content) return null;
+
+    // Parsing logic
+    const regex = type === 'ACT' ? /\bACT\s+[IVX]+:/i : /\bCHANNEL\s+\d+:/i;
+    const parts = content.split(regex);
+    const matches = content.match(new RegExp(regex, 'gi')) || [];
+    
+    // The first part is usually intro text (Overture)
+    const overture = parts[0]?.trim();
+    const blocks = parts.slice(1).map((text, i) => ({
+        label: matches[i],
+        text: text.trim().split(' — ')[1] || text.trim(),
+        title: text.trim().split(' — ')[0] || ''
+    }));
+
+    return (
+        <div className="col-span-full border border-[#D4A574]/20 bg-[#1A1A1A] p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+            {/* Background Accent */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+            
+            <div className="relative z-10">
+                <div className="flex justify-between items-center mb-10 border-b border-[#D4A574]/20 pb-6">
+                    <h3 className="text-[14px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">{title}</h3>
+                    <span className="text-[10px] font-mono text-[#D4A574]/30 uppercase tracking-widest">Forensic Map v2.0</span>
+                </div>
+
+                {type === 'ACT' && <TensionMap acts={matches} />}
+
+                {overture && (
+                    <div className="mb-12 max-w-2xl">
+                        <p className="text-[15px] text-white/90 leading-relaxed font-light italic border-l-2 border-[#D4A574]/30 pl-6 py-2">
+                            {overture}
+                        </p>
+                    </div>
+                )}
+
+                <div className={`grid grid-cols-1 md:grid-cols-${blocks.length || 3} gap-12`}>
+                    {blocks.map((block, i) => (
+                        <div key={i} className="space-y-4">
+                            <div className="flex items-center gap-3">
+                                <div className="w-1.5 h-1.5 rounded-full bg-[#D4A574]" />
+                                <span className="text-[10px] font-bold text-[#D4A574]/60 uppercase tracking-[0.3em]">{block.label}</span>
+                            </div>
+                            <h4 className="text-[12px] font-bold text-white uppercase tracking-wider">{block.title}</h4>
+                            <p className="text-[13px] text-white/70 leading-[1.8] font-light">
+                                {block.text}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 
 function SovereignProcessingView({ assetId, agency }: { assetId: string, agency?: any }) {
@@ -602,16 +695,19 @@ export default function AssetWorkspace({
                                         {extraction.full_dossier && (
                                             <div className="pt-12 border-t border-[#D4A574]/20 space-y-8">
                                                 
-                                                {/* The Core 2-Column Grid: Narrative, Semiotics */}
-                                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px] max-h-[600px] overflow-y-auto dark-scroll">
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 flex-shrink-0 sticky top-0 bg-[#1A1A1A] z-10">Narrative Framework</span>
-                                                        <p className="text-[13px] text-[#FFFFFF] leading-[1.625] font-light whitespace-pre-wrap mt-2">{extraction.full_dossier.narrative_framework}</p>
-                                                    </div>
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px] max-h-[600px] overflow-y-auto dark-scroll">
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2 flex-shrink-0 sticky top-0 bg-[#1A1A1A] z-10">Semiotic Subtext</span>
-                                                        <p className="text-[13px] text-[#FFFFFF] leading-[1.625] font-light whitespace-pre-wrap mt-2">{extraction.full_dossier.semiotic_subtext}</p>
-                                                    </div>
+                                                {/* FULL-WIDTH FORENSIC DOSSIER */}
+                                                <div className="grid grid-cols-1 gap-8">
+                                                    <DossierGrid 
+                                                        title="Narrative Framework" 
+                                                        content={extraction.full_dossier.narrative_framework || ''} 
+                                                        type="ACT" 
+                                                    />
+                                                    
+                                                    <DossierGrid 
+                                                        title="Semiotic Subtext" 
+                                                        content={extraction.full_dossier.semiotic_subtext || ''} 
+                                                        type="CHANNEL" 
+                                                    />
                                                 </div>
 
                                                 {/* Secondary Row: Archetypes, Readings and Objections */}
