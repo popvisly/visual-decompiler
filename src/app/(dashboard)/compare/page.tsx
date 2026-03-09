@@ -14,12 +14,30 @@ interface Asset {
 }
 
 // API Response Type mapping
-interface CompareResult {
+interface DifferentialDiagnosticResponse {
     diagnostic_id: string;
-    status: string;
+    status: 'success' | 'error';
     macro_synthesis: {
         primary_shift: string;
         strategic_delta_summary: string;
+    };
+    matrix_cubes: {
+        winning_variant: {
+            label: string;
+            rationale: string;
+        };
+        psychological_edge: {
+            trigger: string;
+            delta: string;
+        };
+        fatigue_differential: {
+            longevity_delta: string;
+            comparison: string;
+        };
+    };
+    behavioral_bars: {
+        persuasion_density: { a: number; b: number };
+        cognitive_friction: { a: number; b: number };
     };
     radar_metrics: {
         axes: string[];
@@ -39,7 +57,7 @@ export default function DifferentialDiagnosticsPage() {
     const [assetA, setAssetA] = useState<Asset | null>(null);
     const [assetB, setAssetB] = useState<Asset | null>(null);
     const [status, setStatus] = useState<'idle' | 'analyzing' | 'success' | 'error'>('idle');
-    const [result, setResult] = useState<CompareResult | null>(null);
+    const [result, setResult] = useState<DifferentialDiagnosticResponse | null>(null);
 
     useEffect(() => {
         async function fetchAssets() {
@@ -243,6 +261,121 @@ export default function DifferentialDiagnosticsPage() {
                                             </div>
                                         </div>
                                     ))}
+                                </div>
+                            </div>
+
+                            {/* COMPARISON MATRIX & BEHAVIORAL BARS */}
+                            <div className="mt-24 space-y-16">
+                                <div className="border-t border-[#D4A574]/10 pt-16">
+                                    <h3 className="text-[10px] font-bold tracking-[0.5em] uppercase text-[#1A1A1A]/40 mb-12 text-center">
+                                        COMPARISON MATRIX
+                                    </h3>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                        {/* Winning Variant Cube */}
+                                        <div className="bg-[#1A1A1A] p-8 rounded-[2rem] border border-[#D4A574]/30 shadow-2xl relative overflow-hidden group">
+                                            <div className="absolute top-0 right-0 p-4">
+                                                <div className="w-2 h-2 bg-[#D4A574] rounded-full animate-pulse" />
+                                            </div>
+                                            <h4 className="text-[9px] font-bold tracking-[0.3em] uppercase text-[#D4A574]/60 mb-6">Winning Variant</h4>
+                                            <div className="text-2xl font-light tracking-tight text-white mb-4 uppercase">
+                                                {result.matrix_cubes.winning_variant.label}
+                                            </div>
+                                            <p className="text-[11px] text-[#D4A574]/40 leading-relaxed uppercase tracking-wider">
+                                                {result.matrix_cubes.winning_variant.rationale}
+                                            </p>
+                                        </div>
+
+                                        {/* Psychological Edge Cube */}
+                                        <div className="bg-[#1A1A1A] p-8 rounded-[2rem] border border-[#D4A574]/10 shadow-xl">
+                                            <h4 className="text-[9px] font-bold tracking-[0.3em] uppercase text-[#D4A574]/60 mb-6">Psychological Edge</h4>
+                                            <div className="text-xl font-bold tracking-widest text-[#D4A574] mb-2 uppercase">
+                                                {result.matrix_cubes.psychological_edge.trigger}
+                                            </div>
+                                            <div className="text-[11px] text-white/60 font-mono tracking-widest uppercase">
+                                                {result.matrix_cubes.psychological_edge.delta}
+                                            </div>
+                                        </div>
+
+                                        {/* Fatigue Differential Cube */}
+                                        <div className="bg-[#1A1A1A] p-8 rounded-[2rem] border border-[#D4A574]/10 shadow-xl">
+                                            <h4 className="text-[9px] font-bold tracking-[0.3em] uppercase text-[#D4A574]/60 mb-6">Fatigue Differential</h4>
+                                            <div className="text-3xl font-light tracking-tighter text-white mb-2 uppercase">
+                                                {result.matrix_cubes.fatigue_differential.longevity_delta}
+                                            </div>
+                                            <p className="text-[11px] text-[#D4A574]/40 leading-relaxed uppercase tracking-wider">
+                                                {result.matrix_cubes.fatigue_differential.comparison}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 pt-8">
+                                    {/* Persuasion Density Bars */}
+                                    <div className="space-y-8">
+                                        <h4 className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A]/40 border-b border-[#D4A574]/10 pb-4">
+                                            Persuasion Density
+                                        </h4>
+                                        <div className="space-y-10">
+                                            <div className="space-y-3">
+                                                <div className="flex justify-between items-end">
+                                                    <span className="text-[9px] font-bold tracking-widest text-[#1A1A1A]/40 uppercase">ASSET A</span>
+                                                    <span className="text-2xl font-light tracking-tighter text-[#1A1A1A]">{result.behavioral_bars.persuasion_density.a}%</span>
+                                                </div>
+                                                <div className="h-[2px] w-full bg-[#1A1A1A]/5 rounded-full overflow-hidden">
+                                                    <div 
+                                                        className="h-full bg-[#4A4A4A] transition-all duration-1000 ease-out"
+                                                        style={{ width: `${result.behavioral_bars.persuasion_density.a}%` }}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="space-y-3">
+                                                <div className="flex justify-between items-end">
+                                                    <span className="text-[9px] font-bold tracking-widest text-[#D4A574] uppercase">ASSET B</span>
+                                                    <span className="text-2xl font-light tracking-tighter text-[#1A1A1A]">{result.behavioral_bars.persuasion_density.b}%</span>
+                                                </div>
+                                                <div className="h-[2px] w-full bg-[#1A1A1A]/5 rounded-full overflow-hidden">
+                                                    <div 
+                                                        className="h-full bg-[#D4A574] transition-all duration-1000 ease-out"
+                                                        style={{ width: `${result.behavioral_bars.persuasion_density.b}%` }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Cognitive Friction Bars */}
+                                    <div className="space-y-8">
+                                        <h4 className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A]/40 border-b border-[#D4A574]/10 pb-4">
+                                            Cognitive Friction
+                                        </h4>
+                                        <div className="space-y-10">
+                                            <div className="space-y-3">
+                                                <div className="flex justify-between items-end">
+                                                    <span className="text-[9px] font-bold tracking-widest text-[#1A1A1A]/40 uppercase">ASSET A</span>
+                                                    <span className="text-2xl font-light tracking-tighter text-[#1A1A1A]">{result.behavioral_bars.cognitive_friction.a}%</span>
+                                                </div>
+                                                <div className="h-[2px] w-full bg-[#1A1A1A]/5 rounded-full overflow-hidden">
+                                                    <div 
+                                                        className="h-full bg-[#4A4A4A] transition-all duration-1000 ease-out"
+                                                        style={{ width: `${result.behavioral_bars.cognitive_friction.a}%` }}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="space-y-3">
+                                                <div className="flex justify-between items-end">
+                                                    <span className="text-[9px] font-bold tracking-widest text-[#D4A574] uppercase">ASSET B</span>
+                                                    <span className="text-2xl font-light tracking-tighter text-[#1A1A1A]">{result.behavioral_bars.cognitive_friction.b}%</span>
+                                                </div>
+                                                <div className="h-[2px] w-full bg-[#1A1A1A]/5 rounded-full overflow-hidden">
+                                                    <div 
+                                                        className="h-full bg-[#D4A574] transition-all duration-1000 ease-out"
+                                                        style={{ width: `${result.behavioral_bars.cognitive_friction.b}%` }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

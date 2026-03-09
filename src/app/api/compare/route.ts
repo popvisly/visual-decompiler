@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
 import { supabaseAdmin } from '@/lib/supabase';
+import { DIFFERENTIAL_DIAGNOSTIC_PROMPT } from '@/lib/prompts';
 
 // SCHEMA 1: Differential Diagnostics interface
 export interface DifferentialDiagnosticResponse {
@@ -9,6 +10,24 @@ export interface DifferentialDiagnosticResponse {
     macro_synthesis: {
         primary_shift: string;
         strategic_delta_summary: string;
+    };
+    matrix_cubes: {
+        winning_variant: {
+            label: string;
+            rationale: string;
+        };
+        psychological_edge: {
+            trigger: string;
+            delta: string;
+        };
+        fatigue_differential: {
+            longevity_delta: string;
+            comparison: string;
+        };
+    };
+    behavioral_bars: {
+        persuasion_density: { a: number; b: number };
+        cognitive_friction: { a: number; b: number };
     };
     radar_metrics: {
         axes: string[];
@@ -45,35 +64,17 @@ export async function POST(req: Request) {
         const anthropic = getAnthropic();
         const model = getClaudeModel('agency'); // Use most capable model for comparison
 
-        const systemPrompt = `You are a forensic advertising strategist analyzing two assets for a Differential Diagnostic.
-CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact schema:
-{
-  "diagnostic_id": "diff_req_[random_id]",
-  "status": "success",
-  "macro_synthesis": {
-    "primary_shift": "string",
-    "strategic_delta_summary": "string"
-  },
-  "radar_metrics": {
-    "axes": ["Aesthetic Authority", "Cognitive Load", "Status Signaling", "Materiality", "Narrative Tension"],
-    "asset_a_scores": [number, number, number, number, number],
-    "asset_b_scores": [number, number, number, number, number]
-  },
-  "semiotic_shifts": [
-    {
-      "variable_isolated": "string",
-      "asset_a_state": "string",
-      "asset_b_state": "string",
-      "impact_on_conversion": "string"
-    }
-  ]
-}`;
+        const systemPrompt = DIFFERENTIAL_DIAGNOSTIC_PROMPT;
 
-        const userMessage = `Compare these two asset extractions and provide the Differential Diagnostic JSON.
-Asset A Extraction:
+        const userMessage = `Compare these two asset extractions and provide the Differential Diagnostic JSON following the requested schema.
+Asset A Data:
+${JSON.stringify(assetA.data, null, 2)}
+Asset A Forensic Extraction:
 ${JSON.stringify(assetA.data.extractions?.length ? assetA.data.extractions[0] : {}, null, 2)}
 
-Asset B Extraction:
+Asset B Data:
+${JSON.stringify(assetB.data, null, 2)}
+Asset B Forensic Extraction:
 ${JSON.stringify(assetB.data.extractions?.length ? assetB.data.extractions[0] : {}, null, 2)}`;
 
         // 3. Call Claude
@@ -95,9 +96,6 @@ ${JSON.stringify(assetB.data.extractions?.length ? assetB.data.extractions[0] : 
         }
 
         const result = JSON.parse(text) as DifferentialDiagnosticResponse;
-
-        // Optional: Save the diagnostic result to the database if needed
-        // await supabaseAdmin.from('comparisons').insert({...})
 
         return NextResponse.json(result);
 
