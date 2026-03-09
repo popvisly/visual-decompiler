@@ -86,42 +86,98 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
         <>
             <GatekeeperIntercept isVisible={showGatekeeper} onClose={() => setShowGatekeeper(false)} />
             <div
-                className={`min-h-[calc(100vh-64px)] md:min-h-screen w-full flex items-center justify-center p-8 transition-colors duration-300 relative overflow-hidden ${isDragging ? 'bg-[#FBFBF6] text-[#1A1A1A]' : 'bg-[#FBFBF6] text-[#1A1A1A]'}`}
+                className="min-h-screen w-full flex items-center justify-center p-8 bg-[#FBFBF6] relative overflow-hidden"
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
             >
-                {/* 2% Geometric Grid Overlay */}
-                <div className="pointer-events-none absolute inset-0 opacity-[0.2] [background-image:linear-gradient(rgba(212,165,116,0.05)_48px,transparent_48px),linear-gradient(90deg,rgba(212,165,116,0.05)_48px,transparent_48px)] [background-size:48px_48px]" />
+                {/* 2.5% Geometric Grid Overlay */}
+                <div className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:40px_40px]" />
 
-                {/* 
-        The Upload Zone
-        Massive, pure center geometry. Dashed lines.
-      */}
-                <div
-                    className={`w-full max-w-4xl aspect-video border-[1px] border-dashed flex items-center justify-center relative overflow-hidden transition-all duration-300 z-10 ${isDragging ? 'border-[#8B4513] scale-[0.98] bg-[#F5F5DC]/10' : 'border-[#D4A574]/30'
+                <div className="relative z-10 w-full max-w-5xl flex flex-col items-center">
+                    {/* Page Title Protocol */}
+                    <div className="text-center mb-16 border-b border-[#D4A574]/20 pb-8 w-full">
+                        <h1 className="text-[12px] font-bold tracking-[0.5em] uppercase text-[#D4A574]">
+                            [ ANALYZE AD ASSET ]
+                        </h1>
+                        <p className="mt-4 text-[9px] font-mono tracking-[0.3em] uppercase text-[#1A1A1A]/30">
+                            Neural Ingestion & Extraction Protocol v2.5
+                        </p>
+                    </div>
+
+                    {/* The Extraction Portal Card */}
+                    <div
+                        className={`w-full max-w-4xl aspect-[21/9] bg-[#1A1A1A] border-2 rounded-[2.5rem] flex flex-col items-center justify-center relative overflow-hidden transition-all duration-500 shadow-2xl group cursor-pointer ${
+                            isDragging 
+                            ? 'border-[#D4A574] bg-[#1A1A1A]/95 scale-[0.99] shadow-[0_0_50px_rgba(212,165,116,0.15)]' 
+                            : 'border-[#D4A574]/30 hover:border-[#D4A574]/60'
                         }`}
-                >
-                    {!isProcessing ? (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                            <span className={`text-xl md:text-3xl lg:text-5xl font-light tracking-[0.2em] uppercase transition-transform duration-[400ms] text-[#8B4513] ${isDragging ? 'scale-[1.05] drop-shadow-md' : ''}`}>
-                                Drop Asset To<br className="md:hidden" /> Initiate Extraction
-                            </span>
-                        </div>
-                    ) : (
-                        <div className="flex flex-col items-center justify-center gap-12">
-                            {/* The Same Sleek Geometric Loader from Intelligence Pulse */}
-                            <div className={`relative w-24 h-24 ${isDragging ? 'opacity-80' : ''}`}>
-                                <div className="absolute inset-0 border-[1px] border-[#D4A574]/40 animate-[spin_3s_linear_infinite]" />
-                                <div className="absolute inset-2 border-[1px] border-[#8B4513]/30 rotate-45 animate-[spin_4s_linear_infinite_reverse]" />
-                                <div className="absolute inset-4 bg-[#8B4513] animate-pulse" />
+                        onClick={() => document.getElementById('file-upload')?.click()}
+                    >
+                        <input 
+                            id="file-upload"
+                            type="file" 
+                            className="hidden" 
+                            accept="image/*"
+                            onChange={(e) => {
+                                const files = e.target.files;
+                                if (files && files.length > 0) {
+                                    const dragEvent = {
+                                        preventDefault: () => {},
+                                        stopPropagation: () => {},
+                                        dataTransfer: { files }
+                                    } as unknown as React.DragEvent;
+                                    handleDrop(dragEvent);
+                                }
+                            }}
+                        />
+
+                        {!isProcessing ? (
+                            <div className="flex flex-col items-center gap-6 text-center px-12">
+                                <span className={`text-xl md:text-2xl font-light tracking-[0.4em] uppercase transition-all duration-500 text-[#D4A574] ${isDragging ? 'scale-105 brightness-125' : 'group-hover:brightness-110'}`}>
+                                    INITIATE FORENSIC EXTRACTION
+                                </span>
+                                
+                                <div className="space-y-2">
+                                    <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4A574]/40">
+                                        Drop asset to begin deconstruction
+                                    </p>
+                                    <p className="text-[9px] font-mono tracking-[0.15em] uppercase text-[#D4A574]/20">
+                                        SUPPORTED ASSETS: STATIC (JPG, PNG, WEBP) • MAX FILE SIZE: 25MB
+                                    </p>
+                                </div>
                             </div>
- 
-                            <span className="font-sans text-[10px] font-bold tracking-[0.3em] uppercase animate-pulse text-[#8B4513]">
-                                Uplinking to Vault Storage...
-                            </span>
-                        </div>
-                    )}
+                        ) : (
+                            <div className="flex flex-col items-center justify-center gap-12">
+                                <div className="relative w-24 h-24">
+                                    <div className="absolute inset-0 border-[1px] border-[#D4A574]/40 animate-[spin_3s_linear_infinite]" />
+                                    <div className="absolute inset-2 border-[1px] border-[#8B4513]/30 rotate-45 animate-[spin_4s_linear_infinite_reverse]" />
+                                    <div className="absolute inset-4 bg-[#D4A574] animate-pulse rounded-sm" />
+                                </div>
+                                <span className="font-mono text-[10px] font-bold tracking-[0.4em] uppercase animate-pulse text-[#D4A574]">
+                                    EXTRACTING SEMANTIC LAYERS...
+                                </span>
+                            </div>
+                        )}
+
+                        {/* Corner Accents */}
+                        <div className="absolute top-8 left-8 w-4 h-4 border-t-2 border-l-2 border-[#D4A574]/20" />
+                        <div className="absolute top-8 right-8 w-4 h-4 border-t-2 border-r-2 border-[#D4A574]/20" />
+                        <div className="absolute bottom-8 left-8 w-4 h-4 border-b-2 border-l-2 border-[#D4A574]/20" />
+                        <div className="absolute bottom-8 right-8 w-4 h-4 border-b-2 border-r-2 border-[#D4A574]/20" />
+                    </div>
+
+                    {/* Luxury Action Node */}
+                    <div className="mt-16">
+                        <button
+                            onClick={() => document.getElementById('file-upload')?.click()}
+                            disabled={isProcessing}
+                            className="flex items-center gap-6 px-12 py-5 bg-[#4A4A4A] text-white text-[11px] font-bold tracking-[0.4em] uppercase rounded-full shadow-xl hover:bg-[#1A1A1A] hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+                        >
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#D4A574]" />
+                            [ ANALYZE ]
+                        </button>
+                    </div>
                 </div>
             </div>
         </>
