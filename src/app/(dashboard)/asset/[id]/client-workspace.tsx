@@ -276,68 +276,72 @@ const DossierGrid = ({ title, content, type }: { title: string, content: string,
     }));
 
     return (
-        <div className="col-span-full border border-[#D4A574]/20 bg-[#1A1A1A] p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
-            {/* Background Accent */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
-            
-            <div className="relative z-10">
-                <div className="flex justify-between items-center mb-10 border-b border-[#D4A574]/20 pb-6">
-                    <h3 className="text-[14px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">{title}</h3>
-                    <span className="text-[10px] font-mono text-[#D4A574]/30 uppercase tracking-widest">Forensic Map v2.0</span>
-                </div>
-
-                {overture && (
-                    <div className="mb-12 max-w-4xl">
-                        <p className="text-[15px] text-white/90 leading-relaxed font-light italic border-l-2 border-[#D4A574] pl-6 py-2">
-                            {overture}
-                        </p>
+        <div className="col-span-full flex flex-col gap-8">
+            {/* Header & Overture Card */}
+            {(title || overture) && (
+                <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+                    <div className="relative z-10">
+                        <div className="flex justify-between items-center mb-10 border-b border-[#D4A574]/20 pb-6">
+                            <h3 className="text-[14px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">{title}</h3>
+                            <span className="text-[10px] font-mono text-[#D4A574]/30 uppercase tracking-widest">Forensic Map v2.0</span>
+                        </div>
+                        {overture && (
+                            <div className="max-w-4xl">
+                                <p className="text-[15px] text-white/90 leading-relaxed font-light italic border-l-2 border-[#D4A574] pl-6 py-2">
+                                    {overture}
+                                </p>
+                            </div>
+                        )}
                     </div>
-                )}
+                </div>
+            )}
 
-                <div className="space-y-16">
-                    {blocks.map((block, i) => (
-                        <div key={i} className="group/block relative">
-                            {/* Vertical Marker */}
-                            <div className="absolute -left-10 top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#D4A574]/40 via-[#D4A574]/10 to-transparent" />
-                            
-                            <div className="flex flex-col gap-6">
-                                <div className="flex justify-between items-start border-b border-[#D4A574]/10 pb-4 relative">
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex items-center gap-3 mb-1">
-                                            <div className="w-2 h-2 rounded-full bg-[#D4A574] shadow-[0_0_10px_#D4A574]" />
-                                            <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.4em]">{block.label}</span>
-                                        </div>
-                                        <h4 className="text-[28px] font-bold text-white uppercase tracking-[0.05em]">{block.title}</h4>
+            {/* Modular Block Cards */}
+            {blocks.map((block, i) => (
+                <div key={i} className="border border-[#D4A574]/20 bg-[#1A1A1A] p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+                    <div className="relative z-10">
+                        <div className="flex flex-col gap-6">
+                            <div className="flex justify-between items-start border-b border-[#D4A574]/10 pb-4 relative">
+                                <div className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-3 mb-1">
+                                        <div className="w-2 h-2 rounded-full bg-[#D4A574] shadow-[0_0_10px_#D4A574]" />
+                                        <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.4em]">{block.label}</span>
                                     </div>
-                                    <div className="group/info relative cursor-help pt-2">
-                                        <svg className="w-4 h-4 text-[#D4A574]/40 group-hover/info:text-[#D4A574] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <div className="absolute top-full right-0 mt-4 w-64 bg-[#1A1A1A] border border-[#D4A574]/30 p-4 rounded-xl shadow-2xl opacity-0 translate-y-2 group-hover/info:opacity-100 group-hover/info:translate-y-0 transition-all z-50 pointer-events-none">
-                                            <p className="text-[10px] uppercase tracking-widest font-bold text-[#D4A574] mb-2">Forensic Protocol {block.label}</p>
-                                            <p className="text-[12px] text-white/70 leading-relaxed font-light">
-                                                {type === 'ACT' 
-                                                    ? "Monitors the neural 'Neural Frequency' across this strategic act. The wave density indicates persuasion pressure and cognitive resonance." 
-                                                    : "Isolated semiotic channel audit. Cross-referencing visual signals with underlying brand machinery."}
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <h4 className="text-[28px] font-bold text-white uppercase tracking-[0.05em]">{block.title}</h4>
                                 </div>
-
-                                {type === 'ACT' && <AnalyticWaveMap index={i} />}
-                                
-                                <div className="space-y-6 max-w-5xl">
-                                    {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
-                                        <p key={pi} className="text-[15px] text-white/70 leading-[1.8] font-light">
-                                            {paragraph.trim()}
+                                <div className="group/info relative cursor-help pt-2">
+                                    <svg className="w-4 h-4 text-[#D4A574]/40 group-hover/info:text-[#D4A574] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <div className="absolute top-full right-0 mt-4 w-64 bg-[#1A1A1A] border border-[#D4A574]/30 p-4 rounded-xl shadow-2xl opacity-0 translate-y-2 group-hover/info:opacity-100 group-hover/info:translate-y-0 transition-all z-50 pointer-events-none">
+                                        <p className="text-[10px] uppercase tracking-widest font-bold text-[#D4A574] mb-2">Forensic Protocol {block.label}</p>
+                                        <p className="text-[12px] text-white/70 leading-relaxed font-light">
+                                            {type === 'ACT' 
+                                                ? "Monitors the neural 'Neural Frequency' across this strategic act. The wave density indicates persuasion pressure and cognitive resonance." 
+                                                : "Isolated semiotic channel audit. Cross-referencing visual signals with underlying brand machinery."}
                                         </p>
-                                    ))}
+                                    </div>
                                 </div>
                             </div>
+
+                            {type === 'ACT' && <AnalyticWaveMap index={i} />}
+                            
+                            <div className="space-y-6 max-w-5xl">
+                                {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
+                                    <p key={pi} className="text-[15px] text-white/70 leading-[1.8] font-light">
+                                        {paragraph.trim()}
+                                    </p>
+                                ))}
+                            </div>
                         </div>
-                    ))}
+                    </div>
                 </div>
-            </div>
+            ))}
+
+            {/* Final Section Separator */}
+            <div className="pt-8 mb-8 border-t border-[#D4A574]/20 opacity-30" />
         </div>
     );
 };
