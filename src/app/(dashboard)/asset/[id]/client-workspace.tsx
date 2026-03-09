@@ -719,7 +719,7 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
                                     <div className="space-y-12">
-                                        {!extraction.primary_mechanic && <SovereignProcessingView assetId={asset.id} agency={agency} />}
+                                        {(!extraction.primary_mechanic || !extraction.full_dossier) && <SovereignProcessingView assetId={asset.id} agency={agency} />}
 
                                         {/* Top 4 Extraction Metrics as Intelligence Cards */}
                                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-2">

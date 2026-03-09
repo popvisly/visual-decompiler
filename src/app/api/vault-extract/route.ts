@@ -19,28 +19,55 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'No assetId provided.' }, { status: 400 });
         }
 
-        // 1. Get asset details and verify ownership
-        const { data: assetData, error: assetError } = await supabaseAdmin
+        // 1. Get asset details and verify ownership (Check V2 assets first, then fallback to V1 ad_digests)
+        let { data: assetData, error: assetError } = await supabaseAdmin
             .from('assets')
-            .select('file_url, user_id, brand_id')
+            .select('id, file_url, user_id, brand_id')
             .eq('id', assetId)
-            .single();
-
-        if (assetError || !assetData) {
-            return NextResponse.json({ error: 'Asset not found.' }, { status: 404 });
+            .maybeSingle();
+            
+        if (!assetData) {
+            const { data: v1Data, error: v1Error } = await supabaseAdmin
+                .from('ad_digests')
+                .select('id, media_url, user_id, brand')
+                .eq('id', assetId)
+                .maybeSingle();
+            
+            if (v1Data) {
+                // Skeleton migration: create the asset record so extraction can link to it
+                const { data: newAsset, error: insertError } = await supabaseAdmin
+                    .from('assets')
+                    .insert({
+                        id: v1Data.id,
+                        file_url: v1Data.media_url,
+                        user_id: v1Data.user_id,
+                        type: 'STATIC' // Defaulting to static for V1 legacy
+                    })
+                    .select('id, file_url, user_id, brand_id')
+                    .single();
+                
+                if (insertError) {
+                    console.error('[Migration Error]:', insertError);
+                    return NextResponse.json({ error: 'Failed to migrate legacy asset for analysis.' }, { status: 500 });
+                }
+                assetData = newAsset;
+            } else {
+                return NextResponse.json({ error: 'Asset not found in any vault version.' }, { status: 404 });
+            }
         }
+
         if (assetData.user_id !== session.userId) {
             return NextResponse.json({ error: 'Unauthorized for this asset.' }, { status: 403 });
         }
 
-        // If extraction already exists, we can return early
+        // 1.5 Check if extraction exists AND has the deep forensic dossier
         const { data: existingExtraction } = await supabaseAdmin
             .from('extractions')
-            .select('id')
+            .select('id, full_dossier')
             .eq('asset_id', assetId)
             .maybeSingle();
             
-        if (existingExtraction) {
+        if (existingExtraction?.full_dossier) {
             return NextResponse.json({ success: true, extractionId: existingExtraction.id, cached: true });
         }
 
@@ -187,8 +214,8 @@ Analyze the media provided. Stay clinical, elite, and provide maximum depth. Ens
             await supabaseAdmin.from('assets').update({ brand_id: targetBrandId }).eq('id', assetId);
         }
 
-        // 5. Save extraction to Intelligence Vault extractions table
-        const { error: extractionError } = await supabaseAdmin.from('extractions').insert({
+        // 5. Save extraction to Intelligence Vault extractions table (Upsert to handle deep upgrades)
+        const { error: extractionError } = await supabaseAdmin.from('extractions').upsert({
             asset_id: assetId,
             confidence_score: extractionResult.confidence_score,
             primary_mechanic: extractionResult.primary_mechanic,
@@ -197,7 +224,7 @@ Analyze the media provided. Stay clinical, elite, and provide maximum depth. Ens
             evidence_anchors: extractionResult.evidence_anchors,
             dna_prompt: extractionResult.dna_prompt,
             full_dossier: extractionResult.full_dossier
-        });
+        }, { onConflict: 'asset_id' });
 
         if (extractionError) {
             console.error('[Extraction DB Error]:', extractionError);
