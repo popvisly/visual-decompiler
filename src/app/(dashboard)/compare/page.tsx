@@ -123,8 +123,8 @@ export default function DifferentialDiagnosticsPage() {
                                 <span className="block text-[12px] font-bold tracking-[0.5em] uppercase text-[#1A1A1A]/40">
                                     COMPARISON MATRIX
                                 </span>
-                                <span className="block text-[10px] font-mono tracking-[0.3em] uppercase text-[#1A1A1A]/20">
-                                    Awaiting Forensic Diagnostic Protocol
+                                <span className="block text-[12px] font-bold tracking-[0.5em] uppercase text-[#D4A574]">
+                                    AWAITING DIFFERENTIAL PARSING...
                                 </span>
                             </div>
                         </div>
@@ -244,7 +244,7 @@ function AssetSelectorPanel({
     return (
         <div className="flex-1 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-[2.5rem] overflow-hidden min-h-[450px] relative transition-all duration-500 hover:border-[#D4A574]/50 group shadow-2xl">
             {/* Background Media View */}
-            {selected ? (
+            {selected && (
                 <div className="absolute inset-0">
                     <img
                         src={selected.file_url}
@@ -252,10 +252,6 @@ function AssetSelectorPanel({
                         className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-1000"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-[#1A1A1A]/80" />
-                </div>
-            ) : (
-                <div className="absolute inset-0 flex items-center justify-center opacity-5">
-                    <span className="text-8xl font-black tracking-tighter text-white uppercase">VAULT</span>
                 </div>
             )}
 
@@ -274,38 +270,71 @@ function AssetSelectorPanel({
                 </div>
 
                 <div className="flex justify-center">
-                    <div className="relative w-full max-w-[240px]">
+                    <div className="relative w-full max-w-[260px]">
                         <button
-                            onClick={() => setOpen(!open)}
+                            onClick={() => setOpen(true)}
                             className="w-full bg-transparent border border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-[#D4A574]/5 py-4 transition-all text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574] rounded-full"
                         >
-                            {selected ? '[ CHANGE ASSET ]' : '[ SELECT FROM VAULT ]'}
+                            {selected ? '[ CHANGE ASSET ]' : '[ SELECT ASSET FROM ARCHIVE ]'}
                         </button>
-
-                        {open && (
-                            <div className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 w-80 bg-[#1A1A1A] border border-[#D4A574]/20 shadow-[0_0_50px_rgba(0,0,0,0.8)] z-50 rounded-3xl overflow-hidden max-h-96">
-                                <div className="p-4 border-b border-[#D4A574]/10 bg-[#1A1A1A] text-[9px] uppercase tracking-[0.4em] text-[#D4A574]/40 font-bold">
-                                    INTELLIGENCE VAULT MANIFEST
-                                </div>
-                                <div className="overflow-y-auto max-h-[300px] scrollbar-hide">
-                                    {availableAssets.map(a => (
-                                        <button
-                                            key={a.id}
-                                            onClick={() => { onSelect(a); setOpen(false); }}
-                                            className="w-full flex items-center gap-4 p-4 border-b border-[#D4A574]/5 hover:bg-[#D4A574]/10 text-left transition-colors group/item"
-                                        >
-                                            <div className="w-12 h-12 bg-black border border-[#D4A574]/20 rounded-lg overflow-hidden shrink-0">
-                                                <img src={a.file_url} className="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition-all" />
-                                            </div>
-                                            <span className="text-[10px] font-bold uppercase tracking-widest text-[#D4A574]/60 group-hover/item:text-[#D4A574] truncate">{a.brand?.name || 'Unknown'}</span>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>
+
+            {/* Selection Drawer (Modal Over Right Side) */}
+            {open && (
+                <div className="fixed inset-0 z-[100] flex justify-end animate-in fade-in duration-300">
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
+                    <div className="relative w-full max-w-md bg-[#FBFBF6] h-screen shadow-2xl animate-in slide-in-from-right duration-500 flex flex-col">
+                        <div className="p-8 border-b border-[#1A1A1A]/10 flex justify-between items-center bg-[#1A1A1A]">
+                            <div className="space-y-1">
+                                <h2 className="text-[11px] font-bold tracking-[0.4em] uppercase text-[#D4A574]">INTELLIGENCE ARCHIVE</h2>
+                                <p className="text-[9px] text-[#D4A574]/50 font-mono tracking-[0.2em] uppercase transition-opacity">Select forensic footprint</p>
+                            </div>
+                            <button 
+                                onClick={() => setOpen(false)}
+                                className="text-[#D4A574] hover:scale-110 transition-transform p-2 border border-[#D4A574]/20 rounded-full"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-hide">
+                            {availableAssets.map(a => (
+                                <button
+                                    key={a.id}
+                                    onClick={() => { onSelect(a); setOpen(false); }}
+                                    className="w-full group/item flex items-center gap-6 p-4 bg-white border border-[#1A1A1A]/5 rounded-2xl hover:border-[#D4A574] hover:shadow-lg transition-all"
+                                >
+                                    <div className="w-16 h-16 bg-[#1A1A1A] rounded-xl overflow-hidden shrink-0 border border-[#1A1A1A]/10">
+                                        <img src={a.file_url} className="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition-all duration-500" />
+                                    </div>
+                                    <div className="flex flex-col text-left">
+                                        <span className="text-[11px] font-bold uppercase tracking-widest text-[#1A1A1A] group-hover/item:text-[#D4A574] transition-colors">{a.brand?.name || 'Unknown'}</span>
+                                        <span className="text-[9px] font-mono text-[#1A1A1A]/40 uppercase tracking-tighter mt-1">Footprint ID: {a.id.split('-')[0]}</span>
+                                    </div>
+                                    <div className="ml-auto opacity-0 group-hover/item:opacity-100 transition-opacity">
+                                        <div className="w-6 h-6 border border-[#D4A574] rounded-full flex items-center justify-center">
+                                            <div className="w-2 h-2 bg-[#D4A574] rounded-full" />
+                                        </div>
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
+                        
+                        <div className="p-8 border-t border-[#1A1A1A]/5 bg-white/50">
+                            <button 
+                                onClick={() => setOpen(false)}
+                                className="w-full py-4 text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]/40 hover:text-[#1A1A1A] transition-colors"
+                            >
+                                [ CANCEL SELECTION ]
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Corner Accents */}
             <div className="absolute top-8 left-8 w-4 h-4 border-t border-l border-[#D4A574]/20" />
