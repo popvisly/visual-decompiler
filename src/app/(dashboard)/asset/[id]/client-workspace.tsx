@@ -166,7 +166,7 @@ const InfoButton = ({ section }: { section: keyof typeof INTELLIGENCE_DEFINITION
                                 {def.breakdown.map((item, i) => (
                                     <div key={i}>
                                         <span className="block text-[9px] font-bold text-[#1A1A1A] uppercase tracking-tighter mb-0.5">{item.label}</span>
-                                        <p className="text-[10px] text-[#1A1A1A]/70 leading-tight italic">{item.text}</p>
+                                        <p className="text-[10px] text-[#1A1A1A]/70 leading-tight">{item.text}</p>
                                     </div>
                                 ))}
                             </div>
