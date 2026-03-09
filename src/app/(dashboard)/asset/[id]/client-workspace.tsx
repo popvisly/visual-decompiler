@@ -177,24 +177,39 @@ const InfoButton = ({ section }: { section: keyof typeof INTELLIGENCE_DEFINITION
         </div>
     );
 };
-const MiniTensionMap = ({ index }: { index: number }) => {
-    const paths = [
-        "M 0 40 Q 15 5 30 25 T 60 10 T 100 0", // Act I: Sharp ascending
-        "M 0 20 Q 10 0 20 20 T 40 10 T 60 25 T 80 5 T 100 20", // Act II: Oscillating
-        "M 0 5 Q 30 5 60 35 T 100 45", // Act III: Resolving
+const MicroRadarMap = ({ index }: { index: number }) => {
+    // Unique "strategic footprints" for each act
+    const actShapes = [
+        "M 50 10 L 85 45 L 65 85 L 35 85 L 15 45 Z", // Act I: Aggressive/Upward
+        "M 50 15 L 75 25 L 90 50 L 75 75 L 50 85 L 25 75 L 10 50 L 25 25 Z", // Act II: Complex/Oscillating
+        "M 50 25 L 70 50 L 50 75 L 30 50 Z", // Act III: Balanced/Resolving
     ];
     
     return (
-        <div className="w-24 h-8 relative opacity-60 group-hover:opacity-100 transition-opacity">
-            <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
+        <div className="w-16 h-16 relative opacity-80 group-hover:opacity-100 transition-opacity">
+            <svg className="w-full h-full p-2" viewBox="0 0 100 100">
+                {/* Background Grid */}
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#D4A574" strokeWidth="0.5" strokeOpacity="0.2" />
+                <circle cx="50" cy="50" r="25" fill="none" stroke="#D4A574" strokeWidth="0.5" strokeOpacity="0.1" />
+                <line x1="50" y1="10" x2="50" y2="90" stroke="#D4A574" strokeWidth="0.5" strokeOpacity="0.2" />
+                <line x1="10" y1="50" x2="90" y2="50" stroke="#D4A574" strokeWidth="0.5" strokeOpacity="0.2" />
+                
+                {/* Analytic Shape */}
                 <path 
-                    d={paths[index] || paths[0]} 
-                    fill="none" 
+                    d={actShapes[index] || actShapes[0]} 
+                    fill="#D4A574" 
+                    fillOpacity="0.2"
                     stroke="#D4A574" 
                     strokeWidth="1.5"
-                    vectorEffect="non-scaling-stroke"
+                    strokeLinejoin="round"
                     className="vector-path"
                 />
+                
+                {/* Strategic Points */}
+                {actShapes[index]?.split(/[MLZ]/).filter(p => p.trim()).map((p, i) => {
+                    const [x, y] = p.trim().split(' ');
+                    return <circle key={i} cx={x} cy={y} r="1.5" fill="#D4A574" />;
+                })}
             </svg>
         </div>
     );
@@ -248,12 +263,16 @@ const DossierGrid = ({ title, content, type }: { title: string, content: string,
                                         <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.4em]">{block.label}</span>
                                         <h4 className="text-[16px] font-bold text-white uppercase tracking-[0.1em] ml-2 block">{block.title}</h4>
                                     </div>
-                                    {type === 'ACT' && <MiniTensionMap index={i} />}
+                                    {type === 'ACT' && <MicroRadarMap index={i} />}
                                 </div>
                                 
-                                <p className="text-[14px] text-white/70 leading-[1.8] font-light max-w-5xl">
-                                    {block.text}
-                                </p>
+                                <div className="space-y-6 max-w-5xl">
+                                    {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
+                                        <p key={pi} className="text-[14px] text-white/70 leading-[1.8] font-light">
+                                            {paragraph.trim()}
+                                        </p>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     ))}
