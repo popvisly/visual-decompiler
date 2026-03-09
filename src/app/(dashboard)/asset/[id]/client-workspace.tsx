@@ -648,11 +648,11 @@ export default function AssetWorkspace({
         <>
             <GatekeeperIntercept isVisible={showGatekeeper} onClose={() => setShowGatekeeper(false)} />
             <div className="w-full bg-[#FBFBF6] min-h-screen flex justify-center">
-                <div className="flex flex-col md:flex-row min-h-screen w-full max-w-[1440px] bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
+                <div className="flex flex-col md:flex-row md:items-start min-h-screen w-full max-w-[1440px] bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
                     <div className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6]">
-                        <div className="md:sticky md:top-0 h-[50vh] md:h-screen p-8 flex flex-col justify-center items-center">
+                        <div className="md:sticky md:top-24 h-[50vh] md:h-auto p-8 flex flex-col justify-center items-center">
 
                             <div className="w-full relative h-[80%] flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl">
                                 {/* If multiple images, render a horizontal CSS scroll snap setup */}
