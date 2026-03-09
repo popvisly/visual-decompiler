@@ -95,14 +95,14 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                             </button>
                         ) : (
                             <div className="flex items-center gap-6 animate-in slide-in-from-right-4 duration-300">
-                                <span className="text-[12px] font-bold tracking-[0.3em] uppercase text-red-500">
+                                <span className="text-[12px] font-bold tracking-[0.4em] uppercase text-[#D4A574]">
                                     CONFIRM PERMANENT REMOVAL?
                                 </span>
                                 <div className="flex gap-4">
                                     <button 
                                         disabled={isDeleting}
                                         onClick={handleDelete}
-                                        className="px-8 py-2 border border-red-500 rounded-full text-[10px] font-bold tracking-[0.3em] uppercase text-red-500 hover:bg-red-500 hover:text-white transition-all disabled:opacity-50"
+                                        className="px-8 py-2 border border-[#D4A574] rounded-full text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574] hover:bg-[#D4A574] hover:text-[#1A1A1A] transition-all disabled:opacity-50"
                                     >
                                         [ YES ]
                                     </button>
@@ -202,11 +202,13 @@ function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelec
                             className={`w-full h-full object-cover transition-all duration-700 ease-out ${isSelected ? 'scale-105 opacity-60' : 'group-hover:scale-110'}`}
                         />
 
-                        <div className="absolute top-4 right-4 bg-[#1A1A1A]/90 backdrop-blur-sm border border-[#D4A574]/40 px-3 py-1 rounded-none">
-                            <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#D4A574]">
-                                {asset.type}
-                            </span>
-                        </div>
+                        {asset.type !== 'STATIC' && (
+                            <div className="absolute top-4 right-4 bg-[#1A1A1A]/90 backdrop-blur-sm border border-[#D4A574]/40 px-3 py-1 rounded-none">
+                                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#D4A574]">
+                                    {asset.type}
+                                </span>
+                            </div>
+                        )}
 
                         {isAnalyzed && (
                             <div className="absolute bottom-4 right-4 bg-[#D4A574] px-3 py-1 rounded-none">
