@@ -476,25 +476,25 @@ export default function AssetWorkspace({
                                                     {/* Aesthetic Signature Matrix */}
                                                     <div className="mt-auto pt-6 border-t border-[#D4A574]/10 space-y-4">
                                                         <div className="flex items-center gap-4">
-                                                            <span className="text-[8px] font-bold text-[#D4A574]/40 uppercase tracking-[0.2em] w-12">Luma</span>
-                                                            <div className="flex-1 h-[1px] bg-[#D4A574]/5 rounded-full overflow-hidden">
-                                                                <div className="h-full bg-[#D4A574]/40 rounded-full w-[72%] animate-pulse" />
+                                                            <span className="text-[10px] font-bold text-[#D4A574]/60 uppercase tracking-[0.2em] w-14">Luma</span>
+                                                            <div className="flex-1 h-2 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-full overflow-hidden">
+                                                                <div className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full w-[72%] animate-pulse" />
                                                             </div>
-                                                            <span className="text-[8px] font-mono text-[#D4A574]/30">0.82V</span>
+                                                            <span className="text-[10px] font-mono text-[#D4A574]">0.82V</span>
                                                         </div>
                                                         <div className="flex items-center gap-4">
-                                                            <span className="text-[8px] font-bold text-[#D4A574]/40 uppercase tracking-[0.2em] w-12">Chromat</span>
-                                                            <div className="flex-1 h-[1px] bg-[#D4A574]/5 rounded-full overflow-hidden">
-                                                                <div className="h-full bg-[#D4A574]/30 rounded-full w-[45%] animate-pulse [animation-delay:200ms]" />
+                                                            <span className="text-[10px] font-bold text-[#D4A574]/60 uppercase tracking-[0.2em] w-14">Chromat</span>
+                                                            <div className="flex-1 h-2 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-full overflow-hidden">
+                                                                <div className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full w-[45%] animate-pulse [animation-delay:200ms]" />
                                                             </div>
-                                                            <span className="text-[8px] font-mono text-[#D4A574]/30">0.44Δ</span>
+                                                            <span className="text-[10px] font-mono text-[#D4A574]">0.44Δ</span>
                                                         </div>
                                                         <div className="flex items-center gap-4">
-                                                            <span className="text-[8px] font-bold text-[#D4A574]/40 uppercase tracking-[0.2em] w-12">Vector</span>
-                                                            <div className="flex-1 h-[1px] bg-[#D4A574]/5 rounded-full overflow-hidden">
-                                                                <div className="h-full bg-[#D4A574]/20 rounded-full w-[89%] animate-pulse [animation-delay:400ms]" />
+                                                            <span className="text-[10px] font-bold text-[#D4A574]/60 uppercase tracking-[0.2em] w-14">Vector</span>
+                                                            <div className="flex-1 h-2 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-full overflow-hidden">
+                                                                <div className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full w-[89%] animate-pulse [animation-delay:400ms]" />
                                                             </div>
-                                                            <span className="text-[8px] font-mono text-[#D4A574]/30">0.91Λ</span>
+                                                            <span className="text-[10px] font-mono text-[#D4A574]">0.91Λ</span>
                                                         </div>
                                                     </div>
                                                 </div>
