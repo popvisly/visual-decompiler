@@ -577,7 +577,7 @@ export default function AssetWorkspace({
     agency: any
 }) {
     const [asset, setAsset] = useState(initialAsset);
-    const [activeTab, setActiveTab] = useState<'INTELLIGENCE' | 'PSYCHOLOGY' | 'BLUEPRINT' | 'MARKET PULSE'>('INTELLIGENCE');
+    const [activeTab, setActiveTab] = useState<'INTELLIGENCE' | 'SIGNALS' | 'PSYCHOLOGY' | 'BLUEPRINT' | 'MARKET PULSE'>('INTELLIGENCE');
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
     const [isGeneratingBlueprint, setIsGeneratingBlueprint] = useState(false);
     const [showGatekeeper, setShowGatekeeper] = useState(false);
@@ -784,7 +784,7 @@ export default function AssetWorkspace({
 
                     {/* Minimalist Segmented Controls */}
                     <div className="sticky top-0 z-20 bg-[#FBFBF6]/95 backdrop-blur-md border-b border-[#D4A574]/20 px-8 pt-8 md:pt-12 pb-0 flex gap-8">
-                        {(['INTELLIGENCE', 'PSYCHOLOGY', 'BLUEPRINT', 'MARKET PULSE'] as const).map(tab => (
+                        {(['INTELLIGENCE', 'SIGNALS', 'PSYCHOLOGY', 'BLUEPRINT', 'MARKET PULSE'] as const).map(tab => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
@@ -915,57 +915,69 @@ export default function AssetWorkspace({
                                                         type="ACT" 
                                                         activeAct={activeAct}
                                                     />
-                                                    
-                                                    {/* Section Break Line */}
-                                                    <div className="my-10 border-t border-[#D4A574]/10 w-full" />
-
-                                                    <DossierGrid 
-                                                        title="Semiotic Subtext" 
-                                                        content={extraction.full_dossier.semiotic_subtext || ''} 
-                                                        type="CHANNEL" 
-                                                    />
-                                                </div>
-
-                                                {/* Secondary Row: Archetypes, Readings and Objections */}
-                                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[200px]">
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Archetype Posture</span>
-                                                        <p className="text-[13px] text-[#FFFFFF] leading-[1.625] tracking-tight mb-4">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
-                                                        {(extraction.full_dossier.archetype_mapping as any)?.strategic_moves && (
-                                                            <div className="space-y-1.5 p-3 bg-white/5 border border-[#D4A574]/10 rounded-xl mt-auto">
-                                                                {(extraction.full_dossier.archetype_mapping as any).strategic_moves.slice(0, 2).map((move: string, i: number) => (
-                                                                    <div key={i} className="flex gap-2 text-[10px] text-[#FFFFFF]/70 leading-tight">
-                                                                        <div className="w-1 h-1 bg-[#D4A574]/40 rounded-full mt-1.5 shrink-0" />
-                                                                        <span>{move}</span>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                     {/* Plausible Readings Card */}
-                                                    {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
-                                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm">
-                                                           <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Plausible Readings</span>
-                                                           <div className="grid grid-cols-1 gap-4">
-                                                                {extraction.full_dossier.possible_readings.slice(0, 2).map((reading, i) => (
-                                                                    <div key={i} className="bg-[#1A1A1A]/50 border border-[#D4A574]/10 p-4 rounded-2xl">
-                                                                        <p className="text-xs font-medium text-[#D4A574] mb-2">{reading.reading}</p>
-                                                                        <p className="text-[10px] text-[#FFFFFF]/60 leading-[1.625] italic">{reading.support.join(" • ")}</p>
-                                                                    </div>
-                                                                ))}
-                                                           </div>
-                                                        </div>
-                                                    )}
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm flex flex-col">
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Objection Dismantled</span>
-                                                        <p className="text-[13px] text-[#FFFFFF] leading-[1.625] font-light italic border-l-2 border-[#D4A574]/30 pl-4 py-1">{extraction.full_dossier.objection_dismantling}</p>
-                                                    </div>
                                                 </div>
                                             </div>
                                         )}
                                     </div>
                                 ) : (
                                     <SovereignProcessingView assetId={asset.id} />
+                                )}
+                            </div>
+                        )}
+
+                        {/* TAB 2: SIGNALS (Technical Autopsy) */}
+                        {activeTab === 'SIGNALS' && (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                {extraction?.full_dossier ? (
+                                    <div className="space-y-12">
+                                        <div className="grid grid-cols-1 gap-8">
+                                            <div className="flex flex-col gap-2 mb-4 border-b border-[#D4A574]/20 pb-4">
+                                                <h2 className="text-2xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Technical Autopsy</h2>
+                                                <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Semiotic Channel Interceptions</p>
+                                            </div>
+                                            
+                                            <DossierGrid 
+                                                title="Semiotic Subtext" 
+                                                content={extraction.full_dossier.semiotic_subtext || ''} 
+                                                type="CHANNEL" 
+                                            />
+                                        </div>
+
+                                        {/* Secondary Row: Archetypes and Plausible Readings */}
+                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-12 border-t border-[#D4A574]/20">
+                                            <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[220px]">
+                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Archetype Posture</span>
+                                                <p className="text-[14px] text-[#FFFFFF] leading-[1.625] tracking-tight mb-4">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
+                                                {(extraction.full_dossier.archetype_mapping as any)?.strategic_moves && (
+                                                    <div className="space-y-2 p-4 bg-white/5 border border-[#D4A574]/10 rounded-xl mt-auto">
+                                                        {(extraction.full_dossier.archetype_mapping as any).strategic_moves.slice(0, 3).map((move: string, i: number) => (
+                                                            <div key={i} className="flex gap-2 text-[11px] text-[#FFFFFF]/70 leading-tight">
+                                                                <div className="w-1 h-1 bg-[#D4A574]/40 rounded-full mt-1.5 shrink-0" />
+                                                                <span>{move}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[220px]">
+                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Objection Dismantled</span>
+                                                <p className="text-[14px] text-[#FFFFFF] leading-[1.625] font-light italic border-l-2 border-[#D4A574]/30 pl-5 py-2">{extraction.full_dossier.objection_dismantling}</p>
+                                                
+                                                {/* Readings Snippet */}
+                                                {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
+                                                    <div className="mt-auto pt-6 border-t border-[#D4A574]/10">
+                                                        <p className="text-[10px] font-bold text-[#D4A574]/40 uppercase tracking-widest mb-2">Primary Reading</p>
+                                                        <p className="text-[11px] text-[#FFFFFF]/60 leading-relaxed italic">{extraction.full_dossier.possible_readings[0].reading}</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="h-64 flex flex-col items-center justify-center border border-[#D4A574]/10 border-dashed rounded-3xl opacity-30">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Deep Intelligence Required for Signal Interception</p>
+                                    </div>
                                 )}
                             </div>
                         )}
