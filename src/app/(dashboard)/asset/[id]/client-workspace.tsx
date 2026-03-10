@@ -1086,13 +1086,22 @@ export default function AssetWorkspace({
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                 {/* Module 2: Plausible Readings */}
                                                 {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 rounded-[2.5rem] shadow-sm flex flex-col min-h-[300px] hover:border-[#D4A574]/50 transition-colors">
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 md:p-10 rounded-[2.5rem] shadow-sm flex flex-col min-h-[300px] hover:border-[#D4A574]/50 transition-colors relative overflow-hidden">
+                                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#D4A574]/10 via-[#D4A574]/40 to-[#D4A574]/10" />
                                                         <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-8 border-b border-[#D4A574]/20 pb-4">Plausible Readings</span>
-                                                        <div className="space-y-8">
+                                                        <div className="space-y-6 flex-1 flex flex-col justify-center">
                                                             {extraction.full_dossier.possible_readings.slice(0, 2).map((reading, i) => (
-                                                                <div key={i} className="relative pl-6 border-l border-[#D4A574]/30">
-                                                                    <p className="text-[10px] font-bold text-[#D4A574] uppercase tracking-widest mb-2">{i === 0 ? 'Primary Interpretation' : 'Secondary Interpretation'}</p>
-                                                                    <p className="text-[14px] text-white/90 font-light leading-[1.8] italic">{reading.reading}</p>
+                                                                <div key={i} className="relative flex gap-6 items-start group">
+                                                                    <div className="text-[40px] leading-none font-bold text-[#D4A574]/10 tracking-tighter select-none w-12 text-right font-mono transition-colors group-hover:text-[#D4A574]/20">
+                                                                        0{i + 1}
+                                                                    </div>
+                                                                    <div className="flex-1 pb-6 border-b border-[#D4A574]/10 last:border-0 last:pb-0">
+                                                                        <div className="flex items-center gap-3 mb-3">
+                                                                            <div className="w-1.5 h-1.5 bg-[#D4A574] rounded-full shadow-[0_0_8px_#D4A574]" />
+                                                                            <h4 className="text-[10px] font-bold text-[#D4A574] uppercase tracking-[0.2em]">{i === 0 ? 'Primary Decoding' : 'Secondary Context'}</h4>
+                                                                        </div>
+                                                                        <p className="text-[14px] text-white/80 font-light leading-[1.8] italic">{reading.reading}</p>
+                                                                    </div>
                                                                 </div>
                                                             ))}
                                                         </div>
