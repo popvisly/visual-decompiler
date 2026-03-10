@@ -1109,14 +1109,24 @@ export default function AssetWorkspace({
                                                 )}
 
                                                 {/* Module 3: Objection Dismantled */}
-                                                <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 rounded-[2.5rem] shadow-sm flex flex-col min-h-[300px] hover:border-[#D4A574]/50 transition-colors">
-                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-8 border-b border-[#D4A574]/20 pb-4">Objection Dismantled</span>
-                                                    <p className="text-[15px] text-[#FFFFFF] leading-[1.8] font-light italic border-l-2 border-[#8B4513] pl-6 py-4 bg-[#8B4513]/5 rounded-r-2xl">
-                                                        {extraction.full_dossier.objection_dismantling}
-                                                    </p>
-                                                    <div className="mt-auto pt-8 opacity-40">
-                                                        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4A574] to-transparent" />
-                                                        <p className="text-[10px] font-mono text-center mt-3 tracking-widest uppercase text-[#D4A574]">Neural Buffer Neutralized</p>
+                                                <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 md:p-10 rounded-[2.5rem] shadow-sm flex flex-col min-h-[300px] hover:border-[#D4A574]/50 transition-colors relative overflow-hidden">
+                                                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#D4A574]/10 via-[#D4A574]/40 to-[#D4A574]/10" />
+                                                    <div className="flex items-center gap-3 mb-8 border-b border-[#D4A574]/20 pb-4">
+                                                        <svg className="w-4 h-4 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" /></svg>
+                                                        <span className="text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Objection Dismantled</span>
+                                                    </div>
+                                                    <div className="flex-1 flex flex-col justify-center">
+                                                        <p className="text-[15px] text-[#FFFFFF]/90 leading-[1.8] font-light italic border-l border-[#D4A574]/30 pl-6 py-2 relative">
+                                                            <span className="absolute left-0 top-0 w-0.5 h-full bg-gradient-to-b from-[#D4A574]/50 to-transparent" />
+                                                            "{extraction.full_dossier.objection_dismantling}"
+                                                        </p>
+                                                    </div>
+                                                    <div className="mt-8 pt-6 border-t border-[#D4A574]/10 flex items-center justify-between opacity-50">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="w-1.5 h-1.5 bg-[#8B4513] rounded-sm animate-pulse" />
+                                                            <p className="text-[9px] font-mono tracking-widest uppercase text-[#D4A574]">Neural Buffer Neutralized</p>
+                                                        </div>
+                                                        <p className="text-[9px] font-mono tracking-widest text-[#D4A574]">SYS.OBJD.01</p>
                                                     </div>
                                                 </div>
                                             </div>
