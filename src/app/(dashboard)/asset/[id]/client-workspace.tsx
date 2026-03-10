@@ -8,6 +8,7 @@ import AdAnalyticsTab from '@/components/AdAnalyticsTab';
 import RadarChart from '@/components/RadarChart';
 import StrategicPostureMap from '@/components/StrategicPostureMap';
 import { FileDown, Code, Info } from 'lucide-react';
+import RadiantArchitectureOverlay from '@/components/RadiantArchitectureOverlay';
 
 interface WorkspaceAsset {
     id: string;
@@ -583,6 +584,7 @@ export default function AssetWorkspace({
     const [isGeneratingBlueprint, setIsGeneratingBlueprint] = useState(false);
     const [showGatekeeper, setShowGatekeeper] = useState(false);
     const [showCopiedToast, setShowCopiedToast] = useState(false);
+    const [showRadiant, setShowRadiant] = useState(false);
 
     const [sequenceData, setSequenceData] = useState<SequenceData | null>(null);
     const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(null);
@@ -737,6 +739,7 @@ export default function AssetWorkspace({
                                         ))}
                                     </div>
                                 )}
+                                {activeTab === 'SIGNALS' && showRadiant && <RadiantArchitectureOverlay />}
                                 {asset.type !== 'STATIC' && (
                                     <div className="absolute top-4 left-4 bg-[#1A1A1A]/90 border border-[#D4A574]/40 px-3 py-1 backdrop-blur-sm rounded-none">
                                         <span className="text-[9px] uppercase tracking-widest text-[#D4A574]">{asset.type}</span>
@@ -931,6 +934,22 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction?.full_dossier ? (
                                     <div className="space-y-12">
+                                        {/* RADIANT ARCHITECTURE TOGGLE */}
+                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                                            <div className="flex flex-col gap-2">
+                                                <h3 className="text-[13px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Macro-Diagnostic Map</h3>
+                                                <p className="text-[11px] text-[#FFFFFF]/50 font-light tracking-wide">Visualize optical trajectories and focal anchors.</p>
+                                            </div>
+                                            <button 
+                                                onClick={() => setShowRadiant(!showRadiant)}
+                                                className={`px-6 py-2.5 rounded-full border text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300 ${showRadiant ? 'bg-[#D4A574] text-[#1A1A1A] border-[#D4A574] hover:bg-[#C1A67B]' : 'bg-transparent text-[#D4A574] border-[#D4A574]/30 hover:border-[#D4A574]/80'}`}
+                                            >
+                                                [ RADIANT ARCHITECTURE ]
+                                            </button>
+                                        </div>
+
+                                        <div className="border-t border-[#D4A574]/20 pt-8 mt-2" />
+
                                         {/* Technical Autopsy: Channels Only */}
                                         <div className="grid grid-cols-1 gap-8">
                                             <div className="flex flex-col gap-2 mb-4 border-b border-[#D4A574]/20 pb-4">
