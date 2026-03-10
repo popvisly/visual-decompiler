@@ -150,12 +150,25 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
         { "x": 80, "y": 70, "label": "Secondary Anchor (e.g. CTA, Tagline)", "gravity": "high|critical|medium" }
       ],
       "escape_vector": { "from_x": 80, "from_y": 70, "angle": 135 }
-    }
+    },
+    "gaze_topology": {
+      "mode_of_address": "direct|averted|mixed",
+      "viewer_position": "voyeur|participant|aspirant|confronted",
+      "power_holder": "subject|viewer|shared|ambiguous",
+      "reading": "One clinical sentence explaining how gaze positions the audience psychologically"
+    },
+    "counter_reading_matrix": [
+      { "lens": "Marxist", "reading": "One precise sentence on class/power dynamics encoded" },
+      { "lens": "Feminist", "reading": "One precise sentence on gender power structures" },
+      { "lens": "Post-Colonial", "reading": "One precise sentence on cultural/racial address" },
+      { "lens": "Queer Theory", "reading": "One precise sentence on heteronormativity or subversion" }
+    ]
   }
 }
 
 CRITICAL: The 'narrative_framework' MUST use the 'ACT I: [TITLE]' format and the 'semiotic_subtext' MUST use the 'CHANNEL 1: [TITLE]' format.
 CRITICAL: For 'radiant_architecture', analyse the actual image composition. 'x' and 'y' are percentage coordinates (0-100) of where the viewer's eye is drawn. Anchor 1 should be where the eye FIRST lands, Anchor 2 where it travels next, and Anchor 3 where it settles. The 'escape_vector' angle (0-360 degrees, 0=right, 90=down) marks where visual momentum exits the frame. Provide realistic coordinates based on the ACTUAL layout, do NOT use the example values.
+CRITICAL: For 'gaze_topology', analyse whether the subject(s) look directly at the camera (direct) or away (averted). Determine if the viewer is positioned as a voyeur, participant, aspirant, or confronted. For 'counter_reading_matrix', provide genuinely critical readings — do NOT soften or hedge. Each lens must identify a specific power dynamic or ideological tension.
 
 STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive fluff to ensure the entire JSON payload fits within the 8,192 token window. Ensure 'trigger_distribution' keys (Status, Scarcity, Utility, Authority, Social Proof) map to integers 0-100. Similarly 'cognitive_friction' and 'persuasion_density' should be integers 0-100.`;
 

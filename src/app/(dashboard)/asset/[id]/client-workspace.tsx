@@ -966,6 +966,56 @@ export default function AssetWorkspace({
                                                 type="CHANNEL" 
                                             />
                                         </div>
+
+                                        {/* ── Gaze Topology ── */}
+                                        {(extraction.full_dossier as any)?.gaze_topology && (
+                                            <>
+                                                <div className="border-t border-[#D4A574]/20 pt-8 mt-2" />
+                                                <div className="flex flex-col gap-2 mb-4 border-b border-[#D4A574]/20 pb-4">
+                                                    <h2 className="text-2xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Gaze Topology</h2>
+                                                    <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Mode of Address &amp; Viewer Positioning</p>
+                                                </div>
+                                                <div className="grid grid-cols-3 gap-4 mb-6">
+                                                    {[
+                                                        { label: 'Mode of Address', value: (extraction.full_dossier as any).gaze_topology.mode_of_address },
+                                                        { label: 'Viewer Position', value: (extraction.full_dossier as any).gaze_topology.viewer_position },
+                                                        { label: 'Power Holder', value: (extraction.full_dossier as any).gaze_topology.power_holder },
+                                                    ].map((item, i) => (
+                                                        <div key={i} className="border border-[#D4A574]/20 bg-[#1A1A1A] rounded-2xl p-5 flex flex-col items-center gap-2">
+                                                            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">{item.label}</span>
+                                                            <span className="text-[14px] font-bold uppercase tracking-[0.15em] text-white">{item.value}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                <div className="border border-[#D4A574]/10 bg-[#FBFBF6] rounded-2xl p-6">
+                                                    <p className="text-[13px] text-[#1A1A1A]/80 leading-relaxed font-light italic">
+                                                        &ldquo;{(extraction.full_dossier as any).gaze_topology.reading}&rdquo;
+                                                    </p>
+                                                </div>
+                                            </>
+                                        )}
+
+                                        {/* ── Counter-Reading Matrix ── */}
+                                        {(extraction.full_dossier as any)?.counter_reading_matrix && (
+                                            <>
+                                                <div className="border-t border-[#D4A574]/20 pt-8 mt-2" />
+                                                <div className="flex flex-col gap-2 mb-4 border-b border-[#D4A574]/20 pb-4">
+                                                    <h2 className="text-2xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Counter-Reading Matrix</h2>
+                                                    <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Polysemic Deconstruction via Critical Theory</p>
+                                                </div>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    {((extraction.full_dossier as any).counter_reading_matrix as { lens: string; reading: string }[]).map((item, i) => (
+                                                        <div key={i} className="border border-[#D4A574]/15 bg-[#1A1A1A] rounded-2xl p-6 flex flex-col gap-3">
+                                                            <div className="flex items-center gap-3">
+                                                                <div className="w-2 h-2 rounded-full bg-[#D4A574]" />
+                                                                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">{item.lens}</span>
+                                                            </div>
+                                                            <p className="text-[12px] text-white/70 leading-relaxed font-light">{item.reading}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
                                 ) : (
                                     <div className="h-64 flex flex-col items-center justify-center border border-[#D4A574]/10 border-dashed rounded-3xl opacity-30">
