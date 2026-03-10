@@ -742,7 +742,7 @@ export default function AssetWorkspace({
                                         ))}
                                     </div>
                                 )}
-                                {activeTab === 'SIGNALS' && showRadiant && <RadiantArchitectureOverlay />}
+                                {activeTab === 'SIGNALS' && showRadiant && <RadiantArchitectureOverlay data={(extraction?.full_dossier as any)?.radiant_architecture} />}
                                 {asset.type !== 'STATIC' && (
                                     <div className="absolute top-4 left-4 bg-[#1A1A1A]/90 border border-[#D4A574]/40 px-3 py-1 backdrop-blur-sm rounded-none">
                                         <span className="text-[9px] uppercase tracking-widest text-[#D4A574]">{asset.type}</span>

@@ -1,6 +1,66 @@
 'use client';
 
-export default function RadiantArchitectureOverlay() {
+interface RadiantAnchor {
+    x: number;
+    y: number;
+    label: string;
+    gravity: 'high' | 'critical' | 'medium';
+}
+
+interface RadiantData {
+    anchors: RadiantAnchor[];
+    escape_vector: { from_x: number; from_y: number; angle: number };
+}
+
+// Fallback defaults for legacy assets without AI-driven data
+const DEFAULT_DATA: RadiantData = {
+    anchors: [
+        { x: 20, y: 30, label: 'Primary Anchor', gravity: 'high' },
+        { x: 50, y: 50, label: 'Hero Element', gravity: 'critical' },
+        { x: 80, y: 60, label: 'Secondary Anchor', gravity: 'medium' },
+    ],
+    escape_vector: { from_x: 80, from_y: 60, angle: 135 },
+};
+
+function getStrokeForGravity(gravity: string): string {
+    switch (gravity) {
+        case 'critical': return '#D4A574';
+        case 'high': return '#FFFFFF';
+        default: return '#FFFFFF';
+    }
+}
+
+function getRadiusForGravity(gravity: string): number {
+    switch (gravity) {
+        case 'critical': return 4;
+        case 'high': return 3;
+        default: return 2.5;
+    }
+}
+
+export default function RadiantArchitectureOverlay({ data }: { data?: RadiantData }) {
+    const d = data?.anchors?.length ? data : DEFAULT_DATA;
+    const anchors = d.anchors.slice(0, 3);
+    const escape = d.escape_vector;
+
+    // Calculate escape endpoint using angle
+    const escAngle = (escape.angle * Math.PI) / 180;
+    const escLen = 18;
+    const escEndX = escape.from_x + Math.cos(escAngle) * escLen;
+    const escEndY = escape.from_y + Math.sin(escAngle) * escLen;
+
+    // Arrow head points
+    const arrowLen = 2;
+    const arrowAngle1 = escAngle + (Math.PI * 5) / 6;
+    const arrowAngle2 = escAngle - (Math.PI * 5) / 6;
+    const arrowPts = `${escEndX},${escEndY} ${escEndX + Math.cos(arrowAngle1) * arrowLen},${escEndY + Math.sin(arrowAngle1) * arrowLen} ${escEndX + Math.cos(arrowAngle2) * arrowLen},${escEndY + Math.sin(arrowAngle2) * arrowLen}`;
+
+    // Build the polyline path from anchors
+    const vectorPoints = anchors.map(a => `${a.x},${a.y}`).join(' ');
+
+    // Optical loop center is around the primary focal anchor (the 'critical' one, or anchor 2)
+    const loopCenter = anchors.find(a => a.gravity === 'critical') || anchors[1] || anchors[0];
+
     return (
         <div className="absolute inset-0 z-20 pointer-events-none w-full h-full overflow-hidden mix-blend-difference transition-opacity duration-1000">
             <svg 
@@ -15,88 +75,56 @@ export default function RadiantArchitectureOverlay() {
                 </defs>
 
                 {/* ── Optical Loops (Attention Traps) ── */}
-                <circle cx="50" cy="50" r="15" fill="none" stroke="#D4A574" strokeWidth="0.2" className="animate-[spin_20s_linear_infinite]" strokeDasharray="2 4" opacity="0.8" />
-                <circle cx="50" cy="50" r="22" fill="none" stroke="#FFFFFF" strokeWidth="0.1" opacity="0.6" className="animate-[spin_30s_linear_infinite_reverse]" strokeDasharray="1 6" />
-                <path d="M 45 45 C 50 30, 70 30, 55 55" fill="none" stroke="#D4A574" strokeWidth="0.3" opacity="0.8" strokeDasharray="1 2" />
+                <circle cx={loopCenter.x} cy={loopCenter.y} r="15" fill="none" stroke="#D4A574" strokeWidth="0.2" className="animate-[spin_20s_linear_infinite]" strokeDasharray="2 4" opacity="0.8" />
+                <circle cx={loopCenter.x} cy={loopCenter.y} r="22" fill="none" stroke="#FFFFFF" strokeWidth="0.1" opacity="0.6" className="animate-[spin_30s_linear_infinite_reverse]" strokeDasharray="1 6" />
+                {anchors.length >= 2 && (
+                    <path d={`M ${anchors[0].x + 5} ${anchors[0].y + 5} C ${loopCenter.x} ${anchors[0].y - 10}, ${anchors[anchors.length - 1].x + 10} ${anchors[0].y - 10}, ${loopCenter.x + 5} ${loopCenter.y + 5}`} fill="none" stroke="#D4A574" strokeWidth="0.3" opacity="0.8" strokeDasharray="1 2" />
+                )}
 
                 {/* ── Focal Anchors (Reticles) ── */}
-                {/* Anchor 1: Top Left (Logo/Headline area) */}
-                <g transform="translate(20, 30)" filter="url(#tan-glow)">
-                    <circle cx="0" cy="0" r="3" fill="none" stroke="#000000" strokeWidth="0.55" />
-                    <circle cx="0" cy="0" r="3" fill="none" stroke="#FFFFFF" strokeWidth="0.3" />
-                    <circle cx="0" cy="0" r="0.75" fill="#000000" />
-                    <circle cx="0" cy="0" r="0.5" fill="#D4A574" />
-                    
-                    <g stroke="#000000" strokeWidth="0.55">
-                        <line x1="-5" y1="0" x2="-2" y2="0" />
-                        <line x1="2" y1="0" x2="5" y2="0" />
-                        <line x1="0" y1="-5" x2="0" y2="-2" />
-                        <line x1="0" y1="2" x2="0" y2="5" />
-                    </g>
-                    <g stroke="#FFFFFF" strokeWidth="0.3">
-                        <line x1="-5" y1="0" x2="-2" y2="0" />
-                        <line x1="2" y1="0" x2="5" y2="0" />
-                        <line x1="0" y1="-5" x2="0" y2="-2" />
-                        <line x1="0" y1="2" x2="0" y2="5" />
-                    </g>
-                    <text x="4" y="-4" fill="#D4A574" fontSize="3" fontFamily="monospace" letterSpacing="0.1em" style={{ textShadow: '0px 0px 2px #000' }}>01</text>
-                </g>
-
-                {/* Anchor 2: Center (Hero Product) */}
-                <g transform="translate(50, 50)" filter="url(#tan-glow)">
-                    <circle cx="0" cy="0" r="4" fill="none" stroke="#000000" strokeWidth="0.65" />
-                    <circle cx="0" cy="0" r="4" fill="none" stroke="#D4A574" strokeWidth="0.4" />
-                    <circle cx="0" cy="0" r="1.05" fill="#000000" />
-                    <circle cx="0" cy="0" r="0.8" fill="#FFFFFF" />
-                    
-                    <g stroke="#000000" strokeWidth="0.65">
-                        <line x1="-6" y1="0" x2="-3" y2="0" />
-                        <line x1="3" y1="0" x2="6" y2="0" />
-                        <line x1="0" y1="-6" x2="0" y2="-3" />
-                        <line x1="0" y1="3" x2="0" y2="6" />
-                    </g>
-                    <g stroke="#D4A574" strokeWidth="0.4">
-                        <line x1="-6" y1="0" x2="-3" y2="0" />
-                        <line x1="3" y1="0" x2="6" y2="0" />
-                        <line x1="0" y1="-6" x2="0" y2="-3" />
-                        <line x1="0" y1="3" x2="0" y2="6" />
-                    </g>
-                    <text x="5" y="-5" fill="#FFFFFF" fontSize="3" fontFamily="monospace" letterSpacing="0.1em" style={{ textShadow: '0px 0px 2px #000' }}>02</text>
-                </g>
-
-                {/* Anchor 3: Bottom Right (CTA / Key Model) */}
-                <g transform="translate(80, 60)" filter="url(#tan-glow)">
-                    <circle cx="0" cy="0" r="3" fill="none" stroke="#000000" strokeWidth="0.55" />
-                    <circle cx="0" cy="0" r="3" fill="none" stroke="#FFFFFF" strokeWidth="0.3" />
-                    <circle cx="0" cy="0" r="0.75" fill="#000000" />
-                    <circle cx="0" cy="0" r="0.5" fill="#D4A574" />
-                    
-                    <g stroke="#000000" strokeWidth="0.55">
-                        <line x1="-5" y1="0" x2="-2" y2="0" />
-                        <line x1="2" y1="0" x2="5" y2="0" />
-                        <line x1="0" y1="-5" x2="0" y2="-2" />
-                        <line x1="0" y1="2" x2="0" y2="5" />
-                    </g>
-                    <g stroke="#FFFFFF" strokeWidth="0.3">
-                        <line x1="-5" y1="0" x2="-2" y2="0" />
-                        <line x1="2" y1="0" x2="5" y2="0" />
-                        <line x1="0" y1="-5" x2="0" y2="-2" />
-                        <line x1="0" y1="2" x2="0" y2="5" />
-                    </g>
-                    <text x="4" y="-4" fill="#D4A574" fontSize="3" fontFamily="monospace" letterSpacing="0.1em" style={{ textShadow: '0px 0px 2px #000' }}>03</text>
-                </g>
+                {anchors.map((anchor, i) => {
+                    const r = getRadiusForGravity(anchor.gravity);
+                    const color = getStrokeForGravity(anchor.gravity);
+                    const crossLen = r + 2;
+                    const crossGap = r - 1;
+                    return (
+                        <g key={i} transform={`translate(${anchor.x}, ${anchor.y})`} filter="url(#tan-glow)">
+                            {/* Double-stroke reticle circle */}
+                            <circle cx="0" cy="0" r={r} fill="none" stroke="#000000" strokeWidth={anchor.gravity === 'critical' ? 0.65 : 0.55} />
+                            <circle cx="0" cy="0" r={r} fill="none" stroke={color} strokeWidth={anchor.gravity === 'critical' ? 0.4 : 0.3} />
+                            {/* Center dot */}
+                            <circle cx="0" cy="0" r={anchor.gravity === 'critical' ? 1.05 : 0.75} fill="#000000" />
+                            <circle cx="0" cy="0" r={anchor.gravity === 'critical' ? 0.8 : 0.5} fill={anchor.gravity === 'critical' ? '#FFFFFF' : '#D4A574'} />
+                            {/* Cross hairs - black under-stroke then colored */}
+                            <g stroke="#000000" strokeWidth={anchor.gravity === 'critical' ? 0.65 : 0.55}>
+                                <line x1={-crossLen} y1="0" x2={-crossGap} y2="0" />
+                                <line x1={crossGap} y1="0" x2={crossLen} y2="0" />
+                                <line x1="0" y1={-crossLen} x2="0" y2={-crossGap} />
+                                <line x1="0" y1={crossGap} x2="0" y2={crossLen} />
+                            </g>
+                            <g stroke={color} strokeWidth={anchor.gravity === 'critical' ? 0.4 : 0.3}>
+                                <line x1={-crossLen} y1="0" x2={-crossGap} y2="0" />
+                                <line x1={crossGap} y1="0" x2={crossLen} y2="0" />
+                                <line x1="0" y1={-crossLen} x2="0" y2={-crossGap} />
+                                <line x1="0" y1={crossGap} x2="0" y2={crossLen} />
+                            </g>
+                            {/* Label */}
+                            <text x={r + 2} y={-(r + 1)} fill="#D4A574" fontSize="3" fontFamily="monospace" letterSpacing="0.1em" style={{ textShadow: '0px 0px 2px #000' }}>{String(i + 1).padStart(2, '0')}</text>
+                        </g>
+                    );
+                })}
 
                 {/* ── Primary Vector Path (1 -> 2 -> 3) ── */}
                 <g filter="url(#tan-glow)">
                     <polyline 
-                        points="20,30 50,50 80,60" 
+                        points={vectorPoints}
                         fill="none" 
                         stroke="#000000" 
                         strokeWidth="0.55" 
                         opacity="0.9"
                     />
                     <polyline 
-                        points="20,30 50,50 80,60" 
+                        points={vectorPoints}
                         fill="none" 
                         stroke="#FFFFFF" 
                         strokeWidth="0.3" 
@@ -105,15 +133,15 @@ export default function RadiantArchitectureOverlay() {
                 </g>
 
                 {/* ── Escapement Point (Visual Leak) ── */}
-                <g transform="translate(80, 60)">
+                <g>
                     {/* Double Stroke */}
-                    <line x1="0" y1="0" x2="15" y2="25" stroke="#000000" strokeWidth="0.65" strokeDasharray="1 2" />
-                    <line x1="0" y1="0" x2="15" y2="25" stroke="#D4A574" strokeWidth="0.4" strokeDasharray="1 2" />
+                    <line x1={escape.from_x} y1={escape.from_y} x2={escEndX} y2={escEndY} stroke="#000000" strokeWidth="0.65" strokeDasharray="1 2" />
+                    <line x1={escape.from_x} y1={escape.from_y} x2={escEndX} y2={escEndY} stroke="#D4A574" strokeWidth="0.4" strokeDasharray="1 2" />
                     
-                    {/* Arrow head with shadow base */}
-                    <polygon points="15.5,25.5 11.5,25.5 14.5,22.5" fill="#000000" />
-                    <polygon points="15,25 12,25 14,23" fill="#D4A574" />
-                    <text x="16" y="27" fill="#D4A574" fontSize="2.5" fontFamily="monospace" opacity="0.9" style={{ textShadow: '0px 0px 2px #000' }}>ESCAPE_VELOCITY</text>
+                    {/* Arrow head */}
+                    <polygon points={arrowPts} fill="#000000" />
+                    <polygon points={arrowPts} fill="#D4A574" />
+                    <text x={escEndX + 1} y={escEndY + 2} fill="#D4A574" fontSize="2.5" fontFamily="monospace" opacity="0.9" style={{ textShadow: '0px 0px 2px #000' }}>ESC</text>
                 </g>
 
                 {/* Grid Overlay */}
@@ -126,13 +154,9 @@ export default function RadiantArchitectureOverlay() {
                 
                 {/* Bounding Box Brackets */}
                 <g stroke="#D4A574" strokeWidth="0.5" fill="none" opacity="0.6">
-                    {/* Top Left */}
                     <path d="M 5,10 L 5,5 L 10,5" />
-                    {/* Top Right */}
                     <path d="M 95,10 L 95,5 L 90,5" />
-                    {/* Bottom Left */}
                     <path d="M 5,90 L 5,95 L 10,95" />
-                    {/* Bottom Right */}
                     <path d="M 95,90 L 95,95 L 90,95" />
                 </g>
             </svg>

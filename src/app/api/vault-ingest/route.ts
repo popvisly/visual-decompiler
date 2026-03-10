@@ -195,11 +195,20 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
       "test_cells": [
         { "lever": "Hook|CTA|Visual|Copy", "change": "string", "rationale": "string" }
       ]
+    },
+    "radiant_architecture": {
+      "anchors": [
+        { "x": 20, "y": 30, "label": "Primary Visual Anchor (e.g. Logo, Headline)", "gravity": "high|critical|medium" },
+        { "x": 50, "y": 50, "label": "Hero Element (e.g. Product, Model Face)", "gravity": "high|critical|medium" },
+        { "x": 80, "y": 70, "label": "Secondary Anchor (e.g. CTA, Tagline)", "gravity": "high|critical|medium" }
+      ],
+      "escape_vector": { "from_x": 80, "from_y": 70, "angle": 135 }
     }
   }
 }
 
 CRITICAL: The 'narrative_framework' MUST use the 'ACT I: [TITLE]' format and the 'semiotic_subtext' MUST use the 'CHANNEL 1: [TITLE]' format.
+CRITICAL: For 'radiant_architecture', analyse the actual image composition. 'x' and 'y' are percentage coordinates (0-100) of where the viewer's eye is drawn. Anchor 1 should be where the eye FIRST lands, Anchor 2 where it travels next, and Anchor 3 where it settles. The 'escape_vector' angle (0-360 degrees, 0=right, 90=down) marks where visual momentum exits the frame. Provide realistic coordinates based on the ACTUAL layout, do NOT use the example values.
 
 STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive fluff to ensure the entire JSON payload fits within the 8,192 token window. Ensure 'trigger_distribution' keys (Status, Scarcity, Utility, Authority, Social Proof) map to integers 0-100. Similarly 'cognitive_friction' and 'persuasion_density' should be integers 0-100.`;
 
