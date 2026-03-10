@@ -160,7 +160,7 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
     "counter_reading_matrix": [
       { "lens": "Marxist", "reading": "One precise sentence on class/power dynamics encoded" },
       { "lens": "Feminist", "reading": "One precise sentence on gender power structures" },
-      { "lens": "Post-Colonial", "reading": "One precise sentence on cultural/racial address" },
+      { "lens": "Post-Colonial", "reading": "One precise sentence on cultural/racial address, including any inadvertent cultural appropriation risks or First Nations (Indigenous Australian) representation concerns" },
       { "lens": "Queer Theory", "reading": "One precise sentence on heteronormativity or subversion" }
     ]
   }
