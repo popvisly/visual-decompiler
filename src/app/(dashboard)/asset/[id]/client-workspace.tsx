@@ -6,6 +6,7 @@ import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { SovereignPrintHeader, SovereignPrintFooter } from '@/components/SovereignDossierParts';
 import AdAnalyticsTab from '@/components/AdAnalyticsTab';
 import RadarChart from '@/components/RadarChart';
+import StrategicPostureMap from '@/components/StrategicPostureMap';
 import { FileDown, Code, Info } from 'lucide-react';
 
 interface WorkspaceAsset {
@@ -1052,32 +1053,43 @@ export default function AssetWorkspace({
                                                 <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Deep Psychological Extraction</p>
                                             </div>
 
-                                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                                                {/* Module 1: Archetype Posture */}
-                                                <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[240px]">
-                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Archetype Posture</span>
-                                                    <p className="text-[14px] text-[#FFFFFF] leading-[1.625] tracking-tight mb-6">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
+                                            {/* Archetype Posture (Full Width Premium Card) */}
+                                            <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 md:p-10 flex flex-col md:flex-row hover:border-[#D4A574] transition-all rounded-[2.5rem] shadow-sm gap-12 items-center relative overflow-hidden group">
+                                                <div className="absolute top-0 right-1/4 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                                                <div className="flex-1 flex flex-col h-full z-10 w-full">
+                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-4">Archetype Posture</span>
+                                                    <p className="text-[18px] text-[#FFFFFF] leading-[1.8] tracking-tight mb-8 font-light">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
                                                     {(extraction.full_dossier.archetype_mapping as any)?.strategic_moves && (
-                                                        <div className="space-y-2 p-4 bg-white/5 border border-[#D4A574]/10 rounded-xl mt-auto">
+                                                        <div className="space-y-4 p-6 bg-white/5 border border-[#D4A574]/10 rounded-3xl mt-auto">
+                                                            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#D4A574]/50 block mb-3">Strategic Execution</span>
                                                             {(extraction.full_dossier.archetype_mapping as any).strategic_moves.slice(0, 3).map((move: string, i: number) => (
-                                                                <div key={i} className="flex gap-2 text-[11px] text-[#FFFFFF]/80 leading-tight">
-                                                                    <div className="w-1.5 h-1.5 bg-[#D4A574]/50 rounded-full mt-1.5 shrink-0" />
+                                                                <div key={i} className="flex gap-3 text-[13px] text-[#FFFFFF]/80 leading-relaxed font-light">
+                                                                    <div className="w-1.5 h-1.5 bg-[#D4A574]/60 rounded-full mt-2 shrink-0 shadow-[0_0_8px_#D4A574]" />
                                                                     <span>{move}</span>
                                                                 </div>
                                                             ))}
                                                         </div>
                                                     )}
                                                 </div>
+                                                <div className="w-full md:w-[320px] shrink-0 flex items-center justify-center p-6 bg-[#0A0A0A] rounded-[2rem] border border-[#D4A574]/10 shadow-inner z-10 transition-transform duration-700 group-hover:scale-[1.02]">
+                                                    <StrategicPostureMap 
+                                                        posture={extraction.full_dossier.archetype_mapping?.target_posture || ''} 
+                                                        moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
+                                                    />
+                                                </div>
+                                            </div>
 
+                                            {/* Readings & Objections (2-Column Grid) */}
+                                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                                                 {/* Module 2: Plausible Readings */}
                                                 {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[240px]">
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Plausible Readings</span>
-                                                        <div className="space-y-6">
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 rounded-[2.5rem] shadow-sm flex flex-col min-h-[300px] hover:border-[#D4A574]/50 transition-colors">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-8 border-b border-[#D4A574]/20 pb-4">Plausible Readings</span>
+                                                        <div className="space-y-8">
                                                             {extraction.full_dossier.possible_readings.slice(0, 2).map((reading, i) => (
                                                                 <div key={i} className="relative pl-6 border-l border-[#D4A574]/30">
-                                                                    <p className="text-[10px] font-bold text-[#D4A574] uppercase tracking-widest mb-1">{i === 0 ? 'Primary Interpretation' : 'Secondary Interpretation'}</p>
-                                                                    <p className="text-[13px] text-white/90 font-light leading-relaxed italic">{reading.reading}</p>
+                                                                    <p className="text-[10px] font-bold text-[#D4A574] uppercase tracking-widest mb-2">{i === 0 ? 'Primary Interpretation' : 'Secondary Interpretation'}</p>
+                                                                    <p className="text-[14px] text-white/90 font-light leading-[1.8] italic">{reading.reading}</p>
                                                                 </div>
                                                             ))}
                                                         </div>
@@ -1085,14 +1097,14 @@ export default function AssetWorkspace({
                                                 )}
 
                                                 {/* Module 3: Objection Dismantled */}
-                                                <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[240px]">
-                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Objection Dismantled</span>
-                                                    <p className="text-[14px] text-[#FFFFFF] leading-[1.8] font-light italic border-l-2 border-[#8B4513] pl-6 py-2 bg-[#8B4513]/5 rounded-r-2xl">
+                                                <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 rounded-[2.5rem] shadow-sm flex flex-col min-h-[300px] hover:border-[#D4A574]/50 transition-colors">
+                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-8 border-b border-[#D4A574]/20 pb-4">Objection Dismantled</span>
+                                                    <p className="text-[15px] text-[#FFFFFF] leading-[1.8] font-light italic border-l-2 border-[#8B4513] pl-6 py-4 bg-[#8B4513]/5 rounded-r-2xl">
                                                         {extraction.full_dossier.objection_dismantling}
                                                     </p>
-                                                    <div className="mt-auto pt-6 opacity-40">
+                                                    <div className="mt-auto pt-8 opacity-40">
                                                         <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4A574] to-transparent" />
-                                                        <p className="text-[9px] font-mono text-center mt-2 tracking-widest uppercase text-[#D4A574]">Neural Buffer Neutralized</p>
+                                                        <p className="text-[10px] font-mono text-center mt-3 tracking-widest uppercase text-[#D4A574]">Neural Buffer Neutralized</p>
                                                     </div>
                                                 </div>
                                             </div>
