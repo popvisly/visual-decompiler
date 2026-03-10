@@ -717,7 +717,7 @@ export default function AssetWorkspace({
                     <aside className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6] md:sticky md:top-0 z-10">
                         <div className="pt-14 pb-8 px-8 flex flex-col justify-center items-center">
 
-                            <div className="w-full relative h-[80%] flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl" style={getAssetStyle()}>
+                            <div className="w-full max-w-[480px] aspect-[4/5] relative flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl" style={getAssetStyle()}>
                                 {/* If multiple images, render a horizontal CSS scroll snap setup */}
                                 <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide">
                                     {fileUrls.map((url, idx) => (
