@@ -1057,9 +1057,9 @@ export default function AssetWorkspace({
                                             </div>
 
                                             {/* Archetype Posture (Full Width Premium Card) */}
-                                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-[2.5rem] p-6 text-left md:p-10 hover:border-[#D4A574] transition-all shadow-sm relative overflow-hidden group">
+                                            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-[2.5rem] p-6 text-left md:p-10 hover:border-[#D4A574] transition-all shadow-sm relative overflow-hidden group">
                                                 <div className="absolute top-0 right-1/4 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-                                                <div className="lg:col-span-7 xl:col-span-8 flex flex-col h-full z-10 w-full justify-center">
+                                                <div className="md:col-span-7 xl:col-span-8 flex flex-col h-full z-10 w-full justify-center">
                                                     <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-4">Archetype Posture</span>
                                                     <p className="text-[18px] text-[#FFFFFF] leading-[1.8] tracking-tight mb-8 font-light">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
                                                     {(extraction.full_dossier.archetype_mapping as any)?.strategic_moves && (
@@ -1074,7 +1074,7 @@ export default function AssetWorkspace({
                                                         </div>
                                                     )}
                                                 </div>
-                                                <div className="lg:col-span-5 xl:col-span-4 w-full flex items-center justify-center p-6 rounded-[2rem] z-10 transition-transform duration-700 group-hover:scale-[1.02] min-h-[300px]">
+                                                <div className="md:col-span-5 xl:col-span-4 w-full flex items-center justify-center p-6 rounded-[2rem] z-10 transition-transform duration-700 group-hover:scale-[1.02] min-h-[300px]">
                                                     <StrategicPostureMap 
                                                         posture={extraction.full_dossier.archetype_mapping?.target_posture || ''} 
                                                         moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
@@ -1083,7 +1083,7 @@ export default function AssetWorkspace({
                                             </div>
 
                                             {/* Readings & Objections (2-Column Grid) */}
-                                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                 {/* Module 2: Plausible Readings */}
                                                 {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
                                                     <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 rounded-[2.5rem] shadow-sm flex flex-col min-h-[300px] hover:border-[#D4A574]/50 transition-colors">
