@@ -980,16 +980,19 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     {/* Trigger Distribution Radar */}
-                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col items-center rounded-3xl shadow-sm self-start">
-                                        <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 self-start w-full border-b border-[#D4A574]/20 pb-4">
+                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col items-center justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                        <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
                                             Trigger Distribution Map
                                         </h3>
-                                        <div className="w-full max-w-[320px]">
+                                        <div className="w-full max-w-[320px] flex-1 flex items-center justify-center -mt-6">
                                             <RadarChart 
                                                 data={Object.entries((extraction?.full_dossier as any)?.archetype_mapping?.trigger_distribution || {}).map(([label, value]) => ({ label, value: value as number }))}
                                                 forceLight={false}
                                             />
                                         </div>
+                                        <p className="text-[12px] text-[#FFFFFF]/60 leading-relaxed font-light mt-4 pt-4 border-t border-[#D4A574]/10 text-center px-4 w-full">
+                                            This distribution quantifies the creative's psychological surface area—identifying which aspiration levers are being engaged to command consumer compliance.
+                                        </p>
                                     </div>
 
                                     {/* Emotional DNA Heatmap replaced with Persuasion Metrics if available */}
@@ -1071,7 +1074,7 @@ export default function AssetWorkspace({
                                                         </div>
                                                     )}
                                                 </div>
-                                                <div className="lg:col-span-5 xl:col-span-4 w-full flex items-center justify-center p-6 bg-[#0A0A0A] rounded-[2rem] border border-[#D4A574]/10 shadow-inner z-10 transition-transform duration-700 group-hover:scale-[1.02] min-h-[300px]">
+                                                <div className="lg:col-span-5 xl:col-span-4 w-full flex items-center justify-center p-6 rounded-[2rem] z-10 transition-transform duration-700 group-hover:scale-[1.02] min-h-[300px]">
                                                     <StrategicPostureMap 
                                                         posture={extraction.full_dossier.archetype_mapping?.target_posture || ''} 
                                                         moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
