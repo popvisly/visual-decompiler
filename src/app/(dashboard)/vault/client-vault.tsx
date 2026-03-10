@@ -11,12 +11,8 @@ interface VaultAsset {
     file_url: string;
     created_at: string;
     brand?: { name: string; market_sector: string };
-    extraction?: { 
-        primary_mechanic: string; 
-        visual_style: string; 
-        confidence_score: number;
-        full_dossier: any;
-    }[];
+    extraction?: any;
+    extractions?: any;
 }
 
 export default function VaultClient({ initialAssets }: { initialAssets: VaultAsset[] }) {
@@ -165,7 +161,10 @@ function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelec
     const brandName = asset.brand?.name || 'Unknown Entity';
     const sector = asset.brand?.market_sector || 'Unclassified';
     
-    const extraction = asset.extraction?.[0];
+    // Standardize extraction normalization (handle array vs object and plural fallback)
+    const rawExtraction = asset.extraction || asset.extractions;
+    const extraction = Array.isArray(rawExtraction) ? rawExtraction[0] : rawExtraction;
+    
     const isAnalysed = !!extraction?.full_dossier;
     const mechanic = isAnalysed ? extraction?.primary_mechanic : 'Awaiting Forensic Deep-Dive';
 
