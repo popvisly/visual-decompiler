@@ -1054,9 +1054,9 @@ export default function AssetWorkspace({
                                             </div>
 
                                             {/* Archetype Posture (Full Width Premium Card) */}
-                                            <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 md:p-10 flex flex-col md:flex-row hover:border-[#D4A574] transition-all rounded-[2.5rem] shadow-sm gap-12 items-center relative overflow-hidden group">
+                                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-[2.5rem] p-6 text-left md:p-10 hover:border-[#D4A574] transition-all shadow-sm relative overflow-hidden group">
                                                 <div className="absolute top-0 right-1/4 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-                                                <div className="flex-1 flex flex-col h-full z-10 w-full">
+                                                <div className="lg:col-span-7 xl:col-span-8 flex flex-col h-full z-10 w-full justify-center">
                                                     <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-4">Archetype Posture</span>
                                                     <p className="text-[18px] text-[#FFFFFF] leading-[1.8] tracking-tight mb-8 font-light">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
                                                     {(extraction.full_dossier.archetype_mapping as any)?.strategic_moves && (
@@ -1071,7 +1071,7 @@ export default function AssetWorkspace({
                                                         </div>
                                                     )}
                                                 </div>
-                                                <div className="w-full md:w-[320px] shrink-0 flex items-center justify-center p-6 bg-[#0A0A0A] rounded-[2rem] border border-[#D4A574]/10 shadow-inner z-10 transition-transform duration-700 group-hover:scale-[1.02]">
+                                                <div className="lg:col-span-5 xl:col-span-4 w-full flex items-center justify-center p-6 bg-[#0A0A0A] rounded-[2rem] border border-[#D4A574]/10 shadow-inner z-10 transition-transform duration-700 group-hover:scale-[1.02] min-h-[300px]">
                                                     <StrategicPostureMap 
                                                         posture={extraction.full_dossier.archetype_mapping?.target_posture || ''} 
                                                         moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}

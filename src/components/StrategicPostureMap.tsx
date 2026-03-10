@@ -14,9 +14,9 @@ export default function StrategicPostureMap({ posture, moves = [] }: Props) {
         setMounted(true);
     }, []);
 
-    const size = 200;
+    const size = 260;
     const center = size / 2;
-    const padding = 30;
+    const padding = 50;
     const graphSize = size - padding * 2;
 
     // Mapping logic (simplified for demonstration/dashboard feel)
@@ -58,7 +58,7 @@ export default function StrategicPostureMap({ posture, moves = [] }: Props) {
     const activeY = mounted ? targetPos.y : center;
 
     return (
-        <div className="relative w-full max-w-[200px] aspect-square flex items-center justify-center">
+        <div className="relative w-full max-w-[260px] aspect-square flex items-center justify-center">
             <svg width="100%" height="100%" viewBox={`0 0 ${size} ${size}`} className="overflow-visible">
                 {/* Background Grid */}
                 <circle cx={center} cy={center} r={graphSize/2} fill="transparent" stroke="#D4A57411" strokeWidth="1" />
