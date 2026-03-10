@@ -8,7 +8,6 @@ import Logo from '@/components/Logo';
 import { supabaseClient } from '@/lib/supabase-client';
 
 const PILLARS = [
-    { key: 'library', label: 'Vault', href: '/vault' },
     { key: 'boards', label: 'Workspace', href: '/boards' },
     { key: 'intelligence', label: 'Analytics', href: '/compare' },
     { key: 'pricing', label: 'Pricing', href: '/pricing' },
@@ -58,12 +57,13 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                         }
                     `}
                 >
-                    {/* ── Left: Logo + Pillars ── */}
-                    <div className="flex items-center gap-6 lg:gap-8">
+                    {/* ── Left: Logo ── */}
+                    <div className="flex items-center w-[240px]">
                         <Logo href="/" sublabel="Advertising Intelligence" forceDark={forceDark} />
+                    </div>
 
-                        {/* Desktop Pillars */}
-                        <nav className="hidden md:flex items-center gap-1">
+                    {/* ── Center: Desktop Pillars ── */}
+                    <nav className="hidden md:flex flex-1 justify-center items-center gap-4">
                             {PILLARS.map((p) => {
                                 const active = isActive(pathname, p.href);
                                 return (
@@ -89,10 +89,9 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                                 );
                             })}
                         </nav>
-                    </div>
 
                     {/* ── Right: Utility Bar ── */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-end w-[240px] gap-4">
                         <div className="hidden md:block">
                             {isAuthenticated ? (
                                 <div className="flex items-center justify-end gap-3">
