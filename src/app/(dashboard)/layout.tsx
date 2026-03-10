@@ -3,7 +3,7 @@
 import { ReactNode, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Plus, Database, Activity, Settings } from 'lucide-react';
+import { Plus, Database, Activity, LayoutGrid, Settings } from 'lucide-react';
 import SidebarFooter from './sidebar-footer';
 import { supabaseClient } from '@/lib/supabase-client';
 
@@ -27,6 +27,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         { name: '[ ANALYSE AD ASSET ]', href: '/ingest', icon: Plus },
         { name: 'Intelligence Vault', href: '/vault', icon: Database },
         { name: 'Intelligence Pulse', href: '/compare', icon: Activity },
+        { name: 'Sovereign Boards', href: '/boards', icon: LayoutGrid },
         { name: 'Agency Settings', href: '/settings', icon: Settings },
     ];
 

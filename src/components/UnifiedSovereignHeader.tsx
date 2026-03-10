@@ -8,7 +8,6 @@ import Logo from '@/components/Logo';
 import { supabaseClient } from '@/lib/supabase-client';
 
 const PILLARS = [
-    { key: 'boards', label: 'Workspace', href: '/boards' },
     { key: 'intelligence', label: 'Analytics', href: '/compare' },
     { key: 'pricing', label: 'Pricing', href: '/pricing' },
     { key: 'help', label: 'Help Center', href: '/help' },
