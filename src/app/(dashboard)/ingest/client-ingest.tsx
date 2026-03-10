@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { supabaseClient } from '@/lib/supabase-client';
@@ -9,7 +9,25 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
     const router = useRouter();
     const [isDragging, setIsDragging] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [progress, setProgress] = useState(0);
     const [showGatekeeper, setShowGatekeeper] = useState(false);
+
+    // Simulated progress during deconstruction
+    useEffect(() => {
+        let interval: NodeJS.Timeout;
+        if (isProcessing) {
+            setProgress(0);
+            interval = setInterval(() => {
+                setProgress(prev => {
+                    if (prev >= 95) return 95;
+                    // Smaller increments as we get closer to 95
+                    const increment = prev < 50 ? 2 : prev < 80 ? 1 : 0.5;
+                    return Math.min(95, prev + increment);
+                });
+            }, 1500);
+        }
+        return () => clearInterval(interval);
+    }, [isProcessing]);
 
     const handleDragOver = useCallback((e: React.DragEvent) => {
         e.preventDefault();
@@ -157,6 +175,24 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                 <span className="font-mono text-[10px] font-bold tracking-[0.4em] uppercase animate-pulse text-[#D4A574]">
                                     EXTRACTING SEMANTIC LAYERS...
                                 </span>
+
+                                {/* Forensic Progress Gauge */}
+                                <div className="w-full max-w-xs space-y-4">
+                                    <div className="w-full h-[1px] bg-[#D4A574]/20 rounded-full overflow-hidden">
+                                        <div 
+                                            className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-1000 ease-out"
+                                            style={{ width: `${progress}%` }}
+                                        />
+                                    </div>
+                                    <div className="flex justify-between items-center px-1">
+                                        <span className="text-[8px] font-mono text-[#D4A574]/40 uppercase tracking-widest">DECONSTRUCTING</span>
+                                        <span className="text-[10px] font-mono text-[#D4A574]">{Math.floor(progress)}%</span>
+                                    </div>
+                                    <p className="text-[10px] text-[#D4A574]/60 text-center leading-relaxed italic pt-4">
+                                        Analysing takes roughly 2–3 minutes. <br/>
+                                        Your report will be waiting in the Vault.
+                                    </p>
+                                </div>
                             </div>
                         )}
 
