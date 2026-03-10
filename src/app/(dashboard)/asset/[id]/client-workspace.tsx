@@ -177,7 +177,7 @@ const InfoButton = ({ section }: { section: keyof typeof INTELLIGENCE_DEFINITION
         </div>
     );
 };
-const AnalyticWaveMap = ({ index }: { index: number }) => {
+const AnalyticWaveMap = ({ index, isActive }: { index: number, isActive?: boolean }) => {
     // Multi-layered "Neural Frequency" waves for each act
     const waves = [
         {
@@ -209,7 +209,7 @@ const AnalyticWaveMap = ({ index }: { index: number }) => {
     const currentWaves = waves[index] || waves[0];
     
     return (
-        <div className="w-full h-32 relative opacity-40 group-hover/block:opacity-80 transition-all duration-700 my-8">
+        <div className={`w-full h-32 relative transition-all duration-700 my-8 ${isActive ? 'opacity-100 scale-[1.02]' : 'opacity-40 group-hover/block:opacity-80'}`}>
             <svg className="w-full h-full" viewBox="0 0 100 85" preserveAspectRatio="none">
                 <defs>
                     <linearGradient id={`grad-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
@@ -259,7 +259,7 @@ const AnalyticWaveMap = ({ index }: { index: number }) => {
     );
 };
 
-const DossierGrid = ({ title, content, type }: { title: string, content: string, type: 'ACT' | 'CHANNEL' }) => {
+const DossierGrid = ({ title, content, type, activeAct }: { title: string, content: string, type: 'ACT' | 'CHANNEL', activeAct?: string | null }) => {
     if (!content) return null;
 
     // Parsing logic
@@ -270,7 +270,7 @@ const DossierGrid = ({ title, content, type }: { title: string, content: string,
     // The first part is usually intro text (Overture)
     const overture = parts[0]?.trim();
     const blocks = parts.slice(1).map((text, i) => ({
-        label: matches[i],
+        label: matches[i]?.replace(':', '').trim(),
         text: text.trim().split(' — ')[1] || text.trim(),
         title: text.trim().split(' — ')[0] || ''
     }));
@@ -279,7 +279,12 @@ const DossierGrid = ({ title, content, type }: { title: string, content: string,
         <div className="col-span-full flex flex-col gap-8">
             {/* Header & Lead-in Card (Consolidated) */}
             {(title || overture || blocks.length > 0) && (
-                <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group/block">
+                <div 
+                    id={type === 'ACT' ? blocks[0]?.label : undefined} 
+                    className={`forensic-act-block border p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group/block transition-all duration-500 ${
+                        activeAct === blocks[0]?.label ? 'border-[#D4A574] bg-[#1A1A1A]/90 ring-1 ring-[#D4A574]/30' : 'border-[#D4A574]/20 bg-[#1A1A1A]'
+                    }`}
+                >
                     <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
                     <div className="relative z-10">
                         {/* Section Header */}
@@ -323,7 +328,7 @@ const DossierGrid = ({ title, content, type }: { title: string, content: string,
                                     </div>
                                 </div>
 
-                                {type === 'ACT' && <AnalyticWaveMap index={0} />}
+                                {type === 'ACT' && <AnalyticWaveMap index={0} isActive={activeAct === blocks[0].label} />}
                                 
                                 <div className="space-y-6 max-w-5xl">
                                     {blocks[0].text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
@@ -340,7 +345,13 @@ const DossierGrid = ({ title, content, type }: { title: string, content: string,
 
             {/* Remaining Modular Block Cards */}
             {blocks.slice(1).map((block, i) => (
-                <div key={i + 1} className="border border-[#D4A574]/20 bg-[#1A1A1A] p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group/block">
+                <div 
+                    key={i + 1} 
+                    id={type === 'ACT' ? block.label : undefined} 
+                    className={`forensic-act-block border p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group/block transition-all duration-500 ${
+                        activeAct === block.label ? 'border-[#D4A574] bg-[#1A1A1A]/90 ring-1 ring-[#D4A574]/30' : 'border-[#D4A574]/20 bg-[#1A1A1A]'
+                    }`}
+                >
                     <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
                     <div className="relative z-10">
                         <div className="flex flex-col gap-6">
@@ -367,7 +378,7 @@ const DossierGrid = ({ title, content, type }: { title: string, content: string,
                                 </div>
                             </div>
 
-                            {type === 'ACT' && <AnalyticWaveMap index={i + 1} />}
+                            {type === 'ACT' && <AnalyticWaveMap index={i + 1} isActive={activeAct === block.label} />}
                             
                             <div className="space-y-6 max-w-5xl">
                                 {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
@@ -572,15 +583,67 @@ export default function AssetWorkspace({
     const [showGatekeeper, setShowGatekeeper] = useState(false);
     const [showCopiedToast, setShowCopiedToast] = useState(false);
 
-    // We'll store dynamically generated results here if they aren't strictly persisted in the rigid Phase 2 schema
     const [sequenceData, setSequenceData] = useState<SequenceData | null>(null);
     const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(null);
+    const [activeAct, setActiveAct] = useState<string | null>(null);
 
     // Normalize extraction payload (V1 array vs V2 object)
     const extraction = Array.isArray(asset.extraction) ? asset.extraction[0] : asset.extraction;
     
     // Parse visual style string if it's stringified JSON
     let parsedStyle = extraction?.visual_style;
+
+    // Intersection Observer for "Focal Zoom" evolution
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setActiveAct(entry.target.id);
+                }
+            });
+        }, {
+            // Focus on elements in the center 40% of the viewport
+            rootMargin: '-30% 0% -30% 0%',
+            threshold: 0.2
+        });
+
+        const targets = document.querySelectorAll('.forensic-act-block');
+        targets.forEach(t => observer.observe(t));
+
+        return () => observer.disconnect();
+    }, [activeTab, extraction]);
+
+    // Dynamic Asset Transforms
+    const getAssetStyle = () => {
+        const base = {
+            transition: 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
+            filter: 'none',
+            transform: 'none',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+        };
+
+        if (activeAct === 'ACT I') {
+            return {
+                ...base,
+                boxShadow: '0 0 40px rgba(212, 165, 116, 0.4), 0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+            };
+        }
+        if (activeAct === 'ACT II') {
+            return {
+                ...base,
+                transform: 'scale(1.15) translateY(-10%)',
+                filter: 'brightness(1.05)'
+            };
+        }
+        if (activeAct === 'ACT III') {
+            return {
+                ...base,
+                transform: 'scale(1.25) translateY(20%)',
+                filter: 'brightness(1.1)'
+            };
+        }
+        return base;
+    };
 
     const isCarousel = asset.type === 'CAROUSEL';
 
@@ -654,7 +717,7 @@ export default function AssetWorkspace({
                     <aside className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6] md:sticky md:top-0 z-10">
                         <div className="pt-14 pb-8 px-8 flex flex-col justify-center items-center">
 
-                            <div className="w-full relative h-[80%] flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl">
+                            <div className="w-full relative h-[80%] flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl" style={getAssetStyle()}>
                                 {/* If multiple images, render a horizontal CSS scroll snap setup */}
                                 <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide">
                                     {fileUrls.map((url, idx) => (
@@ -850,6 +913,7 @@ export default function AssetWorkspace({
                                                         title="Narrative Framework" 
                                                         content={extraction.full_dossier.narrative_framework || ''} 
                                                         type="ACT" 
+                                                        activeAct={activeAct}
                                                     />
                                                     
                                                     {/* Section Break Line */}
