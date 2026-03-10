@@ -1056,29 +1056,52 @@ export default function AssetWorkspace({
                                                 <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Deep Psychological Extraction</p>
                                             </div>
 
-                                            {/* Archetype Posture (Full Width Premium Card) */}
-                                            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-[2.5rem] p-6 text-left md:p-10 hover:border-[#D4A574] transition-all shadow-sm relative overflow-hidden group">
-                                                <div className="absolute top-0 right-1/4 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-                                                <div className="md:col-span-7 xl:col-span-8 flex flex-col h-full z-10 w-full justify-center">
-                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-4">Archetype Posture</span>
-                                                    <p className="text-[18px] text-[#FFFFFF] leading-[1.8] tracking-tight mb-8 font-light">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
-                                                    {(extraction.full_dossier.archetype_mapping as any)?.strategic_moves && (
-                                                        <div className="space-y-4 p-6 bg-white/5 border border-[#D4A574]/10 rounded-3xl mt-auto">
-                                                            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#D4A574]/50 block mb-3">Strategic Execution</span>
-                                                            {(extraction.full_dossier.archetype_mapping as any).strategic_moves.slice(0, 3).map((move: string, i: number) => (
-                                                                <div key={i} className="flex gap-3 text-[13px] text-[#FFFFFF]/80 leading-relaxed font-light">
-                                                                    <div className="w-1.5 h-1.5 bg-[#D4A574]/60 rounded-full mt-2 shrink-0 shadow-[0_0_8px_#D4A574]" />
-                                                                    <span>{move}</span>
-                                                                </div>
-                                                            ))}
+                                            {/* Strategic Framework Split */}
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                {/* Archetype Posture */}
+                                                <div className="bg-[#1A1A1A] border border-[#D4A574]/20 rounded-[2.5rem] p-6 text-left md:p-10 hover:border-[#D4A574] transition-all shadow-sm relative overflow-hidden group flex flex-col">
+                                                    <div className="absolute top-0 right-1/4 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+                                                    <div className="flex flex-col h-full z-10 w-full relative">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-4">Archetype Posture</span>
+                                                        <p className="text-[14px] text-[#FFFFFF] leading-[1.8] tracking-tight mb-8 font-light">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
+                                                        
+                                                        <div className="mt-auto w-full flex items-center justify-center rounded-[2rem] transition-transform duration-700 group-hover:scale-[1.02]">
+                                                            <StrategicPostureMap 
+                                                                posture={extraction.full_dossier.archetype_mapping?.target_posture || ''} 
+                                                                moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
+                                                            />
                                                         </div>
-                                                    )}
+                                                    </div>
                                                 </div>
-                                                <div className="md:col-span-5 xl:col-span-4 w-full flex items-center justify-center p-6 rounded-[2rem] z-10 transition-transform duration-700 group-hover:scale-[1.02] min-h-[300px]">
-                                                    <StrategicPostureMap 
-                                                        posture={extraction.full_dossier.archetype_mapping?.target_posture || ''} 
-                                                        moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
-                                                    />
+
+                                                {/* Strategic Mechanics */}
+                                                <div className="bg-[#1A1A1A] border border-[#D4A574]/20 rounded-[2.5rem] p-6 text-left md:p-10 hover:border-[#D4A574] transition-all shadow-sm relative overflow-hidden flex flex-col">
+                                                    <div className="absolute bottom-0 right-0 w-64 h-64 bg-white/5 blur-[100px] rounded-full translate-y-1/2 translate-x-1/4 pointer-events-none" />
+                                                    <div className="z-10 flex flex-col h-full relative">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-8 border-b border-[#D4A574]/20 pb-4">Strategic Mechanics</span>
+                                                        
+                                                        <div className="space-y-8 flex-grow flex flex-col justify-center">
+                                                            <div className="relative pl-6">
+                                                                <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-[#D4A574] rounded-full shadow-[0_0_8px_#D4A574]" />
+                                                                <div className="absolute left-[3px] top-4 bottom-[-24px] w-[1px] bg-gradient-to-b from-[#D4A574]/30 to-transparent" />
+                                                                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#FFFFFF] block mb-2">Aspirational Collapse</span>
+                                                                <p className="text-[13px] text-[#FFFFFF]/70 leading-relaxed font-light">Compress aspiration gap through democratic styling codes (denim) while maintaining luxury context (YSL brand equity, Paris mythology).</p>
+                                                            </div>
+                                                            
+                                                            <div className="relative pl-6">
+                                                                <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-[#D4A574] rounded-full shadow-[0_0_8px_#D4A574]" />
+                                                                <div className="absolute left-[3px] top-4 bottom-[-24px] w-[1px] bg-gradient-to-b from-[#D4A574]/30 to-transparent" />
+                                                                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#FFFFFF] block mb-2">Possessive Programming</span>
+                                                                <p className="text-[13px] text-[#FFFFFF]/70 leading-relaxed font-light">Deploy &apos;MON&apos; (my/mine) linguistic structure to transfer Paris ownership from geography to consumer psychological property.</p>
+                                                            </div>
+                                                            
+                                                            <div className="relative pl-6">
+                                                                <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-[#D4A574] rounded-full shadow-[0_0_8px_#D4A574]" />
+                                                                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#FFFFFF] block mb-2">Inverted Participation</span>
+                                                                <p className="text-[13px] text-[#FFFFFF]/70 leading-relaxed font-light">Use architectural inversion to force viewer into structural participation rather than observational distance.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
