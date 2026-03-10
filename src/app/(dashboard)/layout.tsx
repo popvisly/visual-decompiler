@@ -35,7 +35,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     return (
         <div className="flex min-h-screen bg-[#FBFBF6] text-[#1A1A1A]">
             {/* Global Sidebar - Minimalist, 1px geometric borders */}
-            <aside className="w-64 border-r border-[#E5E5E1] flex flex-col justify-between py-8 px-6 hidden md:flex bg-white/40 backdrop-blur-sm relative z-50">
+            <aside className="w-64 border-r border-[#E5E5E1] flex flex-col justify-between py-8 px-6 hidden md:flex bg-white/40 backdrop-blur-sm sticky top-0 h-screen z-50">
 
                 <div className="relative z-10">
                     {/* Logo / Brand Mark */}
