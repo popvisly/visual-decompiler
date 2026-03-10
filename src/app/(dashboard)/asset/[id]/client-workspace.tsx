@@ -930,6 +930,7 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction?.full_dossier ? (
                                     <div className="space-y-12">
+                                        {/* Technical Autopsy: Channels Only */}
                                         <div className="grid grid-cols-1 gap-8">
                                             <div className="flex flex-col gap-2 mb-4 border-b border-[#D4A574]/20 pb-4">
                                                 <h2 className="text-2xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Technical Autopsy</h2>
@@ -941,37 +942,6 @@ export default function AssetWorkspace({
                                                 content={extraction.full_dossier.semiotic_subtext || ''} 
                                                 type="CHANNEL" 
                                             />
-                                        </div>
-
-                                        {/* Secondary Row: Archetypes and Plausible Readings */}
-                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-12 border-t border-[#D4A574]/20">
-                                            <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[220px]">
-                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Archetype Posture</span>
-                                                <p className="text-[14px] text-[#FFFFFF] leading-[1.625] tracking-tight mb-4">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
-                                                {(extraction.full_dossier.archetype_mapping as any)?.strategic_moves && (
-                                                    <div className="space-y-2 p-4 bg-white/5 border border-[#D4A574]/10 rounded-xl mt-auto">
-                                                        {(extraction.full_dossier.archetype_mapping as any).strategic_moves.slice(0, 3).map((move: string, i: number) => (
-                                                            <div key={i} className="flex gap-2 text-[11px] text-[#FFFFFF]/70 leading-tight">
-                                                                <div className="w-1 h-1 bg-[#D4A574]/40 rounded-full mt-1.5 shrink-0" />
-                                                                <span>{move}</span>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                            </div>
-
-                                            <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[220px]">
-                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Objection Dismantled</span>
-                                                <p className="text-[14px] text-[#FFFFFF] leading-[1.625] font-light italic border-l-2 border-[#D4A574]/30 pl-5 py-2">{extraction.full_dossier.objection_dismantling}</p>
-                                                
-                                                {/* Readings Snippet */}
-                                                {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
-                                                    <div className="mt-auto pt-6 border-t border-[#D4A574]/10">
-                                                        <p className="text-[10px] font-bold text-[#D4A574]/40 uppercase tracking-widest mb-2">Primary Reading</p>
-                                                        <p className="text-[11px] text-[#FFFFFF]/60 leading-relaxed italic">{extraction.full_dossier.possible_readings[0].reading}</p>
-                                                    </div>
-                                                )}
-                                            </div>
                                         </div>
                                     </div>
                                 ) : (
@@ -1073,6 +1043,61 @@ export default function AssetWorkspace({
                                             </div>
                                         )}
                                     </div>
+
+                                    {/* DEEP PSYCHOLOGICAL AUTOPSY SUITE */}
+                                    {extraction?.full_dossier && (
+                                        <div className="pt-12 border-t border-[#D4A574]/20 space-y-8">
+                                            <div className="flex flex-col gap-2 mb-4">
+                                                <h2 className="text-xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Behavioral Deconstruction</h2>
+                                                <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Deep Psychological Extraction</p>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                                {/* Module 1: Archetype Posture */}
+                                                <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col hover:border-[#D4A574] transition-all rounded-3xl shadow-sm min-h-[240px]">
+                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Archetype Posture</span>
+                                                    <p className="text-[14px] text-[#FFFFFF] leading-[1.625] tracking-tight mb-6">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
+                                                    {(extraction.full_dossier.archetype_mapping as any)?.strategic_moves && (
+                                                        <div className="space-y-2 p-4 bg-white/5 border border-[#D4A574]/10 rounded-xl mt-auto">
+                                                            {(extraction.full_dossier.archetype_mapping as any).strategic_moves.slice(0, 3).map((move: string, i: number) => (
+                                                                <div key={i} className="flex gap-2 text-[11px] text-[#FFFFFF]/80 leading-tight">
+                                                                    <div className="w-1.5 h-1.5 bg-[#D4A574]/50 rounded-full mt-1.5 shrink-0" />
+                                                                    <span>{move}</span>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                {/* Module 2: Plausible Readings */}
+                                                {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[240px]">
+                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Plausible Readings</span>
+                                                        <div className="space-y-6">
+                                                            {extraction.full_dossier.possible_readings.slice(0, 2).map((reading, i) => (
+                                                                <div key={i} className="relative pl-6 border-l border-[#D4A574]/30">
+                                                                    <p className="text-[10px] font-bold text-[#D4A574] uppercase tracking-widest mb-1">{i === 0 ? 'Primary Interpretation' : 'Secondary Interpretation'}</p>
+                                                                    <p className="text-[13px] text-white/90 font-light leading-relaxed italic">{reading.reading}</p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Module 3: Objection Dismantled */}
+                                                <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[240px]">
+                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Objection Dismantled</span>
+                                                    <p className="text-[14px] text-[#FFFFFF] leading-[1.8] font-light italic border-l-2 border-[#8B4513] pl-6 py-2 bg-[#8B4513]/5 rounded-r-2xl">
+                                                        {extraction.full_dossier.objection_dismantling}
+                                                    </p>
+                                                    <div className="mt-auto pt-6 opacity-40">
+                                                        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4A574] to-transparent" />
+                                                        <p className="text-[9px] font-mono text-center mt-2 tracking-widest uppercase text-[#D4A574]">Neural Buffer Neutralized</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         )}
