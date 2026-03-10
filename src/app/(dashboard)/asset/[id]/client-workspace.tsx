@@ -720,7 +720,10 @@ export default function AssetWorkspace({
                     <aside className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6] md:sticky md:top-0 z-10">
                         <div className="pt-14 pb-8 px-8 flex flex-col justify-center items-center">
 
-                            <div className="w-full max-w-[480px] aspect-[4/5] relative flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl" style={getAssetStyle()}>
+                            <div 
+                                className={`w-full max-w-[480px] aspect-[4/5] relative flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75 saturate-50' : ''}`}
+                                style={getAssetStyle()}
+                            >
                                 {/* If multiple images, render a horizontal CSS scroll snap setup */}
                                 <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide">
                                     {fileUrls.map((url, idx) => (
@@ -733,7 +736,7 @@ export default function AssetWorkspace({
                                     ))}
                                 </div>
                                 {fileUrls.length > 1 && (
-                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 border border-[#E5E5E1] px-3 py-1 flex gap-2 rounded-full">
+                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2bg-white/90 border border-[#E5E5E1] px-3 py-1 flex gap-2 rounded-full">
                                         {fileUrls.map((_, i) => (
                                             <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#8B4513]/30" />
                                         ))}
