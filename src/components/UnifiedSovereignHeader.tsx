@@ -58,7 +58,7 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                     `}
                 >
                     {/* ── Left: Logo ── */}
-                    <div className="flex items-center w-[240px]">
+                    <div className="flex items-center flex-1">
                         <Logo href="/" sublabel="Advertising Intelligence" forceDark={forceDark} />
                     </div>
 
@@ -91,11 +91,11 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                         </nav>
 
                     {/* ── Right: Utility Bar ── */}
-                    <div className="flex items-center justify-end w-[240px] gap-4">
+                    <div className="flex items-center justify-end flex-1 gap-4">
                         <div className="hidden md:block">
                             {isAuthenticated ? (
                                 <div className="flex items-center justify-end gap-3">
-                                    <div className={`flex flex-col items-end text-[9px] font-bold tracking-[0.2em] uppercase hidden lg:flex ${forceDark ? 'text-gray-400' : 'text-[#141414]/60'}`}>
+                                    <div className={`flex flex-col items-end text-[9px] font-bold tracking-[0.2em] uppercase hidden lg:flex whitespace-nowrap ${forceDark ? 'text-gray-400' : 'text-[#141414]/60'}`}>
                                         <span>ENTER THE VAULT FOR</span>
                                         <span>FURTHER FORENSIC ANALYSIS &gt;</span>
                                     </div>
@@ -105,7 +105,7 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                                             inline-flex items-center justify-center
                                             rounded-none border px-6 py-2.5
                                             text-[10px] font-bold tracking-[0.2em] uppercase
-                                            transition-all duration-300
+                                            transition-all duration-300 whitespace-nowrap
                                             ${forceDark
                                                 ? 'bg-white text-black border-white hover:bg-neutral-200'
                                                 : 'bg-black text-white hover:bg-neutral-800 border-black'
