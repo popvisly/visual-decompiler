@@ -969,7 +969,7 @@ export default function AssetWorkspace({
 
                                         {/* ── Gaze Topology ── */}
                                         {(extraction.full_dossier as any)?.gaze_topology && (
-                                            <>
+                                            <section className="signals-section">
                                                 <div className="border-t border-[#D4A574]/20 pt-8 mt-2" />
                                                 <div className="flex flex-col gap-2 mb-4 border-b border-[#D4A574]/20 pb-4">
                                                     <h2 className="text-2xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Gaze Topology</h2>
@@ -992,12 +992,12 @@ export default function AssetWorkspace({
                                                         &ldquo;{(extraction.full_dossier as any).gaze_topology.reading}&rdquo;
                                                     </p>
                                                 </div>
-                                            </>
+                                            </section>
                                         )}
 
                                         {/* ── Counter-Reading Matrix ── */}
                                         {(extraction.full_dossier as any)?.counter_reading_matrix && (
-                                            <>
+                                            <section className="counter-reading-section">
                                                 <div className="border-t border-[#D4A574]/20 pt-8 mt-2" />
                                                 <div className="flex flex-col gap-2 mb-4 border-b border-[#D4A574]/20 pb-4">
                                                     <h2 className="text-2xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Counter-Reading Matrix</h2>
@@ -1014,7 +1014,7 @@ export default function AssetWorkspace({
                                                         </div>
                                                     ))}
                                                 </div>
-                                            </>
+                                            </section>
                                         )}
                                     </div>
                                 ) : (
