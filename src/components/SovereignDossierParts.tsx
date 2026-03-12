@@ -14,7 +14,7 @@ export const SovereignPrintHeader = ({ agency }: { agency: Agency | null }) => {
     if (!agency) return null;
 
     return (
-        <div className="hidden print:flex flex-col items-center justify-center w-full py-12 border-b-2 mb-12" style={{ borderColor: agency.primary_hex || '#141414' }}>
+        <div className="print-only flex flex-col items-center justify-center w-full py-12 border-b-2 mb-12" style={{ borderColor: agency.primary_hex || '#141414' }}>
             {agency.whitelabel_logo ? (
                 <img src={agency.whitelabel_logo} alt={agency.name} className="h-16 mb-4 object-contain" />
             ) : (
@@ -36,7 +36,7 @@ export const SovereignPrintFooter = ({ agency, assetId }: { agency: Agency | nul
     const ingestionId = `VD-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
 
     return (
-        <div className="hidden print:flex flex-col mt-24 pt-8 border-t-2 border-[#C1A67B]">
+        <div className="print-only flex flex-col mt-24 pt-8 border-t-2 border-[#C1A67B]">
             {/* Primary Metadata Row */}
             <div className="flex justify-between items-end mb-6">
                 <div className="space-y-2">

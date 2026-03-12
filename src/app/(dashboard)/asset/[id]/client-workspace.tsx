@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { SovereignPrintHeader, SovereignPrintFooter } from '@/components/SovereignDossierParts';
@@ -309,7 +309,7 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                             <div className="flex flex-col gap-6 pt-4">
                                 <div className="flex justify-between items-start border-b border-[#D4A574]/10 pb-4 relative">
                                     <div className="flex flex-col gap-2">
-                                        <div className="flex items-center gap-3 mb-1">
+                                        <div className="flex items-center gap-6 mb-1">
                                             <div className="w-2 h-2 rounded-full bg-[#D4A574] shadow-[0_0_10px_#D4A574]" />
                                             <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.4em]">{blocks[0].label}</span>
                                         </div>
@@ -359,7 +359,7 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                         <div className="flex flex-col gap-6">
                             <div className="flex justify-between items-start border-b border-[#D4A574]/10 pb-4 relative">
                                 <div className="flex flex-col gap-2">
-                                    <div className="flex items-center gap-3 mb-1">
+                                    <div className="flex items-center gap-6 mb-1">
                                         <div className="w-2 h-2 rounded-full bg-[#D4A574] shadow-[0_0_10px_#D4A574]" />
                                         <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.4em]">{block.label}</span>
                                     </div>
@@ -590,6 +590,8 @@ export default function AssetWorkspace({
     const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(null);
     const [activeAct, setActiveAct] = useState<string | null>(null);
 
+    const printRef = useRef<HTMLDivElement>(null);
+
     // Normalize extraction payload (V1 array vs V2 object)
     const extraction = Array.isArray(asset.extraction) ? asset.extraction[0] : asset.extraction;
     
@@ -703,6 +705,33 @@ export default function AssetWorkspace({
         });
     };
 
+    // Print/PDF export: force a dedicated print layout + suppress browser header title text
+    const handleExportDossier = () => {
+        // DOM inspection (requested): verify what we actually have at print time
+        // eslint-disable-next-line no-console
+        console.log('[PDF EXPORT] full_dossier:', extraction?.full_dossier);
+
+        const originalTitle = document.title;
+        document.body.classList.add('printing');
+
+        const cleanup = () => {
+            document.title = originalTitle;
+            document.body.classList.remove('printing');
+            window.removeEventListener('afterprint', cleanup);
+        };
+
+        window.addEventListener('afterprint', cleanup);
+
+        // Removes the "Decompiler — Drop an ad…" title from Chrome's print header.
+        // (Users can also disable "Headers and footers" in the print dialog for a fully clean page.)
+        document.title = '';
+
+        // Fallback cleanup if afterprint doesn't fire (some browsers)
+        window.setTimeout(cleanup, 10_000);
+
+        requestAnimationFrame(() => window.print());
+    };
+
     // Safe parsing of arrays from strings if needed
     let fileUrls = [asset.file_url];
     try {
@@ -713,7 +742,157 @@ export default function AssetWorkspace({
     return (
         <>
             <GatekeeperIntercept isVisible={showGatekeeper} onClose={() => setShowGatekeeper(false)} />
-            <div className="w-full bg-[#FBFBF6] min-h-screen flex justify-center">
+
+            <style jsx global>{`
+                /* FORCE PRINT ROUTING: only show the sovereign print layout during an export */
+                @media screen {
+                    body.printing .sovereign-print-layout { display: block !important; }
+                    body.printing .screen-layout { display: none !important; }
+
+                    body:not(.printing) .sovereign-print-layout { display: none !important; }
+                    body:not(.printing) .screen-layout { display: block !important; }
+                }
+
+                @media print {
+                    body.printing .sovereign-print-layout { display: block !important; }
+                    body.printing .screen-layout { display: none !important; }
+
+                    /* Ink-save inversion: override ANY dark surfaces */
+                    body.printing,
+                    body.printing * {
+                        color: #141414 !important;
+                    }
+
+                    body.printing .sovereign-print-layout {
+                        background: #FFFFFF !important;
+                        color: #141414 !important;
+                    }
+
+                    body.printing .sovereign-print-layout .forensic-act-block,
+                    body.printing .sovereign-print-layout section,
+                    body.printing .sovereign-print-layout div {
+                        background: transparent !important;
+                        box-shadow: none !important;
+                    }
+
+                    body.printing .sovereign-print-layout .border,
+                    body.printing .sovereign-print-layout [class*="border-"] {
+                        border-color: #C1A67B !important;
+                    }
+                }
+            `}</style>
+
+            {/* Print-only sovereign briefing layout (includes Signals + Psychology after Narrative Framework) */}
+            <div className="sovereign-print-layout bg-white text-[#141414]">
+                <div ref={printRef} className="max-w-[900px] mx-auto px-12 py-14">
+                    <SovereignPrintHeader agency={agency} />
+
+                    {/* PRIMARY MECHANIC */}
+                    <section className="mb-10">
+                        <div className="border border-[#C1A67B] rounded-2xl p-8">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#C1A67B] mb-4">Primary Mechanic</p>
+                            <p className="text-[18px] font-light tracking-[0.08em] uppercase leading-snug">
+                                {extraction?.primary_mechanic || '—'}
+                            </p>
+                            <div className="mt-6 pt-6 border-t border-[#E7DED1]">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#6B6B6B]">Confidence</p>
+                                <p className="text-[36px] font-light tracking-tight">
+                                    {extraction?.confidence_score != null ? `${Math.round(extraction.confidence_score)}%` : '—'}
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* SYNTHESISED VISUAL STYLE */}
+                    <section className="mb-12">
+                        <div className="border border-[#C1A67B] rounded-2xl p-8">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#C1A67B] mb-4">Synthesised Visual Style</p>
+                            <p className="text-[13px] leading-relaxed text-[#141414]">
+                                {parsedStyle || '—'}
+                            </p>
+                        </div>
+                    </section>
+
+                    {/* NARRATIVE FRAMEWORK */}
+                    {extraction?.full_dossier?.narrative_framework && (
+                        <section className="mb-14">
+                            <h2 className="text-[12px] font-bold uppercase tracking-[0.35em] text-[#141414] mb-6">Narrative Framework</h2>
+                            <DossierGrid title="Narrative Framework" content={extraction.full_dossier.narrative_framework} type="ACT" activeAct={null} />
+                        </section>
+                    )}
+
+                    {/* SIGNALS (Gaze Topology, Chromatic Base) */}
+                    <section className="mb-14">
+                        <h2 className="text-[12px] font-bold uppercase tracking-[0.35em] text-[#141414] mb-6">Signals</h2>
+
+                        {/* Gaze Topology */}
+                        {(extraction?.full_dossier as any)?.gaze_topology && (
+                            <div className="mb-10">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#6B6B6B] mb-4">Gaze Topology</p>
+                                <div className="grid grid-cols-3 gap-4">
+                                    {[
+                                        { label: 'Mode of Address', value: (extraction?.full_dossier as any)?.gaze_topology?.mode_of_address },
+                                        { label: 'Viewer Position', value: (extraction?.full_dossier as any)?.gaze_topology?.viewer_position },
+                                        { label: 'Power Holder', value: (extraction?.full_dossier as any)?.gaze_topology?.power_holder },
+                                    ].map((item, i) => (
+                                        <div key={i} className="border border-[#C1A67B] rounded-xl p-5">
+                                            <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#6B6B6B] mb-2">{item.label}</p>
+                                            <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#141414]">{item.value || '—'}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                                {((extraction?.full_dossier as any)?.gaze_topology?.reading) && (
+                                    <div className="mt-4 border border-[#E7DED1] bg-[#FBF7EF] rounded-xl p-5">
+                                        <p className="text-[12px] italic text-[#141414] leading-relaxed">&ldquo;{(extraction?.full_dossier as any)?.gaze_topology?.reading}&rdquo;</p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* Chromatic Base */}
+                        <div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#6B6B6B] mb-4">Chromatic Base</p>
+                            {extraction?.color_palette && extraction.color_palette.length > 0 ? (
+                                <div className="flex flex-wrap gap-2">
+                                    {extraction.color_palette.slice(0, 12).map((hex: string, i: number) => (
+                                        <div key={i} className="flex items-center gap-2 border border-[#C1A67B] rounded-full px-3 py-2">
+                                            <div className="w-3.5 h-3.5 rounded-full border border-[#E7DED1]" style={{ backgroundColor: hex }} />
+                                            <span className="text-[10px] font-mono tracking-wider text-[#141414]">{hex}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p className="text-[11px] text-[#6B6B6B]">No palette detected.</p>
+                            )}
+                        </div>
+                    </section>
+
+                    {/* PSYCHOLOGY (Archetype Posture, Rhetorical Shield) */}
+                    <section className="mb-14">
+                        <h2 className="text-[12px] font-bold uppercase tracking-[0.35em] text-[#141414] mb-6">Psychology</h2>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="border border-[#C1A67B] rounded-2xl p-8">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#6B6B6B] mb-4">Archetype Posture</p>
+                                <p className="text-[13px] leading-relaxed text-[#141414]">
+                                    {extraction?.full_dossier?.archetype_mapping?.target_posture || '—'}
+                                </p>
+                            </div>
+
+                            <div className="border border-[#C1A67B] rounded-2xl p-8">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#6B6B6B] mb-4">Rhetorical Shield</p>
+                                <p className="text-[13px] leading-relaxed text-[#141414]">
+                                    {(extraction?.full_dossier as any)?.rhetorical_shield || '—'}
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <SovereignPrintFooter agency={agency} assetId={asset.id} />
+                </div>
+            </div>
+
+            <div className="screen-layout w-full bg-[#FBFBF6] min-h-screen flex justify-center">
                 <div className="flex flex-col md:flex-row md:items-start min-h-screen w-full max-w-[1440px] bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
@@ -766,11 +945,11 @@ export default function AssetWorkspace({
                                             Copy Embed Widget
                                         </button>
                                         <button
-                                            onClick={() => window.print()}
+                                            onClick={handleExportDossier}
                                             className="no-print flex items-center gap-2 px-4 py-2 bg-[#4A4A4A] text-white text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] rounded-full transition-all"
                                         >
                                             <FileDown className="w-3 h-3" />
-                                            Export Dossier
+                                            Export Dossier (Print/PDF)
                                         </button>
                                     </div>
                                     {/* Simple Toast Notification */}

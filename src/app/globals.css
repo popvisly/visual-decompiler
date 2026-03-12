@@ -508,7 +508,13 @@ select.styled-select {
    STRATEGIC PRINT SYSTEM — Milestone 20
    ══════════════════════════════════════════════ */
 
+/* Print visibility helpers (do not rely on Tailwind print: variant) */
+.print-only { display: none !important; }
+.print-hidden { display: block !important; }
+
 @media print {
+    .print-only { display: flex !important; }
+    .print-hidden { display: none !important; }
 
     /* Reset canvas for pure delivery */
     body {
