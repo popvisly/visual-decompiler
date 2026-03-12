@@ -1236,7 +1236,7 @@ export default function AssetWorkspace({
                                             Trigger Distribution Map
                                         </h3>
                                         <div className="w-full max-w-[320px] flex-1 flex items-center justify-center -mt-6">
-                                            <RadarChart 
+                                            <RadarChart
                                                 data={Object.entries((extraction?.full_dossier as any)?.archetype_mapping?.trigger_distribution || {}).map(([label, value]) => ({ label, value: value as number }))}
                                                 forceLight={false}
                                             />
@@ -1246,166 +1246,113 @@ export default function AssetWorkspace({
                                         </p>
                                     </div>
 
-                                    {/* Emotional DNA Heatmap replaced with Persuasion Metrics if available */}
-                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 flex flex-col justify-between rounded-3xl shadow-sm h-full">
-                                        <div className="w-full mb-4">
-                                            <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest border-b border-[#D4A574]/20 pb-4">
-                                                Persuasion Metrics
-                                            </h3>
-                                        </div>
-                                        
-                                        {(extraction?.full_dossier as any)?.persuasion_metrics ? (
-                                             <div className="flex-1 space-y-8 flex flex-col justify-center">
-                                                <div>
-                                                    <div className="flex justify-between items-end mb-3">
-                                                        <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">Persuasion Density</span>
-                                                        <span className="text-[11px] font-mono text-[#D4A574]/80">{((extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density as number)}%</span>
-                                                    </div>
-                                                    <div className="w-full bg-white/5 h-1.5 border border-[#D4A574]/10 rounded-full overflow-hidden">
-                                                        <div 
-                                                            className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full transition-all duration-1000" 
-                                                            style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density}%` }}
-                                                        />
-                                                    </div>
+                                    {/* Strategic Posture Map */}
+                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                        <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
+                                            Strategic Posture
+                                        </h3>
+                                        {extraction?.full_dossier?.archetype_mapping ? (
+                                            <div className="flex-1 flex flex-col justify-between">
+                                                <p className="text-[12px] text-[#FFFFFF]/70 leading-relaxed font-light mb-6">
+                                                    {extraction.full_dossier.archetype_mapping?.target_posture}
+                                                </p>
+                                                <div className="flex items-center justify-center">
+                                                    <StrategicPostureMap
+                                                        posture={extraction.full_dossier.archetype_mapping?.target_posture || ''}
+                                                        moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
+                                                    />
                                                 </div>
-                                                <div>
-                                                    <div className="flex justify-between items-end mb-3">
-                                                        <span className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Cognitive Friction</span>
-                                                        <span className="text-[11px] font-mono text-[#8B4513]">{((extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction as number)}%</span>
-                                                    </div>
-                                                    <div className="w-full bg-white/5 h-1.5 border border-[#D4A574]/10 rounded-full overflow-hidden">
-                                                        <div 
-                                                            className="h-full bg-[#8B4513]/40 rounded-full transition-all duration-1000" 
-                                                            style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction}%` }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="mt-8 pt-6 border-t border-[#D4A574]/10">
-                                                    <div className="flex flex-col gap-3">
-                                                        <div className="flex items-center gap-2">
-                                                            <svg className="w-3.5 h-3.5 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                                            <span className="text-[13px] font-bold text-[#D4A574] uppercase tracking-[0.3em]">Predictive Longevity</span>
-                                                        </div>
-                                                        <p className="text-[13px] text-[#FFFFFF]/80 leading-relaxed font-light pl-[22px] border-l border-[#D4A574]/20">
-                                                            {((extraction?.full_dossier as any)?.persuasion_metrics?.predictive_longevity as string)}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                             </div>
+                                            </div>
                                         ) : (
                                             <div className="flex-1 flex items-center justify-center">
-                                                <div className="text-[10px] uppercase font-bold tracking-widest text-[#D4A574]/30">Legacy Asset - No Depth Metrics Available</div>
+                                                <div className="text-[10px] uppercase font-bold tracking-widest text-[#D4A574]/30">No Posture Data</div>
                                             </div>
                                         )}
                                     </div>
 
-                                    {/* DEEP PSYCHOLOGICAL AUTOPSY SUITE */}
-                                    {extraction?.full_dossier && (
-                                        <div className="pt-12 border-t border-[#D4A574]/20 space-y-8">
-                                            <div className="flex flex-col gap-2 mb-4">
-                                                <h2 className="text-xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Behavioral Deconstruction</h2>
-                                                <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Deep Psychological Extraction</p>
-                                            </div>
-
-                                            {/* Strategic Framework Split */}
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                                {/* Archetype Posture */}
-                                                <div className="bg-[#1A1A1A] border border-[#D4A574]/20 rounded-[2.5rem] p-6 text-left md:p-10 hover:border-[#D4A574] transition-all shadow-sm relative overflow-hidden group flex flex-col">
-                                                    <div className="absolute top-0 right-1/4 w-64 h-64 bg-[#D4A574]/5 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-                                                    <div className="flex flex-col h-full z-10 w-full relative">
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-4">Archetype Posture</span>
-                                                        <p className="text-[14px] text-[#FFFFFF] leading-[1.8] tracking-tight mb-8 font-light">{extraction.full_dossier.archetype_mapping?.target_posture}</p>
-                                                        
-                                                        <div className="mt-auto w-full flex items-center justify-center rounded-[2rem] transition-transform duration-700 group-hover:scale-[1.02]">
-                                                            <StrategicPostureMap 
-                                                                posture={extraction.full_dossier.archetype_mapping?.target_posture || ''} 
-                                                                moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
-                                                            />
-                                                        </div>
-                                                    </div>
+                                    {/* Persuasion Density */}
+                                    {(extraction?.full_dossier as any)?.persuasion_metrics && (
+                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                            <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
+                                                Persuasion Density
+                                            </h3>
+                                            <div className="flex-1 flex flex-col justify-center">
+                                                <div className="flex justify-between items-end mb-4">
+                                                    <span className="text-[11px] font-mono text-[#D4A574]/60 uppercase tracking-widest">Conversion Density</span>
+                                                    <span className="text-[32px] font-bold text-[#D4A574] leading-none">{((extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density as number)}%</span>
                                                 </div>
-
-                                                {/* Strategic Mechanics */}
-                                                <div className="bg-[#1A1A1A] border border-[#D4A574]/20 rounded-[2.5rem] p-6 text-left md:p-10 hover:border-[#D4A574] transition-all shadow-sm relative overflow-hidden flex flex-col">
-                                                    <div className="absolute bottom-0 right-0 w-64 h-64 bg-white/5 blur-[100px] rounded-full translate-y-1/2 translate-x-1/4 pointer-events-none" />
-                                                    <div className="z-10 flex flex-col h-full relative">
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-8 border-b border-[#D4A574]/20 pb-4">Strategic Mechanics</span>
-                                                        
-                                                        <div className="space-y-8 flex-grow flex flex-col justify-center">
-                                                            <div className="relative pl-6">
-                                                                <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-[#D4A574] rounded-full shadow-[0_0_8px_#D4A574]" />
-                                                                <div className="absolute left-[3px] top-4 bottom-[-24px] w-[1px] bg-gradient-to-b from-[#D4A574]/30 to-transparent" />
-                                                                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#FFFFFF] block mb-2">Aspirational Collapse</span>
-                                                                <p className="text-[13px] text-[#FFFFFF]/70 leading-relaxed font-light">Compress aspiration gap through democratic styling codes (denim) while maintaining luxury context (YSL brand equity, Paris mythology).</p>
-                                                            </div>
-                                                            
-                                                            <div className="relative pl-6">
-                                                                <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-[#D4A574] rounded-full shadow-[0_0_8px_#D4A574]" />
-                                                                <div className="absolute left-[3px] top-4 bottom-[-24px] w-[1px] bg-gradient-to-b from-[#D4A574]/30 to-transparent" />
-                                                                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#FFFFFF] block mb-2">Possessive Programming</span>
-                                                                <p className="text-[13px] text-[#FFFFFF]/70 leading-relaxed font-light">Deploy &apos;MON&apos; (my/mine) linguistic structure to transfer Paris ownership from geography to consumer psychological property.</p>
-                                                            </div>
-                                                            
-                                                            <div className="relative pl-6">
-                                                                <div className="absolute left-0 top-1.5 w-1.5 h-1.5 bg-[#D4A574] rounded-full shadow-[0_0_8px_#D4A574]" />
-                                                                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#FFFFFF] block mb-2">Inverted Participation</span>
-                                                                <p className="text-[13px] text-[#FFFFFF]/70 leading-relaxed font-light">Use architectural inversion to force viewer into structural participation rather than observational distance.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div className="w-full bg-white/5 h-2 border border-[#D4A574]/10 rounded-full overflow-hidden">
+                                                    <div
+                                                        className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full transition-all duration-1000"
+                                                        style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density}%` }}
+                                                    />
                                                 </div>
                                             </div>
+                                            <p className="text-[12px] text-[#FFFFFF]/60 leading-relaxed font-light mt-4 pt-4 border-t border-[#D4A574]/10">
+                                                Measures the creative's informational compression—how efficiently it transfers brand signal into consumer memory structures.
+                                            </p>
+                                        </div>
+                                    )}
 
-                                            {/* Readings & Objections (2-Column Grid) */}
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                                {/* Module 2: Plausible Readings */}
-                                                {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 md:p-10 rounded-[2.5rem] shadow-sm flex flex-col min-h-[300px] hover:border-[#D4A574]/50 transition-colors relative overflow-hidden">
-                                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#D4A574]/10 via-[#D4A574]/40 to-[#D4A574]/10" />
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-8 border-b border-[#D4A574]/20 pb-4">Plausible Readings</span>
-                                                        <div className="space-y-6 flex-1 flex flex-col justify-center">
-                                                            {extraction.full_dossier.possible_readings.slice(0, 2).map((reading, i) => (
-                                                                <div key={i} className="relative flex gap-6 items-start group">
-                                                                    <div className="text-[40px] leading-none font-bold text-[#D4A574]/10 tracking-tighter select-none w-12 text-right font-mono transition-colors group-hover:text-[#D4A574]/20">
-                                                                        0{i + 1}
-                                                                    </div>
-                                                                    <div className="flex-1 pb-6 border-b border-[#D4A574]/10 last:border-0 last:pb-0">
-                                                                        <div className="flex items-center gap-3 mb-3">
-                                                                            <div className="w-1.5 h-1.5 bg-[#D4A574] rounded-full shadow-[0_0_8px_#D4A574]" />
-                                                                            <h4 className="text-[10px] font-bold text-[#D4A574] uppercase tracking-[0.2em]">{i === 0 ? 'Primary Decoding' : 'Secondary Context'}</h4>
-                                                                        </div>
-                                                                        <p className="text-[14px] text-white/80 font-light leading-[1.8] italic">{reading.reading}</p>
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                )}
-
-                                                {/* Module 3: Objection Dismantled */}
-                                                <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-8 md:p-10 rounded-[2.5rem] shadow-sm flex flex-col min-h-[300px] hover:border-[#D4A574]/50 transition-colors relative overflow-hidden">
-                                                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#D4A574]/10 via-[#D4A574]/40 to-[#D4A574]/10" />
-                                                    <div className="flex items-center gap-3 mb-8 border-b border-[#D4A574]/20 pb-4">
-                                                        <svg className="w-4 h-4 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" /></svg>
-                                                        <span className="text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Objection Dismantled</span>
-                                                    </div>
-                                                    <div className="flex-1 flex flex-col justify-center">
-                                                        <p className="text-[15px] text-[#FFFFFF]/90 leading-[1.8] font-light italic border-l border-[#D4A574]/30 pl-6 py-2 relative">
-                                                            <span className="absolute left-0 top-0 w-0.5 h-full bg-gradient-to-b from-[#D4A574]/50 to-transparent" />
-                                                            "{extraction.full_dossier.objection_dismantling}"
-                                                        </p>
-                                                    </div>
-                                                    <div className="mt-8 pt-6 border-t border-[#D4A574]/10 flex items-center justify-between opacity-50">
-                                                        <div className="flex items-center gap-2">
-                                                            <div className="w-1.5 h-1.5 bg-[#8B4513] rounded-sm animate-pulse" />
-                                                            <p className="text-[9px] font-mono tracking-widest uppercase text-[#D4A574]">Neural Buffer Neutralized</p>
-                                                        </div>
-                                                        <p className="text-[9px] font-mono tracking-widest text-[#D4A574]">SYS.OBJD.01</p>
-                                                    </div>
+                                    {/* Cognitive Friction */}
+                                    {(extraction?.full_dossier as any)?.persuasion_metrics && (
+                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                            <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
+                                                Cognitive Friction
+                                            </h3>
+                                            <div className="flex-1 flex flex-col justify-center">
+                                                <div className="flex justify-between items-end mb-4">
+                                                    <span className="text-[11px] font-mono text-[#8B4513]/80 uppercase tracking-widest">Resistance Index</span>
+                                                    <span className="text-[32px] font-bold text-[#8B4513] leading-none">{((extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction as number)}%</span>
                                                 </div>
+                                                <div className="w-full bg-white/5 h-2 border border-[#D4A574]/10 rounded-full overflow-hidden">
+                                                    <div
+                                                        className="h-full bg-[#8B4513]/40 rounded-full transition-all duration-1000"
+                                                        style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction}%` }}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <p className="text-[12px] text-[#FFFFFF]/60 leading-relaxed font-light mt-4 pt-4 border-t border-[#D4A574]/10">
+                                                Quantifies neural resistance to message adoption. Low scores indicate frictionless persuasion pathways.
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {/* Predictive Longevity */}
+                                    {(extraction?.full_dossier as any)?.persuasion_metrics && (
+                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                            <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
+                                                Predictive Longevity
+                                            </h3>
+                                            <div className="flex-1 flex flex-col justify-center">
+                                                <div className="flex items-center gap-2 mb-4">
+                                                    <svg className="w-4 h-4 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                    <span className="text-[11px] font-mono text-[#D4A574]/60 uppercase tracking-widest">Fatigue Analysis</span>
+                                                </div>
+                                                <p className="text-[12px] text-[#FFFFFF]/70 leading-relaxed font-light">
+                                                    {((extraction?.full_dossier as any)?.persuasion_metrics?.predictive_longevity as string)}
+                                                </p>
                                             </div>
                                         </div>
                                     )}
+
+                                    {/* Behavioral Deconstruction */}
+                                    {extraction?.full_dossier?.archetype_mapping && (
+                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                            <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
+                                                Behavioral Deconstruction
+                                            </h3>
+                                            <div className="flex-1 flex flex-col justify-center space-y-4">
+                                                {((extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []).slice(0, 3).map((move: string, i: number) => (
+                                                    <div key={i} className="flex gap-3 items-start">
+                                                        <div className="w-1.5 h-1.5 bg-[#D4A574] rounded-full mt-2 flex-shrink-0" />
+                                                        <p className="text-[12px] text-[#FFFFFF]/70 leading-relaxed font-light">{move}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
                                 </div>
                             </div>
                         )}
@@ -1442,6 +1389,49 @@ export default function AssetWorkspace({
                                                         </div>
                                                     ))}
                                                 </div>
+                                            </div>
+                                        )}
+
+                                        {/* Plausible Readings & Objection Dismantled */}
+                                        {extraction?.full_dossier && (
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                {/* Plausible Readings */}
+                                                {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[300px]">
+                                                        <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
+                                                            Plausible Readings
+                                                        </h3>
+                                                        <div className="flex-1 flex flex-col justify-center space-y-6">
+                                                            {extraction.full_dossier.possible_readings.slice(0, 2).map((reading, i) => (
+                                                                <div key={i} className="space-y-2">
+                                                                    <div className="flex items-center gap-2">
+                                                                        <div className="w-1.5 h-1.5 bg-[#D4A574] rounded-full" />
+                                                                        <span className="text-[10px] font-bold text-[#D4A574] uppercase tracking-[0.2em]">
+                                                                            {i === 0 ? 'Primary' : 'Secondary'}
+                                                                        </span>
+                                                                    </div>
+                                                                    <p className="text-[12px] text-[#FFFFFF]/70 leading-relaxed font-light pl-[18px]">
+                                                                        {reading.reading}
+                                                                    </p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Objection Dismantled */}
+                                                {extraction.full_dossier.objection_dismantling && (
+                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[300px]">
+                                                        <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
+                                                            Objection Dismantled
+                                                        </h3>
+                                                        <div className="flex-1 flex flex-col justify-center">
+                                                            <p className="text-[12px] text-[#FFFFFF]/70 leading-relaxed font-light">
+                                                                {extraction.full_dossier.objection_dismantling}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
 
