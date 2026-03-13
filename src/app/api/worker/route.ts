@@ -8,6 +8,7 @@ import { hashFile } from '@/lib/hashing';
 import { generateEmbedding } from '@/lib/embeddings';
 import { RoutingService } from '@/lib/routing_service';
 import { sendDeconstructionEmail } from '@/lib/mail';
+import { recordUsageEvent } from '@/lib/usage';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
@@ -272,6 +273,15 @@ export async function POST(req: Request) {
                         .from('users')
                         .update({ usage_count: nextCount })
                         .eq('id', job.user_id);
+
+                    const { error: usageLogError } = await recordUsageEvent(job.user_id, {
+                        jobId: job.id,
+                        brand,
+                        source: 'worker',
+                    });
+                    if (usageLogError) {
+                        console.error(`[Worker Job ${job.id}] Failed to write usage log:`, usageLogError);
+                    }
 
                     // 6.6 Send Email Notification (Launch Readiness)
                     if (u?.email) {

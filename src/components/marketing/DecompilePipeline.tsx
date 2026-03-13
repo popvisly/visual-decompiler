@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
+import Link from 'next/link';
 import { Pill, PreviewCard, StageImage } from '@/types/homepage';
 
 type Props = {
@@ -35,15 +36,15 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
           <div className="text-center w-full mx-auto mb-16 lg:mb-20 px-4">
             <div className="flex flex-col items-center gap-4">
               <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#C1A67B]">
-                How It Works
+                The Extraction Protocol
               </span>
               <h2 className="text-4xl md:text-7xl font-semibold text-[#141414] tracking-tight uppercase leading-[0.9]">
-                Decode the Invisible<br />
-                <span className="text-[#C1A67B]">Architecture of Persuasion.</span>
+                Drop an Ad.<br />
+                <span className="text-[#C1A67B]">Get the Invisible Brief.</span>
               </h2>
             </div>
             <p className="text-base md:text-lg text-[#6B6B6B] max-w-2xl mx-auto leading-relaxed font-medium mt-8">
-              This isn't a surface-level semantic scan. The visual reasoning engine deconstructs the structural architecture of the creative—drilling into subtext to isolate the precise trigger mechanics, evidence anchors, and behavioral nudges being deployed.
+              13 forensic dimensions. Every ad contains a hidden persuasion architecture: trigger mechanics, semiotic subtext, gaze topology, competitive displacement, and more. We surface all of it.
             </p>
           </div>
         </motion.div>
@@ -70,10 +71,10 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
                 <span className="text-[40px] font-bold text-[#141414]/[0.04] leading-none tracking-tighter select-none">01</span>
                 <div>
                   <div className="text-[10px] font-bold tracking-[0.2em] text-[#C1A67B] uppercase">Phase 01</div>
-                  <div className="text-xs tracking-wider text-[#6B6B6B] uppercase">Sovereign Ingestion</div>
+                  <div className="text-xs tracking-wider text-[#6B6B6B] uppercase">01 - Ingest</div>
                 </div>
               </div>
-              <div className="text-2xl md:text-3xl leading-tight text-[#141414] font-semibold tracking-tight">Drag-and-drop your forensic<br />library into the secure Vault.</div>
+              <div className="text-2xl md:text-3xl leading-tight text-[#141414] font-semibold tracking-tight">Drop any ad. JPG, PNG, WebP.<br />It&apos;s secured and deduplicated instantly.</div>
 
               {/* Watch Image — Dark Frame */}
               <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-[#141414] border-0 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_48px_rgba(193,166,123,0.15)] transition-all duration-300">
@@ -106,10 +107,10 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
                 <span className="text-[40px] font-bold text-[#141414]/[0.04] leading-none tracking-tighter select-none">02</span>
                 <div>
                   <div className="text-[10px] font-bold tracking-[0.2em] text-[#C1A67B] uppercase">Phase 02</div>
-                  <div className="text-xs tracking-wider text-[#6B6B6B] uppercase">Neural Deconstruction</div>
+                  <div className="text-xs tracking-wider text-[#6B6B6B] uppercase">02 - Deconstruct</div>
                 </div>
               </div>
-              <div className="text-2xl md:text-3xl leading-tight text-[#141414] font-semibold tracking-tight">Powered by Claude 3.5 Sonnet<br />for forensic precision.</div>
+              <div className="text-2xl md:text-3xl leading-tight text-[#141414] font-semibold tracking-tight">13 forensic dimensions.<br />Extracted in under 3 minutes.</div>
 
               {/* Palette Logic — Watch: Navy, Rose Gold, Amber */}
               <div className="bg-white rounded-xl border-0 p-6 md:p-8 hover:shadow-lg transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
@@ -167,10 +168,10 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
                 <span className="text-[40px] font-bold text-[#141414]/[0.04] leading-none tracking-tighter select-none">03</span>
                 <div>
                   <div className="text-[10px] font-bold tracking-[0.2em] text-[#C1A67B] uppercase">Phase 03</div>
-                  <div className="text-xs tracking-wider text-[#6B6B6B] uppercase">Strategic Dossier</div>
+                  <div className="text-xs tracking-wider text-[#6B6B6B] uppercase">03 - Export</div>
                 </div>
               </div>
-              <div className="text-2xl md:text-3xl leading-tight text-[#141414] font-semibold tracking-tight">Export high-stakes, white-labeled<br />dossiers for client-ready presentation.</div>
+              <div className="text-2xl md:text-3xl leading-tight text-[#141414] font-semibold tracking-tight">A boardroom-ready Strategic Dossier.<br />White-labeled. One click.</div>
 
               {/* Intelligence Report Panel */}
               <div className="rounded-2xl bg-white border-0 shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-8 space-y-6 flex-1">
@@ -211,6 +212,18 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
               </div>
             </motion.div>
           </div>
+        </div>
+
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 text-center">
+          <Link
+            href="/ingest"
+            className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#8B4513] transition-colors hover:text-[#141414]"
+          >
+            [ Analyse Your First Ad - Free ]
+          </Link>
+          <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#6B6B6B]">
+            No credit card. Results in under 3 minutes.
+          </span>
         </div>
       </div>
     </section>

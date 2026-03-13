@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Trash2, X, Check } from 'lucide-react';
+import { Search, X, Check, ChevronDown } from 'lucide-react';
 import { supabaseClient } from '@/lib/supabase-client';
 
 interface VaultAsset {
@@ -20,6 +20,92 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
     const [showConfirm, setShowConfirm] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [query, setQuery] = useState('');
+    const [sectorFilter, setSectorFilter] = useState('ALL SECTORS');
+    const [mechanicFilter, setMechanicFilter] = useState('ALL MECHANICS');
+    const [sortOrder, setSortOrder] = useState('NEWEST');
+
+    const sectorOptions = useMemo(() => {
+        const sectors = new Set<string>();
+        for (const asset of assets) {
+            const sector = asset.brand?.market_sector?.trim();
+            if (sector) sectors.add(sector);
+        }
+        return ['ALL SECTORS', ...Array.from(sectors).sort()];
+    }, [assets]);
+
+    const mechanicOptions = useMemo(() => {
+        const mechanics = new Set<string>();
+        for (const asset of assets) {
+            const rawExtraction = asset.extraction || asset.extractions;
+            const extraction = Array.isArray(rawExtraction) ? rawExtraction[0] : rawExtraction;
+            const mechanic = extraction?.primary_mechanic?.trim();
+            if (mechanic) mechanics.add(mechanic);
+        }
+        return ['ALL MECHANICS', ...Array.from(mechanics).sort()];
+    }, [assets]);
+
+    const filteredAssets = useMemo(() => {
+        let next = [...assets];
+        const normalizedQuery = query.trim().toLowerCase();
+
+        if (normalizedQuery) {
+            next = next.filter((asset) => {
+                const rawExtraction = asset.extraction || asset.extractions;
+                const extraction = Array.isArray(rawExtraction) ? rawExtraction[0] : rawExtraction;
+
+                return [
+                    asset.brand?.name,
+                    asset.brand?.market_sector,
+                    extraction?.primary_mechanic,
+                    asset.id,
+                ]
+                    .filter(Boolean)
+                    .some((value) => String(value).toLowerCase().includes(normalizedQuery));
+            });
+        }
+
+        if (sectorFilter !== 'ALL SECTORS') {
+            next = next.filter((asset) => asset.brand?.market_sector === sectorFilter);
+        }
+
+        if (mechanicFilter !== 'ALL MECHANICS') {
+            next = next.filter((asset) => {
+                const rawExtraction = asset.extraction || asset.extractions;
+                const extraction = Array.isArray(rawExtraction) ? rawExtraction[0] : rawExtraction;
+                return extraction?.primary_mechanic === mechanicFilter;
+            });
+        }
+
+        next.sort((a, b) => {
+            const aExtraction = Array.isArray(a.extraction || a.extractions) ? (a.extraction || a.extractions)[0] : (a.extraction || a.extractions);
+            const bExtraction = Array.isArray(b.extraction || b.extractions) ? (b.extraction || b.extractions)[0] : (b.extraction || b.extractions);
+            const aConfidence = Number(aExtraction?.confidence_score || 0);
+            const bConfidence = Number(bExtraction?.confidence_score || 0);
+
+            switch (sortOrder) {
+                case 'OLDEST':
+                    return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+                case 'CONFIDENCE HIGH':
+                    return bConfidence - aConfidence;
+                case 'CONFIDENCE LOW':
+                    return aConfidence - bConfidence;
+                case 'BRAND A-Z':
+                    return (a.brand?.name || '').localeCompare(b.brand?.name || '');
+                default:
+                    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+            }
+        });
+
+        return next;
+    }, [assets, query, sectorFilter, mechanicFilter, sortOrder]);
+
+    const clearFilters = () => {
+        setQuery('');
+        setSectorFilter('ALL SECTORS');
+        setMechanicFilter('ALL MECHANICS');
+        setSortOrder('NEWEST');
+    };
 
     const toggleSelect = (id: string) => {
         const next = new Set(selectedIds);
@@ -119,18 +205,62 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                     <h1 className="text-4xl md:text-5xl font-light tracking-tightest uppercase mb-4 text-[#8B4513]">
                         The Intelligence Vault
                     </h1>
-                    <div className="flex items-center gap-3">
-                        <p className="text-[#4A4A4A]/60 font-sans text-[11px] font-bold tracking-[0.2em] uppercase">
-                            {assets.length} Forensic Extractions Secured
-                        </p>
-                        <div className="h-px w-8 bg-[#D4A574]" />
+                    <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+                        <div className="flex items-center gap-3">
+                            <p className="text-[#4A4A4A]/60 font-sans text-[11px] font-bold tracking-[0.2em] uppercase">
+                                {filteredAssets.length} Forensic Extractions {query || sectorFilter !== 'ALL SECTORS' || mechanicFilter !== 'ALL MECHANICS' ? 'Matching' : 'Secured'}
+                            </p>
+                            <div className="h-px w-8 bg-[#D4A574]" />
+                        </div>
+
+                        <div className="w-full max-w-4xl space-y-3">
+                            <div className="relative">
+                                <Search className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8B4513]/60" />
+                                <input
+                                    type="text"
+                                    value={query}
+                                    onChange={(event) => setQuery(event.target.value)}
+                                    placeholder="SEARCH — brand, sector, mechanic..."
+                                    className="w-full border-b border-[#1A1A1A]/20 bg-transparent py-3 pl-7 pr-8 text-[11px] font-mono uppercase tracking-[0.22em] text-[#1A1A1A] outline-none placeholder:text-[#1A1A1A]/30"
+                                />
+                                {query && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setQuery('')}
+                                        className="absolute right-0 top-1/2 -translate-y-1/2 text-[#1A1A1A]/40 transition-colors hover:text-[#1A1A1A]"
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </button>
+                                )}
+                            </div>
+
+                            <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">
+                                <VaultSelect label="Sector" value={sectorFilter} onChange={setSectorFilter} options={sectorOptions} />
+                                <VaultSelect label="Mechanic" value={mechanicFilter} onChange={setMechanicFilter} options={mechanicOptions} />
+                                <VaultSelect
+                                    label="Sort"
+                                    value={sortOrder}
+                                    onChange={setSortOrder}
+                                    options={['NEWEST', 'OLDEST', 'CONFIDENCE HIGH', 'CONFIDENCE LOW', 'BRAND A-Z']}
+                                />
+                                {(query || sectorFilter !== 'ALL SECTORS' || mechanicFilter !== 'ALL MECHANICS' || sortOrder !== 'NEWEST') && (
+                                    <button
+                                        type="button"
+                                        onClick={clearFilters}
+                                        className="self-start rounded-full border border-[#D4A574]/40 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B4513] transition-all hover:border-[#D4A574] hover:bg-white"
+                                    >
+                                        Clear Filters
+                                    </button>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </header>
 
                 {/* Grid */}
-                {assets.length > 0 ? (
+                {filteredAssets.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 select-none">
-                        {assets.map((asset) => (
+                        {filteredAssets.map((asset) => (
                             <VaultCard 
                                 key={asset.id} 
                                 asset={asset} 
@@ -138,6 +268,22 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                                 onToggle={() => toggleSelect(asset.id)}
                             />
                         ))}
+                    </div>
+                ) : assets.length > 0 ? (
+                    <div className="h-64 flex flex-col items-center justify-center border border-[#E5E5E1] border-dashed rounded-3xl bg-white shadow-sm px-8 text-center">
+                        <span className="text-[#1A1A1A] font-sans text-xs md:text-sm tracking-[0.3em] uppercase mb-4 font-bold text-center">
+                            No Extractions Matching Your Filters.
+                        </span>
+                        <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-[#4A4A4A]/50 mb-6 max-w-xl">
+                            Try searching by brand, sector, persuasion mechanic, or clear the active filters.
+                        </p>
+                        <button 
+                            type="button"
+                            onClick={clearFilters}
+                            className="text-[#D4A574] text-[10px] font-mono tracking-widest uppercase hover:underline"
+                        >
+                            [ CLEAR FILTERS ]
+                        </button>
                     </div>
                 ) : (
                     <div className="h-64 flex flex-col items-center justify-center border border-[#E5E5E1] border-dashed rounded-3xl bg-white shadow-sm">
@@ -154,6 +300,36 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                 )}
             </div>
         </div>
+    );
+}
+
+function VaultSelect({
+    label,
+    value,
+    onChange,
+    options,
+}: {
+    label: string;
+    value: string;
+    onChange: (value: string) => void;
+    options: string[];
+}) {
+    return (
+        <label className="relative min-w-[180px]">
+            <span className="mb-2 block text-[9px] font-bold uppercase tracking-[0.2em] text-[#4A4A4A]/50">{label}</span>
+            <select
+                value={value}
+                onChange={(event) => onChange(event.target.value)}
+                className="w-full appearance-none rounded-full border border-[#1A1A1A]/20 bg-white px-4 py-2.5 pr-10 text-[10px] font-bold uppercase tracking-[0.18em] text-[#1A1A1A] outline-none transition-all hover:border-[#D4A574]/50 focus:border-[#D4A574]"
+            >
+                {options.map((option) => (
+                    <option key={option} value={option}>
+                        {option}
+                    </option>
+                ))}
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-4 top-[2.15rem] h-4 w-4 text-[#8B4513]/60" />
+        </label>
     );
 }
 

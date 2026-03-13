@@ -24,7 +24,7 @@ export default function FooterStartNow() {
                                 <span className="text-[#C1A67B]">your competition?</span>
                             </motion.h2>
                             <p className="text-base md:text-lg text-[#FBF7EF]/45 max-w-md mx-auto lg:mx-0 leading-relaxed">
-                                Start deconstructing ads with forensic precision. No credit card required.
+                                Upload your first ad. Get a complete forensic extraction with trigger mechanics, semiotics, and a DNA prompt in under 3 minutes. Free to start.
                             </p>
                         </div>
 
@@ -54,15 +54,16 @@ export default function FooterStartNow() {
                         <div className="w-7 h-7 bg-[#C1A67B] flex items-center justify-center rounded-lg text-[#141414] font-bold text-sm">V</div>
                         <div className="flex flex-col">
                             <span className="text-sm font-bold tracking-tight leading-none uppercase text-[#FBF7EF]">VisualDecompiler</span>
-                            <span className="text-[9px] font-semibold tracking-[0.2em] uppercase text-[#FBF7EF]/30">Strategic Intelligence</span>
+                            <span className="text-[9px] font-semibold tracking-[0.2em] uppercase text-[#FBF7EF]/30">Advertising Intelligence</span>
                         </div>
                     </div>
 
                     {/* Links */}
                     <div className="flex flex-wrap justify-center gap-6 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#FBF7EF]/35">
                         <a href="/pricing" className="hover:text-[#C1A67B] transition-colors">Pricing</a>
-                        <a href="/intelligence" className="hover:text-[#C1A67B] transition-colors">Intelligence</a>
-                        <a href="/ingest" className="hover:text-[#C1A67B] transition-colors">Login</a>
+                        <a href="/vault" className="hover:text-[#C1A67B] transition-colors">Vault</a>
+                        <a href="/docs/user-guide" className="hover:text-[#C1A67B] transition-colors">Help Center</a>
+                        <a href="/login" className="hover:text-[#C1A67B] transition-colors">Login</a>
                     </div>
 
                     {/* Legal */}

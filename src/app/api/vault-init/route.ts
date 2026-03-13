@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import crypto from 'crypto';
 import sharp from 'sharp';
 import { getServerSession } from '@/lib/auth-server';
+import { assertUsageAvailable } from '@/lib/usage';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,6 +12,19 @@ export async function POST(req: Request) {
         const session = await getServerSession(req);
         if (!session.userId) {
             return NextResponse.json({ error: 'Unauthorized: No active sovereign session found.' }, { status: 401 });
+        }
+
+        try {
+            await assertUsageAvailable(session.userId, session.email);
+        } catch (error) {
+            if (error instanceof Error && error.message === 'LIMIT_REACHED') {
+                const usage = (error as Error & { usage?: unknown }).usage;
+                return NextResponse.json(
+                    { error: 'LIMIT_REACHED', message: 'You have reached your monthly analysis limit.', usage },
+                    { status: 402 }
+                );
+            }
+            throw error;
         }
 
         const { error: userErr } = await supabaseAdmin

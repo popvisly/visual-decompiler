@@ -20,6 +20,7 @@ function isTokenExpired(token: string) {
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
+    const isEmbedRoute = pathname.startsWith('/embed/');
 
     // Phase 2: Protect any route in the Agency OS (dashboard)
     const isDashboardRoute =
@@ -64,10 +65,10 @@ export function middleware(request: NextRequest) {
     let finalCspHeader = cspHeader;
     
     // Phase 2 PLG: iFrame Embed system
-    if (pathname.startsWith('/embed/')) {
+    if (isEmbedRoute) {
         finalCspHeader = cspHeader.replace(
             "frame-ancestors 'none';", 
-            "frame-ancestors https://*.notion.so https://*.figma.com https://*.pitch.com;"
+            "frame-ancestors *;"
         );
         // Ensure X-Frame-Options is not blocking
         requestHeaders.delete('X-Frame-Options');
@@ -82,12 +83,10 @@ export function middleware(request: NextRequest) {
     });
 
     response.headers.set('Content-Security-Policy', finalCspHeader);
-    if (pathname.startsWith('/embed/')) {
-        response.headers.delete('X-Frame-Options');
+    if (isEmbedRoute) {
+        response.headers.set('X-Frame-Options', 'ALLOWALL');
     }
 
-
-    response.headers.set('Content-Security-Policy', cspHeader);
     return response;
 }
 

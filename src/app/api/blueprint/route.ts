@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
+import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
+import { assertUsageAvailable } from '@/lib/usage';
 
 // SCHEMA 3: Production Blueprints interface
 export interface ProductionBlueprintResponse {
@@ -29,6 +31,24 @@ export interface ProductionBlueprintResponse {
 
 export async function POST(req: Request) {
     try {
+        const session = await getServerSession(req);
+        if (!session.userId) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        try {
+            await assertUsageAvailable(session.userId, session.email);
+        } catch (error) {
+            if (error instanceof Error && error.message === 'LIMIT_REACHED') {
+                const usage = (error as Error & { usage?: unknown }).usage;
+                return NextResponse.json(
+                    { error: 'LIMIT_REACHED', message: 'Usage limit reached for this billing cycle.', usage },
+                    { status: 402 }
+                );
+            }
+            throw error;
+        }
+
         const { assetId, brandId } = await req.json();
 
         if (!assetId) {
@@ -54,6 +74,9 @@ export async function POST(req: Request) {
 
         // 2. Prepare Claude API to generate the Production Blueprint based on Forensic Extraction
         const anthropic = getAnthropic();
+        if (!anthropic) {
+            throw new Error('Anthropic client unavailable');
+        }
         const model = getClaudeModel('agency');
 
         const systemPrompt = `You are a high-end creative director generating a Production Blueprint based on forensic asset extractions.
@@ -91,7 +114,7 @@ Extraction Data:
 ${JSON.stringify(extraction, null, 2)}`;
 
         // 3. Call Claude
-        const response = await anthropic!.messages.create({
+        const response = await anthropic.messages.create({
             model,
             max_tokens: 4096,
             system: systemPrompt,

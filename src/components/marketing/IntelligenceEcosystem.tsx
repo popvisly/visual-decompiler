@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { Database, Search, Layout, FileText } from 'lucide-react';
 
 const PILLARS = [
@@ -14,7 +13,7 @@ const PILLARS = [
         icon: <Search className="w-6 h-6" />,
         subtext: "Single-Asset Deconstruction",
         title: "Forensic Extraction",
-        copy: "Ingest a static asset and deconstruct the semiotic subtext, trigger mechanics, and evidence anchors using our optimized Claude 3.5 Sonnet neural pipeline."
+        copy: "Ingest a static asset and deconstruct the semiotic subtext, trigger mechanics, and evidence anchors using our forensic extraction pipeline."
     },
     {
         icon: <Layout className="w-6 h-6" />,
@@ -36,12 +35,8 @@ export default function IntelligenceEcosystem() {
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2">
                     {PILLARS.map((pillar, idx) => (
-                        <motion.div
+                        <div
                             key={pillar.title}
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: idx * 0.1 }}
                             className={`
                                 p-12 lg:p-16 border-[#141414]/10
                                 ${idx === 0 ? 'border-b md:border-r' : ''}
@@ -78,7 +73,7 @@ export default function IntelligenceEcosystem() {
                                     <div className="inline-flex h-[1px] w-12 bg-[#141414]/20 group-hover:w-24 group-hover:bg-[#C1A67B] transition-all duration-700" />
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>

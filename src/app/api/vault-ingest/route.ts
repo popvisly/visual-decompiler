@@ -4,6 +4,7 @@ import crypto from 'crypto';
 import sharp from 'sharp';
 import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
 import { getServerSession } from '@/lib/auth-server';
+import { assertUsageAvailable } from '@/lib/usage';
 
 export const maxDuration = 300; // 5 minutes max function duration for Pro/Enterprise tier
 export const dynamic = 'force-dynamic';
@@ -13,6 +14,19 @@ export async function POST(req: Request) {
         const session = await getServerSession(req);
         if (!session.userId) {
             return NextResponse.json({ error: 'Unauthorized: No active sovereign session found.' }, { status: 401 });
+        }
+
+        try {
+            await assertUsageAvailable(session.userId, session.email);
+        } catch (error) {
+            if (error instanceof Error && error.message === 'LIMIT_REACHED') {
+                const usage = (error as Error & { usage?: unknown }).usage;
+                return NextResponse.json(
+                    { error: 'LIMIT_REACHED', message: 'You have reached your monthly analysis limit.', usage },
+                    { status: 402 }
+                );
+            }
+            throw error;
         }
 
         // Upsert user to ensure they exist in our tracking and satisfy foreign keys
@@ -146,6 +160,9 @@ export async function POST(req: Request) {
 
         // 5. Trigger Claude Deconstruction FIRST to get Brand Intelligence
         const anthropic = getAnthropic();
+        if (!anthropic) {
+            throw new Error('Anthropic client unavailable');
+        }
         const model = getClaudeModel('agency');
 
         const systemPrompt = `You are an elite forensic advertising strategist, creative director, and semiotician. Analyse the given asset (static image or video frame) and extract its core strategic and semiotic DNA.
@@ -244,7 +261,7 @@ STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive 
             }
         ];
 
-        const response = await anthropic!.messages.create({
+        const response = await anthropic.messages.create({
             model,
             max_tokens: 8192,
             system: systemPrompt,
