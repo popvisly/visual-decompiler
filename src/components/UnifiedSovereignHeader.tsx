@@ -41,7 +41,7 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
             { key: 'help', label: 'Help Center', href: '/docs/user-guide' },
         ]
         : [
-            { key: 'how', label: 'How It Works', href: '/#features' },
+            { key: 'how', label: 'How It Works', href: '/#how' },
             { key: 'pricing', label: 'Pricing', href: '/pricing' },
             { key: 'help', label: 'Help Center', href: '/docs/user-guide' },
         ] as const;

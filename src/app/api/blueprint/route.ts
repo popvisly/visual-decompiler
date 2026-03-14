@@ -49,17 +49,18 @@ export async function POST(req: Request) {
             throw error;
         }
 
-        const { assetId, brandId } = await req.json();
+        const { assetId } = await req.json();
 
         if (!assetId) {
             return NextResponse.json({ error: 'assetId is required' }, { status: 400 });
         }
 
-        // 1. Fetch asset and its latest extraction
+        // 1. Fetch asset and its latest extraction, scoped to the current user.
         const { data: asset, error } = await supabaseAdmin
             .from('assets')
             .select('*, extractions(*)')
             .eq('id', assetId)
+            .eq('user_id', session.userId)
             .single();
 
         if (error || !asset) {
@@ -133,8 +134,17 @@ ${JSON.stringify(extraction, null, 2)}`;
 
         const result = JSON.parse(text) as ProductionBlueprintResponse;
 
-        // Optional: Could insert the blueprint back into another table, updating DB states.
-        // e.g., await supabaseAdmin.from('blueprints').insert({ ... })
+        const { error: persistError } = await supabaseAdmin
+            .from('extractions')
+            .update({
+                blueprint: result,
+                updated_at: new Date().toISOString(),
+            })
+            .eq('asset_id', assetId);
+
+        if (persistError) {
+            throw new Error(`Failed to persist blueprint: ${persistError.message}`);
+        }
 
         return NextResponse.json(result);
 

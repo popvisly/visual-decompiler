@@ -23,6 +23,7 @@ interface WorkspaceAsset {
         color_palette: string[];
         evidence_anchors: string[] | Record<string, unknown>[];
         dna_prompt: string;
+        blueprint?: BlueprintData | string | null;
         full_dossier?: {
             narrative_framework?: string;
             semiotic_subtext?: string;
@@ -44,6 +45,7 @@ interface WorkspaceAsset {
         color_palette: string[];
         evidence_anchors: string[] | Record<string, unknown>[];
         dna_prompt: string;
+        blueprint?: BlueprintData | string | null;
         full_dossier?: {
             narrative_framework?: string;
             semiotic_subtext?: string;
@@ -81,6 +83,8 @@ interface SequenceData {
 }
 
 interface BlueprintData {
+    blueprint_id?: string;
+    status?: 'success' | 'error';
     verified_dna_prompt: string;
     execution_constraints: {
         primary_trigger: string;
@@ -101,6 +105,22 @@ interface BlueprintData {
         prompt: string;
     }[];
 }
+
+const parseBlueprint = (value: BlueprintData | string | null | undefined): BlueprintData | null => {
+    if (!value) {
+        return null;
+    }
+
+    if (typeof value === 'string') {
+        try {
+            return JSON.parse(value) as BlueprintData;
+        } catch {
+            return null;
+        }
+    }
+
+    return value;
+};
 
 const ANALYSIS_STEPS = [
     'Extracting visual elements',
@@ -549,9 +569,12 @@ export default function AssetWorkspace({
     const [showGatekeeper, setShowGatekeeper] = useState(false);
     const [showCopiedToast, setShowCopiedToast] = useState(false);
     const [showRadiant, setShowRadiant] = useState(false);
+    const [blueprintError, setBlueprintError] = useState<string | null>(null);
 
     const [sequenceData, setSequenceData] = useState<SequenceData | null>(null);
-    const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(null);
+    const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(
+        parseBlueprint(Array.isArray(initialAsset.extraction) ? initialAsset.extraction[0]?.blueprint : initialAsset.extraction?.blueprint)
+    );
     const [activeAct, setActiveAct] = useState<string | null>(null);
 
     const printRef = useRef<HTMLDivElement>(null);
@@ -561,6 +584,10 @@ export default function AssetWorkspace({
     
     // Parse visual style string if it's stringified JSON
     let parsedStyle = extraction?.visual_style;
+
+    useEffect(() => {
+        setBlueprintData(parseBlueprint(extraction?.blueprint));
+    }, [extraction]);
 
     // Intersection Observer for "Focal Zoom" evolution
     useEffect(() => {
@@ -644,18 +671,40 @@ export default function AssetWorkspace({
             return;
         }
 
+        setBlueprintError(null);
         setIsGeneratingBlueprint(true);
         try {
             const res = await fetch('/api/blueprint', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ assetId: asset.id, brandId: asset.brand_id })
+                body: JSON.stringify({ assetId: asset.id })
             });
-            if (!res.ok) throw new Error("Failed blueprint extraction");
             const data = await res.json();
+
+            if (!res.ok) {
+                const message = typeof data?.message === 'string'
+                    ? data.message
+                    : typeof data?.error === 'string'
+                        ? data.error
+                        : 'Failed blueprint extraction';
+                throw new Error(message);
+            }
+
             setBlueprintData(data);
+            setAsset((current) => {
+                const nextExtraction = Array.isArray(current.extraction)
+                    ? current.extraction.map((item, index) => index === 0 ? { ...item, blueprint: data } : item)
+                    : current.extraction
+                        ? { ...current.extraction, blueprint: data }
+                        : current.extraction;
+
+                return {
+                    ...current,
+                    extraction: nextExtraction,
+                };
+            });
         } catch (err) {
-            // Silently handle or expose explicitly to UI
+            setBlueprintError(err instanceof Error ? err.message : 'Failed blueprint extraction');
         } finally {
             setIsGeneratingBlueprint(false);
         }
@@ -1335,17 +1384,37 @@ export default function AssetWorkspace({
                                 {!blueprintData ? (
                                 <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-10 flex flex-col items-center justify-center text-center rounded-3xl shadow-sm">
                                         <h3 className="text-[#D4A574] text-lg font-light mb-2">Production Blueprint Uninitialized</h3>
-                                        <p className="text-[#FFFFFF]/70 text-sm max-w-sm mb-8">Synthesize the extraction data into elite execution constraints.</p>
+                                        <p className="text-[#FFFFFF]/70 text-sm max-w-sm mb-4">Synthesize the extraction data into elite execution constraints.</p>
+                                        <p className="text-[#D4A574]/60 text-[10px] font-bold uppercase tracking-[0.28em] mb-8">Generated blueprints are now saved to this asset automatically.</p>
+                                        {blueprintError && (
+                                            <div className="max-w-md mb-6 rounded-2xl border border-[#8B4513]/30 bg-[#8B4513]/10 px-5 py-4">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574] mb-2">Blueprint Generation Failed</p>
+                                                <p className="text-sm text-[#FFFFFF]/75 leading-relaxed">{blueprintError}</p>
+                                            </div>
+                                        )}
                                         <button
                                             onClick={handleGenerateBlueprint}
                                             disabled={isGeneratingBlueprint || !extraction}
                                             className="bg-[#D4A574] text-[#1A1A1A] px-8 py-3.5 text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] hover:text-white rounded-full transition-all disabled:opacity-50"
                                         >
-                                            {isGeneratingBlueprint ? 'Synthesizing Blueprint...' : 'Generate Blueprint'}
+                                            {isGeneratingBlueprint ? 'Synthesizing Execution Constraints...' : 'Generate Blueprint'}
                                         </button>
                                     </div>
                                 ) : (
                                     <div className="space-y-12">
+                                        <div className="flex flex-col gap-4 rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-5 md:flex-row md:items-center md:justify-between">
+                                            <div>
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574] mb-2">Production Blueprint Active</p>
+                                                <p className="text-sm text-[#FFFFFF]/70">This blueprint is stored in the Intelligence Vault and will reload when you revisit the asset.</p>
+                                            </div>
+                                            <button
+                                                onClick={handleGenerateBlueprint}
+                                                disabled={isGeneratingBlueprint}
+                                                className="border border-[#D4A574]/40 px-5 py-3 text-[10px] font-bold tracking-widest uppercase text-[#D4A574] rounded-full hover:bg-[#D4A574] hover:text-[#1A1A1A] transition-all disabled:opacity-50"
+                                            >
+                                                {isGeneratingBlueprint ? 'Refreshing...' : 'Regenerate Blueprint'}
+                                            </button>
+                                        </div>
 
                                         {/* Iteration Test Plan (Remixing) */}
                                         {extraction?.full_dossier?.test_plan && (
