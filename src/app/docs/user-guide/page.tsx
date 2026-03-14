@@ -10,7 +10,7 @@ const SECTIONS = [
     {
         title: "The Forensic Mindset",
         icon: <Scan className="w-5 h-5 text-accent" />,
-        content: "The v2.0 dashboard is no longer just a summary; it is an auditable evidence base powered by the Claude 3.5 Sonnet engine.",
+        content: "The v2.0 dashboard is no longer just a summary; it is an auditable evidence base powered by the Claude Sonnet engine.",
         subsections: [
             {
                 subtitle: "1. Unified Persuasion Stack",

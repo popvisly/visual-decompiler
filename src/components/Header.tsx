@@ -35,7 +35,7 @@ export default function Header({ activeTab }: { activeTab?: 'dashboard' | 'analy
                                 : 'text-[#6B6B6B] hover:text-[#141414] hover:bg-white/50'
                                 }`}
                         >
-                            Analytics
+                            Intelligence Pulse
                         </Link>
                         <Link
                             href="/ingest"

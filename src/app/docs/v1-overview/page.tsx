@@ -97,7 +97,7 @@ export default function AgencyOverviewPage() {
                         <div className="p-8 bg-white border border-[#E7DED1] rounded-[2.5rem] shadow-[0_20px_60px_rgba(20,20,20,0.03)]">
                             <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-[#141414] mb-4">What is Sovereign Intelligence?</h2>
                             <p className="text-lg text-[#6B6B6B] font-light leading-relaxed">
-                                Visual Decompiler v2.0 is the Sovereign Intelligence OS. Powered by Claude 3.5 Sonnet and secured by Supabase, it transforms creative assets into forensic insights. It standardizes how elite agencies move from subjective interpretation to auditable proof, SHA-256 asset integrity, and white-labeled strategic dossiers.
+                                Visual Decompiler v2.0 is the Creative Intelligence System. Powered by Claude Sonnet and secured by Supabase, it transforms creative assets into forensic insights. It standardizes how elite agencies move from subjective interpretation to auditable proof, SHA-256 asset integrity, and white-labeled strategic dossiers.
                             </p>
                         </div>
                     </div>

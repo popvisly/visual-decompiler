@@ -7,7 +7,7 @@ const ANALYSIS_SECTIONS = [
     { label: 'Report', desc: 'Trigger mechanics & narrative framework' },
     { label: 'Intelligence', desc: 'Neural thesis & strategic verdict' },
     { label: 'Forensics', desc: 'Evidence anchors & friction zones' },
-    { label: 'Analytics', desc: 'Platform affinity & emotional drivers' },
+    { label: 'Pulse', desc: 'Platform affinity & emotional drivers' },
     { label: 'Prompt', desc: 'Reconstruction blueprint' },
     { label: 'Audience', desc: 'Psychographic persona mapping' },
 ];

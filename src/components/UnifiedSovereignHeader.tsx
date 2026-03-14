@@ -7,14 +7,9 @@ import { Menu, X } from 'lucide-react';
 import Logo from '@/components/Logo';
 import { supabaseClient } from '@/lib/supabase-client';
 
-const PILLARS = [
-    { key: 'intelligence', label: 'Analytics', href: '/compare' },
-    { key: 'pricing', label: 'Pricing', href: '/pricing' },
-    { key: 'help', label: 'Help Center', href: '/help' },
-] as const;
-
 function isActive(pathname: string, href: string): boolean {
     if (href === '/vault') return pathname === '/vault';
+    if (href.startsWith('/#')) return pathname === '/';
     return pathname.startsWith(href);
 }
 
@@ -38,6 +33,18 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
             authListener.subscription.unsubscribe();
         };
     }, []);
+
+    const navItems = isAuthenticated
+        ? [
+            { key: 'vault', label: 'Vault', href: '/vault' },
+            { key: 'pulse', label: 'Intelligence Pulse', href: '/compare' },
+            { key: 'help', label: 'Help Center', href: '/docs/user-guide' },
+        ]
+        : [
+            { key: 'how', label: 'How It Works', href: '/#features' },
+            { key: 'pricing', label: 'Pricing', href: '/pricing' },
+            { key: 'help', label: 'Help Center', href: '/docs/user-guide' },
+        ] as const;
 
     return (
         <header className="fixed top-8 inset-x-0 z-50 pointer-events-none px-4 md:px-8">
@@ -63,7 +70,7 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
 
                     {/* ── Center: Desktop Pillars ── */}
                     <nav className="hidden md:flex flex-1 justify-center items-center gap-4">
-                            {PILLARS.map((p) => {
+                            {navItems.map((p) => {
                                 const active = isActive(pathname, p.href);
                                 return (
                                     <Link
@@ -94,10 +101,6 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                         <div className="hidden md:block">
                             {isAuthenticated ? (
                                 <div className="flex items-center justify-end gap-3">
-                                    <div className={`flex flex-col items-end text-[9px] font-bold tracking-[0.2em] uppercase hidden lg:flex whitespace-nowrap ${forceDark ? 'text-gray-400' : 'text-[#141414]/60'}`}>
-                                        <span>ENTER THE VAULT FOR</span>
-                                        <span>FURTHER FORENSIC ANALYSIS &gt;</span>
-                                    </div>
                                     <Link
                                         href="/vault"
                                         className={`
@@ -106,8 +109,8 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                                             text-[10px] font-bold tracking-[0.2em] uppercase
                                             transition-all duration-300 whitespace-nowrap
                                             ${forceDark
-                                                ? 'bg-white text-black border-white hover:bg-neutral-200'
-                                                : 'bg-black text-white hover:bg-neutral-800 border-black'
+                                                ? 'bg-transparent text-white border-white/60 hover:border-white hover:bg-white/10'
+                                                : 'bg-transparent text-black border-black/40 hover:border-black hover:bg-black/5'
                                             }
                                         `}
                                     >
@@ -147,7 +150,7 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                 {/* ── Mobile Menu ── */}
                 {mobileOpen && (
                     <div className="pointer-events-auto md:hidden mt-2 rounded-none bg-black border border-neutral-800 shadow-xl p-4 space-y-2 animate-in fade-in slide-in-from-top-2 duration-200">
-                        {PILLARS.map((p) => {
+                        {navItems.map((p) => {
                             const active = isActive(pathname, p.href);
                             return (
                                 <Link

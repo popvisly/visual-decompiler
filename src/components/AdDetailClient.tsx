@@ -194,7 +194,7 @@ export default function AdDetailClient({
                                         { key: 'report', label: 'Report' },
                                         { key: 'intelligence', label: 'Intelligence' },
                                         { key: 'forensics', label: 'Forensics' },
-                                        { key: 'analytics', label: 'Analytics' },
+                                        { key: 'analytics', label: 'Pulse' },
                                         { key: 'prompt', label: 'Prompt' },
                                         { key: 'audience', label: 'Audience' },
                                         { key: 'remix', label: 'Remix' },

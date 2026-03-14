@@ -5,23 +5,23 @@ import Image from 'next/image';
 
 const PERSONAS = [
     {
-        category: "THE STRATEGISTS",
-        objective: "Market Intelligence & Narrative Mapping",
-        roles: "For CMOs and Brand Leads who require a high-level view of the competitive landscape. Use the engine to deconstruct the visual DNA of market shifts, identify emerging semiotic patterns, and map the \"invisible\" mechanics of persuasion used by competitors to command market share.",
+        category: "NEW BUSINESS LEAD",
+        objective: "Pitch Prep & Competitive Framing",
+        roles: "Walk into the pitch with differential proof instead of opinion. Compare competitor assets, isolate the strategic delta, and turn the strongest patterns into client-facing ammunition.",
         image: "/images/personas/c-levels.png",
         color: "#C1A67B"
     },
     {
-        category: "THE OPTIMIZERS",
-        objective: "Performance Lifting & Variable Isolation",
-        roles: "For Growth and UA Specialists who manage high-stakes ad spend. Isolate the specific psychological triggers and \"Evidence Anchors\" that correlate with conversion. Move beyond creative guesswork by using forensic deconstruction to identify why specific assets scale while others fail.",
+        category: "STRATEGY DIRECTOR",
+        objective: "Landscape Mapping & Mechanic Intelligence",
+        roles: "Use the Intelligence Vault as a living competitive archive. Track recurring trigger mechanics, semiotic codes, and category shifts across brands before they become mainstream.",
         image: "/images/personas/analytics.png",
         color: "#C1A67B"
     },
     {
-        category: "THE DIRECTORS",
-        objective: "Creative Translation & Briefing Precision",
-        roles: "For Creative Directors and Art Directors who bridge the gap between data and execution. Decompile winning references into objective, technical blueprints. Use the tool's analytics to provide production teams with high-fidelity briefs that eliminate subjective interpretation and creative drift.",
+        category: "CREATIVE DIRECTOR",
+        objective: "Creative Translation & Blueprint Precision",
+        roles: "Translate winning references into technical direction the team can actually build from. Move from taste-based interpretation to concrete production cues, narrative mechanics, and execution-ready briefs.",
         image: "/images/personas/creatives.png",
         color: "#C1A67B"
     }
@@ -38,16 +38,16 @@ export default function PersonaGrid() {
                 <div className="text-center mb-24 md:mb-32 space-y-8">
                     <div className="flex flex-col items-center gap-4">
                         <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#C1A67B]">
-                            Competitive Intelligence
+                            Who Deploys It
                         </span>
                         <h2 className="text-4xl md:text-7xl font-semibold text-[#FBF7EF] tracking-tightest uppercase leading-[0.9]">
-                            Built for every stage<br />
-                            <span className="text-[#C1A67B]">of the Strategy Loop.</span>
+                            Built for the people
+                            <br />
+                            <span className="text-[#C1A67B]">who turn reference into advantage.</span>
                         </h2>
                     </div>
                     <p className="text-base md:text-lg text-[#FBF7EF]/40 max-w-2xl mx-auto leading-relaxed font-medium">
-                        From C-suite macro intelligence to creative execution and pulse-monitoring.
-                        A unified platform to deconstruct, synthesise, and outpace the market.
+                        From pitch preparation to market mapping to creative direction, each view turns invisible persuasion structure into something an agency team can use immediately.
                     </p>
                 </div>
 

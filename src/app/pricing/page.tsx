@@ -30,7 +30,7 @@ const PLANS = [
         interval: '/mo',
         description: 'Professional-grade deconstruction for brand strategists and creative leads.',
         features: [
-            'Sonnet 4.5 AI Engine (Pro)',
+            'Sonnet 4.6 AI Engine (Pro)',
             'Extended thinking analysis',
             '100 deconstructions / month',
             'Advanced Trend Forensics',
@@ -40,7 +40,7 @@ const PLANS = [
         ],
         cta: 'Upgrade to Pro',
         highlight: true,
-        model: 'Sonnet 4.5',
+        model: 'Sonnet 4.6',
         costPerAnalysis: '$0.49',
     },
     {
@@ -215,7 +215,7 @@ export default function PricingPage() {
                                 $5 <span className="text-lg opacity-40">per analysis</span>
                             </h3>
                             <p className="text-sm text-[#6B6B6B] font-light mb-6 max-w-sm">
-                                Perfect for one-off projects. Get instant Pro-tier (Sonnet 4.5) analysis without a subscription.
+                                Perfect for one-off projects. Get instant Pro-tier (Sonnet 4.6) analysis without a subscription.
                             </p>
                             <button
                                 onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_ONETIME || 'price_1T64V10LZZUO4xz4jug67wyT')}
@@ -279,7 +279,7 @@ export default function PricingPage() {
                                 {
                                     capability: 'AI Model',
                                     observer: 'Haiku 4.5 (Fast)',
-                                    pro: 'Sonnet 4.5 (Pro)',
+                                    pro: 'Sonnet 4.6 (Pro)',
                                     sovereign: 'Opus 4.6 (Premium)'
                                 },
                                 {

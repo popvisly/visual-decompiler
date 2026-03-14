@@ -10,7 +10,7 @@ const HIGHLIGHTS = [
     {
         title: "Forensic Evidence Infrastructure",
         icon: <ShieldCheck className="w-5 h-5 text-accent" />,
-        items: ["Sovereign Ingestion (SHA-256 Hashing)", "Deep Claude 3.5 Sonnet extraction"]
+        items: ["Sovereign Ingestion (SHA-256 Hashing)", "Deep Claude Sonnet extraction"]
     },
     {
         title: "Operational Test Planning",
@@ -86,7 +86,7 @@ export default function ReleaseNotesPage() {
                         <Sparkles className="w-10 h-10 text-accent mb-6" />
                         <h2 className="text-2xl font-light uppercase tracking-tight text-[#141414] mb-4">Stable Standard v2.0</h2>
                         <p className="text-sm text-[#6B6B6B] font-light mb-8 max-w-lg">
-                            This release formalizes the Sovereign Intelligence architecture and integrates Claude 3.5 Sonnet across the entire tactical dashboard.
+                            This release formalizes the Sovereign Intelligence architecture and integrates Claude Sonnet across the entire tactical dashboard.
                         </p>
                         <Link href="/docs/schema-contract" className="text-[10px] font-bold uppercase tracking-widest text-[#141414] border-b-2 border-[#141414]/10 hover:border-accent transition-all pb-1">
                             View technical specification

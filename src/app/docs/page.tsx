@@ -74,7 +74,7 @@ const STRATEGIC_TERMS = [
     },
     {
         term: 'Sovereign Score',
-        definition: 'A proprietary aggregate metric combining Market Resonance and Tactical Window into a single intelligence index. Derived using the Claude 3.5 Sonnet neural pipeline for maximum forensic fidelity.',
+        definition: 'A proprietary aggregate metric combining Market Resonance and Tactical Window into a single intelligence index. Derived using the Claude Sonnet neural pipeline for maximum forensic fidelity.',
     },
     {
         term: 'Neural Verdict',
@@ -97,7 +97,7 @@ const DOSSIER_SECTIONS = [
     },
     {
         title: 'Privacy & Sovereignty',
-        content: 'All intelligence is processed via the Claude 3.5 Sonnet pipeline on infrastructure secured by Supabase Sovereign Auth. Each export includes a Data Sovereignty notice and SHA-256 integrity fingerprint.',
+        content: 'All intelligence is processed via the Claude Sonnet pipeline on infrastructure secured by Supabase Sovereign Auth. Each export includes a Data Sovereignty notice and SHA-256 integrity fingerprint.',
     },
 ];
 
@@ -106,7 +106,7 @@ const HELP_ARTICLES = [
         title: "Visual Decompiler v2.0 (Sovereign Intelligence) — Overview",
         slug: "v1-overview",
         category: "Milestones",
-        desc: "Forensic, evidence-backed insights powered by the Claude 3.5 Sonnet neural pipeline.",
+        desc: "Forensic, evidence-backed insights powered by the Claude Sonnet neural pipeline.",
         keywords: "v2.0, sovereign, intelligence, overview, receipts, safe zone, survivability, risk flags, sonnet"
     },
     {

@@ -40,7 +40,7 @@ export default function SchemaContractPage() {
                         </h1>
                         <p className="text-xl text-white/50 font-light leading-relaxed max-w-2xl">
                             Defining the formal data structure for the v2.0 forensic engine.
-                            Powered by Claude 3.5 Sonnet and SHA-256 hash integrity.
+                            Powered by Claude Sonnet and SHA-256 hash integrity.
                         </p>
                     </div>
 
