@@ -51,7 +51,7 @@ export default function AdAnalyticsTab({ brand }: { brand?: string | null }) {
                     <Activity className="w-8 h-8 text-[#D4A574]/50" />
                     <p className="text-[#FFFFFF] font-medium text-sm tracking-tight">Insufficient data for statistical significance.</p>
                     <p className="text-[#D4A574]/70 font-bold text-[10px] max-w-md uppercase tracking-[0.2em] leading-relaxed px-8">
-                        Market Analytics require a broader competitive set. 
+                        Market Pulse requires a broader competitive set.
                         Ingest more assets for {brand ? <span className="text-[#D4A574]">{brand}</span> : <span className="text-[#D4A574]">this category</span>} to unlock saturation metrics.
                     </p>
                 </div>

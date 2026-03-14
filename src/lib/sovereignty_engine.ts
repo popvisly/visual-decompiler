@@ -81,7 +81,7 @@ export class SovereigntyEngine {
     }
 
     /**
-     * Generates a high-level executive briefing using Claude 3.5 Sonnet or GPT-4o.
+     * Generates a high-level executive briefing using Claude Sonnet or GPT-4o.
      */
     static async generateBriefing(metrics: AgencyMetrics): Promise<ExecutiveBriefing> {
         const systemPrompt = `You are the Executive Command Intelligence of the Strategic Laboratory. 
@@ -89,7 +89,7 @@ export class SovereigntyEngine {
                     
                     Metrics:
                     - Total Strategic Boards: ${metrics.totalBoards}
-                    - Active Analytics: ${metrics.totalAds} ads
+                    - Active Intelligence Vault assets: ${metrics.totalAds} ads
                     - Anomaly Detection: ${metrics.anomalyCount} active clusters
                     - Prediction Accuracy: ${metrics.predictionAccuracy * 100}%
                     - Trend Resonance: ${metrics.trendResonance * 100}%

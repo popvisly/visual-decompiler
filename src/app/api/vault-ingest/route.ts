@@ -9,6 +9,22 @@ import { assertUsageAvailable } from '@/lib/usage';
 export const maxDuration = 300; // 5 minutes max function duration for Pro/Enterprise tier
 export const dynamic = 'force-dynamic';
 
+function coerceString(value: unknown, fallback = '') {
+    if (typeof value === 'string') {
+        return value;
+    }
+
+    if (value == null) {
+        return fallback;
+    }
+
+    try {
+        return JSON.stringify(value);
+    } catch {
+        return fallback;
+    }
+}
+
 export async function POST(req: Request) {
     try {
         const session = await getServerSession(req);
@@ -57,10 +73,12 @@ export async function POST(req: Request) {
         let buffer: Buffer;
         let fileExt = 'png';
         let mimeType = 'image/jpeg';
+        let brandHint = '';
 
         if (contentType.includes('application/json')) {
             const body = await req.json();
             const mediaUrl = body.mediaUrl;
+            brandHint = typeof body.brandName === 'string' ? body.brandName.trim() : '';
             if (!mediaUrl) {
                 return NextResponse.json({ error: 'No mediaUrl provided.' }, { status: 400 });
             }
@@ -94,6 +112,7 @@ export async function POST(req: Request) {
         } else if (contentType.includes('multipart/form-data')) {
             const formData = await req.formData();
             const file = formData.get('file') as File | null;
+            brandHint = typeof formData.get('brandName') === 'string' ? String(formData.get('brandName')).trim() : '';
 
             if (!file) {
                 return NextResponse.json({ error: 'No file uploaded.' }, { status: 400 });
@@ -165,15 +184,16 @@ export async function POST(req: Request) {
         }
         const model = getClaudeModel('agency');
 
-        const systemPrompt = `You are an elite forensic advertising strategist, creative director, and semiotician. Analyse the given asset (static image or video frame) and extract its core strategic and semiotic DNA.
-CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact schema. Do NOT omit any keys. Provide forensic, multi-paragraph deep-dives for Narrative, Semiotics, and Archetypes. Maintain an elite, clinical, and highly specialized tone.
+        const systemPrompt = `You are the Visual Decompiler: an elite forensic intelligence system that reverse-engineers the persuasion architecture of advertising.
+You are not a sentiment analyzer. You are not a description tool. You are a structural X-ray machine for commercial creative.
+Return a single valid JSON object matching this schema exactly. No markdown. No commentary outside the JSON.
 
 {
   "brand_name_guess": "Brand Name",
   "market_sector_guess": "Industry Category",
   "confidence_score": 95,
-  "primary_mechanic": "Status Signaling via Negative Space",
-  "visual_style": "Brutalist Minimalism",
+  "primary_mechanic": "Specific named persuasion mechanic",
+  "visual_style": "Dense synthesized visual style summary",
   "color_palette": ["#000000", "#FFFFFF", "#FF0000"],
   "evidence_anchors": [
     {
@@ -183,7 +203,7 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
       "visual_anchor": "string"
     }
   ],
-  "dna_prompt": "A single sentence summary combining style and mechanic",
+  "dna_prompt": "A single dense sentence that can reconstruct the aesthetic in image-generation tools",
   "full_dossier": {
     "narrative_framework": "[OVERTURE] A brief one-paragraph intro. \n\nACT I: THE HOOK — Multi-paragraph forensic deconstruction. \n\nACT II: THE CONFLICT — Multi-paragraph strategic deconstruction. \n\nACT III: THE RESOLUTION — Multi-paragraph resolution deconstruction.",
     "semiotic_subtext": "[OVERTURE] A brief intro. \n\nCHANNEL 1: VISUAL GRAMMAR — Analysis. \n\nCHANNEL 2: CULTURAL SEMIOTICS — Analysis. \n\nCHANNEL 3: PSYCHOLOGICAL TRIGGERS — Analysis.",
@@ -232,15 +252,21 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
       { "lens": "Feminist", "reading": "One precise sentence on gender power structures" },
       { "lens": "Post-Colonial", "reading": "One precise sentence on cultural/racial address, including any inadvertent cultural appropriation risks or First Nations (Indigenous Australian) representation concerns" },
       { "lens": "Queer Theory", "reading": "One precise sentence on heteronormativity or subversion" }
-    ]
+    ],
+    "competitive_displacement": "One concise paragraph explaining how this asset displaces category norms or where it fails to create strategic distance."
   }
 }
 
-CRITICAL: The 'narrative_framework' MUST use the 'ACT I: [TITLE]' format and the 'semiotic_subtext' MUST use the 'CHANNEL 1: [TITLE]' format.
-CRITICAL: For 'radiant_architecture', analyse the actual image composition. 'x' and 'y' are percentage coordinates (0-100) of where the viewer's eye is drawn. Anchor 1 should be where the eye FIRST lands, Anchor 2 where it travels next, and Anchor 3 where it settles. The 'escape_vector' angle (0-360 degrees, 0=right, 90=down) marks where visual momentum exits the frame. Provide realistic coordinates based on the ACTUAL layout, do NOT use the example values.
-CRITICAL: For 'gaze_topology', analyse whether the subject(s) look directly at the camera (direct) or away (averted). Determine if the viewer is positioned as a voyeur, participant, aspirant, or confronted. For 'counter_reading_matrix', provide genuinely critical readings — do NOT soften or hedge. Each lens must identify a specific power dynamic or ideological tension.
-
-STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive fluff to ensure the entire JSON payload fits within the 8,192 token window. Ensure 'trigger_distribution' keys (Status, Scarcity, Utility, Authority, Social Proof) map to integers 0-100. Similarly 'cognitive_friction' and 'persuasion_density' should be integers 0-100.`;
+RULES:
+- Treat this as a 13-dimension forensic extraction, with competitive_displacement as Dimension 13.
+- Every claim must be grounded in something visually present in the asset.
+- The narrative_framework MUST use ACT I / ACT II / ACT III headings.
+- The semiotic_subtext MUST use CHANNEL 1 / CHANNEL 2 / CHANNEL 3 headings.
+- For radiant_architecture, use realistic coordinates based on the actual composition.
+- For gaze_topology and counter_reading_matrix, be precise and genuinely critical rather than softened.
+- Ensure trigger_distribution values are integers from 0-100.
+- Ensure cognitive_friction and persuasion_density are integers from 0-100.
+- Keep the writing dense, clinical, and premium, but concise enough to fit within the response window.`;
 
         const base64Data = buffer.toString('base64');
 
@@ -250,7 +276,10 @@ STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive 
             | { type: "image"; source: { type: "base64"; media_type: AuthImageMedia; data: string } };
 
         const userContent: ContentBlock[] = [
-            { type: "text", text: "Analyse this asset and provide the full 5-page forensic extraction dossier." },
+            {
+                type: "text",
+                text: `Perform a complete forensic extraction on this advertisement and return the full 13-dimension dossier.${brandHint ? ` Brand hint: ${brandHint}. Use it only if the asset evidence supports it.` : ''}`
+            },
             {
                 type: "image",
                 source: {
@@ -303,15 +332,24 @@ STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive 
             throw new Error(`Forensic data corruption (Invalid JSON). Technical: ${jsonError.message}`);
         }
 
+        const normalizedColorPalette = Array.isArray(extractionResult.color_palette)
+            ? extractionResult.color_palette.filter((value: unknown) => typeof value === 'string')
+            : [];
+        const normalizedEvidenceAnchors = Array.isArray(extractionResult.evidence_anchors)
+            ? extractionResult.evidence_anchors
+            : [];
+        const normalizedVisualStyle = coerceString(extractionResult.visual_style, 'Forensic visual style unavailable.');
+        const normalizedDnaPrompt = coerceString(extractionResult.dna_prompt, 'DNA prompt unavailable.');
+
         // 6. Dynamic Brand Binding
         let targetBrandId = null;
-        const brandName = extractionResult.brand_name_guess || 'Unknown Brand';
+        const resolvedBrandName = brandHint || extractionResult.brand_name_guess || 'Unknown Brand';
         const marketSector = extractionResult.market_sector_guess || 'Uncategorized';
 
         // Check if brand exists in Intelligence Vault
         const { data: existingBrand } = await supabaseAdmin.from('brands')
             .select('id')
-            .ilike('name', brandName)
+            .ilike('name', resolvedBrandName)
             .limit(1)
             .maybeSingle();
 
@@ -323,7 +361,7 @@ STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive 
             if (!agencies) throw new Error("No Agency found to anchor new Brand.");
             
             const { data: newBrand, error: newBrandError } = await supabaseAdmin.from('brands').insert({
-                name: brandName,
+                name: resolvedBrandName,
                 market_sector: marketSector,
                 agency_id: agencies.id
             }).select('id').single();
@@ -347,10 +385,10 @@ STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive 
             asset_id: assetData.id,
             confidence_score: extractionResult.confidence_score,
             primary_mechanic: extractionResult.primary_mechanic,
-            visual_style: extractionResult.visual_style,
-            color_palette: extractionResult.color_palette,
-            evidence_anchors: extractionResult.evidence_anchors,
-            dna_prompt: extractionResult.dna_prompt,
+            visual_style: normalizedVisualStyle,
+            color_palette: normalizedColorPalette,
+            evidence_anchors: normalizedEvidenceAnchors,
+            dna_prompt: normalizedDnaPrompt,
             full_dossier: extractionResult.full_dossier
         });
 

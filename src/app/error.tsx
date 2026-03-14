@@ -1,5 +1,6 @@
 'use client';
 
+import * as Sentry from "@sentry/nextjs";
 import { useEffect } from 'react';
 
 export default function RootErrorBoundary({
@@ -10,8 +11,7 @@ export default function RootErrorBoundary({
     reset: () => void;
 }) {
     useEffect(() => {
-        // Log the error to an error reporting service
-        // TODO: Integrate Sentry or similar error tracking
+        Sentry.captureException(error);
         console.error("Root error boundary caught:", error);
     }, [error]);
 
