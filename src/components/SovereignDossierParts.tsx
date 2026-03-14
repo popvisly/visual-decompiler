@@ -5,23 +5,30 @@ import React from 'react';
 interface Agency {
     name?: string;
     whitelabel_logo?: string;
+    logo_url?: string;
     primary_hex?: string;
     tier?: string;
     is_whitelabel_active?: boolean;
+    descriptor?: string;
+    contact_email?: string;
+    confidentiality_notice?: string;
 }
 
 export const SovereignPrintHeader = ({ agency }: { agency: Agency | null }) => {
     if (!agency) return null;
 
+    const logoSrc = agency.logo_url || agency.whitelabel_logo;
+    const descriptor = agency.descriptor || 'Forensic Intelligence Briefing';
+
     return (
         <div className="print-only flex flex-col items-center justify-center w-full py-12 border-b-2 mb-12" style={{ borderColor: agency.primary_hex || '#141414' }}>
-            {agency.whitelabel_logo ? (
-                <img src={agency.whitelabel_logo} alt={agency.name} className="h-16 mb-4 object-contain" />
+            {logoSrc ? (
+                <img src={logoSrc} alt={agency.name} className="h-16 mb-4 object-contain" />
             ) : (
                 <div className="w-12 h-12 bg-black rounded-sm mb-4 flex items-center justify-center text-white font-bold text-xl">V</div>
             )}
             <h1 className="text-3xl font-light tracking-[0.2em] uppercase text-black">{agency.name || 'STRATEGIC DOSSIER'}</h1>
-            <div className="mt-2 text-[10px] font-mono tracking-[0.3em] uppercase text-neutral-400">Forensic Intelligence Briefing</div>
+            <div className="mt-2 text-[10px] font-mono tracking-[0.3em] uppercase text-neutral-400">{descriptor}</div>
         </div>
     );
 };
@@ -31,6 +38,8 @@ export const SovereignPrintFooter = ({ agency, assetId }: { agency: Agency | nul
     const timestamp = new Date().toISOString();
     const date = new Date().toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' });
     const time = new Date().toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', hour12: false });
+    const contact = agency?.contact_email || 'hello@visualdecompiler.com';
+    const confidentialityNotice = agency?.confidentiality_notice || 'This Strategic Dossier is prepared exclusively for the named recipient. Contents are confidential and may not be distributed without written consent.';
 
     // Generate unique ingestion_id (epoch-based forensic identifier)
     const ingestionId = `VD-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
@@ -43,6 +52,7 @@ export const SovereignPrintFooter = ({ agency, assetId }: { agency: Agency | nul
                     <p className="text-[8px] font-bold tracking-[0.25em] uppercase text-[#C1A67B]">Classification: Confidential / Forensic</p>
                     <p className="text-[9px] font-mono text-[#141414] uppercase">Ingestion ID: {ingestionId}</p>
                     <p className="text-[8px] font-mono text-[#141414]/60 uppercase">Asset ID: {assetId}</p>
+                    <p className="text-[8px] font-mono text-[#141414]/60">{contact}</p>
                 </div>
 
                 <div className="text-right space-y-1">
@@ -75,6 +85,9 @@ export const SovereignPrintFooter = ({ agency, assetId }: { agency: Agency | nul
                     <p className="text-[7px] tracking-[0.4em] uppercase text-[#141414]/30">End of Sovereign Briefing</p>
                 </div>
             </div>
+            <p className="mt-6 text-center text-[8px] leading-relaxed text-[#141414]/55 max-w-[680px]">
+                {confidentialityNotice}
+            </p>
         </div>
     );
 };
