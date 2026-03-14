@@ -298,9 +298,9 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                 </div>
             )}
 
-            {/* Narrative acts stay full-width; channels can remain side-by-side */}
+            {/* Keep dossier sections vertically stacked to preserve reading width */}
             {blocks.length > 0 && (
-                <div className={type === 'ACT' ? 'space-y-8' : 'grid grid-cols-1 md:grid-cols-3 gap-8'}>
+                <div className="space-y-8">
                     {blocks.map((block, i) => (
                         <div
                             key={i}
@@ -337,13 +337,17 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                 </>
                             ) : (
                                 <>
-                                    <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
-                                        {block.label}: {block.title}
+                                    <div className="flex items-center gap-3 mb-5">
+                                        <div className="w-2 h-2 rounded-full bg-[#D4A574]/60" />
+                                        <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.35em]">{block.label}</span>
+                                    </div>
+                                    <h3 className="text-[1.75rem] md:text-[2rem] font-bold uppercase tracking-tight text-[#F5F3EE] pb-5 border-b border-[#D4A574]/20">
+                                        {block.title}
                                     </h3>
-                                    <div className="flex-1 max-h-[400px] overflow-y-auto">
+                                    <div className="flex-1 pt-6">
                                         <div className="space-y-4">
                                             {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
-                                                <p key={pi} className="text-[12px] text-[#FFFFFF]/70 leading-relaxed font-light">
+                                                <p key={pi} className="text-[15px] text-[#FFFFFF]/70 leading-9 font-light">
                                                     {paragraph.trim()}
                                                 </p>
                                             ))}
