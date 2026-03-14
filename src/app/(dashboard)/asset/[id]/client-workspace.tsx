@@ -950,13 +950,28 @@ export default function AssetWorkspace({
                                 <div className="flex flex-col items-end gap-2 relative">
                                     <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
                                     <div className="flex items-center gap-2">
-                                        <button
-                                            onClick={handleCopyEmbed}
-                                            className="no-print flex items-center gap-2 px-4 py-2 bg-[#1A1A1A] border border-[#D4A574]/30 text-[#D4A574] text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A]/80 rounded-full transition-all"
-                                        >
-                                            <Code className="w-3 h-3" />
-                                            Copy Embed Widget
-                                        </button>
+                                        <div className="relative group">
+                                            <button
+                                                onClick={handleCopyEmbed}
+                                                className="no-print flex items-center gap-2 px-4 py-2 bg-[#1A1A1A] border border-[#D4A574]/30 text-[#D4A574] text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A]/80 rounded-full transition-all"
+                                            >
+                                                <Code className="w-3 h-3" />
+                                                Copy Embed Widget
+                                                <Info className="w-3 h-3 text-[#D4A574]/70" />
+                                            </button>
+                                            <div className="pointer-events-none absolute right-0 top-full z-40 mt-3 w-[320px] rounded-[1.5rem] border border-[#D4A574]/20 bg-[#141414] p-5 text-left opacity-0 shadow-2xl transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 translate-y-1">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#D4A574]">Embed Widget</p>
+                                                <p className="mt-3 text-[12px] leading-relaxed text-[#FFFFFF]/70">
+                                                    Paste this iFrame into a client portal, strategy deck, Notion page, or internal dashboard to display a self-contained forensic intelligence panel.
+                                                </p>
+                                                <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-[#D4A574]/60">
+                                                    Use for: client-facing reports · internal strategy decks · agency dashboards
+                                                </p>
+                                                <pre className="mt-4 overflow-x-auto rounded-2xl border border-[#D4A574]/10 bg-black/30 p-3 text-[10px] leading-relaxed text-[#FFFFFF]/75">
+{`<iframe src="visualdecompiler.com/embed/${asset.id}" width="100%" height="600px" />`}
+                                                </pre>
+                                            </div>
+                                        </div>
                                         <button
                                             onClick={handleExportDossier}
                                             className="no-print flex items-center gap-2 px-4 py-2 bg-[#4A4A4A] text-white text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] rounded-full transition-all"
