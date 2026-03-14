@@ -53,6 +53,17 @@ export default function DifferentialDiagnosticsPage() {
     const [status, setStatus] = useState<'idle' | 'analysing' | 'success' | 'error'>('idle');
     const [result, setResult] = useState<DifferentialDiagnosticResponse | null>(null);
     const [agency, setAgency] = useState<{ name: string; is_whitelabel_active: boolean } | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [analysisProgress, setAnalysisProgress] = useState(0);
+    const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    const [loadingLabelIndex, setLoadingLabelIndex] = useState(0);
+
+    const loadingLabels = [
+        'Isolating persuasion deltas',
+        'Comparing trigger mechanics',
+        'Mapping strategic divergence',
+        'Synthesizing conversion impact',
+    ];
 
     useEffect(() => {
         async function fetchAgency() {
@@ -116,17 +127,26 @@ export default function DifferentialDiagnosticsPage() {
         if (!assetA || !assetB) return;
         setStatus('analysing');
         setResult(null);
+        setErrorMessage(null);
+        setAnalysisProgress(7);
+        setElapsedSeconds(0);
+        setLoadingLabelIndex(0);
         try {
             const res = await fetch('/api/compare', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ assetAId: assetA.id, assetBId: assetB.id })
             });
-            if (!res.ok) throw new Error("Analyse failed");
             const data = await res.json();
+            if (!res.ok) {
+                throw new Error(data?.error || 'Differential diagnostic failed');
+            }
+            setAnalysisProgress(100);
             setResult(data);
             setStatus('success');
         } catch (err) {
+            const message = err instanceof Error ? err.message : 'Differential diagnostic failed';
+            setErrorMessage(message);
             setStatus('error');
         }
     };
@@ -137,11 +157,40 @@ export default function DifferentialDiagnosticsPage() {
             setAssetB(null);
             setResult(null);
             setStatus('idle');
+            setErrorMessage(null);
+            setAnalysisProgress(0);
+            setElapsedSeconds(0);
             localStorage.removeItem('pulse_asset_a');
             localStorage.removeItem('pulse_asset_b');
             localStorage.removeItem('pulse_results');
         }
     };
+
+    useEffect(() => {
+        if (status !== 'analysing') return;
+
+        const progressInterval = setInterval(() => {
+            setAnalysisProgress((prev) => {
+                if (prev >= 95) return 95;
+                const increment = prev < 45 ? 6 : prev < 75 ? 4 : 2;
+                return Math.min(95, prev + increment);
+            });
+        }, 1400);
+
+        const elapsedInterval = setInterval(() => {
+            setElapsedSeconds((prev) => prev + 1);
+        }, 1000);
+
+        const labelInterval = setInterval(() => {
+            setLoadingLabelIndex((prev) => (prev + 1) % loadingLabels.length);
+        }, 2600);
+
+        return () => {
+            clearInterval(progressInterval);
+            clearInterval(elapsedInterval);
+            clearInterval(labelInterval);
+        };
+    }, [status]);
 
     const chartData = result?.radar_metrics.axes.map((axis, i) => ({
         subject: axis,
@@ -183,16 +232,56 @@ export default function DifferentialDiagnosticsPage() {
 
             <div className="relative z-10 p-8 md:p-12 lg:p-16 max-w-[1600px] mx-auto">
                 {/* Header Actions */}
-                <div className="flex justify-end mb-8">
-                    <button 
-                        onClick={handleReset}
-                        className="group flex items-center gap-3 px-6 py-3 border border-[#1A1A1A]/10 hover:border-[#D4A574]/40 rounded-full transition-all bg-white/40 backdrop-blur-sm"
-                    >
-                        <div className="w-1.5 h-1.5 bg-[#D4A574]/40 group-hover:bg-[#D4A574] rounded-full transition-colors" />
-                        <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A]/40 group-hover:text-[#D4A574] transition-colors">
-                            [ RESET LABORATORY ]
-                        </span>
-                    </button>
+                <div className="flex flex-col gap-8 mb-8">
+                    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 border-b border-[#D4A574]/20 pb-8">
+                        <div>
+                            <p className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#D4A574] mb-4">Intelligence Pulse</p>
+                            <h1 className="text-4xl md:text-6xl font-light tracking-tightest uppercase text-[#1A1A1A] leading-[0.92]">
+                                Differential
+                                <br />
+                                Diagnostic
+                            </h1>
+                            <p className="mt-5 max-w-2xl text-[12px] font-medium uppercase tracking-[0.18em] text-[#1A1A1A]/45">
+                                Choose two assets from the Intelligence Vault and surface the strategic delta, persuasion lift, and fatigue gap.
+                            </p>
+                        </div>
+
+                        <div className="flex justify-end">
+                            <button 
+                                onClick={handleReset}
+                                className="group flex items-center gap-3 px-6 py-3 border border-[#1A1A1A]/10 hover:border-[#D4A574]/40 rounded-full transition-all bg-white/40 backdrop-blur-sm"
+                            >
+                                <div className="w-1.5 h-1.5 bg-[#D4A574]/40 group-hover:bg-[#D4A574] rounded-full transition-colors" />
+                                <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A]/40 group-hover:text-[#D4A574] transition-colors">
+                                    [ RESET LABORATORY ]
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {status === 'analysing' && (
+                        <div className="rounded-[2rem] border border-[#D4A574]/20 bg-white/70 px-6 py-6 shadow-sm">
+                            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                <div>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#D4A574]">
+                                        {loadingLabels[loadingLabelIndex]}
+                                    </p>
+                                    <p className="mt-2 text-[11px] font-mono uppercase tracking-[0.14em] text-[#1A1A1A]/45">
+                                        Elapsed {elapsedSeconds}s
+                                    </p>
+                                </div>
+                                <div className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#1A1A1A]/55">
+                                    {analysisProgress}% complete
+                                </div>
+                            </div>
+                            <div className="mt-5 h-2 overflow-hidden rounded-full bg-[#EDE8DE]">
+                                <div
+                                    className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-1000"
+                                    style={{ width: `${analysisProgress}%` }}
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Lab Panels Section */}
@@ -253,6 +342,9 @@ export default function DifferentialDiagnosticsPage() {
                                 <span className="block text-[12px] font-bold tracking-[0.5em] uppercase text-[#D4A574]">
                                     AWAITING DIFFERENTIAL PARSING...
                                 </span>
+                                <p className="pt-3 text-[11px] font-mono uppercase tracking-[0.15em] text-[#1A1A1A]/35">
+                                    Select two extracted assets to begin.
+                                </p>
                             </div>
                         </div>
                     )}
@@ -268,14 +360,35 @@ export default function DifferentialDiagnosticsPage() {
                             <div className="w-full max-w-md space-y-4">
                                 <div className="flex justify-between items-end">
                                     <span className="text-[10px] font-bold tracking-[0.5em] uppercase text-[#D4A574] animate-pulse">
-                                        CALIBRATING PERSUASION DELTA...
+                                        {loadingLabels[loadingLabelIndex].toUpperCase()}...
                                     </span>
-                                    <span className="text-[9px] font-mono text-[#D4A574]/40">EST_LOAD: 8.2s</span>
+                                    <span className="text-[9px] font-mono text-[#D4A574]/40">ELAPSED: {elapsedSeconds}s</span>
                                 </div>
                                 <div className="h-[1px] w-full bg-[#1A1A1A]/5 relative overflow-hidden">
                                     <div className="absolute inset-0 bg-[#D4A574] w-1/3 animate-[loading_3s_ease-in-out_infinite]" />
                                 </div>
                             </div>
+                        </div>
+                    )}
+
+                    {status === 'error' && (
+                        <div className="flex flex-col items-center justify-center py-24 space-y-8 animate-in fade-in duration-500 bg-white/60 rounded-[2.5rem] border border-dashed border-[#D4A574]/20">
+                            <div className="w-16 h-16 rounded-full border border-[#D4A574]/20 bg-[#1A1A1A] flex items-center justify-center text-[#D4A574] text-2xl">
+                                !
+                            </div>
+                            <div className="text-center space-y-3 max-w-xl px-6">
+                                <p className="text-[12px] font-bold tracking-[0.4em] uppercase text-[#D4A574]">Differential Diagnostic Failed</p>
+                                <p className="text-[12px] text-[#1A1A1A]/60 leading-relaxed font-medium">
+                                    {errorMessage || 'The comparison engine could not complete the analysis. Try re-running the diagnostic in a moment.'}
+                                </p>
+                            </div>
+                            <button
+                                onClick={handleAnalyse}
+                                disabled={!assetA || !assetB}
+                                className="px-8 py-4 rounded-full bg-[#1A1A1A] text-[#FBF7EF] text-[10px] font-bold uppercase tracking-[0.25em] transition-all hover:bg-[#8B4513] disabled:opacity-40"
+                            >
+                                [ RE-RUN DIFFERENTIAL ]
+                            </button>
                         </div>
                     )}
 

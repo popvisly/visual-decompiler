@@ -283,6 +283,18 @@ export async function POST(req: Request) {
                         console.error(`[Worker Job ${job.id}] Failed to write usage log:`, usageLogError);
                     }
 
+                    const { error: notificationError } = await supabaseAdmin
+                        .from('notifications')
+                        .insert({
+                            org_id: job.user_id,
+                            title: 'EXTRACTION COMPLETE',
+                            message: `${brand || 'Asset'} is ready in your Intelligence Vault.`,
+                            link: `/asset/${job.id}`,
+                        });
+                    if (notificationError) {
+                        console.error(`[Worker Job ${job.id}] Failed to create completion notification:`, notificationError);
+                    }
+
                     // 6.6 Send Email Notification (Launch Readiness)
                     if (u?.email) {
                         console.log(`[Worker Job ${job.id}] Sending completion email to ${u.email}`);
@@ -292,6 +304,20 @@ export async function POST(req: Request) {
 
                 results.push({ id: job.id, status: finalStatus });
                 console.log(`[Worker Job ${job.id}] Completed: ${finalStatus}`);
+
+                if (finalStatus === 'error' && job.user_id) {
+                    const { error: notificationError } = await supabaseAdmin
+                        .from('notifications')
+                        .insert({
+                            org_id: job.user_id,
+                            title: 'EXTRACTION FAILED',
+                            message: `${brand || 'Asset'} could not be processed. Re-run the scan to try again.`,
+                            link: `/asset/${job.id}`,
+                        });
+                    if (notificationError) {
+                        console.error(`[Worker Job ${job.id}] Failed to create error notification:`, notificationError);
+                    }
+                }
 
                 // 6.7 Persist Deep Audit Hooks (Milestone 24)
                 if (finalStatus === 'processed') {

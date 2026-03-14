@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Plus, Database, Activity, LayoutGrid, Settings } from 'lucide-react';
 import SidebarFooter from './sidebar-footer';
+import NotificationBell from '@/components/NotificationBell';
 import { supabaseClient } from '@/lib/supabase-client';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
@@ -40,13 +41,14 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
                 <div className="relative z-10">
                     {/* Logo / Brand Mark */}
-                    <div className="mb-12">
-                        <Link href="/" className="group flex items-center gap-2">
+                    <div className="mb-12 flex items-start justify-between gap-3">
+                        <Link href="/" className="group flex items-center gap-2 min-w-0">
                             <div className="w-4 h-4 bg-[#1A1A1A] rounded-sm group-hover:bg-[#D4A574] transition-colors flex-shrink-0" />
                             <span className="font-sans text-[11px] font-bold tracking-[0.3em] uppercase opacity-90 group-hover:opacity-100 transition-opacity text-[#1A1A1A] group-hover:text-[#D4A574] truncate">
                                 {displayBrandName}
                             </span>
                         </Link>
+                        <NotificationBell />
                     </div>
 
                     {/* Navigation */}

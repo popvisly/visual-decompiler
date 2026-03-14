@@ -298,27 +298,59 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                 </div>
             )}
 
-            {/* Three Channel Cards in Grid */}
+            {/* Narrative acts stay full-width; channels can remain side-by-side */}
             {blocks.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className={type === 'ACT' ? 'space-y-8' : 'grid grid-cols-1 md:grid-cols-3 gap-8'}>
                     {blocks.map((block, i) => (
                         <div
                             key={i}
                             id={type === 'ACT' ? block.label : undefined}
-                            className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[300px]"
+                            className={`border bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col ${
+                                type === 'ACT'
+                                    ? 'forensic-act-block min-h-[420px] scroll-mt-24'
+                                    : 'min-h-[300px]'
+                            } ${
+                                type === 'ACT' && activeAct === block.label
+                                    ? 'border-[#D4A574]/50 shadow-[0_0_0_1px_rgba(212,165,116,0.18)]'
+                                    : 'border-[#D4A574]/20'
+                            }`}
                         >
-                            <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
-                                {block.label}: {block.title}
-                            </h3>
-                            <div className="flex-1 max-h-[400px] overflow-y-auto">
-                                <div className="space-y-4">
-                                    {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
-                                        <p key={pi} className="text-[12px] text-[#FFFFFF]/70 leading-relaxed font-light">
-                                            {paragraph.trim()}
-                                        </p>
-                                    ))}
-                                </div>
-                            </div>
+                            {type === 'ACT' ? (
+                                <>
+                                    <div className="flex items-center gap-3 mb-5">
+                                        <div className={`w-2 h-2 rounded-full transition-all ${activeAct === block.label ? 'bg-[#D4A574] shadow-[0_0_14px_rgba(212,165,116,0.45)]' : 'bg-[#D4A574]/60'}`} />
+                                        <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.35em]">{block.label}</span>
+                                    </div>
+                                    <h3 className="text-[2rem] md:text-[2.5rem] font-bold uppercase tracking-tight text-[#F5F3EE] pb-5 border-b border-[#D4A574]/20">
+                                        {block.title}
+                                    </h3>
+                                    <AnalyticWaveMap index={i} isActive={activeAct === block.label} />
+                                    <div className="flex-1">
+                                        <div className="space-y-5">
+                                            {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
+                                                <p key={pi} className="text-[15px] text-[#FFFFFF]/70 leading-9 font-light">
+                                                    {paragraph.trim()}
+                                                </p>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
+                                        {block.label}: {block.title}
+                                    </h3>
+                                    <div className="flex-1 max-h-[400px] overflow-y-auto">
+                                        <div className="space-y-4">
+                                            {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
+                                                <p key={pi} className="text-[12px] text-[#FFFFFF]/70 leading-relaxed font-light">
+                                                    {paragraph.trim()}
+                                                </p>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     ))}
                 </div>

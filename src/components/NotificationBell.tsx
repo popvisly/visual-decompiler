@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Bell, MessageSquare, Sparkles, Check, ExternalLink, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { supabaseClient } from '@/lib/supabase-client';
 
 interface Notification {
     id: string;
@@ -35,9 +36,27 @@ export default function NotificationBell() {
 
     useEffect(() => {
         fetchNotifications();
-        // Poll every 60 seconds for new notifications
         const interval = setInterval(fetchNotifications, 60000);
-        return () => clearInterval(interval);
+
+        const channel = supabaseClient
+            .channel('dashboard-notifications')
+            .on(
+                'postgres_changes',
+                {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'notifications',
+                },
+                () => {
+                    fetchNotifications();
+                }
+            )
+            .subscribe();
+
+        return () => {
+            clearInterval(interval);
+            supabaseClient.removeChannel(channel);
+        };
     }, []);
 
     const unreadCount = notifications.filter(n => !n.read).length;
