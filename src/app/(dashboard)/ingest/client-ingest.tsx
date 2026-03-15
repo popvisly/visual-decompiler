@@ -419,19 +419,29 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                         )}
                     </div>
 
-                    <div className="mt-12 grid w-full max-w-5xl gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-start">
-                        {PROCESS_STEPS.map((step, index) => (
-                            <div key={step.number} className="contents md:block">
-                                <div className="rounded-[1.75rem] border border-[#D4A574]/15 bg-white/70 p-6 text-center shadow-[0_12px_24px_rgba(20,20,20,0.03)]">
-                                    <p className="text-[26px] font-semibold leading-none text-[#C1A67B]">{step.number}</p>
-                                    <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.26em] text-[#1A1A1A]">{step.label}</p>
-                                    <p className="mt-3 text-sm leading-relaxed text-[#4A4A4A]">{step.description}</p>
+                    <div className="mt-12 w-full max-w-5xl">
+                        <div className="relative space-y-4 md:space-y-5">
+                            <div className="pointer-events-none absolute bottom-8 left-[2.15rem] top-8 hidden w-px bg-[#D4A574]/18 md:block" />
+                            {PROCESS_STEPS.map((step, index) => (
+                                <div
+                                    key={step.number}
+                                    className="relative grid gap-4 rounded-[1.9rem] border border-[#D4A574]/15 bg-white/75 p-5 shadow-[0_12px_24px_rgba(20,20,20,0.03)] md:grid-cols-[88px_1fr] md:items-center md:p-7"
+                                >
+                                    <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border border-[#D4A574]/20 bg-[#FBFBF6] md:h-16 md:w-16">
+                                        <span className="text-[24px] font-semibold leading-none text-[#C1A67B] md:text-[28px]">{step.number}</span>
+                                    </div>
+                                    <div className="text-left">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#1A1A1A]">{step.label}</p>
+                                        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#4A4A4A] md:text-[15px]">
+                                            {step.description}
+                                        </p>
+                                    </div>
+                                    {index < PROCESS_STEPS.length - 1 && (
+                                        <div className="ml-7 h-5 text-[#C1A67B]/65 md:hidden">↓</div>
+                                    )}
                                 </div>
-                                {index < PROCESS_STEPS.length - 1 && (
-                                    <div className="hidden items-center justify-center text-2xl text-[#C1A67B]/70 md:flex">→</div>
-                                )}
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
 
                     <div className="mt-8 flex w-full max-w-4xl items-start gap-3 rounded-[1.5rem] border border-[#D4A574]/15 bg-white/70 px-5 py-4 text-sm text-[#4A4A4A] shadow-[0_12px_24px_rgba(20,20,20,0.03)]">

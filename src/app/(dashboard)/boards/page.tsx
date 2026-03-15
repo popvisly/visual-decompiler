@@ -28,6 +28,7 @@ export default async function BoardsPage() {
             )
         `)
         .or(`user_id.eq.${userId}${orgId ? `,org_id.eq.${orgId}` : ''}`)
+        .is('archived_at', null)
         .order('created_at', { ascending: false })
         .limit(20);
 

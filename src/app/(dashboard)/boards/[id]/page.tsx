@@ -27,8 +27,8 @@ export default async function BoardDetailPage({ params }: { params: Promise<{ id
                     id,
                     file_url,
                     type,
-                    brands ( name ),
-                    extractions ( primary_mechanic )
+                    brands ( name, market_sector ),
+                    extractions ( primary_mechanic, confidence_score )
                 ),
                 ad_digests (
                     id,
@@ -55,7 +55,9 @@ export default async function BoardDetailPage({ params }: { params: Promise<{ id
                 mediaUrl: item.assets.file_url,
                 mediaKind: item.assets.type,
                 brand: item.assets.brands?.name || 'Unknown',
+                sector: item.assets.brands?.market_sector || 'Unclassified',
                 primaryMechanic: extraction?.primary_mechanic || 'Awaiting Analysis',
+                confidenceScore: extraction?.confidence_score || 0,
                 href: `/asset/${item.assets.id}`,
                 itemType: 'asset' as const,
             };
@@ -67,7 +69,9 @@ export default async function BoardDetailPage({ params }: { params: Promise<{ id
                 mediaUrl: item.ad_digests.media_url,
                 mediaKind: item.ad_digests.media_kind,
                 brand: item.ad_digests.brand || 'Unknown',
+                sector: 'Legacy Asset',
                 primaryMechanic: item.ad_digests.digest?.classification?.trigger_mechanic || 'Legacy Extraction',
+                confidenceScore: 0,
                 href: `/report/${item.ad_digests.id}`,
                 itemType: 'ad' as const,
             };
