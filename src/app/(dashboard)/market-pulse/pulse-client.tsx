@@ -61,6 +61,21 @@ function formatDate(value?: string) {
     }).format(date);
 }
 
+function formatReportDate(value?: string) {
+    if (!value) return 'Today';
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+        return 'Today';
+    }
+
+    return new Intl.DateTimeFormat('en-AU', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+    }).format(date);
+}
+
 export default function MechanicIntelligenceClient() {
     const [data, setData] = useState<PulseResponse | null>(null);
     const [selectedWindow, setSelectedWindow] = useState<number>(30);
@@ -109,6 +124,9 @@ export default function MechanicIntelligenceClient() {
 
     const sectorOptions = useMemo(() => ['ALL SECTORS', ...(data?.sector_options || [])], [data?.sector_options]);
     const belowVolumeThreshold = (data?.assetCount || 0) < 20;
+    const reportSectorLabel = selectedSector === 'ALL SECTORS' ? 'Vault-Wide Intelligence' : selectedSector;
+    const reportDate = formatReportDate(data?.computed_at);
+    const reportDepthLabel = (data?.assetCount || 0) >= 50 ? 'Boardroom-grade' : (data?.assetCount || 0) >= 20 ? 'Directional' : 'Early signal';
 
     const handleExportReport = () => {
         window.print();
@@ -207,16 +225,49 @@ export default function MechanicIntelligenceClient() {
                     </div>
                 ) : data ? (
                     <div className="mt-8 space-y-8">
-                        <div className="flex justify-end">
-                            <button
-                                onClick={handleExportReport}
-                                className="rounded-full border border-[#D4A574]/18 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-white"
-                            >
-                                <span className="inline-flex items-center gap-2">
-                                    <FileDown className="h-4 w-4" />
-                                    Export Intelligence Report
-                                </span>
-                            </button>
+                        <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+                            <section className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Executive Readout</p>
+                                <div className="mt-5 grid gap-4 md:grid-cols-3">
+                                    <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Scope</p>
+                                        <p className="mt-3 text-lg font-semibold uppercase tracking-[0.04em] text-[#1A1A1A]">{reportSectorLabel}</p>
+                                    </div>
+                                    <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Signal Depth</p>
+                                        <p className="mt-3 text-lg font-semibold uppercase tracking-[0.04em] text-[#1A1A1A]">{reportDepthLabel}</p>
+                                    </div>
+                                    <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Export Snapshot</p>
+                                        <p className="mt-3 text-lg font-semibold uppercase tracking-[0.04em] text-[#1A1A1A]">{reportDate}</p>
+                                    </div>
+                                </div>
+                                <p className="mt-5 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
+                                    This report is designed as a strategic leave-behind for client briefings, combining mechanic momentum, trigger pressure, anomaly detection, and whitespace opportunity mapping into a single exportable intelligence layer.
+                                </p>
+                            </section>
+
+                            <div className="flex items-start justify-end">
+                                <button
+                                    onClick={handleExportReport}
+                                    className="rounded-full border border-[#D4A574]/18 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-white"
+                                >
+                                    <span className="inline-flex items-center gap-2">
+                                        <FileDown className="h-4 w-4" />
+                                        Export Intelligence Report
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="grid gap-4 md:grid-cols-3">
+                            {data.dominant_mechanics.slice(0, 3).map((mechanic, index) => (
+                                <div key={mechanic.mechanic} className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-5 shadow-sm">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Dominant Mechanic {(index + 1).toString().padStart(2, '0')}</p>
+                                    <p className="mt-4 text-lg font-semibold uppercase tracking-[0.04em] text-[#1A1A1A]">{mechanic.mechanic}</p>
+                                    <p className="mt-3 text-[11px] uppercase tracking-[0.18em] text-[#6B6B6B]">{mechanic.share}% vault share · {mechanic.count} source assets</p>
+                                </div>
+                            ))}
                         </div>
 
                         <div className="grid gap-6 md:grid-cols-3">
@@ -370,10 +421,15 @@ export default function MechanicIntelligenceClient() {
                         <section className="intelligence-report-page intelligence-report-cover">
                             <div className="intelligence-report-cover-inner">
                                 <p className="intelligence-report-kicker">Mechanic Intelligence Report</p>
-                                <h1 className="intelligence-report-title">{selectedSector === 'ALL SECTORS' ? 'Vault-Wide Signal Map' : selectedSector}</h1>
+                                <h1 className="intelligence-report-title">{reportSectorLabel}</h1>
                                 <p className="intelligence-report-subtitle">
                                     {data.assetCount} forensic extractions analysed across a rolling {data.window_days}-day window.
                                 </p>
+                                <div className="intelligence-report-cover-meta">
+                                    <span>{reportDate}</span>
+                                    <span>Confidential</span>
+                                    <span>{data.cached ? 'Cached 24h snapshot' : 'Live recompute snapshot'}</span>
+                                </div>
                             </div>
                         </section>
 
@@ -387,8 +443,14 @@ export default function MechanicIntelligenceClient() {
                             </div>
                             <div className="intelligence-report-list">
                                 {data.mechanic_velocity.map((item) => (
-                                    <div key={item.mechanic} className="intelligence-report-row">
-                                        <span>{item.mechanic}</span>
+                                    <div key={item.mechanic} className="intelligence-report-velocity-row">
+                                        <div className="intelligence-report-velocity-copy">
+                                            <span>{item.mechanic}</span>
+                                            <small>{Math.round((item.share / 100) * data.assetCount)} assets in active window</small>
+                                        </div>
+                                        <div className="intelligence-report-velocity-bar-wrap">
+                                            <div className="intelligence-report-velocity-bar" style={{ width: `${Math.max(item.share, 6)}%` }} />
+                                        </div>
                                         <span>{item.share}%</span>
                                         <span>{item.delta >= 0 ? '+' : ''}{item.delta}%</span>
                                     </div>
@@ -404,13 +466,29 @@ export default function MechanicIntelligenceClient() {
                                     <h2 className="intelligence-report-section-title">Aggregate pressure map</h2>
                                 </div>
                             </div>
-                            <div className="intelligence-report-list">
-                                {data.category_trigger_profile.map((trigger) => (
-                                    <div key={trigger.label} className="intelligence-report-row">
-                                        <span>{trigger.label}</span>
-                                        <span>{trigger.value}</span>
+                            <div className="intelligence-report-trigger-grid">
+                                <div className="intelligence-report-trigger-panel">
+                                    <p className="intelligence-report-panel-label">Trigger distribution</p>
+                                    <div className="intelligence-report-list">
+                                        {data.category_trigger_profile.map((trigger) => (
+                                            <div key={trigger.label} className="intelligence-report-row">
+                                                <span>{trigger.label}</span>
+                                                <span>{trigger.value}</span>
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
+                                </div>
+                                <div className="intelligence-report-trigger-panel">
+                                    <p className="intelligence-report-panel-label">Whitespace opportunities</p>
+                                    <div className="intelligence-report-opportunity-list">
+                                        {data.opportunity_gaps.map((gap, index) => (
+                                            <div key={`${gap}-${index}`} className="intelligence-report-opportunity-item">
+                                                <span>{(index + 1).toString().padStart(2, '0')}</span>
+                                                <p>{gap}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         </section>
 
@@ -428,6 +506,7 @@ export default function MechanicIntelligenceClient() {
                                         <p>{flag.type}</p>
                                         <h3>{flag.finding}</h3>
                                         <p>{flag.recommendation}</p>
+                                        <small>Source asset count: {flag.asset_count}</small>
                                     </div>
                                 ))}
                             </div>
@@ -436,6 +515,39 @@ export default function MechanicIntelligenceClient() {
                         <section className="intelligence-report-page">
                             <div className="intelligence-report-section-header">
                                 <span className="intelligence-report-section-number">04</span>
+                                <div>
+                                    <p className="intelligence-report-section-kicker">Benchmark Snapshot</p>
+                                    <h2 className="intelligence-report-section-title">Category benchmark and palette load</h2>
+                                </div>
+                            </div>
+                            <div className="intelligence-report-benchmark-grid">
+                                <div className="intelligence-report-benchmark-card">
+                                    <p>Average Persuasion Density</p>
+                                    <strong>{data.category_persuasion_benchmark.avg_density}%</strong>
+                                </div>
+                                <div className="intelligence-report-benchmark-card">
+                                    <p>Average Cognitive Friction</p>
+                                    <strong>{data.category_persuasion_benchmark.avg_friction}%</strong>
+                                </div>
+                                <div className="intelligence-report-benchmark-card">
+                                    <p>Benchmark Reading</p>
+                                    <strong>{data.category_persuasion_benchmark.your_rank}</strong>
+                                </div>
+                            </div>
+                            <div className="intelligence-report-palette-grid">
+                                {data.chromatic_saturation.map((color) => (
+                                    <div key={color.hex} className="intelligence-report-palette-chip">
+                                        <div className="intelligence-report-palette-swatch" style={{ backgroundColor: color.hex }} />
+                                        <span>{color.hex}</span>
+                                        <small>{color.count}</small>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        <section className="intelligence-report-page">
+                            <div className="intelligence-report-section-header">
+                                <span className="intelligence-report-section-number">05</span>
                                 <div>
                                     <p className="intelligence-report-section-kicker">Methodology</p>
                                     <h2 className="intelligence-report-section-title">How this readout is built</h2>
@@ -521,6 +633,17 @@ export default function MechanicIntelligenceClient() {
                                 color: #5d5d57;
                             }
 
+                            .intelligence-report-cover-meta {
+                                display: flex;
+                                justify-content: center;
+                                gap: 12pt;
+                                margin-top: 18pt;
+                                font-size: 9pt;
+                                text-transform: uppercase;
+                                letter-spacing: 0.18em;
+                                color: #7b715e;
+                            }
+
                             .intelligence-report-section-header {
                                 display: flex;
                                 align-items: baseline;
@@ -558,6 +681,41 @@ export default function MechanicIntelligenceClient() {
                                 font-size: 11pt;
                             }
 
+                            .intelligence-report-velocity-row {
+                                display: grid;
+                                grid-template-columns: 2fr 2.4fr 0.6fr 0.6fr;
+                                gap: 12pt;
+                                align-items: center;
+                                border: 1px solid #dccaa9;
+                                background: white;
+                                padding: 14pt;
+                                border-radius: 14pt;
+                            }
+
+                            .intelligence-report-velocity-copy {
+                                display: grid;
+                                gap: 4pt;
+                            }
+
+                            .intelligence-report-velocity-copy small,
+                            .intelligence-report-flag small {
+                                font-size: 9pt;
+                                color: #7a7467;
+                            }
+
+                            .intelligence-report-velocity-bar-wrap {
+                                height: 8pt;
+                                overflow: hidden;
+                                border-radius: 999px;
+                                background: #ece2cf;
+                            }
+
+                            .intelligence-report-velocity-bar {
+                                height: 100%;
+                                border-radius: 999px;
+                                background: linear-gradient(90deg, #8b6a36, #d4a574);
+                            }
+
                             .intelligence-report-flag h3 {
                                 font-size: 14pt;
                                 font-weight: 500;
@@ -567,6 +725,90 @@ export default function MechanicIntelligenceClient() {
                                 font-size: 11pt;
                                 line-height: 1.7;
                                 color: #5d5d57;
+                            }
+
+                            .intelligence-report-trigger-grid,
+                            .intelligence-report-benchmark-grid {
+                                display: grid;
+                                grid-template-columns: 1fr 1fr;
+                                gap: 16pt;
+                                margin-top: 24pt;
+                            }
+
+                            .intelligence-report-trigger-panel,
+                            .intelligence-report-benchmark-card {
+                                padding: 16pt;
+                                border: 1px solid #dccaa9;
+                                background: #fffdf8;
+                            }
+
+                            .intelligence-report-panel-label,
+                            .intelligence-report-benchmark-card p {
+                                margin: 0;
+                                font-size: 9pt;
+                                font-weight: 700;
+                                letter-spacing: 0.2em;
+                                text-transform: uppercase;
+                                color: #8b6a36;
+                            }
+
+                            .intelligence-report-benchmark-card strong {
+                                display: block;
+                                margin-top: 10pt;
+                                font-size: 18pt;
+                                font-weight: 500;
+                                line-height: 1.4;
+                            }
+
+                            .intelligence-report-opportunity-list {
+                                display: grid;
+                                gap: 10pt;
+                                margin-top: 18pt;
+                            }
+
+                            .intelligence-report-opportunity-item {
+                                display: grid;
+                                grid-template-columns: 28pt 1fr;
+                                gap: 12pt;
+                                align-items: start;
+                            }
+
+                            .intelligence-report-opportunity-item span {
+                                font-size: 12pt;
+                                color: #c1a67b;
+                            }
+
+                            .intelligence-report-opportunity-item p {
+                                margin: 0;
+                                font-size: 11pt;
+                                line-height: 1.6;
+                            }
+
+                            .intelligence-report-palette-grid {
+                                display: grid;
+                                grid-template-columns: repeat(3, 1fr);
+                                gap: 12pt;
+                                margin-top: 18pt;
+                            }
+
+                            .intelligence-report-palette-chip {
+                                display: grid;
+                                gap: 8pt;
+                                padding: 12pt;
+                                border: 1px solid #dccaa9;
+                                background: #fffdf8;
+                            }
+
+                            .intelligence-report-palette-swatch {
+                                height: 34pt;
+                                border: 1px solid rgba(0, 0, 0, 0.08);
+                            }
+
+                            .intelligence-report-palette-chip span,
+                            .intelligence-report-palette-chip small {
+                                font-size: 9pt;
+                                text-transform: uppercase;
+                                letter-spacing: 0.16em;
                             }
                         }
                     `}</style>
