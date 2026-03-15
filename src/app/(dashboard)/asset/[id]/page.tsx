@@ -26,6 +26,7 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
             id: rawAsset.id,
             type: rawAsset.type,
             file_url: rawAsset.file_url,
+            tags: Array.isArray(rawAsset.tags) ? rawAsset.tags : [],
             brand: rawAsset.brands ? { name: rawAsset.brands.name, market_sector: rawAsset.brands.market_sector } : undefined,
             extraction: rawAsset.extractions ? rawAsset.extractions : undefined
         };
@@ -60,6 +61,7 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
                 id: digestRow.id,
                 type: digestRow.media_kind?.toUpperCase() || 'STATIC',
                 file_url: digestRow.media_url,
+                tags: [],
                 brand: { name: 'V1 PIPELINE FAILURE', market_sector: 'SYSTEM ERROR' },
                 extraction: [{
                     primary_mechanic: 'Analysis Aborted',
@@ -75,6 +77,7 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
                 id: digestRow.id,
                 type: digestRow.media_kind?.toUpperCase() || 'STATIC',
                 file_url: digestRow.media_url,
+                tags: [],
                 brand: { 
                     name: digestRow.brand || parsedDigest?.meta?.brand_guess || 'Unknown', 
                     market_sector: parsedDigest?.meta?.product_category_guess || 'Uncategorized' 

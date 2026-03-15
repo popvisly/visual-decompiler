@@ -11,6 +11,7 @@ export default async function IntelligenceVaultPage() {
       id,
       type,
       file_url,
+      tags,
       created_at,
       brand:brands ( name, market_sector ),
       extraction:extractions ( primary_mechanic, visual_style, confidence_score, full_dossier )

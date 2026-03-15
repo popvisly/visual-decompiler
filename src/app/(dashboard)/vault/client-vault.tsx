@@ -10,6 +10,7 @@ interface VaultAsset {
     type: string;
     file_url: string;
     created_at: string;
+    tags?: string[];
     brand?: { name: string; market_sector: string };
     extraction?: any;
     extractions?: any;
@@ -23,6 +24,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
     const [query, setQuery] = useState('');
     const [sectorFilter, setSectorFilter] = useState('ALL SECTORS');
     const [mechanicFilter, setMechanicFilter] = useState('ALL MECHANICS');
+    const [tagFilter, setTagFilter] = useState('ALL TAGS');
     const [sortOrder, setSortOrder] = useState('NEWEST');
 
     const sectorOptions = useMemo(() => {
@@ -45,6 +47,17 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
         return ['ALL MECHANICS', ...Array.from(mechanics).sort()];
     }, [assets]);
 
+    const tagOptions = useMemo(() => {
+        const tags = new Set<string>();
+        for (const asset of assets) {
+            for (const tag of asset.tags || []) {
+                const normalized = tag.trim();
+                if (normalized) tags.add(normalized);
+            }
+        }
+        return ['ALL TAGS', ...Array.from(tags).sort()];
+    }, [assets]);
+
     const filteredAssets = useMemo(() => {
         let next = [...assets];
         const normalizedQuery = query.trim().toLowerCase();
@@ -58,6 +71,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                     asset.brand?.name,
                     asset.brand?.market_sector,
                     extraction?.primary_mechanic,
+                    ...(asset.tags || []),
                     asset.id,
                 ]
                     .filter(Boolean)
@@ -75,6 +89,10 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                 const extraction = Array.isArray(rawExtraction) ? rawExtraction[0] : rawExtraction;
                 return extraction?.primary_mechanic === mechanicFilter;
             });
+        }
+
+        if (tagFilter !== 'ALL TAGS') {
+            next = next.filter((asset) => (asset.tags || []).includes(tagFilter));
         }
 
         next.sort((a, b) => {
@@ -98,12 +116,13 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
         });
 
         return next;
-    }, [assets, query, sectorFilter, mechanicFilter, sortOrder]);
+    }, [assets, query, sectorFilter, mechanicFilter, tagFilter, sortOrder]);
 
     const clearFilters = () => {
         setQuery('');
         setSectorFilter('ALL SECTORS');
         setMechanicFilter('ALL MECHANICS');
+        setTagFilter('ALL TAGS');
         setSortOrder('NEWEST');
     };
 
@@ -208,7 +227,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                     <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                         <div className="flex items-center gap-3">
                             <p className="text-[#4A4A4A]/60 font-sans text-[11px] font-bold tracking-[0.2em] uppercase">
-                                {filteredAssets.length} Forensic Extractions {query || sectorFilter !== 'ALL SECTORS' || mechanicFilter !== 'ALL MECHANICS' ? 'Matching' : 'Secured'}
+                                {filteredAssets.length} Forensic Extractions {query || sectorFilter !== 'ALL SECTORS' || mechanicFilter !== 'ALL MECHANICS' || tagFilter !== 'ALL TAGS' ? 'Matching' : 'Secured'}
                             </p>
                             <div className="h-px w-8 bg-[#D4A574]" />
                         </div>
@@ -237,13 +256,14 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                             <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">
                                 <VaultSelect label="Sector" value={sectorFilter} onChange={setSectorFilter} options={sectorOptions} />
                                 <VaultSelect label="Mechanic" value={mechanicFilter} onChange={setMechanicFilter} options={mechanicOptions} />
+                                <VaultSelect label="Tag" value={tagFilter} onChange={setTagFilter} options={tagOptions} />
                                 <VaultSelect
                                     label="Sort"
                                     value={sortOrder}
                                     onChange={setSortOrder}
                                     options={['NEWEST', 'OLDEST', 'CONFIDENCE HIGH', 'CONFIDENCE LOW', 'BRAND A-Z']}
                                 />
-                                {(query || sectorFilter !== 'ALL SECTORS' || mechanicFilter !== 'ALL MECHANICS' || sortOrder !== 'NEWEST') && (
+                                {(query || sectorFilter !== 'ALL SECTORS' || mechanicFilter !== 'ALL MECHANICS' || tagFilter !== 'ALL TAGS' || sortOrder !== 'NEWEST') && (
                                     <button
                                         type="button"
                                         onClick={clearFilters}
@@ -275,7 +295,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                             No Extractions Matching Your Filters.
                         </span>
                         <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-[#4A4A4A]/50 mb-6 max-w-xl">
-                            Try searching by brand, sector, persuasion mechanic, or clear the active filters.
+                            Try searching by brand, sector, persuasion mechanic, tag, or clear the active filters.
                         </p>
                         <button 
                             type="button"
@@ -343,6 +363,7 @@ function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelec
     
     const isAnalysed = !!extraction?.full_dossier;
     const mechanic = isAnalysed ? extraction?.primary_mechanic : 'Awaiting Forensic Deep-Dive';
+    const tags = (asset.tags || []).slice(0, 3);
 
     return (
         <div className="group relative">
@@ -407,6 +428,18 @@ function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelec
                             <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4A574] mb-8 border-l border-[#D4A574]/30 pl-3">
                                 {sector}
                             </p>
+                            {tags.length > 0 && (
+                                <div className="mb-6 flex flex-wrap gap-2">
+                                    {tags.map((tag) => (
+                                        <span
+                                            key={tag}
+                                            className="rounded-full border border-[#D4A574]/18 bg-[#D4A574]/10 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-[#F5F3EE]/80"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         <div className="pt-6 border-t border-[#D4A574]/20">

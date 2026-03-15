@@ -9,6 +9,7 @@ import StrategicPostureMap from '@/components/StrategicPostureMap';
 import { FileDown, Code, Info, Sparkles, Copy } from 'lucide-react';
 import RadiantArchitectureOverlay from '@/components/RadiantArchitectureOverlay';
 import AddToBoard from '@/components/AddToBoard';
+import AssetTagEditor from '@/components/AssetTagEditor';
 
 interface CloneConcept {
     concept_id?: number;
@@ -60,6 +61,7 @@ interface WorkspaceAsset {
     type: string;
     file_url: string;
     brand_id?: string;
+    tags?: string[];
     brand?: { name: string; market_sector: string };
     extraction?: {
         primary_mechanic: string;
@@ -1333,14 +1335,13 @@ export default function AssetWorkspace({
                                 )}
                             </div>
 
-                            <div className="w-full mt-6 flex justify-between items-end border-b border-[#D4A574]/20 pb-4">
-                                <div>
+                            <div className="w-full mt-6 border-b border-[#D4A574]/20 pb-4">
+                                <div className="mb-4">
                                     <h1 className="text-2xl font-light tracking-tightest text-[#D4A574] uppercase">{asset.brand?.name}</h1>
                                     <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#D4A574]">{asset.brand?.market_sector}</span>
                                 </div>
-                                <div className="flex flex-col items-end gap-2 relative">
-                                    <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
-                                    <div className="flex items-center gap-2">
+                                <div className="relative flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
+                                    <div className="flex flex-wrap items-center gap-2">
                                         <button
                                             onClick={handleOpenCloneDrawer}
                                             className="no-print flex items-center gap-2 px-4 py-2 bg-[#D4A574] text-[#141414] text-[10px] font-bold tracking-widest uppercase hover:bg-[#c8955b] rounded-full transition-all"
@@ -1379,6 +1380,9 @@ export default function AssetWorkspace({
                                         </button>
                                         <AddToBoard assetId={asset.id} />
                                     </div>
+                                    <div className="relative xl:min-w-[96px] xl:text-right">
+                                        <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
+                                    </div>
                                     {/* Simple Toast Notification */}
                                     {showCopiedToast && (
                                         <div className="absolute top-full mt-2 right-0 bg-[#8B4513] text-[#F5F5DC] text-[9px] font-bold tracking-widest uppercase px-3 py-1.5 shadow-lg animate-in fade-in slide-in-from-top-2 duration-200 z-50">
@@ -1386,6 +1390,19 @@ export default function AssetWorkspace({
                                         </div>
                                     )}
                                 </div>
+                            </div>
+
+                            <div className="mt-5">
+                                <AssetTagEditor
+                                    assetId={asset.id}
+                                    initialTags={asset.tags || []}
+                                    onTagsChange={(nextTags) => {
+                                        setAsset((currentAsset) => ({
+                                            ...currentAsset,
+                                            tags: nextTags,
+                                        }));
+                                    }}
+                                />
                             </div>
                         </div>
                     </aside>
