@@ -8,11 +8,16 @@ module.exports = {
     '/app',
     '/api/*',
     '/_next/*',
+    '/icon.svg',
     '/share/private/*',
     '/server-sitemap.xml',
   ],
   // Transform function to set priority and changefreq
   transform: async (config, path) => {
+    if (path.includes('(') || path.includes(')')) {
+      return null;
+    }
+
     // Set higher priority for important pages
     let priority = 0.5;
     let changefreq = 'weekly';
