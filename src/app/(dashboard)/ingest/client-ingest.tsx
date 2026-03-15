@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { AlertCircle, CheckCircle2, FileImage, Vault } from 'lucide-react';
+import { AlertCircle, FileImage } from 'lucide-react';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { supabaseClient } from '@/lib/supabase-client';
 import type { UsageStatus } from '@/lib/usage';
@@ -444,21 +444,6 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                         </div>
                     </div>
 
-                    <div className="mt-8 flex w-full max-w-4xl items-start gap-3 rounded-[1.5rem] border border-[#D4A574]/15 bg-white/70 px-5 py-4 text-sm text-[#4A4A4A] shadow-[0_12px_24px_rgba(20,20,20,0.03)]">
-                        <Vault className="mt-0.5 h-4 w-4 shrink-0 text-[#C1A67B]" />
-                        <p className="leading-relaxed">
-                            Completed extractions are stored in your{' '}
-                            <Link href="/vault" className="font-semibold text-[#8B4513] transition-colors hover:text-[#1A1A1A]">
-                                Intelligence Vault
-                            </Link>
-                            {' '}and available immediately after processing.
-                        </p>
-                    </div>
-
-                    <div className="mt-6 flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#6A6A6A]">
-                        <CheckCircle2 className="h-4 w-4 text-[#C1A67B]" />
-                        <span>No outdated steps, no redundant analyse button, no guesswork about where the result lands.</span>
-                    </div>
                 </div>
             </div>
         </>

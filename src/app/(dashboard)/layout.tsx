@@ -3,7 +3,7 @@
 import { ReactNode, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Plus, Database, Activity, LayoutGrid, Settings } from 'lucide-react';
+import { Plus, Database, Activity, LayoutGrid, Settings, Users } from 'lucide-react';
 import SidebarFooter from './sidebar-footer';
 import NotificationBell from '@/components/NotificationBell';
 import { supabaseClient } from '@/lib/supabase-client';
@@ -30,6 +30,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         { name: 'Intelligence Pulse', href: '/compare', icon: Activity },
         { name: 'Sovereign Boards', href: '/boards', icon: LayoutGrid },
         { name: 'Agency Settings', href: '/settings', icon: Settings },
+        { name: 'Team & Seats', href: '/settings/team', icon: Users },
     ];
 
     const displayBrandName = agency?.is_whitelabel_active ? (agency.name || 'Decompiler') : 'Decompiler';
