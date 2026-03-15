@@ -1,13 +1,34 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 import { supabaseAdmin } from '@/lib/supabase';
 import { Asset } from '@/lib/intelligence_service';
 import IntelligenceArchiveDrawer from '@/components/IntelligenceArchiveDrawer';
+import { FileDown } from 'lucide-react';
+
+type PulseAsset = Asset & {
+    brand: {
+        name: string;
+        market_sector?: string;
+    };
+    extractions?: {
+        primary_mechanic: string;
+        confidence_score?: number;
+        full_dossier?: {
+            archetype_mapping?: {
+                target_posture?: string;
+            };
+            persuasion_metrics?: {
+                predictive_longevity?: string;
+            };
+        };
+    };
+};
 
 // API Response Type mapping
 interface DifferentialDiagnosticResponse {
+    pulse_result_id?: string | null;
     diagnostic_id: string;
     status: 'success' | 'error';
     macro_synthesis: {
@@ -47,9 +68,9 @@ interface DifferentialDiagnosticResponse {
 }
 
 export default function DifferentialDiagnosticsPage() {
-    const [vaultAssets, setVaultAssets] = useState<Asset[]>([]);
-    const [assetA, setAssetA] = useState<Asset | null>(null);
-    const [assetB, setAssetB] = useState<Asset | null>(null);
+    const [vaultAssets, setVaultAssets] = useState<PulseAsset[]>([]);
+    const [assetA, setAssetA] = useState<PulseAsset | null>(null);
+    const [assetB, setAssetB] = useState<PulseAsset | null>(null);
     const [status, setStatus] = useState<'idle' | 'analysing' | 'success' | 'error'>('idle');
     const [result, setResult] = useState<DifferentialDiagnosticResponse | null>(null);
     const [agency, setAgency] = useState<{ name: string; is_whitelabel_active: boolean } | null>(null);
@@ -57,6 +78,8 @@ export default function DifferentialDiagnosticsPage() {
     const [analysisProgress, setAnalysisProgress] = useState(0);
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [loadingLabelIndex, setLoadingLabelIndex] = useState(0);
+    const [preparedFor, setPreparedFor] = useState('');
+    const printRef = useRef<HTMLDivElement>(null);
 
     const loadingLabels = [
         'Isolating persuasion deltas',
@@ -91,7 +114,7 @@ export default function DifferentialDiagnosticsPage() {
         async function fetchAssets() {
             const { data } = await supabaseAdmin
                 .from('assets')
-                .select('id, file_url, brand:brands(name), extractions(primary_mechanic)')
+                .select('id, file_url, type, brand:brands(name, market_sector), extractions(primary_mechanic, confidence_score, full_dossier)')
                 .limit(20);
             
             if (data) {
@@ -99,7 +122,7 @@ export default function DifferentialDiagnosticsPage() {
                     ...item,
                     extractions: item.extractions?.[0] || item.extractions
                 }));
-                setVaultAssets(formatted as Asset[]);
+                setVaultAssets(formatted as PulseAsset[]);
             }
         }
         fetchAssets();
@@ -209,6 +232,31 @@ export default function DifferentialDiagnosticsPage() {
             ? '[ RE-RUN DIFFERENTIAL ]' 
             : 'Initiate Differential Diagnostic';
 
+    const handleExportDifferentialDossier = () => {
+        if (!result || !assetA || !assetB) return;
+
+        const originalTitle = document.title;
+        document.body.classList.add('printing-differential');
+
+        const cleanup = () => {
+            document.title = originalTitle;
+            document.body.classList.remove('printing-differential');
+            window.removeEventListener('afterprint', cleanup);
+        };
+
+        window.addEventListener('afterprint', cleanup);
+        document.title = '';
+        window.setTimeout(cleanup, 10000);
+        requestAnimationFrame(() => window.print());
+    };
+
+    const persuasionDelta = result
+        ? result.behavioral_bars.persuasion_density.b - result.behavioral_bars.persuasion_density.a
+        : 0;
+    const frictionDelta = result
+        ? result.behavioral_bars.cognitive_friction.b - result.behavioral_bars.cognitive_friction.a
+        : 0;
+
     return (
         <div className="min-h-screen bg-[#FBFBF6] text-[#1A1A1A] relative overflow-hidden">
             {/* pulse animation for button */}
@@ -224,6 +272,38 @@ export default function DifferentialDiagnosticsPage() {
                 @keyframes loading {
                     0% { transform: translateX(-100%); }
                     100% { transform: translateX(300%); }
+                }
+                @media print {
+                    body * {
+                        visibility: hidden;
+                    }
+                    .differential-print-layout,
+                    .differential-print-layout * {
+                        visibility: visible;
+                    }
+                    .differential-print-layout {
+                        position: absolute;
+                        inset: 0;
+                        background: white;
+                        color: #1A1A1A;
+                        display: block !important;
+                    }
+                    .differential-section {
+                        break-before: page;
+                        page-break-before: always;
+                    }
+                    .differential-section:first-child {
+                        break-before: avoid;
+                        page-break-before: avoid;
+                    }
+                    .differential-block {
+                        break-inside: avoid;
+                        page-break-inside: avoid;
+                    }
+                    @page {
+                        size: A4;
+                        margin: 18mm 16mm;
+                    }
                 }
             `}</style>
 
@@ -313,13 +393,13 @@ export default function DifferentialDiagnosticsPage() {
                     />
 
                     {/* New Forensic Archive Drawer */}
-                    <IntelligenceArchiveDrawer 
+                        <IntelligenceArchiveDrawer 
                         isOpen={drawerState.open}
                         label={drawerState.target === 'A' ? 'CONTROL (ASSET A)' : 'PROPOSED (ASSET B)'}
                         onClose={() => setDrawerState({ open: false, target: null })}
                         onSelect={(asset) => {
-                            if (drawerState.target === 'A') setAssetA(asset);
-                            else setAssetB(asset);
+                            if (drawerState.target === 'A') setAssetA(asset as PulseAsset);
+                            else setAssetB(asset as PulseAsset);
                             setDrawerState({ open: false, target: null });
                         }}
                     />
@@ -394,6 +474,30 @@ export default function DifferentialDiagnosticsPage() {
 
                     {status === 'success' && result && (
                         <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-1000">
+                            <div className="mb-8 flex flex-col gap-4 rounded-[2rem] border border-[#D4A574]/15 bg-white/70 p-6 md:flex-row md:items-end md:justify-between">
+                                <div>
+                                    <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574]">Differential Dossier</p>
+                                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#1A1A1A]/60">
+                                        Export a five-page client-facing report from this live differential analysis. Prepared-for name is optional and appears on the cover.
+                                    </p>
+                                </div>
+                                <div className="flex flex-col gap-3 md:min-w-[320px]">
+                                    <input
+                                        type="text"
+                                        value={preparedFor}
+                                        onChange={(event) => setPreparedFor(event.target.value)}
+                                        placeholder="Prepared for (optional)"
+                                        className="rounded-full border border-[#D4A574]/20 bg-white px-5 py-3 text-sm text-[#1A1A1A] outline-none transition-colors focus:border-[#D4A574]"
+                                    />
+                                    <button
+                                        onClick={handleExportDifferentialDossier}
+                                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#4A4A4A] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.25em] text-white transition-all hover:bg-[#1A1A1A]"
+                                    >
+                                        <FileDown className="h-3.5 w-3.5" />
+                                        Export Differential Dossier
+                                    </button>
+                                </div>
+                            </div>
                             <div className="mb-16 border-l-[3px] border-[#D4A574] pl-8">
                                 <h2 className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]/40 mb-4">Macro Synthesis</h2>
                                 <h1 className="text-3xl md:text-5xl font-light tracking-tightest text-[#1A1A1A] leading-[1.1] mb-6 uppercase">
@@ -598,6 +702,163 @@ export default function DifferentialDiagnosticsPage() {
                     )}
                 </div>
             </div>
+            {result && assetA && assetB && (
+                <div ref={printRef} className="differential-print-layout hidden">
+                    <section className="differential-section min-h-[100vh] px-10 py-12">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#C9A96E]">Differential Intelligence Report</p>
+                        <div className="mt-6 grid grid-cols-[1fr_auto_1fr] items-center gap-6 differential-block">
+                            <div className="space-y-3">
+                                <div className="aspect-[4/3] overflow-hidden border border-[#C9A96E]/40">
+                                    <img src={assetA.file_url} alt={assetA.brand.name} className="h-full w-full object-cover" />
+                                </div>
+                                <p className="text-lg font-semibold uppercase">{assetA.brand.name}</p>
+                                <p className="text-xs uppercase tracking-[0.18em] text-[#6B6B6B]">{assetA.brand.market_sector || 'Uncategorised'}</p>
+                            </div>
+                            <div className="text-center text-xl font-light uppercase tracking-[0.45em] text-[#C9A96E]">vs</div>
+                            <div className="space-y-3">
+                                <div className="aspect-[4/3] overflow-hidden border border-[#C9A96E]/40">
+                                    <img src={assetB.file_url} alt={assetB.brand.name} className="h-full w-full object-cover" />
+                                </div>
+                                <p className="text-lg font-semibold uppercase">{assetB.brand.name}</p>
+                                <p className="text-xs uppercase tracking-[0.18em] text-[#6B6B6B]">{assetB.brand.market_sector || 'Uncategorised'}</p>
+                            </div>
+                        </div>
+                        <div className="mt-10 border-t border-b border-[#C9A96E] py-6 text-sm leading-relaxed">
+                            <p>Control: {assetA.brand.name} — {assetA.brand.market_sector || 'Uncategorised'}</p>
+                            <p>Proposed: {assetB.brand.name} — {assetB.brand.market_sector || 'Uncategorised'}</p>
+                            <p>Prepared by: {agency?.is_whitelabel_active ? agency.name : 'Visual Decompiler'}</p>
+                            {preparedFor && <p>Prepared for: {preparedFor}</p>}
+                            <p>Classification: Confidential / Forensic</p>
+                            <p>Date: {new Date().toLocaleDateString()}</p>
+                        </div>
+                    </section>
+
+                    <section className="differential-section min-h-[100vh] px-10 py-12">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#C9A96E]">Executive Delta</p>
+                        <div className="mt-8 grid gap-6">
+                            <div className="differential-block border border-[#C9A96E]/30 p-6">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C9A96E]">Primary Mechanic Comparison</p>
+                                <div className="mt-4 grid gap-3 text-sm">
+                                    <p><strong>Control:</strong> {assetA.extractions?.primary_mechanic || 'Unknown'}</p>
+                                    <p><strong>Proposed:</strong> {assetB.extractions?.primary_mechanic || 'Unknown'}</p>
+                                    <p><strong>Delta:</strong> {result.macro_synthesis.primary_shift}</p>
+                                </div>
+                            </div>
+                            <div className="differential-block border border-[#C9A96E]/30 p-6">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C9A96E]">Confidence Delta</p>
+                                <div className="mt-4 grid grid-cols-2 gap-6 text-sm">
+                                    <p><strong>Control:</strong> {assetA.extractions?.confidence_score ?? '—'}%</p>
+                                    <p><strong>Proposed:</strong> {assetB.extractions?.confidence_score ?? '—'}%</p>
+                                </div>
+                            </div>
+                            <div className="differential-block border border-[#C9A96E]/30 p-6">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C9A96E]">Persuasion Metrics Comparison</p>
+                                <table className="mt-4 w-full text-left text-sm">
+                                    <thead>
+                                        <tr>
+                                            <th className="border-b border-[#C9A96E]/30 py-2">Metric</th>
+                                            <th className="border-b border-[#C9A96E]/30 py-2">Control</th>
+                                            <th className="border-b border-[#C9A96E]/30 py-2">Proposed</th>
+                                            <th className="border-b border-[#C9A96E]/30 py-2">Delta</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td className="py-2">Persuasion Density</td>
+                                            <td className="py-2">{result.behavioral_bars.persuasion_density.a}%</td>
+                                            <td className="py-2">{result.behavioral_bars.persuasion_density.b}%</td>
+                                            <td className="py-2">{persuasionDelta > 0 ? '+' : ''}{persuasionDelta}%</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="py-2">Cognitive Friction</td>
+                                            <td className="py-2">{result.behavioral_bars.cognitive_friction.a}%</td>
+                                            <td className="py-2">{result.behavioral_bars.cognitive_friction.b}%</td>
+                                            <td className="py-2">{frictionDelta > 0 ? '+' : ''}{frictionDelta}%</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="py-2">Predictive Longevity</td>
+                                            <td className="py-2">{assetA.extractions?.full_dossier?.persuasion_metrics?.predictive_longevity || '—'}</td>
+                                            <td className="py-2">{assetB.extractions?.full_dossier?.persuasion_metrics?.predictive_longevity || '—'}</td>
+                                            <td className="py-2">{result.matrix_cubes.fatigue_differential.longevity_delta}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="differential-section min-h-[100vh] px-10 py-12">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#C9A96E]">Strategic Divergence</p>
+                        <div className="mt-8 space-y-8">
+                            <div className="differential-block border border-[#C9A96E]/30 p-6">
+                                <p className="text-base leading-relaxed">{result.macro_synthesis.strategic_delta_summary}</p>
+                            </div>
+                            <div className="differential-block border border-[#C9A96E]/30 p-6">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C9A96E]">Trigger Distribution Delta</p>
+                                <div className="mt-4 grid gap-3 text-sm">
+                                    {result.radar_metrics.axes.map((axis, index) => (
+                                        <div key={axis} className="grid grid-cols-[1.2fr_0.4fr_0.4fr] gap-4">
+                                            <span>{axis}</span>
+                                            <span>{result.radar_metrics.asset_a_scores[index]}</span>
+                                            <span>{result.radar_metrics.asset_b_scores[index]}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="differential-block border border-[#C9A96E]/30 p-6">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C9A96E]">Archetype Posture Delta</p>
+                                <div className="mt-4 grid gap-3 text-sm">
+                                    <p><strong>Control:</strong> {assetA.extractions?.full_dossier?.archetype_mapping?.target_posture || 'Not available'}</p>
+                                    <p><strong>Proposed:</strong> {assetB.extractions?.full_dossier?.archetype_mapping?.target_posture || 'Not available'}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="differential-section min-h-[100vh] px-10 py-12">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#C9A96E]">Semiotic Shift Ledger</p>
+                        <div className="mt-8 space-y-6">
+                            {result.semiotic_shifts.map((shift, index) => (
+                                <div key={`${shift.variable_isolated}-${index}`} className="differential-block border border-[#C9A96E]/30 p-6">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C9A96E]">{shift.variable_isolated}</p>
+                                    <div className="mt-4 grid gap-3 text-sm">
+                                        <p><strong>Control:</strong> {shift.asset_a_state}</p>
+                                        <p><strong>Proposed:</strong> {shift.asset_b_state}</p>
+                                        <p><strong>Impact:</strong> {shift.impact_on_conversion}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className="differential-section min-h-[100vh] px-10 py-12">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#C9A96E]">Strategic Recommendation</p>
+                        <div className="mt-8 grid gap-6">
+                            <div className="differential-block border border-[#C9A96E]/30 p-6">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C9A96E]">Winning Variant</p>
+                                <p className="mt-4 text-base leading-relaxed">{result.matrix_cubes.winning_variant.label} — {result.matrix_cubes.winning_variant.rationale}</p>
+                            </div>
+                            <div className="differential-block border border-[#C9A96E]/30 p-6">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C9A96E]">Opportunity Represented by the Gap</p>
+                                <p className="mt-4 text-base leading-relaxed">{result.matrix_cubes.psychological_edge.delta}</p>
+                            </div>
+                            <div className="differential-block border border-[#C9A96E]/30 p-6">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C9A96E]">Strategic Recommendations</p>
+                                <ol className="mt-4 list-decimal space-y-3 pl-5 text-base leading-relaxed">
+                                    <li>Prioritise the persuasion architecture signalled by {result.matrix_cubes.winning_variant.label} when briefing the next client-facing concept.</li>
+                                    <li>Exploit the psychological edge around {result.matrix_cubes.psychological_edge.trigger.toLowerCase()} to widen the conversion gap.</li>
+                                    <li>Use the semiotic deltas to reduce fatigue risk while preserving the stronger performance signals identified in this report.</li>
+                                </ol>
+                            </div>
+                            <div className="pt-8 text-sm text-[#6B6B6B]">
+                                <p>{agency?.is_whitelabel_active ? agency.name : 'Visual Decompiler'}</p>
+                                <p>Classification: Confidential</p>
+                                <p>Pulse Result ID: {result.pulse_result_id || 'In-session analysis'}</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            )}
         </div>
     );
 }
@@ -612,7 +873,7 @@ function AssetSelectorPanel({
     onOpenDrawer
 }: {
     label: string,
-    selected: Asset | null,
+    selected: PulseAsset | null,
     onOpenDrawer: () => void
 }) {
     return (

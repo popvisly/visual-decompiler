@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
+import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { DIFFERENTIAL_DIAGNOSTIC_PROMPT } from '@/lib/prompts';
 
@@ -45,6 +46,11 @@ export interface DifferentialDiagnosticResponse {
 
 export async function POST(req: Request) {
     try {
+        const session = await getServerSession(req);
+        if (!session.userId) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const { assetAId, assetBId } = await req.json();
 
         if (!assetAId || !assetBId) {
@@ -98,7 +104,37 @@ ${JSON.stringify(assetB.data.extractions?.length ? assetB.data.extractions[0] : 
 
         const result = JSON.parse(text) as DifferentialDiagnosticResponse;
 
-        return NextResponse.json(result);
+        const { data: agency } = await supabaseAdmin
+            .from('agencies')
+            .select('id')
+            .limit(1)
+            .single();
+
+        const payload = {
+            ...result,
+            asset_a_id: assetAId,
+            asset_b_id: assetBId,
+        };
+
+        const { data: pulseResult, error: pulseError } = await supabaseAdmin
+            .from('pulse_results')
+            .insert({
+                agency_id: agency?.id || null,
+                asset_a_id: assetAId,
+                asset_b_id: assetBId,
+                differential_analysis: payload,
+            })
+            .select('id')
+            .single();
+
+        if (pulseError) {
+            console.error('[Differential Diagnostic] Failed to persist pulse result:', pulseError);
+        }
+
+        return NextResponse.json({
+            ...result,
+            pulse_result_id: pulseResult?.id || null,
+        });
 
     } catch (error: any) {
         console.error('[Differential Diagnostic Error]:', error);

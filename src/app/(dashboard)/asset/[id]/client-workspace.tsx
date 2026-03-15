@@ -3,12 +3,57 @@
 import { useState, useEffect, useRef } from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
-import { SovereignPrintHeader, SovereignPrintFooter } from '@/components/SovereignDossierParts';
 import AdAnalyticsTab from '@/components/AdAnalyticsTab';
 import RadarChart from '@/components/RadarChart';
 import StrategicPostureMap from '@/components/StrategicPostureMap';
-import { FileDown, Code, Info } from 'lucide-react';
+import { FileDown, Code, Info, Sparkles, Copy } from 'lucide-react';
 import RadiantArchitectureOverlay from '@/components/RadiantArchitectureOverlay';
+import AddToBoard from '@/components/AddToBoard';
+
+interface CloneConcept {
+    concept_id?: number;
+    title: string;
+    hook_type: string;
+    logline: string;
+    scene: string;
+    psychological_mechanism: string;
+    copy_direction: string;
+    casting_direction: string;
+    visual_language: string;
+    production_complexity: 'LOW' | 'MEDIUM' | 'HIGH' | string;
+    dna_prompt: string;
+}
+
+interface CloneOutputData {
+    extracted_mechanism: string;
+    deployment_principle: string;
+    concepts: CloneConcept[];
+}
+
+interface MarketPulseData {
+    status: 'success' | 'error';
+    scope: string;
+    assetCount: number;
+    dominant_mechanics: {
+        mechanic: string;
+        count: number;
+        share: number;
+    }[];
+    category_trigger_profile: {
+        label: string;
+        value: number;
+    }[];
+    category_persuasion_benchmark: {
+        avg_density: number;
+        avg_friction: number;
+        your_rank: string;
+    };
+    chromatic_saturation: {
+        hex: string;
+        count: number;
+    }[];
+    opportunity_gaps: string[];
+}
 
 interface WorkspaceAsset {
     id: string;
@@ -23,6 +68,7 @@ interface WorkspaceAsset {
         color_palette: string[];
         evidence_anchors: string[] | Record<string, unknown>[];
         dna_prompt: string;
+        clone_output?: CloneOutputData | string | null;
         blueprint?: BlueprintData | string | null;
         full_dossier?: {
             narrative_framework?: string;
@@ -45,6 +91,7 @@ interface WorkspaceAsset {
         color_palette: string[];
         evidence_anchors: string[] | Record<string, unknown>[];
         dna_prompt: string;
+        clone_output?: CloneOutputData | string | null;
         blueprint?: BlueprintData | string | null;
         full_dossier?: {
             narrative_framework?: string;
@@ -120,6 +167,63 @@ const parseBlueprint = (value: BlueprintData | string | null | undefined): Bluep
     }
 
     return value;
+};
+
+const parseCloneOutput = (value: CloneOutputData | string | null | undefined): CloneOutputData | null => {
+    if (!value) {
+        return null;
+    }
+
+    if (typeof value === 'string') {
+        try {
+            return JSON.parse(value) as CloneOutputData;
+        } catch {
+            return null;
+        }
+    }
+
+    return value;
+};
+
+const parseDossierSections = (content: string | undefined, type: 'ACT' | 'CHANNEL') => {
+    if (!content) {
+        return {
+            intro: '',
+            sections: [] as { label: string; title: string; text: string }[],
+        };
+    }
+
+    const regex = type === 'ACT' ? /\bACT\s+[IVX]+:/gi : /\bCHANNEL\s+\d+:/gi;
+    const parts = content.split(regex);
+    const matches = content.match(regex) || [];
+
+    return {
+        intro: parts[0]?.trim() || '',
+        sections: parts.slice(1).map((text, index) => {
+            const trimmed = text.trim();
+            const [title, ...rest] = trimmed.split(' — ');
+            return {
+                label: matches[index]?.replace(':', '').trim() || `${type} ${index + 1}`,
+                title: rest.length > 0 ? title.trim() : '',
+                text: rest.length > 0 ? rest.join(' — ').trim() : trimmed,
+            };
+        }),
+    };
+};
+
+const stringifyValue = (value: unknown): string => {
+    if (value == null) return '—';
+    if (typeof value === 'string') return value;
+    if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+    if (Array.isArray(value)) {
+        return value.map((item) => stringifyValue(item)).join(' · ');
+    }
+    if (typeof value === 'object') {
+        return Object.entries(value as Record<string, unknown>)
+            .map(([key, entry]) => `${key}: ${stringifyValue(entry)}`)
+            .join(' · ');
+    }
+    return '—';
 };
 
 const ANALYSIS_STEPS = [
@@ -566,14 +670,26 @@ export default function AssetWorkspace({
     const [activeTab, setActiveTab] = useState<'INTELLIGENCE' | 'SIGNALS' | 'PSYCHOLOGY' | 'BLUEPRINT' | 'MARKET PULSE'>('INTELLIGENCE');
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
     const [isGeneratingBlueprint, setIsGeneratingBlueprint] = useState(false);
+    const [isGeneratingClone, setIsGeneratingClone] = useState(false);
     const [showGatekeeper, setShowGatekeeper] = useState(false);
     const [showCopiedToast, setShowCopiedToast] = useState(false);
     const [showRadiant, setShowRadiant] = useState(false);
+    const [showCloneDrawer, setShowCloneDrawer] = useState(false);
+    const [showExportModal, setShowExportModal] = useState(false);
     const [blueprintError, setBlueprintError] = useState<string | null>(null);
+    const [cloneError, setCloneError] = useState<string | null>(null);
+    const [marketPulseError, setMarketPulseError] = useState<string | null>(null);
+    const [copiedPromptIndex, setCopiedPromptIndex] = useState<number | null>(null);
+    const [marketPulseData, setMarketPulseData] = useState<MarketPulseData | null>(null);
+    const [isLoadingMarketPulse, setIsLoadingMarketPulse] = useState(false);
+    const [exportClientName, setExportClientName] = useState('');
 
     const [sequenceData, setSequenceData] = useState<SequenceData | null>(null);
     const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(
         parseBlueprint(Array.isArray(initialAsset.extraction) ? initialAsset.extraction[0]?.blueprint : initialAsset.extraction?.blueprint)
+    );
+    const [cloneData, setCloneData] = useState<CloneOutputData | null>(
+        parseCloneOutput(Array.isArray(initialAsset.extraction) ? initialAsset.extraction[0]?.clone_output : initialAsset.extraction?.clone_output)
     );
     const [activeAct, setActiveAct] = useState<string | null>(null);
 
@@ -581,6 +697,7 @@ export default function AssetWorkspace({
 
     // Normalize extraction payload (V1 array vs V2 object)
     const extraction = Array.isArray(asset.extraction) ? asset.extraction[0] : asset.extraction;
+    const dossier = extraction?.full_dossier as any;
     
     // Parse visual style string if it's stringified JSON
     let parsedStyle = extraction?.visual_style;
@@ -588,6 +705,45 @@ export default function AssetWorkspace({
     useEffect(() => {
         setBlueprintData(parseBlueprint(extraction?.blueprint));
     }, [extraction]);
+
+    useEffect(() => {
+        setCloneData(parseCloneOutput(extraction?.clone_output));
+    }, [extraction]);
+
+    useEffect(() => {
+        if (activeTab !== 'MARKET PULSE' || !isSovereign || marketPulseData || isLoadingMarketPulse) {
+            return;
+        }
+
+        const fetchMarketPulse = async () => {
+            setMarketPulseError(null);
+            setIsLoadingMarketPulse(true);
+
+            try {
+                const res = await fetch('/api/market-pulse', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        assetId: asset.id,
+                        marketSector: asset.brand?.market_sector || null,
+                    }),
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(typeof data?.error === 'string' ? data.error : 'Failed to load Market Pulse');
+                }
+
+                setMarketPulseData(data);
+            } catch (err) {
+                setMarketPulseError(err instanceof Error ? err.message : 'Failed to load Market Pulse');
+            } finally {
+                setIsLoadingMarketPulse(false);
+            }
+        };
+
+        void fetchMarketPulse();
+    }, [activeTab, asset.brand?.market_sector, asset.id, isLoadingMarketPulse, isSovereign, marketPulseData]);
 
     // Intersection Observer for "Focal Zoom" evolution
     useEffect(() => {
@@ -718,6 +874,92 @@ export default function AssetWorkspace({
         });
     };
 
+    const handleGenerateClone = async () => {
+        if (!isSovereign) {
+            setShowGatekeeper(true);
+            return;
+        }
+
+        setCloneError(null);
+        setIsGeneratingClone(true);
+
+        try {
+            const res = await fetch('/api/clone', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ assetId: asset.id }),
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(typeof data?.error === 'string' ? data.error : 'Failed to generate clone concepts');
+            }
+
+            setCloneData(data);
+            setAsset((current) => {
+                const nextExtraction = Array.isArray(current.extraction)
+                    ? current.extraction.map((item, index) => index === 0 ? { ...item, clone_output: data } : item)
+                    : current.extraction
+                        ? { ...current.extraction, clone_output: data }
+                        : current.extraction;
+
+                return {
+                    ...current,
+                    extraction: nextExtraction,
+                };
+            });
+        } catch (err) {
+            setCloneError(err instanceof Error ? err.message : 'Failed to generate clone concepts');
+        } finally {
+            setIsGeneratingClone(false);
+        }
+    };
+
+    const handleOpenCloneDrawer = () => {
+        if (!isSovereign) {
+            setShowGatekeeper(true);
+            return;
+        }
+
+        setShowCloneDrawer(true);
+        if (!cloneData && !isGeneratingClone) {
+            void handleGenerateClone();
+        }
+    };
+
+    const handleCopyPrompt = async (prompt: string, index: number) => {
+        await navigator.clipboard.writeText(prompt);
+        setCopiedPromptIndex(index);
+        window.setTimeout(() => setCopiedPromptIndex((current) => (current === index ? null : current)), 1800);
+    };
+
+    const handleRefreshMarketPulse = async () => {
+        setMarketPulseError(null);
+        setIsLoadingMarketPulse(true);
+
+        try {
+            const res = await fetch('/api/market-pulse', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    assetId: asset.id,
+                    marketSector: asset.brand?.market_sector || null,
+                }),
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(typeof data?.error === 'string' ? data.error : 'Failed to load Market Pulse');
+            }
+
+            setMarketPulseData(data);
+        } catch (err) {
+            setMarketPulseError(err instanceof Error ? err.message : 'Failed to load Market Pulse');
+        } finally {
+            setIsLoadingMarketPulse(false);
+        }
+    };
+
     // Print/PDF export: force a dedicated print layout + suppress browser header title text
     const handleExportDossier = () => {
         // DOM inspection (requested): verify what we actually have at print time
@@ -745,12 +987,31 @@ export default function AssetWorkspace({
         requestAnimationFrame(() => window.print());
     };
 
+    const handleInitiateExport = () => {
+        setShowExportModal(false);
+        handleExportDossier();
+    };
+
     // Safe parsing of arrays from strings if needed
     let fileUrls = [asset.file_url];
     try {
         const parsed = JSON.parse(asset.file_url);
         if (Array.isArray(parsed)) fileUrls = parsed;
     } catch (e) { }
+
+    const accentHex = agency?.primary_hex || '#C9A96E';
+    const isWhitelabel = Boolean(agency?.is_whitelabel_active);
+    const dossierAgencyName = isWhitelabel ? agency?.name || 'Agency' : 'VISUAL DECOMPILER';
+    const dossierDescriptor = isWhitelabel
+        ? agency?.descriptor || 'FORENSIC INTELLIGENCE SYSTEM'
+        : 'FORENSIC INTELLIGENCE SYSTEM';
+    const dossierLogo = isWhitelabel ? agency?.logo_url || agency?.whitelabel_logo : null;
+    const dossierPreparedBy = isWhitelabel ? agency?.name || 'Agency' : 'Visual Decompiler';
+    const dossierContact = agency?.contact_email || 'hello@visualdecompiler.com';
+    const dossierConfidentiality = agency?.confidentiality_notice || 'This dossier is confidential and intended solely for the named recipient.';
+    const narrativeSections = parseDossierSections(dossier?.narrative_framework, 'ACT');
+    const signalSections = parseDossierSections(dossier?.semiotic_subtext, 'CHANNEL');
+    const firstFrameUrl = fileUrls[0] || asset.file_url;
 
     return (
         <>
@@ -770,138 +1031,268 @@ export default function AssetWorkspace({
                     body.printing .sovereign-print-layout { display: block !important; }
                     body.printing .screen-layout { display: none !important; }
 
-                    /* Ink-save inversion: override ANY dark surfaces */
-                    body.printing,
-                    body.printing * {
-                        color: #141414 !important;
-                    }
-
                     body.printing .sovereign-print-layout {
                         background: #FFFFFF !important;
                         color: #141414 !important;
                     }
 
-                    body.printing .sovereign-print-layout .forensic-act-block,
-                    body.printing .sovereign-print-layout section,
-                    body.printing .sovereign-print-layout div {
-                        background: transparent !important;
-                        box-shadow: none !important;
+                    body.printing .sovereign-print-layout .dossier-section {
+                        page-break-before: always;
+                        break-before: page;
                     }
 
-                    body.printing .sovereign-print-layout .border,
-                    body.printing .sovereign-print-layout [class*="border-"] {
-                        border-color: #C1A67B !important;
+                    body.printing .sovereign-print-layout .dossier-section:first-child {
+                        page-break-before: avoid;
+                        break-before: avoid;
+                    }
+
+                    body.printing .sovereign-print-layout .dossier-block {
+                        page-break-inside: avoid;
+                        break-inside: avoid;
+                    }
+
+                    body.printing .sovereign-print-layout * {
+                        box-shadow: none !important;
+                        text-shadow: none !important;
+                    }
+
+                    @page {
+                        size: A4;
+                        margin: 20mm 18mm;
                     }
                 }
             `}</style>
 
             {/* Print-only sovereign briefing layout (includes Signals + Psychology after Narrative Framework) */}
             <div className="sovereign-print-layout bg-white text-[#141414]">
-                <div ref={printRef} className="max-w-[900px] mx-auto px-12 py-14">
-                    <SovereignPrintHeader agency={agency} />
+                <div ref={printRef} className="mx-auto max-w-[900px] px-12 py-14">
+                    <section className="dossier-section min-h-[calc(100vh-40mm)] py-6">
+                        <div className="flex min-h-[calc(100vh-64mm)] flex-col items-center text-center">
+                            {dossierLogo ? (
+                                <img src={dossierLogo} alt={dossierAgencyName} className="h-20 max-w-[220px] object-contain" />
+                            ) : (
+                                <div className="flex h-16 w-16 items-center justify-center rounded-full border text-2xl font-bold" style={{ borderColor: accentHex, color: accentHex }}>
+                                    V
+                                </div>
+                            )}
+                            <p className="mt-8 text-[10px] font-bold uppercase tracking-[0.42em]" style={{ color: accentHex }}>{dossierAgencyName}</p>
+                            <p className="mt-3 text-[11px] uppercase tracking-[0.3em] text-[#6B6B6B]">{dossierDescriptor}</p>
+                            <h1 className="mt-12 text-3xl font-light uppercase tracking-[0.34em]">FORENSIC INTELLIGENCE DOSSIER</h1>
+                            <div className="mt-8 h-px w-full" style={{ backgroundColor: accentHex }} />
+                            <div className="mt-10 max-w-[60%] overflow-hidden border border-[#E7DED1] p-3">
+                                <img src={firstFrameUrl} alt={asset.brand?.name || 'Asset'} className="max-h-[360px] w-full object-contain" />
+                            </div>
+                            <h2 className="mt-10 text-3xl font-semibold uppercase tracking-tight">{asset.brand?.name || 'Unknown Brand'}</h2>
+                            <p className="mt-3 text-[12px] uppercase tracking-[0.24em] text-[#6B6B6B]">{asset.brand?.market_sector || 'Uncategorised Sector'}</p>
+                            <div className="mt-10 h-px w-full" style={{ backgroundColor: accentHex }} />
+                            <div className="mt-8 space-y-2 text-sm uppercase tracking-[0.16em] text-[#4A4A4A]">
+                                <p>Classification: Confidential</p>
+                                <p>Ingestion ID: VD-{asset.id.split('-')[0].toUpperCase()}</p>
+                                <p>Generated: {new Date().toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                                <p>Prepared by: {dossierPreparedBy}</p>
+                                {exportClientName && <p>Prepared for: {exportClientName}</p>}
+                            </div>
+                        </div>
+                    </section>
 
-                    {/* PRIMARY MECHANIC */}
-                    <section className="mb-10">
-                        <div className="border border-[#C1A67B] rounded-2xl p-8">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#C1A67B] mb-4">Primary Mechanic</p>
-                            <p className="text-[18px] font-light tracking-[0.08em] uppercase leading-snug">
-                                {extraction?.primary_mechanic || '—'}
-                            </p>
-                            <div className="mt-6 pt-6 border-t border-[#E7DED1]">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#6B6B6B]">Confidence</p>
-                                <p className="text-[36px] font-light tracking-tight">
-                                    {extraction?.confidence_score != null ? `${Math.round(extraction.confidence_score)}%` : '—'}
+                    <section className="dossier-section min-h-[calc(100vh-40mm)] py-6">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.35em]" style={{ color: accentHex }}>Executive Intelligence Summary</p>
+                        <div className="mt-8 space-y-8">
+                            <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Primary Mechanic</p>
+                                <p className="mt-4 text-2xl font-semibold uppercase tracking-tight">{extraction?.primary_mechanic || '—'}</p>
+                                <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>
+                                    Confidence Score: {extraction?.confidence_score != null ? `${Math.round(extraction.confidence_score <= 1 ? extraction.confidence_score * 100 : extraction.confidence_score)}%` : '—'}
                                 </p>
                             </div>
-                        </div>
-                    </section>
-
-                    {/* SYNTHESISED VISUAL STYLE */}
-                    <section className="mb-12">
-                        <div className="border border-[#C1A67B] rounded-2xl p-8">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#C1A67B] mb-4">Synthesised Visual Style</p>
-                            <p className="text-[13px] leading-relaxed text-[#141414]">
-                                {parsedStyle || '—'}
-                            </p>
-                        </div>
-                    </section>
-
-                    {/* NARRATIVE FRAMEWORK */}
-                    {extraction?.full_dossier?.narrative_framework && (
-                        <section className="mb-14">
-                            <h2 className="text-[12px] font-bold uppercase tracking-[0.35em] text-[#141414] mb-6">Narrative Framework</h2>
-                            <DossierGrid title="Narrative Framework" content={extraction.full_dossier.narrative_framework} type="ACT" activeAct={null} />
-                        </section>
-                    )}
-
-                    {/* SIGNALS (Gaze Topology, Chromatic Base) */}
-                    <section className="mb-14">
-                        <h2 className="text-[12px] font-bold uppercase tracking-[0.35em] text-[#141414] mb-6">Signals</h2>
-
-                        {/* Gaze Topology */}
-                        {(extraction?.full_dossier as any)?.gaze_topology && (
-                            <div className="mb-10">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#6B6B6B] mb-4">Gaze Topology</p>
-                                <div className="grid grid-cols-3 gap-4">
-                                    {[
-                                        { label: 'Mode of Address', value: (extraction?.full_dossier as any)?.gaze_topology?.mode_of_address },
-                                        { label: 'Viewer Position', value: (extraction?.full_dossier as any)?.gaze_topology?.viewer_position },
-                                        { label: 'Power Holder', value: (extraction?.full_dossier as any)?.gaze_topology?.power_holder },
-                                    ].map((item, i) => (
-                                        <div key={i} className="border border-[#C1A67B] rounded-xl p-5">
-                                            <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#6B6B6B] mb-2">{item.label}</p>
-                                            <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#141414]">{item.value || '—'}</p>
+                            <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Synthesised Visual Style</p>
+                                <p className="mt-4 text-sm leading-relaxed">{parsedStyle || '—'}</p>
+                            </div>
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Narrative Framework</p>
+                                    <p className="mt-4 text-sm leading-relaxed">{narrativeSections.intro || narrativeSections.sections[0]?.text || '—'}</p>
+                                </div>
+                                <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Persuasion Metrics</p>
+                                    <div className="mt-4 space-y-3 text-sm">
+                                        <p>Persuasion Density: {dossier?.persuasion_metrics?.persuasion_density ?? '—'}</p>
+                                        <p>Cognitive Friction: {dossier?.persuasion_metrics?.cognitive_friction ?? '—'}</p>
+                                        <p>Predictive Longevity: {dossier?.persuasion_metrics?.predictive_longevity || '—'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Chromatic Base</p>
+                                <div className="mt-4 flex flex-wrap gap-3">
+                                    {(extraction?.color_palette || []).map((hex: string, index: number) => (
+                                        <div key={`${hex}-${index}`} className="flex items-center gap-2 border px-3 py-2" style={{ borderColor: accentHex }}>
+                                            <span className="h-4 w-4 border border-[#E7DED1]" style={{ backgroundColor: hex }} />
+                                            <span className="text-xs font-mono">{hex}</span>
                                         </div>
                                     ))}
                                 </div>
-                                {((extraction?.full_dossier as any)?.gaze_topology?.reading) && (
-                                    <div className="mt-4 border border-[#E7DED1] bg-[#FBF7EF] rounded-xl p-5">
-                                        <p className="text-[12px] italic text-[#141414] leading-relaxed">&ldquo;{(extraction?.full_dossier as any)?.gaze_topology?.reading}&rdquo;</p>
-                                    </div>
-                                )}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="dossier-section min-h-[calc(100vh-40mm)] py-6">
+                        <div className="flex items-center justify-between">
+                            <p className="text-[11px] font-bold uppercase tracking-[0.35em]" style={{ color: accentHex }}>Narrative Framework</p>
+                            <p className="text-[10px] uppercase tracking-[0.24em] text-[#6B6B6B]">Forensic Map v2.0</p>
+                        </div>
+                        <div className="mt-4 h-px w-full" style={{ backgroundColor: accentHex }} />
+                        {narrativeSections.intro && (
+                            <div className="dossier-block mt-8 border-l-2 pl-6" style={{ borderColor: accentHex }}>
+                                <p className="text-base italic leading-relaxed">{narrativeSections.intro}</p>
                             </div>
                         )}
-
-                        {/* Chromatic Base */}
-                        <div>
-                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#6B6B6B] mb-4">Chromatic Base</p>
-                            {extraction?.color_palette && extraction.color_palette.length > 0 ? (
-                                <div className="flex flex-wrap gap-2">
-                                    {extraction.color_palette.slice(0, 12).map((hex: string, i: number) => (
-                                        <div key={i} className="flex items-center gap-2 border border-[#C1A67B] rounded-full px-3 py-2">
-                                            <div className="w-3.5 h-3.5 rounded-full border border-[#E7DED1]" style={{ backgroundColor: hex }} />
-                                            <span className="text-[10px] font-mono tracking-wider text-[#141414]">{hex}</span>
-                                        </div>
-                                    ))}
+                        <div className="mt-10 space-y-10">
+                            {narrativeSections.sections.map((section, index) => (
+                                <div key={`${section.label}-${index}`} className="dossier-block">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.3em]" style={{ color: accentHex }}>
+                                        {section.label} {section.title ? `· ${section.title}` : ''}
+                                    </p>
+                                    <p className="mt-4 text-sm leading-7">{section.text}</p>
                                 </div>
-                            ) : (
-                                <p className="text-[11px] text-[#6B6B6B]">No palette detected.</p>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className="dossier-section min-h-[calc(100vh-40mm)] py-6">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.35em]" style={{ color: accentHex }}>Signals Intelligence</p>
+                        <div className="mt-4 h-px w-full" style={{ backgroundColor: accentHex }} />
+                        <div className="mt-8 space-y-8">
+                            <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Gaze Topology</p>
+                                <div className="mt-4 grid grid-cols-3 gap-4 text-sm">
+                                    <p>Mode of Address: {(dossier?.gaze_topology?.mode_of_address) || '—'}</p>
+                                    <p>Viewer Position: {(dossier?.gaze_topology?.viewer_position) || '—'}</p>
+                                    <p>Primary Gaze Vector: {(dossier?.gaze_topology?.power_holder) || '—'}</p>
+                                </div>
+                                {dossier?.gaze_topology?.reading && <p className="mt-4 text-sm italic leading-relaxed">{dossier.gaze_topology.reading}</p>}
+                            </div>
+                            {signalSections.intro && (
+                                <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Semiotic Overture</p>
+                                    <p className="mt-4 text-sm leading-relaxed">{signalSections.intro}</p>
+                                </div>
+                            )}
+                            {signalSections.sections.map((section, index) => (
+                                <div key={`${section.label}-${index}`} className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>
+                                        {section.label} {section.title ? `· ${section.title}` : ''}
+                                    </p>
+                                    <p className="mt-4 text-sm leading-relaxed">{section.text}</p>
+                                </div>
+                            ))}
+                            {dossier?.radiant_architecture && (
+                                <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Macro-Diagnostic Map</p>
+                                    <p className="mt-4 text-sm leading-relaxed">{stringifyValue(dossier.radiant_architecture)}</p>
+                                </div>
                             )}
                         </div>
                     </section>
 
-                    {/* PSYCHOLOGY (Archetype Posture, Rhetorical Shield) */}
-                    <section className="mb-14">
-                        <h2 className="text-[12px] font-bold uppercase tracking-[0.35em] text-[#141414] mb-6">Psychology</h2>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="border border-[#C1A67B] rounded-2xl p-8">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#6B6B6B] mb-4">Archetype Posture</p>
-                                <p className="text-[13px] leading-relaxed text-[#141414]">
-                                    {extraction?.full_dossier?.archetype_mapping?.target_posture || '—'}
-                                </p>
+                    <section className="dossier-section min-h-[calc(100vh-40mm)] py-6">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.35em]" style={{ color: accentHex }}>Psychological Profile</p>
+                        <div className="mt-4 h-px w-full" style={{ backgroundColor: accentHex }} />
+                        <div className="mt-8 space-y-8">
+                            <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Archetype Posture</p>
+                                <p className="mt-4 text-sm leading-relaxed">{dossier?.archetype_mapping?.target_posture || '—'}</p>
                             </div>
-
-                            <div className="border border-[#C1A67B] rounded-2xl p-8">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#6B6B6B] mb-4">Rhetorical Shield</p>
-                                <p className="text-[13px] leading-relaxed text-[#141414]">
-                                    {(extraction?.full_dossier as any)?.rhetorical_shield || '—'}
-                                </p>
+                            <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Trigger Distribution</p>
+                                <div className="mt-4 space-y-2 text-sm">
+                                    {Object.entries(dossier?.archetype_mapping?.trigger_distribution || {}).map(([label, value]) => (
+                                        <p key={label}>{label}: {stringifyValue(value)}</p>
+                                    ))}
+                                </div>
                             </div>
+                            <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Strategic Moves</p>
+                                <p className="mt-4 text-sm leading-relaxed">{stringifyValue(dossier?.archetype_mapping?.strategic_moves)}</p>
+                            </div>
+                            <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Objection Dismantling</p>
+                                <p className="mt-4 text-sm leading-relaxed">{dossier?.objection_dismantling || '—'}</p>
+                            </div>
+                            {dossier?.counter_reading_matrix && (
+                                <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Counter-Reading Matrix</p>
+                                    <div className="mt-4 space-y-4 text-sm">
+                                        {(dossier.counter_reading_matrix as any[]).map((entry, index) => (
+                                            <div key={index}>
+                                                <p className="font-semibold uppercase">{entry.lens || `Reading ${index + 1}`}</p>
+                                                <p className="mt-1 leading-relaxed">{entry.reading || stringifyValue(entry)}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </section>
 
-                    <SovereignPrintFooter agency={agency} assetId={asset.id} />
+                    <section className="dossier-section min-h-[calc(100vh-40mm)] py-6">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.35em]" style={{ color: accentHex }}>Creative DNA Prompt</p>
+                        <div className="mt-4 h-px w-full" style={{ backgroundColor: accentHex }} />
+                        <div className="dossier-block mt-8 border p-6" style={{ borderColor: accentHex }}>
+                            <p className="text-sm leading-relaxed">
+                                The following prompt reconstructs the persuasion architecture of this asset for deployment in AI image generation systems.
+                            </p>
+                            <div className="mt-6 border p-5" style={{ borderColor: accentHex }}>
+                                <pre className="whitespace-pre-wrap text-xs leading-6">{extraction?.dna_prompt || 'DNA prompt unavailable.'}</pre>
+                            </div>
+                            <p className="mt-6 text-sm leading-relaxed">
+                                Strategic deployment note: this prompt captures the visual grammar, chromatic logic, semiotic register, and persuasion architecture of the original asset, not its surface appearance.
+                            </p>
+                        </div>
+                    </section>
+
+                    <section className="dossier-section min-h-[calc(100vh-40mm)] py-6">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.35em]" style={{ color: accentHex }}>Evidence & Test Plan</p>
+                        <div className="mt-4 h-px w-full" style={{ backgroundColor: accentHex }} />
+                        <div className="mt-8 space-y-8">
+                            <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Evidence Anchors</p>
+                                <div className="mt-4 space-y-3 text-sm">
+                                    {(Array.isArray(extraction?.evidence_anchors) ? extraction.evidence_anchors : []).length > 0 ? (
+                                        (extraction?.evidence_anchors as any[]).map((entry, index) => (
+                                            <p key={index} className="leading-relaxed">{typeof entry === 'string' ? entry : stringifyValue(entry)}</p>
+                                        ))
+                                    ) : (
+                                        <p>—</p>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Strategic Test Plan</p>
+                                {dossier?.test_plan ? (
+                                    <div className="mt-4 space-y-4 text-sm">
+                                        <p className="leading-relaxed">{dossier.test_plan.hypothesis}</p>
+                                        <ol className="list-decimal space-y-3 pl-5">
+                                            {(dossier.test_plan.test_cells || []).map((cell: any, index: number) => (
+                                                <li key={index}>
+                                                    <span className="font-semibold">{cell.lever}:</span> {cell.change} — {cell.rationale}
+                                                </li>
+                                            ))}
+                                        </ol>
+                                    </div>
+                                ) : (
+                                    <p className="mt-4 text-sm">—</p>
+                                )}
+                            </div>
+                            <div className="border-t pt-8 text-xs leading-relaxed text-[#6B6B6B]" style={{ borderColor: accentHex }}>
+                                <p>{dossierAgencyName}</p>
+                                <p>{dossierContact}</p>
+                                <p className="mt-3">{dossierConfidentiality}</p>
+                                <p className="mt-3">Classification: Confidential · Asset ID: {asset.id} · Generated {new Date().toLocaleDateString('en-AU')}</p>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
 
@@ -950,6 +1341,13 @@ export default function AssetWorkspace({
                                 <div className="flex flex-col items-end gap-2 relative">
                                     <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
                                     <div className="flex items-center gap-2">
+                                        <button
+                                            onClick={handleOpenCloneDrawer}
+                                            className="no-print flex items-center gap-2 px-4 py-2 bg-[#D4A574] text-[#141414] text-[10px] font-bold tracking-widest uppercase hover:bg-[#c8955b] rounded-full transition-all"
+                                        >
+                                            <Sparkles className="w-3 h-3" />
+                                            {cloneData ? 'Open Clone Engine' : 'Clone This Mechanic'}
+                                        </button>
                                         <div className="relative group">
                                             <button
                                                 onClick={handleCopyEmbed}
@@ -973,12 +1371,13 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
                                         <button
-                                            onClick={handleExportDossier}
+                                            onClick={() => setShowExportModal(true)}
                                             className="no-print flex items-center gap-2 px-4 py-2 bg-[#4A4A4A] text-white text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] rounded-full transition-all"
                                         >
                                             <FileDown className="w-3 h-3" />
                                             Export Dossier (Print/PDF)
                                         </button>
+                                        <AddToBoard assetId={asset.id} />
                                     </div>
                                     {/* Simple Toast Notification */}
                                     {showCopiedToast && (
@@ -990,6 +1389,50 @@ export default function AssetWorkspace({
                             </div>
                         </div>
                     </aside>
+
+                    {showExportModal && (
+                        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/55 px-6 backdrop-blur-sm no-print">
+                            <div className="w-full max-w-xl rounded-[2rem] border border-[#D4A574]/20 bg-[#141414] p-8 text-[#F5F3EE] shadow-2xl">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Export Strategic Dossier</p>
+                                <h3 className="mt-4 text-2xl font-light uppercase tracking-tight">Print-safe agency dossier</h3>
+                                <p className="mt-4 text-sm leading-relaxed text-[#FFFFFF]/65">
+                                    For best results use Chrome, choose Save as PDF, set paper size to A4, and disable browser headers and footers.
+                                </p>
+
+                                <div className="mt-6 space-y-2">
+                                    <label className="block text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Client Name</label>
+                                    <input
+                                        type="text"
+                                        value={exportClientName}
+                                        onChange={(event) => setExportClientName(event.target.value)}
+                                        placeholder="Optional cover-page client name"
+                                        className="w-full rounded-full border border-[#D4A574]/20 bg-black/30 px-5 py-3 text-sm text-[#F5F3EE] outline-none transition-colors focus:border-[#D4A574]"
+                                    />
+                                </div>
+
+                                <div className="mt-6 rounded-2xl border border-[#D4A574]/15 bg-black/20 p-4 text-sm leading-relaxed text-[#FFFFFF]/65">
+                                    {isWhitelabel
+                                        ? `Agency branding active — ${dossierAgencyName}`
+                                        : 'Visual Decompiler branding active for this export.'}
+                                </div>
+
+                                <div className="mt-8 flex flex-col gap-3 md:flex-row md:justify-end">
+                                    <button
+                                        onClick={() => setShowExportModal(false)}
+                                        className="rounded-full border border-[#D4A574]/20 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574] transition-colors hover:bg-[#D4A574]/10"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={handleInitiateExport}
+                                        className="rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition-colors hover:bg-[#c8955b]"
+                                    >
+                                        Initiate Export
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                 {/* RIGHT COLUMN: Scrollable Forensic Console (55%) */}
                 <div className="w-full md:w-[55%] bg-[#FBFBF6] min-h-screen relative">
@@ -1015,9 +1458,6 @@ export default function AssetWorkspace({
 
                     {/* Tab Content Area */}
                     <div className="p-8 md:p-12">
-                        {/* Sovereign PDF Header */}
-                        <SovereignPrintHeader agency={agency} />
-
                         {/* TAB 1: INTELLIGENCE */}
                         {activeTab === 'INTELLIGENCE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -1243,22 +1683,151 @@ export default function AssetWorkspace({
                         {/* MARKET PULSE (Locked / Last) */}
                         {activeTab === 'MARKET PULSE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
-                                <div className="absolute inset-0 z-10 backdrop-blur-md bg-[#FBFBF6]/60 flex items-center justify-center rounded-3xl">
-                                    <div className="bg-[#1A1A1A] border border-[#D4A574]/40 p-8 rounded-3xl text-center shadow-2xl flex flex-col items-center">
-                                        <div className="w-12 h-12 rounded-full bg-[#D4A574]/10 flex items-center justify-center border border-[#D4A574]/30 mb-4">
-                                            <svg className="w-5 h-5 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                                {!isSovereign ? (
+                                    <>
+                                        <div className="absolute inset-0 z-10 backdrop-blur-md bg-[#FBFBF6]/60 flex items-center justify-center rounded-3xl">
+                                            <div className="bg-[#1A1A1A] border border-[#D4A574]/40 p-8 rounded-3xl text-center shadow-2xl flex flex-col items-center">
+                                                <div className="w-12 h-12 rounded-full bg-[#D4A574]/10 flex items-center justify-center border border-[#D4A574]/30 mb-4">
+                                                    <svg className="w-5 h-5 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                                                </div>
+                                                <span className="text-[#D4A574] font-bold tracking-[0.3em] uppercase text-[10px] mb-2">Sovereign Feature</span>
+                                                <h3 className="text-[#FFFFFF] text-xl font-light mb-4 tracking-tight">Market Pulse Locked</h3>
+                                                <p className="text-[#FFFFFF]/60 text-xs mb-8 max-w-xs leading-relaxed">Cross-asset statistical aggregation and category saturation density mapping is restricted to paid agency tiers.</p>
+                                                <button className="bg-[#D4A574] text-[#1A1A1A] px-8 py-3 rounded-full text-[10px] uppercase font-bold tracking-widest hover:bg-[#1A1A1A] hover:text-white transition-colors">
+                                                    Premium Unlock
+                                                </button>
+                                            </div>
                                         </div>
-                                        <span className="text-[#D4A574] font-bold tracking-[0.3em] uppercase text-[10px] mb-2">Sovereign Feature</span>
-                                        <h3 className="text-[#FFFFFF] text-xl font-light mb-4 tracking-tight">Market Pulse Locked</h3>
-                                        <p className="text-[#FFFFFF]/60 text-xs mb-8 max-w-xs leading-relaxed">Cross-asset statistical aggregation and category saturation density mapping is restricted to Enterprise tiers.</p>
-                                        <button className="bg-[#D4A574] text-[#1A1A1A] px-8 py-3 rounded-full text-[10px] uppercase font-bold tracking-widest hover:bg-[#1A1A1A] hover:text-white transition-colors">
-                                            Premium Unlock
+                                        <div className="opacity-40 pointer-events-none select-none filter blur-[2px]">
+                                            <AdAnalyticsTab brand={asset.brand?.name} />
+                                        </div>
+                                    </>
+                                ) : isLoadingMarketPulse && !marketPulseData ? (
+                                    <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] px-8 py-16 text-center">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Synthesising Market Pulse</p>
+                                        <p className="mt-4 text-sm leading-relaxed text-[#FFFFFF]/65">
+                                            Aggregating category mechanics, chromatic saturation, and persuasion benchmarks from the Intelligence Vault.
+                                        </p>
+                                    </div>
+                                ) : marketPulseError ? (
+                                    <div className="rounded-3xl border border-[#8B4513]/20 bg-[#1A1A1A] px-8 py-12">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Market Pulse Interrupted</p>
+                                        <p className="mt-4 text-sm leading-relaxed text-[#FFFFFF]/70">{marketPulseError}</p>
+                                        <button
+                                            onClick={() => void handleRefreshMarketPulse()}
+                                            className="mt-6 rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414]"
+                                        >
+                                            Retry Pulse
                                         </button>
                                     </div>
-                                </div>
-                                <div className="opacity-40 pointer-events-none select-none filter blur-[2px]">
-                                    <AdAnalyticsTab brand={asset.brand?.name} />
-                                </div>
+                                ) : marketPulseData ? (
+                                    <div className="space-y-8">
+                                        <div className="flex flex-col gap-6 rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-8 text-white shadow-sm md:flex-row md:items-end md:justify-between">
+                                            <div>
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Market Pulse</p>
+                                                <h3 className="mt-3 text-3xl font-light tracking-tight text-[#FFFFFF]">
+                                                    {marketPulseData.scope}
+                                                </h3>
+                                                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#FFFFFF]/65">
+                                                    Vault-wide aggregation of persuasion mechanics, category trigger mix, and chromatic territory for {asset.brand?.market_sector || 'your active market'}.
+                                                </p>
+                                            </div>
+                                            <button
+                                                onClick={() => void handleRefreshMarketPulse()}
+                                                disabled={isLoadingMarketPulse}
+                                                className="rounded-full border border-[#D4A574]/25 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574] transition-colors hover:bg-[#D4A574]/10 disabled:opacity-50"
+                                            >
+                                                {isLoadingMarketPulse ? 'Refreshing...' : 'Refresh Pulse'}
+                                            </button>
+                                        </div>
+
+                                        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                                            <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-6">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Assets sampled</p>
+                                                <p className="mt-4 text-4xl font-light text-white">{marketPulseData.assetCount}</p>
+                                            </div>
+                                            <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-6">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Avg persuasion density</p>
+                                                <p className="mt-4 text-4xl font-light text-white">{marketPulseData.category_persuasion_benchmark.avg_density}%</p>
+                                            </div>
+                                            <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-6">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Avg cognitive friction</p>
+                                                <p className="mt-4 text-4xl font-light text-white">{marketPulseData.category_persuasion_benchmark.avg_friction}%</p>
+                                                <p className="mt-3 text-[11px] uppercase tracking-[0.14em] text-[#FFFFFF]/45">{marketPulseData.category_persuasion_benchmark.your_rank}</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+                                            <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-6">
+                                                <h3 className="border-b border-[#D4A574]/15 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
+                                                    Dominant Mechanics
+                                                </h3>
+                                                <div className="mt-5 space-y-4">
+                                                    {marketPulseData.dominant_mechanics.map((item) => (
+                                                        <div key={item.mechanic} className="rounded-2xl border border-white/6 bg-black/20 p-4">
+                                                            <div className="flex items-center justify-between gap-4">
+                                                                <p className="text-sm font-medium uppercase tracking-[0.08em] text-white">{item.mechanic}</p>
+                                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{item.share}% share</span>
+                                                            </div>
+                                                            <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/5">
+                                                                <div className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574]" style={{ width: `${item.share}%` }} />
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-6">
+                                                <h3 className="border-b border-[#D4A574]/15 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
+                                                    Trigger Profile
+                                                </h3>
+                                                <div className="mt-4">
+                                                    <RadarChart data={marketPulseData.category_trigger_profile} forceLight={false} />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+                                            <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-6">
+                                                <h3 className="border-b border-[#D4A574]/15 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
+                                                    Opportunity Gaps
+                                                </h3>
+                                                <div className="mt-5 grid gap-4">
+                                                    {marketPulseData.opportunity_gaps.map((gap, index) => (
+                                                        <div key={`${gap}-${index}`} className="rounded-2xl border border-white/6 bg-black/20 p-4">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Whitespace {(index + 1).toString().padStart(2, '0')}</p>
+                                                            <p className="mt-3 text-sm leading-relaxed text-[#FFFFFF]/72">{gap}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-6">
+                                                <h3 className="border-b border-[#D4A574]/15 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
+                                                    Chromatic Saturation
+                                                </h3>
+                                                <div className="mt-5 grid grid-cols-2 gap-4">
+                                                    {marketPulseData.chromatic_saturation.map((color) => (
+                                                        <div key={color.hex} className="rounded-2xl border border-white/6 bg-black/20 p-4">
+                                                            <div className="h-16 rounded-xl border border-white/10" style={{ backgroundColor: color.hex }} />
+                                                            <div className="mt-3 flex items-center justify-between gap-3">
+                                                                <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-white">{color.hex}</span>
+                                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{color.count}</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="rounded-3xl border border-dashed border-[#D4A574]/20 bg-[#1A1A1A] px-8 py-14 text-center">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Market Pulse Ready</p>
+                                        <p className="mt-4 text-sm leading-relaxed text-[#FFFFFF]/65">
+                                            Refresh this tab to aggregate the current category benchmark from the Intelligence Vault.
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         )}
 
@@ -1587,13 +2156,154 @@ export default function AssetWorkspace({
                             </div>
                         )}
 
-                        {/* Sovereign PDF Footer */}
-                        <SovereignPrintFooter agency={agency} assetId={asset.id} />
                     </div>
                 </div>
                 </div>
             </div>
-        </div>
+            </div>
+
+            {showCloneDrawer && (
+                <div className="fixed inset-0 z-[80] no-print">
+                    <div
+                        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                        onClick={() => setShowCloneDrawer(false)}
+                    />
+                    <div className="absolute inset-y-0 right-0 w-full max-w-3xl overflow-y-auto border-l border-[#D4A574]/20 bg-[#141414] shadow-2xl">
+                        <div className="sticky top-0 z-10 border-b border-[#D4A574]/15 bg-[#141414]/95 px-6 py-5 backdrop-blur-md md:px-8">
+                            <div className="flex items-start justify-between gap-6">
+                                <div>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Clone Engine</p>
+                                    <h2 className="mt-3 text-3xl font-light uppercase tracking-tight text-[#F5F5DC]">
+                                        {cloneData?.extracted_mechanism || extraction?.primary_mechanic || 'Creative DNA Extraction'}
+                                    </h2>
+                                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#F5F5DC]/68">
+                                        {cloneData?.deployment_principle || 'Generate five original campaign concepts that preserve the persuasion architecture while shifting the aesthetic, scene, and execution language.'}
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={() => setShowCloneDrawer(false)}
+                                    className="rounded-full border border-[#D4A574]/20 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574] transition-colors hover:bg-[#D4A574]/10"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="px-6 py-8 md:px-8">
+                            <div className="rounded-[2rem] border border-[#D4A574]/15 bg-black/20 p-6">
+                                <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Source asset</p>
+                                        <p className="mt-2 text-xl font-light uppercase tracking-tight text-[#F5F5DC]">{asset.brand?.name || 'Unknown Brand'}</p>
+                                        <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-[#F5F5DC]/45">{asset.brand?.market_sector || 'Uncategorised'}</p>
+                                    </div>
+                                    <button
+                                        onClick={() => void handleGenerateClone()}
+                                        disabled={isGeneratingClone}
+                                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition-all hover:bg-[#c8955b] disabled:cursor-wait disabled:opacity-60"
+                                    >
+                                        <Sparkles className="h-3.5 w-3.5" />
+                                        {isGeneratingClone ? 'Synthesising Concepts...' : cloneData ? 'Regenerate Concepts' : 'Generate Concepts'}
+                                    </button>
+                                </div>
+                                {cloneError && (
+                                    <p className="mt-4 rounded-2xl border border-[#8B4513]/30 bg-[#8B4513]/10 px-4 py-3 text-sm text-[#F5F5DC]/80">
+                                        {cloneError}
+                                    </p>
+                                )}
+                            </div>
+
+                            {isGeneratingClone && !cloneData ? (
+                                <div className="mt-8 rounded-[2rem] border border-dashed border-[#D4A574]/20 bg-black/10 px-6 py-12 text-center">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Extracting transferable persuasion DNA</p>
+                                    <p className="mt-4 text-sm leading-relaxed text-[#F5F5DC]/60">
+                                        Clone Engine is unpacking the core mechanism, stripping out the incumbent aesthetic, and drafting five fresh deployment directions.
+                                    </p>
+                                </div>
+                            ) : cloneData ? (
+                                <div className="mt-8 space-y-6">
+                                    <div className="grid gap-4 md:grid-cols-2">
+                                        <div className="rounded-[2rem] border border-[#D4A574]/15 bg-black/20 p-5">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Extracted Mechanism</p>
+                                            <p className="mt-3 text-base leading-relaxed text-[#F5F5DC]/82">{cloneData.extracted_mechanism}</p>
+                                        </div>
+                                        <div className="rounded-[2rem] border border-[#D4A574]/15 bg-black/20 p-5">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Deployment Principle</p>
+                                            <p className="mt-3 text-base leading-relaxed text-[#F5F5DC]/82">{cloneData.deployment_principle}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid gap-5">
+                                        {cloneData.concepts.map((concept, index) => (
+                                            <article key={`${concept.title}-${index}`} className="rounded-[2rem] border border-[#D4A574]/15 bg-[#171717] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                                                    <div>
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#D4A574]/70">
+                                                            Concept {(concept.concept_id || index + 1).toString().padStart(2, '0')}
+                                                        </p>
+                                                        <h3 className="mt-3 text-2xl font-light uppercase tracking-tight text-[#F5F5DC]">{concept.title}</h3>
+                                                    </div>
+                                                    <div className="flex flex-wrap items-center gap-2">
+                                                        <span className="rounded-full border border-[#D4A574]/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">
+                                                            {concept.hook_type}
+                                                        </span>
+                                                        <span className="rounded-full border border-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#F5F5DC]/65">
+                                                            {concept.production_complexity}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <p className="mt-5 text-base leading-relaxed text-[#F5F5DC]/80">{concept.logline}</p>
+
+                                                <div className="mt-6 grid gap-4 md:grid-cols-2">
+                                                    <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Scene</p>
+                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/72">{concept.scene}</p>
+                                                    </div>
+                                                    <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Psychological Mechanism</p>
+                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/72">{concept.psychological_mechanism}</p>
+                                                    </div>
+                                                    <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Copy Direction</p>
+                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/72">{concept.copy_direction}</p>
+                                                    </div>
+                                                    <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Casting + Visual Language</p>
+                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/72">{concept.casting_direction}</p>
+                                                        <p className="mt-3 border-t border-white/6 pt-3 text-sm leading-relaxed text-[#F5F5DC]/58">{concept.visual_language}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="mt-6 rounded-[1.5rem] border border-[#D4A574]/10 bg-black/25 p-4">
+                                                    <div className="flex items-center justify-between gap-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">DNA Prompt</p>
+                                                        <button
+                                                            onClick={() => void handleCopyPrompt(concept.dna_prompt, index)}
+                                                            className="inline-flex items-center gap-2 rounded-full border border-[#D4A574]/20 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] transition-colors hover:bg-[#D4A574]/10"
+                                                        >
+                                                            <Copy className="h-3 w-3" />
+                                                            {copiedPromptIndex === index ? 'Copied' : 'Copy'}
+                                                        </button>
+                                                    </div>
+                                                    <pre className="mt-3 whitespace-pre-wrap text-xs leading-relaxed text-[#F5F5DC]/72">{concept.dna_prompt}</pre>
+                                                </div>
+                                            </article>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="mt-8 rounded-[2rem] border border-dashed border-[#D4A574]/20 bg-black/10 px-6 py-12 text-center">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Clone Engine ready</p>
+                                    <p className="mt-4 text-sm leading-relaxed text-[#F5F5DC]/60">
+                                        Generate five original campaign routes that preserve the persuasion logic while breaking completely from the incumbent execution.
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
     </>
 );
 }

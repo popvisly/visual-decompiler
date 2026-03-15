@@ -8,7 +8,7 @@ interface Board {
     name: string;
 }
 
-export default function AddToBoard({ adId }: { adId: string }) {
+export default function AddToBoard({ adId, assetId }: { adId?: string; assetId?: string }) {
     const [isOpen, setIsOpen] = useState(false);
     const [boards, setBoards] = useState<Board[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +37,8 @@ export default function AddToBoard({ adId }: { adId: string }) {
         try {
             const res = await fetch(`/api/boards/${boardId}/items`, {
                 method: 'POST',
-                body: JSON.stringify({ adId })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ adId, assetId })
             });
             if (res.ok) {
                 setSuccessId(boardId);
@@ -59,6 +60,7 @@ export default function AddToBoard({ adId }: { adId: string }) {
         try {
             const res = await fetch('/api/boards', {
                 method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: newBoardName })
             });
             const newBoard = await res.json();

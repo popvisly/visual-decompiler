@@ -1,0 +1,140 @@
+import { NextResponse } from 'next/server';
+
+import { getAnthropic, CLAUDE_MODEL } from '@/lib/anthropic';
+import { getServerSession } from '@/lib/auth-server';
+import { supabaseAdmin } from '@/lib/supabase';
+
+const extractJsonObject = (value: string) => {
+    const fenced = value.match(/```json\s*([\s\S]*?)```/i) || value.match(/```\s*([\s\S]*?)```/i);
+    const candidate = fenced?.[1] || value;
+    const start = candidate.indexOf('{');
+    const end = candidate.lastIndexOf('}');
+
+    if (start === -1 || end === -1 || end <= start) {
+        throw new Error('Clone Engine returned malformed JSON.');
+    }
+
+    return JSON.parse(candidate.slice(start, end + 1));
+};
+
+export async function POST(req: Request) {
+    const session = await getServerSession(req);
+    if (!session.userId) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    try {
+        const { assetId, briefOverride } = await req.json();
+
+        if (!assetId || typeof assetId !== 'string') {
+            return NextResponse.json({ error: 'Asset ID is required' }, { status: 400 });
+        }
+
+        const { data: asset, error: assetError } = await supabaseAdmin
+            .from('assets')
+            .select(`
+                id,
+                brands ( name, market_sector ),
+                extractions!inner (
+                    id,
+                    primary_mechanic,
+                    evidence_anchors,
+                    dna_prompt,
+                    full_dossier,
+                    clone_output
+                )
+            `)
+            .eq('id', assetId)
+            .single();
+
+        if (assetError || !asset) {
+            return NextResponse.json({ error: 'Asset not found' }, { status: 404 });
+        }
+
+        const extraction = Array.isArray(asset.extractions) ? asset.extractions[0] : asset.extractions;
+        const dossier = extraction?.full_dossier;
+
+        if (!extraction || !dossier) {
+            return NextResponse.json({ error: 'A completed dossier is required before cloning this mechanic.' }, { status: 400 });
+        }
+
+        const anthropic = getAnthropic();
+        if (!anthropic) {
+            return NextResponse.json({ error: 'AI service unavailable' }, { status: 500 });
+        }
+
+        const systemPrompt = `You are an elite creative strategist. You receive forensic intelligence about a competitor advertisement and generate 5 completely original campaign concepts that deploy the same underlying persuasion architecture through an entirely different aesthetic, narrative, and visual language.
+
+You are NOT copying the ad. You are extracting the MECHANISM and deploying it freshly.
+
+Return a single valid JSON object. No markdown. No preamble.`;
+
+        const userMessage = `Generate 5 original campaign concepts that use the same persuasion architecture as this forensic extraction.
+
+Asset:
+Brand: ${asset.brands?.name || 'Unknown'}
+Category: ${asset.brands?.market_sector || 'Unknown'}
+
+Dossier:
+Primary Mechanic: ${extraction.primary_mechanic}
+Trigger Distribution: ${JSON.stringify((dossier as any)?.archetype_mapping?.trigger_distribution || {})}
+Semiotic Overture: ${typeof (dossier as any)?.semiotic_subtext === 'string' ? (dossier as any).semiotic_subtext : (dossier as any)?.semiotic_subtext?.overture || ''}
+Target Posture: ${(dossier as any)?.archetype_mapping?.target_posture || ''}
+Strategic Moves: ${JSON.stringify((dossier as any)?.archetype_mapping?.strategic_moves || [])}
+Evidence Anchors: ${JSON.stringify(extraction.evidence_anchors || [])}
+DNA Prompt: ${extraction.dna_prompt || ''}
+${briefOverride ? `Creative Brief Override: ${briefOverride}` : ''}
+
+Return this JSON structure:
+{
+  "extracted_mechanism": "string — the pure persuasion mechanic, stripped of all aesthetic",
+  "deployment_principle": "string — how to redeploy this mechanic in a fresh context",
+  "concepts": [
+    {
+      "concept_id": 1,
+      "title": "string",
+      "hook_type": "string — e.g. Reversal, Juxtaposition, Documentary, Restraint",
+      "logline": "string — one sentence concept",
+      "scene": "string — what we see in this ad",
+      "psychological_mechanism": "string — how this deploys the extracted mechanic",
+      "copy_direction": "string — headline/tagline direction",
+      "casting_direction": "string",
+      "visual_language": "string",
+      "production_complexity": "LOW | MEDIUM | HIGH",
+      "dna_prompt": "string — Midjourney/DALL-E ready prompt for this concept"
+    }
+  ]
+}`;
+
+        const response = await anthropic.messages.create({
+            model: CLAUDE_MODEL,
+            max_tokens: 3000,
+            system: systemPrompt,
+            messages: [{ role: 'user', content: userMessage }],
+        });
+
+        const textResponse = response.content
+            .filter((block) => block.type === 'text')
+            .map((block) => block.text)
+            .join('\n');
+
+        const cloneOutput = extractJsonObject(textResponse);
+
+        const { error: updateError } = await supabaseAdmin
+            .from('extractions')
+            .update({
+                clone_output: cloneOutput,
+                updated_at: new Date().toISOString(),
+            })
+            .eq('id', extraction.id);
+
+        if (updateError) {
+            console.error('[Clone API] Failed to save clone output:', updateError);
+        }
+
+        return NextResponse.json(cloneOutput);
+    } catch (error) {
+        console.error('[Clone API] Critical error:', error);
+        return NextResponse.json({ error: 'Failed to generate clone concepts' }, { status: 500 });
+    }
+}
