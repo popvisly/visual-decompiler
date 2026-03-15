@@ -8,6 +8,7 @@ import { AlertCircle, FileImage } from 'lucide-react';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { supabaseClient } from '@/lib/supabase-client';
 import type { UsageStatus } from '@/lib/usage';
+import { SECTOR_TAXONOMY, type SectorTaxonomyValue } from '@/lib/sector-taxonomy';
 
 type StageFile = {
     file: File;
@@ -65,6 +66,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
     const [showGatekeeper, setShowGatekeeper] = useState(false);
     const [stagedFile, setStagedFile] = useState<StageFile | null>(null);
     const [brandName, setBrandName] = useState('');
+    const [marketSector, setMarketSector] = useState<SectorTaxonomyValue>('Luxury Fashion');
     const [error, setError] = useState<string | null>(null);
     const [usageStatus, setUsageStatus] = useState<UsageStatus | null>(null);
     const [usageLoading, setUsageLoading] = useState(true);
@@ -195,6 +197,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
             if (brandName.trim()) {
                 formData.append('brandName', brandName.trim());
             }
+            formData.append('marketSector', marketSector);
 
             const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
             if (sessionError) {
@@ -224,7 +227,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
             setError(extractionError.message || 'Unknown error occurred during ingestion.');
             setIsProcessing(false);
         }
-    }, [brandName, isSovereign, router, stagedFile]);
+    }, [brandName, isSovereign, marketSector, router, stagedFile]);
 
     const clearStagedAsset = useCallback(() => {
         if (stagedFile) {
@@ -232,6 +235,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
         }
 
         setBrandName('');
+        setMarketSector('Luxury Fashion');
         setError(null);
         setStagedFile(null);
     }, [stagedFile]);
@@ -350,6 +354,27 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                                         placeholder="Optional, for your team's reference"
                                                         className="w-full rounded-full border border-[#D4A574]/20 bg-white/5 px-5 py-3 text-sm text-[#F5F5DC] placeholder:text-white/25 focus:border-[#D4A574]/50 focus:outline-none"
                                                     />
+                                                </div>
+
+                                                <div className="space-y-3">
+                                                    <label htmlFor="market-sector" className="block text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574]/80">
+                                                        Sector Taxonomy
+                                                    </label>
+                                                    <select
+                                                        id="market-sector"
+                                                        value={marketSector}
+                                                        onChange={(e) => setMarketSector(e.target.value as SectorTaxonomyValue)}
+                                                        className="w-full rounded-full border border-[#D4A574]/20 bg-white/5 px-5 py-3 text-sm text-[#F5F5DC] outline-none transition-colors focus:border-[#D4A574]/50"
+                                                    >
+                                                        {SECTOR_TAXONOMY.map((sector) => (
+                                                            <option key={sector} value={sector} className="text-black">
+                                                                {sector}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                    <p className="text-[11px] leading-relaxed text-white/45">
+                                                        This locks the asset into a controlled sector taxonomy so future Mechanic Intelligence trends stay clean and comparable.
+                                                    </p>
                                                 </div>
 
                                                 <div className="flex flex-col gap-3 pt-2 sm:flex-row">

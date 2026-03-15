@@ -5,6 +5,7 @@ import sharp from 'sharp';
 import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
 import { getServerSession } from '@/lib/auth-server';
 import { assertUsageAvailable } from '@/lib/usage';
+import { normalizeSector } from '@/lib/sector-taxonomy';
 
 export const maxDuration = 300; // 5 minutes max function duration for Pro/Enterprise tier
 export const dynamic = 'force-dynamic';
@@ -74,11 +75,13 @@ export async function POST(req: Request) {
         let fileExt = 'png';
         let mimeType = 'image/jpeg';
         let brandHint = '';
+        let sectorHint = '';
 
         if (contentType.includes('application/json')) {
             const body = await req.json();
             const mediaUrl = body.mediaUrl;
             brandHint = typeof body.brandName === 'string' ? body.brandName.trim() : '';
+            sectorHint = normalizeSector(typeof body.marketSector === 'string' ? body.marketSector : '');
             if (!mediaUrl) {
                 return NextResponse.json({ error: 'No mediaUrl provided.' }, { status: 400 });
             }
@@ -113,6 +116,7 @@ export async function POST(req: Request) {
             const formData = await req.formData();
             const file = formData.get('file') as File | null;
             brandHint = typeof formData.get('brandName') === 'string' ? String(formData.get('brandName')).trim() : '';
+            sectorHint = normalizeSector(typeof formData.get('marketSector') === 'string' ? String(formData.get('marketSector')) : '');
 
             if (!file) {
                 return NextResponse.json({ error: 'No file uploaded.' }, { status: 400 });
@@ -278,7 +282,7 @@ RULES:
         const userContent: ContentBlock[] = [
             {
                 type: "text",
-                text: `Perform a complete forensic extraction on this advertisement and return the full 13-dimension dossier.${brandHint ? ` Brand hint: ${brandHint}. Use it only if the asset evidence supports it.` : ''}`
+                text: `Perform a complete forensic extraction on this advertisement and return the full 13-dimension dossier.${brandHint ? ` Brand hint: ${brandHint}. Use it only if the asset evidence supports it.` : ''}${sectorHint ? ` Sector taxonomy hint: ${sectorHint}. Use this controlled sector label unless the visual evidence strongly contradicts it.` : ''}`
             },
             {
                 type: "image",
@@ -344,7 +348,7 @@ RULES:
         // 6. Dynamic Brand Binding
         let targetBrandId = null;
         const resolvedBrandName = brandHint || extractionResult.brand_name_guess || 'Unknown Brand';
-        const marketSector = extractionResult.market_sector_guess || 'Uncategorized';
+        const marketSector = normalizeSector(sectorHint || extractionResult.market_sector_guess || 'Other');
 
         // Check if brand exists in Intelligence Vault
         const { data: existingBrand } = await supabaseAdmin.from('brands')
