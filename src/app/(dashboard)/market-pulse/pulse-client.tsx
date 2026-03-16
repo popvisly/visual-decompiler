@@ -154,6 +154,11 @@ function buildRadarPoints(metrics: TriggerMetric[]) {
     }).join(' ');
 }
 
+function inferMechanicFromFlag(flag: IntelligenceFlag, mechanics: PulseMetric[]) {
+    const haystack = `${flag.finding} ${flag.recommendation}`.toLowerCase();
+    return mechanics.find((item) => haystack.includes(item.mechanic.toLowerCase()))?.mechanic || null;
+}
+
 export default function MechanicIntelligenceClient({
     hasAccess,
     tierLabel,
@@ -223,6 +228,17 @@ export default function MechanicIntelligenceClient({
 
     const handleExportReport = () => {
         window.print();
+    };
+
+    const handleFlagAction = (flag: IntelligenceFlag) => {
+        if (!data) return;
+
+        const matchedMechanic = inferMechanicFromFlag(flag, data.mechanic_velocity);
+        if (matchedMechanic) {
+            setActiveMechanic(matchedMechanic);
+        }
+
+        document.getElementById('mechanic-audit-trail')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     return (
@@ -618,7 +634,7 @@ export default function MechanicIntelligenceClient({
                         </div>
 
                         {activeMechanicData ? (
-                            <section className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                            <section id="mechanic-audit-trail" className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
                                 <div className="flex flex-col gap-3 border-b border-[#D4A574]/12 pb-4 md:flex-row md:items-end md:justify-between">
                                     <div>
                                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Mechanic Audit Trail</p>
@@ -663,6 +679,12 @@ export default function MechanicIntelligenceClient({
                                             <p className="mt-4 text-[9px] font-bold uppercase tracking-[0.2em] text-[#8B4513]">
                                                 Source asset count: {flag.asset_count}
                                             </p>
+                                            <button
+                                                onClick={() => handleFlagAction(flag)}
+                                                className="mt-4 text-left text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513] transition-opacity hover:opacity-70"
+                                            >
+                                                {flag.type === 'VELOCITY ALERT' ? 'View Trend' : flag.type === 'SATURATION SIGNAL' ? `View ${flag.asset_count} Assets` : 'Explore Mechanic'}
+                                            </button>
                                         </div>
                                     ))}
                                 </div>
