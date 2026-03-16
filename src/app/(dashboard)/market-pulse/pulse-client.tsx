@@ -8,6 +8,12 @@ type PulseMetric = {
     share: number;
     delta: number;
     direction: 'up' | 'down' | 'flat';
+    assets?: {
+        id: string;
+        brand: string;
+        sector: string;
+        created_at: string;
+    }[];
 };
 
 type IntelligenceFlag = {
@@ -34,6 +40,7 @@ type PulseResponse = {
     intelligence_flags: IntelligenceFlag[];
     dominant_mechanics: { mechanic: string; count: number; share: number }[];
     category_trigger_profile: TriggerMetric[];
+    vault_trigger_profile?: TriggerMetric[];
     category_persuasion_benchmark: {
         avg_density: number;
         avg_friction: number;
@@ -44,6 +51,62 @@ type PulseResponse = {
 };
 
 const WINDOW_OPTIONS = [30, 60, 90] as const;
+const LOCKED_PREVIEW: PulseResponse = {
+    status: 'success',
+    scope: 'Luxury Fragrance',
+    sector_options: ['Luxury Fragrance', 'Luxury Fashion', 'Premium Spirits'],
+    window_days: 90,
+    cached: true,
+    computed_at: new Date().toISOString(),
+    assetCount: 58,
+    mechanic_velocity: [
+        { mechanic: 'Status Signaling', share: 58, delta: 26, direction: 'up' },
+        { mechanic: 'Heritage Weaponization', share: 41, delta: 12, direction: 'up' },
+        { mechanic: 'Aspirational Void', share: 31, delta: 2, direction: 'flat' },
+        { mechanic: 'Scarcity Architecture', share: 21, delta: -8, direction: 'down' },
+    ],
+    intelligence_flags: [
+        {
+            type: 'SATURATION SIGNAL',
+            finding: 'Status signaling dominates the current sector window and is approaching fatigue.',
+            recommendation: 'Counter-program with a differentiated posture before the category collapses into sameness.',
+            asset_count: 12,
+        },
+        {
+            type: 'UNTAPPED MECHANIC',
+            finding: 'Cognitive dissonance remains materially underused in the visible competitive set.',
+            recommendation: 'Prototype a challenger route built around tension rather than polish.',
+            asset_count: 0,
+        },
+    ],
+    dominant_mechanics: [
+        { mechanic: 'Status Signaling', count: 34, share: 58 },
+        { mechanic: 'Heritage Weaponization', count: 24, share: 41 },
+        { mechanic: 'Aspirational Void', count: 18, share: 31 },
+    ],
+    category_trigger_profile: [
+        { label: 'Status', value: 82 },
+        { label: 'Authority', value: 66 },
+        { label: 'Scarcity', value: 49 },
+        { label: 'Utility', value: 28 },
+        { label: 'Social Proof', value: 22 },
+    ],
+    category_persuasion_benchmark: {
+        avg_density: 71,
+        avg_friction: 36,
+        your_rank: 'Above category median',
+    },
+    chromatic_saturation: [
+        { hex: '#D8C4A0', count: 18 },
+        { hex: '#201A17', count: 15 },
+        { hex: '#EEE6D6', count: 12 },
+    ],
+    opportunity_gaps: [
+        'Introduce a harder cognitive dissonance route while prestige competitors stay overly harmonious.',
+        'Use utility-led proof as a counterweight to the current category status excess.',
+        'Reframe authority cues into scarcity architecture before rivals crowd the signal.',
+    ],
+};
 
 function formatDate(value?: string) {
     if (!value) return 'Just now';
@@ -76,11 +139,33 @@ function formatReportDate(value?: string) {
     }).format(date);
 }
 
-export default function MechanicIntelligenceClient() {
+function buildRadarPoints(metrics: TriggerMetric[]) {
+    const size = 240;
+    const center = size / 2;
+    const radius = 84;
+
+    return metrics.map((metric, index) => {
+        const angle = (Math.PI * 2 * index) / metrics.length - Math.PI / 2;
+        const scaledRadius = (Math.min(metric.value, 100) / 100) * radius;
+        const x = center + Math.cos(angle) * scaledRadius;
+        const y = center + Math.sin(angle) * scaledRadius;
+
+        return `${x},${y}`;
+    }).join(' ');
+}
+
+export default function MechanicIntelligenceClient({
+    hasAccess,
+    tierLabel,
+}: {
+    hasAccess: boolean;
+    tierLabel: string;
+}) {
     const [data, setData] = useState<PulseResponse | null>(null);
     const [selectedWindow, setSelectedWindow] = useState<number>(30);
     const [selectedSector, setSelectedSector] = useState<string>('ALL SECTORS');
     const [velocityMode, setVelocityMode] = useState<'share' | 'count'>('share');
+    const [activeMechanic, setActiveMechanic] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -127,6 +212,14 @@ export default function MechanicIntelligenceClient() {
     const reportSectorLabel = selectedSector === 'ALL SECTORS' ? 'Vault-Wide Intelligence' : selectedSector;
     const reportDate = formatReportDate(data?.computed_at);
     const reportDepthLabel = (data?.assetCount || 0) >= 50 ? 'Boardroom-grade' : (data?.assetCount || 0) >= 20 ? 'Directional' : 'Early signal';
+    const activeMechanicData = data?.mechanic_velocity.find((item) => item.mechanic === activeMechanic) || data?.mechanic_velocity[0] || null;
+    const radarMetrics = data?.category_trigger_profile.slice(0, 5) || [];
+    const radarBaseline = radarMetrics.map((metric) => ({
+        label: metric.label,
+        value: data?.vault_trigger_profile?.find((item) => item.label === metric.label)?.value || 0,
+    }));
+    const radarPoints = radarMetrics.length > 2 ? buildRadarPoints(radarMetrics) : '';
+    const radarBaselinePoints = radarBaseline.length > 2 ? buildRadarPoints(radarBaseline) : '';
 
     const handleExportReport = () => {
         window.print();
@@ -196,7 +289,88 @@ export default function MechanicIntelligenceClient() {
                     </button>
                 </div>
 
-                {loading ? (
+                {!hasAccess ? (
+                    <div className="mt-8 space-y-8">
+                        <div className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-8 shadow-sm">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Premium Intelligence Preview</p>
+                            <h2 className="mt-4 text-3xl font-light uppercase tracking-tight text-[#1A1A1A]">Market Pulse is reserved for Agency Sovereignty and Enterprise</h2>
+                            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
+                                Your current tier is {tierLabel}. Upgrade to unlock live cross-asset mechanic velocity, auditable anomaly flags, boardroom exports, and sector-wide signal mapping.
+                            </p>
+                            <a
+                                href="/pricing"
+                                className="mt-8 inline-flex rounded-full bg-[#141414] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition-colors hover:bg-black"
+                            >
+                                Upgrade to Agency Sovereignty
+                            </a>
+                        </div>
+
+                        <div className="relative overflow-hidden rounded-[2rem] border border-[#D4A574]/18 bg-white p-8 shadow-sm">
+                            <div className="pointer-events-none select-none blur-[2.5px] opacity-70">
+                                <div className="grid gap-6 md:grid-cols-3">
+                                    <div className="rounded-[2rem] border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Assets Sampled</p>
+                                        <p className="mt-4 text-4xl font-light text-[#1A1A1A]">{LOCKED_PREVIEW.assetCount}</p>
+                                    </div>
+                                    <div className="rounded-[2rem] border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Avg Persuasion Density</p>
+                                        <p className="mt-4 text-4xl font-light text-[#1A1A1A]">{LOCKED_PREVIEW.category_persuasion_benchmark.avg_density}%</p>
+                                    </div>
+                                    <div className="rounded-[2rem] border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Avg Cognitive Friction</p>
+                                        <p className="mt-4 text-4xl font-light text-[#1A1A1A]">{LOCKED_PREVIEW.category_persuasion_benchmark.avg_friction}%</p>
+                                    </div>
+                                </div>
+
+                                <div className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+                                    <section className="rounded-[2rem] border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
+                                        <p className="border-b border-[#D4A574]/12 pb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Mechanic Velocity</p>
+                                        <div className="mt-6 space-y-4">
+                                            {LOCKED_PREVIEW.mechanic_velocity.map((item) => (
+                                                <div key={item.mechanic} className="rounded-[1.5rem] border border-[#D4A574]/12 bg-white p-4">
+                                                    <div className="flex items-start justify-between gap-4">
+                                                        <div>
+                                                            <p className="text-sm font-semibold uppercase tracking-[0.06em] text-[#1A1A1A]">{item.mechanic}</p>
+                                                            <p className="mt-2 text-[10px] uppercase tracking-[0.16em] text-[#6B6B6B]">{item.share}% share in active window</p>
+                                                        </div>
+                                                        <div className="rounded-full bg-[#EFE8DA] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
+                                                            {item.delta >= 0 ? '+' : ''}{item.delta}%
+                                                        </div>
+                                                    </div>
+                                                    <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#EDE8DD]">
+                                                        <div className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574]" style={{ width: `${item.share}%` }} />
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </section>
+
+                                    <section className="rounded-[2rem] border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
+                                        <p className="border-b border-[#D4A574]/12 pb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Anomaly & Gap Intelligence</p>
+                                        <div className="mt-6 space-y-4">
+                                            {LOCKED_PREVIEW.intelligence_flags.map((flag, index) => (
+                                                <div key={`${flag.type}-${index}`} className="rounded-[1.5rem] border border-[#D4A574]/12 bg-white p-4">
+                                                    <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B4513]/70">{flag.type}</p>
+                                                    <p className="mt-3 text-sm leading-relaxed text-[#1A1A1A]">{flag.finding}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+
+                            <div className="absolute inset-0 flex items-center justify-center bg-[#FBFBF6]/55">
+                                <div className="max-w-md rounded-[2rem] border border-[#D4A574]/30 bg-[#1A1A1A] p-8 text-center text-white shadow-2xl">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Locked Preview</p>
+                                    <h3 className="mt-4 text-2xl font-light uppercase tracking-tight">See the intelligence layer before you upgrade</h3>
+                                    <p className="mt-4 text-sm leading-relaxed text-white/70">
+                                        The full dashboard unlocks live sector filters, source-asset audit trails, and exportable anomaly reporting once your agency moves onto the sovereignty tier.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : loading ? (
                     <div className="mt-8 rounded-[2rem] border border-[#D4A574]/18 bg-white px-8 py-16 text-center shadow-sm">
                         <Loader2 className="mx-auto h-8 w-8 animate-spin text-[#D4A574]" />
                         <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.32em] text-[#8B4513]">Synthesising category motion</p>
@@ -340,6 +514,14 @@ export default function MechanicIntelligenceClient() {
                                             <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#EDE8DD]">
                                                 <div className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574]" style={{ width: `${item.share}%` }} />
                                             </div>
+                                            <div className="mt-4 flex justify-end">
+                                                <button
+                                                    onClick={() => setActiveMechanic(item.mechanic)}
+                                                    className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513] transition-opacity hover:opacity-70"
+                                                >
+                                                    View Source Assets
+                                                </button>
+                                            </div>
                                         </div>
                                     )) : (
                                         <div className="rounded-[1.5rem] border border-dashed border-[#D4A574]/18 bg-[#FBFBF6] p-6 text-[11px] uppercase tracking-[0.16em] text-[#6B6B6B]">
@@ -350,22 +532,124 @@ export default function MechanicIntelligenceClient() {
                             </section>
 
                             <section className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
-                                <p className="border-b border-[#D4A574]/12 pb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Trigger Profile</p>
-                                <div className="mt-6 space-y-4">
-                                    {data.category_trigger_profile.map((trigger) => (
-                                        <div key={trigger.label}>
-                                            <div className="flex items-center justify-between gap-4">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#1A1A1A]">{trigger.label}</p>
-                                                <span className="text-[10px] uppercase tracking-[0.16em] text-[#8B4513]">{trigger.value}</span>
-                                            </div>
-                                            <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#EDE8DD]">
-                                                <div className="h-full rounded-full bg-[#D4A574]" style={{ width: `${Math.min(trigger.value, 100)}%` }} />
-                                            </div>
-                                        </div>
-                                    ))}
+                                <div className="border-b border-[#D4A574]/12 pb-4">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Trigger Distribution Radar</p>
+                                    <p className="mt-2 text-sm leading-relaxed text-[#6B6B6B]">
+                                        Selected sector versus vault-wide trigger pressure. The gap between the two shapes is the strategic opportunity surface.
+                                    </p>
+                                </div>
+
+                                <div className="mt-6 grid gap-6">
+                                    <div className="mx-auto w-full max-w-[280px]">
+                                        <svg viewBox="0 0 240 240" className="h-auto w-full">
+                                            {[36, 58, 84].map((radius) => (
+                                                <circle
+                                                    key={radius}
+                                                    cx="120"
+                                                    cy="120"
+                                                    r={radius}
+                                                    fill="none"
+                                                    stroke="#E6DDCF"
+                                                    strokeDasharray="4 6"
+                                                />
+                                            ))}
+                                            {radarMetrics.map((metric, index) => {
+                                                const angle = (Math.PI * 2 * index) / radarMetrics.length - Math.PI / 2;
+                                                const labelX = 120 + Math.cos(angle) * 104;
+                                                const labelY = 120 + Math.sin(angle) * 104;
+                                                const axisX = 120 + Math.cos(angle) * 84;
+                                                const axisY = 120 + Math.sin(angle) * 84;
+
+                                                return (
+                                                    <g key={metric.label}>
+                                                        <line x1="120" y1="120" x2={axisX} y2={axisY} stroke="#E6DDCF" />
+                                                        <text
+                                                            x={labelX}
+                                                            y={labelY}
+                                                            textAnchor="middle"
+                                                            dominantBaseline="middle"
+                                                            fontSize="9"
+                                                            letterSpacing="0.18em"
+                                                            fill="#8B4513"
+                                                        >
+                                                            {metric.label.toUpperCase()}
+                                                        </text>
+                                                    </g>
+                                                );
+                                            })}
+                                            {radarBaselinePoints ? (
+                                                <polygon
+                                                    points={radarBaselinePoints}
+                                                    fill="rgba(180, 170, 150, 0.22)"
+                                                    stroke="#B8A17C"
+                                                    strokeWidth="2"
+                                                />
+                                            ) : null}
+                                            {radarPoints ? (
+                                                <polygon
+                                                    points={radarPoints}
+                                                    fill="rgba(212, 165, 116, 0.28)"
+                                                    stroke="#D4A574"
+                                                    strokeWidth="2.5"
+                                                />
+                                            ) : null}
+                                        </svg>
+                                    </div>
+
+                                    <div className="grid gap-3">
+                                        {radarMetrics.map((trigger) => {
+                                            const baseline = radarBaseline.find((item) => item.label === trigger.label)?.value || 0;
+                                            const delta = trigger.value - baseline;
+
+                                            return (
+                                                <div key={trigger.label} className="rounded-[1.25rem] border border-[#D4A574]/12 bg-[#FBFBF6] px-4 py-3">
+                                                    <div className="flex items-center justify-between gap-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#1A1A1A]">{trigger.label}</p>
+                                                        <span className="text-[10px] uppercase tracking-[0.16em] text-[#8B4513]">
+                                                            {trigger.value} vs {baseline} {delta >= 0 ? `(+${delta})` : `(${delta})`}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             </section>
                         </div>
+
+                        {activeMechanicData ? (
+                            <section className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                                <div className="flex flex-col gap-3 border-b border-[#D4A574]/12 pb-4 md:flex-row md:items-end md:justify-between">
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Mechanic Audit Trail</p>
+                                        <h2 className="mt-2 text-2xl font-light uppercase tracking-tight text-[#1A1A1A]">{activeMechanicData.mechanic}</h2>
+                                        <p className="mt-2 text-sm leading-relaxed text-[#6B6B6B]">
+                                            Direct source assets behind the selected mechanic, so the signal can be defended in a strategy meeting rather than treated as a black-box summary.
+                                        </p>
+                                    </div>
+                                    <p className="text-[10px] uppercase tracking-[0.18em] text-[#6B6B6B]">
+                                        {activeMechanicData.assets?.length || 0} auditable sources surfaced
+                                    </p>
+                                </div>
+
+                                <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                                    {(activeMechanicData.assets || []).map((asset) => (
+                                        <a
+                                            key={asset.id}
+                                            href={`/asset/${asset.id}`}
+                                            className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-5 transition-transform hover:-translate-y-0.5"
+                                        >
+                                            <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">{asset.sector}</p>
+                                            <p className="mt-4 text-lg font-semibold uppercase tracking-[0.04em] text-[#1A1A1A]">{asset.brand}</p>
+                                            <p className="mt-3 text-[10px] uppercase tracking-[0.18em] text-[#6B6B6B]">
+                                                Analysed {formatDate(asset.created_at)}
+                                            </p>
+                                            <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">Open dossier</p>
+                                        </a>
+                                    ))}
+                                </div>
+                            </section>
+                        ) : null}
 
                         <div className="grid gap-6 xl:grid-cols-[1fr_1fr]">
                             <section className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm xl:col-span-2">
