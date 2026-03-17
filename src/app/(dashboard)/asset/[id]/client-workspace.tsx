@@ -2279,14 +2279,14 @@ export default function AssetWorkspace({
                         onClick={() => setShowCloneDrawer(false)}
                     />
                     <div className="absolute inset-y-0 right-0 w-full max-w-3xl overflow-y-auto border-l border-[#D4A574]/20 bg-[#141414] shadow-2xl">
-                        <div className="sticky top-0 z-10 border-b border-[#D4A574]/15 bg-[#141414]/95 px-6 py-5 backdrop-blur-md md:px-8">
+                        <div className="border-b border-[#D4A574]/15 bg-[#141414] px-6 py-5 md:px-8">
                             <div className="flex items-start justify-between gap-6">
                                 <div>
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Clone Engine</p>
                                     <h2 className="mt-3 text-3xl font-light uppercase tracking-tight text-[#F5F5DC]">
                                         {cloneData?.extracted_mechanism || extraction?.primary_mechanic || 'Creative DNA Extraction'}
                                     </h2>
-                                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#F5F5DC]/68">
+                                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#F5F5DC]/84">
                                         {cloneData?.deployment_principle || 'Generate five original campaign concepts that preserve the persuasion architecture while shifting the aesthetic, scene, and execution language.'}
                                     </p>
                                 </div>
@@ -2305,7 +2305,7 @@ export default function AssetWorkspace({
                                     <div>
                                         <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Source asset</p>
                                         <p className="mt-2 text-xl font-light uppercase tracking-tight text-[#F5F5DC]">{asset.brand?.name || 'Unknown Brand'}</p>
-                                        <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-[#F5F5DC]/45">{asset.brand?.market_sector || 'Uncategorised'}</p>
+                                        <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-[#F5F5DC]/62">{asset.brand?.market_sector || 'Uncategorised'}</p>
                                     </div>
                                     <button
                                         onClick={() => void handleGenerateClone()}
@@ -2333,7 +2333,7 @@ export default function AssetWorkspace({
                                                 style={{ width: `${cloneProgress}%` }}
                                             />
                                         </div>
-                                        <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#F5F5DC]/45">
+                                        <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#F5F5DC]/62">
                                             Translating the core persuasion architecture into original concept directions.
                                         </p>
                                     </div>
@@ -2343,7 +2343,7 @@ export default function AssetWorkspace({
                             {isGeneratingClone && !cloneData ? (
                                 <div className="mt-8 rounded-[2rem] border border-dashed border-[#D4A574]/20 bg-black/10 px-6 py-12 text-center">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Extracting transferable persuasion DNA</p>
-                                    <p className="mt-4 text-sm leading-relaxed text-[#F5F5DC]/60">
+                                    <p className="mt-4 text-sm leading-relaxed text-[#F5F5DC]/76">
                                         Clone Engine is unpacking the core mechanism, stripping out the incumbent aesthetic, and drafting five fresh deployment directions.
                                     </p>
                                 </div>
@@ -2352,11 +2352,11 @@ export default function AssetWorkspace({
                                     <div className="grid gap-4 md:grid-cols-2">
                                         <div className="rounded-[2rem] border border-[#D4A574]/15 bg-black/20 p-5">
                                             <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Extracted Mechanism</p>
-                                            <p className="mt-3 text-base leading-relaxed text-[#F5F5DC]/82">{cloneData.extracted_mechanism}</p>
+                                            <p className="mt-3 text-base leading-relaxed text-[#F5F5DC]/88">{cloneData.extracted_mechanism}</p>
                                         </div>
                                         <div className="rounded-[2rem] border border-[#D4A574]/15 bg-black/20 p-5">
                                             <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Deployment Principle</p>
-                                            <p className="mt-3 text-base leading-relaxed text-[#F5F5DC]/82">{cloneData.deployment_principle}</p>
+                                            <p className="mt-3 text-base leading-relaxed text-[#F5F5DC]/88">{cloneData.deployment_principle}</p>
                                         </div>
                                     </div>
 
@@ -2374,31 +2374,31 @@ export default function AssetWorkspace({
                                                         <span className="rounded-full border border-[#D4A574]/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">
                                                             {concept.hook_type}
                                                         </span>
-                                                        <span className="rounded-full border border-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#F5F5DC]/65">
+                                                        <span className="rounded-full border border-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#F5F5DC]/78">
                                                             {concept.production_complexity}
                                                         </span>
                                                     </div>
                                                 </div>
 
-                                                <p className="mt-5 text-base leading-relaxed text-[#F5F5DC]/80">{concept.logline}</p>
+                                                <p className="mt-5 text-base leading-relaxed text-[#F5F5DC]/88">{concept.logline}</p>
 
                                                 <div className="mt-6 grid gap-4 md:grid-cols-2">
                                                     <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
                                                         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Scene</p>
-                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/72">{concept.scene}</p>
+                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/82">{concept.scene}</p>
                                                     </div>
                                                     <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
                                                         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Psychological Mechanism</p>
-                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/72">{concept.psychological_mechanism}</p>
+                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/82">{concept.psychological_mechanism}</p>
                                                     </div>
                                                     <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
                                                         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Copy Direction</p>
-                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/72">{concept.copy_direction}</p>
+                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/82">{concept.copy_direction}</p>
                                                     </div>
                                                     <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
                                                         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Casting + Visual Language</p>
-                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/72">{concept.casting_direction}</p>
-                                                        <p className="mt-3 border-t border-white/6 pt-3 text-sm leading-relaxed text-[#F5F5DC]/58">{concept.visual_language}</p>
+                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/82">{concept.casting_direction}</p>
+                                                        <p className="mt-3 border-t border-white/6 pt-3 text-sm leading-relaxed text-[#F5F5DC]/74">{concept.visual_language}</p>
                                                     </div>
                                                 </div>
 
@@ -2413,7 +2413,7 @@ export default function AssetWorkspace({
                                                             {copiedPromptIndex === index ? 'Copied' : 'Copy'}
                                                         </button>
                                                     </div>
-                                                    <pre className="mt-3 whitespace-pre-wrap text-xs leading-relaxed text-[#F5F5DC]/72">{concept.dna_prompt}</pre>
+                                                    <pre className="mt-3 whitespace-pre-wrap text-xs leading-relaxed text-[#F5F5DC]/84">{concept.dna_prompt}</pre>
                                                 </div>
                                             </article>
                                         ))}
@@ -2422,7 +2422,7 @@ export default function AssetWorkspace({
                             ) : (
                                 <div className="mt-8 rounded-[2rem] border border-dashed border-[#D4A574]/20 bg-black/10 px-6 py-12 text-center">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Clone Engine ready</p>
-                                    <p className="mt-4 text-sm leading-relaxed text-[#F5F5DC]/60">
+                                    <p className="mt-4 text-sm leading-relaxed text-[#F5F5DC]/76">
                                         Generate five original campaign routes that preserve the persuasion logic while breaking completely from the incumbent execution.
                                     </p>
                                 </div>
