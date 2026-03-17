@@ -4,6 +4,19 @@ import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { assertUsageAvailable } from '@/lib/usage';
 
+const extractJsonObject = (value: string) => {
+    const fenced = value.match(/```json\s*([\s\S]*?)```/i) || value.match(/```\s*([\s\S]*?)```/i);
+    const candidate = fenced?.[1] || value;
+    const start = candidate.indexOf('{');
+    const end = candidate.lastIndexOf('}');
+
+    if (start === -1 || end === -1 || end <= start) {
+        throw new Error('Blueprint Engine returned malformed JSON.');
+    }
+
+    return JSON.parse(candidate.slice(start, end + 1));
+};
+
 // SCHEMA 3: Production Blueprints interface
 export interface ProductionBlueprintResponse {
     blueprint_id: string;
@@ -136,14 +149,28 @@ ${JSON.stringify(extraction, null, 2)}`;
         const contentBlock = response.content.find((block) => block.type === 'text');
         if (!contentBlock) throw new Error("Claude returned no text response");
 
-        let text = contentBlock.text;
-        if (text.includes('```json')) {
-            text = text.split('```json')[1].split('```')[0].trim();
-        } else if (text.includes('```')) {
-            text = text.split('```')[1].split('```')[0].trim();
-        }
+        let result: ProductionBlueprintResponse;
+        try {
+            result = extractJsonObject(contentBlock.text) as ProductionBlueprintResponse;
+        } catch (parseError) {
+            console.error('[Blueprint API] JSON parse failure:', {
+                stopReason: response.stop_reason,
+                responseLength: contentBlock.text.length,
+                tail: contentBlock.text.slice(-500),
+            });
 
-        const result = JSON.parse(text) as ProductionBlueprintResponse;
+            if (response.stop_reason === 'max_tokens') {
+                return NextResponse.json(
+                    { error: 'Blueprint generation hit the response ceiling before the JSON finished. Retry once to regenerate a tighter pass.' },
+                    { status: 502 }
+                );
+            }
+
+            return NextResponse.json(
+                { error: parseError instanceof Error ? parseError.message : 'Blueprint Engine returned malformed JSON.' },
+                { status: 502 }
+            );
+        }
 
         const { error: persistError } = await supabaseAdmin
             .from('extractions')

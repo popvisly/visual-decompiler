@@ -16,17 +16,22 @@ export default function AddToBoard({ adId, assetId }: { adId?: string; assetId?:
     const [newBoardName, setNewBoardName] = useState('');
     const [isSaving, setIsSaving] = useState(false);
     const [successId, setSuccessId] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
     const fetchBoards = async () => {
         setIsLoading(true);
+        setError(null);
         try {
             const res = await fetch('/api/boards');
             const data = await res.json();
-            if (Array.isArray(data)) {
-                setBoards(data);
+            if (!res.ok) {
+                throw new Error(typeof data?.error === 'string' ? data.error : 'Failed to load boards');
             }
+
+            setBoards(Array.isArray(data) ? data : []);
         } catch (err) {
-            console.error('Failed to fetch boards:', err);
+            setError(err instanceof Error ? err.message : 'Failed to load boards');
         } finally {
             setIsLoading(false);
         }
@@ -34,21 +39,29 @@ export default function AddToBoard({ adId, assetId }: { adId?: string; assetId?:
 
     const handleAddToBoard = async (boardId: string) => {
         setIsSaving(true);
+        setError(null);
+        setStatusMessage(null);
         try {
             const res = await fetch(`/api/boards/${boardId}/items`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ adId, assetId })
             });
-            if (res.ok) {
-                setSuccessId(boardId);
-                setTimeout(() => {
-                    setSuccessId(null);
-                    setIsOpen(false);
-                }, 1500);
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(typeof data?.error === 'string' ? data.error : 'Failed to add asset to board');
             }
+
+            setSuccessId(boardId);
+            setStatusMessage('Asset added to board');
+            setTimeout(() => {
+                setSuccessId(null);
+                setStatusMessage(null);
+                setIsOpen(false);
+            }, 1500);
         } catch (err) {
-            console.error('Failed to add to board:', err);
+            setError(err instanceof Error ? err.message : 'Failed to add asset to board');
         } finally {
             setIsSaving(false);
         }
@@ -57,6 +70,8 @@ export default function AddToBoard({ adId, assetId }: { adId?: string; assetId?:
     const handleCreateBoard = async () => {
         if (!newBoardName.trim()) return;
         setIsSaving(true);
+        setError(null);
+        setStatusMessage(null);
         try {
             const res = await fetch('/api/boards', {
                 method: 'POST',
@@ -64,14 +79,18 @@ export default function AddToBoard({ adId, assetId }: { adId?: string; assetId?:
                 body: JSON.stringify({ name: newBoardName })
             });
             const newBoard = await res.json();
-            if (res.ok) {
-                setBoards([newBoard, ...boards]);
-                setNewBoardName('');
-                setIsCreating(false);
-                handleAddToBoard(newBoard.id);
+
+            if (!res.ok) {
+                throw new Error(typeof newBoard?.error === 'string' ? newBoard.error : 'Failed to create board');
             }
+
+            setBoards([newBoard, ...boards]);
+            setNewBoardName('');
+            setIsCreating(false);
+            setStatusMessage('Board created');
+            await handleAddToBoard(newBoard.id);
         } catch (err) {
-            console.error('Failed to create board:', err);
+            setError(err instanceof Error ? err.message : 'Failed to create board');
         } finally {
             setIsSaving(false);
         }
@@ -118,6 +137,16 @@ export default function AddToBoard({ adId, assetId }: { adId?: string; assetId?:
                             ))
                         )}
                     </div>
+
+                    {(error || statusMessage) && (
+                        <div className={`mb-3 rounded-xl border px-3 py-2 text-[10px] font-bold uppercase tracking-[0.16em] ${
+                            error
+                                ? 'border-[#8B4513]/30 bg-[#8B4513]/10 text-[#f3b1a0]'
+                                : 'border-[#D4A574]/20 bg-[#D4A574]/10 text-[#D4A574]'
+                        }`}>
+                            {error || statusMessage}
+                        </div>
+                    )}
 
                     {!isCreating ? (
                         <button

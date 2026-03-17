@@ -28,6 +28,7 @@ export default function AssetTagEditor({
 
     useEffect(() => {
         setTags(initialTags);
+        setError(null);
     }, [initialTags]);
 
     useEffect(() => {
@@ -79,8 +80,11 @@ export default function AssetTagEditor({
             setTags(resolvedTags);
             setSuggestions((prev) => Array.from(new Set([...resolvedTags, ...prev])).sort((a, b) => a.localeCompare(b)));
             onTagsChange?.(resolvedTags);
+            return resolvedTags;
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to update tags');
+            const message = err instanceof Error ? err.message : 'Failed to update tags';
+            setError(message);
+            throw new Error(message);
         } finally {
             setIsSaving(false);
         }
@@ -99,13 +103,21 @@ export default function AssetTagEditor({
         const nextTags = [...tags, nextTag];
         setTags(nextTags);
         setTagInput('');
-        await persistTags(nextTags);
+        try {
+            await persistTags(nextTags);
+        } catch {
+            setTags(tags);
+        }
     };
 
     const handleRemoveTag = async (tagToRemove: string) => {
         const nextTags = tags.filter((tag) => tag.toLowerCase() !== tagToRemove.toLowerCase());
         setTags(nextTags);
-        await persistTags(nextTags);
+        try {
+            await persistTags(nextTags);
+        } catch {
+            setTags(tags);
+        }
     };
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
