@@ -1,10 +1,18 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { supabaseClient } from '@/lib/supabase-client';
 
 export default function LoginPage() {
+    return (
+        <Suspense fallback={<LoginPageShell />}>
+            <LoginPageContent />
+        </Suspense>
+    );
+}
+
+function LoginPageContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [email, setEmail] = useState('');
@@ -84,6 +92,45 @@ export default function LoginPage() {
         }
     };
 
+    return <LoginPageShell
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        mode={mode}
+        setMode={setMode}
+        status={status}
+        message={message}
+        inviteToken={inviteToken}
+        handleAuth={handleAuth}
+    />;
+}
+
+type LoginPageShellProps = {
+    email?: string;
+    setEmail?: React.Dispatch<React.SetStateAction<string>>;
+    password?: string;
+    setPassword?: React.Dispatch<React.SetStateAction<string>>;
+    mode?: 'signin' | 'signup';
+    setMode?: React.Dispatch<React.SetStateAction<'signin' | 'signup'>>;
+    status?: 'idle' | 'loading' | 'error' | 'success';
+    message?: string;
+    inviteToken?: string | null;
+    handleAuth?: (e: React.FormEvent) => Promise<void>;
+};
+
+function LoginPageShell({
+    email = '',
+    setEmail,
+    password = '',
+    setPassword,
+    mode = 'signin',
+    setMode,
+    status = 'idle',
+    message = '',
+    inviteToken = null,
+    handleAuth,
+}: LoginPageShellProps = {}) {
     return (
         <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-8 selection:bg-white selection:text-black">
             <div className="w-full max-w-sm">
@@ -100,14 +147,14 @@ export default function LoginPage() {
                 <div className="mb-10 flex items-center justify-center gap-2">
                     <button
                         type="button"
-                        onClick={() => setMode('signin')}
+                        onClick={() => setMode?.('signin')}
                         className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] ${mode === 'signin' ? 'border-b border-white text-white' : 'text-neutral-500'}`}
                     >
                         Sign In
                     </button>
                     <button
                         type="button"
-                        onClick={() => setMode('signup')}
+                        onClick={() => setMode?.('signup')}
                         className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] ${mode === 'signup' ? 'border-b border-white text-white' : 'text-neutral-500'}`}
                     >
                         Create Account
@@ -129,7 +176,7 @@ export default function LoginPage() {
                             type="email"
                             id="email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => setEmail?.(e.target.value)}
                             className="w-full bg-transparent border-b border-neutral-800 pb-3 text-lg font-light text-white outline-none focus:border-white transition-colors peer placeholder-transparent"
                             placeholder="Email"
                             required
@@ -147,7 +194,7 @@ export default function LoginPage() {
                             type="password"
                             id="password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => setPassword?.(e.target.value)}
                             className="w-full bg-transparent border-b border-neutral-800 pb-3 text-lg font-light text-white outline-none focus:border-white transition-colors peer placeholder-transparent"
                             placeholder="Password"
                             required
