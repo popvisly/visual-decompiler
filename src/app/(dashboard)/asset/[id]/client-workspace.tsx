@@ -782,20 +782,6 @@ export default function AssetWorkspace({
                 boxShadow: '0 0 40px rgba(212, 165, 116, 0.4), 0 25px 50px -12px rgba(0, 0, 0, 0.25)'
             };
         }
-        if (activeAct === 'ACT II') {
-            return {
-                ...base,
-                transform: 'scale(1.15) translateY(-10%)',
-                filter: 'brightness(1.05)'
-            };
-        }
-        if (activeAct === 'ACT III') {
-            return {
-                ...base,
-                transform: 'scale(1.25) translateY(20%)',
-                filter: 'brightness(1.1)'
-            };
-        }
         return base;
     };
 
@@ -1316,7 +1302,7 @@ export default function AssetWorkspace({
                                             key={idx}
                                             src={url}
                                             alt={`Asset frame ${idx}`}
-                                            className="w-full h-full object-contain shrink-0 snap-center transition-all duration-700"
+                                            className="w-full h-full object-cover object-center shrink-0 snap-center transition-all duration-700"
                                         />
                                     ))}
                                 </div>

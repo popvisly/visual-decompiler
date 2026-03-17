@@ -28,6 +28,14 @@ type TriggerMetric = {
     value: number;
 };
 
+type TriggerDriver = {
+    id: string;
+    brand: string;
+    sector: string;
+    created_at: string;
+    score: number;
+};
+
 type PulseResponse = {
     status: 'success' | 'error';
     scope: string;
@@ -41,6 +49,7 @@ type PulseResponse = {
     dominant_mechanics: { mechanic: string; count: number; share: number }[];
     category_trigger_profile: TriggerMetric[];
     vault_trigger_profile?: TriggerMetric[];
+    trigger_drivers?: Record<string, TriggerDriver[]>;
     category_persuasion_benchmark: {
         avg_density: number;
         avg_friction: number;
@@ -171,6 +180,7 @@ export default function MechanicIntelligenceClient({
     const [selectedSector, setSelectedSector] = useState<string>('ALL SECTORS');
     const [velocityMode, setVelocityMode] = useState<'share' | 'count'>('share');
     const [activeMechanic, setActiveMechanic] = useState<string | null>(null);
+    const [activeTrigger, setActiveTrigger] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -225,6 +235,26 @@ export default function MechanicIntelligenceClient({
     }));
     const radarPoints = radarMetrics.length > 2 ? buildRadarPoints(radarMetrics) : '';
     const radarBaselinePoints = radarBaseline.length > 2 ? buildRadarPoints(radarBaseline) : '';
+    const activeTriggerDrivers = (activeTrigger && data?.trigger_drivers?.[activeTrigger]) || [];
+    const reportTriggerDrivers = radarMetrics
+        .slice(0, 3)
+        .map((metric) => ({
+            label: metric.label,
+            assets: (data?.trigger_drivers?.[metric.label] || []).slice(0, 2),
+        }))
+        .filter((group) => group.assets.length > 0);
+
+    useEffect(() => {
+        if (!activeTrigger && radarMetrics[0]?.label) {
+            setActiveTrigger(radarMetrics[0].label);
+        }
+    }, [activeTrigger, radarMetrics]);
+
+    useEffect(() => {
+        if (activeTrigger && !radarMetrics.some((metric) => metric.label === activeTrigger)) {
+            setActiveTrigger(radarMetrics[0]?.label || null);
+        }
+    }, [activeTrigger, radarMetrics]);
 
     const handleExportReport = () => {
         window.print();
@@ -587,6 +617,8 @@ export default function MechanicIntelligenceClient({
                                                             fontSize="9"
                                                             letterSpacing="0.18em"
                                                             fill="#8B4513"
+                                                            style={{ cursor: 'pointer' }}
+                                                            onClick={() => setActiveTrigger(metric.label)}
                                                         >
                                                             {metric.label.toUpperCase()}
                                                         </text>
@@ -620,7 +652,12 @@ export default function MechanicIntelligenceClient({
                                             return (
                                                 <div key={trigger.label} className="rounded-[1.25rem] border border-[#D4A574]/12 bg-[#FBFBF6] px-4 py-3">
                                                     <div className="flex items-center justify-between gap-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#1A1A1A]">{trigger.label}</p>
+                                                        <button
+                                                            onClick={() => setActiveTrigger(trigger.label)}
+                                                            className={`text-[10px] font-bold uppercase tracking-[0.16em] ${activeTrigger === trigger.label ? 'text-[#8B4513]' : 'text-[#1A1A1A]'}`}
+                                                        >
+                                                            {trigger.label}
+                                                        </button>
                                                         <span className="text-[10px] uppercase tracking-[0.16em] text-[#8B4513]">
                                                             {trigger.value} vs {baseline} {delta >= 0 ? `(+${delta})` : `(${delta})`}
                                                         </span>
@@ -629,6 +666,43 @@ export default function MechanicIntelligenceClient({
                                             );
                                         })}
                                     </div>
+
+                                    {activeTrigger ? (
+                                        <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                            <div className="flex items-end justify-between gap-4 border-b border-[#D4A574]/12 pb-3">
+                                                <div>
+                                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Trigger Drivers</p>
+                                                    <p className="mt-2 text-lg font-semibold uppercase tracking-[0.04em] text-[#1A1A1A]">{activeTrigger}</p>
+                                                </div>
+                                                <p className="text-[10px] uppercase tracking-[0.16em] text-[#6B6B6B]">Top 3 source assets</p>
+                                            </div>
+
+                                            <div className="mt-4 grid gap-3">
+                                                {activeTriggerDrivers.length > 0 ? activeTriggerDrivers.map((asset) => (
+                                                    <a
+                                                        key={`${activeTrigger}-${asset.id}`}
+                                                        href={`/asset/${asset.id}`}
+                                                        className="rounded-[1.25rem] border border-[#D4A574]/12 bg-white px-4 py-3 transition-transform hover:-translate-y-0.5"
+                                                    >
+                                                        <div className="flex items-center justify-between gap-4">
+                                                            <div>
+                                                                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#1A1A1A]">{asset.brand}</p>
+                                                                <p className="mt-2 text-[10px] uppercase tracking-[0.16em] text-[#6B6B6B]">{asset.sector}</p>
+                                                            </div>
+                                                            <div className="text-right">
+                                                                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Score {asset.score}</p>
+                                                                <p className="mt-2 text-[10px] uppercase tracking-[0.16em] text-[#6B6B6B]">{formatDate(asset.created_at)}</p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                )) : (
+                                                    <div className="rounded-[1.25rem] border border-dashed border-[#D4A574]/18 bg-white px-4 py-5 text-[11px] uppercase tracking-[0.16em] text-[#6B6B6B]">
+                                                        Trigger-driver sources will appear here as more dossiers accumulate.
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ) : null}
                                 </div>
                             </section>
                         </div>
@@ -802,6 +876,44 @@ export default function MechanicIntelligenceClient({
                             <div className="intelligence-report-section-header">
                                 <span className="intelligence-report-section-number">03</span>
                                 <div>
+                                    <p className="intelligence-report-section-kicker">Trigger Drivers</p>
+                                    <h2 className="intelligence-report-section-title">Source assets behind the pressure map</h2>
+                                </div>
+                            </div>
+                            <div className="intelligence-report-driver-groups">
+                                {reportTriggerDrivers.length > 0 ? reportTriggerDrivers.map((group) => (
+                                    <div key={group.label} className="intelligence-report-driver-group">
+                                        <div className="intelligence-report-driver-group-header">
+                                            <p>{group.label}</p>
+                                            <span>Top source assets</span>
+                                        </div>
+                                        <div className="intelligence-report-driver-list">
+                                            {group.assets.map((asset) => (
+                                                <div key={`${group.label}-${asset.id}`} className="intelligence-report-driver-item">
+                                                    <div>
+                                                        <strong>{asset.brand}</strong>
+                                                        <small>{asset.sector}</small>
+                                                    </div>
+                                                    <div className="intelligence-report-driver-meta">
+                                                        <span>Score {asset.score}</span>
+                                                        <small>{formatReportDate(asset.created_at)}</small>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )) : (
+                                    <div className="intelligence-report-driver-empty">
+                                        Trigger-driver source assets will populate here as the intelligence sample deepens.
+                                    </div>
+                                )}
+                            </div>
+                        </section>
+
+                        <section className="intelligence-report-page">
+                            <div className="intelligence-report-section-header">
+                                <span className="intelligence-report-section-number">04</span>
+                                <div>
                                     <p className="intelligence-report-section-kicker">Intelligence Flags</p>
                                     <h2 className="intelligence-report-section-title">Highest-priority findings</h2>
                                 </div>
@@ -820,7 +932,7 @@ export default function MechanicIntelligenceClient({
 
                         <section className="intelligence-report-page">
                             <div className="intelligence-report-section-header">
-                                <span className="intelligence-report-section-number">04</span>
+                                <span className="intelligence-report-section-number">05</span>
                                 <div>
                                     <p className="intelligence-report-section-kicker">Benchmark Snapshot</p>
                                     <h2 className="intelligence-report-section-title">Category benchmark and palette load</h2>
@@ -853,7 +965,7 @@ export default function MechanicIntelligenceClient({
 
                         <section className="intelligence-report-page">
                             <div className="intelligence-report-section-header">
-                                <span className="intelligence-report-section-number">05</span>
+                                <span className="intelligence-report-section-number">06</span>
                                 <div>
                                     <p className="intelligence-report-section-kicker">Methodology</p>
                                     <h2 className="intelligence-report-section-title">How this readout is built</h2>
@@ -861,7 +973,7 @@ export default function MechanicIntelligenceClient({
                             </div>
                             <p className="intelligence-report-methodology">
                                 Analysis based on {data.assetCount} forensic extractions across {selectedSector === 'ALL SECTORS' ? data.sector_options.length || 1 : 1} sectors.
-                                Each asset is deconstructed across 13 forensic dimensions, then aggregated into mechanic prevalence, trigger pressure, and anomaly signals.
+                                Each asset is deconstructed across 13 forensic dimensions, then aggregated into mechanic prevalence, trigger pressure, anomaly signals, and auditable source-asset drivers.
                                 Snapshot computed {formatDate(data.computed_at)} with a 24-hour cache window for repeat report views.
                             </p>
                         </section>
@@ -1039,6 +1151,97 @@ export default function MechanicIntelligenceClient({
                                 grid-template-columns: 1fr 1fr;
                                 gap: 16pt;
                                 margin-top: 24pt;
+                            }
+
+                            .intelligence-report-driver-groups {
+                                display: grid;
+                                gap: 16pt;
+                                margin-top: 24pt;
+                            }
+
+                            .intelligence-report-driver-group {
+                                border: 1px solid #dccaa9;
+                                background: #fffdf8;
+                                border-radius: 16pt;
+                                padding: 16pt;
+                            }
+
+                            .intelligence-report-driver-group-header,
+                            .intelligence-report-driver-item {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                gap: 16pt;
+                            }
+
+                            .intelligence-report-driver-group-header {
+                                padding-bottom: 10pt;
+                                border-bottom: 1px solid #e8dcc7;
+                            }
+
+                            .intelligence-report-driver-group-header p,
+                            .intelligence-report-driver-group-header span {
+                                margin: 0;
+                                font-size: 10pt;
+                                font-weight: 700;
+                                letter-spacing: 0.14em;
+                                text-transform: uppercase;
+                                color: #8b6a36;
+                            }
+
+                            .intelligence-report-driver-list {
+                                display: grid;
+                                gap: 10pt;
+                                margin-top: 12pt;
+                            }
+
+                            .intelligence-report-driver-item {
+                                padding: 12pt 0;
+                                border-bottom: 1px solid #efe6d6;
+                            }
+
+                            .intelligence-report-driver-item:last-child {
+                                border-bottom: none;
+                                padding-bottom: 0;
+                            }
+
+                            .intelligence-report-driver-item strong {
+                                display: block;
+                                font-size: 12pt;
+                                font-weight: 600;
+                                text-transform: uppercase;
+                            }
+
+                            .intelligence-report-driver-item small,
+                            .intelligence-report-driver-meta small {
+                                display: block;
+                                margin-top: 4pt;
+                                font-size: 9pt;
+                                color: #7a7467;
+                            }
+
+                            .intelligence-report-driver-meta {
+                                text-align: right;
+                            }
+
+                            .intelligence-report-driver-meta span {
+                                display: block;
+                                font-size: 10pt;
+                                font-weight: 700;
+                                letter-spacing: 0.12em;
+                                text-transform: uppercase;
+                                color: #8b6a36;
+                            }
+
+                            .intelligence-report-driver-empty {
+                                margin-top: 24pt;
+                                border: 1px dashed #dccaa9;
+                                border-radius: 16pt;
+                                padding: 18pt;
+                                font-size: 10pt;
+                                letter-spacing: 0.14em;
+                                text-transform: uppercase;
+                                color: #7a7467;
                             }
 
                             .intelligence-report-trigger-panel,

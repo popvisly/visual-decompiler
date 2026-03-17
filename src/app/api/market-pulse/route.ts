@@ -24,6 +24,10 @@ type SourceAsset = {
     created_at: string;
 };
 
+type TriggerSourceAsset = SourceAsset & {
+    score: number;
+};
+
 const averageMap = (totals: Record<string, number>, divisor: number) =>
     Object.entries(totals)
         .map(([label, value]) => ({
@@ -322,6 +326,7 @@ export async function POST(req: Request) {
         const triggerTotals: Record<string, number> = {};
         const colorCounts: Record<string, number> = {};
         const mechanicAssets: Record<string, SourceAsset[]> = {};
+        const triggerAssets: Record<string, TriggerSourceAsset[]> = {};
         const densities: { assetId: string; value: number }[] = [];
         const frictions: number[] = [];
 
@@ -353,6 +358,14 @@ export async function POST(req: Request) {
             for (const [label, value] of Object.entries(triggerDistribution)) {
                 if (typeof value === 'number') {
                     triggerTotals[label] = (triggerTotals[label] || 0) + value;
+                    triggerAssets[label] = triggerAssets[label] || [];
+                    triggerAssets[label].push({
+                        id: asset.id,
+                        brand: typeof asset.brands?.name === 'string' && asset.brands.name.trim().length > 0 ? asset.brands.name : 'Untitled Brand',
+                        sector: typeof asset.brands?.market_sector === 'string' && asset.brands.market_sector.trim().length > 0 ? asset.brands.market_sector : 'Other',
+                        created_at: asset.created_at,
+                        score: value,
+                    });
                 }
             }
 
@@ -414,6 +427,18 @@ export async function POST(req: Request) {
 
         const categoryTriggerProfile = averageMap(triggerTotals, pulseAssets.length);
         const vaultTriggerProfile = averageMap(buildTriggerTotals(agencyPulseAssets), agencyPulseAssets.length);
+        const triggerDrivers = Object.fromEntries(
+            Object.entries(triggerAssets).map(([label, assets]) => [
+                label,
+                assets
+                    .slice()
+                    .sort((a, b) => {
+                        if (b.score !== a.score) return b.score - a.score;
+                        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+                    })
+                    .slice(0, 3),
+            ])
+        );
         const avgDensity = densities.length > 0
             ? Math.round(densities.reduce((sum, item) => sum + item.value, 0) / densities.length)
             : 0;
@@ -451,6 +476,7 @@ export async function POST(req: Request) {
             dominant_mechanics: dominantMechanics,
             category_trigger_profile: categoryTriggerProfile,
             vault_trigger_profile: vaultTriggerProfile,
+            trigger_drivers: triggerDrivers,
             category_persuasion_benchmark: {
                 avg_density: avgDensity,
                 avg_friction: avgFriction,
