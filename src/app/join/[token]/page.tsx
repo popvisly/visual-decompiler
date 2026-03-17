@@ -64,16 +64,16 @@ export default async function JoinTeamPage({ params }: { params: Promise<{ token
 
                 <div className="mt-10 flex flex-col gap-4 md:flex-row">
                     <Link
-                        href="/login"
+                        href={`/login?invite=${token}&email=${encodeURIComponent(invitation.email)}`}
                         className="rounded-full bg-[#141414] px-6 py-3 text-center text-[10px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition-colors hover:bg-black"
                     >
                         Sign In To Accept
                     </Link>
                     <Link
-                        href="/pricing"
+                        href={`/login?invite=${token}&email=${encodeURIComponent(invitation.email)}&mode=signup`}
                         className="rounded-full border border-[#D4A574]/20 px-6 py-3 text-center text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#FBFBF6]"
                     >
-                        View Platform
+                        Create Account To Accept
                     </Link>
                 </div>
             </div>
