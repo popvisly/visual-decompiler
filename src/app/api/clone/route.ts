@@ -83,7 +83,9 @@ export async function POST(req: Request) {
 
 You are NOT copying the ad. You are extracting the MECHANISM and deploying it freshly.
 
-Return a single valid JSON object. No markdown. No preamble.`;
+Return a single valid JSON object. No markdown. No preamble.
+
+Keep every field concise and production-useful. Do not write essays.`;
 
         const userMessage = `Generate 5 original campaign concepts that use the same persuasion architecture as this forensic extraction.
 
@@ -124,7 +126,7 @@ Return this JSON structure:
 
         const response = await anthropic.messages.create({
             model: getClaudeModel('agency'),
-            max_tokens: 3000,
+            max_tokens: 5000,
             system: systemPrompt,
             messages: [{ role: 'user', content: userMessage }],
         });
@@ -134,7 +136,28 @@ Return this JSON structure:
             .map((block) => block.text)
             .join('\n');
 
-        const cloneOutput = extractJsonObject(textResponse);
+        let cloneOutput;
+        try {
+            cloneOutput = extractJsonObject(textResponse);
+        } catch (parseError) {
+            console.error('[Clone API] JSON parse failure:', {
+                stopReason: response.stop_reason,
+                responseLength: textResponse.length,
+                tail: textResponse.slice(-500),
+            });
+
+            if (response.stop_reason === 'max_tokens') {
+                return NextResponse.json(
+                    { error: 'Clone Engine hit the response ceiling before concepts finished rendering. Retry once to regenerate a shorter pass.' },
+                    { status: 502 }
+                );
+            }
+
+            return NextResponse.json(
+                { error: parseError instanceof Error ? parseError.message : 'Clone Engine returned malformed JSON.' },
+                { status: 502 }
+            );
+        }
 
         const { error: updateError } = await supabaseAdmin
             .from('extractions')
@@ -145,11 +168,15 @@ Return this JSON structure:
 
         if (updateError) {
             console.error('[Clone API] Failed to save clone output:', updateError);
+            return NextResponse.json({ error: `Failed to persist clone output: ${updateError.message}` }, { status: 500 });
         }
 
         return NextResponse.json(cloneOutput);
     } catch (error) {
         console.error('[Clone API] Critical error:', error);
-        return NextResponse.json({ error: 'Failed to generate clone concepts' }, { status: 500 });
+        return NextResponse.json(
+            { error: error instanceof Error ? error.message : 'Failed to generate clone concepts' },
+            { status: 500 }
+        );
     }
 }
