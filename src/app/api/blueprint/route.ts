@@ -55,10 +55,10 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'assetId is required' }, { status: 400 });
         }
 
-        // 1. Fetch asset and its latest extraction, scoped to the current user.
+        // 1. Verify asset ownership first.
         const { data: asset, error } = await supabaseAdmin
             .from('assets')
-            .select('*, extractions(*)')
+            .select('id, user_id')
             .eq('id', assetId)
             .eq('user_id', session.userId)
             .single();
@@ -67,13 +67,24 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Asset not found in the Intelligence Vault' }, { status: 404 });
         }
 
-        const extraction = asset.extractions?.length ? asset.extractions[0] : null;
+        // 2. Fetch the most recent extraction directly instead of relying on an embedded relationship shape.
+        const { data: extraction, error: extractionError } = await supabaseAdmin
+            .from('extractions')
+            .select('*')
+            .eq('asset_id', assetId)
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .maybeSingle();
 
-        if (!extraction) {
-            return NextResponse.json({ error: 'No extraction data available to build a blueprint' }, { status: 400 });
+        if (extractionError) {
+            return NextResponse.json({ error: 'Failed to load extraction data for blueprint generation' }, { status: 500 });
         }
 
-        // 2. Prepare Claude API to generate the Production Blueprint based on Forensic Extraction
+        if (!extraction) {
+            return NextResponse.json({ error: 'No extraction data available to build a blueprint yet. Retry once the forensic dossier has finished persisting.' }, { status: 400 });
+        }
+
+        // 3. Prepare Claude API to generate the Production Blueprint based on Forensic Extraction
         const anthropic = getAnthropic();
         if (!anthropic) {
             throw new Error('Anthropic client unavailable');
@@ -114,7 +125,7 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
 Extraction Data:
 ${JSON.stringify(extraction, null, 2)}`;
 
-        // 3. Call Claude
+        // 4. Call Claude
         const response = await anthropic.messages.create({
             model,
             max_tokens: 4096,
@@ -138,9 +149,8 @@ ${JSON.stringify(extraction, null, 2)}`;
             .from('extractions')
             .update({
                 blueprint: result,
-                updated_at: new Date().toISOString(),
             })
-            .eq('asset_id', assetId);
+            .eq('id', extraction.id);
 
         if (persistError) {
             throw new Error(`Failed to persist blueprint: ${persistError.message}`);
