@@ -17,25 +17,28 @@ function formatDate(value: string) {
 export default async function JoinTeamPage({ params }: { params: Promise<{ token: string }> }) {
     const { token } = await params;
 
-    const { data: invitation } = await supabaseAdmin
+    const { data: invitation, error: invitationError } = await supabaseAdmin
         .from('team_invitations')
-        .select(`
-            *,
-            agencies (
-                name,
-                descriptor
-            )
-        `)
+        .select('*')
         .eq('invite_token', token)
         .is('revoked_at', null)
         .limit(1)
         .maybeSingle();
 
-    if (!invitation) {
+    if (invitationError || !invitation) {
         notFound();
     }
 
-    const agency = Array.isArray(invitation.agencies) ? invitation.agencies[0] : invitation.agencies;
+    if (new Date(invitation.expires_at).getTime() < Date.now()) {
+        notFound();
+    }
+
+    const { data: agency } = await supabaseAdmin
+        .from('agencies')
+        .select('name, descriptor')
+        .eq('id', invitation.agency_id)
+        .limit(1)
+        .maybeSingle();
 
     return (
         <div className="min-h-screen bg-[#FBFBF6] px-6 py-12 md:px-8">
