@@ -2,6 +2,7 @@ import { randomBytes } from 'crypto';
 import { NextResponse } from 'next/server';
 
 import { getServerSession } from '@/lib/auth-server';
+import { sendTeamInvitationEmail } from '@/lib/mail';
 import { supabaseAdmin } from '@/lib/supabase';
 
 const VALID_ROLES = new Set(['owner', 'admin', 'analyst']);
@@ -166,9 +167,21 @@ export async function POST(req: Request) {
                 });
         }
 
+        const inviteUrl = `/join/${token}`;
+        const emailResult = await sendTeamInvitationEmail({
+            email,
+            inviteUrl,
+            agencyName: agency.name || 'Your Agency',
+            role,
+            inviterEmail: session.email,
+            expiresAt,
+            message: message || null,
+        });
+
         return NextResponse.json({
             invitation,
-            inviteUrl: `/join/${token}`,
+            inviteUrl,
+            emailSent: !!emailResult,
         });
     } catch (error) {
         return NextResponse.json(

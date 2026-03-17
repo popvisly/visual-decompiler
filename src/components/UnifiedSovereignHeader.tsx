@@ -16,7 +16,7 @@ function isActive(pathname: string, href: string): boolean {
 export default function UnifiedSovereignHeader({ forceDark = false }: { forceDark?: boolean } = {}) {
     const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
     useEffect(() => {
         const checkSession = async () => {
@@ -70,36 +70,61 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
 
                     {/* ── Center: Desktop Pillars ── */}
                     <nav className="hidden md:flex flex-1 justify-center items-center gap-4">
-                            {navItems.map((p) => {
-                                const active = isActive(pathname, p.href);
-                                return (
-                                    <Link
-                                        key={p.key}
-                                        href={p.href}
+                        {isAuthenticated === null ? (
+                            <div className="flex items-center gap-4 opacity-50" aria-hidden="true">
+                                {[0, 1, 2].map((index) => (
+                                    <div
+                                        key={index}
                                         className={`
-                                            px-3 py-1.5 rounded-none border border-transparent
-                                            text-[10px] font-bold uppercase tracking-[0.15em]
-                                            transition-all
-                                            ${active
-                                                ? forceDark
-                                                    ? 'text-white border-white bg-white/5'
-                                                    : 'text-[#141414] border-black bg-black/5'
-                                                : forceDark
-                                                    ? 'text-white/60 hover:text-white hover:border-white/30'
-                                                    : 'text-[#6B6B6B] hover:text-[#141414] hover:border-black/30'
-                                            }
+                                            h-8 rounded-none border border-transparent
+                                            ${forceDark ? 'bg-white/10' : 'bg-black/5'}
                                         `}
-                                    >
-                                        {p.label}
-                                    </Link>
-                                );
-                            })}
-                        </nav>
+                                        style={{ width: index === 1 ? 110 : 86 }}
+                                    />
+                                ))}
+                            </div>
+                        ) : (
+                            <>
+                                {navItems.map((p) => {
+                                    const active = isActive(pathname, p.href);
+                                    return (
+                                        <Link
+                                            key={p.key}
+                                            href={p.href}
+                                            className={`
+                                                px-3 py-1.5 rounded-none border border-transparent
+                                                text-[10px] font-bold uppercase tracking-[0.15em]
+                                                transition-all
+                                                ${active
+                                                    ? forceDark
+                                                        ? 'text-white border-white bg-white/5'
+                                                        : 'text-[#141414] border-black bg-black/5'
+                                                    : forceDark
+                                                        ? 'text-white/60 hover:text-white hover:border-white/30'
+                                                        : 'text-[#6B6B6B] hover:text-[#141414] hover:border-black/30'
+                                                }
+                                            `}
+                                        >
+                                            {p.label}
+                                        </Link>
+                                    );
+                                })}
+                            </>
+                        )}
+                    </nav>
 
                     {/* ── Right: Utility Bar ── */}
                     <div className="flex items-center justify-end flex-1 gap-4">
                         <div className="hidden md:block">
-                            {isAuthenticated ? (
+                            {isAuthenticated === null ? (
+                                <div
+                                    className={`
+                                        h-10 w-[132px] rounded-none border
+                                        ${forceDark ? 'border-white/20 bg-white/10' : 'border-black/10 bg-black/5'}
+                                    `}
+                                    aria-hidden="true"
+                                />
+                            ) : isAuthenticated ? (
                                 <div className="flex items-center justify-end gap-3">
                                     <Link
                                         href="/vault"
