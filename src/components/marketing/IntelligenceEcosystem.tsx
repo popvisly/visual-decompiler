@@ -51,18 +51,21 @@ const VAULT_PREVIEW_ASSETS = [
         mechanic: 'Transcendental Status Signaling',
         image: '/images/examples/valentino-voce-viva.png',
     },
-    {
-        brand: 'Calvin Klein',
-        sector: 'Prestige Fragrance',
-        mechanic: 'Aspirational Intimacy as Status Currency',
-        image: '/images/examples/perfume.jpg',
-    },
 ];
 
 function VaultPreview() {
     return (
-        <div className="mt-3 rounded-[2rem] border border-[#141414]/10 bg-[#141414] p-4 shadow-[0_24px_80px_rgba(20,20,20,0.14)]">
-            <div className="grid grid-cols-2 gap-3">
+        <div className="mt-3 rounded-[2rem] border border-[#141414]/10 bg-[#141414] p-5 shadow-[0_24px_80px_rgba(20,20,20,0.14)]">
+            <div className="flex items-center justify-between border-b border-white/8 pb-4">
+                <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">Example Vault</p>
+                    <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-[#F7F3EC]/65">Searchable forensic memory with secured extractions</p>
+                </div>
+                <div className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 text-[9px] font-bold uppercase tracking-[0.16em] text-[#F7F3EC]">
+                    124 assets
+                </div>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-3">
                 {VAULT_PREVIEW_ASSETS.map((asset) => (
                     <div key={asset.brand} className="overflow-hidden rounded-[1.5rem] border border-white/8 bg-[#1D1D1B]">
                         <div className="relative aspect-[4/5] overflow-hidden">
@@ -71,22 +74,22 @@ function VaultPreview() {
                                 alt={asset.brand}
                                 fill
                                 className="object-cover object-center"
-                                sizes="(max-width: 768px) 50vw, 20vw"
+                                sizes="(max-width: 768px) 33vw, 16vw"
                             />
                             <div className="absolute bottom-3 right-3 rounded-sm bg-[#D4A574] px-3 py-1 text-[8px] font-bold uppercase tracking-[0.18em] text-[#141414]">
-                                Forensic Secured
+                                Secured
                             </div>
                         </div>
                         <div className="space-y-3 px-4 py-4">
                             <div>
-                                <p className="text-lg font-medium uppercase tracking-tight text-[#F7F3EC]">{asset.brand}</p>
-                                <p className="mt-2 border-l border-[#D4A574]/40 pl-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">
+                                <p className="text-base font-medium uppercase tracking-tight text-[#F7F3EC]">{asset.brand}</p>
+                                <p className="mt-2 border-l border-[#D4A574]/40 pl-3 text-[9px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">
                                     {asset.sector}
                                 </p>
                             </div>
                             <div className="border-t border-white/8 pt-3">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8E846F]">Structural Logic</p>
-                                <p className="mt-2 text-[12px] leading-relaxed text-[#F7F3EC]/80">
+                                <p className="text-[8px] font-bold uppercase tracking-[0.18em] text-[#8E846F]">Mechanic</p>
+                                <p className="mt-2 text-[11px] leading-relaxed text-[#F7F3EC]/78">
                                     {asset.mechanic}
                                 </p>
                             </div>
@@ -101,33 +104,36 @@ function VaultPreview() {
 function ExtractionPreview() {
     return (
         <div className="mt-3 overflow-hidden rounded-[2rem] border border-[#141414]/10 bg-[#141414] p-5 shadow-[0_24px_80px_rgba(20,20,20,0.12)]">
-            <div className="grid gap-5 lg:grid-cols-[180px_1fr]">
+            <div className="grid gap-5 lg:grid-cols-[220px_1fr]">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] border border-white/10">
                     <Image
                         src="/images/examples/perfume_ad.jpg"
                         alt="Example forensic extraction"
                         fill
                         className="object-cover object-center"
-                        sizes="(max-width: 1024px) 100vw, 20vw"
+                        sizes="(max-width: 1024px) 100vw, 22vw"
                     />
                 </div>
                 <div className="space-y-4">
                     <div>
-                        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">Primary Mechanic</p>
+                        <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">Example Extraction</p>
                         <h4 className="mt-3 text-xl font-medium uppercase tracking-[0.08em] text-[#F7F3EC]">
                             Celebrity Aspirational Transfer
                         </h4>
+                        <p className="mt-3 max-w-md text-[12px] leading-relaxed text-[#F7F3EC]/72">
+                            High-key studio portraiture with monumental product scale and saturated chromatic punctuation.
+                        </p>
                     </div>
-                    <div className="grid gap-3 md:grid-cols-[1fr_120px]">
-                        <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] p-4">
-                            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/75">Synthesized Visual Style</p>
-                            <p className="mt-3 text-[12px] leading-relaxed text-[#F7F3EC]/78">
-                                High-key studio portraiture with monumental product scale and saturated chromatic punctuation.
-                            </p>
-                        </div>
+                    <div className="grid gap-3 md:grid-cols-[160px_1fr]">
                         <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] p-4">
                             <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/75">Confidence</p>
                             <p className="mt-4 text-4xl font-light text-[#F7F3EC]">99<span className="text-[#D4A574]/60">%</span></p>
+                        </div>
+                        <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] p-4">
+                            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/75">Structural Readout</p>
+                            <p className="mt-3 text-[12px] leading-relaxed text-[#F7F3EC]/78">
+                                Semiotic subtext, trigger mechanics, chromatic base, evidence anchors, and dossier logic synthesized into one forensic output.
+                            </p>
                         </div>
                     </div>
                     <div className="grid grid-cols-3 gap-2">
