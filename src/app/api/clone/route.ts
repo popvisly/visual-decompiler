@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { getAnthropic, CLAUDE_MODEL } from '@/lib/anthropic';
+import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
 import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 
@@ -34,15 +34,9 @@ export async function POST(req: Request) {
             .from('assets')
             .select(`
                 id,
-                brands ( name, market_sector ),
-                extractions!inner (
-                    id,
-                    primary_mechanic,
-                    evidence_anchors,
-                    dna_prompt,
-                    full_dossier,
-                    clone_output
-                )
+                user_id,
+                brand_id,
+                brands ( name, market_sector )
             `)
             .eq('id', assetId)
             .single();
@@ -51,7 +45,29 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Asset not found' }, { status: 404 });
         }
 
-        const extraction = Array.isArray(asset.extractions) ? asset.extractions[0] : asset.extractions;
+        if (asset.user_id !== session.userId) {
+            return NextResponse.json({ error: 'Unauthorized for this asset' }, { status: 403 });
+        }
+
+        const { data: extraction, error: extractionError } = await supabaseAdmin
+            .from('extractions')
+            .select(`
+                id,
+                primary_mechanic,
+                evidence_anchors,
+                dna_prompt,
+                full_dossier,
+                clone_output
+            `)
+            .eq('asset_id', assetId)
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .maybeSingle();
+
+        if (extractionError) {
+            return NextResponse.json({ error: 'Failed to load extraction data for Clone Engine' }, { status: 500 });
+        }
+
         const dossier = extraction?.full_dossier;
 
         if (!extraction || !dossier) {
@@ -107,7 +123,7 @@ Return this JSON structure:
 }`;
 
         const response = await anthropic.messages.create({
-            model: CLAUDE_MODEL,
+            model: getClaudeModel('agency'),
             max_tokens: 3000,
             system: systemPrompt,
             messages: [{ role: 'user', content: userMessage }],
@@ -124,7 +140,6 @@ Return this JSON structure:
             .from('extractions')
             .update({
                 clone_output: cloneOutput,
-                updated_at: new Date().toISOString(),
             })
             .eq('id', extraction.id);
 

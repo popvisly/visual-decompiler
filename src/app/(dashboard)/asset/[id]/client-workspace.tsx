@@ -247,6 +247,14 @@ const BLUEPRINT_STEPS = [
     'Finalizing production blueprint',
 ];
 
+const CLONE_STEPS = [
+    'Extracting transferable persuasion DNA',
+    'Stripping incumbent aesthetics',
+    'Drafting fresh concept routes',
+    'Encoding DNA prompts',
+    'Finalizing clone concepts',
+];
+
 const SIGNAL_NODES = [
     'Trigger', 'Narrative', 'Evidence',
     'Subtext', 'Archetype', 'Confidence',
@@ -695,6 +703,8 @@ export default function AssetWorkspace({
     const [exportClientName, setExportClientName] = useState('');
     const [blueprintProgress, setBlueprintProgress] = useState(0);
     const [blueprintStep, setBlueprintStep] = useState(0);
+    const [cloneProgress, setCloneProgress] = useState(0);
+    const [cloneStep, setCloneStep] = useState(0);
 
     const [sequenceData, setSequenceData] = useState<SequenceData | null>(null);
     const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(
@@ -747,6 +757,32 @@ export default function AssetWorkspace({
             clearInterval(stepInterval);
         };
     }, [isGeneratingBlueprint]);
+
+    useEffect(() => {
+        if (!isGeneratingClone) {
+            setCloneProgress(0);
+            setCloneStep(0);
+            return;
+        }
+
+        setCloneProgress(10);
+
+        const progressInterval = setInterval(() => {
+            setCloneProgress((current) => {
+                if (current >= 92) return 92;
+                return Math.min(92, current + 5 + Math.floor(Math.random() * 7));
+            });
+        }, 1100);
+
+        const stepInterval = setInterval(() => {
+            setCloneStep((current) => (current + 1) % CLONE_STEPS.length);
+        }, 1700);
+
+        return () => {
+            clearInterval(progressInterval);
+            clearInterval(stepInterval);
+        };
+    }, [isGeneratingClone]);
 
     useEffect(() => {
         if (activeTab !== 'MARKET PULSE' || !isSovereign || marketPulseData || isLoadingMarketPulse) {
@@ -2284,6 +2320,23 @@ export default function AssetWorkspace({
                                     <p className="mt-4 rounded-2xl border border-[#8B4513]/30 bg-[#8B4513]/10 px-4 py-3 text-sm text-[#F5F5DC]/80">
                                         {cloneError}
                                     </p>
+                                )}
+                                {isGeneratingClone && (
+                                    <div className="mt-6 rounded-[1.75rem] border border-[#D4A574]/15 bg-black/20 px-5 py-5">
+                                        <div className="flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">
+                                            <span>{CLONE_STEPS[cloneStep]}</span>
+                                            <span>{cloneProgress}%</span>
+                                        </div>
+                                        <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#2A2722]">
+                                            <div
+                                                className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-700"
+                                                style={{ width: `${cloneProgress}%` }}
+                                            />
+                                        </div>
+                                        <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#F5F5DC]/45">
+                                            Translating the core persuasion architecture into original concept directions.
+                                        </p>
+                                    </div>
                                 )}
                             </div>
 
