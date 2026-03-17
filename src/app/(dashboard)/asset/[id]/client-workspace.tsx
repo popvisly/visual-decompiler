@@ -239,6 +239,14 @@ const ANALYSIS_STEPS = [
     'Assembling intelligence report',
 ];
 
+const BLUEPRINT_STEPS = [
+    'Mapping execution constraints',
+    'Synthesizing test variations',
+    'Encoding technical specifications',
+    'Verifying copy remixes',
+    'Finalizing production blueprint',
+];
+
 const SIGNAL_NODES = [
     'Trigger', 'Narrative', 'Evidence',
     'Subtext', 'Archetype', 'Confidence',
@@ -685,6 +693,8 @@ export default function AssetWorkspace({
     const [marketPulseData, setMarketPulseData] = useState<MarketPulseData | null>(null);
     const [isLoadingMarketPulse, setIsLoadingMarketPulse] = useState(false);
     const [exportClientName, setExportClientName] = useState('');
+    const [blueprintProgress, setBlueprintProgress] = useState(0);
+    const [blueprintStep, setBlueprintStep] = useState(0);
 
     const [sequenceData, setSequenceData] = useState<SequenceData | null>(null);
     const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(
@@ -711,6 +721,32 @@ export default function AssetWorkspace({
     useEffect(() => {
         setCloneData(parseCloneOutput(extraction?.clone_output));
     }, [extraction]);
+
+    useEffect(() => {
+        if (!isGeneratingBlueprint) {
+            setBlueprintProgress(0);
+            setBlueprintStep(0);
+            return;
+        }
+
+        setBlueprintProgress(12);
+
+        const progressInterval = setInterval(() => {
+            setBlueprintProgress((current) => {
+                if (current >= 92) return 92;
+                return Math.min(92, current + 5 + Math.floor(Math.random() * 7));
+            });
+        }, 1100);
+
+        const stepInterval = setInterval(() => {
+            setBlueprintStep((current) => (current + 1) % BLUEPRINT_STEPS.length);
+        }, 1700);
+
+        return () => {
+            clearInterval(progressInterval);
+            clearInterval(stepInterval);
+        };
+    }, [isGeneratingBlueprint]);
 
     useEffect(() => {
         if (activeTab !== 'MARKET PULSE' || !isSovereign || marketPulseData || isLoadingMarketPulse) {
@@ -1979,6 +2015,23 @@ export default function AssetWorkspace({
                                                 <p className="text-sm text-[#FFFFFF]/75 leading-relaxed">{blueprintError}</p>
                                             </div>
                                         )}
+                                        {isGeneratingBlueprint && (
+                                            <div className="mb-8 w-full max-w-md rounded-[1.75rem] border border-[#D4A574]/15 bg-black/20 px-5 py-5">
+                                                <div className="flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">
+                                                    <span>{BLUEPRINT_STEPS[blueprintStep]}</span>
+                                                    <span>{blueprintProgress}%</span>
+                                                </div>
+                                                <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#2A2722]">
+                                                    <div
+                                                        className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-700"
+                                                        style={{ width: `${blueprintProgress}%` }}
+                                                    />
+                                                </div>
+                                                <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#FFFFFF]/45">
+                                                    Building execution constraints, variant prompts, and copy remixes from the live forensic dossier.
+                                                </p>
+                                            </div>
+                                        )}
                                         <button
                                             onClick={handleGenerateBlueprint}
                                             disabled={isGeneratingBlueprint || !extraction}
@@ -2002,6 +2055,24 @@ export default function AssetWorkspace({
                                                 {isGeneratingBlueprint ? 'Refreshing...' : 'Regenerate Blueprint'}
                                             </button>
                                         </div>
+
+                                        {isGeneratingBlueprint && (
+                                            <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] px-5 py-5">
+                                                <div className="flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">
+                                                    <span>{BLUEPRINT_STEPS[blueprintStep]}</span>
+                                                    <span>{blueprintProgress}%</span>
+                                                </div>
+                                                <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#2A2722]">
+                                                    <div
+                                                        className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-700"
+                                                        style={{ width: `${blueprintProgress}%` }}
+                                                    />
+                                                </div>
+                                                <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#FFFFFF]/45">
+                                                    Regenerating the production blueprint against the current forensic dossier.
+                                                </p>
+                                            </div>
+                                        )}
 
                                         {/* Iteration Test Plan (Remixing) */}
                                         {extraction?.full_dossier?.test_plan && (
