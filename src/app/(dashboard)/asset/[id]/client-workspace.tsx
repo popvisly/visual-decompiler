@@ -2283,10 +2283,10 @@ export default function AssetWorkspace({
                             <div className="flex items-start justify-between gap-6">
                                 <div>
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Clone Engine</p>
-                                    <h2 className="mt-3 text-3xl font-light uppercase tracking-tight text-[#F5F5DC]">
+                                    <h2 className="mt-3 max-w-4xl text-[2.6rem] font-light uppercase tracking-tight leading-[1.08] text-[#F5F5DC]">
                                         {cloneData?.extracted_mechanism || extraction?.primary_mechanic || 'Creative DNA Extraction'}
                                     </h2>
-                                    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#F5F5DC]/84">
+                                    <p className="mt-4 max-w-3xl text-[15px] leading-7 text-[#F5F5DC]/92">
                                         {cloneData?.deployment_principle || 'Generate five original campaign concepts that preserve the persuasion architecture while shifting the aesthetic, scene, and execution language.'}
                                     </p>
                                 </div>
@@ -2300,12 +2300,12 @@ export default function AssetWorkspace({
                         </div>
 
                         <div className="px-6 py-8 md:px-8">
-                            <div className="rounded-[2rem] border border-[#D4A574]/15 bg-black/20 p-6">
+                            <div className="rounded-[2rem] border border-[#D4A574]/15 bg-[#181716] p-6">
                                 <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                                     <div>
                                         <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Source asset</p>
                                         <p className="mt-2 text-xl font-light uppercase tracking-tight text-[#F5F5DC]">{asset.brand?.name || 'Unknown Brand'}</p>
-                                        <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-[#F5F5DC]/62">{asset.brand?.market_sector || 'Uncategorised'}</p>
+                                        <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-[#F5F5DC]/72">{asset.brand?.market_sector || 'Uncategorised'}</p>
                                     </div>
                                     <button
                                         onClick={() => void handleGenerateClone()}
@@ -2317,12 +2317,12 @@ export default function AssetWorkspace({
                                     </button>
                                 </div>
                                 {cloneError && (
-                                    <p className="mt-4 rounded-2xl border border-[#8B4513]/30 bg-[#8B4513]/10 px-4 py-3 text-sm text-[#F5F5DC]/80">
+                                    <p className="mt-4 rounded-2xl border border-[#8B4513]/30 bg-[#8B4513]/10 px-4 py-3 text-sm text-[#F5F5DC]/92">
                                         {cloneError}
                                     </p>
                                 )}
                                 {isGeneratingClone && (
-                                    <div className="mt-6 rounded-[1.75rem] border border-[#D4A574]/15 bg-black/20 px-5 py-5">
+                                    <div className="mt-6 rounded-[1.75rem] border border-[#D4A574]/15 bg-black/30 px-5 py-5">
                                         <div className="flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">
                                             <span>{CLONE_STEPS[cloneStep]}</span>
                                             <span>{cloneProgress}%</span>
@@ -2333,7 +2333,7 @@ export default function AssetWorkspace({
                                                 style={{ width: `${cloneProgress}%` }}
                                             />
                                         </div>
-                                        <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#F5F5DC]/62">
+                                        <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#F5F5DC]/72">
                                             Translating the core persuasion architecture into original concept directions.
                                         </p>
                                     </div>
@@ -2341,31 +2341,31 @@ export default function AssetWorkspace({
                             </div>
 
                             {isGeneratingClone && !cloneData ? (
-                                <div className="mt-8 rounded-[2rem] border border-dashed border-[#D4A574]/20 bg-black/10 px-6 py-12 text-center">
+                                <div className="mt-8 rounded-[2rem] border border-dashed border-[#D4A574]/20 bg-black/15 px-6 py-12 text-center">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Extracting transferable persuasion DNA</p>
-                                    <p className="mt-4 text-sm leading-relaxed text-[#F5F5DC]/76">
+                                    <p className="mt-4 text-sm leading-relaxed text-[#F5F5DC]/86">
                                         Clone Engine is unpacking the core mechanism, stripping out the incumbent aesthetic, and drafting five fresh deployment directions.
                                     </p>
                                 </div>
                             ) : cloneData ? (
                                 <div className="mt-8 space-y-6">
                                     <div className="grid gap-4 md:grid-cols-2">
-                                        <div className="rounded-[2rem] border border-[#D4A574]/15 bg-black/20 p-5">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Extracted Mechanism</p>
-                                            <p className="mt-3 text-base leading-relaxed text-[#F5F5DC]/88">{cloneData.extracted_mechanism}</p>
+                                        <div className="rounded-[2rem] border border-[#D4A574]/15 bg-[#181716] p-5">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Extracted Mechanism</p>
+                                            <p className="mt-3 text-[17px] leading-8 text-[#F5F5DC]/96">{cloneData.extracted_mechanism}</p>
                                         </div>
-                                        <div className="rounded-[2rem] border border-[#D4A574]/15 bg-black/20 p-5">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Deployment Principle</p>
-                                            <p className="mt-3 text-base leading-relaxed text-[#F5F5DC]/88">{cloneData.deployment_principle}</p>
+                                        <div className="rounded-[2rem] border border-[#D4A574]/15 bg-[#181716] p-5">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Deployment Principle</p>
+                                            <p className="mt-3 text-[17px] leading-8 text-[#F5F5DC]/96">{cloneData.deployment_principle}</p>
                                         </div>
                                     </div>
 
                                     <div className="grid gap-5">
                                         {cloneData.concepts.map((concept, index) => (
-                                            <article key={`${concept.title}-${index}`} className="rounded-[2rem] border border-[#D4A574]/15 bg-[#171717] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <article key={`${concept.title}-${index}`} className="rounded-[2rem] border border-[#D4A574]/18 bg-[#1A1918] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                                                     <div>
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#D4A574]/70">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#D4A574]/82">
                                                             Concept {(concept.concept_id || index + 1).toString().padStart(2, '0')}
                                                         </p>
                                                         <h3 className="mt-3 text-2xl font-light uppercase tracking-tight text-[#F5F5DC]">{concept.title}</h3>
@@ -2380,31 +2380,31 @@ export default function AssetWorkspace({
                                                     </div>
                                                 </div>
 
-                                                <p className="mt-5 text-base leading-relaxed text-[#F5F5DC]/88">{concept.logline}</p>
+                                                <p className="mt-5 text-[18px] leading-8 text-[#F5F5DC]/96">{concept.logline}</p>
 
                                                 <div className="mt-6 grid gap-4 md:grid-cols-2">
-                                                    <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Scene</p>
-                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/82">{concept.scene}</p>
+                                                    <div className="rounded-[1.5rem] border border-white/8 bg-[#111110] p-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/78">Scene</p>
+                                                        <p className="mt-3 text-[15px] leading-8 text-[#F5F5DC]/92">{concept.scene}</p>
                                                     </div>
-                                                    <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Psychological Mechanism</p>
-                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/82">{concept.psychological_mechanism}</p>
+                                                    <div className="rounded-[1.5rem] border border-white/8 bg-[#111110] p-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/78">Psychological Mechanism</p>
+                                                        <p className="mt-3 text-[15px] leading-8 text-[#F5F5DC]/92">{concept.psychological_mechanism}</p>
                                                     </div>
-                                                    <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Copy Direction</p>
-                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/82">{concept.copy_direction}</p>
+                                                    <div className="rounded-[1.5rem] border border-white/8 bg-[#111110] p-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/78">Copy Direction</p>
+                                                        <p className="mt-3 text-[15px] leading-8 text-[#F5F5DC]/92">{concept.copy_direction}</p>
                                                     </div>
-                                                    <div className="rounded-[1.5rem] border border-white/6 bg-black/20 p-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/60">Casting + Visual Language</p>
-                                                        <p className="mt-3 text-sm leading-relaxed text-[#F5F5DC]/82">{concept.casting_direction}</p>
-                                                        <p className="mt-3 border-t border-white/6 pt-3 text-sm leading-relaxed text-[#F5F5DC]/74">{concept.visual_language}</p>
+                                                    <div className="rounded-[1.5rem] border border-white/8 bg-[#111110] p-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/78">Casting + Visual Language</p>
+                                                        <p className="mt-3 text-[15px] leading-8 text-[#F5F5DC]/92">{concept.casting_direction}</p>
+                                                        <p className="mt-3 border-t border-white/8 pt-3 text-[15px] leading-8 text-[#F5F5DC]/86">{concept.visual_language}</p>
                                                     </div>
                                                 </div>
 
-                                                <div className="mt-6 rounded-[1.5rem] border border-[#D4A574]/10 bg-black/25 p-4">
+                                                <div className="mt-6 rounded-[1.5rem] border border-[#D4A574]/12 bg-[#111110] p-4">
                                                     <div className="flex items-center justify-between gap-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">DNA Prompt</p>
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/82">DNA Prompt</p>
                                                         <button
                                                             onClick={() => void handleCopyPrompt(concept.dna_prompt, index)}
                                                             className="inline-flex items-center gap-2 rounded-full border border-[#D4A574]/20 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] transition-colors hover:bg-[#D4A574]/10"
@@ -2413,16 +2413,16 @@ export default function AssetWorkspace({
                                                             {copiedPromptIndex === index ? 'Copied' : 'Copy'}
                                                         </button>
                                                     </div>
-                                                    <pre className="mt-3 whitespace-pre-wrap text-xs leading-relaxed text-[#F5F5DC]/84">{concept.dna_prompt}</pre>
+                                                    <pre className="mt-3 whitespace-pre-wrap text-[13px] leading-7 text-[#F5F5DC]/90">{concept.dna_prompt}</pre>
                                                 </div>
                                             </article>
                                         ))}
                                     </div>
                                 </div>
                             ) : (
-                                <div className="mt-8 rounded-[2rem] border border-dashed border-[#D4A574]/20 bg-black/10 px-6 py-12 text-center">
+                                <div className="mt-8 rounded-[2rem] border border-dashed border-[#D4A574]/20 bg-black/15 px-6 py-12 text-center">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Clone Engine ready</p>
-                                    <p className="mt-4 text-sm leading-relaxed text-[#F5F5DC]/76">
+                                    <p className="mt-4 text-sm leading-relaxed text-[#F5F5DC]/86">
                                         Generate five original campaign routes that preserve the persuasion logic while breaking completely from the incumbent execution.
                                     </p>
                                 </div>
