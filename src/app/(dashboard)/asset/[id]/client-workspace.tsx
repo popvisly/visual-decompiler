@@ -187,6 +187,30 @@ const parseCloneOutput = (value: CloneOutputData | string | null | undefined): C
     return value;
 };
 
+const splitLeadSentence = (value: string | undefined | null) => {
+    if (!value) {
+        return {
+            lead: '',
+            remainder: '',
+        };
+    }
+
+    const trimmed = value.trim();
+    const firstSentenceMatch = trimmed.match(/^.*?[.!?](?:\s|$)/);
+
+    if (!firstSentenceMatch) {
+        return {
+            lead: trimmed,
+            remainder: '',
+        };
+    }
+
+    const lead = firstSentenceMatch[0].trim();
+    const remainder = trimmed.slice(firstSentenceMatch[0].length).trim();
+
+    return { lead, remainder };
+};
+
 const parseDossierSections = (content: string | undefined, type: 'ACT' | 'CHANNEL') => {
     if (!content) {
         return {
@@ -720,6 +744,9 @@ export default function AssetWorkspace({
     // Normalize extraction payload (V1 array vs V2 object)
     const extraction = Array.isArray(asset.extraction) ? asset.extraction[0] : asset.extraction;
     const dossier = extraction?.full_dossier as any;
+    const cloneIntroSource = cloneData?.extracted_mechanism || extraction?.primary_mechanic || 'Creative DNA Extraction';
+    const cloneIntroBody = cloneData?.deployment_principle || 'Generate five original campaign concepts that preserve the persuasion architecture while shifting the aesthetic, scene, and execution language.';
+    const { lead: cloneIntroLead, remainder: cloneIntroRemainder } = splitLeadSentence(cloneIntroSource);
     
     // Parse visual style string if it's stringified JSON
     let parsedStyle = extraction?.visual_style;
@@ -2284,10 +2311,11 @@ export default function AssetWorkspace({
                                 <div>
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Clone Engine</p>
                                     <h2 className="mt-3 max-w-4xl text-[2rem] font-light uppercase tracking-tight leading-[1.08] text-[#1A1A1A] md:text-[2.35rem]">
-                                        {cloneData?.extracted_mechanism || extraction?.primary_mechanic || 'Creative DNA Extraction'}
+                                        {cloneIntroLead}
                                     </h2>
                                     <p className="mt-4 max-w-3xl text-[15px] leading-7 text-[#1A1A1A]/72">
-                                        {cloneData?.deployment_principle || 'Generate five original campaign concepts that preserve the persuasion architecture while shifting the aesthetic, scene, and execution language.'}
+                                        {cloneIntroRemainder ? `${cloneIntroRemainder} ` : ''}
+                                        {cloneIntroBody}
                                     </p>
                                 </div>
                                 <button
