@@ -7,7 +7,7 @@ import NeuralParticleHero from '@/components/marketing/NeuralParticleHero';
 type Props = {
     headline: string[];
     subhead: string;
-    ctaPrimary: LinkCta;
+    ctaPrimary?: LinkCta;
     ctaSecondary?: LinkCta;
     stageImage: StageImage;
 };
@@ -17,7 +17,7 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
     const tileY = useTransform(scrollY, [0, 500], [0, 60]);
 
     return (
-        <section className="relative bg-[#FBFBF6] text-[#141414] min-h-[78vh] md:min-h-[82vh] flex flex-col justify-center pt-32 md:pt-40 pb-12 md:pb-16 overflow-hidden">
+        <section className="relative bg-[#FBFBF6] text-[#141414] min-h-[70vh] md:min-h-[76vh] flex flex-col justify-center pt-32 md:pt-40 pb-8 md:pb-10 overflow-hidden">
 
             {/* Bone Grid Background */}
             <div className="pointer-events-none absolute inset-0 opacity-[0.55] [background-image:linear-gradient(rgba(20,20,20,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.028)_1px,transparent_1px)] [background-size:48px_48px]" />
@@ -41,56 +41,60 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, stag
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-                    className="text-[18px] md:text-[21px] text-[#141414]/75 max-w-2xl leading-[1.4] mb-9 tracking-[-0.01em]"
+                    className="text-[18px] md:text-[21px] text-[#141414]/75 max-w-2xl leading-[1.4] mb-6 tracking-[-0.01em]"
                 >
                     {subhead}
                 </motion.p>
 
                 {/* CTAs */}
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-5 w-full"
-                >
-                    <a
-                        href={ctaPrimary.href}
-                        className="
-                            inline-flex items-center justify-center w-full sm:w-auto
-                            rounded-full border border-[#E7DED1]
-                            bg-[#FBF7EF] backdrop-blur
-                            px-8 py-3.5
-                            text-[14px] font-medium tracking-[-0.01em] text-[#141414]
-                            shadow-[0_10px_30px_rgba(20,20,20,0.07)]
-                            transition-all duration-300
-                            hover:-translate-y-[1px]
-                            hover:border-[#D8CCBC]
-                            hover:shadow-[0_16px_40px_rgba(20,20,20,0.10)]
-                        "
+                {(ctaPrimary || ctaSecondary) && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                        className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4 w-full"
                     >
-                        {ctaPrimary.label}
-                    </a>
-                    {ctaSecondary && (
-                        <a
-                            href={ctaSecondary.href}
-                            className="
-                                inline-flex items-center justify-center w-full sm:w-auto
-                                rounded-full border border-[#141414]
-                                bg-[#141414] text-[#FBF7EF]
-                                px-8 py-3.5 text-[14px] font-medium tracking-tight
-                                transition-all duration-300
-                                hover:-translate-y-[1px]
-                                hover:bg-black
-                                hover:shadow-[0_12px_24px_rgba(20,20,20,0.3)]
-                            "
-                        >
-                            {ctaSecondary.label}
-                        </a>
-                    )}
-                </motion.div>
+                        {ctaPrimary && (
+                            <a
+                                href={ctaPrimary.href}
+                                className="
+                                    inline-flex items-center justify-center w-full sm:w-auto
+                                    rounded-full border border-[#E7DED1]
+                                    bg-[#FBF7EF] backdrop-blur
+                                    px-8 py-3.5
+                                    text-[14px] font-medium tracking-[-0.01em] text-[#141414]
+                                    shadow-[0_10px_30px_rgba(20,20,20,0.07)]
+                                    transition-all duration-300
+                                    hover:-translate-y-[1px]
+                                    hover:border-[#D8CCBC]
+                                    hover:shadow-[0_16px_40px_rgba(20,20,20,0.10)]
+                                "
+                            >
+                                {ctaPrimary.label}
+                            </a>
+                        )}
+                        {ctaSecondary && (
+                            <a
+                                href={ctaSecondary.href}
+                                className="
+                                    inline-flex items-center justify-center w-full sm:w-auto
+                                    rounded-full border border-[#141414]
+                                    bg-[#141414] text-[#FBF7EF]
+                                    px-8 py-3.5 text-[14px] font-medium tracking-tight
+                                    transition-all duration-300
+                                    hover:-translate-y-[1px]
+                                    hover:bg-black
+                                    hover:shadow-[0_12px_24px_rgba(20,20,20,0.3)]
+                                "
+                            >
+                                {ctaSecondary.label}
+                            </a>
+                        )}
+                    </motion.div>
+                )}
 
                 {/* Neural Intelligence Hero */}
-                <div className="w-full">
+                <div className="w-full mt-1">
                     <NeuralParticleHero />
                 </div>
 

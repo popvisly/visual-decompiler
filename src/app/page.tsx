@@ -72,10 +72,6 @@ export default async function HomePage() {
             <Hero
                 headline={["Advertising intelligence.", "Deconstructed."]}
                 subhead="The sovereign infrastructure for elite agencies. Understand & comprehend the architecture of persuasion to justify high-stakes strategy with forensic precision."
-                ctaPrimary={{
-                    label: "[ INGEST AD ASSET ]",
-                    href: "/ingest"
-                }}
                 stageImage={{ src: "/images/examples/perfume_ad_no_logo.jpg", alt: "Luxury perfume ad" }}
             />
 
