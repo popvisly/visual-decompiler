@@ -127,7 +127,7 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                             ) : isAuthenticated ? (
                                 <div className="flex items-center justify-end gap-3">
                                     <Link
-                                        href="/vault"
+                                        href="/ingest"
                                         className={`
                                             inline-flex items-center justify-center
                                             rounded-none border px-6 py-2.5
@@ -139,7 +139,7 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                                             }
                                         `}
                                     >
-                                        [ ENTER VAULT ]
+                                        [ ANALYSE ASSET ]
                                     </Link>
                                 </div>
                             ) : (
@@ -201,11 +201,11 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                         <div className="pt-4 mt-2 border-t border-neutral-800">
                             {isAuthenticated ? (
                                 <Link
-                                    href="/vault"
+                                    href="/ingest"
                                     onClick={() => setMobileOpen(false)}
                                     className="block text-center w-full px-4 py-3 border border-white bg-white text-black text-[11px] font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors"
                                 >
-                                    [ ENTER VAULT ]
+                                    [ ANALYSE ASSET ]
                                 </Link>
                             ) : (
                                 <Link
