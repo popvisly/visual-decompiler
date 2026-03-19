@@ -544,7 +544,7 @@ export default function ProductProofSequence() {
                                     <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
                                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Trigger Distribution Map</p>
                                         <div className="mt-6 rounded-[1.3rem] border border-white/12 bg-[#171717] p-4">
-                                            <div className="relative grid h-[220px] place-items-center overflow-hidden rounded-[1rem] border border-white/12 [background-image:linear-gradient(rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px)] [background-size:56px_56px]">
+                                            <div className="relative grid h-[220px] place-items-center overflow-hidden rounded-[1rem] [background-image:linear-gradient(rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px)] [background-size:56px_56px]">
                                                 <div className="pointer-events-none absolute left-1/2 top-5 -translate-x-1/2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">
                                                     Status
                                                 </div>
