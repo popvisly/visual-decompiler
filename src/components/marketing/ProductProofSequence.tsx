@@ -381,11 +381,11 @@ export default function ProductProofSequence() {
                                             <div className="relative h-full w-full">
                                                 <div className="absolute left-[40%] top-[18%] h-[45%] w-px bg-[#E7C79B]/78" />
                                                 <div className="absolute left-[40%] top-[18%] h-4 w-4 -translate-x-1/2 rounded-full border border-[#E7C79B] bg-white/90" />
-                                                <div className="absolute left-[50%] top-[40%] h-4 w-4 -translate-x-1/2 rounded-full border border-[#E7C79B] bg-white/90" />
+                                                <div className="absolute left-[54%] top-[36%] h-4 w-4 -translate-x-1/2 rounded-full border border-[#E7C79B] bg-white/90" />
                                                 <div className="absolute left-[42%] top-[63%] h-4 w-4 -translate-x-1/2 rounded-full border border-[#E7C79B] bg-white/90" />
                                                 <div className="absolute left-[40%] top-[18%] h-px w-[18%] bg-[#E7C79B]/78" />
                                                 <div className="absolute left-[42%] top-[63%] h-px w-[8%] bg-[#E7C79B]/78" />
-                                                <div className="absolute left-[50%] top-[40%] h-px w-[12%] bg-[#E7C79B]/78" />
+                                                <div className="absolute left-[42%] top-[63%] h-px w-[12%] bg-[#E7C79B]/78" />
                                                 <div className="absolute left-[32%] top-[12%] text-xl text-[#E7C79B]/65">01</div>
                                                 <div className="absolute left-[43%] top-[58%] text-xl text-[#E7C79B]/65">02</div>
                                                 <div className="absolute left-[56%] top-[31%] text-xl text-[#E7C79B]/45">03</div>
