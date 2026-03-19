@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 
 const PLATFORM_SURFACES = [
@@ -232,44 +233,54 @@ function PlatformRibbon() {
                 ))}
             </div>
 
-            {activeSurface && (
-                <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(20,20,20,0.34)] px-6 py-10 backdrop-blur-sm"
-                    onClick={() => setActiveSurface(null)}
-                >
-                    <div
-                        className="w-full max-w-3xl rounded-[2.2rem] border border-[#D9CCB4] bg-[#FBFBF6] p-8 shadow-[0_28px_80px_rgba(20,20,20,0.18)] md:p-10"
-                        onClick={(event) => event.stopPropagation()}
+            <AnimatePresence>
+                {activeSurface && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.22, ease: 'easeOut' }}
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(20,20,20,0.20)] px-6 py-10 backdrop-blur-[6px]"
+                        onClick={() => setActiveSurface(null)}
                     >
-                        <div className="flex items-start justify-between gap-6 border-b border-[#141414]/8 pb-6">
-                            <div className="space-y-3">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Inside the Platform</p>
-                                <h3 className="max-w-2xl text-3xl font-semibold uppercase leading-[0.96] tracking-tight text-[#141414] md:text-5xl">
-                                    {activeSurface.title}
-                                </h3>
+                        <motion.div
+                            initial={{ opacity: 0, y: 18, scale: 0.985 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 12, scale: 0.99 }}
+                            transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+                            className="w-full max-w-3xl rounded-[2.2rem] border border-[#D9CCB4] bg-[#FBFBF6] p-8 shadow-[0_28px_80px_rgba(20,20,20,0.18)] md:p-10"
+                            onClick={(event) => event.stopPropagation()}
+                        >
+                            <div className="flex items-start justify-between gap-6 border-b border-[#141414]/8 pb-6">
+                                <div className="space-y-3">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Inside the Platform</p>
+                                    <h3 className="max-w-2xl text-3xl font-semibold uppercase leading-[0.96] tracking-tight text-[#141414] md:text-5xl">
+                                        {activeSurface.title}
+                                    </h3>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setActiveSurface(null)}
+                                    className="rounded-full border border-[#D9CCB4] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#7C745F] transition-colors hover:border-[#CBB28A] hover:text-[#141414]"
+                                >
+                                    Close
+                                </button>
                             </div>
-                            <button
-                                type="button"
-                                onClick={() => setActiveSurface(null)}
-                                className="rounded-full border border-[#D9CCB4] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#7C745F] transition-colors hover:border-[#CBB28A] hover:text-[#141414]"
-                            >
-                                Close
-                            </button>
-                        </div>
 
-                        <div className="mt-8 grid gap-5 md:grid-cols-2">
-                            <div className="rounded-[1.7rem] border border-[#D9CCB4] bg-white p-6">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C1A67B]">What it is</p>
-                                <p className="mt-4 text-lg leading-relaxed text-[#3F3B34]">{activeSurface.what}</p>
+                            <div className="mt-8 grid gap-5 md:grid-cols-2">
+                                <div className="rounded-[1.7rem] border border-[#D9CCB4] bg-white p-6">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C1A67B]">What it is</p>
+                                    <p className="mt-4 text-lg leading-relaxed text-[#3F3B34]">{activeSurface.what}</p>
+                                </div>
+                                <div className="rounded-[1.7rem] border border-[#D9CCB4] bg-[#141414] p-6 text-white">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Why you want it</p>
+                                    <p className="mt-4 text-lg leading-relaxed text-white/82">{activeSurface.why}</p>
+                                </div>
                             </div>
-                            <div className="rounded-[1.7rem] border border-[#D9CCB4] bg-[#141414] p-6 text-white">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Why you want it</p>
-                                <p className="mt-4 text-lg leading-relaxed text-white/82">{activeSurface.why}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 }
