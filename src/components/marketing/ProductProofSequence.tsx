@@ -104,7 +104,7 @@ const vaultAssets = [
         title: 'CHANEL',
         sector: 'Luxury Fragrance',
         mechanic: 'Celebrity Aspiration Transfer',
-        image: '/images/examples/perfume_ad_no_logo.jpg',
+        image: '/images/examples/Chanel_No5.webp',
     },
     {
         title: 'ACNE STUDIOS',
@@ -362,7 +362,7 @@ export default function ProductProofSequence() {
                                     <div className="relative p-4">
                                         <div className="overflow-hidden rounded-[1.35rem] border border-[#BCA27D] bg-[#141414] p-2">
                                             <Image
-                                                src="/images/examples/perfume_ad.jpg"
+                                                src="/images/examples/Chanel_No5.webp"
                                                 alt="Chanel asset preview with macro-diagnostic overlay"
                                                 width={1080}
                                                 height={1400}
@@ -714,7 +714,7 @@ export default function ProductProofSequence() {
                                     <div className="overflow-hidden rounded-[1.6rem] border border-[#D9CCB4] bg-[#141414] text-white">
                                         <div className="relative">
                                             <Image
-                                                src="/images/examples/perfume_ad_no_logo.jpg"
+                                                src="/images/examples/Chanel_No5.webp"
                                                 alt="Control asset preview"
                                                 width={720}
                                                 height={520}

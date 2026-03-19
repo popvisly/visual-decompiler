@@ -15,7 +15,7 @@ export default async function HomePage() {
             <Hero
                 headline={["Advertising intelligence.", "Deconstructed."]}
                 subhead="The sovereign infrastructure for elite agencies. Understand & comprehend the architecture of persuasion to justify high-stakes strategy with forensic precision."
-                stageImage={{ src: "/images/examples/perfume_ad_no_logo.jpg", alt: "Luxury perfume ad" }}
+                stageImage={{ src: "/images/examples/Chanel_No5.webp", alt: "Chanel No5 fragrance ad" }}
             />
 
             <ProductProofSequence />
