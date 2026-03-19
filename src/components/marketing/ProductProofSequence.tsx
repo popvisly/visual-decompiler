@@ -463,37 +463,44 @@ export default function ProductProofSequence() {
 
                                     <div className="grid gap-5 md:grid-cols-[0.95fr_1.05fr]">
                                         <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] px-6 py-5 text-white">
-                                            <div className="flex items-center justify-between gap-4">
+                                            <div className="flex items-start justify-between gap-4">
                                                 <div>
                                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Macro-Diagnostic Map</p>
                                                     <p className="mt-2 text-sm text-white/65">Visualize optical trajectories and focal anchors.</p>
                                                 </div>
-                                                <span className="rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#141414]">
+                                                <span className="rounded-full border border-[#D4A574]/22 bg-white/[0.04] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">
                                                     Radiant Architecture
                                                 </span>
                                             </div>
-                                            <div className="mt-6 grid h-[180px] grid-cols-6 gap-2 rounded-[1.4rem] border border-white/6 bg-black/15 p-4">
-                                                <div className="col-span-2 rounded-[1.1rem] border border-[#D4A574]/14 bg-white/[0.03] p-4">
-                                                    <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Focus Path</p>
-                                                    <div className="mt-5 space-y-4">
-                                                        <div className="h-2 w-10 rounded-full bg-[#D4A574]" />
-                                                        <div className="h-2 w-16 rounded-full bg-[#D4A574]/70" />
-                                                        <div className="h-2 w-8 rounded-full bg-[#D4A574]/55" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-span-4 rounded-[1.1rem] border border-[#D4A574]/14 bg-white/[0.03] p-4">
-                                                    <div className="relative h-full overflow-hidden rounded-[0.9rem]">
-                                                        <div className="absolute left-[18%] top-[12%] h-[60%] w-px bg-[#D4A574]/38" />
-                                                        <div className="absolute left-[18%] top-[12%] h-3 w-3 -translate-x-1/2 rounded-full border border-[#D4A574] bg-white" />
-                                                        <div className="absolute left-[48%] top-[38%] h-3 w-3 -translate-x-1/2 rounded-full border border-[#D4A574] bg-white" />
-                                                        <div className="absolute left-[42%] top-[64%] h-3 w-3 -translate-x-1/2 rounded-full border border-[#D4A574] bg-white" />
-                                                        <div className="absolute left-[18%] top-[12%] h-px w-[30%] bg-[#D4A574]/38" />
-                                                        <div className="absolute left-[18%] top-[64%] h-px w-[24%] bg-[#D4A574]/38" />
-                                                        <div className="absolute left-[48%] top-[38%] h-px w-[24%] bg-[#D4A574]/38" />
-                                                        <div className="absolute right-[12%] top-[22%] h-2 w-2 rounded-full bg-white/80" />
-                                                        <div className="absolute right-[9%] top-[49%] h-2 w-2 rounded-full bg-white/60" />
-                                                        <div className="absolute left-[6%] top-[49%] h-2 w-2 rounded-full bg-white/55" />
-                                                        <div className="absolute bottom-[10%] left-[50%] h-10 w-10 -translate-x-1/2 rounded-full border border-[#D4A574]/18" />
+                                            <div className="mt-6 overflow-hidden rounded-[1.4rem] border border-white/8 bg-black/15 p-4">
+                                                <div className="aspect-[1.38/1] rounded-[1.1rem] [background-image:linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:48px_48px]">
+                                                    <div className="grid h-full grid-cols-[0.35fr_0.65fr] gap-4 p-4">
+                                                        <div className="rounded-[1rem] border border-[#D4A574]/18 bg-white/[0.03] p-4">
+                                                            <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Focus Path</p>
+                                                            <div className="mt-5 space-y-4">
+                                                                <div className="h-2.5 w-12 rounded-full bg-[#D4A574]" />
+                                                                <div className="h-2.5 w-16 rounded-full bg-[#D4A574]/72" />
+                                                                <div className="h-2.5 w-9 rounded-full bg-[#D4A574]/52" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="relative rounded-[1rem] border border-[#D4A574]/18 bg-white/[0.03]">
+                                                            <svg viewBox="0 0 220 170" className="h-full w-full">
+                                                                <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                                                    <rect x="1" y="1" width="218" height="168" rx="18" stroke="rgba(255,255,255,0.08)" />
+                                                                    <path d="M84 28 L84 128" stroke="rgba(212,165,116,0.38)" strokeWidth="1.5" />
+                                                                    <path d="M84 28 L130 64 L108 128" stroke="rgba(212,165,116,0.38)" strokeWidth="1.5" />
+                                                                    <path d="M84 128 L130 64" stroke="rgba(212,165,116,0.38)" strokeWidth="1.5" />
+                                                                    <circle cx="84" cy="28" r="7" fill="#F8F2E8" stroke="#D4A574" strokeWidth="1.5" />
+                                                                    <circle cx="130" cy="64" r="7" fill="#F8F2E8" stroke="#D4A574" strokeWidth="1.5" />
+                                                                    <circle cx="84" cy="128" r="7" fill="#F8F2E8" stroke="#D4A574" strokeWidth="1.5" />
+                                                                    <circle cx="166" cy="48" r="4" fill="rgba(255,255,255,0.82)" />
+                                                                    <circle cx="177" cy="90" r="4" fill="rgba(255,255,255,0.58)" />
+                                                                    <circle cx="64" cy="78" r="4" fill="rgba(255,255,255,0.52)" />
+                                                                    <circle cx="104" cy="108" r="18" stroke="rgba(255,255,255,0.88)" strokeWidth="1.5" />
+                                                                </g>
+                                                            </svg>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
