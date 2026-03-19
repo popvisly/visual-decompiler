@@ -366,7 +366,7 @@ export default function ProductProofSequence() {
 
                             <div className="overflow-hidden rounded-[2rem] border border-[#D9CCB4] bg-[#FBFBF6] shadow-[0_20px_50px_rgba(20,20,20,0.08)]">
                                 <div className="overflow-hidden rounded-[1.6rem] border-b border-[#141414]/8">
-                                    <div className="relative p-4">
+                                    <div className="group relative p-4">
                                         <div className="overflow-hidden rounded-[1.35rem] border border-[#BCA27D] bg-[#141414] p-2">
                                             <Image
                                                 src="/images/examples/Chanel_No5.webp"
@@ -377,7 +377,16 @@ export default function ProductProofSequence() {
                                             />
                                         </div>
 
-                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-8">
+                                        <div className="pointer-events-none absolute inset-x-8 top-8 z-10 flex items-start justify-between">
+                                            <span className="rounded-full border border-[#E7C79B]/40 bg-[#FBFBF6]/72 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#8B6C47] backdrop-blur-sm transition-all duration-300 group-hover:bg-[#FBFBF6]/90 group-hover:text-[#141414]">
+                                                Hover to reveal Macro-Diagnostic Map
+                                            </span>
+                                            <span className="rounded-full border border-[#E7C79B]/28 bg-[#141414]/42 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#F3E3C9]/72 backdrop-blur-sm transition-all duration-300 group-hover:border-[#E7C79B]/45 group-hover:text-[#F3E3C9]">
+                                                Radiant Architecture
+                                            </span>
+                                        </div>
+
+                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[#141414]/0 p-8 opacity-0 transition-all duration-500 group-hover:bg-[#141414]/14 group-hover:opacity-100">
                                             <div className="relative h-full w-full">
                                                 <div className="absolute left-[40%] top-[18%] h-[45%] w-px bg-[#E7C79B]/78" />
                                                 <div className="absolute left-[40%] top-[18%] h-4 w-4 -translate-x-1/2 rounded-full border border-[#E7C79B] bg-white/90" />
@@ -407,11 +416,11 @@ export default function ProductProofSequence() {
                                         <p className="text-[11px] uppercase tracking-[0.18em] text-[#B79E7A]">ID: 1cb30400</p>
                                     </div>
 
-                                    <div className="flex flex-wrap gap-3">
+                                    <div className="grid gap-3 sm:grid-cols-2">
                                         {dossierActions.map((action, index) => (
                                             <span
                                                 key={action}
-                                                className={`inline-flex items-center rounded-full px-5 py-3 text-[11px] font-bold uppercase tracking-[0.22em] ${
+                                                className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-center text-[11px] font-bold uppercase tracking-[0.22em] ${
                                                     index === 0
                                                         ? 'bg-[#D4A574] text-[#141414]'
                                                         : index === 1
