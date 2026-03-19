@@ -190,6 +190,13 @@ const cloneConcepts = [
     },
 ];
 
+const outputActions = [
+    'Open Clone Engine',
+    'Copy Embed Widget',
+    'Export Dossier (Print/PDF)',
+    'Add to Board',
+];
+
 const marketSignals = [
     {
         label: 'Mechanic Velocity',
@@ -613,11 +620,61 @@ export default function ProductProofSequence() {
                                 </h2>
                             </div>
                             <p className="max-w-xl text-lg leading-relaxed text-[#5F5B53]">
-                                This is where the subscription becomes hard to walk away from. The platform generates blueprint test plans, clone concepts, and DNA prompts that push the insight straight into creative development.
+                                This is where the subscription becomes hard to walk away from. The platform does not stop at analysis. It opens clone routes, produces boardroom-ready dossier output, creates an embeddable intelligence panel, and gives strategy teams something they can actually ship.
                             </p>
                         </div>
 
                         <div className="grid gap-6">
+                            <div className="rounded-[2rem] border border-[#D9CCB4] bg-white p-7 shadow-[0_14px_40px_rgba(20,20,20,0.06)]">
+                                <div className="flex flex-wrap gap-3">
+                                    {outputActions.map((action, index) => (
+                                        <span
+                                            key={action}
+                                            className={`inline-flex items-center rounded-full px-5 py-3 text-[11px] font-bold uppercase tracking-[0.22em] ${
+                                                index === 0
+                                                    ? 'bg-[#D4A574] text-[#141414]'
+                                                    : index === 1
+                                                      ? 'bg-[#141414] text-[#F5EBDC]'
+                                                      : 'bg-[#4B4B4B] text-white'
+                                            }`}
+                                        >
+                                            {action}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="rounded-[2rem] border border-[#D9CCB4] bg-[#FBFBF6] p-7 shadow-[0_14px_40px_rgba(20,20,20,0.06)]">
+                                <div className="flex flex-col gap-4 border-b border-[#141414]/8 pb-5 md:flex-row md:items-end md:justify-between">
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C1A67B]">Embed Widget</p>
+                                        <h3 className="mt-3 text-2xl font-semibold uppercase tracking-tight text-[#141414]">A self-contained forensic intelligence panel</h3>
+                                    </div>
+                                    <p className="text-[11px] uppercase tracking-[0.18em] text-[#7A7468]">Client reports · strategy decks · dashboards</p>
+                                </div>
+
+                                <div className="mt-6 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+                                    <div className="space-y-4 rounded-[1.6rem] border border-[#D9CCB4] bg-white p-6">
+                                        <p className="text-base leading-relaxed text-[#3F3B34]">
+                                            Paste this iFrame into a client portal, strategy deck, Notion page, or internal dashboard to display a self-contained forensic intelligence panel.
+                                        </p>
+                                        <div className="rounded-[1.3rem] border border-[#E3D6BF] bg-[#FBF8F1] p-4">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C1A67B]">Use for</p>
+                                            <p className="mt-3 text-sm leading-relaxed text-[#5F5B53]">client-facing reports · internal strategy decks · agency dashboards</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="rounded-[1.6rem] border border-[#D9CCB4] bg-[#141414] p-6 text-white">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Embed Snippet</p>
+                                        <div className="mt-4 overflow-hidden rounded-[1.2rem] border border-white/10 bg-black/20 p-5">
+                                            <code className="block whitespace-pre-wrap break-all text-[13px] leading-relaxed text-white/82">
+                                                {`<iframe src="visualdecompiler.com/embed/1cb30400-1ba3-4dda-8fe2-7650674aeb4a" width="100%" height="600px" />`}
+                                            </code>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="rounded-[2rem] border border-[#D9CCB4] bg-white p-7 shadow-[0_14px_40px_rgba(20,20,20,0.06)]">
                                 <div className="flex flex-col gap-4 border-b border-[#141414]/8 pb-5 md:flex-row md:items-end md:justify-between">
                                     <div>
