@@ -444,7 +444,7 @@ export default function ProductProofSequence() {
 
                                 <div className="mt-6 grid gap-5">
                                     <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
-                                        <div className="flex items-start justify-between gap-6">
+                                        <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_140px] md:items-start">
                                         <div className="max-w-xl">
                                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Primary Mechanic</p>
                                                 <h3 className="mt-4 text-3xl font-light uppercase leading-[1.02] tracking-[0.08em] text-white">
@@ -454,9 +454,9 @@ export default function ProductProofSequence() {
                                                     Desire and identity migrate from subject to product through proximity, chromatic unity, and monumentality.
                                                 </p>
                                             </div>
-                                            <div className="min-w-[120px] border-l border-white/10 pl-6">
+                                            <div className="border-t border-white/10 pt-5 md:border-l md:border-t-0 md:pl-6 md:pt-0">
                                                 <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Confidence</p>
-                                                <p className="mt-5 text-6xl font-light text-white">99%</p>
+                                                <p className="mt-4 text-6xl font-light leading-none text-white md:text-[4.25rem]">99%</p>
                                             </div>
                                         </div>
                                     </div>
@@ -473,31 +473,31 @@ export default function ProductProofSequence() {
                                                 </span>
                                             </div>
                                             <div className="mt-6 overflow-hidden rounded-[1.4rem] border border-white/8 bg-black/15 p-4">
-                                                <div className="aspect-[1.38/1] rounded-[1.1rem] [background-image:linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:48px_48px]">
-                                                    <div className="grid h-full grid-cols-[0.35fr_0.65fr] gap-4 p-4">
+                                                <div className="aspect-[1.38/1] rounded-[1.1rem] [background-image:linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:48px_48px] p-4">
+                                                    <div className="grid h-full grid-cols-[92px_1fr] gap-4">
                                                         <div className="rounded-[1rem] border border-[#D4A574]/18 bg-white/[0.03] p-4">
                                                             <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Focus Path</p>
-                                                            <div className="mt-5 space-y-4">
-                                                                <div className="h-2.5 w-12 rounded-full bg-[#D4A574]" />
-                                                                <div className="h-2.5 w-16 rounded-full bg-[#D4A574]/72" />
-                                                                <div className="h-2.5 w-9 rounded-full bg-[#D4A574]/52" />
+                                                            <div className="mt-6 space-y-4">
+                                                                <div className="h-2.5 w-11 rounded-full bg-[#D4A574]" />
+                                                                <div className="h-2.5 w-14 rounded-full bg-[#D4A574]/72" />
+                                                                <div className="h-2.5 w-8 rounded-full bg-[#D4A574]/52" />
                                                             </div>
                                                         </div>
 
-                                                        <div className="relative rounded-[1rem] border border-[#D4A574]/18 bg-white/[0.03]">
-                                                            <svg viewBox="0 0 220 170" className="h-full w-full">
+                                                        <div className="relative overflow-hidden rounded-[1rem] border border-[#D4A574]/18 bg-white/[0.03]">
+                                                            <svg viewBox="0 0 240 170" className="h-full w-full">
                                                                 <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                                                    <rect x="1" y="1" width="218" height="168" rx="18" stroke="rgba(255,255,255,0.08)" />
-                                                                    <path d="M84 28 L84 128" stroke="rgba(212,165,116,0.38)" strokeWidth="1.5" />
-                                                                    <path d="M84 28 L130 64 L108 128" stroke="rgba(212,165,116,0.38)" strokeWidth="1.5" />
-                                                                    <path d="M84 128 L130 64" stroke="rgba(212,165,116,0.38)" strokeWidth="1.5" />
-                                                                    <circle cx="84" cy="28" r="7" fill="#F8F2E8" stroke="#D4A574" strokeWidth="1.5" />
-                                                                    <circle cx="130" cy="64" r="7" fill="#F8F2E8" stroke="#D4A574" strokeWidth="1.5" />
-                                                                    <circle cx="84" cy="128" r="7" fill="#F8F2E8" stroke="#D4A574" strokeWidth="1.5" />
-                                                                    <circle cx="166" cy="48" r="4" fill="rgba(255,255,255,0.82)" />
-                                                                    <circle cx="177" cy="90" r="4" fill="rgba(255,255,255,0.58)" />
-                                                                    <circle cx="64" cy="78" r="4" fill="rgba(255,255,255,0.52)" />
-                                                                    <circle cx="104" cy="108" r="18" stroke="rgba(255,255,255,0.88)" strokeWidth="1.5" />
+                                                                    <path d="M82 28 L82 126" stroke="rgba(212,165,116,0.42)" strokeWidth="1.5" />
+                                                                    <path d="M82 28 L128 64 L103 126" stroke="rgba(212,165,116,0.42)" strokeWidth="1.5" />
+                                                                    <path d="M82 126 L128 64" stroke="rgba(212,165,116,0.42)" strokeWidth="1.5" />
+                                                                    <circle cx="82" cy="28" r="7" fill="#F8F2E8" stroke="#D4A574" strokeWidth="1.6" />
+                                                                    <circle cx="128" cy="64" r="7" fill="#F8F2E8" stroke="#D4A574" strokeWidth="1.6" />
+                                                                    <circle cx="82" cy="126" r="7" fill="#F8F2E8" stroke="#D4A574" strokeWidth="1.6" />
+                                                                    <circle cx="172" cy="46" r="4" fill="rgba(255,255,255,0.82)" />
+                                                                    <circle cx="186" cy="86" r="4" fill="rgba(255,255,255,0.58)" />
+                                                                    <circle cx="54" cy="84" r="4" fill="rgba(255,255,255,0.48)" />
+                                                                    <circle cx="142" cy="126" r="4" fill="rgba(255,255,255,0.52)" />
+                                                                    <circle cx="104" cy="106" r="22" stroke="rgba(255,255,255,0.82)" strokeWidth="1.5" />
                                                                 </g>
                                                             </svg>
                                                         </div>
