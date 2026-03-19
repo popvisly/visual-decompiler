@@ -99,30 +99,22 @@ const PLATFORM_SURFACE_GROUPS = [
     },
 ];
 
-const vaultAssets = [
+const vaultModules = [
     {
         title: 'CHANEL',
         sector: 'Luxury Fragrance',
         mechanic: 'Celebrity Aspiration Transfer',
         image: '/images/examples/Chanel_No5.webp',
+        tags: ['House codes', 'Monumentality', 'Desire transfer'],
+        note: 'A single dossier becomes a searchable memory object with tags, boards, and benchmark value the next time a fragrance asset enters the vault.',
     },
     {
         title: 'ACNE STUDIOS',
         sector: 'Luxury Fashion / Premium Accessories',
         mechanic: 'Ironic Juxtaposition + Heritage Weaponization',
         image: '/images/examples/ACNE.png',
-    },
-    {
-        title: 'VERSACE',
-        sector: 'Luxury Fragrance',
-        mechanic: 'Transcendental Status Signaling',
-        image: '/images/examples/valentino-voce-viva.png',
-    },
-    {
-        title: 'CALVIN KLEIN',
-        sector: 'Prestige Fragrance',
-        mechanic: 'Aspirational Intimacy as Status Currency',
-        image: '/images/examples/perfume.jpg',
+        tags: ['Culture signal', 'Status absurdity', 'Craft authority'],
+        note: 'The vault is not just for beauty. It holds fashion, accessories, and any future category you want to benchmark against strategic intent.',
     },
 ];
 
@@ -620,31 +612,60 @@ export default function ProductProofSequence() {
                             </p>
                         </div>
 
-                        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-                            {vaultAssets.map((asset) => (
-                                <div key={asset.title} className="overflow-hidden rounded-[1.9rem] border border-[#141414]/12 bg-[#141414] text-white shadow-[0_18px_40px_rgba(20,20,20,0.10)]">
-                                    <div className="relative">
-                                        <Image
-                                            src={asset.image}
-                                            alt={`${asset.title} vault dossier preview`}
-                                            width={720}
-                                            height={920}
-                                            className="aspect-[4/5] w-full object-cover"
-                                        />
-                                        <div className="absolute inset-x-0 bottom-0 flex justify-end px-4 pb-4">
-                                            <span className="bg-[#D4A574] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#141414]">
-                                                Forensic Secured
-                                            </span>
+                        <div className="grid gap-6 lg:grid-cols-2">
+                            {vaultModules.map((asset) => (
+                                <div
+                                    key={asset.title}
+                                    className="overflow-hidden rounded-[2rem] border border-[#141414]/12 bg-[#141414] text-white shadow-[0_18px_40px_rgba(20,20,20,0.10)]"
+                                >
+                                    <div className="grid gap-0 md:grid-cols-[0.95fr_1.05fr]">
+                                        <div className="relative">
+                                            <Image
+                                                src={asset.image}
+                                                alt={`${asset.title} vault dossier preview`}
+                                                width={720}
+                                                height={920}
+                                                className="aspect-[4/5] w-full object-cover md:aspect-[4/4.4]"
+                                            />
+                                            <div className="absolute inset-x-0 bottom-0 flex justify-end px-4 pb-4">
+                                                <span className="bg-[#D4A574] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#141414]">
+                                                    Forensic Secured
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="space-y-5 p-5">
-                                        <div>
-                                            <h3 className="text-[1.65rem] font-light uppercase tracking-tight text-white">{asset.title}</h3>
-                                            <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">{asset.sector}</p>
-                                        </div>
-                                        <div className="border-t border-white/10 pt-4">
-                                            <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#D4A574]/70">Structural Logic</p>
-                                            <p className="mt-3 text-base leading-relaxed text-white/82">{asset.mechanic}</p>
+
+                                        <div className="space-y-5 p-6">
+                                            <div className="flex items-start justify-between gap-4">
+                                                <div>
+                                                    <h3 className="text-[1.85rem] font-light uppercase tracking-tight text-white">{asset.title}</h3>
+                                                    <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">{asset.sector}</p>
+                                                </div>
+                                                <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-white/38">Vault Dossier</span>
+                                            </div>
+
+                                            <div className="border-t border-white/10 pt-4">
+                                                <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#D4A574]/70">Structural Logic</p>
+                                                <p className="mt-3 text-[1.35rem] font-light leading-[1.12] text-white">{asset.mechanic}</p>
+                                            </div>
+
+                                            <div className="border-t border-white/10 pt-4">
+                                                <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#D4A574]/70">Indexed Signals</p>
+                                                <div className="mt-3 flex flex-wrap gap-2">
+                                                    {asset.tags.map((tag) => (
+                                                        <span
+                                                            key={tag}
+                                                            className="rounded-full border border-white/12 bg-white/[0.03] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#F3E3C9]"
+                                                        >
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            <div className="rounded-[1.4rem] border border-[#D4A574]/18 bg-white/[0.03] p-4">
+                                                <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#D4A574]/70">Why it matters</p>
+                                                <p className="mt-3 text-sm leading-relaxed text-white/76">{asset.note}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
