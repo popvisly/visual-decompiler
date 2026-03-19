@@ -4,78 +4,98 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 
-const PLATFORM_SURFACES = [
+const PLATFORM_SURFACE_GROUPS = [
     {
-        label: 'Analyse Ad Asset',
-        title: 'Deconstruct any static creative in minutes',
-        what: 'Drop in a JPG, PNG, or WebP and the platform reads the hidden persuasion system inside the ad.',
-        why: 'This is the fastest route from raw creative to a strategic point of view you can actually defend in front of a client.',
+        label: 'Analysis Layer',
+        surfaces: [
+            {
+                label: 'Analyse Ad Asset',
+                title: 'Deconstruct any static creative in minutes',
+                what: 'Drop in a JPG, PNG, or WebP and the platform reads the hidden persuasion system inside the ad.',
+                why: 'This is the fastest route from raw creative to a strategic point of view you can actually defend in front of a client.',
+            },
+            {
+                label: 'Macro-Diagnostic Map',
+                title: 'Show the visual logic with instant wow-factor',
+                what: 'Map focal anchors, optical trajectories, and the hierarchy of attention directly onto the creative.',
+                why: 'It makes the invisible system visible in one frame, which is exactly where premium belief starts.',
+            },
+            {
+                label: 'Intelligence Vault',
+                title: 'A permanent memory layer for every asset',
+                what: 'Every completed dossier is stored, searchable, deduplicated, and ready to be recalled later by brand, sector, mechanic, or tag.',
+                why: 'It stops the platform being a one-off report generator and turns it into long-term agency memory.',
+            },
+        ],
     },
     {
-        label: 'Intelligence Vault',
-        title: 'A permanent memory layer for every asset',
-        what: 'Every completed dossier is stored, searchable, deduplicated, and ready to be recalled later by brand, sector, mechanic, or tag.',
-        why: 'It stops the platform being a one-off report generator and turns it into long-term agency memory.',
+        label: 'Intelligence Layer',
+        surfaces: [
+            {
+                label: 'Intelligence Pulse',
+                title: 'Compare assets and surface the strategic delta',
+                what: 'Run differential diagnostics between control and proposed assets to reveal persuasion lift, fatigue gaps, and performance direction.',
+                why: 'You stop arguing from taste and start showing why one route should win.',
+            },
+            {
+                label: 'Mechanic Intelligence',
+                title: 'See the market pressure, not just one ad',
+                what: 'Cross-asset intelligence tracks mechanic velocity, trigger pressure, whitespace, and audit trails across the vault.',
+                why: 'It gives agencies a premium planning layer competitors cannot fake with surface-level creative reviews.',
+            },
+            {
+                label: 'Market Pulse',
+                title: 'Benchmark pressure across categories',
+                what: 'Run 30, 60, and 90-day views of mechanic velocity, whitespace, source assets, and category direction.',
+                why: 'It helps agencies pitch from market intelligence, not isolated opinions.',
+            },
+        ],
     },
     {
-        label: 'Intelligence Pulse',
-        title: 'Compare assets and surface the strategic delta',
-        what: 'Run differential diagnostics between control and proposed assets to reveal persuasion lift, fatigue gaps, and performance direction.',
-        why: 'You stop arguing from taste and start showing why one route should win.',
+        label: 'Execution Layer',
+        surfaces: [
+            {
+                label: 'Blueprint',
+                title: 'Convert insight into structured tests',
+                what: 'Each asset can generate an iteration plan with hook, chromatic, copy, and visual tests ready for production teams.',
+                why: 'You do not just diagnose what worked. You know what to test next.',
+            },
+            {
+                label: 'Clone Engine',
+                title: 'Generate fresh campaign routes from one mechanic',
+                what: 'Take a persuasion architecture and spin out new campaign concepts, scenes, psychology, and DNA prompts from it.',
+                why: 'It turns forensic insight into a live creative advantage instead of a post-mortem.',
+            },
+            {
+                label: 'Embed Widget',
+                title: 'Share intelligence cleanly outside the vault',
+                what: 'Turn selected dossier surfaces into a polished external widget without opening the entire workspace.',
+                why: 'It is the cleanest way to circulate proof without creating presentation sprawl.',
+            },
+        ],
     },
     {
-        label: 'Mechanic Intelligence',
-        title: 'See the market pressure, not just one ad',
-        what: 'Cross-asset intelligence tracks mechanic velocity, trigger pressure, whitespace, and audit trails across the vault.',
-        why: 'It gives agencies a premium planning layer competitors cannot fake with surface-level creative reviews.',
-    },
-    {
-        label: 'Sovereign Boards',
-        title: 'Curate live strategy without rebuilding decks',
-        what: 'Group assets into board-ready collections, export board dossiers, and present a strategic narrative cleanly.',
-        why: 'It makes the jump from analysis to presentation feel immediate instead of laborious.',
-    },
-    {
-        label: 'Agency Settings',
-        title: 'White-label the intelligence layer',
-        what: 'Brand dossier identity, exports, and client-facing presentation surfaces so the system feels like your agency, not ours.',
-        why: 'Premium tools win faster when they slot into the agency’s own operating aesthetic.',
-    },
-    {
-        label: 'Team & Seats',
-        title: 'Operate as a real agency system',
-        what: 'Invite strategists, assign roles, and control who can access intelligence, exports, and operating surfaces.',
-        why: 'It turns a powerful solo tool into something a whole strategy unit can live inside.',
-    },
-    {
-        label: 'Clone Engine',
-        title: 'Generate fresh campaign routes from one mechanic',
-        what: 'Take a persuasion architecture and spin out new campaign concepts, scenes, psychology, and DNA prompts from it.',
-        why: 'It turns forensic insight into a live creative advantage instead of a post-mortem.',
-    },
-    {
-        label: 'Blueprint',
-        title: 'Convert insight into structured tests',
-        what: 'Each asset can generate an iteration plan with hook, chromatic, copy, and visual tests ready for production teams.',
-        why: 'You do not just diagnose what worked. You know what to test next.',
-    },
-    {
-        label: 'Market Pulse',
-        title: 'Benchmark pressure across categories',
-        what: 'Run 30, 60, and 90-day views of mechanic velocity, whitespace, source assets, and category direction.',
-        why: 'It helps agencies pitch from market intelligence, not isolated opinions.',
-    },
-    {
-        label: 'Embed Widget',
-        title: 'Share intelligence cleanly outside the vault',
-        what: 'Turn selected dossier surfaces into a polished external widget without opening the entire workspace.',
-        why: 'It is the cleanest way to circulate proof without creating presentation sprawl.',
-    },
-    {
-        label: 'Macro-Diagnostic Map',
-        title: 'Show the visual logic with instant wow-factor',
-        what: 'Map focal anchors, optical trajectories, and the hierarchy of attention directly onto the creative.',
-        why: 'It makes the invisible system visible in one frame, which is exactly where premium belief starts.',
+        label: 'Agency Layer',
+        surfaces: [
+            {
+                label: 'Sovereign Boards',
+                title: 'Curate live strategy without rebuilding decks',
+                what: 'Group assets into board-ready collections, export board dossiers, and present a strategic narrative cleanly.',
+                why: 'It makes the jump from analysis to presentation feel immediate instead of laborious.',
+            },
+            {
+                label: 'Agency Settings',
+                title: 'White-label the intelligence layer',
+                what: 'Brand dossier identity, exports, and client-facing presentation surfaces so the system feels like your agency, not ours.',
+                why: 'Premium tools win faster when they slot into the agency’s own operating aesthetic.',
+            },
+            {
+                label: 'Team & Seats',
+                title: 'Operate as a real agency system',
+                what: 'Invite strategists, assign roles, and control who can access intelligence, exports, and operating surfaces.',
+                why: 'It turns a powerful solo tool into something a whole strategy unit can live inside.',
+            },
+        ],
     },
 ];
 
@@ -203,7 +223,7 @@ const operatingLayers = [
 ];
 
 function PlatformRibbon() {
-    const [activeSurface, setActiveSurface] = useState<(typeof PLATFORM_SURFACES)[number] | null>(null);
+    const [activeSurface, setActiveSurface] = useState<(typeof PLATFORM_SURFACE_GROUPS)[number]['surfaces'][number] | null>(null);
 
     useEffect(() => {
         if (!activeSurface) return;
@@ -221,15 +241,25 @@ function PlatformRibbon() {
     return (
         <>
             <div className="flex flex-wrap gap-2">
-                {PLATFORM_SURFACES.map((surface) => (
-                    <button
-                        key={surface.label}
-                        type="button"
-                        onClick={() => setActiveSurface(surface)}
-                        className="rounded-full border border-[#D9CCB4] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.24em] text-[#7C745F] shadow-[0_6px_18px_rgba(20,20,20,0.04)] transition-all hover:-translate-y-px hover:border-[#CBB28A] hover:text-[#141414]"
-                    >
-                        {surface.label}
-                    </button>
+                {PLATFORM_SURFACE_GROUPS.map((group) => (
+                    <div key={group.label} className="flex flex-wrap items-center gap-2">
+                        <span className="mr-1 text-[10px] font-bold uppercase tracking-[0.32em] text-[#B6A17E]">
+                            {group.label}
+                        </span>
+                        {group.surfaces.map((surface) => (
+                            <button
+                                key={surface.label}
+                                type="button"
+                                onClick={() => setActiveSurface(surface)}
+                                className="rounded-full border border-[#D9CCB4] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.24em] text-[#7C745F] shadow-[0_6px_18px_rgba(20,20,20,0.04)] transition-all hover:-translate-y-px hover:border-[#CBB28A] hover:text-[#141414]"
+                            >
+                                {surface.label}
+                            </button>
+                        ))}
+                        {group !== PLATFORM_SURFACE_GROUPS[PLATFORM_SURFACE_GROUPS.length - 1] && (
+                            <span className="mx-1 hidden h-7 w-px bg-[#D9CCB4] md:block" aria-hidden="true" />
+                        )}
+                    </div>
                 ))}
             </div>
 
