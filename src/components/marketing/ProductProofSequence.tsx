@@ -543,44 +543,48 @@ export default function ProductProofSequence() {
                                 <div className="grid gap-5 md:grid-cols-[1.1fr_0.9fr]">
                                     <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
                                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Trigger Distribution Map</p>
-                                        <div className="mt-6 rounded-[1.3rem] border border-white/12 bg-[#171717] p-4">
-                                            <div className="relative grid h-[220px] place-items-center overflow-hidden rounded-[1rem] [background-image:linear-gradient(rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px)] [background-size:56px_56px]">
-                                                <div className="pointer-events-none absolute left-1/2 top-5 -translate-x-1/2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">
+                                        <div className="mt-5 border-t border-white/10 pt-5">
+                                            <div className="relative h-[240px]">
+                                                <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">
                                                     Status
                                                 </div>
-                                                <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[10px] font-bold uppercase leading-[1.35] tracking-[0.16em] text-[#D4A574]">
+                                                <div className="pointer-events-none absolute left-0 top-[74px] text-[10px] font-bold uppercase leading-[1.35] tracking-[0.16em] text-[#D4A574]">
                                                     Social
                                                     <br />
                                                     Proof
                                                 </div>
-                                                <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-right text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">
+                                                <div className="pointer-events-none absolute right-1 top-[86px] text-right text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">
                                                     Utility
                                                 </div>
-                                                <div className="pointer-events-none absolute bottom-4 left-7 text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">
+                                                <div className="pointer-events-none absolute bottom-[36px] left-[22px] text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">
                                                     Authority
                                                 </div>
-                                                <div className="pointer-events-none absolute bottom-4 right-5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">
+                                                <div className="pointer-events-none absolute bottom-[36px] right-[10px] text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">
                                                     Scarcity
                                                 </div>
 
-                                                <svg viewBox="0 0 220 220" className="h-[168px] w-[168px]">
-                                                    <g fill="none" strokeLinecap="round">
-                                                        <circle cx="110" cy="110" r="60" stroke="rgba(255,255,255,0.26)" strokeWidth="1.4" />
-                                                        <circle cx="110" cy="110" r="40" stroke="rgba(255,255,255,0.16)" strokeWidth="1.2" />
-                                                        <circle cx="110" cy="110" r="20" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
-                                                        <path d="M110 50 L146 82 L135 132 L86 144 L64 94 Z" stroke="rgba(255,255,255,0.16)" strokeWidth="1.2" />
-                                                        <path d="M110 30 L110 170 M48 90 L172 90 M68 148 L152 148 M68 148 L48 90 M152 148 L172 90" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
-                                                        <polygon points="110,50 146,82 135,132 86,144 64,94" fill="rgba(212,165,116,0.22)" stroke="#D4A574" strokeWidth="2.3" />
+                                                <svg viewBox="0 0 260 220" className="absolute inset-0 h-full w-full">
+                                                    <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                                        <path d="M130 26 L196 78 L170 162 L92 162 L64 78 Z" stroke="rgba(212,165,116,0.18)" strokeWidth="1.2" />
+                                                        <path d="M130 56 L173 90 L156 145 L105 145 L87 90 Z" stroke="rgba(212,165,116,0.16)" strokeWidth="1.1" />
+                                                        <path d="M130 84 L152 102 L144 130 L116 130 L108 102 Z" stroke="rgba(212,165,116,0.14)" strokeWidth="1" />
+                                                        <path d="M130 26 L130 162 M64 78 L196 78 M92 162 L170 162 M64 78 L92 162 M196 78 L170 162" stroke="rgba(212,165,116,0.18)" strokeWidth="1" />
+                                                        <polygon points="130,42 164,88 146,136 104,148 76,92" fill="rgba(212,165,116,0.22)" stroke="#D4A574" strokeWidth="2.1" />
                                                     </g>
                                                     <g fill="#F6F1E7">
-                                                        <circle cx="110" cy="50" r="4.5" />
-                                                        <circle cx="146" cy="82" r="4.5" />
-                                                        <circle cx="135" cy="132" r="4.5" />
-                                                        <circle cx="86" cy="144" r="4.5" />
-                                                        <circle cx="64" cy="94" r="4.5" />
+                                                        <circle cx="130" cy="42" r="4.2" />
+                                                        <circle cx="164" cy="88" r="4.2" />
+                                                        <circle cx="146" cy="136" r="4.2" />
+                                                        <circle cx="104" cy="148" r="4.2" />
+                                                        <circle cx="76" cy="92" r="4.2" />
                                                     </g>
                                                 </svg>
                                             </div>
+                                        </div>
+                                        <div className="mt-4 border-t border-white/10 pt-5">
+                                            <p className="mx-auto max-w-[300px] text-center text-sm leading-relaxed text-white/72">
+                                                This distribution quantifies the creative&apos;s psychological surface area, identifying which aspiration levers are being engaged to command consumer compliance.
+                                            </p>
                                         </div>
                                     </div>
 
