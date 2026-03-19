@@ -377,13 +377,7 @@ export default function ProductProofSequence() {
                                             />
                                         </div>
 
-                                        <div className="pointer-events-none absolute left-8 right-8 top-8 z-10 flex items-start justify-start">
-                                            <span className="rounded-full border border-[#E7C79B]/50 bg-[#FBFBF6]/92 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#141414] shadow-[0_8px_24px_rgba(20,20,20,0.08)] transition-all duration-300 group-hover:border-[#D4A574] group-hover:bg-[#FBFBF6]">
-                                                Hover to reveal Macro-Diagnostic Map
-                                            </span>
-                                        </div>
-
-                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[#141414]/0 p-8 opacity-100 transition-all duration-500 group-hover:bg-[#141414]/10">
+                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[#141414]/0 p-8 opacity-0 transition-all duration-500 group-hover:bg-[#141414]/10 group-hover:opacity-100">
                                             <div className="relative h-full w-full">
                                                 <div className="absolute left-[40%] top-[18%] h-[45%] w-px bg-[#E7C79B]/78" />
                                                 <div className="absolute left-[40%] top-[18%] h-4 w-4 -translate-x-1/2 rounded-full border border-[#E7C79B] bg-white/90" />
@@ -411,6 +405,11 @@ export default function ProductProofSequence() {
                                             <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">Luxury Fragrance</p>
                                         </div>
                                         <p className="text-[11px] uppercase tracking-[0.18em] text-[#B79E7A]">ID: 1cb30400</p>
+                                    </div>
+
+                                    <div className="rounded-[1.2rem] border border-[#E3D6BF] bg-white px-4 py-3">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C1A67B]">Macro-Diagnostic Map</p>
+                                        <p className="mt-2 text-sm leading-relaxed text-[#5F5B53]">Hover the Chanel asset to reveal the live focal-path overlay used inside the dossier.</p>
                                     </div>
 
                                     <div className="grid gap-3 sm:grid-cols-2">
