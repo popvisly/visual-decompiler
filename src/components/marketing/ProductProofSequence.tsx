@@ -152,6 +152,13 @@ const dossierEvidence = [
     },
 ];
 
+const dossierActions = [
+    'Open Clone Engine',
+    'Copy Embed Widget',
+    'Export Dossier (Print/PDF)',
+    'Add to Board',
+];
+
 const blueprintCells = [
     {
         label: 'Visual Test',
@@ -335,7 +342,8 @@ export default function ProductProofSequence() {
                         <PlatformRibbon />
                     </div>
 
-                    <section className="grid gap-10 border-b border-[#141414]/8 pb-20 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+                    <section className="space-y-10 border-b border-[#141414]/8 pb-20">
+                        <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
                         <div className="space-y-6">
                             <div className="space-y-3">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Single-Asset Deconstruction</p>
@@ -346,8 +354,70 @@ export default function ProductProofSequence() {
                                 </h2>
                             </div>
                             <p className="max-w-xl text-lg leading-relaxed text-[#5F5B53]">
-                                Start with the surfaces that create belief inside the product: mechanic readout, confidence, psychology pressure, macro-diagnostic signals, and evidence anchors already in motion. The point is not abstract AI commentary. It is a forensic strategic readout.
+                                Start with the actual dossier experience. The asset stays visible, the mechanic reads instantly, and the confidence, map logic, and strategic posture tell you why the ad is working before you ever get to export, clone, or market benchmarking.
                             </p>
+
+                            <div className="overflow-hidden rounded-[2rem] border border-[#D9CCB4] bg-[#FBFBF6] shadow-[0_20px_50px_rgba(20,20,20,0.08)]">
+                                <div className="overflow-hidden rounded-[1.6rem] border-b border-[#141414]/8">
+                                    <div className="relative p-4">
+                                        <div className="overflow-hidden rounded-[1.35rem] border border-[#BCA27D] bg-[#141414] p-2">
+                                            <Image
+                                                src="/images/examples/perfume_ad.jpg"
+                                                alt="Chanel asset preview with macro-diagnostic overlay"
+                                                width={1080}
+                                                height={1400}
+                                                className="aspect-[4/5] w-full rounded-[1.15rem] object-cover"
+                                            />
+                                        </div>
+
+                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-8">
+                                            <div className="relative h-full w-full">
+                                                <div className="absolute left-[40%] top-[18%] h-[45%] w-px bg-[#E7C79B]/78" />
+                                                <div className="absolute left-[40%] top-[18%] h-4 w-4 -translate-x-1/2 rounded-full border border-[#E7C79B] bg-white/90" />
+                                                <div className="absolute left-[50%] top-[40%] h-4 w-4 -translate-x-1/2 rounded-full border border-[#E7C79B] bg-white/90" />
+                                                <div className="absolute left-[42%] top-[63%] h-4 w-4 -translate-x-1/2 rounded-full border border-[#E7C79B] bg-white/90" />
+                                                <div className="absolute left-[40%] top-[18%] h-px w-[18%] bg-[#E7C79B]/78" />
+                                                <div className="absolute left-[42%] top-[63%] h-px w-[8%] bg-[#E7C79B]/78" />
+                                                <div className="absolute left-[50%] top-[40%] h-px w-[12%] bg-[#E7C79B]/78" />
+                                                <div className="absolute left-[32%] top-[12%] text-xl text-[#E7C79B]/65">01</div>
+                                                <div className="absolute left-[43%] top-[58%] text-xl text-[#E7C79B]/65">02</div>
+                                                <div className="absolute left-[56%] top-[31%] text-xl text-[#E7C79B]/45">03</div>
+                                                <div className="absolute left-[8%] top-[6%] h-10 w-10 border-l border-t border-[#E7C79B]/35" />
+                                                <div className="absolute right-[8%] top-[6%] h-10 w-10 border-r border-t border-[#E7C79B]/35" />
+                                                <div className="absolute left-[8%] bottom-[8%] h-10 w-10 border-b border-l border-[#E7C79B]/35" />
+                                                <div className="absolute right-[8%] bottom-[8%] h-10 w-10 border-b border-r border-[#E7C79B]/35" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-5 px-5 py-5">
+                                    <div className="flex items-end justify-between gap-6">
+                                        <div>
+                                            <p className="text-4xl font-light tracking-tight text-[#C1A67B]">CHANEL</p>
+                                            <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">Luxury Fragrance</p>
+                                        </div>
+                                        <p className="text-[11px] uppercase tracking-[0.18em] text-[#B79E7A]">ID: 1cb30400</p>
+                                    </div>
+
+                                    <div className="flex flex-wrap gap-3">
+                                        {dossierActions.map((action, index) => (
+                                            <span
+                                                key={action}
+                                                className={`inline-flex items-center rounded-full px-5 py-3 text-[11px] font-bold uppercase tracking-[0.22em] ${
+                                                    index === 0
+                                                        ? 'bg-[#D4A574] text-[#141414]'
+                                                        : index === 1
+                                                          ? 'bg-[#141414] text-[#F5EBDC]'
+                                                          : 'bg-[#4B4B4B] text-white'
+                                                }`}
+                                            >
+                                                {action}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="space-y-6">
@@ -363,7 +433,7 @@ export default function ProductProofSequence() {
                                 <div className="mt-6 grid gap-5">
                                     <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
                                         <div className="flex items-start justify-between gap-6">
-                                            <div className="max-w-xl">
+                                        <div className="max-w-xl">
                                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Primary Mechanic</p>
                                                 <h3 className="mt-4 text-3xl font-light uppercase leading-[1.02] tracking-[0.08em] text-white">
                                                     Celebrity Aspiration Transfer
@@ -433,49 +503,52 @@ export default function ProductProofSequence() {
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
 
-                                    <div className="grid gap-5 md:grid-cols-[1.05fr_0.95fr]">
-                                        <div className="grid gap-5">
-                                            {dossierEvidence.map((evidence) => (
-                                                <div key={evidence.label} className="rounded-[1.8rem] border border-[#D9CCB4] bg-[#FBFBF6] p-6">
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C1A67B]">{evidence.label}</p>
-                                                    <h3 className="mt-4 text-[1.8rem] font-semibold uppercase leading-[1.02] tracking-tight text-[#141414]">
-                                                        {evidence.title}
-                                                    </h3>
-                                                    <p className="mt-4 text-sm leading-relaxed text-[#5F5B53]">{evidence.note}</p>
-                                                </div>
-                                            ))}
+                        <div className="grid gap-6 lg:grid-cols-[0.78fr_1.22fr]">
+                            <div className="rounded-[2rem] border border-[#D9CCB4] bg-white p-7 shadow-[0_14px_40px_rgba(20,20,20,0.06)]">
+                                <div className="grid gap-5">
+                                    {dossierEvidence.map((evidence) => (
+                                        <div key={evidence.label} className="rounded-[1.8rem] border border-[#D9CCB4] bg-[#FBFBF6] p-6">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C1A67B]">{evidence.label}</p>
+                                            <h3 className="mt-4 text-[1.8rem] font-semibold uppercase leading-[1.02] tracking-tight text-[#141414]">
+                                                {evidence.title}
+                                            </h3>
+                                            <p className="mt-4 text-sm leading-relaxed text-[#5F5B53]">{evidence.note}</p>
                                         </div>
+                                    ))}
+                                </div>
+                            </div>
 
-                                        <div className="grid gap-5">
-                                            <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Trigger Distribution Map</p>
-                                            <div className="mt-6 flex h-[210px] items-center justify-center rounded-[1.3rem] border border-white/6 bg-black/15">
-                                                <div className="relative h-32 w-32">
-                                                    <div className="absolute inset-0 rounded-full border border-[#D4A574]/12" />
-                                                    <div className="absolute inset-[16px] rounded-full border border-[#D4A574]/10" />
-                                                    <div className="absolute inset-[32px] rounded-full border border-[#D4A574]/8" />
-                                                    <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-[#D4A574]/12" />
-                                                    <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-[#D4A574]/12" />
-                                                    <div className="absolute inset-0">
-                                                        <svg viewBox="0 0 120 120" className="h-full w-full">
-                                                            <polygon points="60,14 98,46 84,96 38,90 20,54" fill="rgba(212,165,116,0.22)" stroke="#D4A574" strokeWidth="1.5" />
-                                                        </svg>
-                                                    </div>
+                            <div className="rounded-[2rem] border border-[#D9CCB4] bg-white p-7 shadow-[0_14px_40px_rgba(20,20,20,0.06)]">
+                                <div className="grid gap-5 md:grid-cols-[1.1fr_0.9fr]">
+                                    <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Trigger Distribution Map</p>
+                                        <div className="mt-6 flex h-[220px] items-center justify-center rounded-[1.3rem] border border-white/6 bg-black/15">
+                                            <div className="relative h-36 w-36">
+                                                <div className="absolute inset-0 rounded-full border border-white/15" />
+                                                <div className="absolute inset-[20px] rounded-full border border-white/12" />
+                                                <div className="absolute inset-[40px] rounded-full border border-white/10" />
+                                                <div className="absolute inset-0">
+                                                    <svg viewBox="0 0 120 120" className="h-full w-full">
+                                                        <polygon points="60,16 93,44 84,86 36,94 22,54" fill="rgba(212,165,116,0.22)" stroke="#D4A574" strokeWidth="1.6" />
+                                                    </svg>
                                                 </div>
-                                            </div>
-                                            </div>
-
-                                            <div className="grid gap-5 sm:grid-cols-2">
-                                                {psychologyWidgets.map((widget) => (
-                                                    <div key={widget.label} className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">{widget.label}</p>
-                                                        <p className="mt-5 text-5xl font-light text-[#D4A574]">{widget.value}</p>
-                                                        <p className="mt-4 text-sm leading-relaxed text-white/72">{widget.note}</p>
-                                                    </div>
-                                                ))}
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-1">
+                                        {psychologyWidgets.map((widget) => (
+                                            <div key={widget.label} className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">{widget.label}</p>
+                                                <p className="mt-5 text-5xl font-light text-[#D4A574]">{widget.value}</p>
+                                                <p className="mt-4 text-sm leading-relaxed text-white/72">{widget.note}</p>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>
