@@ -110,7 +110,7 @@ const vaultAssets = [
         title: 'ACNE STUDIOS',
         sector: 'Luxury Fashion / Premium Accessories',
         mechanic: 'Ironic Juxtaposition + Heritage Weaponization',
-        image: '/images/examples/ad_prompted.png',
+        image: '/images/examples/ACNE.png',
     },
     {
         title: 'VERSACE',
