@@ -1,18 +1,81 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-const PLATFORM_LABELS = [
-    'Analyse Ad Asset',
-    'Intelligence Vault',
-    'Intelligence Pulse',
-    'Mechanic Intelligence',
-    'Sovereign Boards',
-    'Agency Settings',
-    'Team & Seats',
-    'Clone Engine',
-    'Blueprint',
-    'Market Pulse',
-    'Embed Widget',
-    'Macro-Diagnostic Map',
+const PLATFORM_SURFACES = [
+    {
+        label: 'Analyse Ad Asset',
+        title: 'Deconstruct any static creative in minutes',
+        what: 'Drop in a JPG, PNG, or WebP and the platform reads the hidden persuasion system inside the ad.',
+        why: 'This is the fastest route from raw creative to a strategic point of view you can actually defend in front of a client.',
+    },
+    {
+        label: 'Intelligence Vault',
+        title: 'A permanent memory layer for every asset',
+        what: 'Every completed dossier is stored, searchable, deduplicated, and ready to be recalled later by brand, sector, mechanic, or tag.',
+        why: 'It stops the platform being a one-off report generator and turns it into long-term agency memory.',
+    },
+    {
+        label: 'Intelligence Pulse',
+        title: 'Compare assets and surface the strategic delta',
+        what: 'Run differential diagnostics between control and proposed assets to reveal persuasion lift, fatigue gaps, and performance direction.',
+        why: 'You stop arguing from taste and start showing why one route should win.',
+    },
+    {
+        label: 'Mechanic Intelligence',
+        title: 'See the market pressure, not just one ad',
+        what: 'Cross-asset intelligence tracks mechanic velocity, trigger pressure, whitespace, and audit trails across the vault.',
+        why: 'It gives agencies a premium planning layer competitors cannot fake with surface-level creative reviews.',
+    },
+    {
+        label: 'Sovereign Boards',
+        title: 'Curate live strategy without rebuilding decks',
+        what: 'Group assets into board-ready collections, export board dossiers, and present a strategic narrative cleanly.',
+        why: 'It makes the jump from analysis to presentation feel immediate instead of laborious.',
+    },
+    {
+        label: 'Agency Settings',
+        title: 'White-label the intelligence layer',
+        what: 'Brand dossier identity, exports, and client-facing presentation surfaces so the system feels like your agency, not ours.',
+        why: 'Premium tools win faster when they slot into the agency’s own operating aesthetic.',
+    },
+    {
+        label: 'Team & Seats',
+        title: 'Operate as a real agency system',
+        what: 'Invite strategists, assign roles, and control who can access intelligence, exports, and operating surfaces.',
+        why: 'It turns a powerful solo tool into something a whole strategy unit can live inside.',
+    },
+    {
+        label: 'Clone Engine',
+        title: 'Generate fresh campaign routes from one mechanic',
+        what: 'Take a persuasion architecture and spin out new campaign concepts, scenes, psychology, and DNA prompts from it.',
+        why: 'It turns forensic insight into a live creative advantage instead of a post-mortem.',
+    },
+    {
+        label: 'Blueprint',
+        title: 'Convert insight into structured tests',
+        what: 'Each asset can generate an iteration plan with hook, chromatic, copy, and visual tests ready for production teams.',
+        why: 'You do not just diagnose what worked. You know what to test next.',
+    },
+    {
+        label: 'Market Pulse',
+        title: 'Benchmark pressure across categories',
+        what: 'Run 30, 60, and 90-day views of mechanic velocity, whitespace, source assets, and category direction.',
+        why: 'It helps agencies pitch from market intelligence, not isolated opinions.',
+    },
+    {
+        label: 'Embed Widget',
+        title: 'Share intelligence cleanly outside the vault',
+        what: 'Turn selected dossier surfaces into a polished external widget without opening the entire workspace.',
+        why: 'It is the cleanest way to circulate proof without creating presentation sprawl.',
+    },
+    {
+        label: 'Macro-Diagnostic Map',
+        title: 'Show the visual logic with instant wow-factor',
+        what: 'Map focal anchors, optical trajectories, and the hierarchy of attention directly onto the creative.',
+        why: 'It makes the invisible system visible in one frame, which is exactly where premium belief starts.',
+    },
 ];
 
 const vaultAssets = [
@@ -139,17 +202,75 @@ const operatingLayers = [
 ];
 
 function PlatformRibbon() {
+    const [activeSurface, setActiveSurface] = useState<(typeof PLATFORM_SURFACES)[number] | null>(null);
+
+    useEffect(() => {
+        if (!activeSurface) return;
+
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setActiveSurface(null);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [activeSurface]);
+
     return (
-        <div className="flex flex-wrap gap-2">
-            {PLATFORM_LABELS.map((label) => (
-                <span
-                    key={label}
-                    className="rounded-full border border-[#D9CCB4] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.24em] text-[#7C745F] shadow-[0_6px_18px_rgba(20,20,20,0.04)]"
+        <>
+            <div className="flex flex-wrap gap-2">
+                {PLATFORM_SURFACES.map((surface) => (
+                    <button
+                        key={surface.label}
+                        type="button"
+                        onClick={() => setActiveSurface(surface)}
+                        className="rounded-full border border-[#D9CCB4] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.24em] text-[#7C745F] shadow-[0_6px_18px_rgba(20,20,20,0.04)] transition-all hover:-translate-y-px hover:border-[#CBB28A] hover:text-[#141414]"
+                    >
+                        {surface.label}
+                    </button>
+                ))}
+            </div>
+
+            {activeSurface && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(20,20,20,0.34)] px-6 py-10 backdrop-blur-sm"
+                    onClick={() => setActiveSurface(null)}
                 >
-                    {label}
-                </span>
-            ))}
-        </div>
+                    <div
+                        className="w-full max-w-3xl rounded-[2.2rem] border border-[#D9CCB4] bg-[#FBFBF6] p-8 shadow-[0_28px_80px_rgba(20,20,20,0.18)] md:p-10"
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        <div className="flex items-start justify-between gap-6 border-b border-[#141414]/8 pb-6">
+                            <div className="space-y-3">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Inside the Platform</p>
+                                <h3 className="max-w-2xl text-3xl font-semibold uppercase leading-[0.96] tracking-tight text-[#141414] md:text-5xl">
+                                    {activeSurface.title}
+                                </h3>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setActiveSurface(null)}
+                                className="rounded-full border border-[#D9CCB4] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#7C745F] transition-colors hover:border-[#CBB28A] hover:text-[#141414]"
+                            >
+                                Close
+                            </button>
+                        </div>
+
+                        <div className="mt-8 grid gap-5 md:grid-cols-2">
+                            <div className="rounded-[1.7rem] border border-[#D9CCB4] bg-white p-6">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C1A67B]">What it is</p>
+                                <p className="mt-4 text-lg leading-relaxed text-[#3F3B34]">{activeSurface.what}</p>
+                            </div>
+                            <div className="rounded-[1.7rem] border border-[#D9CCB4] bg-[#141414] p-6 text-white">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Why you want it</p>
+                                <p className="mt-4 text-lg leading-relaxed text-white/82">{activeSurface.why}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
 
@@ -162,13 +283,13 @@ export default function ProductProofSequence() {
                         <div className="space-y-3">
                             <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Inside the Platform</p>
                             <h2 className="max-w-5xl text-4xl font-semibold uppercase leading-[0.94] tracking-tight text-[#141414] md:text-6xl">
-                                The homepage should show
+                                Premium intelligence,
                                 <br />
-                                <span className="text-[#C1A67B]">the product they are buying.</span>
+                                <span className="text-[#C1A67B]">not abstract promise.</span>
                             </h2>
                         </div>
                         <p className="max-w-4xl text-lg leading-relaxed text-[#5F5B53]">
-                            Visual Decompiler is no longer a concept. It is a premium intelligence system. So the page should pull people through the actual surfaces: dossier, psychology, vault, blueprint, clone, market pulse, and the operating layer around them.
+                            Explore the surfaces that make Visual Decompiler valuable in practice: forensic deconstruction, psychology readouts, vault memory, execution outputs, market intelligence, and the operating layer around them. Click any surface below to see what it does and why agencies keep it close.
                         </p>
                         <PlatformRibbon />
                     </div>
