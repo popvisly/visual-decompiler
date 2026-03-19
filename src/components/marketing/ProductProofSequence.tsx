@@ -251,7 +251,7 @@ function PlatformRibbon() {
                                 key={surface.label}
                                 type="button"
                                 onClick={() => setActiveSurface(surface)}
-                                className="rounded-full border border-[#D9CCB4] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.24em] text-[#7C745F] shadow-[0_6px_18px_rgba(20,20,20,0.04)] transition-all hover:-translate-y-px hover:border-[#CBB28A] hover:text-[#141414]"
+                                className="rounded-full border border-[#D9CCB4] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.24em] text-[#7C745F] shadow-[0_6px_18px_rgba(20,20,20,0.04)] transition-all duration-200 hover:-translate-y-px hover:border-[#CBB28A] hover:bg-[#F5E8D1] hover:text-[#141414]"
                             >
                                 {surface.label}
                             </button>
