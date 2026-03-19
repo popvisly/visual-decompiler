@@ -55,6 +55,19 @@ const psychologyWidgets = [
     },
 ];
 
+const dossierEvidence = [
+    {
+        label: 'Evidence Anchors',
+        title: 'Bottle scale, red boucle, intimate gaze',
+        note: 'The product is elevated to icon status while the subject remains its aspirational delivery system.',
+    },
+    {
+        label: 'Semiotic Subtext',
+        title: 'Heritage coded as warmth and ritual status',
+        note: 'House-code signals read as permanence rather than trend, pushing authority below the threshold of overt claims.',
+    },
+];
+
 const blueprintCells = [
     {
         label: 'Visual Test',
@@ -160,7 +173,7 @@ export default function ProductProofSequence() {
                         <PlatformRibbon />
                     </div>
 
-                    <section className="grid gap-10 border-b border-[#141414]/8 pb-20 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
+                    <section className="grid gap-10 border-b border-[#141414]/8 pb-20 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
                         <div className="space-y-6">
                             <div className="space-y-3">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Single-Asset Deconstruction</p>
@@ -171,29 +184,8 @@ export default function ProductProofSequence() {
                                 </h2>
                             </div>
                             <p className="max-w-xl text-lg leading-relaxed text-[#5F5B53]">
-                                Start with a real asset. Show the Chanel dossier exactly the way it earns belief inside the product: image, mechanic, confidence, evidence anchors, and psychology widgets already in motion.
+                                Start with the surfaces that create belief inside the product: mechanic readout, confidence, psychology pressure, macro-diagnostic signals, and evidence anchors already in motion. The point is not abstract AI commentary. It is a forensic strategic readout.
                             </p>
-
-                            <div className="overflow-hidden rounded-[2rem] border border-[#D9CCB4] bg-[#FBFBF6] shadow-[0_24px_60px_rgba(20,20,20,0.10)]">
-                                <div className="flex items-center justify-between border-b border-[#141414]/8 px-6 py-5">
-                                    <div>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C1A67B]">Intelligence Dossier</p>
-                                        <p className="mt-2 text-2xl font-light tracking-tight text-[#141414]">CHANEL</p>
-                                    </div>
-                                    <p className="text-[11px] uppercase tracking-[0.18em] text-[#8A806D]">Luxury Fragrance</p>
-                                </div>
-                                <div className="p-5">
-                                    <div className="overflow-hidden rounded-[1.5rem] border border-[#D9CCB4] bg-[#141414] p-3">
-                                        <Image
-                                            src="/images/examples/perfume_ad_no_logo.jpg"
-                                            alt="Chanel dossier asset preview"
-                                            width={1080}
-                                            height={1350}
-                                            className="aspect-[4/5] w-full rounded-[1.2rem] object-cover"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <div className="space-y-6">
@@ -225,20 +217,76 @@ export default function ProductProofSequence() {
                                         </div>
                                     </div>
 
-                                    <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] px-6 py-5 text-white">
-                                        <div className="flex items-center justify-between gap-4">
-                                            <div>
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Macro-Diagnostic Map</p>
-                                                <p className="mt-2 text-sm text-white/65">Visualize optical trajectories and focal anchors.</p>
+                                    <div className="grid gap-5 md:grid-cols-[0.95fr_1.05fr]">
+                                        <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] px-6 py-5 text-white">
+                                            <div className="flex items-center justify-between gap-4">
+                                                <div>
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Macro-Diagnostic Map</p>
+                                                    <p className="mt-2 text-sm text-white/65">Visualize optical trajectories and focal anchors.</p>
+                                                </div>
+                                                <span className="rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#141414]">
+                                                    Radiant Architecture
+                                                </span>
                                             </div>
-                                            <span className="rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#141414]">
-                                                Radiant Architecture
-                                            </span>
+                                            <div className="mt-6 grid h-[180px] grid-cols-6 gap-2 rounded-[1.4rem] border border-white/6 bg-black/15 p-4">
+                                                <div className="col-span-2 rounded-[1.1rem] border border-[#D4A574]/14 bg-white/[0.03] p-4">
+                                                    <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Focus Path</p>
+                                                    <div className="mt-5 space-y-4">
+                                                        <div className="h-2 w-10 rounded-full bg-[#D4A574]" />
+                                                        <div className="h-2 w-16 rounded-full bg-[#D4A574]/70" />
+                                                        <div className="h-2 w-8 rounded-full bg-[#D4A574]/55" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-span-4 rounded-[1.1rem] border border-[#D4A574]/14 bg-white/[0.03] p-4">
+                                                    <div className="relative h-full overflow-hidden rounded-[0.9rem]">
+                                                        <div className="absolute left-[18%] top-[12%] h-[60%] w-px bg-[#D4A574]/38" />
+                                                        <div className="absolute left-[18%] top-[12%] h-3 w-3 -translate-x-1/2 rounded-full border border-[#D4A574] bg-white" />
+                                                        <div className="absolute left-[48%] top-[38%] h-3 w-3 -translate-x-1/2 rounded-full border border-[#D4A574] bg-white" />
+                                                        <div className="absolute left-[42%] top-[64%] h-3 w-3 -translate-x-1/2 rounded-full border border-[#D4A574] bg-white" />
+                                                        <div className="absolute left-[18%] top-[12%] h-px w-[30%] bg-[#D4A574]/38" />
+                                                        <div className="absolute left-[18%] top-[64%] h-px w-[24%] bg-[#D4A574]/38" />
+                                                        <div className="absolute left-[48%] top-[38%] h-px w-[24%] bg-[#D4A574]/38" />
+                                                        <div className="absolute right-[12%] top-[22%] h-2 w-2 rounded-full bg-white/80" />
+                                                        <div className="absolute right-[9%] top-[49%] h-2 w-2 rounded-full bg-white/60" />
+                                                        <div className="absolute left-[6%] top-[49%] h-2 w-2 rounded-full bg-white/55" />
+                                                        <div className="absolute bottom-[10%] left-[50%] h-10 w-10 -translate-x-1/2 rounded-full border border-[#D4A574]/18" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid gap-5">
+                                            <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Semiotic Subtext</p>
+                                                <p className="mt-4 text-sm leading-relaxed text-white/72">
+                                                    Heritage authority, chromatic desire, and product monumentality are running as one compressed system rather than as separate visual signals.
+                                                </p>
+                                            </div>
+
+                                            <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Strategic Posture</p>
+                                                <p className="mt-5 text-sm leading-relaxed text-white/72">
+                                                    Icon maintenance. The brand is not disrupting the category; it is asserting the permanence of an already-won cultural throne.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className="grid gap-5 md:grid-cols-2">
-                                        <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
+                                    <div className="grid gap-5 md:grid-cols-[1.05fr_0.95fr]">
+                                        <div className="grid gap-5">
+                                            {dossierEvidence.map((evidence) => (
+                                                <div key={evidence.label} className="rounded-[1.8rem] border border-[#D9CCB4] bg-[#FBFBF6] p-6">
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C1A67B]">{evidence.label}</p>
+                                                    <h3 className="mt-4 text-[1.8rem] font-semibold uppercase leading-[1.02] tracking-tight text-[#141414]">
+                                                        {evidence.title}
+                                                    </h3>
+                                                    <p className="mt-4 text-sm leading-relaxed text-[#5F5B53]">{evidence.note}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <div className="grid gap-5">
+                                            <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
                                             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Trigger Distribution Map</p>
                                             <div className="mt-6 flex h-[210px] items-center justify-center rounded-[1.3rem] border border-white/6 bg-black/15">
                                                 <div className="relative h-32 w-32">
@@ -254,14 +302,6 @@ export default function ProductProofSequence() {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div className="grid gap-5">
-                                            <div className="rounded-[1.8rem] border border-[#D4A574]/18 bg-[#141414] p-6 text-white">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Strategic Posture</p>
-                                                <p className="mt-5 text-sm leading-relaxed text-white/72">
-                                                    Icon maintenance. The brand is not disrupting the category; it is asserting the permanence of an already-won cultural throne.
-                                                </p>
                                             </div>
 
                                             <div className="grid gap-5 sm:grid-cols-2">
