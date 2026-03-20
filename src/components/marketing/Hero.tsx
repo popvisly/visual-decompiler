@@ -9,9 +9,10 @@ type Props = {
     subhead: string;
     ctaPrimary?: LinkCta;
     ctaSecondary?: LinkCta;
+    microproof?: string;
 };
 
-export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary }: Props) {
+export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, microproof }: Props) {
     return (
         <section className="relative flex min-h-[70vh] flex-col justify-center overflow-hidden bg-[#FBFBF6] pb-8 pt-32 text-[#141414] md:min-h-[76vh] md:pb-10 md:pt-40">
 
@@ -88,6 +89,17 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary }: Pr
                             </a>
                         )}
                     </motion.div>
+                )}
+
+                {microproof && (
+                    <motion.p
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
+                        className="mb-2 text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]"
+                    >
+                        {microproof}
+                    </motion.p>
                 )}
 
                 {/* Neural Intelligence Hero */}

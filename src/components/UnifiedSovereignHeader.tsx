@@ -7,13 +7,24 @@ import { Menu, X } from 'lucide-react';
 import Logo from '@/components/Logo';
 import { supabaseClient } from '@/lib/supabase-client';
 
+type HeaderCta = {
+    href: string;
+    label: string;
+};
+
 function isActive(pathname: string, href: string): boolean {
     if (href === '/vault') return pathname === '/vault';
     if (href.startsWith('/#')) return pathname === '/';
     return pathname.startsWith(href);
 }
 
-export default function UnifiedSovereignHeader({ forceDark = false }: { forceDark?: boolean } = {}) {
+export default function UnifiedSovereignHeader({
+    forceDark = false,
+    primaryCta,
+}: {
+    forceDark?: boolean;
+    primaryCta?: HeaderCta;
+} = {}) {
     const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -116,7 +127,25 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
                     {/* ── Right: Utility Bar ── */}
                     <div className="flex items-center justify-end flex-1 gap-4">
                         <div className="hidden md:block">
-                            {isAuthenticated === null ? (
+                            {primaryCta ? (
+                                <div className="flex items-center justify-end gap-3">
+                                    <Link
+                                        href={primaryCta.href}
+                                        className={`
+                                            inline-flex items-center justify-center
+                                            rounded-none border px-6 py-2.5
+                                            text-[10px] font-bold tracking-[0.2em] uppercase
+                                            transition-all duration-300 whitespace-nowrap
+                                            ${forceDark
+                                                ? 'bg-transparent text-white border-white/60 hover:border-white hover:bg-white/10'
+                                                : 'bg-transparent text-black border-black/40 hover:border-black hover:bg-black/5'
+                                            }
+                                        `}
+                                    >
+                                        {`[ ${primaryCta.label} ]`}
+                                    </Link>
+                                </div>
+                            ) : isAuthenticated === null ? (
                                 <div
                                     className={`
                                         h-10 w-[132px] rounded-none border
@@ -199,7 +228,15 @@ export default function UnifiedSovereignHeader({ forceDark = false }: { forceDar
 
                         {/* Mobile Direct Access */}
                         <div className="pt-4 mt-2 border-t border-neutral-800">
-                            {isAuthenticated ? (
+                            {primaryCta ? (
+                                <Link
+                                    href={primaryCta.href}
+                                    onClick={() => setMobileOpen(false)}
+                                    className="block text-center w-full px-4 py-3 border border-white bg-white text-black text-[11px] font-bold uppercase tracking-widest hover:bg-neutral-200 transition-colors"
+                                >
+                                    {`[ ${primaryCta.label} ]`}
+                                </Link>
+                            ) : isAuthenticated ? (
                                 <Link
                                     href="/ingest"
                                     onClick={() => setMobileOpen(false)}

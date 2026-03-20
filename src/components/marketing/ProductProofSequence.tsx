@@ -1,156 +1,156 @@
-type ProofRow = {
+type ProofPoint = {
     label: string;
-    value: string;
-    detail: string;
+    body: string;
 };
 
 type FunnelSection = {
     id: string;
     label: string;
     title: string;
-    accent: string;
     body: string;
-    panelLabel: string;
     tone: 'light' | 'dark';
-    rows: ProofRow[];
+    points: ProofPoint[];
+};
+
+type Stat = {
+    label: string;
+    value: string;
+    detail: string;
 };
 
 const PROOF_STRIP = [
-    'Observer tier includes 5 free analyses',
     '5 intelligence surfaces per dossier',
-    'Vault-backed recall',
-    'White-label dossier export',
+    'Dossiers generated in under 60 seconds',
+    'Vault-backed strategic recall',
     'Built for agency teams',
+];
+
+const STATS: Stat[] = [
+    {
+        value: '5',
+        label: 'Intelligence surfaces',
+        detail: 'per analysis',
+    },
+    {
+        value: '<60s',
+        label: 'Typical dossier',
+        detail: 'generation time',
+    },
+    {
+        value: '100%',
+        label: 'White-label export',
+        detail: 'ready',
+    },
+    {
+        value: '∞',
+        label: 'Compounding strategic memory',
+        detail: 'in Vault',
+    },
 ];
 
 const FUNNEL_SECTIONS: FunnelSection[] = [
     {
         id: 'deconstruction',
         label: 'Single-Asset Deconstruction',
-        title: 'Open the dossier.',
-        accent: 'See the system.',
-        body: 'Start with the actual dossier experience. The asset stays visible, the mechanic reads instantly, and the confidence, map logic, and strategic posture tell you why the ad is working before you ever get to export, clone, or market benchmarking.',
-        panelLabel: 'Live dossier surface',
+        title: 'Open one ad. See exactly why it works.',
+        body: 'Start with one competitor asset and get a complete strategic read: dominant mechanic, confidence score, trigger distribution, friction profile, and action-ready interpretation.',
         tone: 'dark',
-        rows: [
+        points: [
             {
                 label: 'Primary Mechanic',
-                value: 'Celebrity Aspirational Transfer',
-                detail: 'Read the dominant persuasion system before you ever export, clone, or benchmark the asset.',
+                body: 'Identify the winning persuasion system instantly',
             },
             {
-                label: 'Confidence',
-                value: '99% signal certainty',
-                detail: 'The winning logic is scored, not implied, so the readout feels defensible in a room.',
+                label: 'Confidence Layer',
+                body: 'Scored readout you can defend in client rooms',
             },
             {
-                label: 'Psychology',
-                value: 'Trigger distribution, density, and friction',
-                detail: 'Surface the pressure pattern under the creative instead of relying on taste-based interpretation.',
+                label: 'Psychology Map',
+                body: 'Trigger density and friction surfaced clearly',
             },
         ],
     },
     {
         id: 'vault',
         label: 'Intelligence Vault',
-        title: 'Build a memory.',
-        accent: 'Not a one-off report.',
-        body: 'The vault is where the product stops being a clever demo and becomes strategic infrastructure. Searchable assets, deduplicated memory, tags, boards, and future benchmark depth all start here.',
-        panelLabel: 'Indexed memory layer',
+        title: 'Build strategic memory, not one-off reports.',
+        body: 'Every dossier compounds future value inside Vault: searchable assets, deduplicated analyses, shared tags/boards, and stronger benchmarking with every ingest.',
         tone: 'light',
-        rows: [
+        points: [
             {
-                label: 'Search',
-                value: 'Brand, sector, mechanic, or tag',
-                detail: 'Every finished dossier stays searchable instead of disappearing into screenshots and folders.',
+                label: 'Searchable Recall',
+                body: 'Find assets by brand, category, mechanic, or tag',
             },
             {
                 label: 'Deduplication',
-                value: 'Exact assets are remembered before you burn credits twice',
-                detail: 'The system protects agency memory instead of asking the team to remember what was already analysed.',
+                body: 'Avoid re-analysing the same asset twice',
             },
             {
                 label: 'Benchmark Depth',
-                value: 'Future comparisons get sharper over time',
-                detail: 'Each extraction compounds the strategic value of the vault instead of resetting back to zero.',
+                body: 'Comparative intelligence gets sharper over time',
             },
         ],
     },
     {
         id: 'execution',
         label: 'Execution Outputs',
-        title: 'Turn analysis',
-        accent: 'into execution.',
-        body: 'This is where the subscription becomes hard to walk away from. The platform does not stop at analysis. It opens clone routes, produces boardroom-ready dossier output, creates an embeddable intelligence panel, and gives strategy teams something they can actually ship.',
-        panelLabel: 'Execution surfaces',
+        title: 'Turn analysis into client-ready execution.',
+        body: 'Visual Decompiler doesn’t stop at diagnosis. Convert dossier intelligence into deployable outputs your team can pitch, build from, and ship.',
         tone: 'dark',
-        rows: [
+        points: [
+            {
+                label: 'Blueprint Output',
+                body: 'Structural pattern and strategic route extracted',
+            },
             {
                 label: 'Clone Engine',
-                value: 'Fresh campaign routes from one winning mechanic',
-                detail: 'Open new deployable directions without losing the persuasion architecture that made the reference work.',
+                body: 'Generate fresh directions from winning mechanics',
             },
             {
-                label: 'Dossier Export',
-                value: 'White-label strategic output ready for boardrooms',
-                detail: 'Turn the intelligence into something an agency can present, circulate, and defend immediately.',
-            },
-            {
-                label: 'Embed Widget',
-                value: 'Drop live intelligence into decks, Notion, or client portals',
-                detail: 'Move the system into the workflow instead of forcing strategy teams to rebuild it by hand.',
+                label: 'White-Label Export',
+                body: 'Boardroom-ready strategic artifact in minutes',
             },
         ],
     },
     {
         id: 'intelligence',
         label: 'Mechanic Intelligence',
-        title: 'See the market,',
-        accent: 'not just the ad.',
-        body: 'Cross-asset intelligence is where the premium layer becomes obvious. Market Pulse shows mechanic velocity, whitespace, audit trails, and comparative pressure across the vault. Differential Diagnostic shows lift, fatigue, and strategic delta between assets.',
-        panelLabel: 'Cross-asset intelligence',
+        title: 'See category patterns, not just single ads.',
+        body: 'Market Pulse reveals mechanic velocity, saturation, whitespace, and strategic deltas across assets — so decisions are based on market structure, not isolated examples.',
         tone: 'light',
-        rows: [
+        points: [
             {
-                label: 'Market Pulse',
-                value: 'Velocity, whitespace, and audit trails across the vault',
-                detail: 'See which mechanics are still dominant, which are flattening, and where the opportunity is opening up.',
+                label: 'Velocity Tracking',
+                body: 'See which mechanics are rising or flattening',
+            },
+            {
+                label: 'Whitespace Detection',
+                body: 'Spot underexploited strategic positions',
             },
             {
                 label: 'Differential Diagnostic',
-                value: 'Lift, fatigue, and strategic delta between assets',
-                detail: 'Compare two dossiers directly when the real decision is relative strength, not isolated opinion.',
-            },
-            {
-                label: 'Premium Layer',
-                value: 'The platform stops being a report and becomes intelligence',
-                detail: 'This is where the product becomes hard to copy, because it starts surfacing market structure rather than single-ad commentary.',
+                body: 'Compare assets by lift, fatigue, and delta',
             },
         ],
     },
     {
         id: 'operating',
         label: 'Agency Operating Layer',
-        title: 'Run it like',
-        accent: 'an agency system.',
-        body: 'Once the intelligence is working, the rest has to feel inevitable. Boards, embeds, white-labeled export, settings, and team seats are what turn forensic analysis into an operating system clients and strategists can actually live inside.',
-        panelLabel: 'Agency operating layer',
+        title: 'Run intelligence like an agency system.',
+        body: 'Boards, team seats, settings, and export controls turn forensic analysis into a repeatable operating layer across strategy, creative, and leadership.',
         tone: 'light',
-        rows: [
+        points: [
             {
                 label: 'Boards',
-                value: 'Shared strategic workspaces, not floating references',
-                detail: 'Turn promising findings into durable boards that can be reused across pitches, categories, and internal planning.',
+                body: 'Shared strategic workspaces for ongoing programs',
             },
             {
                 label: 'Agency Settings',
-                value: 'White-label identity, export controls, and dossier standards',
-                detail: 'Make the system feel native to the agency rather than borrowed from a generic SaaS product.',
+                body: 'White-label identity and output standards',
             },
             {
                 label: 'Team & Seats',
-                value: 'Analysts, strategists, and founders inside one operating layer',
-                detail: 'The value increases when the whole team can work in the same intelligence system instead of passing PDFs around.',
+                body: 'Analysts and strategists in one coordinated system',
             },
         ],
     },
@@ -159,13 +159,42 @@ const FUNNEL_SECTIONS: FunnelSection[] = [
 function ProofStrip() {
     return (
         <section className="border-y border-[#DED5C5] bg-[#F3ECE1]/70">
-            <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-3 px-6 py-5">
+            <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-3 px-6 py-5 md:flex-nowrap">
                 {PROOF_STRIP.map((item, index) => (
                     <div key={item} className="flex min-w-0 items-center gap-6">
                         <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#7B7266]">
                             {item}
                         </span>
-                        {index < PROOF_STRIP.length - 1 && <span className="hidden h-4 w-px bg-[#D3C7B4] lg:block" />}
+                        {index < PROOF_STRIP.length - 1 && <span className="hidden h-4 w-px bg-[#D3C7B4] md:block" />}
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
+}
+
+function StatsBar() {
+    return (
+        <section className="border-b border-[#DED5C5] bg-[#FBFBF6]">
+            <div className="mx-auto grid max-w-7xl border-x border-[#E5DCCD]/70 md:grid-cols-2 xl:grid-cols-4">
+                {STATS.map((stat, index) => (
+                    <div
+                        key={stat.label}
+                        className={`px-6 py-8 md:px-8 md:py-10 ${
+                            index < STATS.length - 1 ? 'border-b border-[#E5DCCD]/70 xl:border-b-0 xl:border-r' : ''
+                        } ${index === STATS.length - 1 ? '' : 'md:border-r-0'} ${
+                            index < 2 ? 'md:border-r md:border-[#E5DCCD]/70 xl:border-r' : ''
+                        }`}
+                    >
+                        <p className="text-[46px] font-semibold leading-none tracking-[-0.05em] text-[#141414] md:text-[56px]">
+                            {stat.value}
+                        </p>
+                        <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
+                            {stat.label}
+                        </p>
+                        <p className="mt-1 text-sm text-[#5F5B53]">
+                            {stat.detail}
+                        </p>
                     </div>
                 ))}
             </div>
@@ -175,12 +204,10 @@ function ProofStrip() {
 
 function FunnelPanel({
     tone,
-    panelLabel,
-    rows,
+    points,
 }: {
     tone: FunnelSection['tone'];
-    panelLabel: string;
-    rows: ProofRow[];
+    points: ProofPoint[];
 }) {
     const isDark = tone === 'dark';
 
@@ -192,45 +219,30 @@ function FunnelPanel({
                     : 'border-[#D8CCB5] bg-[#FBFAF7] text-[#171614]'
             }`}
         >
-            <p
-                className={`text-[10px] font-bold uppercase tracking-[0.34em] ${
-                    isDark ? 'text-[#D4A574]' : 'text-[#C1A67B]'
-                }`}
-            >
-                {panelLabel}
-            </p>
-
-            <div className="mt-6 divide-y divide-[#D9D0C2]/12">
-                {rows.map((row, index) => (
+            <div className="space-y-6">
+                {points.map((point, index) => (
                     <div
-                        key={row.label}
-                        className={`grid gap-3 py-5 ${
-                            index === 0 ? 'pt-0' : ''
-                        } md:grid-cols-[170px_minmax(0,1fr)]`}
+                        key={point.label}
+                        className={`rounded-[24px] border px-5 py-5 ${
+                            isDark
+                                ? 'border-[#3A352D] bg-[#1D1B18]'
+                                : 'border-[#E3D7C3] bg-[#F8F4EC]'
+                        }`}
                     >
                         <p
                             className={`text-[10px] font-bold uppercase tracking-[0.28em] ${
                                 isDark ? 'text-[#D4A574]' : 'text-[#8F7D63]'
                             }`}
                         >
-                            {row.label}
+                            {point.label}
                         </p>
-                        <div>
-                            <p
-                                className={`text-[24px] leading-[1.08] tracking-tight md:text-[30px] ${
-                                    isDark ? 'text-[#F7F1E6]' : 'text-[#171614]'
-                                }`}
-                            >
-                                {row.value}
-                            </p>
-                            <p
-                                className={`mt-3 text-[16px] leading-8 ${
-                                    isDark ? 'text-[#E3DDD1]/82' : 'text-[#615C54]'
-                                }`}
-                            >
-                                {row.detail}
-                            </p>
-                        </div>
+                        <p
+                            className={`mt-4 text-[22px] leading-[1.18] tracking-tight md:text-[28px] ${
+                                isDark ? 'text-[#F7F1E6]' : 'text-[#171614]'
+                            }`}
+                        >
+                            {point.body}
+                        </p>
                     </div>
                 ))}
             </div>
@@ -251,15 +263,13 @@ function FunnelSectionView({ section }: { section: FunnelSection }) {
                     </p>
                     <h2 className="max-w-4xl text-4xl font-semibold uppercase leading-[0.94] tracking-tight text-[#141414] md:text-6xl">
                         {section.title}
-                        <br />
-                        <span className="text-[#C1A67B]">{section.accent}</span>
                     </h2>
                     <p className="max-w-3xl text-lg leading-relaxed text-[#5F5B53]">
                         {section.body}
                     </p>
                 </div>
 
-                <FunnelPanel tone={section.tone} panelLabel={section.panelLabel} rows={section.rows} />
+                <FunnelPanel tone={section.tone} points={section.points} />
             </div>
         </section>
     );
@@ -269,28 +279,13 @@ export default function ProductProofSequence() {
     return (
         <div id="funnel" className="bg-[#FBFBF6]">
             <ProofStrip />
+            <StatsBar />
 
             <section className="px-6 py-16 md:py-24">
-                <div className="mx-auto max-w-7xl">
-                    <div className="mb-12 md:mb-16">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.36em] text-[#C1A67B]">
-                            Inside the platform
-                        </p>
-                        <h2 className="mt-5 max-w-5xl text-4xl font-semibold uppercase leading-[0.94] tracking-tight text-[#141414] md:text-6xl">
-                            A premium intelligence system.
-                            <br />
-                            <span className="text-[#C1A67B]">Not another swipe file.</span>
-                        </h2>
-                        <p className="mt-6 max-w-4xl text-lg leading-relaxed text-[#5F5B53]">
-                            Visual Decompiler starts with one ad, then opens into vault memory, execution outputs, market intelligence, and an agency operating layer. The sections below show the real surfaces teams subscribe for when the work needs to become durable.
-                        </p>
-                    </div>
-
-                    <div className="space-y-0">
-                        {FUNNEL_SECTIONS.map((section) => (
-                            <FunnelSectionView key={section.id} section={section} />
-                        ))}
-                    </div>
+                <div className="mx-auto max-w-7xl space-y-0">
+                    {FUNNEL_SECTIONS.map((section) => (
+                        <FunnelSectionView key={section.id} section={section} />
+                    ))}
                 </div>
             </section>
         </div>

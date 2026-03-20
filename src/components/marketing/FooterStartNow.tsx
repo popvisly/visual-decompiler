@@ -23,12 +23,12 @@ export default function FooterStartNow() {
                                 viewport={{ once: true }}
                                 className="mb-4 text-4xl font-semibold uppercase leading-[0.95] tracking-tighter text-[#141414] md:text-6xl"
                             >
-                                Five free analyses.
+                                Start free.
                                 <br />
-                                <span className="text-[#C1A67B]">Enough to see the system.</span>
+                                <span className="text-[#C1A67B]">See real output in minutes.</span>
                             </motion.h2>
                             <p className="mx-auto max-w-xl text-base leading-relaxed text-[#5E5A53] md:text-lg lg:mx-0">
-                                Upload a competitor ad, receive a full strategic dossier, and decide from the actual output instead of a sales demo. No card required to start.
+                                Upload a competitor ad and get your first client-ready dossier. No card required.
                             </p>
                         </div>
 
@@ -44,9 +44,36 @@ export default function FooterStartNow() {
                                 <ArrowUpRight className="w-5 h-5" />
                             </motion.a>
                             <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
-                                5 free analyses • no card • upgrade when the vault starts compounding
+                                Observer tier • 5 free analyses • no card required
                             </p>
                         </div>
+                    </div>
+                </div>
+
+                <div className="mb-8 grid gap-4 md:grid-cols-3">
+                    <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6">
+                        <p className="text-lg font-semibold leading-snug text-[#141414]">
+                            Is this just another AI writer?
+                        </p>
+                        <p className="mt-3 text-[15px] leading-7 text-[#5E5A53]">
+                            No. Visual Decompiler analyses existing ads and returns structured strategic intelligence.
+                        </p>
+                    </div>
+                    <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6">
+                        <p className="text-lg font-semibold leading-snug text-[#141414]">
+                            How is this different from ad libraries?
+                        </p>
+                        <p className="mt-3 text-[15px] leading-7 text-[#5E5A53]">
+                            Libraries show what exists; Visual Decompiler explains why it works and how to act on it.
+                        </p>
+                    </div>
+                    <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6">
+                        <p className="text-lg font-semibold leading-snug text-[#141414]">
+                            Will my team actually use this?
+                        </p>
+                        <p className="mt-3 text-[15px] leading-7 text-[#5E5A53]">
+                            Yes — built for team workflows: boards, vault memory, white-label export, and shared seats.
+                        </p>
                     </div>
                 </div>
 
