@@ -5,26 +5,30 @@ import { ArrowUpRight } from 'lucide-react';
 
 export default function FooterStartNow() {
     return (
-        <footer className="bg-[#141414] px-6 pb-8 pt-16 md:pt-20 border-t border-white/5">
+        <footer className="border-t border-[#E2D8C8] bg-[#FBFBF6] px-6 pb-8 pt-16 md:pt-20">
             <div className="max-w-7xl mx-auto">
 
                 {/* Main CTA Section */}
-                <div className="bg-[#1C1C1A] rounded-[2rem] md:rounded-[3rem] px-8 py-12 md:p-16 relative overflow-hidden border border-white/8 mb-8">
+                <div className="relative mb-8 overflow-hidden rounded-[2rem] border border-[#D8CCB5] bg-[radial-gradient(circle_at_top,rgba(212,165,116,0.12),transparent_42%),#FBFBF6] px-8 py-12 md:rounded-[3rem] md:p-16">
                     <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
 
                         {/* Left: Headline */}
                         <div className="flex-1 text-center lg:text-left">
+                            <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
+                                Observer Tier
+                            </p>
                             <motion.h2
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className="text-4xl md:text-6xl font-semibold leading-[0.95] tracking-tighter uppercase mb-4 text-[#FBF7EF]"
+                                className="mb-4 text-4xl font-semibold uppercase leading-[0.95] tracking-tighter text-[#141414] md:text-6xl"
                             >
-                                Ready to decode<br />
-                                <span className="text-[#C1A67B]">your competition?</span>
+                                Five free analyses.
+                                <br />
+                                <span className="text-[#C1A67B]">Enough to see the system.</span>
                             </motion.h2>
-                            <p className="text-base md:text-lg text-[#FBF7EF]/45 max-w-md mx-auto lg:mx-0 leading-relaxed">
-                                Upload your first ad. Get a complete forensic extraction with trigger mechanics, semiotics, and a DNA prompt in under 3 minutes. Free to start.
+                            <p className="mx-auto max-w-xl text-base leading-relaxed text-[#5E5A53] md:text-lg lg:mx-0">
+                                Upload a competitor ad, receive a full strategic dossier, and decide from the actual output instead of a sales demo. No card required to start.
                             </p>
                         </div>
 
@@ -34,42 +38,42 @@ export default function FooterStartNow() {
                                 href="/ingest"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className="inline-flex items-center gap-3 bg-[#C1A67B] text-[#141414] px-10 py-5 rounded-full text-lg font-semibold shadow-xl hover:bg-[#D4B88A] transition-colors"
+                                className="inline-flex items-center gap-3 rounded-full bg-[#141414] px-10 py-5 text-lg font-semibold text-[#FBF7EF] shadow-[0_18px_36px_rgba(20,20,20,0.14)] transition-colors hover:bg-black"
                             >
-                                Start Now
+                                Start Decompiling Free
                                 <ArrowUpRight className="w-5 h-5" />
                             </motion.a>
+                            <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
+                                5 free analyses • no card • upgrade when the vault starts compounding
+                            </p>
                         </div>
                     </div>
-
-                    {/* Gold glow */}
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#C1A67B] opacity-[0.06] blur-[120px] rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none" />
                 </div>
 
                 {/* Footer Links Bar */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6 px-4 py-6 border-t border-white/5">
+                <div className="flex flex-col items-center justify-between gap-6 border-t border-[#E2D8C8] px-4 py-6 md:flex-row">
 
                     {/* Branding */}
                     <div className="flex items-center gap-3">
-                        <div className="w-7 h-7 bg-[#C1A67B] flex items-center justify-center rounded-lg text-[#141414] font-bold text-sm">V</div>
+                        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#141414] text-sm font-bold text-[#FBF7EF]">V</div>
                         <div className="flex flex-col">
-                            <span className="text-sm font-bold tracking-tight leading-none uppercase text-[#FBF7EF]">VisualDecompiler</span>
-                            <span className="text-[9px] font-semibold tracking-[0.2em] uppercase text-[#FBF7EF]/30">Advertising Intelligence</span>
+                            <span className="text-sm font-bold leading-none tracking-tight uppercase text-[#141414]">VisualDecompiler</span>
+                            <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#8A7B64]">Advertising Intelligence</span>
                         </div>
                     </div>
 
                     {/* Links */}
-                    <div className="flex flex-wrap justify-center gap-6 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#FBF7EF]/35">
-                        <a href="/pricing" className="hover:text-[#C1A67B] transition-colors">Pricing</a>
-                        <a href="/vault" className="hover:text-[#C1A67B] transition-colors">Vault</a>
-                        <a href="/docs/user-guide" className="hover:text-[#C1A67B] transition-colors">Help Center</a>
-                        <a href="/login" className="hover:text-[#C1A67B] transition-colors">Login</a>
+                    <div className="flex flex-wrap justify-center gap-6 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#8A7B64]">
+                        <a href="/pricing" className="transition-colors hover:text-[#141414]">Pricing</a>
+                        <a href="/vault" className="transition-colors hover:text-[#141414]">Vault</a>
+                        <a href="/docs/user-guide" className="transition-colors hover:text-[#141414]">Help Center</a>
+                        <a href="/login" className="transition-colors hover:text-[#141414]">Login</a>
                     </div>
 
                     {/* Legal */}
-                    <div className="flex gap-6 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#FBF7EF]/20">
-                        <a href="#" className="hover:text-[#FBF7EF]/50 transition-colors">Terms</a>
-                        <a href="#" className="hover:text-[#FBF7EF]/50 transition-colors">Privacy</a>
+                    <div className="flex gap-6 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#9A9082]">
+                        <a href="#" className="transition-colors hover:text-[#141414]">Terms</a>
+                        <a href="#" className="transition-colors hover:text-[#141414]">Privacy</a>
                         <span>© 2026</span>
                     </div>
                 </div>
