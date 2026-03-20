@@ -5,14 +5,15 @@ import { LinkCta } from '@/types/homepage';
 import NeuralParticleHero from '@/components/marketing/NeuralParticleHero';
 
 type Props = {
-    headline: string[];
+    headline: string;
+    headlineHighlight?: string;
     subhead: string;
     ctaPrimary?: LinkCta;
     ctaSecondary?: LinkCta;
     microproof?: string;
 };
 
-export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, microproof }: Props) {
+export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary, ctaSecondary, microproof }: Props) {
     return (
         <section className="relative flex min-h-[70vh] flex-col justify-center overflow-hidden bg-[#FBFBF6] pb-8 pt-32 text-[#141414] md:min-h-[76vh] md:pb-10 md:pt-40">
 
@@ -37,8 +38,14 @@ export default function Hero({ headline, subhead, ctaPrimary, ctaSecondary, micr
                     transition={{ duration: 0.8, ease: 'easeOut' }}
                     className="mb-6 text-4xl font-semibold uppercase leading-[0.92] tracking-tighter text-[#141414] md:text-7xl"
                 >
-                    {headline[0]}<br />
-                    <span className="text-[#C1A67B]">{headline[1]}</span>
+                    {headlineHighlight ? (
+                        <>
+                            {headline}<br />
+                            <span className="text-[#C1A67B]">{headlineHighlight}</span>
+                        </>
+                    ) : (
+                        headline
+                    )}
                 </motion.h1>
 
                 {/* Subhead */}

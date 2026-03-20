@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 
+const FINAL_CTA_HEADLINE = 'Start free. See real output in minutes.';
+
 export default function FooterStartNow() {
     return (
         <footer className="border-t border-[#E2D8C8] bg-[#FBFBF6] px-6 pb-8 pt-16 md:pt-20">
@@ -23,9 +25,7 @@ export default function FooterStartNow() {
                                 viewport={{ once: true }}
                                 className="mb-4 text-4xl font-semibold uppercase leading-[0.95] tracking-tighter text-[#141414] md:text-6xl"
                             >
-                                Start free.
-                                <br />
-                                <span className="text-[#C1A67B]">See real output in minutes.</span>
+                                {FINAL_CTA_HEADLINE}
                             </motion.h2>
                             <p className="mx-auto max-w-xl text-base leading-relaxed text-[#5E5A53] md:text-lg lg:mx-0">
                                 Upload a competitor ad and get your first client-ready dossier. No card required.
@@ -44,7 +44,7 @@ export default function FooterStartNow() {
                                 <ArrowUpRight className="w-5 h-5" />
                             </motion.a>
                             <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
-                                Observer tier • 5 free analyses • no card required
+                                Observer tier: 5 free analyses (no card required)
                             </p>
                         </div>
                     </div>

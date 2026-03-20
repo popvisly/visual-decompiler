@@ -282,10 +282,21 @@ export default function ProductProofSequence() {
             <StatsBar />
 
             <section className="px-6 py-16 md:py-24">
-                <div className="mx-auto max-w-7xl space-y-0">
+                <div className="mx-auto max-w-7xl">
+                    <div className="mb-12 md:mb-16">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.36em] text-[#C1A67B]">
+                            Inside the platform
+                        </p>
+                        <h2 className="mt-5 max-w-5xl text-4xl font-semibold uppercase leading-[0.94] tracking-tight text-[#141414] md:text-6xl">
+                            A strategic intelligence system. Not another swipe file.
+                        </h2>
+                    </div>
+
+                    <div className="space-y-0">
                     {FUNNEL_SECTIONS.map((section) => (
                         <FunnelSectionView key={section.id} section={section} />
                     ))}
+                    </div>
                 </div>
             </section>
         </div>
