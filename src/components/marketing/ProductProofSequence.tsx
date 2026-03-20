@@ -616,7 +616,7 @@ export default function ProductProofSequence() {
                             </p>
                         </div>
 
-                        <div className="rounded-[2rem] border border-[#D9CCB4] bg-white p-7 shadow-[0_14px_40px_rgba(20,20,20,0.06)]">
+                        <div className="w-full max-w-[860px] rounded-[2rem] border border-[#D9CCB4] bg-white p-7 shadow-[0_14px_40px_rgba(20,20,20,0.06)] lg:justify-self-end">
                             <div className="flex flex-col gap-4 border-b border-[#141414]/8 pb-5 md:flex-row md:items-end md:justify-between">
                                 <div>
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C1A67B]">Searchable Memory Layer</p>
