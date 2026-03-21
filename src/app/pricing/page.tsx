@@ -2,76 +2,31 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check, ShieldCheck, Zap, Globe, Lock } from 'lucide-react';
+import { ArrowUpRight, Check } from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
+import { PRICING, PRICING_COMPARISON_ROWS, PRICING_POSITIONING_LINES } from '@/lib/pricing';
 
-const PLANS = [
-    {
-        id: 'free',
-        name: 'The Observer',
-        price: '$0',
-        description: 'Perfect for individual designers exploring the deconstruction methodology.',
-        features: [
-            'Haiku 4.5 AI Engine (Fast)',
-            'Basic forensic analysis',
-            '5 deconstructions / month',
-            'Community-level signals',
-            'Dashboard access',
-        ],
-        cta: 'Start Free',
-        highlight: false,
-        model: 'Haiku 4.5',
-        costPerAnalysis: '$0.01',
-    },
-    {
-        id: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY || 'price_1T64QL0LZZUO4xz44Cwvqdzk',
-        name: 'Strategic Unit',
-        price: '$49',
-        interval: '/mo',
-        description: 'Professional-grade deconstruction for brand strategists and creative leads.',
-        features: [
-            'Sonnet 4.6 AI Engine (Pro)',
-            'Extended thinking analysis',
-            '100 deconstructions / month',
-            'Advanced Trend Forensics',
-            'Evidence-based receipts',
-            'Export Strategic Dossiers',
-            'Priority support',
-        ],
-        cta: 'Upgrade to Pro',
-        highlight: true,
-        model: 'Sonnet 4.6',
-        costPerAnalysis: '$0.49',
-    },
-    {
-        id: process.env.NEXT_PUBLIC_STRIPE_PRICE_AGENCY_MONTHLY || 'price_1T64ct0LZZUO4xz4flNsI53d',
-        name: 'Agency Sovereignty',
-        price: '$199',
-        interval: '/mo',
-        description: 'Full-spectrum deconstruction for leadership and elite strategy units.',
-        features: [
-            'Opus 4.6 AI Engine (Premium)',
-            'Unlimited deconstructions',
-            'White-label client portals',
-            'Deep semiotic analysis',
-            'Priority Neural Processor',
-            'Strategic Dossier exports',
-            'ISO-27001 Security layer',
-            'Dedicated account manager',
-        ],
-        cta: 'Upgrade to Sovereignty',
-        highlight: false,
-        model: 'Opus 4.6',
-        costPerAnalysis: 'Unlimited',
-    },
-];
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+function CheckItem({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) {
+    return (
+        <li className="flex items-start gap-3 text-sm leading-relaxed">
+            <span
+                className={`mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border ${
+                    dark ? 'border-[#D7B07A]/30 text-[#D7B07A]' : 'border-[#D7CCBB] text-[#8A7354]'
+                }`}
+            >
+                <Check className="h-3 w-3" />
+            </span>
+            <span className={dark ? 'text-[#EADCC9]' : 'text-[#4E493F]'}>{children}</span>
+        </li>
+    );
+}
 
 export default function PricingPage() {
     const [loading, setLoading] = useState<string | null>(null);
 
-    const handleUpgrade = async (planId: string) => {
-        if (planId === 'free') return;
-
+    const handleCheckout = async (planId: string) => {
         setLoading(planId);
         try {
             const res = await fetch('/api/billing/checkout', {
@@ -84,7 +39,7 @@ export default function PricingPage() {
             if (error) throw new Error(error);
             if (url) window.location.href = url;
         } catch (err: any) {
-            console.error('Upgrade failed:', err);
+            console.error('Checkout failed:', err);
             alert(`Unable to initiate checkout: ${err.message || 'Please try again later.'}`);
         } finally {
             setLoading(null);
@@ -92,413 +47,299 @@ export default function PricingPage() {
     };
 
     return (
-        <main className="bg-[#F6F1E7] min-h-screen">
+        <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader />
 
-            <section className="pt-48 pb-32 px-6">
-                <div className="max-w-7xl mx-auto">
-                    {/* Hero Section */}
-                    <div className="max-w-3xl mb-24">
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="flex items-center gap-3 mb-8"
-                        >
-                            <div className="w-8 h-[1px] bg-[#141414]" />
-                            <span className="text-[#141414] text-[11px] font-bold tracking-[0.4em] uppercase">
-                                Investment & Access
-                            </span>
-                        </motion.div>
-
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                            className="text-[12vw] lg:text-[7vw] font-light leading-[0.85] tracking-tightest uppercase text-[#141414]"
-                        >
-                            Selective<br />
-                            <span className="italic font-serif lowercase italic tracking-normal">Intelligence</span>
-                        </motion.h1>
-
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2, duration: 0.8 }}
-                            className="text-xl text-[#6B6B6B] mt-10 font-light leading-relaxed max-w-xl"
-                        >
-                            Elite strategy requires sovereignty. Choose the level of forensic depth
-                            required for your agency's output.
-                        </motion.p>
-                    </div>
-
-                    {/* Pricing Grid */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-                        {PLANS.map((plan, idx) => (
-                            <motion.div
-                                key={plan.id}
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 * idx + 0.4, duration: 0.8 }}
-                                className={`
-                                    relative p-8 md:p-12 rounded-[2.5rem] flex flex-col justify-between
-                                    ${plan.highlight
-                                        ? 'bg-[#141414] text-[#FBF7EF] shadow-[0_40px_80px_rgba(20,20,20,0.15)] scale-[1.02]'
-                                        : 'bg-white border border-[#E7DED1] text-[#141414]'}
-                                `}
-                            >
-                                {plan.highlight && (
-                                    <div className="absolute top-6 right-6 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[9px] font-bold tracking-widest uppercase">
-                                        Most Popular
-                                    </div>
-                                )}
-
-                                <div>
-                                    <h2 className="text-[10px] font-bold tracking-[0.3em] uppercase mb-12 opacity-40">
-                                        {plan.name}
-                                    </h2>
-
-                                    <div className="mb-12">
-                                        <div className="flex items-baseline gap-1">
-                                            <span className="text-6xl md:text-8xl font-light tracking-tightest leading-none">
-                                                {plan.price}
-                                            </span>
-                                            {plan.interval && (
-                                                <span className="text-xl font-light opacity-40">{plan.interval}</span>
-                                            )}
-                                        </div>
-                                        <p className="mt-6 text-lg font-light opacity-70 leading-relaxed max-w-xs">
-                                            {plan.description}
-                                        </p>
-                                    </div>
-
-                                    <ul className="space-y-4 mb-16">
-                                        {plan.features.map((feature) => (
-                                            <li key={feature} className="flex items-center gap-4 text-sm font-medium">
-                                                <div className={`w-5 h-5 rounded-full flex items-center justify-center border ${plan.highlight ? 'border-white/20' : 'border-[#141414]/10'}`}>
-                                                    <Check className="w-3 h-3" />
-                                                </div>
-                                                <span className="opacity-80">{feature}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-
-                                <button
-                                    onClick={() => handleUpgrade(plan.id)}
-                                    disabled={loading !== null}
-                                    className={`
-                                        w-full py-5 rounded-full text-[12px] font-bold uppercase tracking-[0.2em] transition-all
-                                        ${plan.highlight
-                                            ? 'bg-[#FBF7EF] text-[#141414] hover:shadow-[0_20px_40px_rgba(251,247,239,0.2)] active:scale-[0.98]'
-                                            : 'bg-[#141414] text-[#FBF7EF] hover:shadow-[0_20px_40px_rgba(20,20,20,0.1)] active:scale-[0.98]'}
-                                        ${loading === plan.id ? 'opacity-50 cursor-wait' : ''}
-                                    `}
-                                >
-                                    {loading === plan.id ? 'Initializing...' : plan.cta}
-                                </button>
-                            </motion.div>
-                        ))}
-                    </div>
-
-                    {/* One-Time Analysis */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
+            <section className="border-b border-[#E2D8C8] px-6 pb-14 pt-40 md:pb-20 md:pt-48">
+                <div className="mx-auto max-w-7xl">
+                    <motion.p
+                        initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.7, duration: 0.8 }}
-                        className="mt-12 text-center"
+                        transition={{ duration: 0.65, ease: EASE }}
+                        className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]"
                     >
-                        <div className="inline-block bg-white border border-[#E7DED1] rounded-[2rem] p-8 md:p-10">
-                            <p className="text-[10px] font-bold tracking-[0.3em] uppercase mb-4 opacity-40">
-                                No Commitment Required
-                            </p>
-                            <h3 className="text-3xl md:text-4xl font-light mb-3">
-                                $5 <span className="text-lg opacity-40">per analysis</span>
-                            </h3>
-                            <p className="text-sm text-[#6B6B6B] font-light mb-6 max-w-sm">
-                                Perfect for one-off projects. Get instant Pro-tier (Sonnet 4.6) analysis without a subscription.
-                            </p>
-                            <button
-                                onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_ONETIME || 'price_1T64V10LZZUO4xz4jug67wyT')}
-                                disabled={loading !== null}
-                                className="px-8 py-3 bg-[#141414] text-[#FBF7EF] rounded-full text-[11px] font-bold uppercase tracking-[0.2em] hover:shadow-[0_10px_30px_rgba(20,20,20,0.1)] transition-all active:scale-[0.98]"
-                            >
-                                Analyse Once
-                            </button>
-                        </div>
-                    </motion.div>
-
-                    {/* ══════════════════════════════════════════════════════ */}
-                    {/* UPGRADE TO SOVEREIGNTY */}
-                    {/* ══════════════════════════════════════════════════════ */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="mt-32 mb-32"
+                        Pricing & Plans
+                    </motion.p>
+                    <motion.h1
+                        initial={{ opacity: 0, y: 18 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.75, ease: EASE, delay: 0.06 }}
+                        className="mt-5 max-w-5xl text-[40px] font-semibold uppercase leading-[0.92] tracking-[-0.04em] text-[#141414] md:text-[72px]"
                     >
-                        <div className="max-w-3xl mb-16">
-                            <div className="flex items-center gap-3 mb-6">
-                                <div className="w-8 h-[1px] bg-[#141414]" />
-                                <span className="text-[#141414] text-[11px] font-bold tracking-[0.4em] uppercase">
-                                    The Sovereign Advantage
-                                </span>
-                            </div>
-                            <h2 className="text-5xl md:text-6xl font-light leading-[0.9] tracking-tightest uppercase text-[#141414] mb-6">
-                                Move From<br />
-                                <span className="italic font-serif lowercase tracking-normal">Observation</span> to<br />
-                                Forensic Authority
-                            </h2>
-                            <p className="text-lg text-[#6B6B6B] font-light leading-relaxed max-w-xl">
-                                The Observer tier is for exploration. Agency Sovereignty is for deployment.
-                                When the stakes are high and the strategy requires absolute precision,
-                                elite units require a sovereign infrastructure.
-                            </p>
-                        </div>
+                        Start free.
+                        <br />
+                        <span className="text-[#C1A67B]">Scale when it matters.</span>
+                    </motion.h1>
+                    <motion.p
+                        initial={{ opacity: 0, y: 18 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.75, ease: EASE, delay: 0.12 }}
+                        className="mt-8 max-w-2xl text-lg leading-relaxed text-[#5E5A53] md:text-xl"
+                    >
+                        Every tier includes real analysis — not a demo. Observer gives you five complete dossiers to prove the product works before you spend a dollar.
+                    </motion.p>
+                    <motion.p
+                        initial={{ opacity: 0, y: 18 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.75, ease: EASE, delay: 0.18 }}
+                        className="mt-8 max-w-3xl border-l border-[#D8CCB5] pl-5 text-sm uppercase tracking-[0.14em] text-[#756D61] md:text-[13px]"
+                    >
+                        Observer is free forever. Strategic Unit is for individual practitioners. Agency Sovereignty is infrastructure — priced for teams that bill it back to clients.
+                    </motion.p>
+                </div>
+            </section>
 
-                        {/* Comparison Table */}
-                        <div className="bg-white rounded-[2.5rem] border border-[#E7DED1] overflow-hidden shadow-[0_40px_80px_rgba(20,20,20,0.04)] mb-16 overflow-x-auto">
-                            <div className="grid grid-cols-4 text-center border-b border-[#E7DED1] min-w-[800px]">
-                                <div className="p-6 md:p-8 text-left border-r border-[#E7DED1]">
-                                    <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em]">Capability</p>
-                                </div>
-                                <div className="p-6 md:p-8 border-r border-[#E7DED1]">
-                                    <p className="text-[9px] font-bold text-[#6B6B6B]/50 uppercase tracking-[0.3em]">The Observer</p>
-                                    <p className="text-lg font-light text-[#6B6B6B] mt-1">$0</p>
-                                </div>
-                                <div className="p-6 md:p-8 border-r border-[#E7DED1] bg-[#141414]/[0.02]">
-                                    <p className="text-[9px] font-bold text-accent uppercase tracking-[0.3em]">Strategic Unit</p>
-                                    <p className="text-lg font-light text-[#141414] mt-1">$49<span className="text-[#6B6B6B] text-xs">/mo</span></p>
-                                </div>
-                                <div className="p-6 md:p-8">
-                                    <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em]">Agency Sovereignty</p>
-                                    <p className="text-lg font-light text-[#141414] mt-1">$199<span className="text-[#6B6B6B] text-xs">/mo</span></p>
-                                </div>
-                            </div>
-                            {[
-                                {
-                                    capability: 'AI Model',
-                                    observer: 'Haiku 4.5 (Fast)',
-                                    pro: 'Sonnet 4.6 (Pro)',
-                                    sovereign: 'Opus 4.6 (Premium)'
-                                },
-                                {
-                                    capability: 'Monthly Limit',
-                                    observer: '5 analyses',
-                                    pro: '100 analyses',
-                                    sovereign: 'Unlimited'
-                                },
-                                {
-                                    capability: 'Analysis Depth',
-                                    observer: 'Basic forensics',
-                                    pro: 'Extended thinking + Evidence receipts',
-                                    sovereign: 'Deep semiotic analysis + Competitive intelligence'
-                                },
-                                {
-                                    capability: 'Strategic Output',
-                                    observer: 'Dashboard view',
-                                    pro: 'PDF Dossier exports',
-                                    sovereign: 'White-label Strategic Dossiers'
-                                },
-                                {
-                                    capability: 'Identity Control',
-                                    observer: 'Branded "V" Mark',
-                                    pro: 'Branded "V" Mark',
-                                    sovereign: 'Full Agency Branding (Your logo, colors, authority)'
-                                },
-                                {
-                                    capability: 'Security Layer',
-                                    observer: 'Standard Access',
-                                    pro: 'Standard Access',
-                                    sovereign: 'ISO-27001 Compliant Infrastructure'
-                                },
-                                {
-                                    capability: 'Processing Speed',
-                                    observer: 'Standard Queue',
-                                    pro: 'Priority Queue',
-                                    sovereign: 'Priority Processor (<60s)'
-                                },
-                            ].map((row, idx) => (
-                                <div key={idx} className={`grid grid-cols-4 min-w-[800px] ${idx < 6 ? 'border-b border-[#E7DED1]' : ''}`}>
-                                    <div className="p-5 md:p-6 text-left border-r border-[#E7DED1]">
-                                        <p className="text-[10px] font-bold text-[#141414] uppercase tracking-[0.15em]">{row.capability}</p>
-                                    </div>
-                                    <div className="p-5 md:p-6 border-r border-[#E7DED1]">
-                                        <p className="text-[11px] text-[#6B6B6B]/60 font-light leading-relaxed">{row.observer}</p>
-                                    </div>
-                                    <div className="p-5 md:p-6 border-r border-[#E7DED1] bg-[#141414]/[0.02]">
-                                        <p className="text-[11px] text-[#141414] font-medium leading-relaxed">{row.pro}</p>
-                                    </div>
-                                    <div className="p-5 md:p-6">
-                                        <p className="text-[11px] text-[#141414] font-light leading-relaxed">{row.sovereign}</p>
-                                    </div>
-                                </div>
+            <section className="border-b border-[#E2D8C8] px-6 py-8 md:py-10">
+                <div className="mx-auto max-w-7xl">
+                    <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#F8F3EA] px-6 py-6 md:px-8">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8A7B64]">Category Positioning</p>
+                        <div className="mt-4 grid gap-4 md:grid-cols-3">
+                            {PRICING_POSITIONING_LINES.map((line) => (
+                                <p key={line} className="text-base leading-relaxed text-[#3F3A33] md:text-lg">
+                                    {line}
+                                </p>
                             ))}
                         </div>
+                    </div>
+                </div>
+            </section>
 
-                        {/* Value Propositions */}
-                        <div className="space-y-8 mb-16">
-                            <p className="text-[11px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em] mb-6">
-                                Why Elite Agencies Choose Sovereignty
+            <section className="px-6 py-14 md:py-16">
+                <div className="mx-auto max-w-7xl">
+                    <div className="grid gap-6 xl:grid-cols-3">
+                        <motion.article
+                            initial={{ opacity: 0, y: 22 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.65, ease: EASE }}
+                            className="rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] p-8"
+                        >
+                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8A7B64]">{PRICING.observer.name}</p>
+                            <p className="mt-6 text-[56px] font-semibold leading-none tracking-[-0.05em] text-[#141414]">
+                                {PRICING.observer.priceLabel}
+                            </p>
+                            <p className="mt-1 text-[12px] font-bold uppercase tracking-[0.2em] text-[#8A7B64]">
+                                {PRICING.observer.cadenceLabel}
+                            </p>
+                            <p className="mt-6 text-xl font-medium leading-snug text-[#141414]">{PRICING.observer.tagline}</p>
+                            <p className="mt-4 text-base leading-relaxed text-[#5E5A53]">{PRICING.observer.subline}</p>
+
+                            <ul className="mt-8 space-y-4">
+                                {PRICING.observer.features.map((feature) => (
+                                    <CheckItem key={feature}>{feature}</CheckItem>
+                                ))}
+                            </ul>
+
+                            <p className="mt-8 border-t border-[#E4DACC] pt-6 text-sm leading-relaxed text-[#756D61]">
+                                {PRICING.observer.whoItsFor}
                             </p>
 
-                            {/* White-Label Intelligence */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="bg-white p-10 md:p-14 rounded-[2.5rem] border border-[#E7DED1] shadow-[0_20px_60px_rgba(20,20,20,0.02)]"
+                            <a
+                                href={PRICING.observer.ctaHref}
+                                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[#141414] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black"
                             >
-                                <div className="flex items-center gap-3 mb-6">
-                                    <div className="p-2.5 bg-accent/10 rounded-xl"><Globe className="w-4 h-4 text-accent" /></div>
-                                    <h3 className="text-sm font-bold text-[#141414] uppercase tracking-[0.15em]">White-Label Intelligence</h3>
-                                </div>
-                                <p className="text-base text-[#6B6B6B] font-light leading-relaxed max-w-2xl">
-                                    Don&apos;t just provide data — provide a <strong className="text-[#141414] font-medium">proprietary audit</strong>.
-                                    Our Sovereignty tier removes all Visual Decompiler branding. Upload your agency&apos;s identity in Settings,
-                                    and every Strategic Dossier you export will appear as your own proprietary internal intelligence.
-                                    Your clients see your logo, your &ldquo;Neural Verdict,&rdquo; and your forensic authority.
-                                </p>
-                            </motion.div>
+                                {PRICING.observer.ctaLabel}
+                            </a>
+                        </motion.article>
 
-                            {/* ISO-27001 */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.1 }}
-                                className="bg-white p-10 md:p-14 rounded-[2.5rem] border border-[#E7DED1] shadow-[0_20px_60px_rgba(20,20,20,0.02)]"
-                            >
-                                <div className="flex items-center gap-3 mb-6">
-                                    <div className="p-2.5 bg-accent/10 rounded-xl"><ShieldCheck className="w-4 h-4 text-accent" /></div>
-                                    <h3 className="text-sm font-bold text-[#141414] uppercase tracking-[0.15em]">Enterprise-Grade Security</h3>
-                                </div>
-                                <p className="text-base text-[#6B6B6B] font-light leading-relaxed max-w-2xl">
-                                    In high-stakes advertising, data privacy is <strong className="text-[#141414] font-medium">non-negotiable</strong>.
-                                    Our Sovereign Infrastructure is hosted on Vercel&apos;s global edge network, utilizing ISO-27001 and SOC2 compliant protocols.
-                                    We provide the security documentation and encrypted data sovereignty required to pass strict corporate procurement audits —
-                                    ensuring your &ldquo;Persuasion Blueprints&rdquo; never leave the lab.
-                                </p>
-                            </motion.div>
-
-                            {/* Neural Processor */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.2 }}
-                                className="bg-white p-10 md:p-14 rounded-[2.5rem] border border-[#E7DED1] shadow-[0_20px_60px_rgba(20,20,20,0.02)]"
-                            >
-                                <div className="flex items-center gap-3 mb-6">
-                                    <div className="p-2.5 bg-accent/10 rounded-xl"><Zap className="w-4 h-4 text-accent" /></div>
-                                    <h3 className="text-sm font-bold text-[#141414] uppercase tracking-[0.15em]">The Neural Processor Workflow</h3>
-                                </div>
-                                <p className="text-base text-[#6B6B6B] font-light leading-relaxed max-w-2xl">
-                                    Stop wasting senior strategist hours on manual ad breakdowns. The Intelligence Tab automates the
-                                    &ldquo;Schema Autopsy,&rdquo; revealing the competitor&apos;s 3-second hook logic and persuasion sequence
-                                    in seconds. It&apos;s not just a tool — it&apos;s a <strong className="text-[#141414] font-medium">force multiplier</strong> for your strategy unit.
-                                </p>
-                            </motion.div>
-                        </div>
-
-                        {/* Blurred Dossier Preview */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.97 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            className="relative bg-[#141414] rounded-[2.5rem] p-10 md:p-16 overflow-hidden mb-16"
+                        <motion.article
+                            initial={{ opacity: 0, y: 22 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.65, ease: EASE, delay: 0.08 }}
+                            className="relative rounded-[2rem] border border-[#D8CCB5] bg-[#F8F3EA] p-8 shadow-[0_24px_80px_rgba(20,20,20,0.08)]"
                         >
-                            {/* Blurred dossier "preview" */}
-                            <div className="absolute inset-0 overflow-hidden rounded-[2.5rem]">
-                                <div className="absolute inset-8 bg-[#1a1a1a] rounded-2xl p-10 blur-[3px] opacity-40">
-                                    <div className="space-y-4">
-                                        <div className="flex justify-center mb-6">
-                                            <div className="w-16 h-16 border border-white/10 flex items-center justify-center text-white/20 text-2xl font-light">V</div>
-                                        </div>
-                                        <div className="w-32 h-[1px] bg-white/10 mx-auto" />
-                                        <div className="h-4 bg-white/5 rounded w-2/3 mx-auto" />
-                                        <div className="h-3 bg-white/3 rounded w-1/2 mx-auto" />
-                                        <div className="w-32 h-[1px] bg-white/10 mx-auto mt-6" />
-                                        <div className="grid grid-cols-3 gap-4 mt-8">
-                                            <div className="h-16 bg-white/5 rounded-lg" />
-                                            <div className="h-16 bg-white/5 rounded-lg" />
-                                            <div className="h-16 bg-white/5 rounded-lg" />
-                                        </div>
-                                        <div className="space-y-2 mt-6">
-                                            <div className="h-2 bg-white/5 rounded w-full" />
-                                            <div className="h-2 bg-white/5 rounded w-5/6" />
-                                            <div className="h-2 bg-white/5 rounded w-4/6" />
-                                        </div>
-                                    </div>
-                                </div>
+                            <div className="absolute right-6 top-6 rounded-full border border-[#D9C1A0] bg-[#FBFBF6] px-3 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-[#8A6840]">
+                                Most Popular
+                            </div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8A7B64]">{PRICING.strategic.name}</p>
+                            <p className="mt-6 text-[56px] font-semibold leading-none tracking-[-0.05em] text-[#141414]">
+                                ${PRICING.strategic.monthlyPrice}
+                            </p>
+                            <p className="mt-1 text-[12px] font-bold uppercase tracking-[0.2em] text-[#8A7B64]">per month</p>
+                            <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#A27B43]">
+                                or {PRICING.strategic.yearlyLabel} · {PRICING.strategic.savingsLabel}
+                            </p>
+                            <p className="mt-6 text-xl font-medium leading-snug text-[#141414]">{PRICING.strategic.tagline}</p>
+                            <p className="mt-4 text-base leading-relaxed text-[#5E5A53]">{PRICING.strategic.subline}</p>
+
+                            <div className="mt-8 border-t border-[#E1D4C0] pt-6">
+                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#8A6840]">Everything in Observer, plus:</p>
+                                <ul className="mt-4 space-y-4">
+                                    {PRICING.strategic.features.map((feature) => (
+                                        <CheckItem key={feature}>{feature}</CheckItem>
+                                    ))}
+                                </ul>
                             </div>
 
-                            {/* Overlay content */}
-                            <div className="relative z-10 text-center py-12">
-                                <div className="w-20 h-20 rounded-2xl border-2 border-dashed border-accent/30 mx-auto flex items-center justify-center mb-8">
-                                    <p className="text-[8px] font-bold text-accent/50 uppercase tracking-widest leading-tight">Your<br />Logo<br />Here</p>
-                                </div>
-                                <h3 className="text-2xl md:text-3xl font-light text-white uppercase tracking-tight mb-3">
-                                    The Strategic Dossier
-                                </h3>
-                                <p className="text-[11px] text-white/30 uppercase tracking-[0.3em] font-bold mb-8">
-                                    Confidential Forensic Audit for Your Agency
-                                </p>
-                                <p className="text-base text-white/40 font-light max-w-md mx-auto leading-relaxed">
-                                    A 5-section intelligence report, exported as PDF, white-labeled with your agency&apos;s identity.
-                                    The deliverable your clients didn&apos;t know they needed.
-                                </p>
-                            </div>
-                        </motion.div>
-
-                        {/* Strategic Close */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            className="text-center py-16"
-                        >
-                            <p className="text-xl md:text-2xl font-light text-[#141414] leading-relaxed max-w-2xl mx-auto mb-12 italic">
-                                &ldquo;Sovereignty isn&apos;t just about more data — it&apos;s about the right
-                                to <strong className="font-medium not-italic">own the insight</strong>.
-                                Deploy your agency&apos;s forensic layer today.&rdquo;
+                            <p className="mt-8 border-t border-[#E1D4C0] pt-6 text-sm leading-relaxed text-[#756D61]">
+                                {PRICING.strategic.whoItsFor}
                             </p>
 
                             <button
-                                onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_AGENCY_MONTHLY || 'price_1T64ct0LZZUO4xz4flNsI53d')}
+                                onClick={() => handleCheckout(PRICING.strategic.checkoutPriceId)}
                                 disabled={loading !== null}
-                                className="px-14 py-6 bg-[#141414] hover:bg-black text-[#FBF7EF] font-bold text-[12px] uppercase tracking-[0.2em] rounded-full shadow-[0_20px_60px_rgba(20,20,20,0.2)] transition-all active:scale-[0.98]"
+                                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[#141414] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black disabled:cursor-wait disabled:opacity-60"
                             >
-                                {loading ? 'Initializing...' : 'Upgrade to Sovereignty — $199/mo'}
+                                {loading === PRICING.strategic.checkoutPriceId ? 'Initializing…' : PRICING.strategic.ctaLabel}
                             </button>
-                        </motion.div>
-                    </motion.div>
+                            <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
+                                {PRICING.strategic.trialLabel}
+                            </p>
+                        </motion.article>
 
-                    {/* Trust Block */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        className="mt-12 pt-20 border-t border-[#E7DED1] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12"
-                    >
+                        <motion.article
+                            initial={{ opacity: 0, y: 22 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.65, ease: EASE, delay: 0.16 }}
+                            className="rounded-[2rem] border border-[#3C3428] bg-[#15130F] p-8 text-[#F4E9D9]"
+                        >
+                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D7B07A]">{PRICING.agency.name}</p>
+                            <p className="mt-6 text-[52px] font-semibold leading-none tracking-[-0.05em] text-[#F7EEDC]">
+                                From $1,000
+                            </p>
+                            <p className="mt-1 text-[12px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">per month · annual contract</p>
+                            <p className="mt-6 text-xl font-medium leading-snug text-[#F7EEDC]">{PRICING.agency.tagline}</p>
+                            <p className="mt-4 max-w-sm text-lg leading-relaxed text-[#E5D5BC]">
+                                This is not a per-seat tool.
+                            </p>
+                            <p className="mt-2 text-base leading-relaxed text-[#CDBEA8]">{PRICING.agency.subline}</p>
+
+                            <div className="mt-8 border-t border-[#342D24] pt-6">
+                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D7B07A]">Everything in Strategic Unit, plus:</p>
+                                <ul className="mt-4 space-y-4">
+                                    {PRICING.agency.features.map((feature) => (
+                                        <CheckItem key={feature} dark>
+                                            {feature}
+                                        </CheckItem>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <p className="mt-8 border-t border-[#342D24] pt-6 text-sm leading-relaxed text-[#D4C4AB]">
+                                {PRICING.agency.whoItsFor}
+                            </p>
+
+                            <blockquote className="mt-8 rounded-[1.5rem] border border-[#4A3F31] bg-[#1B1813] px-5 py-5 text-sm leading-relaxed text-[#E6D7BF]">
+                                “{PRICING.agency.positioningQuote}”
+                            </blockquote>
+
+                            <a
+                                href={PRICING.agency.ctaHref}
+                                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[#E2C08B] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#1A1712] transition hover:bg-[#EACB9A]"
+                            >
+                                {PRICING.agency.ctaLabel}
+                            </a>
+                            <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.18em] text-[#B89A70]">
+                                {PRICING.agency.contactLabel}
+                            </p>
+                        </motion.article>
+                    </div>
+                </div>
+            </section>
+
+            <section className="border-t border-[#E2D8C8] bg-[#F8F3EA] px-6 py-14 md:py-16">
+                <div className="mx-auto max-w-7xl">
+                    <h2 className="text-3xl font-semibold tracking-tight text-[#141414] md:text-4xl">
+                        What’s included at each tier
+                    </h2>
+                    <div className="mt-8 overflow-x-auto rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6]">
+                        <table className="min-w-[860px] w-full">
+                            <thead className="border-b border-[#E2D8C8] bg-[#F8F3EA]">
+                                <tr>
+                                    <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Feature</th>
+                                    <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Observer</th>
+                                    <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Strategic</th>
+                                    <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Agency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {PRICING_COMPARISON_ROWS.map((row, index) => (
+                                    <tr key={row[0]} className={index < PRICING_COMPARISON_ROWS.length - 1 ? 'border-b border-[#EEE5D8]' : ''}>
+                                        <td className="px-6 py-4 text-sm font-medium text-[#141414]">{row[0]}</td>
+                                        <td className="px-6 py-4 text-sm text-[#5E5A53]">{row[1]}</td>
+                                        <td className="px-6 py-4 text-sm text-[#3F3A33]">{row[2]}</td>
+                                        <td className="px-6 py-4 text-sm text-[#3F3A33]">{row[3]}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section className="px-6 py-14 md:py-16">
+                <div className="mx-auto max-w-7xl">
+                    <h2 className="text-3xl font-semibold tracking-tight text-[#141414] md:text-4xl">
+                        Questions worth asking
+                    </h2>
+                    <div className="mt-8 grid gap-4 md:grid-cols-2">
                         {[
-                            { icon: <ShieldCheck />, title: "Forensic Trust", desc: "Enterprise-grade encryption for all deconstructed signals." },
-                            { icon: <Zap />, title: "Instant Access", desc: "Unlock premium metrics the second the transaction clears." },
-                            { icon: <Globe />, title: "Global Nodes", desc: "Intelligence gathered from all major luxury markets." },
-                            { icon: <Lock />, title: "Sovereign Data", desc: "Your client's strategic data never leaves your instance." },
-                        ].map((item, i) => (
-                            <div key={i} className="space-y-4">
-                                <div className="text-[#141414] opacity-20 w-8 h-8">
-                                    {item.icon}
-                                </div>
-                                <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#141414]">
-                                    {item.title}
-                                </h3>
-                                <p className="text-[12px] text-[#6B6B6B] leading-relaxed">
-                                    {item.desc}
-                                </p>
+                            {
+                                q: 'Is Observer really free — or is it a crippled trial?',
+                                a: 'Observer gives you five complete analyses every month, permanently. All five intelligence surfaces. Full dossier output. No artificial limits on what the analysis returns. It’s free because we’d rather you see the real product than a version of it.',
+                            },
+                            {
+                                q: 'When does Strategic Unit make sense over Observer?',
+                                a: 'The moment you find yourself wanting a sixth analysis. Or when you want Differential Diagnosis, Clone Engine, or the full Vault. Most practitioners hit that point in the first two weeks.',
+                            },
+                            {
+                                q: 'Why is Agency Sovereignty priced at 1K+?',
+                                a: 'Because it’s not a per-seat tool — it’s billable intelligence infrastructure. The white-label output alone is worth more than the subscription cost when it’s presented to a single client as a premium strategic deliverable.',
+                            },
+                            {
+                                q: 'Can I white-label the output on Strategic Unit?',
+                                a: 'Yes — every tier from Strategic Unit up includes white-label export. Agency Sovereignty adds the full dossier identity layer: custom logo, cover design, and agency branding controls.',
+                            },
+                            {
+                                q: 'We’re a small agency — do we need Agency Sovereignty?',
+                                a: 'If you have more than one person using it for client work, yes. The shared Vault, Sovereign Boards, and team seat management are what turn individual analyses into a coordinated agency intelligence system.',
+                            },
+                            {
+                                q: 'Is there an Enterprise tier above Agency Sovereignty?',
+                                a: 'For agencies with specific volume, integration, or white-label infrastructure requirements — yes. Contact us directly: hello@visualdecompiler.com',
+                            },
+                        ].map((item) => (
+                            <div key={item.q} className="rounded-[1.75rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6">
+                                <h3 className="text-lg font-semibold leading-snug text-[#141414]">{item.q}</h3>
+                                <p className="mt-3 text-[15px] leading-7 text-[#5E5A53]">{item.a}</p>
                             </div>
                         ))}
-                    </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="border-t border-[#E2D8C8] bg-[#F8F3EA] px-6 py-16 md:py-20">
+                <div className="mx-auto max-w-5xl text-center">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Observer Tier</p>
+                    <h2 className="mt-5 text-4xl font-semibold uppercase leading-[0.96] tracking-tight text-[#141414] md:text-6xl">
+                        Start with five free analyses.
+                        <br />
+                        <span className="text-[#C1A67B]">No pitch required.</span>
+                    </h2>
+                    <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-[#5E5A53]">
+                        Upload a competitor ad. Get a complete strategic readout. See what the product actually produces before you decide anything.
+                    </p>
+
+                    <div className="mt-10 flex flex-col items-center justify-center gap-4 md:flex-row">
+                        <a
+                            href="/ingest"
+                            className="inline-flex items-center justify-center rounded-full bg-[#141414] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black"
+                        >
+                            Start Free — No Card Required
+                        </a>
+                        <a
+                            href={PRICING.agency.ctaHref}
+                            className="inline-flex items-center justify-center rounded-full border border-[#D8CCB5] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#5E5A53] transition hover:border-[#141414] hover:text-[#141414]"
+                        >
+                            Book an Agency Demo
+                        </a>
+                    </div>
+
+                    <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A7B64]">
+                        Observer is free forever · Strategic Unit includes a 14-day trial · Agency Sovereignty includes a dedicated onboarding session
+                    </p>
                 </div>
             </section>
         </main>

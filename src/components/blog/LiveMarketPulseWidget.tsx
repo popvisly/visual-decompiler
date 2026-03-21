@@ -3,6 +3,7 @@
 import { Activity } from 'lucide-react';
 import CircularGauge from '@/components/CircularGauge';
 import Link from 'next/link';
+import { PRICING } from '@/lib/pricing';
 
 export default function LiveMarketPulseWidget() {
     // Simulated live data to mirror the dashboard Pulse surface.
@@ -39,7 +40,7 @@ export default function LiveMarketPulseWidget() {
                     href="/pricing"
                     className="flex w-full items-center justify-center py-3 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-[#FBF7EF] uppercase tracking-[0.15em] transition-all hover:bg-white hover:text-[#141414] shadow-sm"
                 >
-                    Upgrade to Strategic Unit ($79/mo)
+                    Upgrade to Strategic Unit (${PRICING.strategic.monthlyPrice}/mo)
                 </Link>
             </div>
         </div>
