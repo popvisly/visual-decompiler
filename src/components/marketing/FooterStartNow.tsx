@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 
-const FINAL_CTA_HEADLINE = 'Start free. See real output in minutes.';
+const FINAL_CTA_HEADLINE = 'Start analysis. See real output in minutes.'
 
 export default function FooterStartNow() {
     return (
@@ -33,14 +33,14 @@ export default function FooterStartNow() {
                         </div>
 
                         {/* Right: CTA */}
-                        <div className="flex-shrink-0">
+                        <div className="w-full flex-shrink-0 lg:w-auto">
                             <motion.a
                                 href="/ingest"
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className="inline-flex items-center gap-3 rounded-full bg-[#141414] px-10 py-5 text-lg font-semibold text-[#FBF7EF] shadow-[0_18px_36px_rgba(20,20,20,0.14)] transition-colors hover:bg-black"
+                                className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#141414] px-8 py-4 text-base font-semibold text-[#FBF7EF] shadow-[0_18px_36px_rgba(20,20,20,0.14)] transition-colors hover:bg-black sm:w-auto sm:px-10 sm:py-5 sm:text-lg"
                             >
-                                Start Decompiling Free
+                                Start Analysis
                                 <ArrowUpRight className="w-5 h-5" />
                             </motion.a>
                             <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
@@ -51,7 +51,8 @@ export default function FooterStartNow() {
                 </div>
 
                 <div className="mb-8 grid gap-4 md:grid-cols-3">
-                    <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6">
+                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896]">
+                        <div className="mb-3 h-px w-16 bg-gradient-to-r from-[#D0B896] to-transparent opacity-60 transition-opacity group-hover:opacity-100" />
                         <p className="text-lg font-semibold leading-snug text-[#141414]">
                             Is this just another AI writer?
                         </p>
@@ -59,7 +60,8 @@ export default function FooterStartNow() {
                             No. Visual Decompiler analyses existing ads and returns structured strategic intelligence.
                         </p>
                     </div>
-                    <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6">
+                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896]">
+                        <div className="mb-3 h-px w-16 bg-gradient-to-r from-[#D0B896] to-transparent opacity-60 transition-opacity group-hover:opacity-100" />
                         <p className="text-lg font-semibold leading-snug text-[#141414]">
                             How is this different from ad libraries?
                         </p>
@@ -67,7 +69,8 @@ export default function FooterStartNow() {
                             Libraries show what exists; Visual Decompiler explains why it works and how to act on it.
                         </p>
                     </div>
-                    <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6">
+                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896]">
+                        <div className="mb-3 h-px w-16 bg-gradient-to-r from-[#D0B896] to-transparent opacity-60 transition-opacity group-hover:opacity-100" />
                         <p className="text-lg font-semibold leading-snug text-[#141414]">
                             Will my team actually use this?
                         </p>

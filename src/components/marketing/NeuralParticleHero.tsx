@@ -210,11 +210,11 @@ export default function NeuralParticleHero() {
     }, []);
 
     return (
-        <div className="w-full max-w-[1200px] mx-auto mt-10 mb-4">
-            <div className="rounded-[28px] overflow-hidden bg-[#1A1A1A] border border-[#D4A574]/20 shadow-[0_32px_100px_rgba(0,0,0,0.35)] flex flex-col lg:flex-row" style={{ minHeight: '440px' }}>
+        <div className="w-full max-w-[1200px] mx-auto mt-8 mb-3 md:mt-10 md:mb-4">
+            <div className="rounded-[24px] md:rounded-[28px] overflow-hidden bg-[#1A1A1A] border border-[#D4A574]/20 shadow-[0_32px_100px_rgba(0,0,0,0.35)] flex flex-col lg:flex-row" style={{ minHeight: '420px' }}>
 
                 {/* ── Left Panel: Title + Analysis Sections ── */}
-                <div className="lg:w-[320px] shrink-0 flex flex-col justify-center px-10 py-12 border-b lg:border-b-0 lg:border-r border-white/5">
+                <div className="lg:w-[300px] shrink-0 flex flex-col justify-center px-10 py-12 border-b lg:border-b-0 lg:border-r border-white/5">
 
                     {/* Status pill */}
                     <motion.div
@@ -282,7 +282,7 @@ export default function NeuralParticleHero() {
                     <canvas
                         ref={canvasRef}
                         className="w-full h-full"
-                        style={{ display: 'block', minHeight: '440px' }}
+                        style={{ display: 'block', minHeight: '360px' }}
                     />
                 </div>
             </div>

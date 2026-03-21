@@ -15,7 +15,7 @@ type Props = {
 
 export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary, ctaSecondary, microproof }: Props) {
     return (
-        <section className="relative flex min-h-[70vh] flex-col justify-center overflow-hidden bg-[#FBFBF6] pb-8 pt-32 text-[#141414] md:min-h-[76vh] md:pb-10 md:pt-40">
+        <section className="relative flex min-h-[72vh] flex-col justify-center overflow-hidden bg-[#FBFBF6] pb-6 pt-28 text-[#141414] md:min-h-[74vh] md:pb-10 md:pt-36 lg:min-h-[76vh] lg:pt-40">
 
             {/* Bone Grid Background */}
             <div className="pointer-events-none absolute inset-0 opacity-[0.55] [background-image:linear-gradient(rgba(20,20,20,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.028)_1px,transparent_1px)] [background-size:48px_48px]" />
@@ -28,7 +28,7 @@ export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary,
                     transition={{ duration: 0.7, ease: 'easeOut' }}
                     className="mb-5 text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]"
                 >
-                    Forensic Ad Intelligence
+                    Intelligence Platform
                 </motion.p>
 
                 {/* Headline */}
@@ -36,7 +36,7 @@ export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary,
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: 'easeOut' }}
-                    className="mb-6 text-4xl font-semibold uppercase leading-[0.92] tracking-tighter text-[#141414] md:text-7xl"
+                    className="mb-5 max-w-5xl text-[34px] font-semibold leading-[0.96] tracking-[-0.03em] text-[#141414] sm:text-4xl md:mb-6 md:text-7xl"
                 >
                     {headlineHighlight ? (
                         <>
@@ -53,7 +53,7 @@ export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary,
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
-                    className="mb-8 max-w-3xl text-[18px] leading-[1.45] tracking-[-0.01em] text-[#141414]/74 md:text-[21px]"
+                    className="mb-8 max-w-3xl text-[16px] leading-[1.52] tracking-[-0.01em] text-[#141414]/74 sm:text-[17px] md:mb-10 md:text-[20px]"
                 >
                     {subhead}
                 </motion.p>
@@ -64,21 +64,22 @@ export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary,
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
-                        className="mb-2 flex w-full flex-col items-center justify-center gap-4 sm:flex-row"
+                        className="mb-2 flex w-full flex-col items-center justify-center gap-3 md:flex-row md:gap-4"
                     >
                         {ctaPrimary && (
                             <a
                                 href={ctaPrimary.href}
                                 className="
-                                    inline-flex w-full items-center justify-center
-                                    rounded-full bg-[#141414] px-8 py-4
-                                    text-[12px] font-bold uppercase tracking-[0.2em] text-[#FBF7EF]
+                                    group inline-flex w-full items-center justify-center
+                                    rounded-full bg-[#141414] px-7 py-3.5
+                                    text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF]
                                     transition-all duration-300 hover:-translate-y-[1px]
                                     hover:bg-[#000000] hover:shadow-[0_16px_30px_rgba(20,20,20,0.2)]
-                                    sm:w-auto
+                                    sm:min-w-[220px] sm:w-auto sm:px-8 sm:py-4 sm:text-[12px] sm:tracking-[0.2em]
                                 "
                             >
-                                {ctaPrimary.label}
+                                <span>{ctaPrimary.label}</span>
+                                <span className="ml-2 inline-block h-1.5 w-1.5 rounded-full bg-[#C1A67B] opacity-70 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100" />
                             </a>
                         )}
                         {ctaSecondary && (
@@ -86,10 +87,10 @@ export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary,
                                 href={ctaSecondary.href}
                                 className="
                                     inline-flex w-full items-center justify-center
-                                    border-b border-[#D5CCBD] px-2 pb-1
-                                    text-[11px] font-bold uppercase tracking-[0.24em] text-[#756E63]
-                                    transition-all duration-300 hover:border-[#141414]
-                                    hover:text-[#141414] sm:w-auto
+                                    rounded-full border border-[#D5CCBD] px-5 py-3
+                                    text-[10px] font-bold uppercase tracking-[0.16em] text-[#756E63]
+                                    transition-all duration-300 hover:-translate-y-[1px]
+                                    hover:border-[#141414] hover:text-[#141414] sm:min-w-[220px] sm:w-auto sm:px-6 sm:text-[11px] sm:tracking-[0.2em]
                                 "
                             >
                                 {ctaSecondary.label}
@@ -103,7 +104,7 @@ export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary,
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
-                        className="mb-2 text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]"
+                        className="mb-1 text-[9px] font-bold uppercase tracking-[0.23em] text-[#8A7B64] sm:text-[10px] sm:tracking-[0.26em]"
                     >
                         {microproof}
                     </motion.p>
@@ -113,6 +114,7 @@ export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary,
                 <div className="w-full mt-1">
                     <NeuralParticleHero />
                 </div>
+
 
             </div>
         </section>
