@@ -53,11 +53,13 @@ export default function UnifiedSovereignHeader({
         ? [
             { key: 'vault', label: 'Vault', href: '/vault' },
             { key: 'pulse', label: 'Intelligence Pulse', href: '/compare' },
+            { key: 'about', label: 'About', href: '/about' },
             { key: 'help', label: 'Help Center', href: '/docs/user-guide' },
         ]
         : [
             { key: 'how', label: 'How It Works', href: '/#how' },
             { key: 'pricing', label: 'Pricing', href: '/pricing' },
+            { key: 'about', label: 'About', href: '/about' },
             { key: 'help', label: 'Help Center', href: '/docs/user-guide' },
         ] as const;
 

@@ -10,7 +10,7 @@ export default function HomePage() {
 
             <Hero
                 headline="Decode why luxury creative works—before the market catches up."
-                subhead="Visual Decompiler turns campaign imagery into strategic intelligence: persuasion mechanics, chromatic signatures, and narrative patterns your team can apply across categories."
+                subhead="Visual Decompiler is faster than manual analysis and deeper than using ChatGPT alone. It turns creative assets into structured strategic intelligence your team can trust and act on."
                 ctaPrimary={{ label: 'Start Analysis', href: '/ingest' }}
                 ctaSecondary={{ label: 'View Intelligence Vault', href: '#deconstruction' }}
                 microproof="No card required · 5 free analyses · White-label export ready"

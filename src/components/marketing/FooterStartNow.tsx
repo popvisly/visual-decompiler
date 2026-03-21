@@ -50,6 +50,13 @@ export default function FooterStartNow() {
                     </div>
                 </div>
 
+                <div className="mb-8 rounded-[2rem] border border-[#D8CCB5] bg-[#F8F3EA] px-6 py-6 md:px-8">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8A7B64]">About Visual Decompiler</p>
+                    <p className="mt-3 max-w-5xl text-[15px] leading-7 text-[#5E5A53] md:text-base">
+                        Visual Decompiler is designed to be more convenient than manual analysis, but significantly deeper than using ChatGPT on its own. It combines visual intelligence, strategic structure, and market context into outputs teams can trust and act on quickly. With white-label delivery, agencies and consultants can present premium analytics as their own client-facing system.
+                    </p>
+                </div>
+
                 <div className="mb-8 grid gap-4 md:grid-cols-3">
                     <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896]">
                         <div className="mb-3 h-px w-16 bg-gradient-to-r from-[#D0B896] to-transparent opacity-60 transition-opacity group-hover:opacity-100" />
@@ -94,6 +101,7 @@ export default function FooterStartNow() {
 
                     {/* Links */}
                     <div className="flex flex-wrap justify-center gap-6 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#8A7B64]">
+                        <a href="/about" className="transition-colors hover:text-[#141414]">About</a>
                         <a href="/pricing" className="transition-colors hover:text-[#141414]">Pricing</a>
                         <a href="/vault" className="transition-colors hover:text-[#141414]">Vault</a>
                         <a href="/docs/user-guide" className="transition-colors hover:text-[#141414]">Help Center</a>

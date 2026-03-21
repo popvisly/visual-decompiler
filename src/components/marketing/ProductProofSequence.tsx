@@ -72,6 +72,31 @@ const MIRO_FLOW_NODES: MiroNode[] = [
     },
 ];
 
+const DIFFERENTIAL_METRICS = [
+    { label: 'Strategic Delta', value: '+27% novelty advantage' },
+    { label: 'Persuasion Lift', value: '+18% identity pull' },
+    { label: 'Fatigue Gap', value: '-22% repetition risk' },
+] as const;
+
+const LIVE_DECONSTRUCTION_CARDS = [
+    {
+        label: 'Primary Read',
+        value: 'Status transfer through premium composition and controlled product framing.',
+    },
+    {
+        label: 'Psychological Lever',
+        value: 'Identity mirroring + aspiration pressure creating high social compliance.',
+    },
+    {
+        label: 'Friction Risk',
+        value: 'Low resistance: message clarity is high but distinctiveness can decay with repetition.',
+    },
+    {
+        label: 'Recommended Move',
+        value: 'Keep prestige cues, then introduce one disruptive structural element to reclaim novelty.',
+    },
+] as const;
+
 const LIVE_AD_STACK = [
     {
         src: '/images/examples/Chanel_No5.webp',
@@ -111,24 +136,6 @@ const LIVE_AD_STACK = [
     },
 ] as const;
 
-const LIVE_DECONSTRUCTION_CARDS = [
-    {
-        label: 'Primary Read',
-        value: 'Status transfer through premium composition and controlled product framing.',
-    },
-    {
-        label: 'Psychological Lever',
-        value: 'Identity mirroring + aspiration pressure creating high social compliance.',
-    },
-    {
-        label: 'Friction Risk',
-        value: 'Low resistance: message clarity is high but distinctiveness can decay with repetition.',
-    },
-    {
-        label: 'Recommended Move',
-        value: 'Keep prestige cues, then introduce one disruptive structural element to reclaim novelty.',
-    },
-] as const;
 
 const FUNNEL_SECTIONS: FunnelSection[] = [
     {
@@ -372,6 +379,89 @@ function MiroFlowSection() {
     );
 }
 
+function DifferentialDiagnosisSection() {
+    return (
+        <section className="border-b border-[#2D2923] bg-[#141310] px-6 py-14 md:py-16">
+            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
+                <div className="mb-6 flex items-center gap-3">
+                    <span className="h-px w-10 bg-gradient-to-r from-[#CDA468] to-transparent" />
+                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B79A70]">Intelligence Pulse</p>
+                </div>
+
+                <h3 className="max-w-4xl text-3xl font-semibold leading-[1] tracking-tight text-[#F4E9D9] md:text-5xl">
+                    Differential Diagnosis
+                </h3>
+                <p className="mt-4 max-w-3xl text-[16px] leading-relaxed text-[#CDBEA8] md:text-[18px]">
+                    Compare two assets and surface strategic delta, persuasion lift, and fatigue risk before you commit creative direction.
+                </p>
+
+                <div className="mt-8 grid gap-4 lg:grid-cols-2">
+                    <div className="group relative overflow-hidden rounded-[26px] border border-[#3B352C] bg-[#191713]">
+                        <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D5B386]">
+                            Asset A · Control
+                        </div>
+                        <Image
+                            src="/images/examples/Chanel_No5.webp"
+                            alt="Control asset for differential diagnosis"
+                            width={1200}
+                            height={1400}
+                            className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        />
+                        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0E0D0B] to-transparent" />
+                        <div className="absolute bottom-4 left-4 z-20 text-sm text-[#E7D7BF]">Heritage-led prestige framing</div>
+                    </div>
+
+                    <div className="group relative overflow-hidden rounded-[26px] border border-[#3B352C] bg-[#191713]">
+                        <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D5B386]">
+                            Asset B · Variant
+                        </div>
+                        <Image
+                            src="/images/examples/Watch.png"
+                            alt="Variant asset for differential diagnosis"
+                            width={1200}
+                            height={1400}
+                            className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        />
+                        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0E0D0B] to-transparent" />
+                        <div className="absolute bottom-4 left-4 z-20 text-sm text-[#E7D7BF]">Precision-led product authority</div>
+                    </div>
+                </div>
+
+                <div className="mt-4 flex items-center justify-center">
+                    <span className="rounded-full border border-[#4A3F31] bg-[#1A1712] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A977]">
+                        Differential Read
+                    </span>
+                </div>
+
+                <div className="mt-6 grid gap-3 md:grid-cols-3">
+                    {DIFFERENTIAL_METRICS.map((metric, i) => (
+                        <motion.div
+                            key={metric.label}
+                            initial={{ opacity: 0, y: 12 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.35 }}
+                            transition={{ delay: i * 0.08, duration: 0.45 }}
+                            className="rounded-xl border border-[#3B352C] bg-[#1B1813] px-4 py-4"
+                        >
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">{metric.label}</p>
+                            <p className="mt-2 text-base font-semibold text-[#F1E4D1]">{metric.value}</p>
+                        </motion.div>
+                    ))}
+                </div>
+
+                <div className="mt-6">
+                    <a
+                        href="/compare"
+                        className="inline-flex items-center rounded-full border border-[#E0C08D] bg-[#E0C08D] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#1B1712] transition hover:-translate-y-[1px] hover:bg-[#E8C998]"
+                    >
+                        Run Differential Diagnosis
+                    </a>
+                </div>
+            </motion.div>
+        </section>
+    );
+}
+
 function LiveDeconstruction() {
     return (
         <section className="border-b border-[#E3DACB] bg-[#F8F3EA] px-6 py-14 md:py-18">
@@ -552,10 +642,16 @@ function FunnelPanel({
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: index * 0.08 }}
                         whileHover={{ y: -2 }}
-                        className={`rounded-[24px] border px-5 py-5 ${
+                        className={`group relative overflow-hidden rounded-[24px] border px-5 py-5 ${
                             isDark ? 'border-[#3A352D] bg-[#1D1B18]' : 'border-[#E3D7C3] bg-[#F8F4EC]'
                         }`}
                     >
+                        <motion.span
+                            aria-hidden
+                            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#D2B58E] to-transparent"
+                            animate={{ opacity: [0.15, 0.8, 0.15] }}
+                            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', delay: index * 0.35 }}
+                        />
                         <p
                             className={`text-[10px] font-bold uppercase tracking-[0.28em] ${
                                 isDark ? 'text-[#D4A574]' : 'text-[#8F7D63]'
@@ -577,54 +673,46 @@ function FunnelPanel({
     );
 }
 
-function FunnelSectionView({ section, index }: { section: FunnelSection; index: number }) {
+function PlatformSystemGrid() {
     return (
-        <motion.section
-            id={section.id}
-            initial={{ opacity: 1, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.08 }}
-            transition={{ duration: 0.6, delay: index * 0.03, ease: [0.22, 1, 0.36, 1] }}
-            className={`border-b border-[#E3DACB] py-10 last:border-b-0 md:py-14 ${
-                index % 2 === 0 ? 'bg-[#FBFBF6]' : 'bg-[#F8F3EA]'
-            }`}
-        >
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-14">
-                <div className="space-y-5">
-                    <div className="flex items-center gap-3">
-                        <span className="rounded-full border border-[#D5C3A8] px-2 py-1 text-[9px] font-bold uppercase tracking-[0.16em] text-[#8E7450]">Step {index + 1}</span>
-                        <span className="h-px w-10 bg-gradient-to-r from-[#C8B49A] to-transparent" />
-                        <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">{section.label}</p>
-                    </div>
-                    <p className="max-w-3xl text-sm font-semibold uppercase tracking-[0.12em] text-[#7D6748]">
-                        {STEP_PUNCH[section.id]}
-                    </p>
-                    <h2 className="max-w-4xl text-3xl font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-4xl lg:text-5xl">
-                        {section.title}
-                    </h2>
-                    <p className="max-w-3xl text-[16px] leading-[1.65] text-[#5F5B53] md:text-[17px]">{section.body}</p>
-                    {index === 0 && (
-                        <a
-                            href="#vault"
-                            className="inline-flex items-center text-[10px] font-bold uppercase tracking-[0.2em] text-[#7D6748] transition hover:text-[#1A1712]"
-                        >
-                            Continue to Vault Intelligence ↓
-                        </a>
-                    )}
-                </div>
-
-                <FunnelPanel tone={section.tone} points={section.points} />
-            </div>
-        </motion.section>
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+            {FUNNEL_SECTIONS.map((section, index) => (
+                <motion.article
+                    key={section.id}
+                    id={section.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ delay: index * 0.05, duration: 0.35, ease: SECTION_EASE }}
+                    className={`group relative overflow-hidden rounded-2xl border p-4 ${
+                        index % 2 === 0
+                            ? 'border-[#DCCDB7] bg-[#FCF9F3]'
+                            : 'border-[#D4C3AA] bg-[#F6EFE3]'
+                    }`}
+                >
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8E7450]">0{index + 1}</p>
+                    <h3 className="mt-2 text-base font-semibold leading-tight text-[#141414]">{section.label}</h3>
+                    <p className="mt-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#7D6748]">{STEP_PUNCH[section.id]}</p>
+                    <p className="mt-3 text-sm leading-snug text-[#5E584F]">{section.points[0]?.body}</p>
+                    <a
+                        href={`#${section.id}`}
+                        className="mt-3 inline-flex items-center text-[10px] font-bold uppercase tracking-[0.16em] text-[#9B7A4E] transition group-hover:text-[#1A1712]"
+                    >
+                        View Step
+                    </a>
+                </motion.article>
+            ))}
+        </div>
     );
 }
 
 export default function ProductProofSequence() {
     return (
         <div id="funnel" className="bg-[#FBFBF6]">
-            <StatsBar />
             <LiveDeconstruction />
+            <StatsBar />
             <MiroFlowSection />
+            <DifferentialDiagnosisSection />
 
             <section className="px-6 py-12 md:py-16">
                 <motion.div
@@ -636,17 +724,13 @@ export default function ProductProofSequence() {
                 >
                     <div className="mb-7 md:mb-10">
                         <p className="text-[10px] font-bold uppercase tracking-[0.36em] text-[#C1A67B]">Inside the platform</p>
-                        <h2 className="mt-4 max-w-5xl text-4xl font-semibold leading-[0.96] tracking-tight text-[#141414] md:text-5xl lg:text-6xl">
+                        <h2 className="mt-4 max-w-5xl text-[34px] font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-[44px] lg:text-[54px]">
                             A strategic intelligence system. Not another swipe file.
                         </h2>
 
                     </div>
 
-                    <div className="space-y-0">
-                        {FUNNEL_SECTIONS.map((section, index) => (
-                            <FunnelSectionView key={section.id} section={section} index={index} />
-                        ))}
-                    </div>
+                    <PlatformSystemGrid />
                 </motion.div>
             </section>
         </div>
