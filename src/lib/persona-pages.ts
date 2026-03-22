@@ -23,6 +23,11 @@ export type PersonaPageData = {
         href: string;
     };
     trustLine: string;
+    firstUploadRecipe: {
+        upload: string;
+        outcome: string;
+        next: string;
+    };
     proofPoints: string[];
     features: PersonaFeature[];
     faqs: PersonaFaq[];
@@ -42,14 +47,19 @@ export const ART_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Upload your work-in-progress ad and get back a precise read on what’s working, what’s not, and what to change before you walk into the room. In under 60 seconds.',
     primaryCta: {
-        label: 'Upload Your Concept Free',
+        label: 'Start Analysis',
         href: '/ingest',
     },
     secondaryCta: {
-        label: 'See a Sample Readout',
+        label: 'Open Sample Dossier',
         href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
     },
     trustLine: 'No card required · 5 free analyses · Results in under 60 seconds',
+    firstUploadRecipe: {
+        upload: 'Upload your strongest work-in-progress concept or the reference driving the route.',
+        outcome: 'Look for the dominant mechanic, friction risk, and the recommended move.',
+        next: 'Compare it against your second route before the presentation lock.',
+    },
     proofPoints: [
         '“Keep prestige cues, then introduce one disruptive structural element to reclaim novelty.” — the kind of direction Visual Decompiler returns',
         'Upload any format — JPG, PNG, URL, video frame',
@@ -101,7 +111,7 @@ export const ART_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'Your next presentation just got stronger.',
         subline: 'Upload your concept now. Get your readout before you need it.',
-        label: 'Start Decompiling Free',
+        label: 'Start Analysis',
         href: '/ingest',
         note: 'No card required · First 5 analyses free',
     },
@@ -114,14 +124,19 @@ export const NEW_BUSINESS_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Visual Decompiler gives you forensic competitive intelligence on any brand’s advertising — trigger mechanics, psychological architecture, whitespace analysis — in under 60 seconds. Walk in prepared. Walk out with the business.',
     primaryCta: {
-        label: 'Start Your Pitch Prep Free',
+        label: 'Start Analysis',
         href: '/ingest',
     },
     secondaryCta: {
-        label: 'See a Sample Competitive Dossier',
+        label: 'Open Sample Dossier',
         href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
     },
     trustLine: 'No card required · 5 free analyses · White-label pitch-ready export',
+    firstUploadRecipe: {
+        upload: 'Upload the client’s top competitor or the category leader you expect in the room.',
+        outcome: 'Look for whitespace, strategic delta, and the story the pitch should own.',
+        next: 'Run a second competitor through Differential to sharpen the narrative gap.',
+    },
     proofPoints: [
         'Full competitive category read before any pitch',
         'Whitespace intelligence — find the position no one else is defending',
@@ -168,7 +183,7 @@ export const NEW_BUSINESS_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'The pitch is in 48 hours. Start now.',
         subline: 'Upload the client’s main competitor. See what you get.',
-        label: 'Start Your Pitch Prep Free',
+        label: 'Start Analysis',
         href: '/ingest',
         note: 'No card required · First 5 analyses free',
     },
@@ -181,7 +196,7 @@ export const CREATIVE_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Visual Decompiler gives you the structural logic behind any reference or competitor work — so you can move from instinct to direction fast, without the analysis overhead.',
     primaryCta: {
-        label: 'Start Decompiling Free',
+        label: 'Start Analysis',
         href: '/ingest',
     },
     secondaryCta: {
@@ -189,6 +204,11 @@ export const CREATIVE_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
         href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
     },
     trustLine: 'No card required · 5 free analyses · White-label export ready',
+    firstUploadRecipe: {
+        upload: 'Upload the reference the team keeps circling or the competitor ad everyone is reacting to.',
+        outcome: 'Look for the mechanism, production logic, and the route worth building from.',
+        next: 'Use Blueprint or Clone thinking to turn the strongest mechanic into direction.',
+    },
     proofPoints: [
         'Brief to direction in under 60 seconds',
         'Blueprint output gives your team production-ready structural logic',
@@ -235,7 +255,7 @@ export const CREATIVE_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'Brief faster. Direct better. Defend more.',
         subline: 'Start with one analysis. See what it produces.',
-        label: 'Start Decompiling Free',
+        label: 'Start Analysis',
         href: '/ingest',
         note: 'No card required · First 5 analyses free',
     },
@@ -248,14 +268,19 @@ export const STRATEGY_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Visual Decompiler builds the analytical layer between creative instinct and client confidence — trigger mechanics, category momentum, persuasion mapping, and white-label outputs your clients can trust.',
     primaryCta: {
-        label: 'Start Decompiling Free',
+        label: 'Start Analysis',
         href: '/ingest',
     },
     secondaryCta: {
-        label: 'See the Market Pulse Output',
-        href: '/pricing',
+        label: 'Open Sample Dossier',
+        href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
     },
     trustLine: 'No card required · 5 free analyses · White-label dossier export included',
+    firstUploadRecipe: {
+        upload: 'Upload the lead competitor asset your client keeps pointing at or the route you need to defend.',
+        outcome: 'Look for strategic posture, market implications, and the confidence you can present.',
+        next: 'Compare two routes to turn the recommendation into a client-ready decision.',
+    },
     proofPoints: [
         'Five intelligence surfaces per analysis — not just a single score',
         'Market Pulse tracks mechanic velocity and whitespace across your category',
@@ -302,7 +327,7 @@ export const STRATEGY_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'Intelligence your clients will pay for.',
         subline: 'Start with one analysis. Export it as your own.',
-        label: 'Start Decompiling Free',
+        label: 'Start Analysis',
         href: '/ingest',
         note: 'No card required · White-label export on every tier',
     },
@@ -315,14 +340,19 @@ export const BRAND_MANAGER_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Visual Decompiler gives brand managers a structured analytical view of any creative — so you can brief better, push back smarter, and present recommendations upward with confidence.',
     primaryCta: {
-        label: 'Start Decompiling Free',
+        label: 'Start Analysis',
         href: '/ingest',
     },
     secondaryCta: {
-        label: 'See a Sample Output',
+        label: 'Open Sample Dossier',
         href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
     },
     trustLine: 'No card required · 5 free analyses · No creative background required',
+    firstUploadRecipe: {
+        upload: 'Upload the latest agency concept or the competitor ad your team is benchmarking against.',
+        outcome: 'Look for brief fit, persuasion gaps, and the clearest point of pushback.',
+        next: 'Export the summary or save it into a board for the next review cycle.',
+    },
     proofPoints: [
         'Evaluate submitted agency work against your brief',
         'Identify what’s missing before you’re in the room',
@@ -369,7 +399,7 @@ export const BRAND_MANAGER_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'Better briefs. Better feedback. Better work.',
         subline: 'Upload the last piece of work your agency submitted. See what it’s actually doing.',
-        label: 'Start Decompiling Free',
+        label: 'Start Analysis',
         href: '/ingest',
         note: 'No card required · First 5 analyses free',
     },
@@ -382,14 +412,19 @@ export const COPYWRITER_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Visual Decompiler reads the psychological and emotional architecture of any ad — giving you the structural language to write copy that works with the visual, not just alongside it.',
     primaryCta: {
-        label: 'Start Decompiling Free',
+        label: 'Start Analysis',
         href: '/ingest',
     },
     secondaryCta: {
-        label: 'See the Psychology Output',
+        label: 'Open Sample Dossier',
         href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
     },
     trustLine: 'No card required · 5 free analyses · Results in under 60 seconds',
+    firstUploadRecipe: {
+        upload: 'Upload the campaign visual or reference image you need to write against.',
+        outcome: 'Look for emotional register, audience posture, and message tension.',
+        next: 'Use the readout to tighten promise language and CTA framing before you write.',
+    },
     proofPoints: [
         'Psychology tab maps the emotional levers behind any visual',
         'Audience tab gives you the psychographic persona the ad is targeting',
@@ -436,7 +471,7 @@ export const COPYWRITER_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'Write with the visual. Not just next to it.',
         subline: 'Upload the campaign visual. Read the emotional architecture. Then write.',
-        label: 'Start Decompiling Free',
+        label: 'Start Analysis',
         href: '/ingest',
         note: 'No card required · First 5 analyses free',
     },

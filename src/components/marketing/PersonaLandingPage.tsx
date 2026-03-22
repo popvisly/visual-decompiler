@@ -39,6 +39,23 @@ export default function PersonaLandingPage({ page }: { page: PersonaPageData }) 
                             <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
                                 {page.trustLine}
                             </p>
+                            <div className="mt-8 rounded-[1.8rem] border border-[#D8CCB5] bg-[#F8F3EA] p-5 md:p-6">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8E7450]">Best first upload</p>
+                                <div className="mt-4 grid gap-4 md:grid-cols-3">
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A7B64]">What asset to upload</p>
+                                        <p className="mt-2 text-[14px] leading-6 text-[#4F4A43]">{page.firstUploadRecipe.upload}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A7B64]">What outcome to look for</p>
+                                        <p className="mt-2 text-[14px] leading-6 text-[#4F4A43]">{page.firstUploadRecipe.outcome}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A7B64]">What to do next</p>
+                                        <p className="mt-2 text-[14px] leading-6 text-[#4F4A43]">{page.firstUploadRecipe.next}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="rounded-[2rem] border border-[#3C3428] bg-[#15130F] p-7 text-[#F4E9D9] shadow-[0_28px_90px_rgba(20,20,20,0.18)] md:p-8">
@@ -70,7 +87,7 @@ export default function PersonaLandingPage({ page }: { page: PersonaPageData }) 
                             </h2>
                         </div>
                         <p className="max-w-xl text-base leading-relaxed text-[#5E5A53]">
-                            Same engine. Different front door. This page stays focused on the moment an Art Director needs a read they can act on before the room decides the route.
+                            Same engine. Different front door. This page stays focused on the moment this role needs a read they can act on before the room decides the route.
                         </p>
                     </div>
 
@@ -154,15 +171,17 @@ export default function PersonaLandingPage({ page }: { page: PersonaPageData }) 
                         <div className="flex items-center gap-3">
                             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#141414] text-sm font-bold text-[#FBF7EF]">V</div>
                             <div className="flex flex-col">
-                                <span className="text-sm font-bold uppercase leading-none tracking-tight text-[#141414]">VisualDecompiler</span>
+                                <span className="text-sm font-bold uppercase leading-none tracking-tight text-[#141414]">Visual Decompiler</span>
                                 <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#8A7B64]">Advertising Intelligence</span>
                             </div>
                         </div>
                         <div className="flex flex-wrap justify-center gap-6 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#8A7B64]">
                             <Link href="/about" className="transition-colors hover:text-[#141414]">About</Link>
                             <Link href="/pricing" className="transition-colors hover:text-[#141414]">Pricing</Link>
-                            <Link href="/vault" className="transition-colors hover:text-[#141414]">Vault</Link>
+                            <Link href="/for-art-directors" className="transition-colors hover:text-[#141414]">Persona Guides</Link>
+                            <Link href="/trust-method" className="transition-colors hover:text-[#141414]">Trust & Method</Link>
                             <Link href="/docs/user-guide" className="transition-colors hover:text-[#141414]">Help Center</Link>
+                            <Link href="/login" className="transition-colors hover:text-[#141414]">Login</Link>
                         </div>
                     </div>
                 </div>

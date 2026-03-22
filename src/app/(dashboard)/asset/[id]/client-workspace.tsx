@@ -1425,6 +1425,42 @@ export default function AssetWorkspace({
                                     <h1 className="text-2xl font-light tracking-tightest text-[#D4A574] uppercase">{asset.brand?.name}</h1>
                                     <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#D4A574]">{asset.brand?.market_sector}</span>
                                 </div>
+                                <div className="mb-4 grid gap-3 md:grid-cols-3">
+                                    <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Compare against another asset</p>
+                                        <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
+                                            Put this result beside another route and surface the strategic delta fast.
+                                        </p>
+                                        <a
+                                            href="/compare"
+                                            className="mt-4 inline-flex items-center rounded-full border border-[#D4A574]/35 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10"
+                                        >
+                                            Open Differential
+                                        </a>
+                                    </div>
+                                    <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Save to Vault / Board</p>
+                                        <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
+                                            Keep this read accessible for the next review, board, or client thread.
+                                        </p>
+                                        <div className="mt-4">
+                                            <AddToBoard assetId={asset.id} />
+                                        </div>
+                                    </div>
+                                    <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Export summary</p>
+                                        <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
+                                            Turn the readout into a shareable summary before you lose the room.
+                                        </p>
+                                        <button
+                                            onClick={() => setShowExportModal(true)}
+                                            className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#D4A574]/35 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10"
+                                        >
+                                            <FileDown className="w-3 h-3" />
+                                            Export Summary
+                                        </button>
+                                    </div>
+                                </div>
                                 <div className="relative flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
                                     <div className="flex flex-wrap items-center gap-2">
                                         <button
@@ -1463,7 +1499,6 @@ export default function AssetWorkspace({
                                             <FileDown className="w-3 h-3" />
                                             Export Dossier (Print/PDF)
                                         </button>
-                                        <AddToBoard assetId={asset.id} />
                                     </div>
                                     <div className="relative xl:min-w-[96px] xl:text-right">
                                         <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
