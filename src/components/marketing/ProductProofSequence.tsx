@@ -170,6 +170,29 @@ const PERSONA_LINKS = [
     },
 ] as const;
 
+const DIFFERENTIATION_BLOCKS = [
+    {
+        title: 'Generation Tools',
+        theyDo: 'Create ad variations quickly.',
+        weDo: 'Deliver forensic diagnosis of persuasion mechanics, trigger structures, and friction risk.',
+    },
+    {
+        title: 'Media Dashboards',
+        theyDo: 'Show distribution, spend, and channel movement.',
+        weDo: 'Convert creative signals into strategic readouts your team can act on immediately.',
+    },
+    {
+        title: 'One-Off Testing Workflows',
+        theyDo: 'Validate individual assets in isolation.',
+        weDo: 'Build compounding intelligence through vault memory, cross-asset pattern tracking, and reusable strategic context.',
+    },
+    {
+        title: 'Generic AI Chat',
+        theyDo: 'Broad reasoning without structured forensic output.',
+        weDo: 'Produce client-defensible, boardroom-ready artifacts designed for agency delivery.',
+    },
+] as const;
+
 
 const FUNNEL_SECTIONS: FunnelSection[] = [
     {
@@ -533,6 +556,63 @@ function PersonaDiscoverabilitySection() {
     );
 }
 
+function WhyDifferentSection() {
+    return (
+        <section className="border-b border-[#E3DACB] bg-[#F7F1E7] px-6 py-14 md:py-16">
+            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
+                <div className="max-w-4xl">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
+                        Why Visual Decompiler Is Different
+                    </p>
+                    <h2 className="mt-4 text-3xl font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-5xl">
+                        Not built to generate more ads — built to make better decisions.
+                    </h2>
+                    <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#5E5A53] md:text-lg">
+                        Most tools help teams create assets, track spend, or run tests. Visual Decompiler is built to explain why creative works, what to do next, and how to scale that intelligence across an agency.
+                    </p>
+                </div>
+
+                <div className="mt-10 grid gap-4 md:grid-cols-2">
+                    {DIFFERENTIATION_BLOCKS.map((block, index) => (
+                        <motion.article
+                            key={block.title}
+                            initial={{ opacity: 0, y: 16 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.28 }}
+                            transition={{ duration: 0.45, delay: index * 0.06, ease: SECTION_EASE }}
+                            className="rounded-[1.8rem] border border-[#D8CCB5] bg-[#FCFAF5] px-6 py-6"
+                        >
+                            <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#8E7450]">{block.title}</p>
+                            <div className="mt-4 space-y-4">
+                                <div>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9A8A73]">They do</p>
+                                    <p className="mt-2 text-[15px] leading-7 text-[#5E5A53]">{block.theyDo}</p>
+                                </div>
+                                <div className="border-t border-[#E4D9C8] pt-4">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#7E6948]">We do</p>
+                                    <p className="mt-2 text-[16px] leading-7 text-[#141414]">{block.weDo}</p>
+                                </div>
+                            </div>
+                        </motion.article>
+                    ))}
+                </div>
+
+                <div className="mt-8 flex flex-col gap-5 rounded-[1.8rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 md:flex-row md:items-end md:justify-between">
+                    <p className="max-w-4xl text-[15px] leading-7 text-[#3F3A33] md:text-base">
+                        Visual Decompiler is faster than manual analysis, deeper than ChatGPT alone, and built for white-label agency authority.
+                    </p>
+                    <a
+                        href="#deconstruction"
+                        className="inline-flex items-center justify-center rounded-full border border-[#C9B08B] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#7E6948] transition hover:-translate-y-[1px] hover:border-[#B89462] hover:text-[#5F4724]"
+                    >
+                        See Decompiler Output
+                    </a>
+                </div>
+            </motion.div>
+        </section>
+    );
+}
+
 function LiveDeconstruction() {
     return (
         <section className="border-b border-[#E3DACB] bg-[#F8F3EA] px-6 py-14 md:py-18">
@@ -785,6 +865,7 @@ export default function ProductProofSequence() {
             <PersonaDiscoverabilitySection />
             <StatsBar />
             <MiroFlowSection />
+            <WhyDifferentSection />
 
             <section className="px-6 py-12 md:py-16">
                 <motion.div
