@@ -10,6 +10,7 @@ import { FileDown, Code, Info, Sparkles, Copy } from 'lucide-react';
 import RadiantArchitectureOverlay from '@/components/RadiantArchitectureOverlay';
 import AddToBoard from '@/components/AddToBoard';
 import AssetTagEditor from '@/components/AssetTagEditor';
+import DossierDecisionSummary from '@/components/DossierDecisionSummary';
 
 interface CloneConcept {
     concept_id?: number;
@@ -718,6 +719,7 @@ export default function AssetWorkspace({
     const [showRadiant, setShowRadiant] = useState(false);
     const [showCloneDrawer, setShowCloneDrawer] = useState(false);
     const [showExportModal, setShowExportModal] = useState(false);
+    const [isExecutiveSummary, setIsExecutiveSummary] = useState(false);
     const [blueprintError, setBlueprintError] = useState<string | null>(null);
     const [cloneError, setCloneError] = useState<string | null>(null);
     const [marketPulseError, setMarketPulseError] = useState<string | null>(null);
@@ -1602,6 +1604,19 @@ export default function AssetWorkspace({
                                     <div className="space-y-12">
                                         {(!extraction.primary_mechanic || !extraction.full_dossier) && <SovereignProcessingView assetId={asset.id} agency={agency} />}
 
+                                        {extraction.primary_mechanic && extraction.full_dossier && (
+                                            <DossierDecisionSummary
+                                                extraction={extraction}
+                                                dossier={dossier}
+                                                narrativeIntro={narrativeSections.intro}
+                                                isExecutiveSummary={isExecutiveSummary}
+                                                onToggleExecutiveSummary={setIsExecutiveSummary}
+                                                evidenceHref="#dossier-evidence"
+                                            />
+                                        )}
+
+                                        {!isExecutiveSummary && (
+                                            <>
                                         {/* Top 4 Extraction Metrics as Intelligence Cards */}
                                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-2">
                                             
@@ -1696,7 +1711,7 @@ export default function AssetWorkspace({
 
                                         {/* DEEP SEMIOTIC DOSSIER -> 3-COLUMN ELITE GRID */}
                                         {extraction.full_dossier && (
-                                            <div className="pt-12 border-t border-[#D4A574]/20 space-y-8">
+                                            <div id="dossier-evidence" className="pt-12 border-t border-[#D4A574]/20 space-y-8 scroll-mt-24">
                                                 
                                                 {/* FULL-WIDTH FORENSIC DOSSIER */}
                                                 <div className="grid grid-cols-1 gap-8">
