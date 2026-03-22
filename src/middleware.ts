@@ -28,6 +28,7 @@ export function middleware(request: NextRequest) {
         pathname.startsWith('/boards') ||
         pathname.startsWith('/ingest') ||
         pathname.startsWith('/compare') ||
+        pathname.startsWith('/enablement') ||
         pathname.match(/^\/asset(\/.*)?$/);
 
     if (isDashboardRoute) {
