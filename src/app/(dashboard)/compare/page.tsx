@@ -223,6 +223,8 @@ export default function DifferentialDiagnosticsPage() {
     })) || [];
 
     const isReady = assetA && assetB && status !== 'analysing';
+    const selectedCount = Number(Boolean(assetA)) + Number(Boolean(assetB));
+    const compareProgressLabel = selectedCount === 2 ? '2 / 2 ready' : `${selectedCount} / 2 selected`;
     
     // Check if current assets already match cached results
     const hasCachedResults = result && assetA && assetB; // Simplification: any result counts as "cached" if assets are present
@@ -364,6 +366,38 @@ export default function DifferentialDiagnosticsPage() {
                     )}
                 </div>
 
+                <div className="mb-8 rounded-[2rem] border border-[#D4A574]/18 bg-white px-6 py-6 shadow-sm">
+                    <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+                        <div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Setup Path</p>
+                            <div className="mt-4 grid gap-3 md:grid-cols-2">
+                                <div className={`rounded-[1.4rem] border px-4 py-4 ${assetA ? 'border-[#D4A574]/40 bg-[#FBF7EF]' : 'border-[#E7DED1] bg-[#FCFAF5]'}`}>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step A</p>
+                                    <p className="mt-2 text-sm font-semibold uppercase tracking-[0.06em] text-[#1A1A1A]">Select Control Asset</p>
+                                    <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B]">
+                                        {assetA ? `${assetA.brand.name} loaded as control.` : 'Choose the baseline asset you want every other route measured against.'}
+                                    </p>
+                                </div>
+                                <div className={`rounded-[1.4rem] border px-4 py-4 ${assetB ? 'border-[#D4A574]/40 bg-[#FBF7EF]' : 'border-[#E7DED1] bg-[#FCFAF5]'}`}>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step B</p>
+                                    <p className="mt-2 text-sm font-semibold uppercase tracking-[0.06em] text-[#1A1A1A]">Select Proposed Asset</p>
+                                    <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B]">
+                                        {assetB ? `${assetB.brand.name} loaded as proposed route.` : 'Choose the challenger route so the diagnostic can calculate lift, fatigue, and strategic delta.'}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="min-w-[210px] rounded-[1.4rem] border border-[#D4A574]/18 bg-[#141414] px-5 py-5 text-[#FBF7EF]">
+                            <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Progress State</p>
+                            <p className="mt-3 text-2xl font-light uppercase tracking-tight">{compareProgressLabel}</p>
+                            <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-white/55">
+                                {isReady ? 'Differential diagnostic unlocked' : 'Select both assets to unlock the diagnostic'}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Lab Panels Section */}
                 <div className="flex flex-col lg:flex-row gap-8 mb-12 relative">
                     <AssetSelectorPanel
@@ -374,16 +408,21 @@ export default function DifferentialDiagnosticsPage() {
                     
                     {/* Central Command Hub Action */}
                     <div className="flex items-center justify-center lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 z-20">
-                        <button
-                            onClick={handleAnalyse}
-                            disabled={!isReady}
-                            className={`group relative px-8 py-5 bg-[#D4A574] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all disabled:opacity-50 disabled:grayscale ${isReady ? 'tan-pulse hover:scale-105 active:scale-95' : ''}`}
-                        >
-                            <span className="relative z-10">
-                                {buttonLabel}
-                            </span>
-                            <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity rounded-full" />
-                        </button>
+                        <div className="flex flex-col items-center gap-3">
+                            <button
+                                onClick={handleAnalyse}
+                                disabled={!isReady}
+                                className={`group relative px-8 py-5 bg-[#D4A574] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all disabled:opacity-50 disabled:grayscale ${isReady ? 'tan-pulse hover:scale-105 active:scale-95' : ''}`}
+                            >
+                                <span className="relative z-10">
+                                    {buttonLabel}
+                                </span>
+                                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity rounded-full" />
+                            </button>
+                            <p className="max-w-[220px] text-center text-[10px] font-bold uppercase tracking-[0.18em] text-[#1A1A1A]/45">
+                                {isReady ? 'Both assets selected. Run the differential now.' : 'Select control and proposed assets to enable the diagnostic.'}
+                            </p>
+                        </div>
                     </div>
 
                     <AssetSelectorPanel
@@ -423,8 +462,25 @@ export default function DifferentialDiagnosticsPage() {
                                     AWAITING DIFFERENTIAL PARSING...
                                 </span>
                                 <p className="pt-3 text-[11px] font-mono uppercase tracking-[0.15em] text-[#1A1A1A]/35">
-                                    Select two extracted assets to begin.
+                                    Select your control asset first, then your proposed route.
                                 </p>
+                            </div>
+
+                            <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2">
+                                <div className="rounded-[1.8rem] border border-[#E7DED1] bg-white px-5 py-5 text-left shadow-sm">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step A</p>
+                                    <p className="mt-3 text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A]">Select Control Asset</p>
+                                    <p className="mt-3 text-[12px] leading-relaxed text-[#6B6B6B]">
+                                        Start with the route that defines the baseline you want to measure against.
+                                    </p>
+                                </div>
+                                <div className="rounded-[1.8rem] border border-[#E7DED1] bg-white px-5 py-5 text-left shadow-sm">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step B</p>
+                                    <p className="mt-3 text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A]">Select Proposed Asset</p>
+                                    <p className="mt-3 text-[12px] leading-relaxed text-[#6B6B6B]">
+                                        Choose the challenger concept to see strategic delta, persuasion lift, and fatigue risk.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     )}

@@ -343,12 +343,40 @@ export default function MechanicIntelligenceClient({
                             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
                                 Your current tier is {tierLabel}. Upgrade to unlock live cross-asset mechanic velocity, auditable anomaly flags, boardroom exports, and sector-wide signal mapping.
                             </p>
-                            <a
-                                href="/pricing"
-                                className="mt-8 inline-flex rounded-full bg-[#141414] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition-colors hover:bg-black"
-                            >
-                                Upgrade to Agency Sovereignty
-                            </a>
+                            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                                <a
+                                    href="/ingest"
+                                    className="inline-flex rounded-full bg-[#141414] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition-colors hover:bg-black"
+                                >
+                                    Analyze next asset now
+                                </a>
+                                <a
+                                    href="/vault"
+                                    className="inline-flex rounded-full border border-[#D4A574]/24 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#FBFBF6]"
+                                >
+                                    Open Vault shortlist
+                                </a>
+                                <a
+                                    href="/pricing"
+                                    className="inline-flex rounded-full border border-[#D4A574]/24 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#FBFBF6]"
+                                >
+                                    Upgrade to Agency Sovereignty
+                                </a>
+                            </div>
+                            <div className="mt-6 grid gap-3 md:grid-cols-3">
+                                <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">Unlock at 20 assets</p>
+                                    <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">Mechanic velocity becomes directionally reliable instead of anecdotal.</p>
+                                </div>
+                                <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">What changes</p>
+                                    <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">Audit trails, anomaly flags, and category-level signal mapping come online.</p>
+                                </div>
+                                <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">Why it matters</p>
+                                    <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">You stop reading isolated ads and start reading category movement.</p>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="relative overflow-hidden rounded-[2rem] border border-[#D4A574]/18 bg-white p-8 shadow-sm">
@@ -436,12 +464,34 @@ export default function MechanicIntelligenceClient({
                         <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.2em] text-[#8B4513]">
                             {data.assetCount} of 20 forensic extractions complete
                         </p>
-                        <a
-                            href="/ingest"
-                            className="mt-8 inline-flex rounded-full bg-[#141414] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition-colors hover:bg-black"
-                        >
-                            Analyse More Assets
-                        </a>
+                        <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+                            <a
+                                href="/ingest"
+                                className="inline-flex rounded-full bg-[#141414] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition-colors hover:bg-black"
+                            >
+                                Analyze next asset now
+                            </a>
+                            <a
+                                href="/vault"
+                                className="inline-flex rounded-full border border-[#D4A574]/24 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#FBFBF6]"
+                            >
+                                Open Vault shortlist
+                            </a>
+                        </div>
+                        <div className="mx-auto mt-8 grid max-w-4xl gap-3 text-left md:grid-cols-3">
+                            <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">Unlock at 20 assets</p>
+                                <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">Reliable mechanic velocity, category trigger pressure, and stronger comparative benchmarks.</p>
+                            </div>
+                            <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">Next action</p>
+                                <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">Feed the vault with more competitive assets so the signal field becomes usable for real decisions.</p>
+                            </div>
+                            <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">Why threshold exists</p>
+                                <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">Below 20 assets, pattern shifts are too thin to separate emerging mechanics from noise.</p>
+                            </div>
+                        </div>
                     </div>
                 ) : data ? (
                     <div className="mt-8 space-y-8">

@@ -11,6 +11,7 @@ export default function SettingsClient() {
     const [members, setMembers] = useState<any[]>([]);
     const [verifyingDomain, setVerifyingDomain] = useState(false);
     const [domainStatus, setDomainStatus] = useState<string | null>(null);
+    const [showWhitelabelHelp, setShowWhitelabelHelp] = useState(false);
     const [newWebhook, setNewWebhook] = useState({ url: '' });
     const [isAddingWebhook, setIsAddingWebhook] = useState(false);
     const [settings, setSettings] = useState({
@@ -138,6 +139,23 @@ export default function SettingsClient() {
             alert('Failed to redirect to billing portal.');
         }
     };
+
+    const whitelabelReadiness = [
+        {
+            label: 'Agency identity configured',
+            ready: Boolean(settings.agency_name.trim()),
+        },
+        {
+            label: 'Logo URL configured',
+            ready: Boolean(settings.logo_url.trim()),
+        },
+        {
+            label: 'Custom domain configured',
+            ready: Boolean(settings.custom_domain.trim()),
+        },
+    ];
+
+    const readyWhitelabelCount = whitelabelReadiness.filter((item) => item.ready).length;
 
     if (loading) {
         return (
@@ -270,17 +288,50 @@ export default function SettingsClient() {
                                 </div>
                             </div>
 
-                            <div className="flex items-center justify-between p-10 bg-[#141414] rounded-[3rem] text-[#FBF7EF] shadow-2xl shadow-black/20">
-                                <div>
-                                    <p className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-2">White-Labeling</p>
-                                    <p className="text-sm opacity-50 font-light">Custom domains & proprietary portals</p>
+                            <div className="p-10 bg-[#141414] rounded-[3rem] text-[#FBF7EF] shadow-2xl shadow-black/20">
+                                <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+                                    <div>
+                                        <p className="text-[11px] font-bold text-accent uppercase tracking-[0.3em] mb-2">White-Labeling</p>
+                                        <p className="text-sm opacity-50 font-light">Custom domains & proprietary portals</p>
+                                        <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
+                                            {readyWhitelabelCount} of {whitelabelReadiness.length} readiness signals configured
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() => setSettings({ ...settings, white_label_enabled: !settings.white_label_enabled })}
+                                        className={`w-14 h-8 rounded-full transition-all duration-500 relative ${settings.white_label_enabled ? 'bg-accent' : 'bg-white/10'}`}
+                                    >
+                                        <div className={`absolute top-1.5 w-5 h-5 rounded-full bg-white shadow-sm transition-all duration-500 ${settings.white_label_enabled ? 'left-7.5' : 'left-1.5'}`} />
+                                    </button>
                                 </div>
-                                <button
-                                    onClick={() => setSettings({ ...settings, white_label_enabled: !settings.white_label_enabled })}
-                                    className={`w-14 h-8 rounded-full transition-all duration-500 relative ${settings.white_label_enabled ? 'bg-accent' : 'bg-white/10'}`}
-                                >
-                                    <div className={`absolute top-1.5 w-5 h-5 rounded-full bg-white shadow-sm transition-all duration-500 ${settings.white_label_enabled ? 'left-7.5' : 'left-1.5'}`} />
-                                </button>
+
+                                <div className="mt-8 grid gap-3 md:grid-cols-3">
+                                    {whitelabelReadiness.map((item) => (
+                                        <div key={item.label} className="rounded-[1.75rem] border border-white/10 bg-white/5 px-5 py-5">
+                                            <div className="flex items-center justify-between gap-3">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#E7D7BF]">{item.label}</p>
+                                                <span className={`rounded-full border px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${item.ready ? 'border-[#BB9E7B]/40 text-[#D4A574]' : 'border-white/10 text-white/45'}`}>
+                                                    {item.ready ? 'Ready' : 'Missing'}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="mt-6 border-t border-white/10 pt-5">
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowWhitelabelHelp((current) => !current)}
+                                        className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition-colors hover:text-[#E7D7BF]"
+                                    >
+                                        {showWhitelabelHelp ? 'Hide Learn More' : 'Learn more'}
+                                    </button>
+                                    {showWhitelabelHelp && (
+                                        <p className="mt-3 max-w-3xl text-[12px] leading-relaxed text-white/60">
+                                            White-label mode replaces the platform identity across public-facing dossier surfaces. Configure agency identity, logo, and domain first so exported artifacts feel complete before you enable the toggle.
+                                        </p>
+                                    )}
+                                </div>
                             </div>
                         </div>
 

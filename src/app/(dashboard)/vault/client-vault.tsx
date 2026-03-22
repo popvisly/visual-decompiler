@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Search, X, Check, ChevronDown } from 'lucide-react';
+import { Search, X, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabaseClient } from '@/lib/supabase-client';
 
 interface VaultAsset {
@@ -354,6 +354,7 @@ function VaultSelect({
 }
 
 function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelected: boolean, onToggle: () => void }) {
+    const [showMechanicDetail, setShowMechanicDetail] = useState(false);
     const brandName = asset.brand?.name || 'Unknown Entity';
     const sector = asset.brand?.market_sector || 'Unclassified';
     
@@ -363,6 +364,8 @@ function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelec
     
     const isAnalysed = !!extraction?.full_dossier;
     const mechanic = isAnalysed ? extraction?.primary_mechanic : 'Awaiting Forensic Deep-Dive';
+    const normalizedMechanic = mechanic || 'Awaiting Forensic Deep-Dive';
+    const isLongMechanic = normalizedMechanic.length > 52;
     const tags = (asset.tags || []).slice(0, 3);
 
     return (
@@ -422,14 +425,14 @@ function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelec
                     {/* Stark Data Block underneath */}
                     <div className="p-8 flex-1 flex flex-col justify-between">
                         <div>
-                            <h3 className={`text-xl font-light tracking-tight mb-1 uppercase transition-colors ${isSelected ? 'text-[#D4A574]' : 'text-[#FFFFFF] group-hover:text-[#D4A574]'}`}>
+                            <h3 className={`text-[26px] font-light tracking-tight uppercase transition-colors ${isSelected ? 'text-[#D4A574]' : 'text-[#FFFFFF] group-hover:text-[#D4A574]'}`}>
                                 {brandName}
                             </h3>
-                            <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4A574] mb-8 border-l border-[#D4A574]/30 pl-3">
+                            <p className="mt-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4A574] border-l border-[#D4A574]/30 pl-3">
                                 {sector}
                             </p>
                             {tags.length > 0 && (
-                                <div className="mb-6 flex flex-wrap gap-2">
+                                <div className="mt-6 flex flex-wrap gap-2">
                                     {tags.map((tag) => (
                                         <span
                                             key={tag}
@@ -442,13 +445,41 @@ function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelec
                             )}
                         </div>
 
-                        <div className="pt-6 border-t border-[#D4A574]/20">
+                        <div className="mt-8 border-t border-[#D4A574]/20 pt-6">
                             <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-[#D4A574]/40 mb-2">
-                                Structural Logic
+                                Primary Mechanic
                             </p>
-                            <p className={`text-sm font-medium leading-snug ${isAnalysed ? (isSelected ? 'text-[#FFFFFF]/80' : 'text-[#FFFFFF]') : 'text-[#FFFFFF]/40 italic'}`}>
-                                {mechanic}
+                            <p
+                                title={normalizedMechanic}
+                                className={`text-sm leading-snug ${
+                                    isAnalysed ? (isSelected ? 'text-[#FFFFFF]/80' : 'text-[#FFFFFF]') : 'text-[#FFFFFF]/40 italic'
+                                } ${showMechanicDetail ? '' : 'line-clamp-1'}`}
+                            >
+                                {normalizedMechanic}
                             </p>
+                            {isAnalysed && isLongMechanic && (
+                                <button
+                                    type="button"
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                        setShowMechanicDetail((current) => !current);
+                                    }}
+                                    className="mt-3 inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.18em] text-[#D4A574]/75 transition-colors hover:text-[#D4A574]"
+                                >
+                                    {showMechanicDetail ? (
+                                        <>
+                                            Hide full mechanic
+                                            <ChevronUp className="h-3.5 w-3.5" />
+                                        </>
+                                    ) : (
+                                        <>
+                                            View full mechanic
+                                            <ChevronDown className="h-3.5 w-3.5" />
+                                        </>
+                                    )}
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
