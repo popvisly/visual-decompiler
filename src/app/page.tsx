@@ -6,13 +6,22 @@ import FooterStartNow from '@/components/marketing/FooterStartNow';
 export default function HomePage() {
     return (
         <main className="bg-[#FBFBF6]">
-            <UnifiedSovereignHeader primaryCta={{ label: 'Start Analysis', href: '/ingest' }} />
+            <UnifiedSovereignHeader primaryCta={{ label: 'Start Decompiling Free', href: '/ingest' }} />
 
             <Hero
-                headline="Decode why luxury creative works—before the market catches up."
-                subhead="Visual Decompiler is faster than manual analysis and deeper than using ChatGPT alone. It turns creative assets into structured strategic intelligence your team can trust and act on."
-                ctaPrimary={{ label: 'Start Analysis', href: '/ingest' }}
-                ctaSecondary={{ label: 'View Intelligence Vault', href: '#deconstruction' }}
+                eyebrow="For Art Directors"
+                rotatingEyebrows={[
+                    'For Art Directors',
+                    'For Creative Directors',
+                    'For Strategy Teams',
+                    'For New Business',
+                    'For Brand Managers',
+                ]}
+                headline="See exactly what any ad is doing."
+                headlineHighlight="Before the room decides."
+                subhead="Visual Decompiler turns any ad into a client-ready strategic readout — persuasion mechanics, psychology, comparative route testing, and white-label output in under 60 seconds."
+                ctaPrimary={{ label: 'Start Decompiling Free', href: '/ingest' }}
+                ctaSecondary={{ label: 'Open Sample Dossier', href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a' }}
                 microproof="No card required · 5 free analyses · White-label export ready"
             />
 

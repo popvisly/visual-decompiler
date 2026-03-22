@@ -1,11 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { LinkCta } from '@/types/homepage';
 import NeuralParticleHero from '@/components/marketing/NeuralParticleHero';
 
 type Props = {
+    eyebrow?: string;
+    rotatingEyebrows?: string[];
     headline: string;
+    headlineLineTwo?: string;
     headlineHighlight?: string;
     subhead: string;
     ctaPrimary?: LinkCta;
@@ -13,7 +17,57 @@ type Props = {
     microproof?: string;
 };
 
-export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary, ctaSecondary, microproof }: Props) {
+export default function Hero({
+    eyebrow = 'Intelligence Platform',
+    rotatingEyebrows,
+    headline,
+    headlineLineTwo,
+    headlineHighlight,
+    subhead,
+    ctaPrimary,
+    ctaSecondary,
+    microproof,
+}: Props) {
+    const [eyebrowIndex, setEyebrowIndex] = useState(0);
+    const [shouldRotate, setShouldRotate] = useState(false);
+
+    useEffect(() => {
+        if (!rotatingEyebrows || rotatingEyebrows.length <= 1) return;
+
+        const media = window.matchMedia('(min-width: 768px)');
+
+        const syncRotation = () => {
+            setShouldRotate(media.matches);
+            setEyebrowIndex(0);
+        };
+
+        syncRotation();
+        media.addEventListener('change', syncRotation);
+
+        return () => {
+            media.removeEventListener('change', syncRotation);
+        };
+    }, [rotatingEyebrows]);
+
+    useEffect(() => {
+        if (!rotatingEyebrows || rotatingEyebrows.length <= 1 || !shouldRotate) return;
+
+        const intervalId = window.setInterval(() => {
+            setEyebrowIndex((current) => (current + 1) % rotatingEyebrows.length);
+        }, 3500);
+
+        return () => {
+            window.clearInterval(intervalId);
+        };
+    }, [rotatingEyebrows, shouldRotate]);
+
+    const activeEyebrow =
+        rotatingEyebrows && rotatingEyebrows.length > 0
+            ? shouldRotate
+                ? rotatingEyebrows[eyebrowIndex]
+                : rotatingEyebrows[0]
+            : eyebrow;
+
     return (
         <section className="relative flex min-h-[72vh] flex-col justify-center overflow-hidden bg-[#FBFBF6] pb-6 pt-28 text-[#141414] md:min-h-[74vh] md:pb-10 md:pt-36 lg:min-h-[76vh] lg:pt-40">
 
@@ -28,7 +82,7 @@ export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary,
                     transition={{ duration: 0.7, ease: 'easeOut' }}
                     className="mb-5 text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]"
                 >
-                    Intelligence Platform
+                    {activeEyebrow}
                 </motion.p>
 
                 {/* Headline */}
@@ -41,6 +95,11 @@ export default function Hero({ headline, headlineHighlight, subhead, ctaPrimary,
                     {headlineHighlight ? (
                         <>
                             {headline}<br />
+                            {headlineLineTwo && (
+                                <>
+                                    {headlineLineTwo}<br />
+                                </>
+                            )}
                             <span className="text-[#C1A67B]">{headlineHighlight}</span>
                         </>
                     ) : (
