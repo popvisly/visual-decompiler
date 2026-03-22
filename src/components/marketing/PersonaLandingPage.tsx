@@ -10,6 +10,7 @@ export default function PersonaLandingPage({ page }: { page: PersonaPageData }) 
             <section className="border-b border-[#E2D8C8] px-6 pb-14 pt-36 md:pb-20 md:pt-44">
                 <div className="mx-auto max-w-7xl">
                     <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">{page.eyebrow}</p>
+                    <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">Forensic Advertising Intelligence OS</p>
                     <div className="mt-6 grid gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-end">
                         <div>
                             <h1 className="text-[42px] font-semibold uppercase leading-[0.92] tracking-[-0.05em] text-[#141414] md:text-[72px]">

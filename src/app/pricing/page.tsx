@@ -60,6 +60,14 @@ export default function PricingPage() {
                     >
                         Pricing & Plans
                     </motion.p>
+                    <motion.p
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.65, ease: EASE, delay: 0.03 }}
+                        className="mt-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]"
+                    >
+                        Forensic Advertising Intelligence OS
+                    </motion.p>
                     <motion.h1
                         initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -93,6 +101,7 @@ export default function PricingPage() {
                 <div className="mx-auto max-w-7xl">
                     <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#F8F3EA] px-6 py-6 md:px-8">
                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8A7B64]">Category Positioning</p>
+                        <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.18em] text-[#6F675B]">You’re not selling analysis. You’re selling what agencies hand to clients.</p>
                         <div className="mt-4 grid gap-4 md:grid-cols-3">
                             {PRICING_POSITIONING_LINES.map((line) => (
                                 <p key={line} className="text-base leading-relaxed text-[#3F3A33] md:text-lg">

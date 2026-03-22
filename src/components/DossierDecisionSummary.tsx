@@ -14,6 +14,8 @@ type Props = {
     evidenceHref: string;
 };
 
+type BriefAlignmentState = 'On-brief' | 'Partial' | 'Off-brief';
+
 function normalizeConfidenceScore(value?: number | null) {
     if (value == null) return null;
     return value <= 1 ? Math.round(value * 100) : Math.round(value);
@@ -66,6 +68,30 @@ function decisionRationale(decision: DecisionState, recommendedMove: string, con
     return `Kill the route. ${recommendedMove || `At ${confidenceScore ?? 'low'} confidence, the case is too weak to defend without reworking the concept.`}`;
 }
 
+function deriveBriefAlignment(confidenceScore: number | null, frictionScore: number | null): BriefAlignmentState {
+    if (confidenceScore !== null && confidenceScore >= 82 && (frictionScore === null || frictionScore <= 25)) {
+        return 'On-brief';
+    }
+
+    if (confidenceScore !== null && confidenceScore < 55) {
+        return 'Off-brief';
+    }
+
+    return 'Partial';
+}
+
+function briefAlignmentRationale(state: BriefAlignmentState, strategicMove: string, audienceTension: string) {
+    if (state === 'On-brief') {
+        return 'The asset is carrying a clear mechanism and a defensible strategic direction without obvious friction against the brief.';
+    }
+
+    if (state === 'Off-brief') {
+        return `The asset is not yet translating the intended direction clearly enough, so ${firstSentence(strategicMove).toLowerCase()}`;
+    }
+
+    return `The route shows potential, but ${firstSentence(audienceTension).toLowerCase()}`;
+}
+
 export default function DossierDecisionSummary({
     extraction,
     dossier,
@@ -102,6 +128,22 @@ export default function DossierDecisionSummary({
         firstSentence(positioningImplication) ||
         'The strategic implication is still resolving, so use this as directional guidance.';
     const summaryRecommendedMove = strategicMove;
+    const briefAlignment = deriveBriefAlignment(confidenceScore, frictionScore);
+    const promiseClarity =
+        firstSentence(dossier?.possible_readings?.[0]?.reading) ||
+        firstSentence(dossier?.narrative_framework) ||
+        'The central promise is present, but it needs cleaner language support to land immediately.';
+    const framingStrength =
+        firstSentence(dossier?.archetype_mapping?.target_posture) ||
+        firstSentence(dossier?.semiotic_subtext) ||
+        'The framing is directionally strong, but the positioning cue needs sharper emphasis.';
+    const ctaMessageAlignment =
+        frictionScore !== null && frictionScore <= 20
+            ? 'The visual mechanism and the implied next step are aligned, so the CTA can stay direct.'
+            : 'The visual mechanism is doing more work than the implied CTA, so the message should tighten before rollout.';
+    const suggestedCopyMove =
+        firstSentence(dossier?.test_plan?.hypothesis) ||
+        'Make the value claim more explicit, then align the CTA with the same status or utility promise already signalled visually.';
     const triadStates: DecisionState[] = ['KEEP', 'REFINE', 'KILL'];
 
     return (
@@ -204,6 +246,49 @@ export default function DossierDecisionSummary({
                             <p className="mt-3 text-[14px] leading-6 text-[#F5F3EE]">{item.value}</p>
                         </div>
                     ))}
+                </div>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+                <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-5 md:p-6">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Brief Alignment</p>
+                    <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                        <span className="inline-flex w-fit rounded-full border border-[#D4A574]/30 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#F2D8B0]">
+                            {briefAlignment}
+                        </span>
+                        <p className="max-w-xl text-sm leading-relaxed text-[#FFFFFF]/70">
+                            {briefAlignmentRationale(briefAlignment, strategicMove, audienceTension)}
+                        </p>
+                    </div>
+                </div>
+
+                <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-5 md:p-6">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Copywriter Persuasion Alignment</p>
+                    <div className="mt-5 grid gap-3 md:grid-cols-2">
+                        {[
+                            {
+                                label: 'Promise clarity',
+                                value: promiseClarity,
+                            },
+                            {
+                                label: 'Framing strength',
+                                value: framingStrength,
+                            },
+                            {
+                                label: 'CTA-message alignment',
+                                value: ctaMessageAlignment,
+                            },
+                            {
+                                label: 'Suggested copy move',
+                                value: suggestedCopyMove,
+                            },
+                        ].map((item) => (
+                            <div key={item.label} className="rounded-[1.4rem] border border-[#3A3329] bg-black/10 px-4 py-4">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8F7D63]">{item.label}</p>
+                                <p className="mt-3 text-[14px] leading-6 text-[#F5F3EE]">{item.value}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 

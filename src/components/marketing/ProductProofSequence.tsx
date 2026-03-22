@@ -594,6 +594,7 @@ function WhyDifferentSection() {
                     <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
                         Why Visual Decompiler Is Different
                     </p>
+                    <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">Forensic Advertising Intelligence OS</p>
                     <h2 className="mt-4 text-3xl font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-5xl">
                         Not built to generate more ads — built to make better decisions.
                     </h2>

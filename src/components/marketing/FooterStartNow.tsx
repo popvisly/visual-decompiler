@@ -53,7 +53,7 @@ export default function FooterStartNow() {
                 <div className="mb-8 rounded-[2rem] border border-[#D8CCB5] bg-[#F8F3EA] px-6 py-6 md:px-8">
                     <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8A7B64]">About Visual Decompiler</p>
                     <p className="mt-3 max-w-5xl text-[15px] leading-7 text-[#5E5A53] md:text-base">
-                        Visual Decompiler is designed to be more convenient than manual analysis, but significantly deeper than using ChatGPT on its own. It combines visual intelligence, strategic structure, and market context into outputs teams can trust and act on quickly. With white-label delivery, agencies and consultants can present premium analytics as their own client-facing system.
+                        Visual Decompiler is a Forensic Advertising Intelligence OS designed to be faster than manual analysis and deeper than ChatGPT alone. It combines forensic diagnosis, strategic readouts, compounding intelligence, and white-label agency delivery into outputs teams can trust and hand to clients confidently.
                     </p>
                 </div>
 

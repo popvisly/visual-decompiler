@@ -212,6 +212,14 @@ const splitLeadSentence = (value: string | undefined | null) => {
     return { lead, remainder };
 };
 
+const firstSentence = (value: string | undefined | null) => {
+    if (!value) return '';
+
+    const trimmed = value.trim();
+    const match = trimmed.match(/^.*?[.!?](?:\s|$)/);
+    return (match?.[0] || trimmed).trim();
+};
+
 const parseDossierSections = (content: string | undefined, type: 'ACT' | 'CHANNEL') => {
     if (!content) {
         return {
@@ -720,6 +728,7 @@ export default function AssetWorkspace({
     const [showCloneDrawer, setShowCloneDrawer] = useState(false);
     const [showExportModal, setShowExportModal] = useState(false);
     const [isExecutiveSummary, setIsExecutiveSummary] = useState(false);
+    const [exportPreset, setExportPreset] = useState<'standard' | 'pitch'>('standard');
     const [blueprintError, setBlueprintError] = useState<string | null>(null);
     const [cloneError, setCloneError] = useState<string | null>(null);
     const [marketPulseError, setMarketPulseError] = useState<string | null>(null);
@@ -1101,6 +1110,21 @@ export default function AssetWorkspace({
     const narrativeSections = parseDossierSections(dossier?.narrative_framework, 'ACT');
     const signalSections = parseDossierSections(dossier?.semiotic_subtext, 'CHANNEL');
     const firstFrameUrl = fileUrls[0] || asset.file_url;
+    const pitchNarrative = {
+        problem:
+            `The current category is crowded with surface-level creative signals, which makes it harder for ${asset.brand?.name || 'this brand'} to hold a distinct position without a sharper mechanism.`,
+        insight:
+            firstSentence(dossier?.archetype_mapping?.target_posture) ||
+            firstSentence(dossier?.objection_dismantling) ||
+            firstSentence(narrativeSections.intro) ||
+            'The strongest strategic insight is still emerging, but the asset is already showing a usable persuasion route.',
+        recommendation:
+            firstSentence(dossier?.archetype_mapping?.strategic_moves?.[0]) ||
+            firstSentence(dossier?.test_plan?.hypothesis) ||
+            'Use the current mechanic as the lead route, then tighten the message before client review.',
+        strategicDelta:
+            'No differential comparison is attached yet. Run Differential Diagnostic against a second route to quantify the strategic delta before pitch delivery.',
+    };
 
     return (
         <>
@@ -1187,6 +1211,25 @@ export default function AssetWorkspace({
                     <section className="dossier-section min-h-[calc(100vh-40mm)] py-6">
                         <p className="text-[11px] font-bold uppercase tracking-[0.35em]" style={{ color: accentHex }}>Executive Intelligence Summary</p>
                         <div className="mt-8 space-y-8">
+                            {exportPreset === 'pitch' && (
+                                <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Pitch Narrative</p>
+                                    <div className="mt-6 grid gap-4">
+                                        {[
+                                            ['Problem', pitchNarrative.problem],
+                                            ['Insight', pitchNarrative.insight],
+                                            ['Recommendation', pitchNarrative.recommendation],
+                                            ['Strategic Delta', pitchNarrative.strategicDelta],
+                                        ].map(([label, value]) => (
+                                            <div key={label} className="border-t border-[#E7DED1] pt-4 first:border-t-0 first:pt-0">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: accentHex }}>{label}</p>
+                                                <p className="mt-2 text-sm leading-relaxed text-[#2F2B26]">{value}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
                             <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Primary Mechanic</p>
                                 <p className="mt-4 text-2xl font-semibold uppercase tracking-tight">{extraction?.primary_mechanic || '—'}</p>

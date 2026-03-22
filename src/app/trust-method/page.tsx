@@ -46,6 +46,7 @@ export default function TrustMethodPage() {
             <section className="border-b border-[#E2D8C8] px-6 pb-16 pt-36 md:pb-20 md:pt-44">
                 <div className="mx-auto max-w-5xl">
                     <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Trust & Method</p>
+                    <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">Forensic Advertising Intelligence OS</p>
                     <h1 className="mt-5 max-w-4xl text-[40px] font-semibold leading-[0.94] tracking-[-0.04em] text-[#141414] md:text-[72px]">
                         How Visual Decompiler generates strategic intelligence you can defend.
                     </h1>
