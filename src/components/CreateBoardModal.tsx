@@ -1,19 +1,42 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Plus, X } from 'lucide-react';
+import type { BoardTemplate } from '@/lib/board-templates';
+import { hasTemplatePlaceholders } from '@/lib/board-templates';
 
-export default function CreateBoardModal() {
+type CreateBoardModalProps = {
+    triggerLabel?: string;
+    preset?: BoardTemplate;
+    variant?: 'primary' | 'secondary' | 'template';
+    disabled?: boolean;
+    disabledReason?: string;
+};
+
+export default function CreateBoardModal({
+    triggerLabel = 'Create Board',
+    preset,
+    variant = 'primary',
+    disabled = false,
+    disabledReason,
+}: CreateBoardModalProps = {}) {
     const [isOpen, setIsOpen] = useState(false);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
+    const placeholderWarning = hasTemplatePlaceholders(name) || hasTemplatePlaceholders(description);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        setName(preset?.name || '');
+        setDescription(preset?.description || '');
+    }, [isOpen, preset]);
 
     const handleCreate = async (event: React.FormEvent) => {
         event.preventDefault();
-        if (!name.trim() || isSubmitting) return;
+        if (!name.trim() || isSubmitting || placeholderWarning) return;
 
         setIsSubmitting(true);
         try {
@@ -43,14 +66,24 @@ export default function CreateBoardModal() {
         }
     };
 
+    const triggerClassName =
+        variant === 'secondary'
+            ? 'inline-flex items-center justify-center rounded-full border border-[#D8CCB5] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#7D6748] transition-colors hover:border-[#C8B08D] hover:text-[#141414] disabled:cursor-not-allowed disabled:opacity-45'
+            : variant === 'template'
+                ? 'inline-flex items-center justify-center rounded-full border border-[#D8CCB5] bg-[#FBFBF6] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#6D655B] transition-colors hover:border-[#C8B08D] hover:text-[#141414] disabled:cursor-not-allowed disabled:opacity-45'
+                : 'inline-flex items-center gap-2 rounded-full bg-[#141414] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#FBF7EF] transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-45';
+
     return (
         <>
             <button
+                type="button"
                 onClick={() => setIsOpen(true)}
-                className="inline-flex items-center gap-2 rounded-full bg-[#141414] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#FBF7EF] transition-colors hover:bg-black"
+                disabled={disabled}
+                title={disabled ? disabledReason : undefined}
+                className={triggerClassName}
             >
-                <Plus className="h-3.5 w-3.5" />
-                New Board
+                {variant === 'primary' ? <Plus className="h-3.5 w-3.5" /> : null}
+                {triggerLabel}
             </button>
 
             {isOpen && (
@@ -59,7 +92,9 @@ export default function CreateBoardModal() {
                         <div className="flex items-start justify-between gap-6">
                             <div>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Create Sovereign Board</p>
-                                <h2 className="mt-3 text-2xl font-light uppercase tracking-tight">Curated intelligence collection</h2>
+                                <h2 className="mt-3 text-2xl font-light uppercase tracking-tight">
+                                    {preset ? preset.triggerLabel : 'Curated intelligence collection'}
+                                </h2>
                             </div>
                             <button
                                 onClick={() => setIsOpen(false)}
@@ -82,6 +117,25 @@ export default function CreateBoardModal() {
                                 />
                             </div>
 
+                            {preset ? (
+                                <div className="space-y-3 rounded-[1.5rem] border border-[#D4A574]/15 bg-black/20 px-5 py-4">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Suggested tags</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {preset.suggestedTags.map((tag) => (
+                                            <span
+                                                key={tag}
+                                                className="rounded-full border border-[#D4A574]/20 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]"
+                                            >
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <p className="text-[11px] leading-relaxed text-[#D4C4AB]">
+                                        Use tags for retrieval and reporting.
+                                    </p>
+                                </div>
+                            ) : null}
+
                             <div className="space-y-2">
                                 <label className="block text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Description</label>
                                 <textarea
@@ -93,6 +147,12 @@ export default function CreateBoardModal() {
                                 />
                             </div>
 
+                            {placeholderWarning ? (
+                                <div className="rounded-[1.25rem] border border-[#8B4513]/30 bg-[#8B4513]/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.14em] text-[#F3B1A0]">
+                                    Replace placeholder text before saving.
+                                </div>
+                            ) : null}
+
                             <div className="flex flex-col gap-3 pt-4 md:flex-row md:justify-end">
                                 <button
                                     type="button"
@@ -103,7 +163,7 @@ export default function CreateBoardModal() {
                                 </button>
                                 <button
                                     type="submit"
-                                    disabled={!name.trim() || isSubmitting}
+                                    disabled={!name.trim() || isSubmitting || placeholderWarning}
                                     className="rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition-colors hover:bg-[#c8955b] disabled:cursor-not-allowed disabled:opacity-50"
                                 >
                                     {isSubmitting ? 'Creating...' : 'Create Board'}

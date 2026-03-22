@@ -2,6 +2,7 @@ import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import CreateBoardModal from '@/components/CreateBoardModal';
 import BoardCard from '@/components/BoardCard';
+import { BOARD_TEMPLATES } from '@/lib/board-templates';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,6 +32,12 @@ export default async function BoardsPage() {
         .is('archived_at', null)
         .order('created_at', { ascending: false })
         .limit(20);
+
+    const { count: vaultAssetCount } = await supabaseAdmin
+        .from('assets')
+        .select('id', { count: 'exact', head: true });
+
+    const hasVaultShortlist = (vaultAssetCount || 0) > 0;
 
     const safeBoards = (boards || []).map((board: any) => {
         const previewAssets = (board.board_items || [])
@@ -75,13 +82,49 @@ export default async function BoardsPage() {
             </header>
 
             {safeBoards.length === 0 ? (
-                <div className="w-full aspect-video border border-dashed border-[#D4A574]/20 flex flex-col items-center justify-center gap-6 rounded-[2.5rem] bg-white">
-                    <span className="text-[#6B6B6B] font-mono text-sm tracking-widest uppercase text-center max-w-md px-4 leading-relaxed">
-                        No boards found.
-                        <br /><br />
-                        Create your first curated intelligence collection to organise vault assets around a client, campaign, or competitor landscape.
-                    </span>
-                    <CreateBoardModal />
+                <div className="w-full rounded-[2.5rem] border border-[#D4A574]/15 bg-white px-6 py-12 md:px-10 md:py-14">
+                    <div className="mx-auto max-w-4xl text-center">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#C1A67B]">Boards</p>
+                        <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[#1A1A1A] md:text-5xl">
+                            No boards yet
+                        </h2>
+                        <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-7 text-[#5E5A53] md:text-base">
+                            Start your first curated intelligence collection to group vault assets by client, campaign, or competitor landscape.
+                        </p>
+                        <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8A7B64]">
+                            Boards turn one-off analyses into reusable strategic memory.
+                        </p>
+
+                        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+                            <CreateBoardModal triggerLabel="Create Board" />
+                            {hasVaultShortlist ? (
+                                <a
+                                    href="/vault"
+                                    className="inline-flex items-center justify-center rounded-full border border-[#D8CCB5] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#7D6748] transition-colors hover:border-[#C8B08D] hover:text-[#141414]"
+                                >
+                                    Create from Vault Shortlist
+                                </a>
+                            ) : (
+                                <CreateBoardModal
+                                    triggerLabel="Create from Vault Shortlist"
+                                    variant="secondary"
+                                    disabled={true}
+                                    disabledReason="Build a shortlist in Vault first."
+                                />
+                            )}
+                        </div>
+
+                        <div className="mt-10 grid gap-3 md:grid-cols-3">
+                            {BOARD_TEMPLATES.map((template) => (
+                                <CreateBoardModal
+                                    key={template.key}
+                                    triggerLabel={template.triggerLabel}
+                                    preset={template}
+                                    variant="template"
+                                />
+                            ))}
+                        </div>
+                    </div>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">

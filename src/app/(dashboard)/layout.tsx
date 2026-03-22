@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     }, []);
 
     const navItems = [
-        { name: '[ ANALYSE AD ASSET ]', href: '/ingest', icon: Plus },
+        { name: 'Analyze Asset', href: '/ingest', icon: Plus },
         { name: 'Intelligence Vault', href: '/vault', icon: Database },
         { name: 'Intelligence Pulse', href: '/compare', icon: Activity },
         { name: 'Mechanic Intelligence', href: '/market-pulse', icon: LineChart },
