@@ -6,14 +6,17 @@ import { useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import {
     BarChart3,
+    BriefcaseBusiness,
     Clapperboard,
     Compass,
     Crosshair,
+    FileImage,
     FlaskConical,
     Handshake,
     MessageSquare,
     Palette,
     PenSquare,
+    ScanSearch,
     ShieldCheck,
     Sparkles,
 } from 'lucide-react';
@@ -41,6 +44,14 @@ type Stat = {
 type MiroNode = {
     title: string;
     body: string;
+};
+
+type IntelligenceFlowColumn = {
+    step: string;
+    title: string;
+    body: string;
+    icon: typeof FileImage;
+    tone: 'light' | 'dark';
 };
 
 
@@ -83,6 +94,30 @@ const MIRO_FLOW_NODES: MiroNode[] = [
     {
         title: 'Strategic Move',
         body: 'Translate findings into a concrete creative direction your team can execute next.',
+    },
+];
+
+const INTELLIGENCE_FLOW_COLUMNS: IntelligenceFlowColumn[] = [
+    {
+        step: '01',
+        title: 'Raw Ad Input',
+        body: 'Upload your concept, competitor ad, or client reference. Static, video frame, or campaign creative — the system starts from the real asset.',
+        icon: FileImage,
+        tone: 'light',
+    },
+    {
+        step: '02',
+        title: 'Decompiler Output',
+        body: 'Receive structured forensic surfaces: persuasion mechanism, trigger/friction profile, strategic posture, and differential delta when compared.',
+        icon: ScanSearch,
+        tone: 'dark',
+    },
+    {
+        step: '03',
+        title: 'Strategic Insight',
+        body: 'Get the decision layer: what to keep, what to change, and what to test next — packaged as boardroom-ready artifacts.',
+        icon: BriefcaseBusiness,
+        tone: 'light',
     },
 ];
 
@@ -658,6 +693,82 @@ function WhyDifferentSection() {
     );
 }
 
+function AdToIntelligenceSection() {
+    return (
+        <section className="border-b border-[#E3DACB] bg-[#FBFBF6] px-6 py-14 md:py-16">
+            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
+                <div className="max-w-4xl">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
+                        Forensic Advertising Intelligence OS
+                    </p>
+                    <h2 className="mt-4 text-3xl font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-5xl">
+                        From raw creative to client-defensible strategic direction.
+                    </h2>
+                    <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#5E5A53] md:text-lg">
+                        Most tools stop at analysis. Visual Decompiler converts each asset into structured intelligence your team can use, defend, and deliver.
+                    </p>
+                </div>
+
+                <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                    {INTELLIGENCE_FLOW_COLUMNS.map((column, index) => (
+                        <motion.article
+                            key={column.title}
+                            initial={{ opacity: 0, y: 16 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.28 }}
+                            transition={{ duration: 0.45, delay: index * 0.06, ease: SECTION_EASE }}
+                            className={`relative rounded-[1.8rem] border px-5 py-5 transition duration-200 hover:-translate-y-[1px] ${
+                                column.tone === 'dark'
+                                    ? 'border-[#3C3428] bg-[#15130F] text-[#F4E9D9]'
+                                    : 'border-[#D8CCB5] bg-[#FCFAF5] text-[#141414]'
+                            }`}
+                        >
+                            <div className="flex items-center gap-2">
+                                <column.icon
+                                    aria-hidden="true"
+                                    className={`h-[18px] w-[18px] flex-shrink-0 ${
+                                        column.tone === 'dark' ? 'text-[#D7B07A]' : 'text-[#8E7450]'
+                                    }`}
+                                    strokeWidth={1.75}
+                                />
+                                <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${column.tone === 'dark' ? 'text-[#D7B07A]' : 'text-[#8E7450]'}`}>
+                                    {column.step} {column.title}
+                                </p>
+                            </div>
+                            <p className={`mt-4 text-[15px] leading-7 ${column.tone === 'dark' ? 'text-[#E6D7BF]' : 'text-[#5E5A53]'}`}>
+                                {column.body}
+                            </p>
+                        </motion.article>
+                    ))}
+                </div>
+
+                <div className="mt-8 rounded-[1.8rem] border border-[#D8CCB5] bg-[#F8F3EA] px-6 py-6">
+                    <p className="text-[15px] leading-7 text-[#3F3A33]">
+                        Most tools analyze ads. Visual Decompiler builds strategic intelligence workflows around them.
+                    </p>
+                    <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#8A7B64]">
+                        Built for real agency and campaign workflows — not generic AI output.
+                    </p>
+                    <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                        <Link
+                            href="/ingest"
+                            className="inline-flex items-center justify-center rounded-full bg-[#141414] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black"
+                        >
+                            Start Analysis
+                        </Link>
+                        <Link
+                            href="/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a"
+                            className="inline-flex items-center justify-center rounded-full border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#6D655B] transition hover:border-[#C8B08D] hover:text-[#141414]"
+                        >
+                            Open Sample Dossier
+                        </Link>
+                    </div>
+                </div>
+            </motion.div>
+        </section>
+    );
+}
+
 function LiveDeconstruction() {
     return (
         <section className="border-b border-[#E3DACB] bg-[#F8F3EA] px-6 py-14 md:py-18">
@@ -911,6 +1022,7 @@ export default function ProductProofSequence() {
             <StatsBar />
             <MiroFlowSection />
             <WhyDifferentSection />
+            <AdToIntelligenceSection />
 
             <section className="px-6 py-12 md:py-16">
                 <motion.div
