@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 
-const FINAL_CTA_HEADLINE = 'Start analysis. See real output in minutes.'
+const FINAL_CTA_HEADLINE = 'Start free. See real output in minutes.'
 
 export default function FooterStartNow() {
     return (
@@ -103,6 +103,7 @@ export default function FooterStartNow() {
                     <div className="flex flex-wrap justify-center gap-6 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#8A7B64]">
                         <a href="/about" className="transition-colors hover:text-[#141414]">About</a>
                         <a href="/pricing" className="transition-colors hover:text-[#141414]">Pricing</a>
+                        <a href="/for-art-directors" className="transition-colors hover:text-[#141414]">Persona Guides</a>
                         <a href="/vault" className="transition-colors hover:text-[#141414]">Vault</a>
                         <a href="/docs/user-guide" className="transition-colors hover:text-[#141414]">Help Center</a>
                         <a href="/login" className="transition-colors hover:text-[#141414]">Login</a>

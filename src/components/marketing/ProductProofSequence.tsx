@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 
@@ -133,6 +134,39 @@ const LIVE_AD_STACK = [
         rotate: 4,
         x: 168,
         y: 60,
+    },
+] as const;
+
+const PERSONA_LINKS = [
+    {
+        title: 'Art Directors',
+        subtitle: 'See exactly which visual choices create response — and which ones dilute it.',
+        href: '/for-art-directors',
+    },
+    {
+        title: 'Creative Directors',
+        subtitle: 'Turn campaign review into structured strategic direction your team can execute.',
+        href: '/for-creative-directors',
+    },
+    {
+        title: 'Strategy Directors',
+        subtitle: 'Translate creative patterns into defensible positioning, messaging, and market moves.',
+        href: '/for-strategy-directors',
+    },
+    {
+        title: 'Brand Managers',
+        subtitle: 'Benchmark competitors, reduce creative guesswork, and brief with strategic confidence.',
+        href: '/for-brand-managers',
+    },
+    {
+        title: 'New Business',
+        subtitle: 'Convert pitch intuition into evidence-backed narratives clients can trust quickly.',
+        href: '/for-new-business',
+    },
+    {
+        title: 'Copywriters',
+        subtitle: 'Align language, framing, and persuasion cues with the strongest visual mechanics.',
+        href: '/for-copywriters',
     },
 ] as const;
 
@@ -462,6 +496,43 @@ function DifferentialDiagnosisSection() {
     );
 }
 
+function PersonaDiscoverabilitySection() {
+    return (
+        <section id="who-its-for" className="border-b border-[#E3DACB] bg-[#FBFBF6] px-6 py-12 md:py-14">
+            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
+                <div className="max-w-3xl">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Who it’s for</p>
+                    <h2 className="mt-4 text-3xl font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-4xl">
+                        Visual Decompiler adapts to how different agency roles think, diagnose, and present decisions.
+                    </h2>
+                </div>
+
+                <div className="mt-8 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                    {PERSONA_LINKS.map((persona, index) => (
+                        <motion.div
+                            key={persona.title}
+                            initial={{ opacity: 0, y: 12 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.45, delay: index * 0.04, ease: SECTION_EASE }}
+                        >
+                            <Link
+                                href={persona.href}
+                                className="group block rounded-[1.4rem] border border-[#D8CCB5] bg-[#FCFAF5] px-5 py-5 transition duration-200 hover:-translate-y-[2px] hover:border-[#C9B08B] hover:bg-[#F9F4EB]"
+                            >
+                                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7E6948] transition-colors group-hover:text-[#5F4724]">
+                                    {persona.title}
+                                </p>
+                                <p className="mt-3 text-[15px] leading-7 text-[#5E5A53]">{persona.subtitle}</p>
+                            </Link>
+                        </motion.div>
+                    ))}
+                </div>
+            </motion.div>
+        </section>
+    );
+}
+
 function LiveDeconstruction() {
     return (
         <section className="border-b border-[#E3DACB] bg-[#F8F3EA] px-6 py-14 md:py-18">
@@ -710,9 +781,10 @@ export default function ProductProofSequence() {
     return (
         <div id="funnel" className="bg-[#FBFBF6]">
             <LiveDeconstruction />
+            <DifferentialDiagnosisSection />
+            <PersonaDiscoverabilitySection />
             <StatsBar />
             <MiroFlowSection />
-            <DifferentialDiagnosisSection />
 
             <section className="px-6 py-12 md:py-16">
                 <motion.div
