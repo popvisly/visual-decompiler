@@ -94,7 +94,7 @@ export default function FooterStartNow() {
                     <div className="flex items-center gap-3">
                         <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#141414] text-sm font-bold text-[#FBF7EF]">V</div>
                         <div className="flex flex-col">
-                            <span className="text-sm font-bold leading-none tracking-tight uppercase text-[#141414]">VisualDecompiler</span>
+                            <span className="text-sm font-bold leading-none tracking-tight uppercase text-[#141414]">Visual Decompiler</span>
                             <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#8A7B64]">Advertising Intelligence</span>
                         </div>
                     </div>

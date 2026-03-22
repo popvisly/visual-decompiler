@@ -886,9 +886,9 @@ function PlatformSystemGrid() {
                     }`}
                 >
                     <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8E7450]">0{index + 1}</p>
-                    <h3 className="mt-2 text-base font-semibold leading-tight text-[#141414]">{section.label}</h3>
-                    <p className="mt-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#7D6748]">{STEP_PUNCH[section.id]}</p>
-                    <p className="mt-3 text-sm leading-snug text-[#5E584F]">{section.points[0]?.body}</p>
+                    <h3 className="mt-2 text-[15px] font-semibold leading-snug text-[#141414]">{section.label}</h3>
+                    <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7D6748]">{STEP_PUNCH[section.id]}</p>
+                    <p className="mt-3 max-w-[24ch] text-[13px] leading-6 text-[#5E584F]">{section.points[0]?.body}</p>
                     <a
                         href={`#${section.id}`}
                         className="mt-3 inline-flex items-center text-[10px] font-bold uppercase tracking-[0.16em] text-[#9B7A4E] transition group-hover:text-[#1A1712]"

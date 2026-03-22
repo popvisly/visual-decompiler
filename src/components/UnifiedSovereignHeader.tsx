@@ -175,7 +175,7 @@ export default function UnifiedSovereignHeader({
                                             }
                                         `}
                                     >
-                                        [ ANALYSE ASSET ]
+                                        [ ANALYZE ASSET ]
                                     </Link>
                                 </div>
                             ) : (
@@ -249,7 +249,7 @@ export default function UnifiedSovereignHeader({
                                     onClick={() => setMobileOpen(false)}
                                     className="block text-center w-full rounded-full px-4 py-3 border border-[#141414] bg-[#141414] text-[#FBF7EF] text-[11px] font-bold uppercase tracking-[0.18em] hover:bg-black transition-colors"
                                 >
-                                    ANALYSE ASSET
+                                    ANALYZE ASSET
                                 </Link>
                             ) : (
                                 <Link
