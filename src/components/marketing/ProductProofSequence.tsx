@@ -2,8 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import posthog from 'posthog-js';
 import {
     BarChart3,
     BriefcaseBusiness,
@@ -52,6 +53,8 @@ type IntelligenceFlowColumn = {
     body: string;
     icon: typeof FileImage;
     tone: 'light' | 'dark';
+    imageSrc: string;
+    imageAlt: string;
 };
 
 
@@ -104,6 +107,8 @@ const INTELLIGENCE_FLOW_COLUMNS: IntelligenceFlowColumn[] = [
         body: 'Upload your concept, competitor ad, or client reference. Static, video frame, or campaign creative — the system starts from the real asset.',
         icon: FileImage,
         tone: 'light',
+        imageSrc: '/images/examples/Chanel_No5.webp',
+        imageAlt: 'Luxury fragrance ad used as a raw creative input example',
     },
     {
         step: '02',
@@ -111,6 +116,8 @@ const INTELLIGENCE_FLOW_COLUMNS: IntelligenceFlowColumn[] = [
         body: 'Receive structured forensic surfaces: persuasion mechanism, trigger/friction profile, strategic posture, and differential delta when compared.',
         icon: ScanSearch,
         tone: 'dark',
+        imageSrc: '/images/examples/Watch.png',
+        imageAlt: 'Product creative used to represent decompiler output analysis',
     },
     {
         step: '03',
@@ -118,6 +125,8 @@ const INTELLIGENCE_FLOW_COLUMNS: IntelligenceFlowColumn[] = [
         body: 'Get the decision layer: what to keep, what to change, and what to test next — packaged as boardroom-ready artifacts.',
         icon: BriefcaseBusiness,
         tone: 'light',
+        imageSrc: '/images/examples/ACNE.png',
+        imageAlt: 'Campaign creative used to represent strategic insight output',
     },
 ];
 
@@ -694,8 +703,61 @@ function WhyDifferentSection() {
 }
 
 function AdToIntelligenceSection() {
+    const sectionRef = useRef<HTMLElement | null>(null);
+    const hasTrackedViewRef = useRef(false);
+
+    useEffect(() => {
+        const node = sectionRef.current;
+        if (!node) return;
+
+        const getViewport = () => {
+            if (window.innerWidth < 768) return 'mobile';
+            if (window.innerWidth < 1024) return 'tablet';
+            return 'desktop';
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!hasTrackedViewRef.current && entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                        hasTrackedViewRef.current = true;
+                        posthog.capture('homepage_ad_to_intelligence_view', {
+                            section_id: 'ad-to-intelligence',
+                            page: 'homepage',
+                            variant: 'v1',
+                            viewport: getViewport(),
+                        });
+                    }
+                });
+            },
+            { threshold: [0.5] }
+        );
+
+        observer.observe(node);
+
+        return () => observer.disconnect();
+    }, []);
+
+    const getViewport = () => {
+        if (typeof window === 'undefined') return 'desktop';
+        if (window.innerWidth < 768) return 'mobile';
+        if (window.innerWidth < 1024) return 'tablet';
+        return 'desktop';
+    };
+
+    const trackCtaClick = (eventName: string, ctaLabel: string, ctaTarget: string) => {
+        posthog.capture(eventName, {
+            section_id: 'ad-to-intelligence',
+            page: 'homepage',
+            variant: 'v1',
+            viewport: getViewport(),
+            cta_label: ctaLabel,
+            cta_target: ctaTarget,
+        });
+    };
+
     return (
-        <section className="border-b border-[#E3DACB] bg-[#FBFBF6] px-6 py-14 md:py-16">
+        <section id="ad-to-intelligence" ref={sectionRef} className="border-b border-[#E3DACB] bg-[#FBFBF6] px-6 py-12 md:py-16">
             <motion.div {...REVEAL} className="mx-auto max-w-7xl">
                 <div className="max-w-4xl">
                     <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
@@ -723,6 +785,16 @@ function AdToIntelligenceSection() {
                                     : 'border-[#D8CCB5] bg-[#FCFAF5] text-[#141414]'
                             }`}
                         >
+                            <div className="relative mb-5 h-32 overflow-hidden rounded-[1.3rem] border border-black/5 md:h-36">
+                                <Image
+                                    src={column.imageSrc}
+                                    alt={column.imageAlt}
+                                    fill
+                                    sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
+                                    className="object-cover object-center"
+                                />
+                                <div className={`absolute inset-x-0 bottom-0 h-16 ${column.tone === 'dark' ? 'bg-gradient-to-t from-[#0F0D0A] to-transparent' : 'bg-gradient-to-t from-[#15120E]/70 to-transparent'}`} />
+                            </div>
                             <div className="flex items-center gap-2">
                                 <column.icon
                                     aria-hidden="true"
@@ -752,12 +824,20 @@ function AdToIntelligenceSection() {
                     <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                         <Link
                             href="/ingest"
+                            onClick={() => trackCtaClick('homepage_ad_to_intelligence_cta_primary_click', 'Start Analysis', '/ingest')}
                             className="inline-flex items-center justify-center rounded-full bg-[#141414] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black"
                         >
                             Start Analysis
                         </Link>
                         <Link
                             href="/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a"
+                            onClick={() =>
+                                trackCtaClick(
+                                    'homepage_ad_to_intelligence_cta_secondary_click',
+                                    'Open Sample Dossier',
+                                    '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a'
+                                )
+                            }
                             className="inline-flex items-center justify-center rounded-full border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#6D655B] transition hover:border-[#C8B08D] hover:text-[#141414]"
                         >
                             Open Sample Dossier
