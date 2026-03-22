@@ -4,6 +4,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import {
+    BarChart3,
+    Clapperboard,
+    Compass,
+    Crosshair,
+    FlaskConical,
+    Handshake,
+    MessageSquare,
+    Palette,
+    PenSquare,
+    ShieldCheck,
+    Sparkles,
+} from 'lucide-react';
 
 type ProofPoint = {
     label: string;
@@ -142,31 +155,37 @@ const PERSONA_LINKS = [
         title: 'Art Directors',
         subtitle: 'See exactly which visual choices create response — and which ones dilute it.',
         href: '/for-art-directors',
+        icon: Palette,
     },
     {
         title: 'Creative Directors',
         subtitle: 'Turn campaign review into structured strategic direction your team can execute.',
         href: '/for-creative-directors',
+        icon: Clapperboard,
     },
     {
         title: 'Strategy Directors',
         subtitle: 'Translate creative patterns into defensible positioning, messaging, and market moves.',
         href: '/for-strategy-directors',
+        icon: Compass,
     },
     {
         title: 'Brand Managers',
         subtitle: 'Benchmark competitors, reduce creative guesswork, and brief with strategic confidence.',
         href: '/for-brand-managers',
+        icon: ShieldCheck,
     },
     {
         title: 'New Business',
         subtitle: 'Convert pitch intuition into evidence-backed narratives clients can trust quickly.',
         href: '/for-new-business',
+        icon: Handshake,
     },
     {
         title: 'Copywriters',
         subtitle: 'Align language, framing, and persuasion cues with the strongest visual mechanics.',
         href: '/for-copywriters',
+        icon: PenSquare,
     },
 ] as const;
 
@@ -175,21 +194,25 @@ const DIFFERENTIATION_BLOCKS = [
         title: 'Generation Tools',
         theyDo: 'Create ad variations quickly.',
         weDo: 'Deliver forensic diagnosis of persuasion mechanics, trigger structures, and friction risk.',
+        icon: Sparkles,
     },
     {
         title: 'Media Dashboards',
         theyDo: 'Show distribution, spend, and channel movement.',
         weDo: 'Convert creative signals into strategic readouts your team can act on immediately.',
+        icon: BarChart3,
     },
     {
         title: 'One-Off Testing Workflows',
         theyDo: 'Validate individual assets in isolation.',
         weDo: 'Build compounding intelligence through vault memory, cross-asset pattern tracking, and reusable strategic context.',
+        icon: FlaskConical,
     },
     {
         title: 'Generic AI Chat',
         theyDo: 'Broad reasoning without structured forensic output.',
         weDo: 'Produce client-defensible, boardroom-ready artifacts designed for agency delivery.',
+        icon: MessageSquare,
     },
 ] as const;
 
@@ -543,9 +566,16 @@ function PersonaDiscoverabilitySection() {
                                 href={persona.href}
                                 className="group block rounded-[1.4rem] border border-[#D8CCB5] bg-[#FCFAF5] px-5 py-5 transition duration-200 hover:-translate-y-[2px] hover:border-[#C9B08B] hover:bg-[#F9F4EB]"
                             >
-                                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7E6948] transition-colors group-hover:text-[#5F4724]">
-                                    {persona.title}
-                                </p>
+                                <div className="flex items-start gap-2">
+                                    <persona.icon
+                                        aria-hidden="true"
+                                        className="mt-0.5 h-[17px] w-[17px] flex-shrink-0 text-[#8E7450] transition-colors group-hover:text-[#141414]"
+                                        strokeWidth={1.75}
+                                    />
+                                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7E6948] transition-colors group-hover:text-[#5F4724]">
+                                        {persona.title}
+                                    </p>
+                                </div>
                                 <p className="mt-3 text-[15px] leading-7 text-[#5E5A53]">{persona.subtitle}</p>
                             </Link>
                         </motion.div>
@@ -582,7 +612,14 @@ function WhyDifferentSection() {
                             transition={{ duration: 0.45, delay: index * 0.06, ease: SECTION_EASE }}
                             className="rounded-[1.8rem] border border-[#D8CCB5] bg-[#FCFAF5] px-6 py-6"
                         >
-                            <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#8E7450]">{block.title}</p>
+                            <div className="flex items-start gap-2">
+                                <block.icon
+                                    aria-hidden="true"
+                                    className="mt-0.5 h-[18px] w-[18px] flex-shrink-0 text-[#8E7450]"
+                                    strokeWidth={1.75}
+                                />
+                                <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#8E7450]">{block.title}</p>
+                            </div>
                             <div className="mt-4 space-y-4">
                                 <div>
                                     <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9A8A73]">They do</p>
@@ -598,9 +635,16 @@ function WhyDifferentSection() {
                 </div>
 
                 <div className="mt-8 flex flex-col gap-5 rounded-[1.8rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 md:flex-row md:items-end md:justify-between">
-                    <p className="max-w-4xl text-[15px] leading-7 text-[#3F3A33] md:text-base">
-                        Visual Decompiler is faster than manual analysis, deeper than ChatGPT alone, and built for white-label agency authority.
-                    </p>
+                    <div className="flex max-w-4xl items-start gap-2">
+                        <Crosshair
+                            aria-hidden="true"
+                            className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#8E7450]"
+                            strokeWidth={1.75}
+                        />
+                        <p className="text-[15px] leading-7 text-[#3F3A33] md:text-base">
+                            Visual Decompiler is faster than manual analysis, deeper than ChatGPT alone, and built for white-label agency authority.
+                        </p>
+                    </div>
                     <a
                         href="#deconstruction"
                         className="inline-flex items-center justify-center rounded-full border border-[#C9B08B] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#7E6948] transition hover:-translate-y-[1px] hover:border-[#B89462] hover:text-[#5F4724]"
