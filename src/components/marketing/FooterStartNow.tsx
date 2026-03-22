@@ -104,6 +104,7 @@ export default function FooterStartNow() {
                         <a href="/about" className="transition-colors hover:text-[#141414]">About</a>
                         <a href="/pricing" className="transition-colors hover:text-[#141414]">Pricing</a>
                         <a href="/for-art-directors" className="transition-colors hover:text-[#141414]">Persona Guides</a>
+                        <a href="/trust-method" className="transition-colors hover:text-[#141414]">Trust & Method</a>
                         <a href="/vault" className="transition-colors hover:text-[#141414]">Vault</a>
                         <a href="/docs/user-guide" className="transition-colors hover:text-[#141414]">Help Center</a>
                         <a href="/login" className="transition-colors hover:text-[#141414]">Login</a>
