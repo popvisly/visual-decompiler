@@ -49,7 +49,7 @@ export default async function SharedPortalPage({
             .limit(1)
             .single();
 
-        return <AssetWorkspace initialAsset={asset} isSovereign={true} agency={agency} />;
+        return <AssetWorkspace initialAsset={asset} isSovereign={true} agency={agency} sampleMode />;
     }
 
     // Check Authorization

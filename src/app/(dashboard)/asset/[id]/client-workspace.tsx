@@ -133,6 +133,11 @@ interface SequenceData {
     }[];
 }
 
+type DossierTab = 'INTELLIGENCE' | 'SIGNALS' | 'PSYCHOLOGY' | 'BLUEPRINT' | 'MARKET PULSE';
+
+const FULL_DOSSIER_TABS: readonly DossierTab[] = ['INTELLIGENCE', 'SIGNALS', 'PSYCHOLOGY', 'BLUEPRINT', 'MARKET PULSE'] as const;
+const SAMPLE_DOSSIER_TABS: readonly DossierTab[] = ['INTELLIGENCE', 'SIGNALS', 'PSYCHOLOGY', 'BLUEPRINT'] as const;
+
 interface BlueprintData {
     blueprint_id?: string;
     status?: 'success' | 'error';
@@ -712,14 +717,16 @@ function SovereignProcessingView({ assetId, agency }: { assetId: string, agency?
 export default function AssetWorkspace({
     initialAsset,
     isSovereign,
-    agency
+    agency,
+    sampleMode = false,
 }: {
     initialAsset: WorkspaceAsset,
     isSovereign: boolean,
-    agency: any
+    agency: any,
+    sampleMode?: boolean,
 }) {
     const [asset, setAsset] = useState(initialAsset);
-    const [activeTab, setActiveTab] = useState<'INTELLIGENCE' | 'SIGNALS' | 'PSYCHOLOGY' | 'BLUEPRINT' | 'MARKET PULSE'>('INTELLIGENCE');
+    const [activeTab, setActiveTab] = useState<DossierTab>('INTELLIGENCE');
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
     const [isGeneratingBlueprint, setIsGeneratingBlueprint] = useState(false);
     const [isGeneratingClone, setIsGeneratingClone] = useState(false);
@@ -759,6 +766,7 @@ export default function AssetWorkspace({
     const cloneIntroSource = cloneData?.extracted_mechanism || extraction?.primary_mechanic || 'Creative DNA Extraction';
     const cloneIntroBody = cloneData?.deployment_principle || 'Generate five original campaign concepts that preserve the persuasion architecture while shifting the aesthetic, scene, and execution language.';
     const { lead: cloneIntroLead, remainder: cloneIntroRemainder } = splitLeadSentence(cloneIntroSource);
+    const dossierTabs = sampleMode ? SAMPLE_DOSSIER_TABS : FULL_DOSSIER_TABS;
     
     // Parse visual style string if it's stringified JSON
     let parsedStyle = extraction?.visual_style;
@@ -839,6 +847,12 @@ export default function AssetWorkspace({
             clearInterval(stepInterval);
         };
     }, [isGeneratingClone]);
+
+    useEffect(() => {
+        if (sampleMode && activeTab === 'MARKET PULSE') {
+            setActiveTab('INTELLIGENCE');
+        }
+    }, [activeTab, sampleMode]);
 
     useEffect(() => {
         if (activeTab !== 'MARKET PULSE' || !isSovereign || marketPulseData || isLoadingMarketPulse) {
@@ -1447,10 +1461,27 @@ export default function AssetWorkspace({
             </div>
 
             <div className="screen-layout w-full bg-[#FBFBF6] min-h-screen flex justify-center">
-                <div className="flex flex-col md:flex-row md:items-start min-h-screen w-full max-w-[1440px] bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
+                <div className="min-h-screen w-full max-w-[1440px] bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
+                    {sampleMode && (
+                        <div className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#D4A574]/15 bg-[#FBFBF6]/96 px-5 py-4 backdrop-blur-md md:px-8">
+                            <a href="/" className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513]">
+                                Visual Decompiler
+                            </a>
+                            <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#1A1A1A]/48">
+                                Sample Dossier
+                            </span>
+                            <a
+                                href="/ingest"
+                                className="inline-flex items-center rounded-full border border-[#D4A574]/30 bg-[#1A1A1A] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#F5F3EE] transition-colors hover:bg-[#2A2A2A]"
+                            >
+                                Start Decompiling Free
+                            </a>
+                        </div>
+                    )}
+                    <div className="flex flex-col md:flex-row md:items-start min-h-screen w-full">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    <aside className="w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6] md:sticky md:top-0 z-10">
+                    <aside className={`w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6] md:sticky ${sampleMode ? 'md:top-[66px]' : 'md:top-0'} z-10`}>
                         <div className="pt-14 pb-8 px-8 flex flex-col justify-center items-center">
 
                             <div 
@@ -1488,137 +1519,154 @@ export default function AssetWorkspace({
                                     <h1 className="text-2xl font-light tracking-tightest text-[#D4A574] uppercase">{asset.brand?.name}</h1>
                                     <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#D4A574]">{asset.brand?.market_sector}</span>
                                 </div>
-                                <div className="mb-3 flex items-center justify-between gap-3">
-                                    <div>
-                                        <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Next best action</p>
-                                        <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
-                                            Compare this against a second route, then move the strongest direction into a board or export.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="mb-4 grid gap-3 md:grid-cols-3">
-                                    <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
-                                        <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Compare against another asset</p>
-                                        <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
-                                            Put this result beside another route and surface the strategic delta fast.
-                                        </p>
+                                {sampleMode ? (
+                                    <div className="rounded-[1.5rem] border border-[#D4A574]/18 bg-[#1A1A1A] px-5 py-5 text-[#F5F3EE]">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Sample access</p>
+                                        <p className="mt-3 text-[13px] leading-relaxed text-[#FFFFFF]/78">This is a live sample dossier.</p>
+                                        <p className="mt-2 text-[13px] leading-relaxed text-[#FFFFFF]/62">Create your own in under 60 seconds.</p>
                                         <a
-                                            href="/compare"
-                                            onClick={() =>
-                                                posthog.capture('trial_next_action_compare_click', {
-                                                    surface: 'asset_result',
-                                                    step: 'try_2',
-                                                    href: '/compare',
-                                                })
-                                            }
-                                            className="mt-4 inline-flex items-center rounded-full border border-[#D4A574]/35 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10"
+                                            href="/ingest"
+                                            className="mt-5 inline-flex items-center rounded-full bg-[#D4A574] px-4 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#141414] transition-colors hover:bg-[#c8955b]"
                                         >
-                                            Run Differential Diagnosis
+                                            Start Decompiling Free
                                         </a>
                                     </div>
-                                    <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
-                                        <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Save to Vault / Board</p>
-                                        <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
-                                            This dossier is already stored in Vault. Create a board to keep it active in the next review or client thread.
-                                        </p>
-                                        <div className="mt-4">
-                                            <AddToBoard
-                                                assetId={asset.id}
-                                                triggerLabel="Create Board"
-                                                analytics={{
-                                                    clickEventName: 'trial_next_action_create_board_click',
-                                                    completionEventName: 'trial_try_3_completed',
-                                                    surface: 'asset_result',
-                                                    step: 'try_3',
-                                                    href: '/boards',
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
-                                        <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Export summary</p>
-                                        <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
-                                            Turn the readout into a shareable summary before you lose the room.
-                                        </p>
-                                        <button
-                                            onClick={() => {
-                                                posthog.capture('trial_next_action_export_summary_click', {
-                                                    surface: 'asset_result',
-                                                    step: 'try_3_alt',
-                                                    action: 'export_summary',
-                                                });
-                                                setShowExportModal(true);
-                                            }}
-                                            className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#D4A574]/35 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10"
-                                        >
-                                            <FileDown className="w-3 h-3" />
-                                            Export Summary
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="relative flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        <button
-                                            onClick={handleOpenCloneDrawer}
-                                            className="no-print flex items-center gap-2 px-4 py-2 bg-[#D4A574] text-[#141414] text-[10px] font-bold tracking-widest uppercase hover:bg-[#c8955b] rounded-full transition-all"
-                                        >
-                                            <Sparkles className="w-3 h-3" />
-                                            {cloneData ? 'Open Clone Engine' : 'Clone This Mechanic'}
-                                        </button>
-                                        <div className="relative group">
-                                            <button
-                                                onClick={handleCopyEmbed}
-                                                className="no-print flex items-center gap-2 px-4 py-2 bg-[#1A1A1A] border border-[#D4A574]/30 text-[#D4A574] text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A]/80 rounded-full transition-all"
-                                            >
-                                                <Code className="w-3 h-3" />
-                                                Copy Embed Widget
-                                                <Info className="w-3 h-3 text-[#D4A574]/70" />
-                                            </button>
-                                            <div className="pointer-events-none absolute right-0 top-full z-40 mt-3 w-[320px] rounded-[1.5rem] border border-[#D4A574]/20 bg-[#141414] p-5 text-left opacity-0 shadow-2xl transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 translate-y-1">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#D4A574]">Embed Widget</p>
-                                                <p className="mt-3 text-[12px] leading-relaxed text-[#FFFFFF]/70">
-                                                    Paste this iFrame into a client portal, strategy deck, Notion page, or internal dashboard to display a self-contained forensic intelligence panel.
+                                ) : (
+                                    <>
+                                        <div className="mb-3 flex items-center justify-between gap-3">
+                                            <div>
+                                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Next best action</p>
+                                                <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
+                                                    Compare this against a second route, then move the strongest direction into a board or export.
                                                 </p>
-                                                <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-[#D4A574]/60">
-                                                    Use for: client-facing reports · internal strategy decks · agency dashboards
-                                                </p>
-                                                <pre className="mt-4 overflow-x-auto rounded-2xl border border-[#D4A574]/10 bg-black/30 p-3 text-[10px] leading-relaxed text-[#FFFFFF]/75">
-{`<iframe src="visualdecompiler.com/embed/${asset.id}" width="100%" height="600px" />`}
-                                                </pre>
                                             </div>
                                         </div>
-                                        <button
-                                            onClick={() => setShowExportModal(true)}
-                                            className="no-print flex items-center gap-2 px-4 py-2 bg-[#4A4A4A] text-white text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] rounded-full transition-all"
-                                        >
-                                            <FileDown className="w-3 h-3" />
-                                            Export Dossier (Print/PDF)
-                                        </button>
-                                    </div>
-                                    <div className="relative xl:min-w-[96px] xl:text-right">
-                                        <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
-                                    </div>
-                                    {/* Simple Toast Notification */}
-                                    {showCopiedToast && (
-                                        <div className="absolute top-full mt-2 right-0 bg-[#8B4513] text-[#F5F5DC] text-[9px] font-bold tracking-widest uppercase px-3 py-1.5 shadow-lg animate-in fade-in slide-in-from-top-2 duration-200 z-50">
-                                            Embed Code Copied
+                                        <div className="mb-4 grid gap-3 md:grid-cols-3">
+                                            <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
+                                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Compare against another asset</p>
+                                                <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
+                                                    Put this result beside another route and surface the strategic delta fast.
+                                                </p>
+                                                <a
+                                                    href="/compare"
+                                                    onClick={() =>
+                                                        posthog.capture('trial_next_action_compare_click', {
+                                                            surface: 'asset_result',
+                                                            step: 'try_2',
+                                                            href: '/compare',
+                                                        })
+                                                    }
+                                                    className="mt-4 inline-flex items-center rounded-full border border-[#D4A574]/35 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10"
+                                                >
+                                                    Run Differential Diagnosis
+                                                </a>
+                                            </div>
+                                            <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
+                                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Save to Vault / Board</p>
+                                                <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
+                                                    This dossier is already stored in Vault. Create a board to keep it active in the next review or client thread.
+                                                </p>
+                                                <div className="mt-4">
+                                                    <AddToBoard
+                                                        assetId={asset.id}
+                                                        triggerLabel="Create Board"
+                                                        analytics={{
+                                                            clickEventName: 'trial_next_action_create_board_click',
+                                                            completionEventName: 'trial_try_3_completed',
+                                                            surface: 'asset_result',
+                                                            step: 'try_3',
+                                                            href: '/boards',
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
+                                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Export summary</p>
+                                                <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
+                                                    Turn the readout into a shareable summary before you lose the room.
+                                                </p>
+                                                <button
+                                                    onClick={() => {
+                                                        posthog.capture('trial_next_action_export_summary_click', {
+                                                            surface: 'asset_result',
+                                                            step: 'try_3_alt',
+                                                            action: 'export_summary',
+                                                        });
+                                                        setShowExportModal(true);
+                                                    }}
+                                                    className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#D4A574]/35 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10"
+                                                >
+                                                    <FileDown className="w-3 h-3" />
+                                                    Export Summary
+                                                </button>
+                                            </div>
                                         </div>
-                                    )}
-                                </div>
+                                        <div className="relative flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
+                                            <div className="flex flex-wrap items-center gap-2">
+                                                <button
+                                                    onClick={handleOpenCloneDrawer}
+                                                    className="no-print flex items-center gap-2 px-4 py-2 bg-[#D4A574] text-[#141414] text-[10px] font-bold tracking-widest uppercase hover:bg-[#c8955b] rounded-full transition-all"
+                                                >
+                                                    <Sparkles className="w-3 h-3" />
+                                                    {cloneData ? 'Open Clone Engine' : 'Clone This Mechanic'}
+                                                </button>
+                                                <div className="relative group">
+                                                    <button
+                                                        onClick={handleCopyEmbed}
+                                                        className="no-print flex items-center gap-2 px-4 py-2 bg-[#1A1A1A] border border-[#D4A574]/30 text-[#D4A574] text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A]/80 rounded-full transition-all"
+                                                    >
+                                                        <Code className="w-3 h-3" />
+                                                        Copy Embed Widget
+                                                        <Info className="w-3 h-3 text-[#D4A574]/70" />
+                                                    </button>
+                                                    <div className="pointer-events-none absolute right-0 top-full z-40 mt-3 w-[320px] rounded-[1.5rem] border border-[#D4A574]/20 bg-[#141414] p-5 text-left opacity-0 shadow-2xl transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 translate-y-1">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#D4A574]">Embed Widget</p>
+                                                        <p className="mt-3 text-[12px] leading-relaxed text-[#FFFFFF]/70">
+                                                            Paste this iFrame into a client portal, strategy deck, Notion page, or internal dashboard to display a self-contained forensic intelligence panel.
+                                                        </p>
+                                                        <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-[#D4A574]/60">
+                                                            Use for: client-facing reports · internal strategy decks · agency dashboards
+                                                        </p>
+                                                        <pre className="mt-4 overflow-x-auto rounded-2xl border border-[#D4A574]/10 bg-black/30 p-3 text-[10px] leading-relaxed text-[#FFFFFF]/75">
+{`<iframe src="visualdecompiler.com/embed/${asset.id}" width="100%" height="600px" />`}
+                                                        </pre>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    onClick={() => setShowExportModal(true)}
+                                                    className="no-print flex items-center gap-2 px-4 py-2 bg-[#4A4A4A] text-white text-[10px] font-bold tracking-widest uppercase hover:bg-[#1A1A1A] rounded-full transition-all"
+                                                >
+                                                    <FileDown className="w-3 h-3" />
+                                                    Export Dossier (Print/PDF)
+                                                </button>
+                                            </div>
+                                            <div className="relative xl:min-w-[96px] xl:text-right">
+                                                <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
+                                            </div>
+                                            {showCopiedToast && (
+                                                <div className="absolute top-full mt-2 right-0 bg-[#8B4513] text-[#F5F5DC] text-[9px] font-bold tracking-widest uppercase px-3 py-1.5 shadow-lg animate-in fade-in slide-in-from-top-2 duration-200 z-50">
+                                                    Embed Code Copied
+                                                </div>
+                                            )}
+                                        </div>
+                                    </>
+                                )}
                             </div>
 
-                            <div className="mt-5">
-                                <AssetTagEditor
-                                    assetId={asset.id}
-                                    initialTags={asset.tags || []}
-                                    onTagsChange={(nextTags) => {
-                                        setAsset((currentAsset) => ({
-                                            ...currentAsset,
-                                            tags: nextTags,
-                                        }));
-                                    }}
-                                />
-                            </div>
+                            {!sampleMode && (
+                                <div className="mt-5">
+                                    <AssetTagEditor
+                                        assetId={asset.id}
+                                        initialTags={asset.tags || []}
+                                        onTagsChange={(nextTags) => {
+                                            setAsset((currentAsset) => ({
+                                                ...currentAsset,
+                                                tags: nextTags,
+                                            }));
+                                        }}
+                                    />
+                                </div>
+                            )}
                         </div>
                     </aside>
 
@@ -1672,8 +1720,8 @@ export default function AssetWorkspace({
                     <div className="relative z-10 w-full min-h-screen bg-transparent">
 
                     {/* Minimalist Segmented Controls */}
-                    <div className="sticky top-0 z-20 bg-[#FBFBF6]/95 backdrop-blur-md border-b border-[#D4A574]/20 px-8 pt-8 md:pt-12 pb-0 flex gap-8">
-                        {(['INTELLIGENCE', 'SIGNALS', 'PSYCHOLOGY', 'BLUEPRINT', 'MARKET PULSE'] as const).map(tab => (
+                    <div className={`sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 bg-[#FBFBF6]/95 backdrop-blur-md border-b border-[#D4A574]/20 px-8 pt-8 md:pt-12 pb-0 flex gap-8`}>
+                        {dossierTabs.map(tab => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
@@ -2601,9 +2649,10 @@ export default function AssetWorkspace({
                                 </div>
                             )}
                         </div>
-                    </div>
                 </div>
+            </div>
             )}
+        </div>
     </>
 );
 }
