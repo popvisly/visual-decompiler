@@ -67,6 +67,14 @@ interface DifferentialDiagnosticResponse {
     }>;
 }
 
+function firstSentence(value?: string | null) {
+    if (!value) return '';
+
+    const trimmed = value.trim();
+    const match = trimmed.match(/^.*?[.!?](?:\s|$)/);
+    return (match?.[0] || trimmed).trim();
+}
+
 export default function DifferentialDiagnosticsPage() {
     const [vaultAssets, setVaultAssets] = useState<PulseAsset[]>([]);
     const [assetA, setAssetA] = useState<PulseAsset | null>(null);
@@ -79,6 +87,7 @@ export default function DifferentialDiagnosticsPage() {
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [loadingLabelIndex, setLoadingLabelIndex] = useState(0);
     const [preparedFor, setPreparedFor] = useState('');
+    const [exportPreset, setExportPreset] = useState<'standard' | 'pitch'>('standard');
     const printRef = useRef<HTMLDivElement>(null);
 
     const loadingLabels = [
@@ -258,6 +267,21 @@ export default function DifferentialDiagnosticsPage() {
     const frictionDelta = result
         ? result.behavioral_bars.cognitive_friction.b - result.behavioral_bars.cognitive_friction.a
         : 0;
+    const pitchNarrative = result && assetA && assetB
+        ? {
+            problem: `The category is compressing around familiar creative patterns, making it harder for ${assetB.brand.name} to claim a sharper strategic position without clear evidence.`,
+            insight:
+                firstSentence(result.macro_synthesis.primary_shift) ||
+                firstSentence(result.macro_synthesis.strategic_delta_summary) ||
+                'The diagnostic surfaced a meaningful strategic difference between the control and proposed routes.',
+            recommendation:
+                firstSentence(result.matrix_cubes.winning_variant.rationale) ||
+                `Prioritise ${result.matrix_cubes.winning_variant.label} as the route with the stronger client-facing case.`,
+            strategicDelta:
+                firstSentence(result.macro_synthesis.strategic_delta_summary) ||
+                'The differential layer is directional for now, but it already shows a clearer strategic advantage for the recommended route.',
+        }
+        : null;
 
     return (
         <div className="min-h-screen bg-[#FBFBF6] text-[#1A1A1A] relative overflow-hidden">
@@ -538,6 +562,31 @@ export default function DifferentialDiagnosticsPage() {
                                     </p>
                                 </div>
                                 <div className="flex flex-col gap-3 md:min-w-[320px]">
+                                    <div className="inline-flex rounded-full border border-[#D4A574]/20 bg-white/70 p-1">
+                                        <button
+                                            type="button"
+                                            onClick={() => setExportPreset('standard')}
+                                            className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] transition ${
+                                                exportPreset === 'standard' ? 'bg-[#D4A574] text-[#141414]' : 'text-[#8B4513] hover:bg-[#D4A574]/10'
+                                            }`}
+                                        >
+                                            Standard Dossier
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setExportPreset('pitch')}
+                                            className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] transition ${
+                                                exportPreset === 'pitch' ? 'bg-[#D4A574] text-[#141414]' : 'text-[#8B4513] hover:bg-[#D4A574]/10'
+                                            }`}
+                                        >
+                                            Pitch Narrative
+                                        </button>
+                                    </div>
+                                    {exportPreset === 'pitch' && (
+                                        <p className="text-[11px] leading-relaxed text-[#1A1A1A]/55">
+                                            Adds a concise pitch-ready narrative: Problem, Insight, Recommendation, and Strategic Delta.
+                                        </p>
+                                    )}
                                     <input
                                         type="text"
                                         value={preparedFor}
@@ -788,6 +837,25 @@ export default function DifferentialDiagnosticsPage() {
                             <p>Date: {new Date().toLocaleDateString()}</p>
                         </div>
                     </section>
+
+                    {exportPreset === 'pitch' && pitchNarrative && (
+                        <section className="differential-section min-h-[100vh] px-10 py-12">
+                            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#C9A96E]">Pitch Narrative</p>
+                            <div className="mt-8 grid gap-6">
+                                {[
+                                    ['Problem', pitchNarrative.problem],
+                                    ['Insight', pitchNarrative.insight],
+                                    ['Recommendation', pitchNarrative.recommendation],
+                                    ['Strategic Delta', pitchNarrative.strategicDelta],
+                                ].map(([label, value]) => (
+                                    <div key={label} className="differential-block border border-[#C9A96E]/30 p-6">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#C9A96E]">{label}</p>
+                                        <p className="mt-4 text-base leading-relaxed text-[#1A1A1A]">{value}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
 
                     <section className="differential-section min-h-[100vh] px-10 py-12">
                         <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#C9A96E]">Executive Delta</p>
