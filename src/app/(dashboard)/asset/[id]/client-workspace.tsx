@@ -2397,22 +2397,24 @@ export default function AssetWorkspace({
                                         {extraction?.full_dossier?.test_plan && (
                                             <div>
                                                 <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Iteration & Test Plan</span>
-                                                <p className="text-sm text-[#FFFFFF] mb-6 border-l-2 border-[#D4A574] pl-4 italic">{extraction.full_dossier.test_plan.hypothesis}</p>
-                                                <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-3">
-                                                    {extraction.full_dossier.test_plan.test_cells.map((cell: any, i: number) => (
-                                                        <div key={i} className={`${ANALYSIS_CARD_CLASS} flex flex-col`}>
+                                                <p className="mb-6 border-l-2 border-[#D4A574] pl-4 text-sm leading-relaxed text-[#FFFFFF]/86">{extraction.full_dossier.test_plan.hypothesis}</p>
+                                                <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
+                                                    {extraction.full_dossier.test_plan.test_cells.map((cell: any, i: number) => {
+                                                        const isLongCell = `${cell.change ?? ''} ${cell.rationale ?? ''}`.length > 210;
+                                                        return (
+                                                        <div key={i} className={`${ANALYSIS_CARD_CLASS} flex flex-col ${isLongCell ? 'xl:col-span-2' : 'xl:col-span-1'}`}>
                                                             <span className="text-[11px] font-bold tracking-[0.2em] text-[#D4A574] uppercase block mb-3">{cell.lever}</span>
                                                             <p className="text-sm text-[#FFFFFF] font-light mb-4 leading-relaxed">{cell.change}</p>
-                                                            <p className="text-[9px] text-[#D4A574]/60 uppercase tracking-[0.2em] mt-auto border-t border-[#D4A574]/10 pt-4 font-bold">{cell.rationale}</p>
+                                                            <p className="mt-auto border-t border-[#D4A574]/10 pt-4 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]/72">{cell.rationale}</p>
                                                         </div>
-                                                    ))}
+                                                    )})}
                                                 </div>
                                             </div>
                                         )}
 
                                         {/* Plausible Readings & Objection Dismantled */}
                                         {extraction?.full_dossier && (
-                                            <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
+                                            <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
                                                 {/* Plausible Readings */}
                                                 {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
                                                     <div className={`${ANALYSIS_CARD_CLASS} flex flex-col min-h-[220px] xl:min-h-[240px]`}>
@@ -2444,7 +2446,7 @@ export default function AssetWorkspace({
                                                             Objection Dismantled
                                                         </h3>
                                                         <div className="flex-1 flex flex-col justify-center">
-                                                            <p className="text-[12px] text-[#FFFFFF]/70 leading-relaxed font-light">
+                                                            <p className="max-w-[62ch] text-[12px] text-[#FFFFFF]/70 leading-relaxed font-light">
                                                                 {extraction.full_dossier.objection_dismantling}
                                                             </p>
                                                         </div>
@@ -2471,7 +2473,7 @@ export default function AssetWorkspace({
                                         </div>
 
                                          {/* Execution Constraints Checklist */}
-                                         <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
+                                         <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
                                              <div className={ANALYSIS_CARD_CLASS}>
                                                  <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Primary Trigger</span>
                                                  <p className="text-xl text-[#FFFFFF] font-light leading-snug">{blueprintData.execution_constraints.primary_trigger}</p>
@@ -2479,9 +2481,9 @@ export default function AssetWorkspace({
                                              <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm">
                                                  <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Technical Specs</span>
                                                  <ul className="space-y-4 text-sm text-[#FFFFFF]/80">
-                                                     <li className="flex flex-col gap-1"><span className="text-[#D4A574] uppercase text-[9px] font-bold tracking-widest opacity-60">Lighting Architecture</span> <span className="text-sm">{blueprintData.technical_specs.lighting_architecture}</span></li>
-                                                     <li className="flex flex-col gap-1"><span className="text-[#D4A574] uppercase text-[9px] font-bold tracking-widest opacity-60">Gaze Vector</span> <span className="text-sm">{blueprintData.technical_specs.gaze_vector}</span></li>
-                                                     <li className="flex flex-col gap-1"><span className="text-[#D4A574] uppercase text-[9px] font-bold tracking-widest opacity-60">Material Cues</span> <span className="text-sm italic">{blueprintData.technical_specs.material_cues.join(' • ')}</span></li>
+                                                     <li className="flex flex-col gap-1"><span className="text-[#D4A574] uppercase text-[9px] font-bold tracking-[0.18em] opacity-60">Lighting Architecture</span> <span className="max-w-[62ch] text-sm leading-relaxed">{blueprintData.technical_specs.lighting_architecture}</span></li>
+                                                     <li className="flex flex-col gap-1"><span className="text-[#D4A574] uppercase text-[9px] font-bold tracking-[0.18em] opacity-60">Gaze Vector</span> <span className="max-w-[62ch] text-sm leading-relaxed">{blueprintData.technical_specs.gaze_vector}</span></li>
+                                                     <li className="flex flex-col gap-1"><span className="text-[#D4A574] uppercase text-[9px] font-bold tracking-[0.18em] opacity-60">Material Cues</span> <span className="text-sm leading-relaxed">{blueprintData.technical_specs.material_cues.join(' • ')}</span></li>
                                                  </ul>
                                              </div>
                                          </div>
@@ -2489,13 +2491,13 @@ export default function AssetWorkspace({
                                         {/* Brutalist [+] / [-] constraints */}
                                         <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm">
                                             <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#D4A574]/20 pb-2">Strict Inclusion/Exclusion Constraints</span>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono text-xs">
+                                            <div className="grid grid-cols-1 gap-8 text-xs md:grid-cols-2">
                                                 <div className="space-y-4">
                                                     <span className="block text-[8px] font-bold text-[#D4A574] mb-2 uppercase tracking-[0.2em]">[+] Positive Benchmarks</span>
                                                     {blueprintData.execution_constraints.must_include.map((item: string, i: number) => (
                                                         <div key={`inc-${i}`} className="flex items-start gap-3 bg-[#1A1A1A]/50 p-3 border border-[#D4A574]/10 rounded-xl">
                                                             <span className="text-emerald-400 font-bold">✓</span>
-                                                            <span className="text-[#FFFFFF] uppercase tracking-tight">{item}</span>
+                                                            <span className="text-sm leading-relaxed text-[#FFFFFF]">{item}</span>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -2504,7 +2506,7 @@ export default function AssetWorkspace({
                                                     {blueprintData.execution_constraints.must_not_include.map((item: string, i: number) => (
                                                         <div key={`exc-${i}`} className="flex items-start gap-3 bg-[#1A1A1A]/50 p-3 border border-[#D4A574]/10 rounded-xl opacity-60">
                                                             <span className="text-rose-400 font-bold">×</span>
-                                                            <span className="text-[#FFFFFF] uppercase tracking-tight line-through">{item}</span>
+                                                            <span className="text-sm leading-relaxed text-[#FFFFFF] line-through">{item}</span>
                                                         </div>
                                                     ))}
                                                 </div>

@@ -269,21 +269,25 @@ export default function DossierDecisionSummary({
                             {
                                 label: 'Promise clarity',
                                 value: promiseClarity,
-                            },
-                            {
-                                label: 'Framing strength',
-                                value: framingStrength,
+                                span: 'xl:col-span-1',
                             },
                             {
                                 label: 'CTA-message alignment',
                                 value: ctaMessageAlignment,
+                                span: 'xl:col-span-1',
+                            },
+                            {
+                                label: 'Framing strength',
+                                value: framingStrength,
+                                span: 'xl:col-span-2',
                             },
                             {
                                 label: 'Suggested copy move',
                                 value: suggestedCopyMove,
+                                span: 'xl:col-span-2',
                             },
                         ].map((item) => (
-                            <div key={item.label} className="rounded-[1.4rem] border border-[#3A3329] bg-black/10 px-4 py-4">
+                            <div key={item.label} className={`rounded-[1.4rem] border border-[#3A3329] bg-black/10 px-4 py-4 ${item.span}`}>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8F7D63]">{item.label}</p>
                                 <p className="mt-3 text-[14px] leading-6 text-[#F5F3EE]">{item.value}</p>
                             </div>
