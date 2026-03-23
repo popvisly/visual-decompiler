@@ -254,6 +254,15 @@ export default async function EnablementPage() {
                                         </p>
                                     ))}
                                 </div>
+
+                                <div className="mt-6 rounded-[1.2rem] border border-[#E5DDCF] bg-[#FBFBF6] px-4 py-4">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#B28D56]">
+                                        Interpretation note
+                                    </p>
+                                    <p className="mt-3 text-[14px] leading-6 text-[#4F4A43]">
+                                        Completion events are first-time onboarding signals only. They are guarded per browser path with localStorage, so read them as activation progress rather than total repeat usage.
+                                    </p>
+                                </div>
                             </section>
 
                             <section className="grid gap-6 lg:grid-cols-[minmax(0,1.15fr),minmax(0,0.85fr)]">
