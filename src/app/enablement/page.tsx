@@ -5,6 +5,8 @@ import StickyEnablementNav from '@/components/enablement/StickyEnablementNav';
 import {
     ENABLEMENT_DEMO_FLOW,
     ENABLEMENT_GUARDRAILS,
+    ENABLEMENT_HOMEPAGE_READOUT_RULES,
+    ENABLEMENT_HOMEPAGE_READOUT_TARGETS,
     ENABLEMENT_POSITIONING_ANCHOR,
     ENABLEMENT_POSITIONING_LOCK,
     ENABLEMENT_PROOF_MAP,
@@ -23,6 +25,7 @@ const NAV_ITEMS = [
     { id: 'objections', label: 'Objections' },
     { id: 'demo-flow', label: 'Demo Flow' },
     { id: 'proof-map', label: 'Proof Map' },
+    { id: 'homepage-readout', label: 'Homepage Readout' },
     { id: 'snippets', label: 'Snippets' },
 ] as const;
 
@@ -135,6 +138,60 @@ export default async function EnablementPage() {
                                             </p>
                                             <p className="text-[15px] leading-7 text-[#4F4A43]">{row.screens}</p>
                                         </div>
+                                    ))}
+                                </div>
+                            </section>
+
+                            <section id="homepage-readout" className="scroll-mt-28 rounded-[1.85rem] border border-[#D8CCB5] bg-[#FCFAF5] px-6 py-6 md:px-8">
+                                <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                                    <div className="max-w-3xl">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8E7450]">Homepage Readout</p>
+                                        <h2 className="mt-3 text-2xl font-semibold leading-tight tracking-tight text-[#141414] md:text-[32px]">
+                                            Week-one interpretation for the ad-to-intelligence block
+                                        </h2>
+                                        <p className="mt-4 text-[15px] leading-7 text-[#5E5A53]">
+                                            Use this to decide whether the block needs a placement change, a persuasion tweak, or no change at all.
+                                        </p>
+                                    </div>
+                                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8A7B64]">
+                                        Variant v1
+                                    </p>
+                                </div>
+
+                                <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                                    {ENABLEMENT_HOMEPAGE_READOUT_TARGETS.map((target) => (
+                                        <article
+                                            key={target.metric}
+                                            className="rounded-[1.2rem] border border-[#E5DDCF] bg-[#FBFBF6] px-4 py-4"
+                                        >
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#B28D56]">
+                                                {target.metric}
+                                            </p>
+                                            <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#7E6948]">
+                                                {target.event}
+                                            </p>
+                                            <p className="mt-3 text-[22px] font-semibold tracking-tight text-[#141414]">
+                                                {target.target}
+                                            </p>
+                                            <p className="mt-3 text-[14px] leading-6 text-[#4F4A43]">{target.meaning}</p>
+                                        </article>
+                                    ))}
+                                </div>
+
+                                <div className="mt-6 grid gap-3 md:grid-cols-2">
+                                    {ENABLEMENT_HOMEPAGE_READOUT_RULES.map((rule) => (
+                                        <article
+                                            key={rule.title}
+                                            className="rounded-[1.2rem] border border-[#E5DDCF] bg-[#FBFBF6] px-4 py-4"
+                                        >
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#B28D56]">
+                                                {rule.title}
+                                            </p>
+                                            <p className="mt-2 text-[13px] font-semibold uppercase tracking-[0.12em] text-[#7E6948]">
+                                                {rule.threshold}
+                                            </p>
+                                            <p className="mt-3 text-[15px] leading-7 text-[#3F3A33]">{rule.action}</p>
+                                        </article>
                                     ))}
                                 </div>
                             </section>

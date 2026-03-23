@@ -48,6 +48,56 @@ export const ENABLEMENT_PROOF_MAP = [
     },
 ] as const;
 
+export const ENABLEMENT_HOMEPAGE_READOUT_TARGETS = [
+    {
+        metric: 'View rate',
+        event: 'homepage_ad_to_intelligence_view',
+        target: '55%+ of homepage sessions',
+        meaning: 'Confirms the section is being seen often enough to judge persuasion rather than placement.',
+    },
+    {
+        metric: 'Primary CTR',
+        event: 'homepage_ad_to_intelligence_cta_primary_click / views',
+        target: '6-10%',
+        meaning: 'Healthy signal that the block is moving users from proof to action.',
+    },
+    {
+        metric: 'Secondary CTR',
+        event: 'homepage_ad_to_intelligence_cta_secondary_click / views',
+        target: '2-5%',
+        meaning: 'Shows validation-seeking behavior without overwhelming the primary path.',
+    },
+    {
+        metric: 'Primary vs Secondary',
+        event: 'primary clicks vs secondary clicks',
+        target: 'Primary at roughly 2x secondary',
+        meaning: 'Indicates confidence is translating into action, not just curiosity.',
+    },
+] as const;
+
+export const ENABLEMENT_HOMEPAGE_READOUT_RULES = [
+    {
+        title: 'Low views',
+        threshold: '<45% of homepage sessions',
+        action: 'Placement issue. Move the block higher or tighten the section immediately above it.',
+    },
+    {
+        title: 'Good views, weak primary CTR',
+        threshold: 'Primary CTR <4%',
+        action: 'Persuasion issue. Sharpen the headline, lead image, or primary CTA emphasis.',
+    },
+    {
+        title: 'Secondary beating primary',
+        threshold: 'Secondary interest unusually high',
+        action: 'Users want proof first. Keep the dossier CTA visible and clarify what happens after Start Decompiling Free.',
+    },
+    {
+        title: 'Strong primary CTR',
+        threshold: 'Primary CTR 8%+',
+        action: 'Leave the structure stable. Only make minor visual or copy polish changes.',
+    },
+] as const;
+
 export const ENABLEMENT_GUARDRAILS = [
     'Don’t call it “just AI.”',
     'Don’t lead with model/provider.',
