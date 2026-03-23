@@ -16,6 +16,7 @@ import {
     ShieldCheck,
     Sparkles,
 } from 'lucide-react';
+import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 type ProofPoint = {
     label: string;
@@ -720,7 +721,7 @@ function LiveDeconstruction() {
                                 Start Decompiling Free
                             </a>
                             <a
-                                href="/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a"
+                                href={SAMPLE_DOSSIER_HREF}
                                 className="inline-flex items-center justify-center rounded-md border border-[#4A3F30] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#D7C3A5] transition hover:-translate-y-[1px] hover:bg-[#201C17]"
                             >
                                 Open Sample Dossier

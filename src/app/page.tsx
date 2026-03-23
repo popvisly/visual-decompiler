@@ -2,6 +2,7 @@ import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import Hero from '@/components/marketing/Hero';
 import ProductProofSequence from '@/components/marketing/ProductProofSequence';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
+import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 export default function HomePage() {
     return (
@@ -21,7 +22,7 @@ export default function HomePage() {
                 headlineHighlight="Before the room decides."
                 subhead="Visual Decompiler turns any ad into a client-ready strategic readout — persuasion mechanics, psychology, comparative route testing, and white-label output in under 60 seconds."
                 ctaPrimary={{ label: 'Start Decompiling Free', href: '/ingest' }}
-                ctaSecondary={{ label: 'Open Sample Dossier', href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a' }}
+                ctaSecondary={{ label: 'Open Sample Dossier', href: SAMPLE_DOSSIER_HREF }}
                 microproof="No card required · 5 free analyses · White-label export ready"
             />
 

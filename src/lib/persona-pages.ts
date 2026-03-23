@@ -1,3 +1,5 @@
+import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
+
 export type PersonaFeature = {
     eyebrow: string;
     title: string;
@@ -52,7 +54,7 @@ export const ART_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     },
     secondaryCta: {
         label: 'Open Sample Dossier',
-        href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
+        href: SAMPLE_DOSSIER_HREF,
     },
     trustLine: 'No card required · 5 free analyses · Results in under 60 seconds',
     firstUploadRecipe: {
@@ -129,7 +131,7 @@ export const NEW_BUSINESS_PERSONA_PAGE: PersonaPageData = {
     },
     secondaryCta: {
         label: 'Open Sample Dossier',
-        href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
+        href: SAMPLE_DOSSIER_HREF,
     },
     trustLine: 'No card required · 5 free analyses · White-label pitch-ready export',
     firstUploadRecipe: {
@@ -201,7 +203,7 @@ export const CREATIVE_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     },
     secondaryCta: {
         label: 'Open Sample Dossier',
-        href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
+        href: SAMPLE_DOSSIER_HREF,
     },
     trustLine: 'No card required · 5 free analyses · White-label export ready',
     firstUploadRecipe: {
@@ -273,7 +275,7 @@ export const STRATEGY_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     },
     secondaryCta: {
         label: 'Open Sample Dossier',
-        href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
+        href: SAMPLE_DOSSIER_HREF,
     },
     trustLine: 'No card required · 5 free analyses · White-label dossier export included',
     firstUploadRecipe: {
@@ -345,7 +347,7 @@ export const BRAND_MANAGER_PERSONA_PAGE: PersonaPageData = {
     },
     secondaryCta: {
         label: 'Open Sample Dossier',
-        href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
+        href: SAMPLE_DOSSIER_HREF,
     },
     trustLine: 'No card required · 5 free analyses · No creative background required',
     firstUploadRecipe: {
@@ -417,7 +419,7 @@ export const COPYWRITER_PERSONA_PAGE: PersonaPageData = {
     },
     secondaryCta: {
         label: 'Open Sample Dossier',
-        href: '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a',
+        href: SAMPLE_DOSSIER_HREF,
     },
     trustLine: 'No card required · 5 free analyses · Results in under 60 seconds',
     firstUploadRecipe: {
