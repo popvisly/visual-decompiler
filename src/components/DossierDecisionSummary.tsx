@@ -147,11 +147,11 @@ export default function DossierDecisionSummary({
     const triadStates: DecisionState[] = ['KEEP', 'REFINE', 'KILL'];
 
     return (
-        <section className="space-y-6">
+        <section className="space-y-[clamp(12px,1vw,18px)]">
             <div className="flex flex-col gap-4 rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-5 md:flex-row md:items-center md:justify-between md:p-6">
                 <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Decision view</p>
-                    <p className="mt-3 text-sm leading-relaxed text-[#FFFFFF]/68">
+                    <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-[#FFFFFF]/68">
                         Toggle between the executive read and the full forensic surface without losing the underlying analysis.
                     </p>
                 </div>
@@ -181,7 +181,7 @@ export default function DossierDecisionSummary({
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
                         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Creative Director Decision Triad</p>
-                        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#FFFFFF]/68">
+                        <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-[#FFFFFF]/68">
                             {decisionRationale(decision, strategicMove, confidenceScore)}
                         </p>
                     </div>
@@ -193,7 +193,7 @@ export default function DossierDecisionSummary({
                     </a>
                 </div>
 
-                <div className="mt-5 grid gap-3 md:grid-cols-3">
+                <div className="mt-5 grid items-start gap-3 lg:grid-cols-3">
                     {triadStates.map((state) => (
                         <div
                             key={state}
@@ -222,7 +222,7 @@ export default function DossierDecisionSummary({
 
             <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-5 md:p-6">
                 <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Strategy Director Framework</p>
-                <div className="mt-5 grid gap-3 md:grid-cols-2">
+                <div className="mt-5 grid items-start gap-3 xl:grid-cols-2">
                     {[
                         {
                             label: 'Mechanism',
@@ -249,14 +249,14 @@ export default function DossierDecisionSummary({
                 </div>
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+            <div className="grid items-start gap-4 2xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
                 <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-5 md:p-6">
                     <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Brief Alignment</p>
                     <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                         <span className="inline-flex w-fit rounded-full border border-[#D4A574]/30 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#F2D8B0]">
                             {briefAlignment}
                         </span>
-                        <p className="max-w-xl text-sm leading-relaxed text-[#FFFFFF]/70">
+                        <p className="max-w-[62ch] text-sm leading-relaxed text-[#FFFFFF]/70">
                             {briefAlignmentRationale(briefAlignment, strategicMove, audienceTension)}
                         </p>
                     </div>
@@ -264,7 +264,7 @@ export default function DossierDecisionSummary({
 
                 <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-5 md:p-6">
                     <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Copywriter Persuasion Alignment</p>
-                    <div className="mt-5 grid gap-3 md:grid-cols-2">
+                    <div className="mt-5 grid items-start gap-3 xl:grid-cols-2">
                         {[
                             {
                                 label: 'Promise clarity',
@@ -295,7 +295,7 @@ export default function DossierDecisionSummary({
             {isExecutiveSummary ? (
                 <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-5 md:p-6">
                     <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Executive Summary</p>
-                    <div className="mt-5 grid gap-3 md:grid-cols-2">
+                    <div className="mt-5 grid items-start gap-3 xl:grid-cols-2">
                         {[
                             {
                                 label: 'What it’s doing',

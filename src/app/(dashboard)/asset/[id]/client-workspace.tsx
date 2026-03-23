@@ -323,6 +323,9 @@ const INTELLIGENCE_DEFINITIONS = {
     }
 };
 
+const ANALYSIS_CARD_CLASS =
+    'border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-[clamp(16px,1.2vw,24px)] shadow-sm';
+
 const InfoButton = ({ section }: { section: keyof typeof INTELLIGENCE_DEFINITIONS }) => {
     const [isOpen, setIsOpen] = useState(false);
     const def = INTELLIGENCE_DEFINITIONS[section];
@@ -488,8 +491,8 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                             id={type === 'ACT' ? block.label : undefined}
                             className={`border bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col ${
                                 type === 'ACT'
-                                    ? 'forensic-act-block min-h-[420px] scroll-mt-24'
-                                    : 'min-h-[300px]'
+                                    ? 'forensic-act-block min-h-[320px] xl:min-h-[360px] scroll-mt-24'
+                                    : 'min-h-[220px] xl:min-h-[240px]'
                             } ${
                                 type === 'ACT' && activeAct === block.label
                                     ? 'border-[#D4A574]/50 shadow-[0_0_0_1px_rgba(212,165,116,0.18)]'
@@ -507,7 +510,7 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                     </h3>
                                     <AnalyticWaveMap index={i} isActive={activeAct === block.label} />
                                     <div className="flex-1">
-                                        <div className="space-y-5">
+                                        <div className="max-w-[62ch] space-y-5">
                                             {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
                                                 <p key={pi} className="text-[15px] text-[#FFFFFF]/70 leading-9 font-light">
                                                     {paragraph.trim()}
@@ -526,7 +529,7 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                         {block.title}
                                     </h3>
                                     <div className="flex-1 pt-6">
-                                        <div className="space-y-4">
+                                        <div className="max-w-[62ch] space-y-4">
                                             {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
                                                 <p key={pi} className="text-[15px] text-[#FFFFFF]/70 leading-9 font-light">
                                                     {paragraph.trim()}
@@ -1206,6 +1209,61 @@ export default function AssetWorkspace({
                         margin: 20mm 18mm;
                     }
                 }
+
+                .vault-analysis-shell {
+                    --vault-max-width: 1680px;
+                    --vault-content-pad-x: clamp(16px, 2vw, 32px);
+                    --analysis-right-max: 880px;
+                    --analysis-text-measure: 62ch;
+                    max-width: var(--vault-max-width);
+                    margin-inline: auto;
+                    padding-inline: var(--vault-content-pad-x);
+                }
+
+                .vault-analysis-frame {
+                    min-height: 100vh;
+                    width: 100%;
+                }
+
+                .vault-analysis-content-inner {
+                    max-width: var(--analysis-right-max);
+                }
+
+                .vault-analysis-content-inner p,
+                .vault-analysis-content-inner li {
+                    max-width: var(--analysis-text-measure);
+                }
+
+                .vault-analysis-tabbar {
+                    overflow-x: auto;
+                    scrollbar-width: none;
+                }
+
+                .vault-analysis-tabbar::-webkit-scrollbar {
+                    display: none;
+                }
+
+                @media (min-width: 1024px) {
+                    .vault-analysis-frame {
+                        display: grid;
+                        grid-template-columns: minmax(420px, 560px) minmax(680px, 1fr);
+                        align-items: start;
+                    }
+
+                    .vault-analysis-asset-rail {
+                        width: 100%;
+                    }
+
+                    .vault-analysis-content-rail {
+                        width: 100%;
+                    }
+                }
+
+                @media (min-width: 1920px) {
+                    .vault-analysis-shell {
+                        --vault-content-pad-x: clamp(24px, 2.4vw, 40px);
+                    }
+                }
             `}</style>
 
             {/* Print-only sovereign briefing layout (includes Signals + Psychology after Narrative Framework) */}
@@ -1464,8 +1522,9 @@ export default function AssetWorkspace({
                 </div>
             </div>
 
-            <div className="screen-layout w-full bg-[#FBFBF6] min-h-screen flex justify-center">
-                <div className="min-h-screen w-full max-w-[1440px] bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
+            <div className="screen-layout w-full min-h-screen bg-[#FBFBF6]">
+                <div className="vault-analysis-shell min-h-screen w-full bg-[#FBFBF6] text-[#1A1A1A]">
+                    <div className="min-h-screen w-full bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
                     {sampleMode && (
                         <div className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#D4A574]/15 bg-[#FBFBF6]/96 px-5 py-4 backdrop-blur-md md:px-8">
                             <a href="/" className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513]">
@@ -1482,11 +1541,11 @@ export default function AssetWorkspace({
                             </a>
                         </div>
                     )}
-                    <div className="flex flex-col md:flex-row md:items-start min-h-screen w-full">
+                    <div className="vault-analysis-frame">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    <aside className={`w-full md:w-[45%] border-r border-[#D4A574]/20 relative bg-[#FBFBF6] md:sticky ${sampleMode ? 'md:top-[66px]' : 'md:top-0'} z-10`}>
-                        <div className="pt-14 pb-8 px-8 flex flex-col justify-center items-center">
+                    <aside className={`vault-analysis-asset-rail w-full border-r border-[#D4A574]/20 relative bg-[#FBFBF6] lg:sticky ${sampleMode ? 'lg:top-[66px]' : 'lg:top-0'} z-10`}>
+                        <div className="flex flex-col items-center justify-center px-[clamp(16px,2vw,32px)] pt-10 pb-8 lg:pt-14">
 
                             <div 
                                 className={`w-full max-w-[480px] aspect-[4/5] relative flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#1A1A1A] group rounded-2xl shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75 saturate-50' : ''}`}
@@ -1545,8 +1604,8 @@ export default function AssetWorkspace({
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="mb-4 grid gap-3 md:grid-cols-3">
-                                            <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
+                                        <div className="mb-4 grid items-start gap-[clamp(12px,1vw,18px)] md:grid-cols-2 xl:grid-cols-3">
+                                            <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4 min-h-[204px]">
                                                 <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Compare against another asset</p>
                                                 <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
                                                     Put this result beside another route and surface the strategic delta fast.
@@ -1565,7 +1624,7 @@ export default function AssetWorkspace({
                                                     Run Differential Diagnosis
                                                 </a>
                                             </div>
-                                            <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
+                                            <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4 min-h-[204px]">
                                                 <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Save to Vault / Board</p>
                                                 <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
                                                     This dossier is already stored in Vault. Create a board to keep it active in the next review or client thread.
@@ -1584,7 +1643,7 @@ export default function AssetWorkspace({
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
+                                            <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4 min-h-[204px]">
                                                 <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Export summary</p>
                                                 <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
                                                     Turn the readout into a shareable summary before you lose the room.
@@ -1719,12 +1778,12 @@ export default function AssetWorkspace({
                     )}
 
                 {/* RIGHT COLUMN: Scrollable Forensic Console (55%) */}
-                <div className="w-full md:w-[55%] bg-[#FBFBF6] min-h-screen relative">
+                <div className="vault-analysis-content-rail w-full min-h-screen bg-[#FBFBF6] relative">
                     <div className="pointer-events-none absolute inset-0 opacity-[0.4] [background-image:linear-gradient(rgba(212,165,116,0.05)_48px,transparent_48px),linear-gradient(90deg,rgba(212,165,116,0.05)_48px,transparent_48px)] [background-size:48px_48px]" />
-                    <div className="relative z-10 w-full min-h-screen bg-transparent">
+                    <div className="vault-analysis-content-inner relative z-10 min-h-screen w-full bg-transparent">
 
                     {/* Minimalist Segmented Controls */}
-                    <div className={`sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 bg-[#FBFBF6]/95 backdrop-blur-md border-b border-[#D4A574]/20 px-8 pt-8 md:pt-12 pb-0 flex gap-8`}>
+                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 flex gap-6 border-b border-[#D4A574]/20 bg-[#FBFBF6]/95 px-[clamp(16px,2vw,32px)] pt-8 pb-0 backdrop-blur-md md:pt-10`}>
                         {dossierTabs.map(tab => (
                             <button
                                 key={tab}
@@ -1741,12 +1800,12 @@ export default function AssetWorkspace({
                     </div>
 
                     {/* Tab Content Area */}
-                    <div className="p-8 md:p-12">
+                    <div className="px-[clamp(16px,2vw,32px)] py-[clamp(16px,1.6vw,28px)]">
                         {/* TAB 1: INTELLIGENCE */}
                         {activeTab === 'INTELLIGENCE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
-                                    <div className="space-y-12">
+                                    <div className="space-y-10">
                                         {(!extraction.primary_mechanic || !extraction.full_dossier) && <SovereignProcessingView assetId={asset.id} agency={agency} />}
 
                                         {extraction.primary_mechanic && extraction.full_dossier && (
@@ -1760,13 +1819,13 @@ export default function AssetWorkspace({
                                             />
                                         )}
 
-                                        {!isExecutiveSummary ? (
+                                        {!isExecutiveSummary && (
                                             <div className="space-y-12">
-                                                {/* Top 4 Extraction Metrics as Intelligence Cards */}
-                                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-2">
+                                        {/* Top 4 Extraction Metrics as Intelligence Cards */}
+                                        <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] pb-2 xl:grid-cols-3">
                                             
                                             {/* Unified Primary Intelligence Metric */}
-                                            <div className="col-span-1 lg:col-span-3 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-3xl p-6 shadow-sm flex flex-col lg:flex-row lg:items-center gap-6 min-h-[140px]">
+                                            <div className={`col-span-1 xl:col-span-3 ${ANALYSIS_CARD_CLASS} flex flex-col gap-[clamp(12px,1vw,18px)] lg:flex-row lg:items-center min-h-[120px]`}>
                                                 {/* Left: Primary Mechanic */}
                                                 <div className="flex-1">
                                                     <div className="flex justify-between items-center mb-4 border-b border-[#D4A574]/20 pb-2">
@@ -1794,13 +1853,13 @@ export default function AssetWorkspace({
                                             </div>
 
                                             {/* Visual Style */}
-                                            <div className="col-span-1 lg:col-span-2 border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-6 shadow-sm flex flex-col min-h-[140px]">
+                                            <div className={`col-span-1 xl:col-span-2 ${ANALYSIS_CARD_CLASS} flex flex-col min-h-[120px]`}>
                                                 <div className="flex justify-between items-center mb-4 border-b border-[#D4A574]/20 pb-2">
                                                     <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Synthesized Visual Style</span>
                                                     <InfoButton section="VISUAL_STYLE" />
                                                 </div>
                                                 <div className="flex flex-col h-full">
-                                                    <p className="text-sm text-[#FFFFFF] font-light leading-relaxed uppercase tracking-[0.15em] mt-2 mb-8">
+                                                    <p className="mt-2 mb-6 max-w-[62ch] text-sm font-light uppercase leading-relaxed tracking-[0.15em] text-[#FFFFFF]">
                                                         {extraction.visual_style}
                                                     </p>
 
@@ -1832,7 +1891,7 @@ export default function AssetWorkspace({
                                             </div>
 
                                             {/* Color Palette */}
-                                            <div className="col-span-1 border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-6 shadow-sm flex flex-col min-h-[140px]">
+                                            <div className={`col-span-1 ${ANALYSIS_CARD_CLASS} flex flex-col min-h-[120px]`}>
                                                 <div className="flex justify-between items-center mb-4 border-b border-[#D4A574]/20 pb-2">
                                                     <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Chromatic Base</span>
                                                     <InfoButton section="CHROMATIC_BASE" />
@@ -1854,9 +1913,9 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
 
-                                                {/* DEEP SEMIOTIC DOSSIER -> 3-COLUMN ELITE GRID */}
-                                                {extraction.full_dossier ? (
-                                                    <div id="dossier-evidence" className="pt-12 border-t border-[#D4A574]/20 space-y-8 scroll-mt-24">
+                                        {/* DEEP SEMIOTIC DOSSIER -> 3-COLUMN ELITE GRID */}
+                                        {extraction.full_dossier && (
+                                            <div id="dossier-evidence" className="space-y-[clamp(12px,1vw,18px)] border-t border-[#D4A574]/20 pt-10 scroll-mt-24">
                                                 
                                                 {/* FULL-WIDTH FORENSIC DOSSIER */}
                                                 <div className="grid grid-cols-1 gap-8">
@@ -1867,10 +1926,10 @@ export default function AssetWorkspace({
                                                         activeAct={activeAct}
                                                     />
                                                 </div>
-                                                    </div>
-                                                ) : null}
                                             </div>
-                                        ) : null}
+                                        )}
+                                            </div>
+                                        )}
                                     </div>
                                 ) : (
                                     <SovereignProcessingView assetId={asset.id} />
@@ -1882,9 +1941,9 @@ export default function AssetWorkspace({
                         {activeTab === 'SIGNALS' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction?.full_dossier ? (
-                                    <div className="space-y-12">
+                                    <div className="space-y-10">
                                         {/* RADIANT ARCHITECTURE TOGGLE */}
-                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                                        <div className={`${ANALYSIS_CARD_CLASS} flex flex-col items-start justify-between gap-[clamp(12px,1vw,18px)] md:flex-row md:items-center`}>
                                             <div className="flex flex-col gap-2">
                                                 <h3 className="text-[13px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Macro-Diagnostic Map</h3>
                                                 <p className="text-[11px] text-[#FFFFFF]/50 font-light tracking-wide">Visualize optical trajectories and focal anchors.</p>
@@ -1921,13 +1980,13 @@ export default function AssetWorkspace({
                                                     <h2 className="text-2xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Gaze Topology</h2>
                                                     <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Mode of Address &amp; Viewer Positioning</p>
                                                 </div>
-                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                                <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] lg:grid-cols-3">
                                                     {[
                                                         { label: 'Mode of Address', value: (extraction.full_dossier as any).gaze_topology.mode_of_address },
                                                         { label: 'Viewer Position', value: (extraction.full_dossier as any).gaze_topology.viewer_position },
                                                         { label: 'Power Holder', value: (extraction.full_dossier as any).gaze_topology.power_holder },
                                                     ].map((item, i) => (
-                                                        <div key={i} className="border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-6 flex flex-col justify-between shadow-sm min-h-[300px]">
+                                                        <div key={i} className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
                                                             <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
                                                                 {item.label}
                                                             </h3>
@@ -1956,9 +2015,9 @@ export default function AssetWorkspace({
                                                     <h2 className="text-2xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Counter-Reading Matrix</h2>
                                                     <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Polysemic Deconstruction via Critical Theory</p>
                                                 </div>
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
                                                     {((extraction.full_dossier as any).counter_reading_matrix as { lens: string; reading: string }[]).map((item, i) => (
-                                                        <div key={i} className="border border-[#D4A574]/20 bg-[#1A1A1A] rounded-3xl p-6 shadow-sm flex flex-col min-h-[300px]">
+                                                        <div key={i} className={`${ANALYSIS_CARD_CLASS} flex flex-col min-h-[220px] xl:min-h-[240px]`}>
                                                             <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
                                                                 {item.lens}
                                                             </h3>
@@ -2135,7 +2194,7 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     {/* Trigger Distribution Radar */}
-                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col items-center justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                    <div className={`${ANALYSIS_CARD_CLASS} flex flex-col items-center justify-between min-h-[220px] xl:min-h-[240px]`}>
                                         <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
                                             Trigger Distribution Map
                                         </h3>
@@ -2151,7 +2210,7 @@ export default function AssetWorkspace({
                                     </div>
 
                                     {/* Strategic Posture Map */}
-                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                    <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
                                         <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
                                             Strategic Posture
                                         </h3>
@@ -2176,7 +2235,7 @@ export default function AssetWorkspace({
 
                                     {/* Persuasion Density */}
                                     {(extraction?.full_dossier as any)?.persuasion_metrics && (
-                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                        <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
                                             <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
                                                 Persuasion Density
                                             </h3>
@@ -2200,7 +2259,7 @@ export default function AssetWorkspace({
 
                                     {/* Cognitive Friction */}
                                     {(extraction?.full_dossier as any)?.persuasion_metrics && (
-                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                        <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
                                             <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
                                                 Cognitive Friction
                                             </h3>
@@ -2224,7 +2283,7 @@ export default function AssetWorkspace({
 
                                     {/* Predictive Longevity */}
                                     {(extraction?.full_dossier as any)?.persuasion_metrics && (
-                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                        <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
                                             <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
                                                 Predictive Longevity
                                             </h3>
@@ -2242,7 +2301,7 @@ export default function AssetWorkspace({
 
                                     {/* Behavioral Deconstruction */}
                                     {extraction?.full_dossier?.archetype_mapping && (
-                                        <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 flex flex-col justify-between rounded-3xl shadow-sm min-h-[300px]">
+                                        <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
                                             <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
                                                 Behavioral Deconstruction
                                             </h3>
@@ -2339,9 +2398,9 @@ export default function AssetWorkspace({
                                             <div>
                                                 <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Iteration & Test Plan</span>
                                                 <p className="text-sm text-[#FFFFFF] mb-6 border-l-2 border-[#D4A574] pl-4 italic">{extraction.full_dossier.test_plan.hypothesis}</p>
-                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                                <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-3">
                                                     {extraction.full_dossier.test_plan.test_cells.map((cell: any, i: number) => (
-                                                        <div key={i} className="border border-[#D4A574]/20 p-5 bg-[#1A1A1A] flex flex-col rounded-3xl shadow-sm">
+                                                        <div key={i} className={`${ANALYSIS_CARD_CLASS} flex flex-col`}>
                                                             <span className="text-[11px] font-bold tracking-[0.2em] text-[#D4A574] uppercase block mb-3">{cell.lever}</span>
                                                             <p className="text-sm text-[#FFFFFF] font-light mb-4 leading-relaxed">{cell.change}</p>
                                                             <p className="text-[9px] text-[#D4A574]/60 uppercase tracking-[0.2em] mt-auto border-t border-[#D4A574]/10 pt-4 font-bold">{cell.rationale}</p>
@@ -2353,10 +2412,10 @@ export default function AssetWorkspace({
 
                                         {/* Plausible Readings & Objection Dismantled */}
                                         {extraction?.full_dossier && (
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
                                                 {/* Plausible Readings */}
                                                 {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[300px]">
+                                                    <div className={`${ANALYSIS_CARD_CLASS} flex flex-col min-h-[220px] xl:min-h-[240px]`}>
                                                         <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
                                                             Plausible Readings
                                                         </h3>
@@ -2380,7 +2439,7 @@ export default function AssetWorkspace({
 
                                                 {/* Objection Dismantled */}
                                                 {extraction.full_dossier.objection_dismantling && (
-                                                    <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-6 rounded-3xl shadow-sm flex flex-col min-h-[300px]">
+                                                    <div className={`${ANALYSIS_CARD_CLASS} flex flex-col min-h-[220px] xl:min-h-[240px]`}>
                                                         <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
                                                             Objection Dismantled
                                                         </h3>
@@ -2412,8 +2471,8 @@ export default function AssetWorkspace({
                                         </div>
 
                                          {/* Execution Constraints Checklist */}
-                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                             <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-5 rounded-3xl shadow-sm">
+                                         <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
+                                             <div className={ANALYSIS_CARD_CLASS}>
                                                  <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#D4A574]/20 pb-2">Primary Trigger</span>
                                                  <p className="text-xl text-[#FFFFFF] font-light leading-snug">{blueprintData.execution_constraints.primary_trigger}</p>
                                              </div>
@@ -2493,6 +2552,7 @@ export default function AssetWorkspace({
                     </div>
                 </div>
                 </div>
+            </div>
             </div>
             </div>
 
