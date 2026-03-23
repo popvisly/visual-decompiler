@@ -89,7 +89,11 @@ export default function DifferentialDiagnosticsPage() {
     const [loadingLabelIndex, setLoadingLabelIndex] = useState(0);
     const [preparedFor, setPreparedFor] = useState('');
     const [exportPreset, setExportPreset] = useState<'standard' | 'pitch'>('standard');
+    const [isWorkspaceHydrated, setIsWorkspaceHydrated] = useState(false);
+    const [compareHelperMessage, setCompareHelperMessage] = useState<string | null>(null);
     const printRef = useRef<HTMLDivElement>(null);
+    const hasTrackedEmptyStateView = useRef(false);
+    const hasTrackedAssetBHelperView = useRef(false);
 
     const loadingLabels = [
         'Isolating persuasion deltas',
@@ -125,6 +129,7 @@ export default function DifferentialDiagnosticsPage() {
             const { data } = await supabaseAdmin
                 .from('assets')
                 .select('id, file_url, type, brand:brands(name, market_sector), extractions(primary_mechanic, confidence_score, full_dossier)')
+                .order('created_at', { ascending: false })
                 .limit(20);
             
             if (data) {
@@ -136,6 +141,7 @@ export default function DifferentialDiagnosticsPage() {
             }
         }
         fetchAssets();
+        setIsWorkspaceHydrated(true);
     }, []);
 
     // Sync state to localStorage
@@ -153,6 +159,27 @@ export default function DifferentialDiagnosticsPage() {
         if (result) localStorage.setItem('pulse_results', JSON.stringify(result));
         else localStorage.removeItem('pulse_results');
     }, [result]);
+
+    useEffect(() => {
+        if (!isWorkspaceHydrated || hasTrackedEmptyStateView.current) return;
+        if (status !== 'idle' || assetA || assetB || result) return;
+
+        posthog.capture('trial_compare_empty_state_view', {
+            surface: 'compare',
+            state: 'empty_first_run',
+        });
+        hasTrackedEmptyStateView.current = true;
+    }, [assetA, assetB, isWorkspaceHydrated, result, status]);
+
+    useEffect(() => {
+        if (!isWorkspaceHydrated || hasTrackedAssetBHelperView.current) return;
+
+        posthog.capture('trial_compare_asset_b_helper_view', {
+            surface: 'compare',
+            step: 'try_2',
+        });
+        hasTrackedAssetBHelperView.current = true;
+    }, [isWorkspaceHydrated]);
 
     const [drawerState, setDrawerState] = useState<{ open: boolean, target: 'A' | 'B' | null }>({ open: false, target: null });
 
@@ -244,6 +271,7 @@ export default function DifferentialDiagnosticsPage() {
     const isReady = assetA && assetB && status !== 'analysing';
     const selectedCount = Number(Boolean(assetA)) + Number(Boolean(assetB));
     const compareProgressLabel = selectedCount === 2 ? '2 / 2 ready' : `${selectedCount} / 2 selected`;
+    const latestResultAsset = vaultAssets.find((asset) => asset.extractions?.full_dossier) || null;
     
     // Check if current assets already match cached results
     const hasCachedResults = result && assetA && assetB; // Simplification: any result counts as "cached" if assets are present
@@ -269,6 +297,22 @@ export default function DifferentialDiagnosticsPage() {
         document.title = '';
         window.setTimeout(cleanup, 10000);
         requestAnimationFrame(() => window.print());
+    };
+
+    const handleUseLatestResultAsAssetA = () => {
+        posthog.capture('trial_compare_prefill_asset_a_click', {
+            surface: 'compare',
+            step: 'try_2',
+            source: 'latest_result',
+        });
+
+        if (!latestResultAsset) {
+            setCompareHelperMessage('No recent dossier is available yet. Run one analysis first, then return here.');
+            return;
+        }
+
+        setAssetA(latestResultAsset);
+        setCompareHelperMessage(`${latestResultAsset.brand.name} is now loaded as Asset A.`);
     };
 
     const persuasionDelta = result
@@ -420,14 +464,39 @@ export default function DifferentialDiagnosticsPage() {
                                     </p>
                                 </div>
                             </div>
+
+                            <div className="mt-5 rounded-[1.4rem] border border-[#E7DED1] bg-[#FCFAF5] px-4 py-4">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Best first compare move</p>
+                                <div className="mt-3 space-y-2 text-[12px] leading-relaxed text-[#6B6B6B]">
+                                    <p><span className="font-semibold text-[#1A1A1A]">Asset A:</span> Your current strongest route (or latest approved draft).</p>
+                                    <p><span className="font-semibold text-[#1A1A1A]">Asset B:</span> Alternative concept, competitor benchmark, or revised iteration.</p>
+                                    <p><span className="font-semibold text-[#1A1A1A]">Output:</span> Strategic delta, persuasion lift, fatigue gap.</p>
+                                    <p><span className="font-semibold text-[#1A1A1A]">Next:</span> Keep winning route, then save to board.</p>
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="min-w-[210px] rounded-[1.4rem] border border-[#D4A574]/18 bg-[#141414] px-5 py-5 text-[#FBF7EF]">
-                            <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Progress State</p>
-                            <p className="mt-3 text-2xl font-light uppercase tracking-tight">{compareProgressLabel}</p>
-                            <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-white/55">
-                                {isReady ? 'Differential diagnostic unlocked' : 'Select both assets to unlock the diagnostic'}
-                            </p>
+                        <div className="min-w-[210px] space-y-4">
+                            <div className="rounded-[1.4rem] border border-[#D4A574]/18 bg-[#141414] px-5 py-5 text-[#FBF7EF]">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Progress State</p>
+                                <p className="mt-3 text-2xl font-light uppercase tracking-tight">{compareProgressLabel}</p>
+                                <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-white/55">
+                                    {isReady ? 'Differential diagnostic unlocked' : 'Select both assets to unlock the diagnostic'}
+                                </p>
+                            </div>
+
+                            <div className="rounded-[1.4rem] border border-[#E7DED1] bg-[#FCFAF5] px-4 py-4">
+                                <button
+                                    type="button"
+                                    onClick={handleUseLatestResultAsAssetA}
+                                    className="inline-flex rounded-full border border-[#D4A574]/30 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513] transition hover:-translate-y-[1px] hover:border-[#D4A574]/45 hover:bg-white"
+                                >
+                                    Use latest result as Asset A
+                                </button>
+                                <p className="mt-3 text-[11px] leading-relaxed text-[#6B6B6B]">
+                                    {compareHelperMessage || 'Load your most recent completed dossier into Asset A when you want the fastest starting point.'}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -462,6 +531,7 @@ export default function DifferentialDiagnosticsPage() {
                     <AssetSelectorPanel
                         label="PROPOSED (ASSET B)"
                         selected={assetB}
+                        helperText="Tip: Asset B should be meaningfully different from Asset A (concept, framing, or category benchmark) so the delta is decision-useful."
                         onOpenDrawer={() => setDrawerState({ open: true, target: 'B' })}
                     />
 
@@ -1004,10 +1074,12 @@ export default function DifferentialDiagnosticsPage() {
 function AssetSelectorPanel({
     label,
     selected,
+    helperText,
     onOpenDrawer
 }: {
     label: string,
     selected: PulseAsset | null,
+    helperText?: string,
     onOpenDrawer: () => void
 }) {
     return (
@@ -1046,6 +1118,11 @@ function AssetSelectorPanel({
                         >
                             {selected ? '[ CHANGE ASSET ]' : '[ SELECT ASSET FROM ARCHIVE ]'}
                         </button>
+                        {helperText && (
+                            <p className="mt-3 text-center text-[11px] leading-relaxed text-[#D4A574]/68">
+                                {helperText}
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>
