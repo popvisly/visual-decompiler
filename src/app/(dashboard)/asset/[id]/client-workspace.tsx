@@ -1222,7 +1222,11 @@ export default function AssetWorkspace({
                             )}
                             <p className="mt-8 text-[10px] font-bold uppercase tracking-[0.42em]" style={{ color: accentHex }}>{dossierAgencyName}</p>
                             <p className="mt-3 text-[11px] uppercase tracking-[0.3em] text-[#6B6B6B]">{dossierDescriptor}</p>
-                            <h1 className="mt-12 text-3xl font-light uppercase tracking-[0.34em]">FORENSIC INTELLIGENCE DOSSIER</h1>
+                            <h1 className="mt-12 text-center text-3xl font-light uppercase tracking-[0.24em] leading-[1.18]">
+                                <span className="block">Forensic</span>
+                                <span className="block">Intelligence</span>
+                                <span className="block">Dossier</span>
+                            </h1>
                             <div className="mt-8 h-px w-full" style={{ backgroundColor: accentHex }} />
                             <div className="mt-10 max-w-[60%] overflow-hidden border border-[#E7DED1] p-3">
                                 <img src={firstFrameUrl} alt={asset.brand?.name || 'Asset'} className="max-h-[360px] w-full object-contain" />
