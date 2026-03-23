@@ -98,6 +98,33 @@ export const ENABLEMENT_HOMEPAGE_READOUT_RULES = [
     },
 ] as const;
 
+export const ENABLEMENT_HOMEPAGE_SOURCE_NOTES = [
+    {
+        label: 'Source',
+        value: 'PostHog event explorer or insight chart',
+    },
+    {
+        label: 'Event set',
+        value: 'homepage_ad_to_intelligence_view, homepage_ad_to_intelligence_cta_primary_click, homepage_ad_to_intelligence_cta_secondary_click',
+    },
+    {
+        label: 'Scope',
+        value: 'Homepage only. Events already include page = homepage and section_id = ad-to-intelligence.',
+    },
+    {
+        label: 'Date window',
+        value: 'Use a rolling 7-day window for the first read, then compare against the previous 7 days once traffic settles.',
+    },
+    {
+        label: 'Counting rule',
+        value: 'Use total events for CTR calculations. Use unique persons only as a secondary sanity check, not the primary KPI.',
+    },
+    {
+        label: 'Variant filter',
+        value: 'Keep variant = v1 fixed until a deliberate test version exists.',
+    },
+] as const;
+
 export const ENABLEMENT_GUARDRAILS = [
     'Don’t call it “just AI.”',
     'Don’t lead with model/provider.',

@@ -6,6 +6,7 @@ import {
     ENABLEMENT_DEMO_FLOW,
     ENABLEMENT_GUARDRAILS,
     ENABLEMENT_HOMEPAGE_READOUT_RULES,
+    ENABLEMENT_HOMEPAGE_SOURCE_NOTES,
     ENABLEMENT_HOMEPAGE_READOUT_TARGETS,
     ENABLEMENT_POSITIONING_ANCHOR,
     ENABLEMENT_POSITIONING_LOCK,
@@ -192,6 +193,22 @@ export default async function EnablementPage() {
                                             </p>
                                             <p className="mt-3 text-[15px] leading-7 text-[#3F3A33]">{rule.action}</p>
                                         </article>
+                                    ))}
+                                </div>
+
+                                <div className="mt-6 overflow-hidden rounded-[1.35rem] border border-[#E5DDCF]">
+                                    {ENABLEMENT_HOMEPAGE_SOURCE_NOTES.map((note, index) => (
+                                        <div
+                                            key={note.label}
+                                            className={`grid gap-3 bg-[#FBFBF6] px-5 py-4 md:grid-cols-[180px,minmax(0,1fr)] ${
+                                                index !== ENABLEMENT_HOMEPAGE_SOURCE_NOTES.length - 1 ? 'border-b border-[#E5DDCF]' : ''
+                                            }`}
+                                        >
+                                            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#7E6948]">
+                                                {note.label}
+                                            </p>
+                                            <p className="text-[15px] leading-7 text-[#4F4A43]">{note.value}</p>
+                                        </div>
                                     ))}
                                 </div>
                             </section>
