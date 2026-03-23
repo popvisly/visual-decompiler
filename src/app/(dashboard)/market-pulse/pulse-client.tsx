@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Activity, FileDown, Loader2, RefreshCw, TrendingDown, TrendingUp } from 'lucide-react';
+import posthog from 'posthog-js';
 
 type PulseMetric = {
     mechanic: string;
@@ -60,6 +61,22 @@ type PulseResponse = {
 };
 
 const WINDOW_OPTIONS = [30, 60, 90] as const;
+const UNLOCK_THRESHOLD = 20;
+const GATE_PREVIEW_CARDS = [
+    {
+        label: 'Preview · Mechanic Momentum',
+        value: 'See which mechanics are rising, flattening, or losing force over time.',
+    },
+    {
+        label: 'Preview · Trigger Distribution',
+        value: 'Read how persuasion drivers shift across sectors as the category evolves.',
+    },
+    {
+        label: 'Preview · Fatigue Risk Signals',
+        value: 'Spot which recurring patterns are saturating before they dilute response.',
+    },
+] as const;
+
 const LOCKED_PREVIEW: PulseResponse = {
     status: 'success',
     scope: 'Luxury Fragrance',
@@ -184,6 +201,7 @@ export default function MechanicIntelligenceClient({
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const hasTrackedGateTeaserView = useRef(false);
 
     const loadPulse = async (refresh = false) => {
         if (refresh) {
@@ -223,7 +241,8 @@ export default function MechanicIntelligenceClient({
     }, [selectedWindow, selectedSector]);
 
     const sectorOptions = useMemo(() => ['ALL SECTORS', ...(data?.sector_options || [])], [data?.sector_options]);
-    const belowVolumeThreshold = (data?.assetCount || 0) < 20;
+    const belowVolumeThreshold = (data?.assetCount || 0) < UNLOCK_THRESHOLD;
+    const remainingToUnlock = data ? Math.max(UNLOCK_THRESHOLD - data.assetCount, 0) : UNLOCK_THRESHOLD;
     const reportSectorLabel = selectedSector === 'ALL SECTORS' ? 'Vault-Wide Intelligence' : selectedSector;
     const reportDate = formatReportDate(data?.computed_at);
     const reportDepthLabel = (data?.assetCount || 0) >= 50 ? 'Boardroom-grade' : (data?.assetCount || 0) >= 20 ? 'Directional' : 'Early signal';
@@ -249,6 +268,18 @@ export default function MechanicIntelligenceClient({
             setActiveTrigger(radarMetrics[0].label);
         }
     }, [activeTrigger, radarMetrics]);
+
+    useEffect(() => {
+        if (!belowVolumeThreshold || !data || hasTrackedGateTeaserView.current) return;
+
+        posthog.capture('market_pulse_gate_teaser_view', {
+            surface: 'market_pulse',
+            state: 'locked',
+            asset_count: data.assetCount,
+            unlock_threshold: UNLOCK_THRESHOLD,
+        });
+        hasTrackedGateTeaserView.current = true;
+    }, [belowVolumeThreshold, data]);
 
     useEffect(() => {
         if (activeTrigger && !radarMetrics.some((metric) => metric.label === activeTrigger)) {
@@ -464,18 +495,55 @@ export default function MechanicIntelligenceClient({
                         <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.2em] text-[#8B4513]">
                             {data.assetCount} of 20 forensic extractions complete
                         </p>
+                        <p className="mt-3 text-[13px] leading-relaxed text-[#5E5A53]">
+                            You&apos;re at {data.assetCount}/20 assets. Add {remainingToUnlock} more to unlock live trend intelligence.
+                        </p>
+                        <div className="mx-auto mt-8 max-w-5xl text-left">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513]">What unlocks at 20 assets</p>
+                            <div className="mt-4 grid gap-3 md:grid-cols-3">
+                                {GATE_PREVIEW_CARDS.map((card) => (
+                                    <div
+                                        key={card.label}
+                                        className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4 opacity-75"
+                                    >
+                                        <div className="pointer-events-none select-none blur-[0.8px]">
+                                            <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">
+                                                {card.label}
+                                            </p>
+                                            <p className="mt-3 text-[13px] leading-relaxed text-[#5E5A53]">
+                                                {card.value}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
                             <a
                                 href="/ingest"
+                                onClick={() =>
+                                    posthog.capture('market_pulse_gate_primary_click', {
+                                        surface: 'market_pulse',
+                                        state: 'locked',
+                                        target: 'ingest',
+                                    })
+                                }
                                 className="inline-flex rounded-full bg-[#141414] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition-colors hover:bg-black"
                             >
-                                Analyze next asset now
+                                Analyze Next Asset
                             </a>
                             <a
                                 href="/vault"
+                                onClick={() =>
+                                    posthog.capture('market_pulse_gate_secondary_click', {
+                                        surface: 'market_pulse',
+                                        state: 'locked',
+                                        target: 'vault_shortlist',
+                                    })
+                                }
                                 className="inline-flex rounded-full border border-[#D4A574]/24 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#FBFBF6]"
                             >
-                                Open Vault shortlist
+                                Open Vault Shortlist
                             </a>
                         </div>
                         <div className="mx-auto mt-8 grid max-w-4xl gap-3 text-left md:grid-cols-3">
