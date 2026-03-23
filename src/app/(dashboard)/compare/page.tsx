@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
+import posthog from 'posthog-js';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 import { supabaseAdmin } from '@/lib/supabase';
 import { Asset } from '@/lib/intelligence_service';
@@ -176,6 +177,15 @@ export default function DifferentialDiagnosticsPage() {
             setAnalysisProgress(100);
             setResult(data);
             setStatus('success');
+            if (!window.localStorage.getItem('vd_trial_try_2_completed')) {
+                posthog.capture('trial_try_2_completed', {
+                    surface: 'compare',
+                    step: 'try_2',
+                    asset_a_id: assetA.id,
+                    asset_b_id: assetB.id,
+                });
+                window.localStorage.setItem('vd_trial_try_2_completed', '1');
+            }
         } catch (err) {
             const message = err instanceof Error ? err.message : 'Differential diagnostic failed';
             setErrorMessage(message);

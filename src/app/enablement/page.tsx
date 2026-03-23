@@ -4,6 +4,8 @@ import ObjectionCard from '@/components/enablement/ObjectionCard';
 import StickyEnablementNav from '@/components/enablement/StickyEnablementNav';
 import {
     ENABLEMENT_DEMO_FLOW,
+    ENABLEMENT_FIRST_FIVE_HINTS,
+    ENABLEMENT_FIRST_FIVE_METRICS,
     ENABLEMENT_GUARDRAILS,
     ENABLEMENT_HOMEPAGE_READOUT_RULES,
     ENABLEMENT_HOMEPAGE_SOURCE_NOTES,
@@ -27,6 +29,7 @@ const NAV_ITEMS = [
     { id: 'demo-flow', label: 'Demo Flow' },
     { id: 'proof-map', label: 'Proof Map' },
     { id: 'homepage-readout', label: 'Homepage Readout' },
+    { id: 'first-five-readout', label: 'First-5 Readout' },
     { id: 'snippets', label: 'Snippets' },
 ] as const;
 
@@ -209,6 +212,46 @@ export default async function EnablementPage() {
                                             </p>
                                             <p className="text-[15px] leading-7 text-[#4F4A43]">{note.value}</p>
                                         </div>
+                                    ))}
+                                </div>
+                            </section>
+
+                            <section id="first-five-readout" className="scroll-mt-28 rounded-[1.85rem] border border-[#D8CCB5] bg-[#FCFAF5] px-6 py-6 md:px-8">
+                                <div className="max-w-3xl">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8E7450]">First-5 Activation Readout</p>
+                                    <h2 className="mt-3 text-2xl font-semibold leading-tight tracking-tight text-[#141414] md:text-[32px]">
+                                        Read whether Try 1 is leading into Try 2 and Try 3
+                                    </h2>
+                                    <p className="mt-4 text-[15px] leading-7 text-[#5E5A53]">
+                                        Use these funnel signals to judge whether trial onboarding is producing real progression or just isolated clicks.
+                                    </p>
+                                </div>
+
+                                <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                                    {ENABLEMENT_FIRST_FIVE_METRICS.map((item) => (
+                                        <article
+                                            key={item.metric}
+                                            className="rounded-[1.2rem] border border-[#E5DDCF] bg-[#FBFBF6] px-4 py-4"
+                                        >
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#B28D56]">
+                                                {item.metric}
+                                            </p>
+                                            <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#7E6948]">
+                                                {item.event}
+                                            </p>
+                                            <p className="mt-3 text-[14px] leading-6 text-[#4F4A43]">{item.meaning}</p>
+                                        </article>
+                                    ))}
+                                </div>
+
+                                <div className="mt-6 space-y-3">
+                                    {ENABLEMENT_FIRST_FIVE_HINTS.map((hint) => (
+                                        <p
+                                            key={hint}
+                                            className="rounded-[1.2rem] border border-[#E5DDCF] bg-[#FBFBF6] px-4 py-4 text-[15px] leading-7 text-[#3F3A33]"
+                                        >
+                                            {hint}
+                                        </p>
                                     ))}
                                 </div>
                             </section>

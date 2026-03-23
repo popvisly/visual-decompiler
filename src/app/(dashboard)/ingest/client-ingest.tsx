@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AlertCircle, FileImage } from 'lucide-react';
+import posthog from 'posthog-js';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { supabaseClient } from '@/lib/supabase-client';
 import type { UsageStatus } from '@/lib/usage';
@@ -56,6 +57,13 @@ function formatResetDate(resetDate: string | null) {
         day: 'numeric',
         year: 'numeric',
     });
+}
+
+function resolvePlanLabel(tier?: UsageStatus['tier']) {
+    if (tier === 'agency') return 'agency_sovereignty';
+    if (tier === 'pro') return 'strategic_unit';
+    if (tier === 'free') return 'observer';
+    return 'unknown';
 }
 
 export default function IngestClient({ isSovereign }: { isSovereign: boolean }) {
@@ -461,7 +469,15 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                 </div>
                                 {!stagedFile && !isProcessing && (
                                     <button
-                                        onClick={() => document.getElementById('file-upload')?.click()}
+                                        onClick={() => {
+                                            posthog.capture('trial_run_first_analysis_click', {
+                                                surface: 'ingest',
+                                                step: 'try_1',
+                                                plan: resolvePlanLabel(usageStatus?.tier),
+                                                href: '/ingest',
+                                            });
+                                            document.getElementById('file-upload')?.click();
+                                        }}
                                         className="mt-5 inline-flex items-center rounded-full border border-[#D4A574]/25 bg-[#FBFBF6] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#5F4724] transition hover:border-[#D4A574]/45 hover:bg-white"
                                     >
                                         Run First Analysis

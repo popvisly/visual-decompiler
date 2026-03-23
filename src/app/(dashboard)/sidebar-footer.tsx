@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import posthog from 'posthog-js';
 import { supabaseClient } from '@/lib/supabase-client';
 
 type UsageStatus = {
@@ -87,6 +88,13 @@ export default function SidebarFooter() {
                             </div>
                             <Link
                                 href="/help"
+                                onClick={() =>
+                                    posthog.capture('trial_sidebar_how_to_use_click', {
+                                        surface: 'sidebar',
+                                        step: 'guidance',
+                                        href: '/help',
+                                    })
+                                }
                                 className="mt-3 inline-flex text-[9px] font-bold uppercase tracking-[0.18em] text-[#8E7450] transition hover:text-[#5F4724]"
                             >
                                 How to use your 5

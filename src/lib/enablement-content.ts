@@ -125,6 +125,46 @@ export const ENABLEMENT_HOMEPAGE_SOURCE_NOTES = [
     },
 ] as const;
 
+export const ENABLEMENT_FIRST_FIVE_METRICS = [
+    {
+        metric: 'Try 1 click rate',
+        event: 'trial_run_first_analysis_click',
+        meaning: 'Measures whether the ingest helper is getting trial users to start the first guided action.',
+    },
+    {
+        metric: 'Try 1 completion rate',
+        event: 'trial_try_1_completed',
+        meaning: 'Confirms the first dossier actually resolved into a usable result, not just a click.',
+    },
+    {
+        metric: 'Try 2 click-through',
+        event: 'trial_next_action_compare_click',
+        meaning: 'Shows whether the result strip is successfully pulling users into the compare workflow.',
+    },
+    {
+        metric: 'Try 2 completion rate',
+        event: 'trial_try_2_completed',
+        meaning: 'Measures whether comparison intent becomes a finished differential result.',
+    },
+    {
+        metric: 'Try 3 action rate',
+        event: 'trial_next_action_create_board_click + trial_next_action_export_summary_click',
+        meaning: 'Tracks whether users move into collaboration or delivery after the first result.',
+    },
+    {
+        metric: 'Sidebar help click rate',
+        event: 'trial_sidebar_how_to_use_click',
+        meaning: 'Shows whether trial users need guidance reinforcement from the sidebar helper.',
+    },
+] as const;
+
+export const ENABLEMENT_FIRST_FIVE_HINTS = [
+    'High Try 1 click + low completion means ingestion friction or processing trust is the likely problem.',
+    'High Try 1 completion + low Try 2 click means the post-result guidance is not salient enough yet.',
+    'High Try 2 click + low Try 3 means collaboration or export value is still not landing clearly.',
+    'High help clicks + low progression means docs are compensating for product clarity instead of supporting it.',
+] as const;
+
 export const ENABLEMENT_GUARDRAILS = [
     'Don’t call it “just AI.”',
     'Don’t lead with model/provider.',

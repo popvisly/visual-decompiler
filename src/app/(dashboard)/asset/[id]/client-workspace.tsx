@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
+import posthog from 'posthog-js';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import AdAnalyticsTab from '@/components/AdAnalyticsTab';
@@ -797,6 +798,23 @@ export default function AssetWorkspace({
     }, [isGeneratingBlueprint]);
 
     useEffect(() => {
+        if (!extraction?.full_dossier) {
+            return;
+        }
+
+        if (window.localStorage.getItem('vd_trial_try_1_completed')) {
+            return;
+        }
+
+        posthog.capture('trial_try_1_completed', {
+            surface: 'asset_result',
+            step: 'try_1',
+            asset_id: asset.id,
+        });
+        window.localStorage.setItem('vd_trial_try_1_completed', '1');
+    }, [asset.id, extraction?.full_dossier]);
+
+    useEffect(() => {
         if (!isGeneratingClone) {
             setCloneProgress(0);
             setCloneStep(0);
@@ -1486,6 +1504,13 @@ export default function AssetWorkspace({
                                         </p>
                                         <a
                                             href="/compare"
+                                            onClick={() =>
+                                                posthog.capture('trial_next_action_compare_click', {
+                                                    surface: 'asset_result',
+                                                    step: 'try_2',
+                                                    href: '/compare',
+                                                })
+                                            }
                                             className="mt-4 inline-flex items-center rounded-full border border-[#D4A574]/35 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10"
                                         >
                                             Run Differential Diagnosis
@@ -1497,7 +1522,17 @@ export default function AssetWorkspace({
                                             This dossier is already stored in Vault. Create a board to keep it active in the next review or client thread.
                                         </p>
                                         <div className="mt-4">
-                                            <AddToBoard assetId={asset.id} triggerLabel="Create Board" />
+                                            <AddToBoard
+                                                assetId={asset.id}
+                                                triggerLabel="Create Board"
+                                                analytics={{
+                                                    clickEventName: 'trial_next_action_create_board_click',
+                                                    completionEventName: 'trial_try_3_completed',
+                                                    surface: 'asset_result',
+                                                    step: 'try_3',
+                                                    href: '/boards',
+                                                }}
+                                            />
                                         </div>
                                     </div>
                                     <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
@@ -1506,7 +1541,14 @@ export default function AssetWorkspace({
                                             Turn the readout into a shareable summary before you lose the room.
                                         </p>
                                         <button
-                                            onClick={() => setShowExportModal(true)}
+                                            onClick={() => {
+                                                posthog.capture('trial_next_action_export_summary_click', {
+                                                    surface: 'asset_result',
+                                                    step: 'try_3_alt',
+                                                    action: 'export_summary',
+                                                });
+                                                setShowExportModal(true);
+                                            }}
                                             className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#D4A574]/35 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10"
                                         >
                                             <FileDown className="w-3 h-3" />

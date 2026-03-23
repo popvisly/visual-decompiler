@@ -2,20 +2,31 @@
 
 import { useState, useEffect } from 'react';
 import { Plus, FolderPlus, Check, ChevronDown, Loader2 } from 'lucide-react';
+import posthog from 'posthog-js';
 
 interface Board {
     id: string;
     name: string;
 }
 
+type AddToBoardAnalyticsConfig = {
+    clickEventName?: string;
+    completionEventName?: string;
+    surface: string;
+    step: string;
+    href?: string;
+};
+
 export default function AddToBoard({
     adId,
     assetId,
     triggerLabel = 'Add to Board',
+    analytics,
 }: {
     adId?: string;
     assetId?: string;
     triggerLabel?: string;
+    analytics?: AddToBoardAnalyticsConfig;
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const [boards, setBoards] = useState<Board[]>([]);
@@ -63,6 +74,15 @@ export default function AddToBoard({
 
             setSuccessId(boardId);
             setStatusMessage('Asset added to board');
+            if (analytics?.completionEventName && !window.localStorage.getItem('vd_trial_try_3_completed')) {
+                posthog.capture(analytics.completionEventName, {
+                    surface: analytics.surface,
+                    step: analytics.step,
+                    action: 'board_saved',
+                    board_id: boardId,
+                });
+                window.localStorage.setItem('vd_trial_try_3_completed', '1');
+            }
             setTimeout(() => {
                 setSuccessId(null);
                 setStatusMessage(null);
@@ -108,6 +128,13 @@ export default function AddToBoard({
         <div className="relative">
             <button
                 onClick={() => {
+                    if (analytics?.clickEventName) {
+                        posthog.capture(analytics.clickEventName, {
+                            surface: analytics.surface,
+                            step: analytics.step,
+                            href: analytics.href || '/boards',
+                        });
+                    }
                     setIsOpen(!isOpen);
                     if (!isOpen && boards.length === 0) fetchBoards();
                 }}
