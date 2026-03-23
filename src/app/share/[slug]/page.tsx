@@ -8,6 +8,8 @@ import ExportButton from '@/components/ExportButton';
 import { supabaseAdmin } from '@/lib/supabase';
 import { cookies } from 'next/headers';
 import { Printer } from 'lucide-react';
+import AssetWorkspace from '@/app/(dashboard)/asset/[id]/client-workspace';
+import { SAMPLE_DOSSIER_ASSET_ID, SAMPLE_DOSSIER_SLUG } from '@/lib/sample-dossier';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -18,6 +20,37 @@ export default async function SharedPortalPage({
     params: Promise<{ slug: string }>;
 }) {
     const { slug } = await params;
+
+    if (slug === SAMPLE_DOSSIER_SLUG) {
+        const { data: rawAsset, error } = await supabaseAdmin
+            .from('assets')
+            .select(`
+                *,
+                brands ( name, market_sector ),
+                extractions ( * )
+            `)
+            .eq('id', SAMPLE_DOSSIER_ASSET_ID)
+            .single();
+
+        if (error || !rawAsset) notFound();
+
+        const asset = {
+            id: rawAsset.id,
+            type: rawAsset.type,
+            file_url: rawAsset.file_url,
+            tags: Array.isArray(rawAsset.tags) ? rawAsset.tags : [],
+            brand: rawAsset.brands ? { name: rawAsset.brands.name, market_sector: rawAsset.brands.market_sector } : undefined,
+            extraction: rawAsset.extractions ? rawAsset.extractions : undefined,
+        };
+
+        const { data: agency } = await supabaseAdmin
+            .from('agencies')
+            .select('name, whitelabel_logo, primary_hex, tier')
+            .limit(1)
+            .single();
+
+        return <AssetWorkspace initialAsset={asset} isSovereign={true} agency={agency} />;
+    }
 
     // Check Authorization
     const cookieStore = await cookies();
