@@ -1,9 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { LinkCta } from '@/types/homepage';
 import NeuralParticleHero from '@/components/marketing/NeuralParticleHero';
+import {
+    HOMEPAGE_CTA_ICON,
+    HOMEPAGE_PRIMARY_CTA,
+    HOMEPAGE_SECONDARY_CTA,
+} from '@/components/marketing/ctaStyles';
 
 type Props = {
     eyebrow?: string;
@@ -112,7 +118,7 @@ export default function Hero({
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
-                    className="mb-8 max-w-3xl text-[16px] leading-[1.52] tracking-[-0.01em] text-[#141414]/74 sm:text-[17px] md:mb-10 md:text-[20px]"
+                    className="mb-8 max-w-[46rem] text-[16px] font-normal leading-[1.66] tracking-[-0.01em] text-[#141414]/64 sm:text-[17px] md:mb-10 md:text-[20px] md:leading-[1.72]"
                 >
                     {subhead}
                 </motion.p>
@@ -128,31 +134,19 @@ export default function Hero({
                         {ctaPrimary && (
                             <a
                                 href={ctaPrimary.href}
-                                className="
-                                    group inline-flex w-full items-center justify-center
-                                    rounded-full bg-[#141414] px-7 py-3.5
-                                    text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF]
-                                    transition-all duration-300 hover:-translate-y-[1px]
-                                    hover:bg-[#000000] hover:shadow-[0_16px_30px_rgba(20,20,20,0.2)]
-                                    sm:min-w-[220px] sm:w-auto sm:px-8 sm:py-4 sm:text-[12px] sm:tracking-[0.2em]
-                                "
+                                className={`${HOMEPAGE_PRIMARY_CTA} w-full`}
                             >
                                 <span>{ctaPrimary.label}</span>
-                                <span className="ml-2 inline-block h-1.5 w-1.5 rounded-full bg-[#C1A67B] opacity-70 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100" />
+                                <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                             </a>
                         )}
                         {ctaSecondary && (
                             <a
                                 href={ctaSecondary.href}
-                                className="
-                                    inline-flex w-full items-center justify-center
-                                    rounded-full border border-[#D5CCBD] px-5 py-3
-                                    text-[10px] font-bold uppercase tracking-[0.16em] text-[#756E63]
-                                    transition-all duration-300 hover:-translate-y-[1px]
-                                    hover:border-[#141414] hover:text-[#141414] sm:min-w-[220px] sm:w-auto sm:px-6 sm:text-[11px] sm:tracking-[0.2em]
-                                "
+                                className={`${HOMEPAGE_SECONDARY_CTA} w-full`}
                             >
-                                {ctaSecondary.label}
+                                <span>{ctaSecondary.label}</span>
+                                <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                             </a>
                         )}
                     </motion.div>

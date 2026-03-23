@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
+    ArrowUpRight,
     BarChart3,
     Clapperboard,
     Compass,
@@ -17,6 +18,12 @@ import {
     Sparkles,
 } from 'lucide-react';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
+import {
+    HOMEPAGE_CTA_ICON,
+    HOMEPAGE_PRIMARY_CTA,
+    HOMEPAGE_SECONDARY_CTA,
+    HOMEPAGE_TEXT_CTA,
+} from '@/components/marketing/ctaStyles';
 
 type ProofPoint = {
     label: string;
@@ -316,6 +323,10 @@ const STEP_PUNCH: Record<string, string> = {
 };
 
 const SECTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const SECONDARY_CARD_RADIUS = 'rounded-[1.7rem]';
+const CARD_ICON_CLASS = 'mt-[2px] h-[17px] w-[17px] flex-shrink-0';
+const SECTION_BAND = 'px-6 py-16 md:py-24';
+const SECTION_BAND_TIGHT = 'px-6 py-12 md:py-[4.5rem]';
 
 
 
@@ -329,9 +340,10 @@ function StatsBar() {
                 </p>
                 <a
                     href="#deconstruction"
-                    className="mt-4 inline-flex items-center text-[10px] font-bold uppercase tracking-[0.2em] text-[#7D6748] transition hover:text-[#1A1712]"
+                    className={`${HOMEPAGE_TEXT_CTA} mt-4`}
                 >
-                    See Decompiler Output ↓
+                    <span>See Decompiler Output</span>
+                    <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                 </a>
             </div>
 
@@ -363,11 +375,11 @@ function StatsBar() {
 
 function DifferentialDiagnosisSection() {
     return (
-        <section className="border-b border-[#2D2923] bg-[#141310] px-6 py-14 md:py-16">
+        <section className={`border-b border-[#2D2923] bg-[#141310] ${SECTION_BAND}`}>
             <motion.div {...REVEAL} className="mx-auto max-w-7xl">
                 <div className="mb-6 flex items-center gap-3">
                     <span className="h-px w-10 bg-gradient-to-r from-[#CDA468] to-transparent" />
-                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#B79A70]">Intelligence Pulse</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#A8895F]">Intelligence Pulse</p>
                 </div>
 
                 <h3 className="max-w-4xl text-3xl font-semibold leading-[1] tracking-tight text-[#F4E9D9] md:text-5xl">
@@ -410,7 +422,7 @@ function DifferentialDiagnosisSection() {
                 </div>
 
                 <div className="mt-4 flex items-center justify-center">
-                    <span className="rounded-full border border-[#4A3F31] bg-[#1A1712] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#C9A977]">
+                    <span className="rounded-full border border-[#4A3F31] bg-[#171410] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#A8895F]">
                         Differential Read
                     </span>
                 </div>
@@ -434,9 +446,10 @@ function DifferentialDiagnosisSection() {
                 <div className="mt-6">
                     <a
                         href="/compare"
-                        className="inline-flex items-center rounded-full border border-[#E0C08D] bg-[#E0C08D] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#1B1712] transition hover:-translate-y-[1px] hover:bg-[#E8C998]"
+                        className={HOMEPAGE_PRIMARY_CTA}
                     >
-                        Run Differential Diagnosis
+                        <span>Run Differential Diagnosis</span>
+                        <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                     </a>
                 </div>
             </motion.div>
@@ -446,7 +459,7 @@ function DifferentialDiagnosisSection() {
 
 function PersonaDiscoverabilitySection() {
     return (
-        <section id="who-its-for" className="border-b border-[#E3DACB] bg-[#FBFBF6] px-6 py-12 md:py-14">
+        <section id="who-its-for" className={`border-b border-[#E3DACB] bg-[#FBFBF6] ${SECTION_BAND_TIGHT}`}>
             <motion.div {...REVEAL} className="mx-auto max-w-7xl">
                 <div className="max-w-3xl">
                     <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Who it’s for</p>
@@ -466,15 +479,15 @@ function PersonaDiscoverabilitySection() {
                         >
                             <Link
                                 href={persona.href}
-                                className="group block rounded-[1.4rem] border border-[#D8CCB5] bg-[#FCFAF5] px-5 py-5 transition duration-200 hover:-translate-y-[2px] hover:border-[#C9B08B] hover:bg-[#F9F4EB]"
+                                className={`group block ${SECONDARY_CARD_RADIUS} border border-[#D8CCB5] bg-[#FCFAF5] px-5 py-5 transition duration-200 hover:-translate-y-[2px] hover:border-[#C9B08B] hover:bg-[#F9F4EB]`}
                             >
-                                <div className="flex items-start gap-2">
+                                <div className="flex items-start gap-2.5">
                                     <persona.icon
                                         aria-hidden="true"
-                                        className="mt-0.5 h-[17px] w-[17px] flex-shrink-0 text-[#8E7450] transition-colors group-hover:text-[#141414]"
-                                        strokeWidth={1.75}
+                                        className={`${CARD_ICON_CLASS} text-[#8E7450] transition-colors group-hover:text-[#141414]`}
+                                        strokeWidth={1.65}
                                     />
-                                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7E6948] transition-colors group-hover:text-[#5F4724]">
+                                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7E6948] transition-colors group-hover:text-[#5F4724]">
                                         {persona.title}
                                     </p>
                                 </div>
@@ -490,7 +503,7 @@ function PersonaDiscoverabilitySection() {
 
 function WhyDifferentLeadIn() {
     return (
-        <section className="border-b border-[#E3DACB] bg-[#FBFBF6] px-6 py-12 md:py-14">
+        <section className={`border-b border-[#E3DACB] bg-[#FBFBF6] ${SECTION_BAND_TIGHT}`}>
             <motion.div {...REVEAL} className="mx-auto max-w-7xl">
                 <div className="max-w-4xl">
                     <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
@@ -517,7 +530,7 @@ function WhyDifferentLeadIn() {
 
 function WhyDifferentSection() {
     return (
-        <section className="border-b border-[#E3DACB] bg-[#F7F1E7] px-6 py-14 md:py-16">
+        <section className={`border-b border-[#E3DACB] bg-[#F7F1E7] ${SECTION_BAND}`}>
             <motion.div {...REVEAL} className="mx-auto max-w-7xl">
                 <div className="max-w-4xl">
                     <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
@@ -540,23 +553,23 @@ function WhyDifferentSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.28 }}
                             transition={{ duration: 0.45, delay: index * 0.06, ease: SECTION_EASE }}
-                            className="rounded-[1.8rem] border border-[#D8CCB5] bg-[#FCFAF5] px-6 py-6"
+                            className={`${SECONDARY_CARD_RADIUS} border border-[#D8CCB5] bg-[#FCFAF5] px-6 py-6`}
                         >
-                            <div className="flex items-start gap-2">
+                            <div className="flex items-start gap-2.5">
                                 <block.icon
                                     aria-hidden="true"
-                                    className="mt-0.5 h-[18px] w-[18px] flex-shrink-0 text-[#8E7450]"
-                                    strokeWidth={1.75}
+                                    className={`${CARD_ICON_CLASS} text-[#8E7450]`}
+                                    strokeWidth={1.65}
                                 />
-                                <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#8E7450]">{block.title}</p>
+                                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8E7450]">{block.title}</p>
                             </div>
                             <div className="mt-4 space-y-4">
                                 <div>
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9A8A73]">They do</p>
+                                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#A19380]">They do</p>
                                     <p className="mt-2 text-[15px] leading-7 text-[#5E5A53]">{block.theyDo}</p>
                                 </div>
                                 <div className="border-t border-[#E4D9C8] pt-4">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#7E6948]">We do</p>
+                                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7E6948]">We do</p>
                                     <p className="mt-2 text-[16px] leading-7 text-[#141414]">{block.weDo}</p>
                                 </div>
                             </div>
@@ -577,9 +590,10 @@ function WhyDifferentSection() {
                     </div>
                     <a
                         href="#deconstruction"
-                        className="inline-flex items-center justify-center rounded-full border border-[#C9B08B] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#7E6948] transition hover:-translate-y-[1px] hover:border-[#B89462] hover:text-[#5F4724]"
+                        className={HOMEPAGE_SECONDARY_CTA}
                     >
-                        See Decompiler Output
+                        <span>See Decompiler Output</span>
+                        <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                     </a>
                 </div>
             </motion.div>
@@ -589,9 +603,9 @@ function WhyDifferentSection() {
 
 function LiveDeconstruction() {
     return (
-        <section className="border-b border-[#E3DACB] bg-[#F8F3EA] px-6 py-14 md:py-18">
+        <section className={`border-b border-[#E3DACB] bg-[#F8F3EA] ${SECTION_BAND}`}>
             <motion.div {...REVEAL} className="mx-auto max-w-7xl">
-                <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Live Deconstruction</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#B59A70]">Live Deconstruction</p>
                 <h2 className="mt-4 max-w-4xl text-4xl font-semibold uppercase leading-[0.94] tracking-tight text-[#141414] md:text-5xl lg:text-6xl">
                     Visual inputs in. Strategic intelligence out.
                 </h2>
@@ -612,7 +626,7 @@ function LiveDeconstruction() {
                                 <p className="rounded-full border border-[#CDA468]/55 bg-[#181612]/70 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.24em] text-[#E5C18A]">
                                     Incoming Ad Stack
                                 </p>
-                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">Multi-Category</p>
+                                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#A8895F]">Multi-Category</p>
                             </div>
 
                             <div className="relative h-[320px] md:h-[340px]">
@@ -692,7 +706,7 @@ function LiveDeconstruction() {
                     >
                         <div className="mb-4 flex items-center gap-3">
                             <span className="h-px w-10 bg-gradient-to-r from-[#CDA468] to-transparent" />
-                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#CFAE80]">Diagnosis · Decompiler Output</p>
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#BA9B6B]">Diagnosis · Decompiler Output</p>
                         </div>
 
                         <div className="grid gap-3 sm:grid-cols-2">
@@ -707,7 +721,7 @@ function LiveDeconstruction() {
                                     className="group relative overflow-hidden rounded-2xl border border-[#363027] bg-[#1A1814] px-4 py-4"
                                 >
                                     <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#D0B896] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#CFAE80]">{card.label}</p>
+                                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#B99D70]">{card.label}</p>
                                     <p className="mt-2 text-[15px] leading-relaxed text-[#F1E4D1]">{card.value}</p>
                                 </motion.div>
                             ))}
@@ -716,15 +730,17 @@ function LiveDeconstruction() {
                         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                             <a
                                 href="/ingest"
-                                className="inline-flex items-center justify-center rounded-md bg-[#E2C08B] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#1A1712] transition hover:-translate-y-[1px] hover:bg-[#EACB9A]"
+                                className={`${HOMEPAGE_PRIMARY_CTA} bg-[#141414] border-[#141414]`}
                             >
-                                Start Decompiling Free
+                                <span>Start Decompiling Free</span>
+                                <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                             </a>
                             <a
                                 href={SAMPLE_DOSSIER_HREF}
-                                className="inline-flex items-center justify-center rounded-md border border-[#4A3F30] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#D7C3A5] transition hover:-translate-y-[1px] hover:bg-[#201C17]"
+                                className={`${HOMEPAGE_SECONDARY_CTA} border-[#4A3F30] text-[#D7C3A5] hover:border-[#D7C3A5]/60 hover:bg-[#201C17] hover:text-[#FBF7EF]`}
                             >
-                                Open Sample Dossier
+                                <span>Open Sample Dossier</span>
+                                <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                             </a>
                         </div>
                     </motion.div>
@@ -802,7 +818,7 @@ function PlatformSystemGrid() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ delay: index * 0.05, duration: 0.35, ease: SECTION_EASE }}
-                    className={`group relative overflow-hidden rounded-2xl border p-4 ${
+                    className={`group relative overflow-hidden ${SECONDARY_CARD_RADIUS} border p-4 ${
                         index % 2 === 0
                             ? 'border-[#DCCDB7] bg-[#FCF9F3]'
                             : 'border-[#D4C3AA] bg-[#F6EFE3]'
@@ -814,9 +830,10 @@ function PlatformSystemGrid() {
                     <p className="mt-3 max-w-[24ch] text-[13px] leading-6 text-[#5E584F]">{section.points[0]?.body}</p>
                     <a
                         href={`#${section.id}`}
-                        className="mt-3 inline-flex items-center text-[10px] font-bold uppercase tracking-[0.16em] text-[#9B7A4E] transition group-hover:text-[#1A1712]"
+                        className={`${HOMEPAGE_TEXT_CTA} mt-3`}
                     >
-                        View Step
+                        <span>View Step</span>
+                        <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                     </a>
                 </motion.article>
             ))}
@@ -834,7 +851,7 @@ export default function ProductProofSequence() {
             <WhyDifferentLeadIn />
             <WhyDifferentSection />
 
-            <section className="px-6 py-12 md:py-16">
+            <section className={SECTION_BAND}>
                 <motion.div
                     initial={{ opacity: 1, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
