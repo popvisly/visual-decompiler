@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { supabaseClient } from '@/lib/supabase-client';
 
@@ -50,13 +51,16 @@ export default function SidebarFooter() {
         router.refresh(); // Clear layout traces
     };
 
+    const showTrialMilestones = usage?.tier === 'free';
+    const showUpgradeReminder = usage?.tier === 'free' && usage.usageCount >= 3 && !usage.reachedLimit;
+
     return (
         <div className="pt-8 border-t border-[#E5E5E1] flex flex-col gap-5">
             {usage && (
                 <div className="rounded-[1.25rem] border border-[#E5E5E1] bg-white/70 px-4 py-4">
                     <div className="flex items-center justify-between gap-3">
                         <span className="font-sans text-[9px] font-bold tracking-[0.24em] uppercase text-[#4A4A4A]">
-                            Usage
+                            {showTrialMilestones ? 'Trial Progress' : 'Usage'}
                         </span>
                         <span className="font-mono text-[10px] text-[#8B4513]">
                             {usage.usageCount}/{usage.limit}
@@ -73,6 +77,27 @@ export default function SidebarFooter() {
                             ? 'Cycle limit reached. Upgrade to keep extracting.'
                             : `${usage.remaining} analyses remaining this cycle.`}
                     </p>
+                    {showTrialMilestones && (
+                        <>
+                            <div className="mt-4 space-y-2 rounded-[1rem] border border-[#EDE8DE] bg-[#FBFBF6] px-3 py-3">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8E7450]">How to use your 5</p>
+                                <p className="text-[10px] leading-5 text-[#5B554D]">Try 1: Baseline read</p>
+                                <p className="text-[10px] leading-5 text-[#5B554D]">Try 2: Compare route</p>
+                                <p className="text-[10px] leading-5 text-[#5B554D]">Try 3: Save to board</p>
+                            </div>
+                            <Link
+                                href="/help"
+                                className="mt-3 inline-flex text-[9px] font-bold uppercase tracking-[0.18em] text-[#8E7450] transition hover:text-[#5F4724]"
+                            >
+                                How to use your 5
+                            </Link>
+                        </>
+                    )}
+                    {showUpgradeReminder && (
+                        <p className="mt-3 text-[10px] leading-5 text-[#5B554D]">
+                            You&apos;re seeing surface-level gains. Unlock boards, compounding memory, and team collaboration next.
+                        </p>
+                    )}
                 </div>
             )}
             <span className="font-mono text-[9px] text-[#4A4A4A] opacity-60 hover:opacity-100 transition-opacity duration-300 truncate cursor-default" title={email}>

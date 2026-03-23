@@ -8,7 +8,15 @@ interface Board {
     name: string;
 }
 
-export default function AddToBoard({ adId, assetId }: { adId?: string; assetId?: string }) {
+export default function AddToBoard({
+    adId,
+    assetId,
+    triggerLabel = 'Add to Board',
+}: {
+    adId?: string;
+    assetId?: string;
+    triggerLabel?: string;
+}) {
     const [isOpen, setIsOpen] = useState(false);
     const [boards, setBoards] = useState<Board[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -106,7 +114,7 @@ export default function AddToBoard({ adId, assetId }: { adId?: string; assetId?:
                 className="flex items-center gap-2 px-4 py-2 bg-[#141414] border border-[#141414] rounded-xl text-[10px] font-bold text-[#FBF7EF] uppercase tracking-widest hover:bg-[#1A1A1A] transition-all no-print shadow-sm"
             >
                 <Plus className="w-3.5 h-3.5" />
-                Add to Board
+                {triggerLabel}
                 <ChevronDown className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
             </button>
 

@@ -1470,6 +1470,14 @@ export default function AssetWorkspace({
                                     <h1 className="text-2xl font-light tracking-tightest text-[#D4A574] uppercase">{asset.brand?.name}</h1>
                                     <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#D4A574]">{asset.brand?.market_sector}</span>
                                 </div>
+                                <div className="mb-3 flex items-center justify-between gap-3">
+                                    <div>
+                                        <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Next best action</p>
+                                        <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
+                                            Compare this against a second route, then move the strongest direction into a board or export.
+                                        </p>
+                                    </div>
+                                </div>
                                 <div className="mb-4 grid gap-3 md:grid-cols-3">
                                     <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
                                         <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Compare against another asset</p>
@@ -1480,16 +1488,16 @@ export default function AssetWorkspace({
                                             href="/compare"
                                             className="mt-4 inline-flex items-center rounded-full border border-[#D4A574]/35 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10"
                                         >
-                                            Open Differential
+                                            Run Differential Diagnosis
                                         </a>
                                     </div>
                                     <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">
                                         <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Save to Vault / Board</p>
                                         <p className="mt-2 text-[12px] leading-relaxed text-[#FFFFFF]/70">
-                                            Keep this read accessible for the next review, board, or client thread.
+                                            This dossier is already stored in Vault. Create a board to keep it active in the next review or client thread.
                                         </p>
                                         <div className="mt-4">
-                                            <AddToBoard assetId={asset.id} />
+                                            <AddToBoard assetId={asset.id} triggerLabel="Create Board" />
                                         </div>
                                     </div>
                                     <div className="rounded-[1.25rem] border border-[#D4A574]/20 bg-[#1A1A1A] px-4 py-4">

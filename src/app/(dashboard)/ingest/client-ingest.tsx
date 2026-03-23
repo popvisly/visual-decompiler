@@ -130,6 +130,8 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
     }, [stagedFile]);
 
     const observerLimitReached = usageStatus?.tier === 'free' && usageStatus.reachedLimit;
+    const isObserverTrial = usageStatus?.tier === 'free';
+    const showTrialReminder = usageStatus?.tier === 'free' && usageStatus.usageCount >= 3 && !usageStatus.reachedLimit;
     const supportedAssetsLabel = 'Supports JPG, PNG, WEBP - max 25MB';
     const resetLabel = useMemo(
         () => formatResetDate(usageStatus?.billingCycleReset ?? null),
@@ -434,12 +436,64 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                             </div>
                         )}
 
+                        {!observerLimitReached && (
+                            <div className="mt-6 rounded-[1.5rem] border border-[#D4A574]/15 bg-white/80 px-5 py-5">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">Best first move</p>
+                                <div className="mt-4 grid gap-4 md:grid-cols-3">
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A7B64]">Best first upload</p>
+                                        <p className="mt-2 text-[14px] leading-6 text-[#4A4A4A]">
+                                            Your current concept or the latest client ad you need to review today.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A7B64]">What you&apos;ll get in try #1</p>
+                                        <p className="mt-2 text-[14px] leading-6 text-[#4A4A4A]">
+                                            Primary mechanic, friction profile, and a strategic move your team can act on immediately.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A7B64]">What to do next</p>
+                                        <p className="mt-2 text-[14px] leading-6 text-[#4A4A4A]">
+                                            Compare it against a second route, then save the best result into a board.
+                                        </p>
+                                    </div>
+                                </div>
+                                {!stagedFile && !isProcessing && (
+                                    <button
+                                        onClick={() => document.getElementById('file-upload')?.click()}
+                                        className="mt-5 inline-flex items-center rounded-full border border-[#D4A574]/25 bg-[#FBFBF6] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#5F4724] transition hover:border-[#D4A574]/45 hover:bg-white"
+                                    >
+                                        Run First Analysis
+                                    </button>
+                                )}
+                            </div>
+                        )}
+
                         {!usageLoading && usageStatus && (
-                            <div className="mt-6 rounded-[1.5rem] border border-[#D4A574]/15 bg-white/70 px-5 py-4 text-center">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">Usage Status</p>
-                                <p className="mt-2 text-sm text-[#4A4A4A]">
-                                    {usageStatus.usageCount} of {usageStatus.limit} extractions used this cycle.
-                                </p>
+                            <div className="mt-6 rounded-[1.5rem] border border-[#D4A574]/15 bg-white/70 px-5 py-4">
+                                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">
+                                            {isObserverTrial ? 'Trial Progress' : 'Usage Status'}
+                                        </p>
+                                        <p className="mt-2 text-sm text-[#4A4A4A]">
+                                            {usageStatus.usageCount} of {usageStatus.limit} extractions used this cycle.
+                                        </p>
+                                    </div>
+                                    {isObserverTrial && (
+                                        <div className="grid gap-1 text-[11px] leading-5 text-[#5B554D] md:text-right">
+                                            <p>Try 1: Baseline read</p>
+                                            <p>Try 2: Compare route</p>
+                                            <p>Try 3: Save to board</p>
+                                        </div>
+                                    )}
+                                </div>
+                                {showTrialReminder && (
+                                    <p className="mt-4 text-[12px] leading-6 text-[#4A4A4A]">
+                                        You&apos;re seeing surface-level gains. Unlock full workflow: boards, compounding memory, and team collaboration.
+                                    </p>
+                                )}
                             </div>
                         )}
                     </div>
