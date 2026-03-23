@@ -1667,7 +1667,7 @@ export default function AssetWorkspace({
                                         )}
 
                                         {!isExecutiveSummary && (
-                                            <>
+                                            <div className="space-y-12">
                                         {/* Top 4 Extraction Metrics as Intelligence Cards */}
                                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-2">
                                             
@@ -1773,6 +1773,7 @@ export default function AssetWorkspace({
                                                         activeAct={activeAct}
                                                     />
                                                 </div>
+                                            </div>
                                             </div>
                                         )}
                                     </div>
