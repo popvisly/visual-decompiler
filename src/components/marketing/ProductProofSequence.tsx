@@ -8,7 +8,6 @@ import {
     BarChart3,
     Clapperboard,
     Compass,
-    Crosshair,
     FlaskConical,
     Handshake,
     MessageSquare,
@@ -174,27 +173,42 @@ const PERSONA_LINKS = [
 const DIFFERENTIATION_BLOCKS = [
     {
         title: 'Generation Tools',
-        theyDo: 'Create ad variations quickly.',
-        weDo: 'Deliver forensic diagnosis of persuasion mechanics, trigger structures, and friction risk.',
+        theyDo: 'Create ad variations fast.',
+        weDo: 'Map persuasion mechanics, trigger signals, and friction risk into a forensic dossier.',
         icon: Sparkles,
     },
     {
         title: 'Media Dashboards',
-        theyDo: 'Show distribution, spend, and channel movement.',
-        weDo: 'Convert creative signals into strategic readouts your team can act on immediately.',
+        theyDo: 'Track spend, distribution, and movement.',
+        weDo: 'Turn creative signals into strategic readouts, decision layers, and next moves.',
         icon: BarChart3,
     },
     {
         title: 'One-Off Testing Workflows',
-        theyDo: 'Validate individual assets in isolation.',
-        weDo: 'Build compounding intelligence through vault memory, cross-asset pattern tracking, and reusable strategic context.',
+        theyDo: 'Validate single assets in isolation.',
+        weDo: 'Store pattern memory, cross-asset deltas, and reusable blueprint context.',
         icon: FlaskConical,
     },
     {
         title: 'Generic AI Chat',
-        theyDo: 'Broad reasoning without structured forensic output.',
-        weDo: 'Produce client-defensible, boardroom-ready artifacts designed for agency delivery.',
+        theyDo: 'Offer broad reasoning on demand.',
+        weDo: 'Produce structured signals, dossier logic, and client-ready strategic outputs.',
         icon: MessageSquare,
+    },
+] as const;
+
+const DIFFERENTIATION_PROOF_ROWS = [
+    {
+        label: 'Signals',
+        value: 'Trigger profile, friction cues, and narrative pressure in one readout.',
+    },
+    {
+        label: 'Mechanics',
+        value: 'Primary persuasion system, blueprint logic, and strategic posture.',
+    },
+    {
+        label: 'Dossier',
+        value: 'A client-ready object built for review rooms, decks, and follow-up moves.',
     },
 ] as const;
 
@@ -533,19 +547,46 @@ function WhyDifferentSection() {
         <section className={`border-b border-[#E3DACB] bg-[#F7F1E7] ${SECTION_BAND}`}>
             <motion.div {...REVEAL} className="mx-auto max-w-7xl">
                 <div className="max-w-4xl">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
-                        Why Visual Decompiler Is Different
+                    <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8E7450]">
+                        WHY TEAMS SWITCH
                     </p>
-                    <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">Forensic Advertising Intelligence OS</p>
                     <h2 className="mt-4 text-3xl font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-5xl">
-                        Not built to generate more ads — built to make better decisions.
+                        Forensic intelligence your team can act on in minutes.
                     </h2>
                     <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#5E5A53] md:text-lg">
-                        Most tools help teams create assets, track spend, or run tests. Visual Decompiler is built to explain why creative works, what to do next, and how to scale that intelligence across an agency.
+                        See exactly where generic spy tools stop and where Visual Decompiler creates client-ready strategic outputs.
                     </p>
                 </div>
 
-                <div className="mt-10 grid gap-4 md:grid-cols-2">
+                <div className="mt-12 rounded-[1.9rem] border border-[#2B2721] bg-[#171512] px-6 py-6 text-[#F5EFE3] shadow-[0_24px_70px_rgba(18,16,12,0.12)] md:px-8 md:py-8">
+                    <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
+                        <div>
+                            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#B89A70]">
+                                SAMPLE PROOF OBJECT
+                            </p>
+                            <p className="mt-4 max-w-[28rem] text-[18px] leading-[1.55] text-[#EEE4D3] md:text-[20px]">
+                                Signals, mechanics, blueprint logic, and recommendation layers held in one restrained dossier object.
+                            </p>
+                        </div>
+                        <div className="grid gap-3">
+                            {DIFFERENTIATION_PROOF_ROWS.map((row) => (
+                                <div
+                                    key={row.label}
+                                    className="rounded-[1.3rem] border border-[#3A342B] bg-[#1D1A16] px-4 py-4"
+                                >
+                                    <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#B89A70]">
+                                        {row.label}
+                                    </p>
+                                    <p className="mt-2 text-[14px] leading-6 text-[#E5D9C7]">
+                                        {row.value}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-12 grid gap-4 md:grid-cols-2">
                     {DIFFERENTIATION_BLOCKS.map((block, index) => (
                         <motion.article
                             key={block.title}
@@ -553,7 +594,7 @@ function WhyDifferentSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.28 }}
                             transition={{ duration: 0.45, delay: index * 0.06, ease: SECTION_EASE }}
-                            className={`${SECONDARY_CARD_RADIUS} border border-[#D8CCB5] bg-[#FCFAF5] px-6 py-6`}
+                            className={`${SECONDARY_CARD_RADIUS} border border-[#D8CCB5] bg-[#F2EBDF] px-6 py-6`}
                         >
                             <div className="flex items-start gap-2.5">
                                 <block.icon
@@ -565,34 +606,24 @@ function WhyDifferentSection() {
                             </div>
                             <div className="mt-4 space-y-4">
                                 <div>
-                                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#A19380]">They do</p>
-                                    <p className="mt-2 text-[15px] leading-7 text-[#5E5A53]">{block.theyDo}</p>
+                                    <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#A19380]">THEY DO</p>
+                                    <p className="mt-2 max-w-[25ch] text-[15px] leading-6 text-[#5E5A53]">{block.theyDo}</p>
                                 </div>
                                 <div className="border-t border-[#E4D9C8] pt-4">
-                                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7E6948]">We do</p>
-                                    <p className="mt-2 text-[16px] leading-7 text-[#141414]">{block.weDo}</p>
+                                    <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7E6948]">WE DO</p>
+                                    <p className="mt-2 max-w-[30ch] text-[16px] leading-6 text-[#141414]">{block.weDo}</p>
                                 </div>
                             </div>
                         </motion.article>
                     ))}
                 </div>
 
-                <div className="mt-8 flex flex-col gap-5 rounded-[1.8rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 md:flex-row md:items-end md:justify-between">
-                    <div className="flex max-w-4xl items-start gap-2">
-                        <Crosshair
-                            aria-hidden="true"
-                            className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#8E7450]"
-                            strokeWidth={1.75}
-                        />
-                        <p className="text-[15px] leading-7 text-[#3F3A33] md:text-base">
-                            Visual Decompiler is faster than manual analysis, deeper than ChatGPT alone, and built for white-label agency authority.
-                        </p>
-                    </div>
+                <div className="mt-8 flex justify-start md:justify-center">
                     <a
-                        href="#deconstruction"
+                        href={SAMPLE_DOSSIER_HREF}
                         className={HOMEPAGE_SECONDARY_CTA}
                     >
-                        <span>See Decompiler Output</span>
+                        <span>View Sample Dossier</span>
                         <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                     </a>
                 </div>
