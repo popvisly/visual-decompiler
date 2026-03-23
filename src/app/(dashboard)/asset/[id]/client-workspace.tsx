@@ -1666,10 +1666,10 @@ export default function AssetWorkspace({
                                             />
                                         )}
 
-                                        {!isExecutiveSummary && (
+                                        {!isExecutiveSummary ? (
                                             <div className="space-y-12">
-                                        {/* Top 4 Extraction Metrics as Intelligence Cards */}
-                                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-2">
+                                                {/* Top 4 Extraction Metrics as Intelligence Cards */}
+                                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-2">
                                             
                                             {/* Unified Primary Intelligence Metric */}
                                             <div className="col-span-1 lg:col-span-3 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-3xl p-6 shadow-sm flex flex-col lg:flex-row lg:items-center gap-6 min-h-[140px]">
@@ -1760,9 +1760,9 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
 
-                                        {/* DEEP SEMIOTIC DOSSIER -> 3-COLUMN ELITE GRID */}
-                                        {extraction.full_dossier && (
-                                            <div id="dossier-evidence" className="pt-12 border-t border-[#D4A574]/20 space-y-8 scroll-mt-24">
+                                                {/* DEEP SEMIOTIC DOSSIER -> 3-COLUMN ELITE GRID */}
+                                                {extraction.full_dossier ? (
+                                                    <div id="dossier-evidence" className="pt-12 border-t border-[#D4A574]/20 space-y-8 scroll-mt-24">
                                                 
                                                 {/* FULL-WIDTH FORENSIC DOSSIER */}
                                                 <div className="grid grid-cols-1 gap-8">
@@ -1773,9 +1773,10 @@ export default function AssetWorkspace({
                                                         activeAct={activeAct}
                                                     />
                                                 </div>
+                                                    </div>
+                                                ) : null}
                                             </div>
-                                            </div>
-                                        )}
+                                        ) : null}
                                     </div>
                                 ) : (
                                     <SovereignProcessingView assetId={asset.id} />
