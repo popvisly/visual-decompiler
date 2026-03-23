@@ -558,26 +558,26 @@ function WhyDifferentSection() {
                     </p>
                 </div>
 
-                <div className="mt-12 rounded-[1.9rem] border border-[#2B2721] bg-[#171512] px-6 py-6 text-[#F5EFE3] shadow-[0_24px_70px_rgba(18,16,12,0.12)] md:px-8 md:py-8">
-                    <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
-                        <div>
+                <div className="mt-12 rounded-[1.8rem] border border-[#2B2721] bg-[#171512] px-5 py-5 text-[#F5EFE3] shadow-[0_18px_44px_rgba(18,16,12,0.10)] md:px-6 md:py-6">
+                    <div className="grid gap-5 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+                        <div className="max-w-[26rem]">
                             <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#B89A70]">
                                 SAMPLE PROOF OBJECT
                             </p>
-                            <p className="mt-4 max-w-[28rem] text-[18px] leading-[1.55] text-[#EEE4D3] md:text-[20px]">
+                            <p className="mt-3 text-[17px] leading-[1.6] text-[#EEE4D3] md:text-[19px]">
                                 Signals, mechanics, blueprint logic, and recommendation layers held in one restrained dossier object.
                             </p>
                         </div>
-                        <div className="grid gap-3">
+                        <div className="grid gap-3 md:grid-cols-3">
                             {DIFFERENTIATION_PROOF_ROWS.map((row) => (
                                 <div
                                     key={row.label}
-                                    className="rounded-[1.3rem] border border-[#3A342B] bg-[#1D1A16] px-4 py-4"
+                                    className="min-h-[112px] rounded-[1.15rem] border border-[#3A342B] bg-[#201C17] px-4 py-4"
                                 >
                                     <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#B89A70]">
                                         {row.label}
                                     </p>
-                                    <p className="mt-2 text-[14px] leading-6 text-[#E5D9C7]">
+                                    <p className="mt-2 text-[13px] leading-[1.55] text-[#E5D9C7]">
                                         {row.value}
                                     </p>
                                 </div>
@@ -594,24 +594,26 @@ function WhyDifferentSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.28 }}
                             transition={{ duration: 0.45, delay: index * 0.06, ease: SECTION_EASE }}
-                            className={`${SECONDARY_CARD_RADIUS} border border-[#D8CCB5] bg-[#F2EBDF] px-6 py-6`}
+                            className={`${SECONDARY_CARD_RADIUS} border border-[#D6C8B2] bg-[#F4EBDD] px-5 py-5 md:px-6 md:py-6`}
                         >
-                            <div className="flex items-start gap-2.5">
+                            <div className="flex items-center gap-2.5">
                                 <block.icon
                                     aria-hidden="true"
-                                    className={`${CARD_ICON_CLASS} text-[#8E7450]`}
+                                    className="h-[17px] w-[17px] flex-shrink-0 text-[#8E7450]"
                                     strokeWidth={1.65}
                                 />
                                 <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8E7450]">{block.title}</p>
                             </div>
-                            <div className="mt-4 space-y-4">
+                            <div className="mt-4 space-y-3.5">
                                 <div>
                                     <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#A19380]">THEY DO</p>
-                                    <p className="mt-2 max-w-[25ch] text-[15px] leading-6 text-[#5E5A53]">{block.theyDo}</p>
+                                    <p className="mt-2 max-w-[25ch] text-[15px] leading-[1.5] text-[#635D54]">{block.theyDo}</p>
                                 </div>
                                 <div className="border-t border-[#E4D9C8] pt-4">
-                                    <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7E6948]">WE DO</p>
-                                    <p className="mt-2 max-w-[30ch] text-[16px] leading-6 text-[#141414]">{block.weDo}</p>
+                                    <div className="rounded-[1.05rem] border border-[#E1D4BE] bg-[#F8F1E7] px-4 py-3.5">
+                                        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7E6948]">WE DO</p>
+                                        <p className="mt-2 max-w-[30ch] text-[15px] leading-[1.55] text-[#141414]">{block.weDo}</p>
+                                    </div>
                                 </div>
                             </div>
                         </motion.article>
