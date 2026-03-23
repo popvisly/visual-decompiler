@@ -3,7 +3,7 @@ import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 export default function AboutPage() {
     return (
         <main className="min-h-screen bg-[#FBFBF6]">
-            <UnifiedSovereignHeader primaryCta={{ label: 'Start Analysis', href: '/ingest' }} />
+            <UnifiedSovereignHeader primaryCta={{ label: 'Start Decompiling Free', href: '/ingest' }} />
 
             <section className="px-6 pb-16 pt-32 md:pt-40">
                 <div className="mx-auto max-w-5xl">

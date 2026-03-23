@@ -40,7 +40,7 @@ export default function FooterStartNow() {
                                 whileTap={{ scale: 0.98 }}
                                 className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#141414] px-8 py-4 text-base font-semibold text-[#FBF7EF] shadow-[0_18px_36px_rgba(20,20,20,0.14)] transition-colors hover:bg-black sm:w-auto sm:px-10 sm:py-5 sm:text-lg"
                             >
-                                Start Analysis
+                                Start Decompiling Free
                                 <ArrowUpRight className="w-5 h-5" />
                             </motion.a>
                             <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">

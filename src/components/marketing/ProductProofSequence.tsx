@@ -824,10 +824,10 @@ function AdToIntelligenceSection() {
                     <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                         <Link
                             href="/ingest"
-                            onClick={() => trackCtaClick('homepage_ad_to_intelligence_cta_primary_click', 'Start Analysis', '/ingest')}
+                            onClick={() => trackCtaClick('homepage_ad_to_intelligence_cta_primary_click', 'Start Decompiling Free', '/ingest')}
                             className="inline-flex items-center justify-center rounded-full bg-[#141414] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black"
                         >
-                            Start Analysis
+                            Start Decompiling Free
                         </Link>
                         <Link
                             href="/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a"
@@ -987,7 +987,7 @@ function LiveDeconstruction() {
                                 href="/ingest"
                                 className="inline-flex items-center justify-center rounded-md bg-[#E2C08B] px-5 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#1A1712] transition hover:-translate-y-[1px] hover:bg-[#EACB9A]"
                             >
-                                Start Analysis
+                                Start Decompiling Free
                             </a>
                             <a
                                 href="/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a"

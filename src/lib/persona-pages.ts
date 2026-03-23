@@ -47,7 +47,7 @@ export const ART_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Upload your work-in-progress ad and get back a precise read on what’s working, what’s not, and what to change before you walk into the room. In under 60 seconds.',
     primaryCta: {
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
     },
     secondaryCta: {
@@ -111,7 +111,7 @@ export const ART_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'Your next presentation just got stronger.',
         subline: 'Upload your concept now. Get your readout before you need it.',
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
         note: 'No card required · First 5 analyses free',
     },
@@ -124,7 +124,7 @@ export const NEW_BUSINESS_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Visual Decompiler gives you forensic competitive intelligence on any brand’s advertising — trigger mechanics, psychological architecture, whitespace analysis — in under 60 seconds. Walk in prepared. Walk out with the business.',
     primaryCta: {
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
     },
     secondaryCta: {
@@ -183,7 +183,7 @@ export const NEW_BUSINESS_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'The pitch is in 48 hours. Start now.',
         subline: 'Upload the client’s main competitor. See what you get.',
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
         note: 'No card required · First 5 analyses free',
     },
@@ -196,7 +196,7 @@ export const CREATIVE_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Visual Decompiler gives you the structural logic behind any reference or competitor work — so you can move from instinct to direction fast, without the analysis overhead.',
     primaryCta: {
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
     },
     secondaryCta: {
@@ -255,7 +255,7 @@ export const CREATIVE_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'Brief faster. Direct better. Defend more.',
         subline: 'Start with one analysis. See what it produces.',
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
         note: 'No card required · First 5 analyses free',
     },
@@ -268,7 +268,7 @@ export const STRATEGY_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Visual Decompiler builds the analytical layer between creative instinct and client confidence — trigger mechanics, category momentum, persuasion mapping, and white-label outputs your clients can trust.',
     primaryCta: {
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
     },
     secondaryCta: {
@@ -327,7 +327,7 @@ export const STRATEGY_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'Intelligence your clients will pay for.',
         subline: 'Start with one analysis. Export it as your own.',
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
         note: 'No card required · White-label export on every tier',
     },
@@ -340,7 +340,7 @@ export const BRAND_MANAGER_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Visual Decompiler gives brand managers a structured analytical view of any creative — so you can brief better, push back smarter, and present recommendations upward with confidence.',
     primaryCta: {
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
     },
     secondaryCta: {
@@ -399,7 +399,7 @@ export const BRAND_MANAGER_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'Better briefs. Better feedback. Better work.',
         subline: 'Upload the last piece of work your agency submitted. See what it’s actually doing.',
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
         note: 'No card required · First 5 analyses free',
     },
@@ -412,7 +412,7 @@ export const COPYWRITER_PERSONA_PAGE: PersonaPageData = {
     subline:
         'Visual Decompiler reads the psychological and emotional architecture of any ad — giving you the structural language to write copy that works with the visual, not just alongside it.',
     primaryCta: {
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
     },
     secondaryCta: {
@@ -471,7 +471,7 @@ export const COPYWRITER_PERSONA_PAGE: PersonaPageData = {
     finalCta: {
         headline: 'Write with the visual. Not just next to it.',
         subline: 'Upload the campaign visual. Read the emotional architecture. Then write.',
-        label: 'Start Analysis',
+        label: 'Start Decompiling Free',
         href: '/ingest',
         note: 'No card required · First 5 analyses free',
     },

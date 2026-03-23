@@ -210,10 +210,9 @@ export default function PricingPage() {
                             </p>
                             <p className="mt-1 text-[12px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">per month · annual contract</p>
                             <p className="mt-6 text-xl font-medium leading-snug text-[#F7EEDC]">{PRICING.agency.tagline}</p>
-                            <p className="mt-4 max-w-sm text-lg leading-relaxed text-[#E5D5BC]">
-                                This is not a per-seat tool.
+                            <p className="mt-4 max-w-md text-lg leading-relaxed text-[#E5D5BC]">
+                                {PRICING.agency.subline}
                             </p>
-                            <p className="mt-2 text-base leading-relaxed text-[#CDBEA8]">{PRICING.agency.subline}</p>
 
                             <div className="mt-8 border-t border-[#342D24] pt-6">
                                 <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D7B07A]">Everything in Strategic Unit, plus:</p>
@@ -259,8 +258,8 @@ export default function PricingPage() {
                                 <tr>
                                     <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Feature</th>
                                     <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Observer</th>
-                                    <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Strategic</th>
-                                    <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Agency</th>
+                                    <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Strategic Unit</th>
+                                    <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Agency Sovereignty</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -336,7 +335,7 @@ export default function PricingPage() {
                             href="/ingest"
                             className="inline-flex items-center justify-center rounded-full bg-[#141414] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black"
                         >
-                            Start Free — No Card Required
+                            Start Decompiling Free
                         </a>
                         <a
                             href={PRICING.agency.ctaHref}

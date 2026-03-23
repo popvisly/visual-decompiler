@@ -41,7 +41,7 @@ const WHAT_IT_IS_NOT = [
 export default function TrustMethodPage() {
     return (
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
-            <UnifiedSovereignHeader primaryCta={{ label: 'Start Analysis', href: '/ingest' }} />
+            <UnifiedSovereignHeader primaryCta={{ label: 'Start Decompiling Free', href: '/ingest' }} />
 
             <section className="border-b border-[#E2D8C8] px-6 pb-16 pt-36 md:pb-20 md:pt-44">
                 <div className="mx-auto max-w-5xl">
