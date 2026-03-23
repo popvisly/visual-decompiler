@@ -2,22 +2,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
-import posthog from 'posthog-js';
+import { motion } from 'framer-motion';
 import {
     BarChart3,
-    BriefcaseBusiness,
     Clapperboard,
     Compass,
     Crosshair,
-    FileImage,
     FlaskConical,
     Handshake,
     MessageSquare,
     Palette,
     PenSquare,
-    ScanSearch,
     ShieldCheck,
     Sparkles,
 } from 'lucide-react';
@@ -42,22 +37,6 @@ type Stat = {
     detail: string;
 };
 
-type MiroNode = {
-    title: string;
-    body: string;
-};
-
-type IntelligenceFlowColumn = {
-    step: string;
-    title: string;
-    body: string;
-    icon: typeof FileImage;
-    tone: 'light' | 'dark';
-    imageSrc: string;
-    imageAlt: string;
-};
-
-
 const STATS: Stat[] = [
     {
         value: '5',
@@ -78,55 +57,6 @@ const STATS: Stat[] = [
         value: '∞',
         label: 'Compounding strategic memory',
         detail: 'in Vault',
-    },
-];
-
-const MIRO_FLOW_NODES: MiroNode[] = [
-    {
-        title: 'Input Cluster',
-        body: 'Ingest your WIP, competitor, and client campaign assets into one visual field.',
-    },
-    {
-        title: 'Visual Mechanics',
-        body: 'Decompiler isolates composition, chromatic cues, framing, and hierarchy patterns.',
-    },
-    {
-        title: 'Psychology Map',
-        body: 'Surface the persuasion levers behind response: identity, scarcity, authority, and friction.',
-    },
-    {
-        title: 'Strategic Move',
-        body: 'Translate findings into a concrete creative direction your team can execute next.',
-    },
-];
-
-const INTELLIGENCE_FLOW_COLUMNS: IntelligenceFlowColumn[] = [
-    {
-        step: '01',
-        title: 'Raw Ad Input',
-        body: 'Upload your concept, competitor ad, or client reference. Static, video frame, or campaign creative — the system starts from the real asset.',
-        icon: FileImage,
-        tone: 'light',
-        imageSrc: '/images/examples/Chanel_No5.webp',
-        imageAlt: 'Luxury fragrance ad used as a raw creative input example',
-    },
-    {
-        step: '02',
-        title: 'Decompiler Output',
-        body: 'Receive structured forensic surfaces: persuasion mechanism, trigger/friction profile, strategic posture, and differential delta when compared.',
-        icon: ScanSearch,
-        tone: 'dark',
-        imageSrc: '/images/examples/Watch.png',
-        imageAlt: 'Product creative used to represent decompiler output analysis',
-    },
-    {
-        step: '03',
-        title: 'Strategic Insight',
-        body: 'Get the decision layer: what to keep, what to change, and what to test next — packaged as boardroom-ready artifacts.',
-        icon: BriefcaseBusiness,
-        tone: 'light',
-        imageSrc: '/images/examples/ACNE.png',
-        imageAlt: 'Campaign creative used to represent strategic insight output',
     },
 ];
 
@@ -430,79 +360,6 @@ function StatsBar() {
     );
 }
 
-function MiroFlowSection() {
-    const sectionRef = useRef<HTMLElement | null>(null);
-    const [activeIndex, setActiveIndex] = useState(0);
-    const { scrollYProgress } = useScroll({
-        target: sectionRef,
-        offset: ['start 75%', 'end 30%'],
-    });
-
-    useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-        const next = Math.min(MIRO_FLOW_NODES.length - 1, Math.floor(latest * MIRO_FLOW_NODES.length));
-        setActiveIndex(next);
-    });
-
-    return (
-        <section ref={sectionRef} className="border-b border-[#E3DACB] bg-[#F7F1E7] px-6 py-14 md:py-16">
-            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
-                <div className="mb-6 flex items-center gap-3">
-                    <span className="h-px w-10 bg-gradient-to-r from-[#CDA468] to-transparent" />
-                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#9A8A73]">Discovery Flow</p>
-                </div>
-                <h3 className="max-w-4xl text-3xl font-semibold leading-[1] tracking-tight text-[#141414] md:text-5xl">
-                    Insights connect as you scroll — like a living strategy board.
-                </h3>
-
-                <div className="mt-8 grid gap-3 md:grid-cols-4 md:gap-0">
-                    {MIRO_FLOW_NODES.map((node, index) => (
-                        <motion.div
-                            key={node.title}
-                            initial={{ opacity: 0, y: 18 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.35 }}
-                            transition={{ delay: index * 0.12, duration: 0.55, ease: SECTION_EASE }}
-                            className={`group relative rounded-2xl border px-4 py-4 md:rounded-none md:border-l-0 md:first:rounded-l-2xl md:first:border-l md:last:rounded-r-2xl ${
-                                index === activeIndex ? 'border-[#CDA468] bg-[#F7F0E5]' : 'border-[#DCCDB7] bg-[#FCF9F3]'
-                            }`}
-                        >
-                            {index < MIRO_FLOW_NODES.length - 1 && (
-                                <>
-                                    <span className="pointer-events-none absolute -right-2 top-1/2 z-10 hidden h-px w-4 -translate-y-1/2 bg-[#CDB792] md:block" />
-                                    {index === activeIndex && (
-                                        <motion.span
-                                            aria-hidden
-                                            className="pointer-events-none absolute -right-1 top-1/2 z-20 hidden h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#CDA468] md:block"
-                                            animate={{ opacity: [0.25, 1, 0.25], x: [0, 6, 0] }}
-                                            transition={{
-                                                duration: 1.4,
-                                                repeat: Infinity,
-                                                ease: 'easeInOut',
-                                            }}
-                                        />
-                                    )}
-                                </>
-                            )}
-                            <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${index === activeIndex ? 'text-[#7D5F37]' : 'text-[#8E7A5E]'}`}>Step {index + 1}</p>
-                            <p className="mt-2 text-lg font-semibold text-[#171410]">{node.title}</p>
-                            <p className="mt-2 text-sm leading-relaxed text-[#5D584F]">{node.body}</p>
-                        </motion.div>
-                    ))}
-                </div>
-
-                <div className="mt-6 flex justify-end">
-                    <a
-                        href="#operating"
-                        className="inline-flex items-center text-[10px] font-bold uppercase tracking-[0.2em] text-[#7D6748] transition hover:text-[#1A1712]"
-                    >
-                        Continue to Operating Layer ↓
-                    </a>
-                </div>
-            </motion.div>
-        </section>
-    );
-}
-
 function DifferentialDiagnosisSection() {
     return (
         <section className="border-b border-[#2D2923] bg-[#141310] px-6 py-14 md:py-16">
@@ -630,6 +487,33 @@ function PersonaDiscoverabilitySection() {
     );
 }
 
+function WhyDifferentLeadIn() {
+    return (
+        <section className="border-b border-[#E3DACB] bg-[#FBFBF6] px-6 py-12 md:py-14">
+            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
+                <div className="max-w-4xl">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
+                        Why this is different
+                    </p>
+                    <div className="mt-5 space-y-2">
+                        <p className="text-[16px] leading-relaxed text-[#7A7062] md:text-[18px]">
+                            Foreplay shows you what ads exist.
+                        </p>
+                        <p className="text-[16px] leading-relaxed text-[#7A7062] md:text-[18px]">
+                            Brandwatch shows you what people say about brands.
+                        </p>
+                        <p className="text-[28px] font-semibold leading-[1.02] tracking-tight text-[#141414] md:text-[42px]">
+                            Visual Decompiler tells you why the ad is working —
+                            <br />
+                            and how to use that in the room.
+                        </p>
+                    </div>
+                </div>
+            </motion.div>
+        </section>
+    );
+}
+
 function WhyDifferentSection() {
     return (
         <section className="border-b border-[#E3DACB] bg-[#F7F1E7] px-6 py-14 md:py-16">
@@ -696,153 +580,6 @@ function WhyDifferentSection() {
                     >
                         See Decompiler Output
                     </a>
-                </div>
-            </motion.div>
-        </section>
-    );
-}
-
-function AdToIntelligenceSection() {
-    const sectionRef = useRef<HTMLElement | null>(null);
-    const hasTrackedViewRef = useRef(false);
-
-    useEffect(() => {
-        const node = sectionRef.current;
-        if (!node) return;
-
-        const getViewport = () => {
-            if (window.innerWidth < 768) return 'mobile';
-            if (window.innerWidth < 1024) return 'tablet';
-            return 'desktop';
-        };
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!hasTrackedViewRef.current && entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-                        hasTrackedViewRef.current = true;
-                        posthog.capture('homepage_ad_to_intelligence_view', {
-                            section_id: 'ad-to-intelligence',
-                            page: 'homepage',
-                            variant: 'v1',
-                            viewport: getViewport(),
-                        });
-                    }
-                });
-            },
-            { threshold: [0.5] }
-        );
-
-        observer.observe(node);
-
-        return () => observer.disconnect();
-    }, []);
-
-    const getViewport = () => {
-        if (typeof window === 'undefined') return 'desktop';
-        if (window.innerWidth < 768) return 'mobile';
-        if (window.innerWidth < 1024) return 'tablet';
-        return 'desktop';
-    };
-
-    const trackCtaClick = (eventName: string, ctaLabel: string, ctaTarget: string) => {
-        posthog.capture(eventName, {
-            section_id: 'ad-to-intelligence',
-            page: 'homepage',
-            variant: 'v1',
-            viewport: getViewport(),
-            cta_label: ctaLabel,
-            cta_target: ctaTarget,
-        });
-    };
-
-    return (
-        <section id="ad-to-intelligence" ref={sectionRef} className="border-b border-[#E3DACB] bg-[#FBFBF6] px-6 py-12 md:py-16">
-            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
-                <div className="max-w-4xl">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
-                        Forensic Advertising Intelligence OS
-                    </p>
-                    <h2 className="mt-4 text-3xl font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-5xl">
-                        From raw creative to client-defensible strategic direction.
-                    </h2>
-                    <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#5E5A53] md:text-lg">
-                        Most tools stop at analysis. Visual Decompiler converts each asset into structured intelligence your team can use, defend, and deliver.
-                    </p>
-                </div>
-
-                <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                    {INTELLIGENCE_FLOW_COLUMNS.map((column, index) => (
-                        <motion.article
-                            key={column.title}
-                            initial={{ opacity: 0, y: 16 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.28 }}
-                            transition={{ duration: 0.45, delay: index * 0.06, ease: SECTION_EASE }}
-                            className={`relative rounded-[1.8rem] border px-5 py-5 transition duration-200 hover:-translate-y-[1px] ${
-                                column.tone === 'dark'
-                                    ? 'border-[#3C3428] bg-[#15130F] text-[#F4E9D9]'
-                                    : 'border-[#D8CCB5] bg-[#FCFAF5] text-[#141414]'
-                            }`}
-                        >
-                            <div className="relative mb-5 h-32 overflow-hidden rounded-[1.3rem] border border-black/5 md:h-36">
-                                <Image
-                                    src={column.imageSrc}
-                                    alt={column.imageAlt}
-                                    fill
-                                    sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
-                                    className="object-cover object-center"
-                                />
-                                <div className={`absolute inset-x-0 bottom-0 h-16 ${column.tone === 'dark' ? 'bg-gradient-to-t from-[#0F0D0A] to-transparent' : 'bg-gradient-to-t from-[#15120E]/70 to-transparent'}`} />
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <column.icon
-                                    aria-hidden="true"
-                                    className={`h-[18px] w-[18px] flex-shrink-0 ${
-                                        column.tone === 'dark' ? 'text-[#D7B07A]' : 'text-[#8E7450]'
-                                    }`}
-                                    strokeWidth={1.75}
-                                />
-                                <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${column.tone === 'dark' ? 'text-[#D7B07A]' : 'text-[#8E7450]'}`}>
-                                    {column.step} {column.title}
-                                </p>
-                            </div>
-                            <p className={`mt-4 text-[15px] leading-7 ${column.tone === 'dark' ? 'text-[#E6D7BF]' : 'text-[#5E5A53]'}`}>
-                                {column.body}
-                            </p>
-                        </motion.article>
-                    ))}
-                </div>
-
-                <div className="mt-8 rounded-[1.8rem] border border-[#D8CCB5] bg-[#F8F3EA] px-6 py-6">
-                    <p className="text-[15px] leading-7 text-[#3F3A33]">
-                        Most tools analyze ads. Visual Decompiler builds strategic intelligence workflows around them.
-                    </p>
-                    <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#8A7B64]">
-                        Built for real agency and campaign workflows — not generic AI output.
-                    </p>
-                    <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                        <Link
-                            href="/ingest"
-                            onClick={() => trackCtaClick('homepage_ad_to_intelligence_cta_primary_click', 'Start Decompiling Free', '/ingest')}
-                            className="inline-flex items-center justify-center rounded-full bg-[#141414] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black"
-                        >
-                            Start Decompiling Free
-                        </Link>
-                        <Link
-                            href="/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a"
-                            onClick={() =>
-                                trackCtaClick(
-                                    'homepage_ad_to_intelligence_cta_secondary_click',
-                                    'Open Sample Dossier',
-                                    '/asset/1cb30400-1ba3-4dda-8fe2-7650674aeb4a'
-                                )
-                            }
-                            className="inline-flex items-center justify-center rounded-full border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#6D655B] transition hover:border-[#C8B08D] hover:text-[#141414]"
-                        >
-                            Open Sample Dossier
-                        </Link>
-                    </div>
                 </div>
             </motion.div>
         </section>
@@ -975,13 +712,6 @@ function LiveDeconstruction() {
                             ))}
                         </div>
 
-                        <div className="mt-4 rounded-2xl border border-[#363027] bg-[#1A1814] px-4 py-4">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#CFAE80]">Discovery Expands as You Scroll</p>
-                            <p className="mt-2 text-sm leading-relaxed text-[#DCCBB1]">
-                                Next layer reveals pattern deltas, psychological distribution, and strategic posture across each asset — a Miro-style intelligence flow, not static cards.
-                            </p>
-                        </div>
-
                         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                             <a
                                 href="/ingest"
@@ -1096,13 +826,12 @@ function PlatformSystemGrid() {
 export default function ProductProofSequence() {
     return (
         <div id="funnel" className="bg-[#FBFBF6]">
-            <LiveDeconstruction />
             <DifferentialDiagnosisSection />
+            <LiveDeconstruction />
             <PersonaDiscoverabilitySection />
             <StatsBar />
-            <MiroFlowSection />
+            <WhyDifferentLeadIn />
             <WhyDifferentSection />
-            <AdToIntelligenceSection />
 
             <section className="px-6 py-12 md:py-16">
                 <motion.div
