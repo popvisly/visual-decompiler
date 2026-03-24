@@ -449,7 +449,7 @@ export default function AnalyticalHero() {
             {activeLabel && currentCluster && (
                 <>
                     <div
-                        className={`pointer-events-none absolute z-20 rounded-md border bg-[#141414]/95 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.1em] text-[#D4A574] transition-opacity duration-200 ${
+                        className={`pointer-events-none absolute z-20 rounded-md border bg-[#141414]/95 px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-[#D4A574] transition-opacity duration-200 ${
                             isHoveringLabel ? 'border-[#D7B07A] shadow-[0_0_15px_rgba(215,176,122,0.3),0_0_30px_rgba(215,176,122,0.15)]' : 'border-[#D4A574]/30'
                         }`}
                         style={{
@@ -463,7 +463,7 @@ export default function AnalyticalHero() {
 
                     {queuedLabel && nextCluster && (
                         <div
-                            className="pointer-events-none absolute z-20 rounded-md border border-[#D4A574]/30 bg-[#141414]/95 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.1em] text-[#D4A574] transition-opacity duration-200"
+                            className="pointer-events-none absolute z-20 rounded-md border border-[#D4A574]/30 bg-[#141414]/95 px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-[#D4A574] transition-opacity duration-200"
                             style={{
                                 left: `${queuedLabel.x + 30}px`,
                                 top: `${queuedLabel.y - 10}px`,
@@ -475,7 +475,7 @@ export default function AnalyticalHero() {
                     )}
 
                     <div
-                        className={`pointer-events-none absolute z-20 max-w-[220px] rounded-[4px] bg-[#141414]/85 px-3 py-1.5 pl-5 text-[10px] leading-[1.4] text-[#9A9A94] transition-opacity duration-200 ${
+                        className={`pointer-events-none absolute z-20 max-w-[280px] rounded-[4px] bg-[#141414]/88 px-4 py-2.5 pl-7 text-[12px] leading-[1.55] text-[#D2CCC2] transition-opacity duration-200 ${
                             isHoveringLabel ? 'opacity-100' : 'opacity-0'
                         }`}
                         style={{
@@ -483,7 +483,7 @@ export default function AnalyticalHero() {
                             top: `${activeLabel.y + 32}px`,
                         }}
                     >
-                        <span className="absolute left-2 top-1/2 h-0 w-0 -translate-y-1/2 border-b-[4px] border-l-[5px] border-r-0 border-t-[4px] border-b-transparent border-l-[#D4A574] border-t-transparent" />
+                        <span className="absolute left-3 top-1/2 h-0 w-0 -translate-y-1/2 border-b-[5px] border-l-[6px] border-r-0 border-t-[5px] border-b-transparent border-l-[#D4A574] border-t-transparent" />
                         {currentCluster.info}
                     </div>
                 </>
