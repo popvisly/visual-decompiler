@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
 import { HeroVisualItem } from '@/components/marketing/heroVisualData';
 
@@ -25,6 +25,72 @@ function nextValidIndex(items: HeroVisualItem[], invalidIds: Set<string>, startI
     return -1;
 }
 
+type FeaturedStageProps = {
+    current: HeroVisualItem;
+    previous?: HeroVisualItem | null;
+    isTransitioning?: boolean;
+    durationMs?: number;
+    scaleCurrent?: boolean;
+    onImageError: (item: HeroVisualItem, collection: HeroVisualItem[]) => void;
+    featuredItems: HeroVisualItem[];
+};
+
+function FeaturedStage({
+    current,
+    previous = null,
+    isTransitioning = false,
+    durationMs = 380,
+    scaleCurrent = false,
+    onImageError,
+    featuredItems,
+}: FeaturedStageProps) {
+    const transitionStyle = useMemo(
+        () => ({ transition: `opacity ${durationMs}ms ease` }),
+        [durationMs],
+    );
+
+    return (
+        <div className="relative h-[clamp(300px,44vh,420px)] w-full overflow-hidden rounded-[2rem] bg-neutral-950 sm:h-[clamp(340px,46vh,460px)] lg:h-[clamp(320px,52vh,620px)]">
+            {previous ? (
+                <Image
+                    key={`prev-${previous.id}`}
+                    src={previous.src}
+                    alt=""
+                    fill
+                    priority
+                    sizes="(min-width: 1280px) 66vw, (min-width: 1024px) 62vw, 100vw"
+                    className="pointer-events-none select-none object-cover"
+                    style={{
+                        objectPosition: previous.focalPoint || '50% 50%',
+                        opacity: isTransitioning ? 0 : 1,
+                        ...transitionStyle,
+                    }}
+                    onError={() => onImageError(previous, featuredItems)}
+                />
+            ) : null}
+
+            <Image
+                key={`cur-${current.id}`}
+                src={current.src}
+                alt={current.alt}
+                fill
+                priority
+                sizes="(min-width: 1280px) 66vw, (min-width: 1024px) 62vw, 100vw"
+                className="pointer-events-none select-none object-cover"
+                style={{
+                    objectPosition: current.focalPoint || '50% 50%',
+                    opacity: 1,
+                    transform: scaleCurrent ? 'scale(1.03)' : 'scale(1)',
+                    transition: `${transitionStyle.transition}, transform ${Math.max(durationMs * 6, 2200)}ms linear`,
+                }}
+                onError={() => onImageError(current, featuredItems)}
+            />
+
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+        </div>
+    );
+}
+
 export default function HeroVisualComposer({
     featured,
     supporting,
@@ -34,6 +100,8 @@ export default function HeroVisualComposer({
     const prefersReducedMotion = useReducedMotion();
     const shouldReduceMotion = reducedMotion ?? prefersReducedMotion;
     const [featuredIndex, setFeaturedIndex] = useState(0);
+    const [previousFeatured, setPreviousFeatured] = useState<HeroVisualItem | null>(null);
+    const [isTransitioning, setIsTransitioning] = useState(false);
     const [cycleCount, setCycleCount] = useState(0);
     const [invalidIds, setInvalidIds] = useState<Set<string>>(new Set());
 
@@ -58,12 +126,24 @@ export default function HeroVisualComposer({
         if (shouldReduceMotion || validFeatured.length <= 1) return;
 
         const timer = window.setInterval(() => {
+            setPreviousFeatured(validFeatured[featuredIndex] ?? null);
+            setIsTransitioning(true);
             setFeaturedIndex((current) => (current + 1) % validFeatured.length);
             setCycleCount((current) => current + 1);
         }, intervalMs);
 
         return () => window.clearInterval(timer);
-    }, [intervalMs, shouldReduceMotion, validFeatured.length]);
+    }, [featuredIndex, intervalMs, shouldReduceMotion, validFeatured]);
+
+    useEffect(() => {
+        if (!isTransitioning) return;
+        const timer = window.setTimeout(() => {
+            setIsTransitioning(false);
+            setPreviousFeatured(null);
+        }, 420);
+
+        return () => window.clearTimeout(timer);
+    }, [isTransitioning]);
 
     const handleImageError = (item: HeroVisualItem, collection: HeroVisualItem[]) => {
         setInvalidIds((current) => {
@@ -97,42 +177,21 @@ export default function HeroVisualComposer({
         <div className="mt-4 w-full md:mt-6">
             <div className="relative grid gap-4 lg:grid-cols-12">
                 <div className="relative overflow-hidden rounded-[2rem] border border-[#D8C6A6]/45 bg-[#191611] lg:col-span-8">
-                    <div className="relative h-[clamp(300px,44vh,420px)] sm:h-[clamp(340px,46vh,460px)] lg:h-[clamp(420px,52vh,620px)]">
+                    <div className="relative">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.1),transparent_48%),linear-gradient(180deg,rgba(12,10,8,0.08)_0%,rgba(12,10,8,0.3)_100%)]" />
-                        <AnimatePresence mode="wait">
-                            {activeFeatured ? (
-                                <motion.div
-                                    key={activeFeatured.id}
-                                    initial={shouldReduceMotion ? false : { opacity: 0 }}
-                                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
-                                    exit={shouldReduceMotion ? {} : { opacity: 0 }}
-                                    transition={{ duration: shouldReduceMotion ? 0 : 0.4, ease: 'easeOut' }}
-                                    className="absolute inset-0"
-                                >
-                                    <motion.div
-                                        initial={shouldReduceMotion ? false : { scale: 1 }}
-                                        animate={shouldReduceMotion ? { scale: 1 } : { scale: 1.03 }}
-                                        transition={{ duration: shouldReduceMotion ? 0 : intervalMs / 1000, ease: 'linear' }}
-                                        className="h-full w-full"
-                                    >
-                                        <Image
-                                            src={activeFeatured.src}
-                                            alt={activeFeatured.alt}
-                                            fill
-                                            priority
-                                            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 100vw, 66vw"
-                                            className="object-cover"
-                                            style={{ objectPosition: activeFeatured.focalPoint ?? '50% 50%' }}
-                                            onError={() => handleImageError(activeFeatured, featured)}
-                                        />
-                                    </motion.div>
-                                </motion.div>
-                            ) : (
-                                <div className="absolute inset-0 bg-[linear-gradient(135deg,#1E1A15_0%,#141210_100%)]" />
-                            )}
-                        </AnimatePresence>
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0F0D0A]/72 via-[#0F0D0A]/18 to-transparent" aria-hidden="true" />
+                        {activeFeatured ? (
+                            <FeaturedStage
+                                current={activeFeatured}
+                                previous={previousFeatured}
+                                isTransitioning={!shouldReduceMotion && isTransitioning}
+                                durationMs={380}
+                                scaleCurrent={!shouldReduceMotion}
+                                onImageError={handleImageError}
+                                featuredItems={featured}
+                            />
+                        ) : (
+                            <div className="h-[clamp(300px,44vh,420px)] bg-[linear-gradient(135deg,#1E1A15_0%,#141210_100%)] sm:h-[clamp(340px,46vh,460px)] lg:h-[clamp(320px,52vh,620px)]" />
+                        )}
 
                         <div className="absolute bottom-4 left-4 z-20 max-w-[calc(100%-2rem)] rounded-[1.25rem] border border-white/10 bg-[#0D0C0A]/62 px-4 py-4 text-left backdrop-blur-sm sm:bottom-5 sm:left-5 sm:max-w-[26rem]">
                             <div className="flex flex-wrap items-center gap-2">
