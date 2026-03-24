@@ -126,7 +126,7 @@ export default function UnifiedSovereignHeader({
                                             key={p.key}
                                             href={p.href}
                                             className={`
-                                                px-4 py-2 rounded-full border border-transparent
+                                                inline-flex min-w-[118px] items-center justify-center px-4 py-2 text-center whitespace-nowrap rounded-full border border-transparent
                                                 text-[10px] font-semibold uppercase tracking-[0.18em]
                                                 transition-all duration-300
                                                 ${active
@@ -134,8 +134,8 @@ export default function UnifiedSovereignHeader({
                                                         ? 'text-white border-white/50 bg-white/10'
                                                         : 'text-[#141414] border-black/15 bg-black/[0.035]'
                                                     : forceDark
-                                                        ? 'text-white/58 hover:text-white hover:border-white/26 hover:bg-white/5'
-                                                        : 'text-[#79736A] hover:text-[#141414] hover:border-black/14 hover:bg-black/[0.025]'
+                                                        ? 'text-white/58 hover:text-[#F3E5CF] hover:border-[#D4A574]/34 hover:bg-[#D4A574]/12'
+                                                        : 'text-[#79736A] hover:text-[#8A6840] hover:border-[#D4A574]/28 hover:bg-[#F6EFE3]'
                                                 }
                                             `}
                                         >
@@ -217,12 +217,12 @@ export default function UnifiedSovereignHeader({
                                     href={p.href}
                                     onClick={() => setMobileOpen(false)}
                                     className={`
-                                        block rounded-xl px-4 py-3 border border-transparent
+                                        block rounded-xl px-4 py-3 border border-transparent text-center
                                         text-[10px] font-bold uppercase tracking-[0.16em]
                                         transition-all
                                         ${active
                                             ? 'text-[#141414] border-[#D0B896] bg-[#F6EFE3]'
-                                            : 'text-[#6B6B6B] hover:text-[#141414] hover:border-[#D8CCB5] hover:bg-[#F8F3EA]'
+                                            : 'text-[#6B6B6B] hover:text-[#8A6840] hover:border-[#D4A574]/28 hover:bg-[#F8F3EA]'
                                         }
                                     `}
                                 >
