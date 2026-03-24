@@ -431,7 +431,7 @@ export default function AnalyticalHero() {
                         <br />
                         for{' '}
                         <span
-                            className="transition-[opacity,color] duration-[600ms] ease-in-out"
+                            className="font-serif font-normal tracking-[-0.03em] transition-[opacity,color] duration-[600ms] ease-in-out"
                             style={{ color: persona.color, opacity: personaVisible ? 1 : 0 }}
                         >
                             {persona.role}
