@@ -48,7 +48,7 @@ function HeroVisualStage({
     );
 
     return (
-        <div className="relative h-[clamp(300px,44vh,420px)] w-full overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#241d16_0%,#16120f_100%)] sm:h-[clamp(340px,46vh,460px)] lg:h-[clamp(420px,52vh,620px)]">
+        <div className="relative h-[clamp(180px,26vh,230px)] w-full overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#241d16_0%,#16120f_100%)] sm:h-[clamp(200px,28vh,250px)] lg:h-[clamp(220px,30vh,300px)]">
             {previous ? (
                 <Image
                     key={`prev-${previous.id}`}
@@ -173,7 +173,7 @@ export default function HeroVisualComposer({
                         onImageError={handleImageError}
                     />
                 ) : (
-                    <div className="relative h-[clamp(300px,44vh,420px)] w-full overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#241d16_0%,#16120f_100%)] sm:h-[clamp(340px,46vh,460px)] lg:h-[clamp(420px,52vh,620px)]">
+                    <div className="relative h-[clamp(180px,26vh,230px)] w-full overflow-hidden rounded-[2rem] bg-[linear-gradient(135deg,#241d16_0%,#16120f_100%)] sm:h-[clamp(200px,28vh,250px)] lg:h-[clamp(220px,30vh,300px)]">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(255,255,255,0.12)_0%,rgba(255,255,255,0)_24%)]" />
                     </div>
                 )}
