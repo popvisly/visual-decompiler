@@ -6,6 +6,7 @@ import { useReducedMotion } from 'framer-motion';
 type PreviewState = {
     id: 'signals' | 'psychology' | 'blueprint';
     tab: string;
+    shortTab: string;
     title: string;
     subtitle: string;
     tone: string;
@@ -19,6 +20,7 @@ const PREVIEW_STATES: PreviewState[] = [
     {
         id: 'signals',
         tab: 'Signals',
+        shortTab: 'SIG',
         title: 'Signal Stack',
         subtitle: 'Structured extraction from one live creative asset.',
         tone: 'Signals tab',
@@ -32,6 +34,7 @@ const PREVIEW_STATES: PreviewState[] = [
     {
         id: 'psychology',
         tab: 'Psychology',
+        shortTab: 'PSY',
         title: 'Psychology Verdict',
         subtitle: 'How the asset shapes identity, desire, and action momentum.',
         tone: 'Psychology tab',
@@ -44,6 +47,7 @@ const PREVIEW_STATES: PreviewState[] = [
     {
         id: 'blueprint',
         tab: 'Blueprint',
+        shortTab: 'BPT',
         title: 'Rebuild Blueprint',
         subtitle: 'A reconstruction route teams can brief, test, and present.',
         tone: 'Blueprint tab',
@@ -159,7 +163,7 @@ export default function HeroAppPreview() {
 
     return (
         <div
-            className="relative overflow-hidden rounded-[12px] border border-[#D9D1C4] bg-[#F8F4EC] shadow-[0_28px_70px_rgba(20,20,20,0.12)]"
+            className="relative overflow-hidden rounded-[14px] border border-[#D2C7B7] bg-[#F8F4EC] shadow-[0_10px_28px_rgba(20,20,20,0.08)] min-[1024px]:rounded-[16px] min-[1024px]:shadow-[0_18px_40px_rgba(20,20,20,0.10)]"
             onMouseEnter={handlePause}
             onMouseLeave={handleResume}
         >
@@ -172,9 +176,9 @@ export default function HeroAppPreview() {
                 <p className="text-[11px] font-semibold tracking-[0.16em] text-[#6E6558]">Visual Decompiler</p>
             </div>
 
-            <div className="p-3 sm:p-4 md:p-5">
+            <div className="p-2.5 sm:p-4 md:p-5">
                 <div className="rounded-[10px] border border-[#E4DCCD] bg-[#FBF8F2]">
-                    <div className="border-b border-[#E7DED1] px-3 py-3 sm:px-4">
+                    <div className="border-b border-[#E7DED1] px-2.5 py-2.5 sm:px-4 sm:py-3">
                         <div className="relative grid grid-cols-3 gap-1 rounded-full border border-[#E5DBCC] bg-[#F3EDE3] p-1">
                             <div
                                 aria-hidden="true"
@@ -184,71 +188,74 @@ export default function HeroAppPreview() {
                             {PREVIEW_STATES.map((state, index) => (
                                 <div
                                     key={state.id}
-                                    className={`relative z-10 rounded-full px-3 py-2 text-center text-[10px] font-bold uppercase tracking-[0.18em] transition-colors duration-300 ${
+                                    className={`relative z-10 rounded-full px-2 py-2 text-center text-[9px] font-bold uppercase tracking-[0.12em] transition-colors duration-300 sm:px-3 sm:text-[10px] sm:tracking-[0.18em] ${
                                         index === displayIndex ? 'text-[#FBF7EF]' : 'text-[#766C5F]'
                                     }`}
                                 >
-                                    {state.tab}
+                                    <span className="sm:hidden">{state.shortTab}</span>
+                                    <span className="hidden sm:inline">{state.tab}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    <div className="relative min-h-[320px] overflow-hidden sm:min-h-[340px] lg:min-h-[360px]">
+                    <div className="relative min-h-[250px] overflow-hidden sm:min-h-[320px] lg:min-h-[360px]">
                         {visibleStates.map((state) => (
                             <div
                                 key={state.id}
-                                className={`absolute inset-0 px-3 py-3 transition-opacity duration-[400ms] ease-out sm:px-4 sm:py-4 ${
+                                className={`absolute inset-0 px-2.5 py-2.5 transition-opacity duration-[400ms] ease-out sm:px-4 sm:py-4 ${
                                     state.isActive ? 'opacity-100' : 'opacity-0'
                                 }`}
                                 aria-hidden={!state.isActive}
                             >
-                                <div className="rounded-[12px] border border-[#E6DDCF] bg-[#FFFCF7] p-4 sm:p-5">
-                                    <div className="flex flex-col gap-3 border-b border-[#EEE5D8] pb-4 sm:flex-row sm:items-start sm:justify-between">
+                                <div className="rounded-[12px] border border-[#E6DDCF] bg-[#FFFCF7] p-3 sm:p-5">
+                                    <div className="flex flex-col gap-3 border-b border-[#EEE5D8] pb-3 sm:pb-4 sm:flex-row sm:items-start sm:justify-between">
                                         <div>
                                             <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#9A886A]">{state.tone}</p>
-                                            <h3 className="mt-2 text-[22px] font-semibold leading-tight tracking-[-0.02em] text-[#151310]">
+                                            <h3 className="mt-2 text-[20px] font-semibold leading-tight tracking-[-0.02em] text-[#151310] sm:text-[22px]">
                                                 {state.title}
                                             </h3>
-                                            <p className="mt-2 max-w-[34rem] text-sm leading-relaxed text-[#6A6257]">
+                                            <p className="mt-2 max-w-[34rem] text-[13px] leading-relaxed text-[#6A6257] sm:text-sm">
                                                 {state.subtitle}
                                             </p>
                                         </div>
-                                        <div className="rounded-full border border-[#E1D5C2] bg-[#F8F2E9] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#876F4C]">
+                                        <div className="hidden rounded-full border border-[#E1D5C2] bg-[#F8F2E9] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#876F4C] sm:block">
                                             Ready
                                         </div>
                                     </div>
 
                                     {state.rows ? (
-                                        <div className="mt-4 grid gap-3">
-                                            {state.rows.map((row) => (
+                                        <div className="mt-3 grid gap-2.5 sm:mt-4 sm:gap-3">
+                                            {state.rows.map((row, rowIndex) => (
                                                 <div
                                                     key={row.label}
-                                                    className="flex items-center justify-between rounded-[12px] border border-[#ECE2D4] bg-[#FBF7F1] px-4 py-3"
+                                                    className={`flex items-center justify-between rounded-[12px] border border-[#ECE2D4] bg-[#FBF7F1] px-3 py-2.5 sm:px-4 sm:py-3 ${
+                                                        rowIndex === state.rows!.length - 1 ? 'hidden sm:flex' : ''
+                                                    }`}
                                                 >
                                                     <div>
                                                         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662]">
                                                             {row.label}
                                                         </p>
-                                                        <p className="mt-1 text-sm text-[#6D6459]">{row.level}</p>
+                                                        <p className="mt-1 text-[12px] text-[#6D6459] sm:text-sm">{row.level}</p>
                                                     </div>
-                                                    <div className="rounded-full border border-[#D7CAB6] bg-[#F4ECDF] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#3A3228]">
+                                                    <div className="rounded-full border border-[#D7CAB6] bg-[#F4ECDF] px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#3A3228] sm:px-3 sm:text-[10px] sm:tracking-[0.16em]">
                                                         {row.value}
                                                     </div>
                                                 </div>
                                             ))}
                                         </div>
                                     ) : (
-                                        <div className="mt-4 grid gap-4">
-                                            <div className="rounded-[14px] border border-[#E5D8C8] bg-[#F7EFE4] p-4">
+                                        <div className="mt-3 grid gap-3 sm:mt-4 sm:gap-4">
+                                            <div className="rounded-[14px] border border-[#E5D8C8] bg-[#F7EFE4] p-3 sm:p-4">
                                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662]">
                                                     {state.cardTitle}
                                                 </p>
-                                                <p className="mt-3 max-w-[40rem] text-[15px] leading-[1.8] text-[#40392F]">
+                                                <p className="mt-3 max-w-[40rem] text-[14px] leading-[1.7] text-[#40392F] sm:text-[15px] sm:leading-[1.8]">
                                                     {state.cardBody}
                                                 </p>
                                             </div>
-                                            <div className="rounded-[12px] border border-[#ECE2D4] bg-[#FBF7F1] px-4 py-3 text-sm text-[#6A6257]">
+                                            <div className="rounded-[12px] border border-[#ECE2D4] bg-[#FBF7F1] px-3 py-2.5 text-[13px] text-[#6A6257] sm:px-4 sm:py-3 sm:text-sm">
                                                 {state.note}
                                             </div>
                                         </div>

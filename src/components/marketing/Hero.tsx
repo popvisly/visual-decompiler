@@ -33,8 +33,8 @@ export default function Hero({
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0)_60%)]" />
 
             <div className="relative z-10 mx-auto max-w-[1280px] px-6">
-                <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-12 xl:gap-16">
-                    <div className="order-1 flex flex-col text-center lg:text-left">
+                <div className="grid items-center gap-10 min-[1024px]:grid-cols-[1fr_1.15fr] min-[1024px]:gap-12 xl:gap-16">
+                    <div className="order-1 flex flex-col text-center min-[1024px]:text-left">
                         <motion.p
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -57,7 +57,7 @@ export default function Hero({
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.75, ease: 'easeOut', delay: 0.12 }}
-                            className="mx-auto mt-5 max-w-[32rem] text-[16px] font-normal leading-[1.66] tracking-[-0.01em] text-[#141414]/70 md:text-[18px] lg:mx-0 lg:max-w-[31rem]"
+                            className="mx-auto mt-5 max-w-[32rem] text-[16px] font-normal leading-[1.66] tracking-[-0.01em] text-[#141414]/70 md:text-[18px] min-[1024px]:mx-0 min-[1024px]:max-w-[31rem]"
                         >
                             {subhead}
                         </motion.p>
@@ -67,16 +67,16 @@ export default function Hero({
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.75, ease: 'easeOut', delay: 0.18 }}
-                                className="mt-8 flex w-full flex-col items-center gap-3 lg:items-start"
+                                className="mt-8 flex w-full flex-col items-center gap-3 md:flex-row md:justify-center min-[1024px]:justify-start min-[1024px]:items-start"
                             >
                                 {ctaPrimary && (
-                                    <a href={ctaPrimary.href} className={`${HOMEPAGE_PRIMARY_CTA} w-full sm:w-full lg:w-auto`}>
+                                    <a href={ctaPrimary.href} className={`${HOMEPAGE_PRIMARY_CTA} w-full md:w-auto`}>
                                         <span>{ctaPrimary.label}</span>
                                         <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                                     </a>
                                 )}
                                 {ctaSecondary && (
-                                    <a href={ctaSecondary.href} className={`${HOMEPAGE_SECONDARY_CTA} w-full sm:w-full lg:w-auto`}>
+                                    <a href={ctaSecondary.href} className={`${HOMEPAGE_SECONDARY_CTA} w-full md:w-auto`}>
                                         <span>{ctaSecondary.label}</span>
                                         <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                                     </a>
@@ -89,7 +89,7 @@ export default function Hero({
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.75, ease: 'easeOut', delay: 0.24 }}
-                                className="mt-5 text-[9px] font-bold uppercase tracking-[0.23em] text-[#8A7B64] sm:text-[10px] sm:tracking-[0.26em] lg:text-left"
+                                className="mt-5 text-[9px] font-bold uppercase tracking-[0.23em] text-[#8A7B64] sm:text-[10px] sm:tracking-[0.26em] min-[1024px]:text-left"
                             >
                                 {microproof}
                             </motion.p>
