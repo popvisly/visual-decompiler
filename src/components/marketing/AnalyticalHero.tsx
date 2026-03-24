@@ -140,6 +140,7 @@ export default function AnalyticalHero() {
     const sectionRef = useRef<HTMLElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [personaIndex, setPersonaIndex] = useState(0);
+    const [personaVisible, setPersonaVisible] = useState(true);
     const [activeLabel, setActiveLabel] = useState<LabelState | null>(null);
     const [queuedLabel, setQueuedLabel] = useState<LabelState | null>(null);
     const [isHoveringLabel, setIsHoveringLabel] = useState(false);
@@ -156,18 +157,30 @@ export default function AnalyticalHero() {
     }, [queuedLabel]);
 
     useEffect(() => {
-        let intervalId: number | null = null;
-        let timeoutId: number | null = null;
+        let holdTimeout = 0;
+        let fadeTimeout = 0;
+        let cancelled = false;
 
-        timeoutId = window.setTimeout(() => {
-            intervalId = window.setInterval(() => {
-                setPersonaIndex((current) => (current + 1) % PERSONAS.length);
+        const scheduleCycle = () => {
+            holdTimeout = window.setTimeout(() => {
+                if (cancelled) return;
+                setPersonaVisible(false);
+
+                fadeTimeout = window.setTimeout(() => {
+                    if (cancelled) return;
+                    setPersonaIndex((current) => (current + 1) % PERSONAS.length);
+                    setPersonaVisible(true);
+                    scheduleCycle();
+                }, 600);
             }, 8000);
-        }, 8000);
+        };
+
+        scheduleCycle();
 
         return () => {
-            if (timeoutId) window.clearTimeout(timeoutId);
-            if (intervalId) window.clearInterval(intervalId);
+            cancelled = true;
+            window.clearTimeout(holdTimeout);
+            window.clearTimeout(fadeTimeout);
         };
     }, []);
 
@@ -419,12 +432,15 @@ export default function AnalyticalHero() {
                         for{' '}
                         <span
                             className="transition-[opacity,color] duration-[600ms] ease-in-out"
-                            style={{ color: persona.color }}
+                            style={{ color: persona.color, opacity: personaVisible ? 1 : 0 }}
                         >
                             {persona.role}
                         </span>
                     </h1>
-                    <p className="mx-auto mt-6 max-w-[600px] text-[16px] leading-[1.6] text-[#9A9A94] transition-opacity duration-[600ms] ease-in-out">
+                    <p
+                        className="mx-auto mt-6 max-w-[600px] text-[16px] leading-[1.6] text-[#9A9A94] transition-opacity duration-[600ms] ease-in-out"
+                        style={{ opacity: personaVisible ? 1 : 0 }}
+                    >
                         {persona.subtitle}
                     </p>
                 </div>
