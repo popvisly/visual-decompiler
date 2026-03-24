@@ -23,6 +23,19 @@ type LabelState = {
     y: number;
 };
 
+type ParticleState = {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    size: number;
+    cluster: Cluster;
+    opacity: number;
+    angle: number;
+    orbitSpeed: number;
+    pulseOffset: number;
+};
+
 const CLUSTERS: Cluster[] = [
     {
         name: 'Status',
@@ -228,13 +241,15 @@ export default function AnalyticalHero() {
         const ctx = context;
 
         let animationFrame = 0;
+        let labelCycleInterval = 0;
+        let initialLabelTimeout = 0;
         let width = 0;
         let height = 0;
         let particleCount = 800;
 
         const mouse = { x: 0, y: 0 };
 
-        class Particle {
+        class Particle implements ParticleState {
             x: number;
             y: number;
             vx: number;
@@ -244,17 +259,19 @@ export default function AnalyticalHero() {
             opacity: number;
             angle: number;
             orbitSpeed: number;
+            pulseOffset: number;
 
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
                 this.vx = 0;
                 this.vy = 0;
-                this.size = Math.random() * 2 + 1;
+                this.size = Math.random() * 2.2 + 1.2;
                 this.cluster = CLUSTERS[Math.floor(Math.random() * CLUSTERS.length)];
-                this.opacity = Math.random() * 0.4 + 0.2;
+                this.opacity = Math.random() * 0.38 + 0.24;
                 this.angle = Math.random() * Math.PI * 2;
-                this.orbitSpeed = (Math.random() - 0.5) * 0.001;
+                this.orbitSpeed = (Math.random() - 0.5) * 0.003;
+                this.pulseOffset = Math.random() * Math.PI * 2;
             }
 
             update() {
@@ -268,18 +285,18 @@ export default function AnalyticalHero() {
                 const cdx = clusterX - this.x;
                 const cdy = clusterY - this.y;
 
-                this.vx += cdx * 0.0005 + dx * 0.02 * force;
-                this.vy += cdy * 0.0005 + dy * 0.02 * force;
+                this.vx += cdx * 0.00065 + dx * 0.024 * force;
+                this.vy += cdy * 0.00065 + dy * 0.024 * force;
 
-                this.vx *= 0.95;
-                this.vy *= 0.95;
+                this.vx *= 0.94;
+                this.vy *= 0.94;
 
                 this.x += this.vx;
                 this.y += this.vy;
 
                 this.angle += this.orbitSpeed;
-                this.x += Math.cos(this.angle) * 0.1;
-                this.y += Math.sin(this.angle) * 0.1;
+                this.x += Math.cos(this.angle) * 0.18;
+                this.y += Math.sin(this.angle) * 0.18;
 
                 if (this.x < 0) this.x = width;
                 if (this.x > width) this.x = 0;
@@ -289,10 +306,12 @@ export default function AnalyticalHero() {
 
             draw(particles: Particle[]) {
                 const { r, g, b } = hexToRgb(this.cluster.color);
+                const pulse = 0.12 * (1 + Math.sin(this.angle * 2 + this.pulseOffset));
+                const opacity = Math.min(this.opacity + pulse, 0.92);
 
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${this.opacity})`;
+                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`;
                 ctx.fill();
 
                 particles.forEach((other) => {
@@ -306,7 +325,7 @@ export default function AnalyticalHero() {
                         ctx.beginPath();
                         ctx.moveTo(this.x, this.y);
                         ctx.lineTo(other.x, other.y);
-                        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.05 * (1 - distance / 80)})`;
+                        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.08 * (1 - distance / 80)})`;
                         ctx.lineWidth = 0.5;
                         ctx.stroke();
                     }
@@ -333,9 +352,24 @@ export default function AnalyticalHero() {
 
             particles = Array.from({ length: particleCount }, () => new Particle());
 
-            if (!activeLabelRef.current) {
-                setActiveLabel(createLabel(pickClusterIndex(width, height), width, height));
+        };
+
+        const promoteNextLabel = () => {
+            const current = activeLabelRef.current;
+            const next = queuedLabelRef.current;
+
+            if (next) {
+                setActiveLabel(next);
+                setQueuedLabel(null);
+                return;
             }
+
+            if (!current) {
+                setActiveLabel(createLabel(pickClusterIndex(width, height), width, height));
+                return;
+            }
+
+            setActiveLabel(createLabel(pickClusterIndex(width, height, current.clusterIndex), width, height));
         };
 
         const animate = () => {
@@ -375,8 +409,7 @@ export default function AnalyticalHero() {
             } else if (hoverRef.current) {
                 hoverRef.current = false;
                 setIsHoveringLabel(false);
-                setActiveLabel(queuedLabelRef.current || createLabel(pickClusterIndex(width, height, current.clusterIndex), width, height));
-                setQueuedLabel(null);
+                promoteNextLabel();
             }
         };
 
@@ -389,6 +422,18 @@ export default function AnalyticalHero() {
 
         resizeCanvas();
         animate();
+
+        initialLabelTimeout = window.setTimeout(() => {
+            if (!activeLabelRef.current) {
+                setActiveLabel(createLabel(pickClusterIndex(width, height), width, height));
+            }
+        }, 1000);
+
+        labelCycleInterval = window.setInterval(() => {
+            if (!hoverRef.current) {
+                promoteNextLabel();
+            }
+        }, 4200);
 
         window.addEventListener('resize', resizeCanvas);
         canvas.addEventListener('pointermove', handlePointerMove);
@@ -406,6 +451,8 @@ export default function AnalyticalHero() {
 
         return () => {
             window.cancelAnimationFrame(animationFrame);
+            window.clearTimeout(initialLabelTimeout);
+            window.clearInterval(labelCycleInterval);
             window.removeEventListener('resize', resizeCanvas);
             canvas.removeEventListener('pointermove', handlePointerMove);
             canvas.removeEventListener('click', handleClick);
