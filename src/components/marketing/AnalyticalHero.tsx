@@ -91,19 +91,19 @@ const PERSONAS: Persona[] = [
         role: 'New Business',
         subtitle:
             'Walk into pitches with forensic proof of what works in the category — competitive intelligence that positions you as the strategic authority.',
-        color: '#C8230A',
+        color: '#D4A574',
     },
     {
         role: 'Creative Directors',
         subtitle:
             'Stop guessing what resonates. Get structured creative briefs, persuasion maps, and rebuild blueprints for every asset you analyze.',
-        color: '#FBFBF6',
+        color: '#F4A700',
     },
     {
         role: 'Strategy Directors',
         subtitle:
             'Surface the invisible mechanics competitors deploy — signal stacks, trigger distribution, and strategic posture at category scale.',
-        color: '#F4A700',
+        color: '#D9D6D0',
     },
     {
         role: 'Brand Managers',
@@ -431,7 +431,7 @@ export default function AnalyticalHero() {
                         <br />
                         for{' '}
                         <span
-                            className="font-serif font-normal tracking-[-0.03em] transition-[opacity,color] duration-[600ms] ease-in-out"
+                            className="font-serif font-medium tracking-[-0.04em] drop-shadow-[0_1px_12px_rgba(0,0,0,0.18)] transition-[opacity,color] duration-[600ms] ease-in-out"
                             style={{ color: persona.color, opacity: personaVisible ? 1 : 0 }}
                         >
                             {persona.role}
