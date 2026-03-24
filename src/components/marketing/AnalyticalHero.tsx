@@ -23,19 +23,6 @@ type LabelState = {
     y: number;
 };
 
-type ParticleState = {
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    size: number;
-    cluster: Cluster;
-    opacity: number;
-    angle: number;
-    orbitSpeed: number;
-    pulseOffset: number;
-};
-
 const CLUSTERS: Cluster[] = [
     {
         name: 'Status',
@@ -139,14 +126,6 @@ const READOUT_ITEMS = [
     { name: 'Friction Risk', value: 'LOW' },
 ];
 
-function hexToRgb(color: string) {
-    return {
-        r: parseInt(color.slice(1, 3), 16),
-        g: parseInt(color.slice(3, 5), 16),
-        b: parseInt(color.slice(5, 7), 16),
-    };
-}
-
 function isInCenterZone(x: number, y: number, width: number, height: number) {
     const centerX = width / 2;
     const centerY = height / 2;
@@ -154,22 +133,6 @@ function isInCenterZone(x: number, y: number, width: number, height: number) {
     const exclusionHeight = height * 0.3;
 
     return Math.abs(x - centerX) < exclusionWidth / 2 && Math.abs(y - centerY) < exclusionHeight / 2;
-}
-
-function pickClusterIndex(width: number, height: number, exclude?: number) {
-    let attempts = 0;
-    let index = 0;
-
-    do {
-        index = Math.floor(Math.random() * CLUSTERS.length);
-        attempts += 1;
-    } while (
-        (index === exclude ||
-            isInCenterZone(CLUSTERS[index].centerX * width, CLUSTERS[index].centerY * height, width, height)) &&
-        attempts < 30
-    );
-
-    return index;
 }
 
 function createLabel(clusterIndex: number, width: number, height: number): LabelState {
@@ -187,7 +150,6 @@ export default function AnalyticalHero() {
     const [activeLabel, setActiveLabel] = useState<LabelState | null>(null);
     const [queuedLabel, setQueuedLabel] = useState<LabelState | null>(null);
     const [isHoveringLabel, setIsHoveringLabel] = useState(false);
-    const [reducedMotion, setReducedMotion] = useState(false);
     const activeLabelRef = useRef<LabelState | null>(null);
     const queuedLabelRef = useRef<LabelState | null>(null);
     const hoverRef = useRef(false);
@@ -201,34 +163,20 @@ export default function AnalyticalHero() {
     }, [queuedLabel]);
 
     useEffect(() => {
-        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-        const syncMotion = () => setReducedMotion(mediaQuery.matches);
-
-        syncMotion();
-        mediaQuery.addEventListener('change', syncMotion);
-
-        return () => {
-            mediaQuery.removeEventListener('change', syncMotion);
-        };
-    }, []);
-
-    useEffect(() => {
         let intervalId: number | null = null;
         let timeoutId: number | null = null;
 
-        if (!reducedMotion) {
-            timeoutId = window.setTimeout(() => {
-                intervalId = window.setInterval(() => {
-                    setPersonaIndex((current) => (current + 1) % PERSONAS.length);
-                }, 8000);
+        timeoutId = window.setTimeout(() => {
+            intervalId = window.setInterval(() => {
+                setPersonaIndex((current) => (current + 1) % PERSONAS.length);
             }, 8000);
-        }
+        }, 8000);
 
         return () => {
             if (timeoutId) window.clearTimeout(timeoutId);
             if (intervalId) window.clearInterval(intervalId);
         };
-    }, [reducedMotion]);
+    }, []);
 
     useEffect(() => {
         const section = sectionRef.current;
@@ -240,16 +188,12 @@ export default function AnalyticalHero() {
         if (!context) return;
         const ctx = context;
 
-        let animationFrame = 0;
-        let labelCycleInterval = 0;
-        let initialLabelTimeout = 0;
         let width = 0;
         let height = 0;
-        let particleCount = 800;
-
+        let animationFrame = 0;
         const mouse = { x: 0, y: 0 };
 
-        class Particle implements ParticleState {
+        class Particle {
             x: number;
             y: number;
             vx: number;
@@ -259,19 +203,17 @@ export default function AnalyticalHero() {
             opacity: number;
             angle: number;
             orbitSpeed: number;
-            pulseOffset: number;
 
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
                 this.vx = 0;
                 this.vy = 0;
-                this.size = Math.random() * 2.2 + 1.2;
+                this.size = Math.random() * 2 + 1;
                 this.cluster = CLUSTERS[Math.floor(Math.random() * CLUSTERS.length)];
-                this.opacity = Math.random() * 0.38 + 0.24;
+                this.opacity = Math.random() * 0.4 + 0.2;
                 this.angle = Math.random() * Math.PI * 2;
-                this.orbitSpeed = (Math.random() - 0.5) * 0.003;
-                this.pulseOffset = Math.random() * Math.PI * 2;
+                this.orbitSpeed = (Math.random() - 0.5) * 0.001;
             }
 
             update() {
@@ -285,18 +227,18 @@ export default function AnalyticalHero() {
                 const cdx = clusterX - this.x;
                 const cdy = clusterY - this.y;
 
-                this.vx += cdx * 0.00065 + dx * 0.024 * force;
-                this.vy += cdy * 0.00065 + dy * 0.024 * force;
+                this.vx += cdx * 0.0005 + dx * 0.02 * force;
+                this.vy += cdy * 0.0005 + dy * 0.02 * force;
 
-                this.vx *= 0.94;
-                this.vy *= 0.94;
+                this.vx *= 0.95;
+                this.vy *= 0.95;
 
                 this.x += this.vx;
                 this.y += this.vy;
 
                 this.angle += this.orbitSpeed;
-                this.x += Math.cos(this.angle) * 0.18;
-                this.y += Math.sin(this.angle) * 0.18;
+                this.x += Math.cos(this.angle) * 0.1;
+                this.y += Math.sin(this.angle) * 0.1;
 
                 if (this.x < 0) this.x = width;
                 if (this.x > width) this.x = 0;
@@ -305,13 +247,13 @@ export default function AnalyticalHero() {
             }
 
             draw(particles: Particle[]) {
-                const { r, g, b } = hexToRgb(this.cluster.color);
-                const pulse = 0.12 * (1 + Math.sin(this.angle * 2 + this.pulseOffset));
-                const opacity = Math.min(this.opacity + pulse, 0.92);
+                const r = parseInt(this.cluster.color.slice(1, 3), 16);
+                const g = parseInt(this.cluster.color.slice(3, 5), 16);
+                const b = parseInt(this.cluster.color.slice(5, 7), 16);
 
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${this.opacity})`;
                 ctx.fill();
 
                 particles.forEach((other) => {
@@ -319,13 +261,13 @@ export default function AnalyticalHero() {
 
                     const dx = other.x - this.x;
                     const dy = other.y - this.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < 80 && this.cluster === other.cluster) {
+                    if (dist < 80 && this.cluster === other.cluster) {
                         ctx.beginPath();
                         ctx.moveTo(this.x, this.y);
                         ctx.lineTo(other.x, other.y);
-                        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.08 * (1 - distance / 80)})`;
+                        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.05 * (1 - dist / 80)})`;
                         ctx.lineWidth = 0.5;
                         ctx.stroke();
                     }
@@ -335,10 +277,49 @@ export default function AnalyticalHero() {
 
         let particles: Particle[] = [];
 
+        const pickRandomClusterIndex = (exclude?: number) => {
+            let randomCluster = 0;
+            let attempts = 0;
+
+            do {
+                randomCluster = Math.floor(Math.random() * CLUSTERS.length);
+                attempts += 1;
+            } while (
+                ((randomCluster === exclude) ||
+                    isInCenterZone(CLUSTERS[randomCluster].centerX * width, CLUSTERS[randomCluster].centerY * height, width, height)) &&
+                attempts < 20
+            );
+
+            return randomCluster;
+        };
+
+        const showRandomLabel = () => {
+            const clusterIndex = pickRandomClusterIndex();
+            setActiveLabel(createLabel(clusterIndex, width, height));
+            setQueuedLabel(null);
+            setIsHoveringLabel(false);
+        };
+
+        const showNextLabel = (exclude: number) => {
+            const availableClusterIndex = pickRandomClusterIndex(exclude);
+            setQueuedLabel(createLabel(availableClusterIndex, width, height));
+        };
+
+        const fadeOutCurrentLabel = () => {
+            setIsHoveringLabel(false);
+
+            window.setTimeout(() => {
+                const next = queuedLabelRef.current;
+                if (next) {
+                    setActiveLabel(next);
+                    setQueuedLabel(null);
+                }
+            }, 300);
+        };
+
         const resizeCanvas = () => {
             width = section.clientWidth;
             height = section.clientHeight;
-            particleCount = window.innerWidth < 768 ? 500 : 800;
 
             const dpr = window.devicePixelRatio || 1;
             canvas.width = width * dpr;
@@ -349,27 +330,40 @@ export default function AnalyticalHero() {
 
             mouse.x = width / 2;
             mouse.y = height / 2;
-
-            particles = Array.from({ length: particleCount }, () => new Particle());
-
+            particles = Array.from({ length: 800 }, () => new Particle());
         };
 
-        const promoteNextLabel = () => {
+        const handlePointerMove = (event: PointerEvent) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = event.clientX - rect.left;
+            mouse.y = event.clientY - rect.top;
+
             const current = activeLabelRef.current;
-            const next = queuedLabelRef.current;
+            if (!current) return;
 
-            if (next) {
-                setActiveLabel(next);
-                setQueuedLabel(null);
-                return;
+            const dx = mouse.x - current.x;
+            const dy = mouse.y - current.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 100) {
+                if (!hoverRef.current) {
+                    hoverRef.current = true;
+                    setIsHoveringLabel(true);
+                    if (!queuedLabelRef.current) {
+                        showNextLabel(current.clusterIndex);
+                    }
+                }
+            } else if (hoverRef.current) {
+                hoverRef.current = false;
+                fadeOutCurrentLabel();
             }
+        };
 
-            if (!current) {
-                setActiveLabel(createLabel(pickClusterIndex(width, height), width, height));
-                return;
-            }
-
-            setActiveLabel(createLabel(pickClusterIndex(width, height, current.clusterIndex), width, height));
+        const handleClick = () => {
+            particles.forEach((particle) => {
+                particle.cluster = CLUSTERS[Math.floor(Math.random() * CLUSTERS.length)];
+                particle.opacity = Math.random() * 0.5 + 0.3;
+            });
         };
 
         const animate = () => {
@@ -384,75 +378,24 @@ export default function AnalyticalHero() {
             animationFrame = window.requestAnimationFrame(animate);
         };
 
-        const handlePointerMove = (event: PointerEvent) => {
-            const rect = canvas.getBoundingClientRect();
-            mouse.x = event.clientX - rect.left;
-            mouse.y = event.clientY - rect.top;
-
-            const current = activeLabelRef.current;
-            if (!current) return;
-
-            const dx = mouse.x - current.x;
-            const dy = mouse.y - current.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 100) {
-                if (!hoverRef.current) {
-                    hoverRef.current = true;
-                    setIsHoveringLabel(true);
-
-                    if (!queuedLabelRef.current) {
-                        const nextIndex = pickClusterIndex(width, height, current.clusterIndex);
-                        setQueuedLabel(createLabel(nextIndex, width, height));
-                    }
-                }
-            } else if (hoverRef.current) {
-                hoverRef.current = false;
-                setIsHoveringLabel(false);
-                promoteNextLabel();
-            }
-        };
-
-        const handleClick = () => {
-            particles.forEach((particle) => {
-                particle.cluster = CLUSTERS[Math.floor(Math.random() * CLUSTERS.length)];
-                particle.opacity = Math.random() * 0.5 + 0.3;
-            });
-        };
-
         resizeCanvas();
         animate();
 
-        initialLabelTimeout = window.setTimeout(() => {
-            if (!activeLabelRef.current) {
-                setActiveLabel(createLabel(pickClusterIndex(width, height), width, height));
-            }
-        }, 1000);
-
-        labelCycleInterval = window.setInterval(() => {
-            if (!hoverRef.current) {
-                promoteNextLabel();
-            }
-        }, 4200);
+        const labelTimeout = window.setTimeout(showRandomLabel, 1000);
 
         window.addEventListener('resize', resizeCanvas);
         canvas.addEventListener('pointermove', handlePointerMove);
         canvas.addEventListener('pointerleave', () => {
             if (hoverRef.current) {
                 hoverRef.current = false;
-                setIsHoveringLabel(false);
-                if (queuedLabelRef.current) {
-                    setActiveLabel(queuedLabelRef.current);
-                    setQueuedLabel(null);
-                }
+                fadeOutCurrentLabel();
             }
         });
         canvas.addEventListener('click', handleClick);
 
         return () => {
+            window.clearTimeout(labelTimeout);
             window.cancelAnimationFrame(animationFrame);
-            window.clearTimeout(initialLabelTimeout);
-            window.clearInterval(labelCycleInterval);
             window.removeEventListener('resize', resizeCanvas);
             canvas.removeEventListener('pointermove', handlePointerMove);
             canvas.removeEventListener('click', handleClick);
@@ -461,73 +404,88 @@ export default function AnalyticalHero() {
 
     const persona = PERSONAS[personaIndex];
     const currentCluster = activeLabel ? CLUSTERS[activeLabel.clusterIndex] : null;
+    const nextCluster = queuedLabel ? CLUSTERS[queuedLabel.clusterIndex] : null;
 
     return (
-        <section ref={sectionRef} className="relative isolate min-h-[100svh] overflow-hidden bg-[#141414] text-[#FBFBF6]">
+        <section
+            ref={sectionRef}
+            className="relative isolate min-h-[100svh] overflow-hidden bg-[#141414] text-[#FBFBF6] cursor-crosshair"
+        >
             <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,20,20,0.12),rgba(20,20,20,0.02)_35%,rgba(20,20,20,0)_60%)]" />
 
-            <div className="pointer-events-none absolute left-6 top-28 z-20 hidden text-[11px] uppercase tracking-[0.2em] text-[#D4A574] lg:block">
+            <div className="pointer-events-none absolute left-10 top-10 z-20 hidden text-[11px] font-medium tracking-[0.18em] text-[#D4A574] lg:block">
                 Visual Decompiler
             </div>
 
-            <div className="pointer-events-none absolute right-6 top-28 z-20 hidden text-right text-[11px] leading-relaxed text-[#9A9A94]/50 lg:block">
-                Hover labels to trace
+            <div className="pointer-events-none absolute right-10 top-10 z-20 hidden text-right text-[11px] leading-relaxed text-[#9A9A94]/50 lg:block">
+                Hover to reveal
                 <br />
-                the live signal field
+                signal architecture
             </div>
 
-            <div className="pointer-events-none absolute bottom-10 left-6 z-20 hidden text-[11px] text-[#9A9A94]/60 lg:block">
-                Live cluster field · Interactive readout
+            <div className="pointer-events-none absolute bottom-10 left-10 z-20 hidden text-[11px] text-[#9A9A94]/60 lg:block">
+                Live analysis mode
             </div>
 
-            <div className="pointer-events-none absolute bottom-10 right-6 z-20 hidden min-w-[220px] rounded-lg border border-[#D4A574]/30 bg-[#141414]/95 px-5 py-4 lg:block">
-                <p className="mb-3 text-[9px] uppercase tracking-[0.12em] text-[#D4A574]">Signal Readout</p>
-                {READOUT_ITEMS.map((item) => {
-                    const tone =
-                        item.value === 'HIGH'
-                            ? 'text-[#D7B07A]'
-                            : item.value === 'LOW'
-                                ? 'text-[#FBFBF6]'
-                                : 'text-[#9A9A94]';
+            <div className="pointer-events-none absolute bottom-10 right-10 z-20 hidden min-w-[200px] rounded-lg border border-[#D4A574]/30 bg-[#141414]/95 px-5 py-4 lg:block">
+                <p className="mb-3 text-[9px] font-medium uppercase tracking-[0.12em] text-[#D4A574]">Signal Readout</p>
+                {READOUT_ITEMS.map((item) => (
+                    <div key={item.name} className="flex items-baseline justify-between border-b border-[#D4A574]/15 py-1.5 last:border-b-0">
+                        <span className="text-[11px] text-[#9A9A94]">{item.name}</span>
+                        <span className="text-[13px] font-medium text-[#D7B07A]">{item.value}</span>
+                    </div>
+                ))}
+            </div>
 
-                    return (
-                        <div key={item.name} className="flex items-baseline justify-between border-b border-[#D4A574]/15 py-1.5 last:border-b-0">
-                            <span className="text-[11px] text-[#9A9A94]">{item.name}</span>
-                            <span className={`text-[13px] font-medium ${tone}`}>{item.value}</span>
-                        </div>
-                    );
-                })}
+            <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 text-center">
+                <div className="max-w-[900px]">
+                    <h1 className="text-[36px] font-medium leading-[1.2] tracking-[-0.5px] text-[#FBFBF6] sm:text-[44px] md:text-[56px]">
+                        Forensic Intelligence
+                        <br />
+                        for{' '}
+                        <span
+                            className="transition-[opacity,color] duration-[600ms] ease-in-out"
+                            style={{ color: persona.color }}
+                        >
+                            {persona.role}
+                        </span>
+                    </h1>
+                    <p className="mx-auto mt-6 max-w-[600px] text-[16px] leading-[1.6] text-[#9A9A94] transition-opacity duration-[600ms] ease-in-out">
+                        {persona.subtitle}
+                    </p>
+                </div>
             </div>
 
             {activeLabel && currentCluster && (
                 <>
                     <div
-                        className={`pointer-events-none absolute z-20 rounded-md border px-4 py-2 text-[11px] uppercase tracking-[0.12em] text-[#D4A574] transition-opacity duration-200 ${
+                        className={`pointer-events-none absolute z-20 rounded-md border bg-[#141414]/95 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.1em] text-[#D4A574] transition-opacity duration-200 ${
                             isHoveringLabel ? 'border-[#D7B07A] shadow-[0_0_15px_rgba(215,176,122,0.3),0_0_30px_rgba(215,176,122,0.15)]' : 'border-[#D4A574]/30'
-                        } bg-[#141414]/95`}
+                        }`}
                         style={{
                             left: `${activeLabel.x + 30}px`,
                             top: `${activeLabel.y - 10}px`,
+                            opacity: 1,
                         }}
                     >
                         {currentCluster.name}
                     </div>
 
-                    {queuedLabel && (
+                    {queuedLabel && nextCluster && (
                         <div
-                            className="pointer-events-none absolute z-10 rounded-md border border-[#D4A574]/25 bg-[#141414]/88 px-4 py-2 text-[11px] uppercase tracking-[0.12em] text-[#D4A574] transition-opacity duration-200"
+                            className="pointer-events-none absolute z-20 rounded-md border border-[#D4A574]/30 bg-[#141414]/95 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.1em] text-[#D4A574] transition-opacity duration-200"
                             style={{
                                 left: `${queuedLabel.x + 30}px`,
                                 top: `${queuedLabel.y - 10}px`,
+                                opacity: 1,
                             }}
                         >
-                            {CLUSTERS[queuedLabel.clusterIndex].name}
+                            {nextCluster.name}
                         </div>
                     )}
 
                     <div
-                        className={`pointer-events-none absolute z-20 max-w-[220px] rounded-md bg-[#141414]/85 px-5 py-3 pl-8 text-[10px] leading-relaxed text-[#9A9A94] transition-opacity duration-200 ${
+                        className={`pointer-events-none absolute z-20 max-w-[220px] rounded-[4px] bg-[#141414]/85 px-3 py-1.5 pl-5 text-[10px] leading-[1.4] text-[#9A9A94] transition-opacity duration-200 ${
                             isHoveringLabel ? 'opacity-100' : 'opacity-0'
                         }`}
                         style={{
@@ -535,30 +493,11 @@ export default function AnalyticalHero() {
                             top: `${activeLabel.y + 32}px`,
                         }}
                     >
-                        <span className="absolute left-3 top-1/2 h-0 w-0 -translate-y-1/2 border-b-[4px] border-l-[5px] border-r-0 border-t-[4px] border-b-transparent border-l-[#D4A574] border-t-transparent" />
+                        <span className="absolute left-2 top-1/2 h-0 w-0 -translate-y-1/2 border-b-[4px] border-l-[5px] border-r-0 border-t-[4px] border-b-transparent border-l-[#D4A574] border-t-transparent" />
                         {currentCluster.info}
                     </div>
                 </>
             )}
-
-            <div className="relative z-10 flex min-h-[100svh] items-center justify-center px-6 py-32 text-center">
-                <div className="max-w-[900px]">
-                    <h1 className="text-[36px] font-medium leading-[1.15] tracking-[-0.02em] text-[#FBFBF6] sm:text-[44px] md:text-[56px]">
-                        Forensic Intelligence
-                        <br />
-                        for{' '}
-                        <span
-                            className="transition-[color,opacity] duration-[600ms] ease-in-out"
-                            style={{ color: persona.color }}
-                        >
-                            {persona.role}
-                        </span>
-                    </h1>
-                    <p className="mx-auto mt-6 max-w-[600px] text-[15px] leading-[1.7] text-[#9A9A94] transition-opacity duration-[600ms] ease-in-out md:text-base">
-                        {persona.subtitle}
-                    </p>
-                </div>
-            </div>
         </section>
     );
 }
