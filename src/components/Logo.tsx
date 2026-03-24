@@ -23,7 +23,7 @@ export default function Logo({
                 V
             </div>
             <div className="leading-none text-left">
-                <h1 className={`text-[13px] font-bold tracking-[-0.01em] uppercase transition-colors ${forceDark ? 'text-[#FBF7EF]' : 'text-[#141414]'}`}>
+                <h1 className="text-[13px] font-bold tracking-[-0.01em] uppercase text-[#B8A47E] transition-colors">
                     Visual Decompiler
                 </h1>
                 <p className={`mt-0.5 uppercase tracking-[0.2em] transition-colors ${forceDark ? 'text-white/60' : 'text-[#6B6B6B]'}`} style={{ fontSize: '8px' }}>
