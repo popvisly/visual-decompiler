@@ -119,13 +119,6 @@ const PERSONAS: Persona[] = [
     },
 ];
 
-const READOUT_ITEMS = [
-    { name: 'Status Signaling', value: 'MEDIUM' },
-    { name: 'Scarcity Cue', value: 'HIGH' },
-    { name: 'Narrative Arc', value: 'HIGH' },
-    { name: 'Friction Risk', value: 'LOW' },
-];
-
 function isInCenterZone(x: number, y: number, width: number, height: number) {
     const centerX = width / 2;
     const centerY = height / 2;
@@ -246,7 +239,7 @@ export default function AnalyticalHero() {
                 if (this.y > height) this.y = 0;
             }
 
-            draw(particles: Particle[]) {
+            draw() {
                 const r = parseInt(this.cluster.color.slice(1, 3), 16);
                 const g = parseInt(this.cluster.color.slice(3, 5), 16);
                 const b = parseInt(this.cluster.color.slice(5, 7), 16);
@@ -255,23 +248,6 @@ export default function AnalyticalHero() {
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${this.opacity})`;
                 ctx.fill();
-
-                particles.forEach((other) => {
-                    if (other === this) return;
-
-                    const dx = other.x - this.x;
-                    const dy = other.y - this.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 80 && this.cluster === other.cluster) {
-                        ctx.beginPath();
-                        ctx.moveTo(this.x, this.y);
-                        ctx.lineTo(other.x, other.y);
-                        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.05 * (1 - dist / 80)})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
-                });
             }
         }
 
@@ -321,7 +297,7 @@ export default function AnalyticalHero() {
             width = section.clientWidth;
             height = section.clientHeight;
 
-            const dpr = window.devicePixelRatio || 1;
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
             canvas.width = width * dpr;
             canvas.height = height * dpr;
             canvas.style.width = `${width}px`;
@@ -370,10 +346,35 @@ export default function AnalyticalHero() {
             ctx.fillStyle = 'rgba(20, 20, 20, 0.3)';
             ctx.fillRect(0, 0, width, height);
 
-            particles.forEach((particle) => {
-                particle.update();
-                particle.draw(particles);
-            });
+            for (let i = 0; i < particles.length; i += 1) {
+                particles[i].update();
+                particles[i].draw();
+            }
+
+            for (let i = 0; i < particles.length; i += 1) {
+                const particle = particles[i];
+                const r = parseInt(particle.cluster.color.slice(1, 3), 16);
+                const g = parseInt(particle.cluster.color.slice(3, 5), 16);
+                const b = parseInt(particle.cluster.color.slice(5, 7), 16);
+
+                for (let j = i + 1; j < particles.length; j += 1) {
+                    const other = particles[j];
+                    if (particle.cluster !== other.cluster) continue;
+
+                    const dx = other.x - particle.x;
+                    const dy = other.y - particle.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 80) {
+                        ctx.beginPath();
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(other.x, other.y);
+                        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.05 * (1 - dist / 80)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
 
             animationFrame = window.requestAnimationFrame(animate);
         };
@@ -407,35 +408,8 @@ export default function AnalyticalHero() {
     const nextCluster = queuedLabel ? CLUSTERS[queuedLabel.clusterIndex] : null;
 
     return (
-        <section
-            ref={sectionRef}
-            className="relative isolate min-h-[100svh] overflow-hidden bg-[#141414] text-[#FBFBF6] cursor-crosshair"
-        >
+        <section ref={sectionRef} className="relative isolate min-h-[100svh] overflow-hidden bg-[#141414] text-[#FBFBF6]">
             <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-
-            <div className="pointer-events-none absolute left-10 top-10 z-20 hidden text-[11px] font-medium tracking-[0.18em] text-[#D4A574] lg:block">
-                Visual Decompiler
-            </div>
-
-            <div className="pointer-events-none absolute right-10 top-10 z-20 hidden text-right text-[11px] leading-relaxed text-[#9A9A94]/50 lg:block">
-                Hover to reveal
-                <br />
-                signal architecture
-            </div>
-
-            <div className="pointer-events-none absolute bottom-10 left-10 z-20 hidden text-[11px] text-[#9A9A94]/60 lg:block">
-                Live analysis mode
-            </div>
-
-            <div className="pointer-events-none absolute bottom-10 right-10 z-20 hidden min-w-[200px] rounded-lg border border-[#D4A574]/30 bg-[#141414]/95 px-5 py-4 lg:block">
-                <p className="mb-3 text-[9px] font-medium uppercase tracking-[0.12em] text-[#D4A574]">Signal Readout</p>
-                {READOUT_ITEMS.map((item) => (
-                    <div key={item.name} className="flex items-baseline justify-between border-b border-[#D4A574]/15 py-1.5 last:border-b-0">
-                        <span className="text-[11px] text-[#9A9A94]">{item.name}</span>
-                        <span className="text-[13px] font-medium text-[#D7B07A]">{item.value}</span>
-                    </div>
-                ))}
-            </div>
 
             <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 text-center">
                 <div className="max-w-[900px]">
