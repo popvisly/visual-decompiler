@@ -209,22 +209,25 @@ const SECTION_BAND = 'px-6 py-16 md:py-24';
 
 function DifferentialDiagnosisSection() {
     return (
-        <section className={`border-b border-[#2D2923] bg-[#141310] ${SECTION_BAND}`}>
-            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
+        <section className={`relative overflow-hidden border-b border-[#E3DACB] bg-[#FBFBF6] ${SECTION_BAND}`}>
+            <div className="pointer-events-none absolute inset-0 opacity-[0.55] [background-image:linear-gradient(rgba(20,20,20,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.028)_1px,transparent_1px)] [background-size:48px_48px]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0)_60%)]" />
+
+            <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
                 <div className="mb-6 flex items-center gap-3">
                     <span className="h-px w-10 bg-gradient-to-r from-[#CDA468] to-transparent" />
                     <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#A8895F]">Intelligence Pulse</p>
                 </div>
 
-                <h3 className="max-w-4xl text-3xl font-semibold leading-[1] tracking-tight text-[#F4E9D9] md:text-5xl">
+                <h3 className="max-w-4xl text-3xl font-semibold leading-[1] tracking-tight text-[#141414] md:text-5xl">
                     Differential Diagnosis
                 </h3>
-                <p className="mt-4 max-w-3xl text-[16px] leading-relaxed text-[#CDBEA8] md:text-[18px]">
+                <p className="mt-4 max-w-3xl text-[16px] leading-relaxed text-[#5E5A53] md:text-[18px]">
                     Compare two assets and surface strategic delta, persuasion lift, and fatigue risk before you commit creative direction.
                 </p>
 
                 <div className="mt-8 grid gap-4 lg:grid-cols-2">
-                    <div className="group relative overflow-hidden rounded-[26px] border border-[#3B352C] bg-[#191713]">
+                    <div className="group relative overflow-hidden rounded-[26px] border border-[#D8CCB5] bg-[#191713] shadow-[0_18px_40px_rgba(20,20,20,0.08)]">
                         <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D5B386]">
                             Asset A · Control
                         </div>
@@ -239,7 +242,7 @@ function DifferentialDiagnosisSection() {
                         <div className="absolute bottom-4 left-4 z-20 text-sm text-[#E7D7BF]">Heritage-led prestige framing</div>
                     </div>
 
-                    <div className="group relative overflow-hidden rounded-[26px] border border-[#3B352C] bg-[#191713]">
+                    <div className="group relative overflow-hidden rounded-[26px] border border-[#D8CCB5] bg-[#191713] shadow-[0_18px_40px_rgba(20,20,20,0.08)]">
                         <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D5B386]">
                             Asset B · Variant
                         </div>
@@ -256,7 +259,7 @@ function DifferentialDiagnosisSection() {
                 </div>
 
                 <div className="mt-4 flex items-center justify-center">
-                    <span className="rounded-full border border-[#4A3F31] bg-[#171410] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#A8895F]">
+                    <span className="rounded-full border border-[#D8CCB5] bg-[#F8F3EA] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8E7450]">
                         Differential Read
                     </span>
                 </div>
@@ -269,10 +272,10 @@ function DifferentialDiagnosisSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.35 }}
                             transition={{ delay: i * 0.08, duration: 0.45 }}
-                            className="rounded-xl border border-[#3B352C] bg-[#1B1813] px-4 py-4"
+                            className="rounded-xl border border-[#D8CCB5] bg-[#FBF8F2] px-4 py-4 shadow-[0_10px_24px_rgba(20,20,20,0.04)]"
                         >
                             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">{metric.label}</p>
-                            <p className="mt-2 text-base font-semibold text-[#F1E4D1]">{metric.value}</p>
+                            <p className="mt-2 text-base font-semibold text-[#141414]">{metric.value}</p>
                         </motion.div>
                     ))}
                 </div>
