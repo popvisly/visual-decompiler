@@ -61,6 +61,18 @@ const PREVIEW_STATES: PreviewState[] = [
 const STATE_DURATIONS = [5000, 4500, 4500];
 const MAX_TRANSITIONS = 6;
 
+function badgeClasses(value: string) {
+    if (value === 'High') {
+        return 'border border-red-200 bg-red-50 text-red-700';
+    }
+
+    if (value === 'Medium') {
+        return 'border border-amber-200 bg-amber-50 text-amber-700';
+    }
+
+    return 'border border-emerald-200 bg-emerald-50 text-emerald-700';
+}
+
 function useDesktopAnimationEnabled(shouldReduceMotion: boolean) {
     const [isDesktop, setIsDesktop] = useState(false);
 
@@ -163,15 +175,15 @@ export default function HeroAppPreview() {
 
     return (
         <div
-            className="relative overflow-hidden rounded-[14px] border border-[#D2C7B7] bg-[#F8F4EC] shadow-[0_10px_28px_rgba(20,20,20,0.08)] min-[1024px]:rounded-[16px] min-[1024px]:shadow-[0_18px_40px_rgba(20,20,20,0.10)]"
+            className="relative overflow-hidden rounded-[12px] border border-black/8 bg-[#F8F4EC] shadow-[0_1px_2px_rgba(0,0,0,0.04),0_4px_16px_rgba(0,0,0,0.06),0_12px_40px_rgba(0,0,0,0.05)]"
             onMouseEnter={handlePause}
             onMouseLeave={handleResume}
         >
-            <div className="flex items-center gap-3 border-b border-[#E5DDD0] bg-[#F6F0E6] px-4 py-3">
+            <div className="flex items-center gap-3 border-b border-black/6 bg-[rgba(246,240,230,0.88)] px-4 py-3 backdrop-blur-[6px]">
                 <div className="flex items-center gap-1.5" aria-hidden="true">
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#D4B690]" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#DDD3C5]" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#E8E0D5]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#FF605C]/50" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD44]/50" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#00CA4E]/50" />
                 </div>
                 <p className="text-[11px] font-semibold tracking-[0.16em] text-[#6E6558]">Visual Decompiler</p>
             </div>
@@ -182,7 +194,7 @@ export default function HeroAppPreview() {
                         <div className="relative grid grid-cols-3 gap-1 rounded-full border border-[#E5DBCC] bg-[#F3EDE3] p-1">
                             <div
                                 aria-hidden="true"
-                                className="absolute inset-y-1 left-1 w-[calc(33.333%-0.333rem)] rounded-full bg-[#141414] transition-transform duration-300 ease-out"
+                                className="absolute inset-y-1 left-1 w-[calc(33.333%-0.333rem)] rounded-full bg-[#141414] transition-[transform,width] duration-300 ease-out"
                                 style={{ transform: `translateX(${displayIndex * 100}%)` }}
                             />
                             {PREVIEW_STATES.map((state, index) => (
@@ -239,7 +251,7 @@ export default function HeroAppPreview() {
                                                         </p>
                                                         <p className="mt-1 text-[12px] text-[#6D6459] sm:text-sm">{row.level}</p>
                                                     </div>
-                                                    <div className="rounded-full border border-[#D7CAB6] bg-[#F4ECDF] px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#3A3228] sm:px-3 sm:text-[10px] sm:tracking-[0.16em]">
+                                                    <div className={`rounded-full px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.14em] sm:px-3 sm:text-[10px] sm:tracking-[0.16em] ${badgeClasses(row.value)}`}>
                                                         {row.value}
                                                     </div>
                                                 </div>

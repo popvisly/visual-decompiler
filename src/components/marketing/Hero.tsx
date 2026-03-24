@@ -28,19 +28,20 @@ export default function Hero({
     microproof,
 }: Props) {
     return (
-        <section className="relative overflow-hidden bg-[#FBFBF6] pb-10 pt-28 text-[#141414] md:pb-14 md:pt-36 lg:pb-20 lg:pt-[7.5rem]">
+        <section className="relative overflow-hidden bg-[#FBFBF6] pb-10 pt-28 text-[#141414] md:pb-14 md:pt-36 lg:pb-28 lg:pt-[7.5rem]">
             <div className="pointer-events-none absolute inset-0 opacity-[0.55] [background-image:linear-gradient(rgba(20,20,20,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.028)_1px,transparent_1px)] [background-size:48px_48px]" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0)_60%)]" />
 
             <div className="relative z-10 mx-auto max-w-[1280px] px-6">
                 <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:grid-cols-[minmax(0,0.96fr)_minmax(0,1.04fr)] xl:gap-16">
-                    <div className="order-1 flex flex-col text-center lg:text-left">
+                    <div className="order-1 flex flex-col pt-8 text-center lg:pt-12 lg:text-left">
                         <motion.p
                             initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.65, ease: 'easeOut' }}
-                            className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#B8A47E]"
+                            className="flex items-center justify-center gap-3 text-[10px] font-bold uppercase tracking-[0.34em] text-[#B8A47E] lg:justify-start"
                         >
+                            <span aria-hidden="true" className="h-px w-6 bg-[#B8A47E]" />
                             {eyebrow}
                         </motion.p>
 
@@ -57,7 +58,7 @@ export default function Hero({
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.75, ease: 'easeOut', delay: 0.12 }}
-                            className="mx-auto mt-5 max-w-[32rem] text-[16px] font-normal leading-[1.66] tracking-[-0.01em] text-[#141414]/70 md:text-[18px] lg:mx-0 lg:max-w-[31rem]"
+                            className="mx-auto mt-5 max-w-[32rem] text-[16px] font-normal leading-[1.66] tracking-[-0.01em] text-[#141414]/72 md:text-[18px] lg:mx-0 lg:max-w-[31rem] lg:text-[19px]"
                         >
                             {subhead}
                         </motion.p>
@@ -89,7 +90,7 @@ export default function Hero({
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.75, ease: 'easeOut', delay: 0.24 }}
-                                className="mt-5 text-[9px] font-bold uppercase tracking-[0.23em] text-[#8A7B64] sm:text-[10px] sm:tracking-[0.26em] lg:text-left"
+                                className="mt-5 text-[9px] font-bold uppercase tracking-[0.22em] text-[#141414]/40 sm:text-[10px] sm:tracking-[0.24em] lg:text-left"
                             >
                                 {microproof}
                             </motion.p>
@@ -100,7 +101,7 @@ export default function Hero({
                         initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.85, ease: 'easeOut', delay: 0.12 }}
-                        className="order-2 lg:pl-2"
+                        className="order-2 self-center transition-transform duration-500 ease-out lg:pl-2 lg:[transform:perspective(1200px)_rotateY(-2deg)] lg:hover:[transform:perspective(1200px)_rotateY(0deg)]"
                     >
                         <HeroAppPreview />
                     </motion.div>
