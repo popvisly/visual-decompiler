@@ -10,17 +10,9 @@ export default function HomePage() {
             <UnifiedSovereignHeader primaryCta={{ label: 'Start Decompiling Free', href: '/ingest' }} />
 
             <Hero
-                eyebrow="For Art Directors"
-                rotatingEyebrows={[
-                    'For Art Directors',
-                    'For Creative Directors',
-                    'For Strategy Teams',
-                    'For New Business',
-                    'For Brand Managers',
-                ]}
+                eyebrow="For creative strategists"
                 headline="See exactly what any ad is doing."
-                headlineHighlight="Before the room decides."
-                subhead="Visual Decompiler turns any ad into a client-ready strategic readout — persuasion mechanics, psychology, comparative route testing, and white-label output in under 60 seconds."
+                subhead="Drop any ad. Get a client-ready strategic dossier — persuasion mechanics, psychology, signals, and a reconstruction blueprint — in under 60 seconds."
                 ctaPrimary={{ label: 'Start Decompiling Free', href: '/ingest' }}
                 ctaSecondary={{ label: 'Open Sample Dossier', href: SAMPLE_DOSSIER_HREF }}
                 microproof="No card required · 5 free analyses · White-label export ready"

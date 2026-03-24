@@ -2,11 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import { LinkCta } from '@/types/homepage';
-import HeroVisualComposer from '@/components/marketing/HeroVisualComposer';
-import { HERO_VISUAL_FEATURED, HERO_VISUAL_SUPPORTING } from '@/components/marketing/heroVisualData';
-import NeuralParticleHero from '@/components/marketing/NeuralParticleHero';
+import HeroAppPreview from '@/components/marketing/HeroAppPreview';
 import {
     HOMEPAGE_CTA_ICON,
     HOMEPAGE_PRIMARY_CTA,
@@ -15,10 +12,7 @@ import {
 
 type Props = {
     eyebrow?: string;
-    rotatingEyebrows?: string[];
     headline: string;
-    headlineLineTwo?: string;
-    headlineHighlight?: string;
     subhead: string;
     ctaPrimary?: LinkCta;
     ctaSecondary?: LinkCta;
@@ -26,162 +20,91 @@ type Props = {
 };
 
 export default function Hero({
-    eyebrow = 'Intelligence Platform',
-    rotatingEyebrows,
+    eyebrow = 'For creative strategists',
     headline,
-    headlineLineTwo,
-    headlineHighlight,
     subhead,
     ctaPrimary,
     ctaSecondary,
     microproof,
 }: Props) {
-    const [eyebrowIndex, setEyebrowIndex] = useState(0);
-    const [shouldRotate, setShouldRotate] = useState(false);
-
-    useEffect(() => {
-        if (!rotatingEyebrows || rotatingEyebrows.length <= 1) return;
-
-        const media = window.matchMedia('(min-width: 768px)');
-
-        const syncRotation = () => {
-            setShouldRotate(media.matches);
-            setEyebrowIndex(0);
-        };
-
-        syncRotation();
-        media.addEventListener('change', syncRotation);
-
-        return () => {
-            media.removeEventListener('change', syncRotation);
-        };
-    }, [rotatingEyebrows]);
-
-    useEffect(() => {
-        if (!rotatingEyebrows || rotatingEyebrows.length <= 1 || !shouldRotate) return;
-
-        const intervalId = window.setInterval(() => {
-            setEyebrowIndex((current) => (current + 1) % rotatingEyebrows.length);
-        }, 3500);
-
-        return () => {
-            window.clearInterval(intervalId);
-        };
-    }, [rotatingEyebrows, shouldRotate]);
-
-    const activeEyebrow =
-        rotatingEyebrows && rotatingEyebrows.length > 0
-            ? shouldRotate
-                ? rotatingEyebrows[eyebrowIndex]
-                : rotatingEyebrows[0]
-            : eyebrow;
-
     return (
-        <section className="relative flex min-h-[72vh] flex-col justify-center overflow-hidden bg-[#FBFBF6] pb-6 pt-28 text-[#141414] md:min-h-[74vh] md:pb-10 md:pt-36 lg:min-h-[76vh] lg:pt-40">
-
-            {/* Bone Grid Background */}
+        <section className="relative overflow-hidden bg-[#FBFBF6] pb-10 pt-28 text-[#141414] md:pb-14 md:pt-36 lg:pb-20 lg:pt-[7.5rem]">
             <div className="pointer-events-none absolute inset-0 opacity-[0.55] [background-image:linear-gradient(rgba(20,20,20,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.028)_1px,transparent_1px)] [background-size:48px_48px]" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0)_60%)]" />
 
-            <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-6 text-center">
-                <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, ease: 'easeOut' }}
-                    className="mb-5 text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]"
-                >
-                    {activeEyebrow}
-                </motion.p>
+            <div className="relative z-10 mx-auto max-w-[1280px] px-6">
+                <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-12 xl:gap-16">
+                    <div className="order-1 flex flex-col text-center lg:text-left">
+                        <motion.p
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.65, ease: 'easeOut' }}
+                            className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#B8A47E]"
+                        >
+                            {eyebrow}
+                        </motion.p>
 
-                {/* Headline */}
-                <motion.h1
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeOut' }}
-                    className="mb-5 max-w-5xl text-[34px] font-semibold leading-[0.96] tracking-[-0.03em] text-[#141414] sm:text-4xl md:mb-6 md:text-7xl"
-                >
-                    {headlineHighlight ? (
-                        <>
-                            {headline}<br />
-                            {headlineLineTwo && (
-                                <>
-                                    {headlineLineTwo}<br />
-                                </>
-                            )}
-                            <span className="text-[#C1A67B]">{headlineHighlight}</span>
-                        </>
-                    ) : (
-                        headline
-                    )}
-                </motion.h1>
+                        <motion.h1
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.75, ease: 'easeOut', delay: 0.05 }}
+                            className="mt-5 max-w-[11ch] text-[34px] font-semibold leading-[0.96] tracking-[-0.03em] text-[#141414] sm:max-w-none sm:text-[42px] md:text-[56px] lg:text-[72px]"
+                        >
+                            {headline}
+                        </motion.h1>
 
-                {/* Subhead */}
-                <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
-                    className="mb-8 max-w-[46rem] text-[16px] font-normal leading-[1.66] tracking-[-0.01em] text-[#141414]/64 sm:text-[17px] md:mb-10 md:text-[20px] md:leading-[1.72]"
-                >
-                    {subhead}
-                </motion.p>
+                        <motion.p
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.75, ease: 'easeOut', delay: 0.12 }}
+                            className="mx-auto mt-5 max-w-[32rem] text-[16px] font-normal leading-[1.66] tracking-[-0.01em] text-[#141414]/70 md:text-[18px] lg:mx-0 lg:max-w-[31rem]"
+                        >
+                            {subhead}
+                        </motion.p>
 
-                {/* CTAs */}
-                {(ctaPrimary || ctaSecondary) && (
+                        {(ctaPrimary || ctaSecondary) && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.75, ease: 'easeOut', delay: 0.18 }}
+                                className="mt-8 flex w-full flex-col items-center gap-3 lg:items-start"
+                            >
+                                {ctaPrimary && (
+                                    <a href={ctaPrimary.href} className={`${HOMEPAGE_PRIMARY_CTA} w-full sm:w-full lg:w-auto`}>
+                                        <span>{ctaPrimary.label}</span>
+                                        <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
+                                    </a>
+                                )}
+                                {ctaSecondary && (
+                                    <a href={ctaSecondary.href} className={`${HOMEPAGE_SECONDARY_CTA} w-full sm:w-full lg:w-auto`}>
+                                        <span>{ctaSecondary.label}</span>
+                                        <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
+                                    </a>
+                                )}
+                            </motion.div>
+                        )}
+
+                        {microproof && (
+                            <motion.p
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.75, ease: 'easeOut', delay: 0.24 }}
+                                className="mt-5 text-[9px] font-bold uppercase tracking-[0.23em] text-[#8A7B64] sm:text-[10px] sm:tracking-[0.26em] lg:text-left"
+                            >
+                                {microproof}
+                            </motion.p>
+                        )}
+                    </div>
+
                     <motion.div
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
-                        className="mb-2 flex w-full flex-col items-center justify-center gap-3 md:flex-row md:gap-4"
+                        transition={{ duration: 0.85, ease: 'easeOut', delay: 0.12 }}
+                        className="order-2"
                     >
-                        {ctaPrimary && (
-                            <a
-                                href={ctaPrimary.href}
-                                className={`${HOMEPAGE_PRIMARY_CTA} w-full`}
-                            >
-                                <span>{ctaPrimary.label}</span>
-                                <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
-                            </a>
-                        )}
-                        {ctaSecondary && (
-                            <a
-                                href={ctaSecondary.href}
-                                className={`${HOMEPAGE_SECONDARY_CTA} w-full`}
-                            >
-                                <span>{ctaSecondary.label}</span>
-                                <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
-                            </a>
-                        )}
+                        <HeroAppPreview />
                     </motion.div>
-                )}
-
-                {microproof && (
-                    <motion.p
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: 'easeOut', delay: 0.3 }}
-                        className="mb-1 text-[9px] font-bold uppercase tracking-[0.23em] text-[#8A7B64] sm:text-[10px] sm:tracking-[0.26em]"
-                    >
-                        {microproof}
-                    </motion.p>
-                )}
-
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeOut', delay: 0.38 }}
-                    className="mt-5 w-full md:mt-6"
-                >
-                    <NeuralParticleHero />
-                </motion.div>
-
-                <div className="w-full mt-4 md:mt-5">
-                    <HeroVisualComposer
-                        featured={HERO_VISUAL_FEATURED}
-                        supporting={HERO_VISUAL_SUPPORTING}
-                    />
                 </div>
-
-
             </div>
         </section>
     );
