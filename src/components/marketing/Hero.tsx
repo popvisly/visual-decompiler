@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { LinkCta } from '@/types/homepage';
 import HeroVisualComposer from '@/components/marketing/HeroVisualComposer';
 import { HERO_VISUAL_FEATURED, HERO_VISUAL_SUPPORTING } from '@/components/marketing/heroVisualData';
+import NeuralParticleHero from '@/components/marketing/NeuralParticleHero';
 import {
     HOMEPAGE_CTA_ICON,
     HOMEPAGE_PRIMARY_CTA,
@@ -164,7 +165,16 @@ export default function Hero({
                     </motion.p>
                 )}
 
-                <div className="w-full mt-1">
+                <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: 'easeOut', delay: 0.38 }}
+                    className="mt-5 w-full md:mt-6"
+                >
+                    <NeuralParticleHero />
+                </motion.div>
+
+                <div className="w-full mt-4 md:mt-5">
                     <HeroVisualComposer
                         featured={HERO_VISUAL_FEATURED}
                         supporting={HERO_VISUAL_SUPPORTING}

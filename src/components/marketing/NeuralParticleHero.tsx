@@ -210,7 +210,7 @@ export default function NeuralParticleHero() {
     }, []);
 
     return (
-        <div className="w-full max-w-[1200px] mx-auto mt-8 mb-3 md:mt-10 md:mb-4">
+        <div className="w-full max-w-[1200px] mx-auto">
             <div className="rounded-[24px] md:rounded-[28px] overflow-hidden bg-[#1A1A1A] border border-[#D4A574]/20 flex flex-col lg:flex-row" style={{ minHeight: '420px' }}>
 
                 {/* ── Left Panel: Title + Analysis Sections ── */}
