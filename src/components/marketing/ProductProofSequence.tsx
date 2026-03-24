@@ -1,19 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
     ArrowUpRight,
     BarChart3,
-    Clapperboard,
-    Compass,
     FlaskConical,
-    Handshake,
     MessageSquare,
-    Palette,
-    PenSquare,
-    ShieldCheck,
     Sparkles,
 } from 'lucide-react';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
@@ -38,136 +31,10 @@ type FunnelSection = {
     points: ProofPoint[];
 };
 
-type Stat = {
-    label: string;
-    value: string;
-    detail: string;
-};
-
-const STATS: Stat[] = [
-    {
-        value: '5',
-        label: 'Intelligence surfaces',
-        detail: 'per analysis',
-    },
-    {
-        value: '<60s',
-        label: 'Typical dossier',
-        detail: 'generation time',
-    },
-    {
-        value: '100%',
-        label: 'White-label export',
-        detail: 'ready',
-    },
-    {
-        value: '∞',
-        label: 'Compounding strategic memory',
-        detail: 'in Vault',
-    },
-];
-
 const DIFFERENTIAL_METRICS = [
     { label: 'Strategic Delta', value: '+27% novelty advantage' },
     { label: 'Persuasion Lift', value: '+18% identity pull' },
     { label: 'Fatigue Gap', value: '-22% repetition risk' },
-] as const;
-
-const LIVE_DECONSTRUCTION_CARDS = [
-    {
-        label: 'Primary Read',
-        value: 'Status transfer through premium composition and controlled product framing.',
-    },
-    {
-        label: 'Psychological Lever',
-        value: 'Identity mirroring + aspiration pressure creating high social compliance.',
-    },
-    {
-        label: 'Friction Risk',
-        value: 'Low resistance: message clarity is high but distinctiveness can decay with repetition.',
-    },
-    {
-        label: 'Recommended Move',
-        value: 'Keep prestige cues, then introduce one disruptive structural element to reclaim novelty.',
-    },
-] as const;
-
-const LIVE_AD_STACK = [
-    {
-        src: '/images/examples/Chanel_No5.webp',
-        alt: 'Fragrance campaign visual for analysis stack',
-        brand: 'Chanel',
-        sector: 'Fragrance',
-        rotate: -4,
-        x: 0,
-        y: 0,
-    },
-    {
-        src: '/images/examples/Watch.png',
-        alt: 'Luxury watch campaign visual for analysis stack',
-        brand: 'Tag',
-        sector: 'Watch',
-        rotate: 3,
-        x: 56,
-        y: 20,
-    },
-    {
-        src: '/images/examples/dior.png',
-        alt: 'Beauty campaign visual for analysis stack',
-        brand: 'Dior',
-        sector: 'Beauty',
-        rotate: -2,
-        x: 112,
-        y: 40,
-    },
-    {
-        src: '/images/examples/ACNE.png',
-        alt: 'Fashion campaign visual for analysis stack',
-        brand: 'Acne',
-        sector: 'Fashion',
-        rotate: 4,
-        x: 168,
-        y: 60,
-    },
-] as const;
-
-const PERSONA_LINKS = [
-    {
-        title: 'Art Directors',
-        subtitle: 'See exactly which visual choices create response — and which ones dilute it.',
-        href: '/for-art-directors',
-        icon: Palette,
-    },
-    {
-        title: 'Creative Directors',
-        subtitle: 'Turn campaign review into structured strategic direction your team can execute.',
-        href: '/for-creative-directors',
-        icon: Clapperboard,
-    },
-    {
-        title: 'Strategy Directors',
-        subtitle: 'Translate creative patterns into defensible positioning, messaging, and market moves.',
-        href: '/for-strategy-directors',
-        icon: Compass,
-    },
-    {
-        title: 'Brand Managers',
-        subtitle: 'Benchmark competitors, reduce creative guesswork, and brief with strategic confidence.',
-        href: '/for-brand-managers',
-        icon: ShieldCheck,
-    },
-    {
-        title: 'New Business',
-        subtitle: 'Convert pitch intuition into evidence-backed narratives clients can trust quickly.',
-        href: '/for-new-business',
-        icon: Handshake,
-    },
-    {
-        title: 'Copywriters',
-        subtitle: 'Align language, framing, and persuasion cues with the strongest visual mechanics.',
-        href: '/for-copywriters',
-        icon: PenSquare,
-    },
 ] as const;
 
 const DIFFERENTIATION_BLOCKS = [
@@ -338,54 +205,7 @@ const STEP_PUNCH: Record<string, string> = {
 
 const SECTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const SECONDARY_CARD_RADIUS = 'rounded-[1.7rem]';
-const CARD_ICON_CLASS = 'mt-[2px] h-[17px] w-[17px] flex-shrink-0';
 const SECTION_BAND = 'px-6 py-16 md:py-24';
-const SECTION_BAND_TIGHT = 'px-6 py-12 md:py-[4.5rem]';
-
-
-
-function StatsBar() {
-    return (
-        <section className="border-y border-[#DED5C5] bg-[#FBFBF6]">
-            <div className="mx-auto max-w-7xl px-6 py-6 md:py-8">
-                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#9A8A73]">Analysis Surfaces</p>
-                <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#625D54] md:text-base">
-                    One analysis returns five structured outputs. Start with the primary read first, then move through speed, export readiness, and memory depth.
-                </p>
-                <a
-                    href="#deconstruction"
-                    className={`${HOMEPAGE_TEXT_CTA} mt-4`}
-                >
-                    <span>See Decompiler Output</span>
-                    <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
-                </a>
-            </div>
-
-            <div className="mx-auto grid max-w-7xl gap-px bg-[#E5DCCD]/70 sm:grid-cols-2 xl:grid-cols-4">
-                {STATS.map((stat, index) => (
-                    <motion.div
-                        key={stat.label}
-                        initial={{ opacity: 0, y: 24 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.65, delay: index * 0.1 }}
-                        className={`px-6 py-8 md:px-8 md:py-10 ${
-                            index === 0 ? 'rounded-t-2xl bg-[#181613] text-[#F5EBDD]' : 'bg-[#FBFBF6]'
-                        }`}
-                    >
-                        <p className={`text-[46px] font-semibold leading-none tracking-[-0.05em] md:text-[56px] ${index === 0 ? 'text-[#F5EBDD]' : 'text-[#141414]'}`}>
-                            {stat.value}
-                        </p>
-                        <p className={`mt-3 text-[10px] font-bold uppercase tracking-[0.22em] ${index === 0 ? 'text-[#D4B387]' : 'text-[#8A7B64]'}`}>
-                            {stat.label}
-                        </p>
-                        <p className={`mt-1 text-sm ${index === 0 ? 'text-[#DCCBB3]' : 'text-[#5F5B53]'}`}>{stat.detail}</p>
-                    </motion.div>
-                ))}
-            </div>
-        </section>
-    );
-}
 
 function DifferentialDiagnosisSection() {
     return (
@@ -465,77 +285,6 @@ function DifferentialDiagnosisSection() {
                         <span>Run Differential Diagnosis</span>
                         <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                     </a>
-                </div>
-            </motion.div>
-        </section>
-    );
-}
-
-function PersonaDiscoverabilitySection() {
-    return (
-        <section id="who-its-for" className={`border-b border-[#E3DACB] bg-[#FBFBF6] ${SECTION_BAND_TIGHT}`}>
-            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
-                <div className="max-w-3xl">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">Who it’s for</p>
-                    <h2 className="mt-4 text-3xl font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-4xl">
-                        Visual Decompiler adapts to how different agency roles think, diagnose, and present decisions.
-                    </h2>
-                </div>
-
-                <div className="mt-8 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-                    {PERSONA_LINKS.map((persona, index) => (
-                        <motion.div
-                            key={persona.title}
-                            initial={{ opacity: 0, y: 12 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.45, delay: index * 0.04, ease: SECTION_EASE }}
-                        >
-                            <Link
-                                href={persona.href}
-                                className={`group block ${SECONDARY_CARD_RADIUS} border border-[#D8CCB5] bg-[#FCFAF5] px-5 py-5 transition duration-200 hover:-translate-y-[2px] hover:border-[#C9B08B] hover:bg-[#F9F4EB]`}
-                            >
-                                <div className="flex items-start gap-2.5">
-                                    <persona.icon
-                                        aria-hidden="true"
-                                        className={`${CARD_ICON_CLASS} text-[#8E7450] transition-colors group-hover:text-[#141414]`}
-                                        strokeWidth={1.65}
-                                    />
-                                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#7E6948] transition-colors group-hover:text-[#5F4724]">
-                                        {persona.title}
-                                    </p>
-                                </div>
-                                <p className="mt-3 text-[15px] leading-7 text-[#5E5A53]">{persona.subtitle}</p>
-                            </Link>
-                        </motion.div>
-                    ))}
-                </div>
-            </motion.div>
-        </section>
-    );
-}
-
-function WhyDifferentLeadIn() {
-    return (
-        <section className={`border-b border-[#E3DACB] bg-[#FBFBF6] ${SECTION_BAND_TIGHT}`}>
-            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
-                <div className="max-w-4xl">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
-                        Why this is different
-                    </p>
-                    <div className="mt-5 space-y-2">
-                        <p className="text-[16px] leading-relaxed text-[#7A7062] md:text-[18px]">
-                            Foreplay shows you what ads exist.
-                        </p>
-                        <p className="text-[16px] leading-relaxed text-[#7A7062] md:text-[18px]">
-                            Brandwatch shows you what people say about brands.
-                        </p>
-                        <p className="text-[28px] font-semibold leading-[1.02] tracking-tight text-[#141414] md:text-[42px]">
-                            Visual Decompiler tells you why the ad is working —
-                            <br />
-                            and how to use that in the room.
-                        </p>
-                    </div>
                 </div>
             </motion.div>
         </section>
@@ -634,212 +383,6 @@ function WhyDifferentSection() {
     );
 }
 
-function LiveDeconstruction() {
-    return (
-        <section className={`border-b border-[#E3DACB] bg-[#F8F3EA] ${SECTION_BAND}`}>
-            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#B59A70]">Live Deconstruction</p>
-                <h2 className="mt-4 max-w-4xl text-4xl font-semibold uppercase leading-[0.94] tracking-tight text-[#141414] md:text-5xl lg:text-6xl">
-                    Visual inputs in. Strategic intelligence out.
-                </h2>
-                <p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#5F5B53]">
-                    A rotating asset stack across categories feeds one analysis machine — so visual teams see range, and strategy teams trust the output.
-                </p>
-
-                <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-                    <motion.div
-                        initial={{ opacity: 0, x: -26 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.35 }}
-                        transition={{ duration: 0.8, ease: SECTION_EASE }}
-                        className="rounded-[30px] border border-[#D9CCB8] bg-[#131210] p-4 shadow-[0_24px_70px_rgba(18,16,12,0.15)] md:p-5"
-                    >
-                        <div className="relative min-h-[430px] overflow-hidden rounded-[22px] border border-[#2E2A24] bg-[#1A1815] p-4 md:p-5">
-                            <div className="mb-4 flex items-center justify-between">
-                                <p className="rounded-full border border-[#CDA468]/55 bg-[#181612]/70 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.24em] text-[#E5C18A]">
-                                    Incoming Ad Stack
-                                </p>
-                                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#A8895F]">Multi-Category</p>
-                            </div>
-
-                            <div className="relative h-[320px] md:h-[340px]">
-                                {LIVE_AD_STACK.map((ad, index) => (
-                                    <motion.div
-                                        key={`${ad.brand}-${ad.sector}`}
-                                        initial={{ opacity: 0, x: ad.x - 10, y: ad.y + 14, rotate: ad.rotate - 0.6 }}
-                                        whileInView={{ opacity: 1, x: ad.x, y: ad.y, rotate: ad.rotate }}
-                                        viewport={{ once: true, amount: 0.45 }}
-                                        animate={{
-                                            x: ad.x,
-                                            y: [ad.y, ad.y - (3 + index), ad.y],
-                                            rotate: [ad.rotate, ad.rotate + (index % 2 === 0 ? 0.7 : -0.7), ad.rotate],
-                                        }}
-                                        transition={{
-                                            delay: index * 0.24,
-                                            duration: 0.68,
-                                            ease: [0.22, 1, 0.36, 1],
-                                            y: {
-                                                delay: 1.05 + index * 0.16,
-                                                duration: 4.9 + index * 0.55,
-                                                ease: 'easeInOut',
-                                                repeat: Infinity,
-                                                repeatType: 'mirror',
-                                            },
-                                            rotate: {
-                                                delay: 1.15 + index * 0.16,
-                                                duration: 5.1 + index * 0.6,
-                                                ease: 'easeInOut',
-                                                repeat: Infinity,
-                                                repeatType: 'mirror',
-                                            },
-                                        }}
-                                        whileHover={{ scale: 1.02, y: ad.y - 3 }}
-                                        className="absolute left-2 top-2 w-[62%] overflow-hidden rounded-2xl border border-[#3A342B] bg-[#11100E] shadow-[0_20px_45px_rgba(0,0,0,0.35)]"
-                                    >
-                                        <Image
-                                            src={ad.src}
-                                            alt={ad.alt}
-                                            width={800}
-                                            height={1000}
-                                            className="h-[220px] w-full object-cover"
-                                        />
-                                        {index === 1 && (
-                                            <motion.span
-                                                aria-hidden
-                                                className="pointer-events-none absolute inset-0 border border-[#D8B178]/70"
-                                                animate={{ opacity: [0.15, 0.45, 0.15] }}
-                                                transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-                                            />
-                                        )}
-                                        <div className="border-t border-[#2E2A24] bg-[#14120F] px-3 py-2">
-                                            <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#D1B086]">{ad.brand}</p>
-                                            <p className="mt-1 text-[10px] text-[#D7C3A6]/85">{ad.sector}</p>
-                                        </div>
-                                    </motion.div>
-                                ))}
-
-
-                            </div>
-
-                            <div className="mt-4 rounded-2xl border border-[#312B23] bg-[#15130F] px-4 py-4">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#BFA37A]">For Art Directors & Visual Teams</p>
-                                <p className="mt-2 text-sm leading-relaxed text-[#E8D7BF]">
-                                    Feed in your own work-in-progress ads, competitor campaigns, or client references. Visual Decompiler breaks each asset apart from surface craft to psychological structure, so you can see <span className="text-[#F1C98E]">what is driving response</span> and what to change next.
-                                </p>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, x: 26 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.35 }}
-                        transition={{ duration: 0.8, ease: SECTION_EASE }}
-                        className="rounded-[30px] border border-[#2F2A23] bg-[#141310] p-5 md:p-6"
-                    >
-                        <div className="mb-4 flex items-center gap-3">
-                            <span className="h-px w-10 bg-gradient-to-r from-[#CDA468] to-transparent" />
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#BA9B6B]">Diagnosis · Decompiler Output</p>
-                        </div>
-
-                        <div className="grid gap-3 sm:grid-cols-2">
-                            {LIVE_DECONSTRUCTION_CARDS.map((card, i) => (
-                                <motion.div
-                                    key={card.label}
-                                    initial={{ opacity: 0, y: 14 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: i * 0.08, duration: 0.55 }}
-                                    whileHover={{ y: -3 }}
-                                    className="group relative overflow-hidden rounded-2xl border border-[#363027] bg-[#1A1814] px-4 py-4"
-                                >
-                                    <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#D0B896] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#B99D70]">{card.label}</p>
-                                    <p className="mt-2 text-[15px] leading-relaxed text-[#F1E4D1]">{card.value}</p>
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                            <a
-                                href="/ingest"
-                                className={`${HOMEPAGE_PRIMARY_CTA} bg-[#141414] border-[#141414]`}
-                            >
-                                <span>Start Decompiling Free</span>
-                                <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
-                            </a>
-                            <a
-                                href={SAMPLE_DOSSIER_HREF}
-                                className={`${HOMEPAGE_SECONDARY_CTA} border-[#4A3F30] text-[#D7C3A5] hover:border-[#D7C3A5]/60 hover:bg-[#201C17] hover:text-[#FBF7EF]`}
-                            >
-                                <span>Open Sample Dossier</span>
-                                <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
-                            </a>
-                        </div>
-                    </motion.div>
-                </div>
-            </motion.div>
-        </section>
-    );
-}
-
-function FunnelPanel({
-    tone,
-    points,
-}: {
-    tone: FunnelSection['tone'];
-    points: ProofPoint[];
-}) {
-    const isDark = tone === 'dark';
-
-    return (
-        <div
-            className={`rounded-[34px] border px-6 py-6 shadow-[0_20px_60px_rgba(23,22,19,0.06)] md:px-8 md:py-8 ${
-                isDark
-                    ? 'border-[#2B2822] bg-[#171614] text-[#F5EFE3]'
-                    : 'border-[#D8CCB5] bg-[#FBFAF7] text-[#171614]'
-            }`}
-        >
-            <div className="space-y-6">
-                {points.map((point, index) => (
-                    <motion.div
-                        key={point.label}
-                        initial={{ opacity: 0, y: 12 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: index * 0.08 }}
-                        whileHover={{ y: -2 }}
-                        className={`group relative overflow-hidden rounded-[24px] border px-5 py-5 ${
-                            isDark ? 'border-[#3A352D] bg-[#1D1B18]' : 'border-[#E3D7C3] bg-[#F8F4EC]'
-                        }`}
-                    >
-                        <motion.span
-                            aria-hidden
-                            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#D2B58E] to-transparent"
-                            animate={{ opacity: [0.15, 0.8, 0.15] }}
-                            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', delay: index * 0.35 }}
-                        />
-                        <p
-                            className={`text-[10px] font-bold uppercase tracking-[0.28em] ${
-                                isDark ? 'text-[#D4A574]' : 'text-[#8F7D63]'
-                            }`}
-                        >
-                            {point.label}
-                        </p>
-                        <p
-                            className={`mt-4 text-[22px] leading-[1.18] tracking-tight md:text-[28px] ${
-                                isDark ? 'text-[#F7F1E6]' : 'text-[#171614]'
-                            }`}
-                        >
-                            {point.body}
-                        </p>
-                    </motion.div>
-                ))}
-            </div>
-        </div>
-    );
-}
-
 function PlatformSystemGrid() {
     return (
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
@@ -859,8 +402,7 @@ function PlatformSystemGrid() {
                 >
                     <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8E7450]">0{index + 1}</p>
                     <h3 className="mt-2 text-[15px] font-semibold leading-snug text-[#141414]">{section.label}</h3>
-                    <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7D6748]">{STEP_PUNCH[section.id]}</p>
-                    <p className="mt-3 max-w-[24ch] text-[13px] leading-6 text-[#5E584F]">{section.points[0]?.body}</p>
+                    <p className="mt-2 max-w-[25ch] text-[13px] leading-6 text-[#5E584F]">{STEP_PUNCH[section.id]}</p>
                     <a
                         href={`#${section.id}`}
                         className={`${HOMEPAGE_TEXT_CTA} mt-3`}
@@ -878,13 +420,9 @@ export default function ProductProofSequence() {
     return (
         <div id="funnel" className="bg-[#FBFBF6]">
             <DifferentialDiagnosisSection />
-            <LiveDeconstruction />
-            <PersonaDiscoverabilitySection />
-            <StatsBar />
-            <WhyDifferentLeadIn />
             <WhyDifferentSection />
 
-            <section className={SECTION_BAND}>
+            <section className={`border-b border-[#E3DACB] bg-[#FBFBF6] ${SECTION_BAND}`}>
                 <motion.div
                     initial={{ opacity: 1, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -893,11 +431,13 @@ export default function ProductProofSequence() {
                     className="mx-auto max-w-7xl"
                 >
                     <div className="mb-7 md:mb-10">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.36em] text-[#C1A67B]">Inside the platform</p>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.36em] text-[#C1A67B]">System Architecture</p>
                         <h2 className="mt-4 max-w-5xl text-[34px] font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-[44px] lg:text-[54px]">
-                            A strategic intelligence system. Not another swipe file.
+                            The operating layer behind every forensic readout.
                         </h2>
-
+                        <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#5E5A53] md:text-lg">
+                            Move from one asset to compounding intelligence, execution-ready outputs, and agency delivery without adding workflow noise.
+                        </p>
                     </div>
 
                     <PlatformSystemGrid />
