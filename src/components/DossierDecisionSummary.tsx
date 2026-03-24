@@ -145,13 +145,16 @@ export default function DossierDecisionSummary({
         firstSentence(dossier?.test_plan?.hypothesis) ||
         'Make the value claim more explicit, then align the CTA with the same status or utility promise already signalled visually.';
     const triadStates: DecisionState[] = ['KEEP', 'REFINE', 'KILL'];
+    const DARK_TEXT_PRIMARY = 'text-[#F3F1ED]';
+    const DARK_TEXT_SECONDARY = 'text-[#D6D0C6]';
+    const DARK_TEXT_MUTED = 'text-[#B9B19F]';
 
     return (
         <section className="space-y-[clamp(12px,1vw,18px)]">
             <div className="flex flex-col gap-4 rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-5 md:flex-row md:items-center md:justify-between md:p-6">
                 <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Decision view</p>
-                    <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-[#FFFFFF]/68">
+                    <p className={`mt-3 max-w-[62ch] text-sm leading-relaxed ${DARK_TEXT_SECONDARY}`}>
                         Toggle between the executive read and the full forensic surface without losing the underlying analysis.
                     </p>
                 </div>
@@ -181,7 +184,7 @@ export default function DossierDecisionSummary({
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
                         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Creative Director Decision Triad</p>
-                        <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-[#FFFFFF]/68">
+                        <p className={`mt-3 max-w-[62ch] text-sm leading-relaxed ${DARK_TEXT_PRIMARY}`}>
                             {decisionRationale(decision, strategicMove, confidenceScore)}
                         </p>
                     </div>
@@ -203,10 +206,10 @@ export default function DossierDecisionSummary({
                                     : 'border-[#3A3329] bg-black/10'
                             }`}
                         >
-                            <p className={`text-[10px] font-bold uppercase tracking-[0.22em] ${state === decision ? 'text-[#F2D8B0]' : 'text-[#8F7D63]'}`}>
+                            <p className={`text-[10px] font-bold uppercase tracking-[0.22em] ${state === decision ? 'text-[#F2D8B0]' : DARK_TEXT_MUTED}`}>
                                 {state}
                             </p>
-                            <p className="mt-3 text-[13px] leading-6 text-[#FFFFFF]/72">
+                            <p className={`mt-3 text-[13px] leading-6 ${state === decision ? DARK_TEXT_PRIMARY : DARK_TEXT_SECONDARY}`}>
                                 {state === decision
                                     ? 'Recommended state for this route.'
                                     : state === 'KEEP'
@@ -242,8 +245,8 @@ export default function DossierDecisionSummary({
                         },
                     ].map((item) => (
                         <div key={item.label} className="rounded-[1.4rem] border border-[#3A3329] bg-black/10 px-4 py-4">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8F7D63]">{item.label}</p>
-                            <p className="mt-3 text-[14px] leading-6 text-[#F5F3EE]">{item.value}</p>
+                            <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
+                            <p className={`mt-3 text-[14px] leading-6 ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
                         </div>
                     ))}
                 </div>
@@ -256,7 +259,7 @@ export default function DossierDecisionSummary({
                         <span className="inline-flex w-fit rounded-full border border-[#D4A574]/30 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#F2D8B0]">
                             {briefAlignment}
                         </span>
-                        <p className="max-w-[62ch] text-sm leading-relaxed text-[#FFFFFF]/70">
+                        <p className={`max-w-[62ch] text-sm leading-relaxed ${DARK_TEXT_SECONDARY}`}>
                             {briefAlignmentRationale(briefAlignment, strategicMove, audienceTension)}
                         </p>
                     </div>
@@ -288,8 +291,8 @@ export default function DossierDecisionSummary({
                             },
                         ].map((item) => (
                             <div key={item.label} className={`rounded-[1.4rem] border border-[#3A3329] bg-black/10 px-4 py-4 ${item.span}`}>
-                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8F7D63]">{item.label}</p>
-                                <p className="mt-3 text-[14px] leading-6 text-[#F5F3EE]">{item.value}</p>
+                                <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
+                                <p className={`mt-3 text-[14px] leading-6 ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
                             </div>
                         ))}
                     </div>
@@ -319,8 +322,8 @@ export default function DossierDecisionSummary({
                             },
                         ].map((item) => (
                             <div key={item.label} className="rounded-[1.4rem] border border-[#3A3329] bg-black/10 px-4 py-4">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8F7D63]">{item.label}</p>
-                                <p className="mt-3 text-[14px] leading-6 text-[#F5F3EE]">{item.value}</p>
+                                <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
+                                <p className={`mt-3 text-[14px] leading-6 ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
                             </div>
                         ))}
                     </div>
