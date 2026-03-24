@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { LinkCta } from '@/types/homepage';
-import NeuralParticleHero from '@/components/marketing/NeuralParticleHero';
+import HeroVisualComposer from '@/components/marketing/HeroVisualComposer';
+import { HERO_VISUAL_FEATURED, HERO_VISUAL_SUPPORTING } from '@/components/marketing/heroVisualData';
 import {
     HOMEPAGE_CTA_ICON,
     HOMEPAGE_PRIMARY_CTA,
@@ -163,9 +164,11 @@ export default function Hero({
                     </motion.p>
                 )}
 
-                {/* Neural Intelligence Hero */}
                 <div className="w-full mt-1">
-                    <NeuralParticleHero />
+                    <HeroVisualComposer
+                        featured={HERO_VISUAL_FEATURED}
+                        supporting={HERO_VISUAL_SUPPORTING}
+                    />
                 </div>
 
 
