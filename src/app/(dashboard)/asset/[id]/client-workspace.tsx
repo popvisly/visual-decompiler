@@ -12,6 +12,7 @@ import RadiantArchitectureOverlay from '@/components/RadiantArchitectureOverlay'
 import AddToBoard from '@/components/AddToBoard';
 import AssetTagEditor from '@/components/AssetTagEditor';
 import DossierDecisionSummary from '@/components/DossierDecisionSummary';
+import WorkspaceTabHeader from '@/components/WorkspaceTabHeader';
 
 interface CloneConcept {
     concept_id?: number;
@@ -1806,6 +1807,11 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
                                     <div className="space-y-10">
+                                        <WorkspaceTabHeader
+                                            kicker="Strategic Readout"
+                                            title="Forensic Intelligence Overview"
+                                            intro="A consolidated strategic read of this asset: core mechanic, persuasion structure, and the clearest path to action."
+                                        />
                                         {(!extraction.primary_mechanic || !extraction.full_dossier) && <SovereignProcessingView assetId={asset.id} agency={agency} />}
 
                                         {extraction.primary_mechanic && extraction.full_dossier && (
@@ -1942,6 +1948,11 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction?.full_dossier ? (
                                     <div className="space-y-10">
+                                        <WorkspaceTabHeader
+                                            kicker="Pattern Extraction"
+                                            title="Technical Autopsy"
+                                            intro="A structural decomposition of the creative signal stack—hooks, pacing, contrast, and attention-routing cues that drive response."
+                                        />
                                         {/* RADIANT ARCHITECTURE TOGGLE */}
                                         <div className={`${ANALYSIS_CARD_CLASS} flex flex-col items-start justify-between gap-[clamp(12px,1vw,18px)] md:flex-row md:items-center`}>
                                             <div className="flex flex-col gap-2">
@@ -1960,11 +1971,6 @@ export default function AssetWorkspace({
 
                                         {/* Technical Autopsy: Channels Only */}
                                         <div className="grid grid-cols-1 gap-8">
-                                            <div className="flex flex-col gap-2 mb-4 border-b border-[#D4A574]/20 pb-4">
-                                                <h2 className="text-2xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Technical Autopsy</h2>
-                                                <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Semiotic Channel Interceptions</p>
-                                            </div>
-                                            
                                             <DossierGrid 
                                                 title="Semiotic Subtext" 
                                                 content={extraction.full_dossier.semiotic_subtext || ''} 
@@ -2040,7 +2046,13 @@ export default function AssetWorkspace({
 
                         {/* MARKET PULSE (Locked / Last) */}
                         {activeTab === 'MARKET PULSE' && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 relative">
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <WorkspaceTabHeader
+                                    kicker="Competitive Context"
+                                    title="Market Pulse"
+                                    intro="How this mechanic maps against live category behavior, saturation risk, and emerging creative opportunity zones."
+                                />
+                                <div className="relative">
                                 {!isSovereign ? (
                                     <>
                                         <div className="absolute inset-0 z-10 backdrop-blur-md bg-[#FBFBF6]/60 flex items-center justify-center rounded-3xl">
@@ -2186,13 +2198,20 @@ export default function AssetWorkspace({
                                         </p>
                                     </div>
                                 )}
+                                </div>
                             </div>
                         )}
 
                         {/* TAB 3: PSYCHOLOGY */}
                         {activeTab === 'PSYCHOLOGY' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="space-y-10">
+                                    <WorkspaceTabHeader
+                                        kicker="Cognitive Dynamics"
+                                        title="Semiotic Channel Interceptions"
+                                        intro="How the asset encodes meaning, identity cues, and emotional triggers to shape perception and decision momentum."
+                                    />
+                                    <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                                     {/* Trigger Distribution Radar */}
                                     <div className={`${ANALYSIS_CARD_CLASS} flex flex-col items-center justify-between min-h-[220px] xl:min-h-[240px]`}>
                                         <h3 className="text-[12px] font-bold text-[#D4A574] uppercase tracking-widest mb-4 w-full border-b border-[#D4A574]/20 pb-4">
@@ -2317,12 +2336,18 @@ export default function AssetWorkspace({
                                     )}
 
                                 </div>
+                                </div>
                             </div>
                         )}
 
                         {/* TAB 4: BLUEPRINT */}
                         {activeTab === 'BLUEPRINT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <WorkspaceTabHeader
+                                    kicker="Execution Logic"
+                                    title="Rebuild Blueprint"
+                                    intro="A production-ready deconstruction of what to keep, what to refine, and what to rebuild for stronger performance."
+                                />
                                 {!blueprintData ? (
                                 <div className="border border-[#D4A574]/20 bg-[#1A1A1A] p-10 flex flex-col items-center justify-center text-center rounded-3xl shadow-sm">
                                         <h3 className="text-[#D4A574] text-lg font-light mb-2">Production Blueprint Uninitialized</h3>
