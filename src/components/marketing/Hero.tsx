@@ -28,7 +28,7 @@ export default function Hero({
     microproof,
 }: Props) {
     return (
-        <section className="relative overflow-hidden bg-[#FBFBF6] pb-10 pt-28 text-[#141414] md:pb-14 md:pt-36 lg:pb-28 lg:pt-[7.5rem]">
+        <section className="relative z-20 -mt-12 overflow-hidden rounded-t-[40px] border-t border-black/5 bg-[#FBFBF6] pb-10 pt-24 text-[#141414] shadow-[0_-24px_50px_rgba(0,0,0,0.5)] md:-mt-20 md:rounded-t-[60px] md:pb-14 md:pt-32 lg:-mt-24 lg:rounded-t-[80px] lg:pb-28 lg:pt-32">
             <div className="pointer-events-none absolute inset-0 opacity-[0.55] [background-image:linear-gradient(rgba(20,20,20,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.028)_1px,transparent_1px)] [background-size:48px_48px]" />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0)_60%)]" />
 
@@ -45,14 +45,14 @@ export default function Hero({
                             {eyebrow}
                         </motion.p>
 
-                        <motion.h1
+                        <motion.h2
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.75, ease: 'easeOut', delay: 0.05 }}
-                            className="mt-5 max-w-[11ch] text-[34px] font-semibold leading-[0.96] tracking-[-0.03em] text-[#141414] sm:max-w-none sm:text-[42px] md:text-[56px] lg:text-[72px]"
+                            className="mt-5 max-w-[11ch] text-[34px] font-semibold leading-[0.96] tracking-[-0.03em] text-[#141414] sm:max-w-none sm:text-[42px] md:text-[52px] lg:text-[60px]"
                         >
                             {headline}
-                        </motion.h1>
+                        </motion.h2>
 
                         <motion.p
                             initial={{ opacity: 0, y: 10 }}
