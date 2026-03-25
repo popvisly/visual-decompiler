@@ -216,7 +216,7 @@ function DifferentialDiagnosisSection() {
             <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
                 <div className="mb-6 flex items-center gap-3">
                     <span className="h-px w-10 bg-gradient-to-r from-[#CDA468] to-transparent" />
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#A8895F]">Intelligence Pulse</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A8895F]">Intelligence Pulse</p>
                 </div>
 
                 <h3 className="max-w-4xl text-3xl font-semibold leading-[1] tracking-tight text-[#141414] md:text-5xl">
@@ -228,7 +228,7 @@ function DifferentialDiagnosisSection() {
 
                 <div className="mt-8 grid gap-4 lg:grid-cols-2">
                     <div className="group relative overflow-hidden rounded-[26px] border border-[#D8CCB5] bg-[#191713] shadow-[0_18px_40px_rgba(20,20,20,0.08)]">
-                        <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D5B386]">
+                        <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
                             Asset A · Control
                         </div>
                         <Image
@@ -243,7 +243,7 @@ function DifferentialDiagnosisSection() {
                     </div>
 
                     <div className="group relative overflow-hidden rounded-[26px] border border-[#D8CCB5] bg-[#191713] shadow-[0_18px_40px_rgba(20,20,20,0.08)]">
-                        <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D5B386]">
+                        <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
                             Asset B · Variant
                         </div>
                         <Image
@@ -259,7 +259,7 @@ function DifferentialDiagnosisSection() {
                 </div>
 
                 <div className="mt-4 flex items-center justify-center">
-                    <span className="rounded-full border border-[#D8CCB5] bg-[#F8F3EA] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8E7450]">
+                    <span className="rounded-full border border-[#D8CCB5] bg-[#F8F3EA] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8E7450]">
                         Differential Read
                     </span>
                 </div>
@@ -299,7 +299,7 @@ function WhyDifferentSection() {
         <section className={`border-b border-[#E3DACB] bg-[#F7F1E7] ${SECTION_BAND}`}>
             <motion.div {...REVEAL} className="mx-auto max-w-7xl">
                 <div className="max-w-4xl">
-                    <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8E7450]">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8E7450]">
                         WHY TEAMS SWITCH
                     </p>
                     <h2 className="mt-4 text-3xl font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-5xl">
@@ -313,10 +313,10 @@ function WhyDifferentSection() {
                 <div className="mt-12 rounded-[1.8rem] border border-[#2B2721] bg-[#171512] px-5 py-5 text-[#F5EFE3] shadow-[0_18px_44px_rgba(18,16,12,0.10)] md:px-6 md:py-6">
                     <div className="grid gap-5 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
                         <div className="max-w-[26rem]">
-                            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#B89A70]">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">
                                 SAMPLE PROOF OBJECT
                             </p>
-                            <p className="mt-3 text-[17px] leading-[1.6] text-[#EEE4D3] md:text-[19px]">
+                            <p className="mt-3 text-lg leading-relaxed text-[#EEE4D3] md:text-lg">
                                 Signals, mechanics, blueprint logic, and recommendation layers held in one restrained dossier object.
                             </p>
                         </div>
@@ -326,10 +326,10 @@ function WhyDifferentSection() {
                                     key={row.label}
                                     className="min-h-[112px] rounded-[1.15rem] border border-[#3A342B] bg-[#201C17] px-4 py-4"
                                 >
-                                    <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#B89A70]">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">
                                         {row.label}
                                     </p>
-                                    <p className="mt-2 text-[13px] leading-[1.55] text-[#E5D9C7]">
+                                    <p className="mt-2 text-sm leading-[1.55] text-[#E5D9C7]">
                                         {row.value}
                                     </p>
                                 </div>
@@ -358,13 +358,13 @@ function WhyDifferentSection() {
                             </div>
                             <div className="mt-4 space-y-3.5">
                                 <div>
-                                    <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#A19380]">THEY DO</p>
-                                    <p className="mt-2 max-w-[25ch] text-[15px] leading-[1.5] text-[#635D54]">{block.theyDo}</p>
+                                    <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#A19380]">THEY DO</p>
+                                    <p className="mt-2 max-w-[25ch] text-sm leading-[1.5] text-[#635D54]">{block.theyDo}</p>
                                 </div>
                                 <div className="border-t border-[#E4D9C8] pt-4">
                                     <div className="rounded-[1.05rem] border border-[#E1D4BE] bg-[#F8F1E7] px-4 py-3.5">
-                                        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7E6948]">WE DO</p>
-                                        <p className="mt-2 max-w-[30ch] text-[15px] leading-[1.55] text-[#141414]">{block.weDo}</p>
+                                        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#7E6948]">WE DO</p>
+                                        <p className="mt-2 max-w-[30ch] text-sm leading-[1.55] text-[#141414]">{block.weDo}</p>
                                     </div>
                                 </div>
                             </div>
@@ -403,9 +403,9 @@ function PlatformSystemGrid() {
                             : 'border-[#D4C3AA] bg-[#F6EFE3]'
                     }`}
                 >
-                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8E7450]">0{index + 1}</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8E7450]">0{index + 1}</p>
                     <h3 className="mt-2 text-[15px] font-semibold leading-snug text-[#141414]">{section.label}</h3>
-                    <p className="mt-2 max-w-[25ch] text-[13px] leading-6 text-[#5E584F]">{STEP_PUNCH[section.id]}</p>
+                    <p className="mt-2 max-w-[25ch] text-sm leading-6 text-[#5E584F]">{STEP_PUNCH[section.id]}</p>
                     <a
                         href={`#${section.id}`}
                         className={`${HOMEPAGE_TEXT_CTA} mt-3`}
@@ -434,7 +434,7 @@ export default function ProductProofSequence() {
                     className="mx-auto max-w-7xl"
                 >
                     <div className="mb-7 md:mb-10">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.36em] text-[#C1A67B]">System Architecture</p>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C1A67B]">System Architecture</p>
                         <h2 className="mt-4 max-w-5xl text-[34px] font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-[44px] lg:text-[54px]">
                             The operating layer behind every forensic readout.
                         </h2>

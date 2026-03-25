@@ -493,7 +493,7 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                     {/* Overture */}
                     {overture && (
                         <div className="max-h-[400px] overflow-y-auto">
-                            <p className="text-[12px] text-[#6A6257] leading-relaxed font-light">
+                            <p className="text-[12px] text-[#6A6257] leading-relaxed">
                                 {overture}
                             </p>
                         </div>
@@ -1371,7 +1371,7 @@ export default function AssetWorkspace({
                                     {(extraction?.color_palette || []).map((hex: string, index: number) => (
                                         <div key={`${hex}-${index}`} className="flex items-center gap-2 border px-3 py-2" style={{ borderColor: accentHex }}>
                                             <span className="h-4 w-4 border border-[#E7DED1]" style={{ backgroundColor: hex }} />
-                                            <span className="text-xs font-mono">{hex}</span>
+                                            <span className="text-[11px] font-mono">{hex}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -1723,7 +1723,7 @@ export default function AssetWorkspace({
                                                 <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
                                             </div>
                                             {showCopiedToast && (
-                                                <div className="absolute top-full mt-2 right-0 bg-[#8B4513] text-[#F5F5DC] text-[9px] font-bold tracking-widest uppercase px-3 py-1.5 shadow-lg animate-in fade-in slide-in-from-top-2 duration-200 z-50">
+                                                <div className="absolute top-full mt-2 right-0 bg-[#8B4513] text-[#F5F5DC] text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1.5 shadow-lg animate-in fade-in slide-in-from-top-2 duration-200 z-50">
                                                     Embed Code Copied
                                                 </div>
                                             )}
@@ -2050,7 +2050,7 @@ export default function AssetWorkspace({
                                                     <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 border-b border-[#E6DDCF] pb-4">
                                                         Gaze Analysis
                                                     </h3>
-                                                    <p className="text-[12px] text-[#6A6257] leading-relaxed font-light">
+                                                    <p className="text-[12px] text-[#6A6257] leading-relaxed">
                                                         {(extraction.full_dossier as any).gaze_topology.reading}
                                                     </p>
                                                 </div>
@@ -2072,7 +2072,7 @@ export default function AssetWorkspace({
                                                                 {item.lens}
                                                             </h3>
                                                             <div className="flex-1 max-h-[400px] overflow-y-auto">
-                                                                <p className="text-[12px] text-[#6A6257] leading-relaxed font-light">{item.reading}</p>
+                                                                <p className="text-[12px] text-[#6A6257] leading-relaxed">{item.reading}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -2291,7 +2291,7 @@ export default function AssetWorkspace({
                                                 forceLight={true}
                                             />
                                         </div>
-                                        <p className="text-[12px] text-[#6A6257] leading-relaxed font-light mt-4 pt-4 border-t border-[#D4A574]/10 text-center px-4 w-full">
+                                        <p className="text-[12px] text-[#6A6257] leading-relaxed mt-4 pt-4 border-t border-[#D4A574]/10 text-center px-4 w-full">
                                             This distribution quantifies the creative's psychological surface area—identifying which aspiration levers are being engaged to command consumer compliance.
                                         </p>
                                     </div>
@@ -2303,7 +2303,7 @@ export default function AssetWorkspace({
                                         </h3>
                                         {extraction?.full_dossier?.archetype_mapping ? (
                                             <div className="flex-1 flex flex-col justify-between">
-                                                <p className="text-[12px] text-[#6A6257] leading-relaxed font-light mb-6">
+                                                <p className="text-[12px] text-[#6A6257] leading-relaxed mb-6">
                                                     {extraction.full_dossier.archetype_mapping?.target_posture}
                                                 </p>
                                                 <div className="flex items-center justify-center">
@@ -2338,7 +2338,7 @@ export default function AssetWorkspace({
                                                     />
                                                 </div>
                                             </div>
-                                            <p className="text-[12px] text-[#6A6257] leading-relaxed font-light mt-4 pt-4 border-t border-[#D4A574]/10">
+                                            <p className="text-[12px] text-[#6A6257] leading-relaxed mt-4 pt-4 border-t border-[#D4A574]/10">
                                                 Measures the creative's informational compression—how efficiently it transfers brand signal into consumer memory structures.
                                             </p>
                                         </div>
@@ -2362,7 +2362,7 @@ export default function AssetWorkspace({
                                                     />
                                                 </div>
                                             </div>
-                                            <p className="text-[12px] text-[#6A6257] leading-relaxed font-light mt-4 pt-4 border-t border-[#D4A574]/10">
+                                            <p className="text-[12px] text-[#6A6257] leading-relaxed mt-4 pt-4 border-t border-[#D4A574]/10">
                                                 Quantifies neural resistance to message adoption. Low scores indicate frictionless persuasion pathways.
                                             </p>
                                         </div>
@@ -2379,7 +2379,7 @@ export default function AssetWorkspace({
                                                     <svg className="w-4 h-4 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                                     <span className="text-[11px] font-mono text-[#D4A574]/60 uppercase tracking-widest">Fatigue Analysis</span>
                                                 </div>
-                                                <p className="text-[12px] text-[#6A6257] leading-relaxed font-light">
+                                                <p className="text-[12px] text-[#6A6257] leading-relaxed">
                                                     {((extraction?.full_dossier as any)?.persuasion_metrics?.predictive_longevity as string)}
                                                 </p>
                                             </div>
@@ -2396,7 +2396,7 @@ export default function AssetWorkspace({
                                                 {((extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []).slice(0, 3).map((move: string, i: number) => (
                                                     <div key={i} className="flex gap-3 items-start">
                                                         <div className="w-1.5 h-1.5 bg-[#D4A574] rounded-full mt-2 flex-shrink-0" />
-                                                        <p className="text-[12px] text-[#6A6257] leading-relaxed font-light">{move}</p>
+                                                        <p className="text-[12px] text-[#6A6257] leading-relaxed">{move}</p>
                                                     </div>
                                                 ))}
                                             </div>
@@ -2418,7 +2418,7 @@ export default function AssetWorkspace({
                                 />
                                 {!blueprintData ? (
                                 <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-10 flex flex-col items-center justify-center text-center rounded-3xl shadow-sm">
-                                        <h3 className="text-[#D4A574] text-lg font-light mb-2">Production Blueprint Uninitialized</h3>
+                                        <h3 className="text-[#D4A574] text-lg font-medium mb-2">Production Blueprint Uninitialized</h3>
                                         <p className="text-[#6A6257] text-sm max-w-sm mb-4">Synthesize the extraction data into elite execution constraints.</p>
                                         <p className="text-[#D4A574]/60 text-[10px] font-bold uppercase tracking-[0.28em] mb-8">Generated blueprints are now saved to this asset automatically.</p>
                                         {blueprintError && (
@@ -2456,7 +2456,7 @@ export default function AssetWorkspace({
                                     <div className="space-y-12">
                                         <div className="flex flex-col gap-4 rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-5 md:flex-row md:items-center md:justify-between">
                                             <div>
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574] mb-2">Production Blueprint Active</p>
+                                                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-2">Production Blueprint Active</p>
                                                 <p className="text-sm text-[#6A6257]">This blueprint is stored in the Intelligence Vault and will reload when you revisit the asset.</p>
                                             </div>
                                             <button
@@ -2489,15 +2489,15 @@ export default function AssetWorkspace({
                                         {/* Iteration Test Plan (Remixing) */}
                                         {extraction?.full_dossier?.test_plan && (
                                             <div>
-                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#E6DDCF] pb-2">Iteration & Test Plan</span>
+                                                <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Iteration & Test Plan</span>
                                                 <p className="mb-6 border-l-2 border-[#D4A574] pl-4 text-sm leading-relaxed text-[#151310]/86">{extraction.full_dossier.test_plan.hypothesis}</p>
                                                 <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
                                                     {extraction.full_dossier.test_plan.test_cells.map((cell: any, i: number) => {
                                                         const isLongCell = `${cell.change ?? ''} ${cell.rationale ?? ''}`.length > 210;
                                                         return (
                                                         <div key={i} className={`${ANALYSIS_CARD_CLASS} flex flex-col ${isLongCell ? 'xl:col-span-2' : 'xl:col-span-1'}`}>
-                                                            <span className="text-[11px] font-bold tracking-[0.2em] text-[#9B8662] uppercase block mb-3">{cell.lever}</span>
-                                                            <p className="text-sm text-[#151310] font-light mb-4 leading-relaxed">{cell.change}</p>
+                                                            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662] block mb-3">{cell.lever}</span>
+                                                            <p className="text-sm text-[#151310] mb-4 leading-relaxed">{cell.change}</p>
                                                             <p className="mt-auto border-t border-[#D4A574]/10 pt-4 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]/72">{cell.rationale}</p>
                                                         </div>
                                                     )})}
@@ -2519,11 +2519,11 @@ export default function AssetWorkspace({
                                                                 <div key={i} className="space-y-2">
                                                                     <div className="flex items-center gap-2">
                                                                         <div className="w-1.5 h-1.5 bg-[#D4A574] rounded-full" />
-                                                                        <span className="text-[10px] font-bold text-[#9B8662] uppercase tracking-[0.2em]">
+                                                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662]">
                                                                             {i === 0 ? 'Primary' : 'Secondary'}
                                                                         </span>
                                                                     </div>
-                                                                    <p className="text-[12px] text-[#6A6257] leading-relaxed font-light pl-[18px]">
+                                                                    <p className="text-[12px] text-[#6A6257] leading-relaxed pl-[18px]">
                                                                         {reading.reading}
                                                                     </p>
                                                                 </div>
@@ -2539,7 +2539,7 @@ export default function AssetWorkspace({
                                                             Objection Dismantled
                                                         </h3>
                                                         <div className="flex-1 flex flex-col justify-center">
-                                                            <p className="max-w-[62ch] text-[12px] text-[#6A6257] leading-relaxed font-light">
+                                                            <p className="max-w-[62ch] text-[12px] text-[#6A6257] leading-relaxed">
                                                                 {extraction.full_dossier.objection_dismantling}
                                                             </p>
                                                         </div>
@@ -2550,14 +2550,14 @@ export default function AssetWorkspace({
 
                                         {/* DNA Prompt Code Block */}
                                         <div>
-                                            <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#E6DDCF] pb-2">Verified DNA Prompt (Midjourney Native)</span>
+                                            <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Verified DNA Prompt (Midjourney Native)</span>
                                             <div className="relative group">
                                                 <div className="absolute top-4 right-4 text-[8px] font-bold text-[#9B8662] uppercase tracking-widest opacity-40">Forensic Copy</div>
-                                                <pre className="p-5 bg-[#FFFCF7] border border-[#D4A574]/30 text-[#151310] text-xs font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap rounded-3xl">
+                                                <pre className="p-5 bg-[#FFFCF7] border border-[#D4A574]/30 text-[#151310] text-[11px] font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap rounded-3xl">
                                                     {blueprintData.verified_dna_prompt}
                                                 </pre>
                                                 <button
-                                                    className="absolute bottom-6 right-6 text-[9px] font-bold tracking-widest uppercase text-[#D4A574]/70 hover:text-[#D4A574] transition-colors bg-[#FFFCF7] px-3 py-1.5 rounded-none border border-[#D4A574]/40"
+                                                    className="absolute bottom-6 right-6 text-[10px] font-bold uppercase tracking-[0.15em] text-[#D4A574]/70 hover:text-[#D4A574] transition-colors bg-[#FFFCF7] px-3 py-1.5 rounded-none border border-[#D4A574]/40"
                                                     onClick={() => navigator.clipboard.writeText(blueprintData.verified_dna_prompt)}
                                                 >
                                                     Copy
@@ -2568,25 +2568,25 @@ export default function AssetWorkspace({
                                          {/* Execution Constraints Checklist */}
                                          <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
                                              <div className={ANALYSIS_CARD_CLASS}>
-                                                 <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#E6DDCF] pb-2">Primary Trigger</span>
-                                                 <p className="text-xl text-[#151310] font-light leading-snug">{blueprintData.execution_constraints.primary_trigger}</p>
+                                                 <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Primary Trigger</span>
+                                                 <p className="text-xl font-medium tracking-tight text-[#151310] leading-snug">{blueprintData.execution_constraints.primary_trigger}</p>
                                              </div>
                                              <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-5 rounded-3xl shadow-sm">
-                                                 <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#E6DDCF] pb-2">Technical Specs</span>
+                                                 <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Technical Specs</span>
                                                  <ul className="space-y-4 text-sm text-[#151310]/80">
-                                                     <li className="flex flex-col gap-1"><span className="text-[#9B8662] uppercase text-[9px] font-bold tracking-[0.18em] opacity-60">Lighting Architecture</span> <span className="max-w-[62ch] text-sm leading-relaxed">{blueprintData.technical_specs.lighting_architecture}</span></li>
-                                                     <li className="flex flex-col gap-1"><span className="text-[#9B8662] uppercase text-[9px] font-bold tracking-[0.18em] opacity-60">Gaze Vector</span> <span className="max-w-[62ch] text-sm leading-relaxed">{blueprintData.technical_specs.gaze_vector}</span></li>
-                                                     <li className="flex flex-col gap-1"><span className="text-[#9B8662] uppercase text-[9px] font-bold tracking-[0.18em] opacity-60">Material Cues</span> <span className="text-sm leading-relaxed">{blueprintData.technical_specs.material_cues.join(' • ')}</span></li>
+                                                     <li className="flex flex-col gap-1"><span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Lighting Architecture</span> <span className="max-w-[62ch] text-sm leading-relaxed">{blueprintData.technical_specs.lighting_architecture}</span></li>
+                                                     <li className="flex flex-col gap-1"><span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Gaze Vector</span> <span className="max-w-[62ch] text-sm leading-relaxed">{blueprintData.technical_specs.gaze_vector}</span></li>
+                                                     <li className="flex flex-col gap-1"><span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Material Cues</span> <span className="text-sm leading-relaxed">{blueprintData.technical_specs.material_cues.join(' • ')}</span></li>
                                                  </ul>
                                              </div>
                                          </div>
 
                                         {/* Brutalist [+] / [-] constraints */}
                                         <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-5 rounded-3xl shadow-sm">
-                                            <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-6 border-b border-[#E6DDCF] pb-2">Strict Inclusion/Exclusion Constraints</span>
+                                            <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-6 border-b border-[#E6DDCF] pb-2">Strict Inclusion/Exclusion Constraints</span>
                                             <div className="grid grid-cols-1 gap-8 text-xs md:grid-cols-2">
                                                 <div className="space-y-4">
-                                                    <span className="block text-[8px] font-bold text-[#D4A574] mb-2 uppercase tracking-[0.2em]">[+] Positive Benchmarks</span>
+                                                    <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662] mb-2">[+] Positive Benchmarks</span>
                                                     {blueprintData.execution_constraints.must_include.map((item: string, i: number) => (
                                                         <div key={`inc-${i}`} className="flex items-start gap-3 bg-[#FFFCF7]/50 p-3 border border-[#D4A574]/10 rounded-xl">
                                                             <span className="text-emerald-400 font-bold">✓</span>
@@ -2595,7 +2595,7 @@ export default function AssetWorkspace({
                                                     ))}
                                                 </div>
                                                 <div className="space-y-4">
-                                                    <span className="block text-[8px] font-bold text-[#D4A574]/50 mb-2 uppercase tracking-[0.2em]">[-] Critical Exclusions</span>
+                                                    <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662]/50 mb-2">[-] Critical Exclusions</span>
                                                     {blueprintData.execution_constraints.must_not_include.map((item: string, i: number) => (
                                                         <div key={`exc-${i}`} className="flex items-start gap-3 bg-[#FFFCF7]/50 p-3 border border-[#D4A574]/10 rounded-xl opacity-60">
                                                             <span className="text-rose-400 font-bold">×</span>
@@ -2609,7 +2609,7 @@ export default function AssetWorkspace({
                                         {/* REMIXES AND VARIANTS */}
                                         {blueprintData.ad_copy_remixes && blueprintData.ad_copy_remixes.length > 0 && (
                                             <div>
-                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#E6DDCF] pb-2">Forensic Copy Remixes</span>
+                                                <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Forensic Copy Remixes</span>
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                     {blueprintData.ad_copy_remixes.map((remix: any, i: number) => (
                                                         <div key={i} className="bg-[#FFFCF7] border border-[#D4A574]/20 p-5 rounded-3xl shadow-sm relative group">
@@ -2625,12 +2625,12 @@ export default function AssetWorkspace({
 
                                         {blueprintData.visual_variant_prompts && blueprintData.visual_variant_prompts.length > 0 && (
                                             <div>
-                                                <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574] mb-4 border-b border-[#E6DDCF] pb-2">Visual Concept Variants</span>
+                                                <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Visual Concept Variants</span>
                                                 <div className="space-y-6">
                                                     {blueprintData.visual_variant_prompts.map((variant: any, i: number) => (
                                                         <div key={i} className="bg-[#FFFCF7] border border-[#D4A574]/20 p-5 rounded-3xl shadow-sm relative">
-                                                            <span className="block text-[10px] font-bold uppercase tracking-widest text-[#D4A574] mb-3">{variant.concept}</span>
-                                                            <pre className="p-4 bg-black/40 border border-[#D4A574]/10 text-[#151310]/80 text-xs font-mono leading-relaxed whitespace-pre-wrap rounded-2xl">
+                                                            <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662] mb-3">{variant.concept}</span>
+                                                            <pre className="p-4 bg-black/40 border border-[#D4A574]/10 text-[#151310]/80 text-[11px] font-mono leading-relaxed whitespace-pre-wrap rounded-2xl">
                                                                 {variant.prompt}
                                                             </pre>
                                                         </div>

@@ -200,7 +200,7 @@ export default function HeroAppPreview() {
                             {PREVIEW_STATES.map((state, index) => (
                                 <div
                                     key={state.id}
-                                    className={`relative z-10 rounded-full px-2 py-2 text-center text-[9px] font-bold uppercase tracking-[0.12em] transition-colors duration-300 sm:px-3 sm:text-[10px] sm:tracking-[0.18em] ${
+                                    className={`relative z-10 rounded-full px-2 py-2 text-center text-[10px] font-bold uppercase tracking-[0.2em] transition-colors duration-300 sm:px-3 sm:text-[10px] sm:tracking-[0.18em] ${
                                         index === displayIndex ? 'text-[#FBF7EF]' : 'text-[#766C5F]'
                                     }`}
                                 >
@@ -223,15 +223,15 @@ export default function HeroAppPreview() {
                                 <div className="rounded-[12px] border border-[#E6DDCF] bg-[#FFFCF7] p-3 sm:p-5">
                                     <div className="flex flex-col gap-3 border-b border-[#EEE5D8] pb-3 sm:pb-4 sm:flex-row sm:items-start sm:justify-between">
                                         <div>
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#9A886A]">{state.tone}</p>
-                                            <h3 className="mt-2 text-[20px] font-semibold leading-tight tracking-[-0.02em] text-[#151310] sm:text-[22px]">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9A886A]">{state.tone}</p>
+                                            <h3 className="mt-2 text-[22px] font-semibold leading-tight tracking-[-0.02em] text-[#151310] sm:text-[22px]">
                                                 {state.title}
                                             </h3>
-                                            <p className="mt-2 max-w-[34rem] text-[13px] leading-relaxed text-[#6A6257] sm:text-sm">
+                                            <p className="mt-2 max-w-[34rem] text-[14px] leading-relaxed text-[#6A6257] sm:text-sm">
                                                 {state.subtitle}
                                             </p>
                                         </div>
-                                        <div className="hidden rounded-full border border-[#E1D5C2] bg-[#F8F2E9] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#876F4C] sm:block">
+                                        <div className="hidden rounded-full border border-[#E1D5C2] bg-[#F8F2E9] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#876F4C] sm:block">
                                             Ready
                                         </div>
                                     </div>
@@ -249,9 +249,9 @@ export default function HeroAppPreview() {
                                                         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662]">
                                                             {row.label}
                                                         </p>
-                                                        <p className="mt-1 text-[12px] text-[#6D6459] sm:text-sm">{row.level}</p>
+                                                        <p className="mt-1 text-[14px] text-[#6D6459] sm:text-sm">{row.level}</p>
                                                     </div>
-                                                    <div className={`rounded-full px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.14em] sm:px-3 sm:text-[10px] sm:tracking-[0.16em] ${badgeClasses(row.value)}`}>
+                                                    <div className={`rounded-full px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] sm:px-3 sm:text-[10px] sm:tracking-[0.16em] ${badgeClasses(row.value)}`}>
                                                         {row.value}
                                                     </div>
                                                 </div>
@@ -267,7 +267,7 @@ export default function HeroAppPreview() {
                                                     {state.cardBody}
                                                 </p>
                                             </div>
-                                            <div className="rounded-[12px] border border-[#ECE2D4] bg-[#FBF7F1] px-3 py-2.5 text-[13px] text-[#6A6257] sm:px-4 sm:py-3 sm:text-sm">
+                                            <div className="rounded-[12px] border border-[#ECE2D4] bg-[#FBF7F1] px-3 py-2.5 text-[14px] text-[#6A6257] sm:px-4 sm:py-3 sm:text-sm">
                                                 {state.note}
                                             </div>
                                         </div>
