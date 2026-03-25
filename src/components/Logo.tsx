@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import logoMark from '../../Logo/Visual_Decompiler_Logo_400px.png';
 
 interface LogoProps {
     href?: string;
@@ -23,7 +22,7 @@ export default function Logo({
         <div className={`flex items-center gap-3 group ${className}`}>
             <div className="flex h-8 w-8 items-center justify-center transition-transform group-hover:scale-105">
                 <Image
-                    src={logoMark}
+                    src="/images/logo/visual-decompiler-logo-400px.png"
                     alt="Visual Decompiler logo mark"
                     width={32}
                     height={32}
