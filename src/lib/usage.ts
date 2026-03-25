@@ -1,6 +1,7 @@
 import { supabaseAdmin } from '@/lib/supabase';
+import { getTierEntitlements, normalizeAppTier, type AppTier } from '@/lib/plans';
 
-export type UsageTier = 'free' | 'pro' | 'agency';
+export type UsageTier = AppTier;
 
 export type UsageStatus = {
     tier: UsageTier;
@@ -12,26 +13,10 @@ export type UsageStatus = {
     reachedLimit: boolean;
 };
 
-const TIER_LIMITS: Record<UsageTier, number> = {
-    free: 5,
-    pro: 100,
-    agency: 500,
-};
-
 const BILLING_CYCLE_DAYS = 30;
 
 export function normalizeUsageTier(rawTier?: string | null): UsageTier {
-    const tier = (rawTier || '').toLowerCase().trim();
-
-    if (tier === 'agency' || tier === 'agency sovereignty') {
-        return 'agency';
-    }
-
-    if (tier === 'pro' || tier === 'strategic unit') {
-        return 'pro';
-    }
-
-    return 'free';
+    return normalizeAppTier(rawTier);
 }
 
 function addDays(date: Date, days: number) {
@@ -43,7 +28,7 @@ function addDays(date: Date, days: number) {
 function buildUsageStatus(user: { tier?: string | null; usage_count?: number | null; billing_cycle_reset?: string | null }): UsageStatus {
     const tier = normalizeUsageTier(user.tier);
     const usageCount = Math.max(0, user.usage_count || 0);
-    const limit = TIER_LIMITS[tier];
+    const limit = getTierEntitlements(tier).monthlyAnalysisLimit;
     const remaining = Math.max(0, limit - usageCount);
     const percentUsed = limit > 0 ? Math.min(100, Math.round((usageCount / limit) * 100)) : 0;
 

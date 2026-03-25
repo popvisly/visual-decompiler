@@ -92,7 +92,7 @@ export default function PricingPage() {
                         transition={{ duration: 0.75, ease: EASE, delay: 0.18 }}
                         className="mt-8 max-w-3xl border-l border-[#D8CCB5] pl-5 text-sm uppercase tracking-[0.14em] text-[#756D61] md:text-[13px]"
                     >
-                        Observer is free forever. Strategic Unit is for individual practitioners. Agency Sovereignty is infrastructure — priced for teams that bill it back to clients.
+                        Observer is free forever. Strategic Unit is for individual practitioners. Professional is for small teams. Agency Sovereignty is infrastructure — priced for teams that bill it back to clients.
                     </motion.p>
                 </div>
             </section>
@@ -115,7 +115,7 @@ export default function PricingPage() {
 
             <section className="px-6 py-14 md:py-16">
                 <div className="mx-auto max-w-7xl">
-                    <div className="grid gap-6 xl:grid-cols-3">
+                    <div className="grid gap-6 xl:grid-cols-4">
                         <motion.article
                             initial={{ opacity: 0, y: 22 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -156,11 +156,8 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.2 }}
                             transition={{ duration: 0.65, ease: EASE, delay: 0.08 }}
-                            className="relative rounded-[2rem] border border-[#D8CCB5] bg-[#F8F3EA] p-8 shadow-[0_24px_80px_rgba(20,20,20,0.08)]"
+                            className="rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] p-8"
                         >
-                            <div className="absolute right-6 top-6 rounded-full border border-[#D9C1A0] bg-[#FBFBF6] px-3 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-[#8A6840]">
-                                Most Popular
-                            </div>
                             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8A7B64]">{PRICING.strategic.name}</p>
                             <p className="mt-6 text-[56px] font-semibold leading-none tracking-[-0.05em] text-[#141414]">
                                 ${PRICING.strategic.monthlyPrice}
@@ -202,6 +199,52 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.2 }}
                             transition={{ duration: 0.65, ease: EASE, delay: 0.16 }}
+                            className="relative rounded-[2rem] border border-[#D8CCB5] bg-[#F8F3EA] p-8 shadow-[0_24px_80px_rgba(20,20,20,0.08)]"
+                        >
+                            <div className="absolute right-6 top-6 rounded-full border border-[#D9C1A0] bg-[#FBFBF6] px-3 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-[#8A6840]">
+                                Most Popular
+                            </div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8A7B64]">{PRICING.professional.name}</p>
+                            <p className="mt-6 text-[56px] font-semibold leading-none tracking-[-0.05em] text-[#141414]">
+                                ${PRICING.professional.monthlyPrice}
+                            </p>
+                            <p className="mt-1 text-[12px] font-bold uppercase tracking-[0.2em] text-[#8A7B64]">per month</p>
+                            <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#A27B43]">
+                                or {PRICING.professional.yearlyLabel} · {PRICING.professional.savingsLabel}
+                            </p>
+                            <p className="mt-6 text-xl font-medium leading-snug text-[#141414]">{PRICING.professional.tagline}</p>
+                            <p className="mt-4 text-base leading-relaxed text-[#5E5A53]">{PRICING.professional.subline}</p>
+
+                            <div className="mt-8 border-t border-[#E1D4C0] pt-6">
+                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#8A6840]">Everything in Strategic Unit, plus:</p>
+                                <ul className="mt-4 space-y-4">
+                                    {PRICING.professional.features.map((feature) => (
+                                        <CheckItem key={feature}>{feature}</CheckItem>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <p className="mt-8 border-t border-[#E1D4C0] pt-6 text-sm leading-relaxed text-[#756D61]">
+                                {PRICING.professional.whoItsFor}
+                            </p>
+
+                            <button
+                                onClick={() => handleCheckout(PRICING.professional.checkoutPriceId)}
+                                disabled={loading !== null}
+                                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[#141414] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black disabled:cursor-wait disabled:opacity-60"
+                            >
+                                {loading === PRICING.professional.checkoutPriceId ? 'Initializing…' : PRICING.professional.ctaLabel}
+                            </button>
+                            <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
+                                {PRICING.professional.trialLabel}
+                            </p>
+                        </motion.article>
+
+                        <motion.article
+                            initial={{ opacity: 0, y: 22 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.65, ease: EASE, delay: 0.24 }}
                             className="rounded-[2rem] border border-[#3C3428] bg-[#15130F] p-8 text-[#F4E9D9]"
                         >
                             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D7B07A]">{PRICING.agency.name}</p>
@@ -259,6 +302,7 @@ export default function PricingPage() {
                                     <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Feature</th>
                                     <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Observer</th>
                                     <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Strategic Unit</th>
+                                    <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Professional</th>
                                     <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Agency Sovereignty</th>
                                 </tr>
                             </thead>
@@ -269,6 +313,7 @@ export default function PricingPage() {
                                         <td className="px-6 py-4 text-sm text-[#5E5A53]">{row[1]}</td>
                                         <td className="px-6 py-4 text-sm text-[#3F3A33]">{row[2]}</td>
                                         <td className="px-6 py-4 text-sm text-[#3F3A33]">{row[3]}</td>
+                                        <td className="px-6 py-4 text-sm text-[#3F3A33]">{row[4]}</td>
                                     </tr>
                                 ))}
                             </tbody>

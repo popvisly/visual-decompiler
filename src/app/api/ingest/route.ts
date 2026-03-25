@@ -3,6 +3,7 @@ import { getServerSession } from '@/lib/auth-server';
 import { decompileAd, VisionInput } from '@/lib/vision';
 import { AdDigestSchema } from '@/types/digest';
 import { supabaseAdmin } from '@/lib/supabase';
+import { getTierEntitlements } from '@/lib/plans';
 
 async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: string; type: 'image' | null; contentType?: string | null; sizeMB?: number; finalUrl?: string }> {
     if (!/^https?:\/\//i.test(mediaUrl)) {
@@ -161,7 +162,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Failed to verify account status' }, { status: 500 });
         }
 
-        const tierLimit = user.tier === 'pro' ? 100 : 5;
+        const tierLimit = getTierEntitlements(user.tier).monthlyAnalysisLimit;
         if (user.usage_count >= tierLimit) {
             return NextResponse.json({
                 error: 'LIMIT_REACHED',

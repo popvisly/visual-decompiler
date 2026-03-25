@@ -373,21 +373,21 @@ export default function SettingsClient() {
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-4">
                                         <h4 className="text-4xl font-light text-[#141414] tracking-tightest uppercase">
-                                            {settings.tier === 'pro' ? 'Agency Sovereignty' : 'The Observer'}
+                                            {settings.tier === 'agency' ? 'Agency Sovereignty' : settings.tier === 'professional' ? 'Professional' : settings.tier === 'pro' ? 'Strategic Unit' : 'The Observer'}
                                         </h4>
-                                        <span className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border ${settings.tier === 'pro' ? 'bg-accent/10 border-accent/20 text-accent' : 'bg-[#E7DED1]/20 border-[#E7DED1]/40 text-[#6B6B6B]'}`}>
-                                            {settings.tier === 'pro' ? 'Premium active' : 'Standard'}
+                                        <span className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border ${settings.tier !== 'free' ? 'bg-accent/10 border-accent/20 text-accent' : 'bg-[#E7DED1]/20 border-[#E7DED1]/40 text-[#6B6B6B]'}`}>
+                                            {settings.tier !== 'free' ? 'Premium active' : 'Standard'}
                                         </span>
                                     </div>
                                     <p className="text-[12px] text-[#6B6B6B] leading-relaxed max-w-md">
-                                        {settings.tier === 'pro'
+                                        {settings.tier !== 'free'
                                             ? "Full-spectrum deconstruction active. You have executive command over all forensic modules."
-                                            : "Basic observer access. Upgrade to Agency Sovereignty to unlock unlimited deconstructions and white-label portals."}
+                                            : "Basic observer access. Upgrade to unlock unlimited deconstructions and premium capabilities."}
                                     </p>
                                 </div>
 
                                 <div className="flex gap-4">
-                                    {settings.tier === 'pro' ? (
+                                    {settings.tier !== 'free' ? (
                                         <button
                                             onClick={handleManageBilling}
                                             className="px-10 py-5 bg-[#141414] hover:bg-black text-[#FBF7EF] font-bold text-[11px] uppercase tracking-widest rounded-full shadow-2xl transition-all active:scale-95 flex items-center gap-3"
@@ -407,7 +407,7 @@ export default function SettingsClient() {
                                 </div>
                             </div>
 
-                            {settings.tier === 'pro' && (
+                            {settings.tier !== 'free' && (
                                 <div className="mt-12 pt-8 border-t border-[#E7DED1]/50 grid grid-cols-1 sm:grid-cols-3 gap-8">
                                     <div className="space-y-1">
                                         <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-widest opacity-50">Billing Identity</p>
@@ -415,7 +415,7 @@ export default function SettingsClient() {
                                     </div>
                                     <div className="space-y-1">
                                         <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-widest opacity-50">Seat Utilization</p>
-                                        <p className="text-[11px] font-bold text-[#141414]">Unlimited / Unlimited</p>
+                                        <p className="text-[11px] font-bold text-[#141414]">Active</p>
                                     </div>
                                     <div className="space-y-1">
                                         <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-widest opacity-50">Laboratory Status</p>

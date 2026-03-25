@@ -37,3 +37,6 @@ dev_pid.txt
 !STRIPE_SETUP_GUIDE.md
 !COST_OPTIMIZATION_GUIDE.md
 !GUARDRAILS.md
+
+# Editor Config
+.vscode/

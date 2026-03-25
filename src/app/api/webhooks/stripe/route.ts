@@ -6,9 +6,12 @@ import Stripe from 'stripe';
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 // Map Price IDs to tiers (from environment variables)
-function getTierFromPriceId(priceId: string): 'free' | 'pro' | 'agency' {
+function getTierFromPriceId(priceId: string): 'free' | 'pro' | 'professional' | 'agency' {
     // Pro tier: $49/mo subscription
     if (priceId === process.env.STRIPE_PRICE_PRO_MONTHLY) return 'pro';
+
+    // Professional tier: $249/mo subscription
+    if (priceId === process.env.STRIPE_PRICE_PROFESSIONAL_MONTHLY) return 'professional';
 
     // Agency tier: $199/mo subscription
     if (priceId === process.env.STRIPE_PRICE_AGENCY_MONTHLY) return 'agency';
@@ -78,7 +81,7 @@ export async function POST(req: Request) {
                 const priceId = subscription.items.data[0]?.price.id;
 
                 // Only update if subscription is active
-                let tier: 'free' | 'pro' | 'agency' = 'free';
+                let tier: 'free' | 'pro' | 'professional' | 'agency' = 'free';
                 if (status === 'active' || status === 'trialing') {
                     tier = priceId ? getTierFromPriceId(priceId) : 'pro';
                 }

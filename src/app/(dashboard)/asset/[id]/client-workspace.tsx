@@ -38,6 +38,8 @@ interface MarketPulseData {
     status: 'success' | 'error';
     scope: string;
     assetCount: number;
+    computed_at?: string;
+    cached?: boolean;
     dominant_mechanics: {
         mechanic: string;
         count: number;
@@ -138,6 +140,22 @@ type DossierTab = 'INTELLIGENCE' | 'SIGNALS' | 'PSYCHOLOGY' | 'BLUEPRINT' | 'MAR
 
 const FULL_DOSSIER_TABS: readonly DossierTab[] = ['INTELLIGENCE', 'SIGNALS', 'PSYCHOLOGY', 'BLUEPRINT', 'MARKET PULSE'] as const;
 const SAMPLE_DOSSIER_TABS: readonly DossierTab[] = ['INTELLIGENCE', 'SIGNALS', 'PSYCHOLOGY', 'BLUEPRINT'] as const;
+
+function formatMarketPulseDate(value?: string) {
+    if (!value) return 'Just now';
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+        return 'Just now';
+    }
+
+    return new Intl.DateTimeFormat('en-AU', {
+        day: '2-digit',
+        month: 'short',
+        hour: 'numeric',
+        minute: '2-digit',
+    }).format(date);
+}
 
 interface BlueprintData {
     blueprint_id?: string;
@@ -770,6 +788,7 @@ export default function AssetWorkspace({
     const cloneIntroSource = cloneData?.extracted_mechanism || extraction?.primary_mechanic || 'Creative DNA Extraction';
     const cloneIntroBody = cloneData?.deployment_principle || 'Generate five original campaign concepts that preserve the persuasion architecture while shifting the aesthetic, scene, and execution language.';
     const { lead: cloneIntroLead, remainder: cloneIntroRemainder } = splitLeadSentence(cloneIntroSource);
+    const marketPulseBelowThreshold = (marketPulseData?.assetCount ?? 0) > 0 && (marketPulseData?.assetCount ?? 0) < 20;
     const dossierTabs = sampleMode ? SAMPLE_DOSSIER_TABS : FULL_DOSSIER_TABS;
     
     // Parse visual style string if it's stringified JSON
@@ -1096,10 +1115,6 @@ export default function AssetWorkspace({
 
     // Print/PDF export: force a dedicated print layout + suppress browser header title text
     const handleExportDossier = () => {
-        // DOM inspection (requested): verify what we actually have at print time
-        // eslint-disable-next-line no-console
-        console.log('[PDF EXPORT] full_dossier:', extraction?.full_dossier);
-
         const originalTitle = document.title;
         document.body.classList.add('printing');
 
@@ -1744,6 +1759,35 @@ export default function AssetWorkspace({
                                 </p>
 
                                 <div className="mt-6 space-y-2">
+                                    <label className="block text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Export preset</label>
+                                    <div className="inline-flex rounded-full border border-[#D4A574]/20 bg-black/20 p-1">
+                                        <button
+                                            type="button"
+                                            onClick={() => setExportPreset('standard')}
+                                            className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] transition ${
+                                                exportPreset === 'standard' ? 'bg-[#D4A574] text-[#141414]' : 'text-[#D4A574] hover:bg-[#D4A574]/10'
+                                            }`}
+                                        >
+                                            Standard Dossier
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setExportPreset('pitch')}
+                                            className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] transition ${
+                                                exportPreset === 'pitch' ? 'bg-[#D4A574] text-[#141414]' : 'text-[#D4A574] hover:bg-[#D4A574]/10'
+                                            }`}
+                                        >
+                                            Pitch Narrative
+                                        </button>
+                                    </div>
+                                    {exportPreset === 'pitch' && (
+                                        <div className="rounded-2xl border border-[#D4A574]/15 bg-black/20 p-4 text-sm leading-relaxed text-[#FFFFFF]/65">
+                                            Concise client-facing structure: Problem, Insight, Recommendation, and a Strategic Delta fallback if no comparison is attached yet.
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="mt-6 space-y-2">
                                     <label className="block text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Client Name</label>
                                     <input
                                         type="text"
@@ -2076,18 +2120,24 @@ export default function AssetWorkspace({
                                     <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] px-8 py-16 text-center">
                                         <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Synthesising Market Pulse</p>
                                         <p className="mt-4 text-sm leading-relaxed text-[#FFFFFF]/65">
-                                            Aggregating category mechanics, chromatic saturation, and persuasion benchmarks from the Intelligence Vault.
+                                            Aggregating live category mechanics, trigger pressure, and chromatic territory from the Intelligence Vault.
+                                        </p>
+                                        <p className="mt-6 text-[11px] uppercase tracking-[0.18em] text-[#FFFFFF]/40">
+                                            Building the current market benchmark for {asset.brand?.market_sector || 'your active market'}.
                                         </p>
                                     </div>
                                 ) : marketPulseError ? (
                                     <div className="rounded-3xl border border-[#8B4513]/20 bg-[#1A1A1A] px-8 py-12">
                                         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Market Pulse Interrupted</p>
-                                        <p className="mt-4 text-sm leading-relaxed text-[#FFFFFF]/70">{marketPulseError}</p>
+                                        <p className="mt-4 text-sm leading-relaxed text-[#FFFFFF]/70">
+                                            The benchmark layer could not be refreshed for this asset right now.
+                                        </p>
+                                        <p className="mt-3 text-sm leading-relaxed text-[#FFFFFF]/55">{marketPulseError}</p>
                                         <button
                                             onClick={() => void handleRefreshMarketPulse()}
                                             className="mt-6 rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414]"
                                         >
-                                            Retry Pulse
+                                            Recompute Pulse
                                         </button>
                                     </div>
                                 ) : marketPulseData ? (
@@ -2101,6 +2151,9 @@ export default function AssetWorkspace({
                                                 <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#FFFFFF]/65">
                                                     Vault-wide aggregation of persuasion mechanics, category trigger mix, and chromatic territory for {asset.brand?.market_sector || 'your active market'}.
                                                 </p>
+                                                <p className="mt-5 text-[10px] uppercase tracking-[0.18em] text-[#FFFFFF]/45">
+                                                    Last updated {formatMarketPulseDate(marketPulseData.computed_at)}{marketPulseData.cached ? ' · cached 24h layer' : ' · live recompute'}
+                                                </p>
                                             </div>
                                             <button
                                                 onClick={() => void handleRefreshMarketPulse()}
@@ -2110,6 +2163,18 @@ export default function AssetWorkspace({
                                                 {isLoadingMarketPulse ? 'Refreshing...' : 'Refresh Pulse'}
                                             </button>
                                         </div>
+
+                                        {marketPulseBelowThreshold && (
+                                            <div className="rounded-3xl border border-[#D4A574]/18 bg-[#1A1A1A] p-6">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Early Signal Read</p>
+                                                <p className="mt-3 text-sm leading-relaxed text-[#FFFFFF]/68">
+                                                    This market benchmark is directional rather than conclusive until the vault reaches 20 forensic extractions in the active category.
+                                                </p>
+                                                <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[#FFFFFF]/50">
+                                                    {marketPulseData.assetCount} of 20 assets sampled
+                                                </p>
+                                            </div>
+                                        )}
 
                                         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                                             <div className="rounded-3xl border border-[#D4A574]/20 bg-[#1A1A1A] p-6">
@@ -2192,9 +2257,12 @@ export default function AssetWorkspace({
                                     </div>
                                 ) : (
                                     <div className="rounded-3xl border border-dashed border-[#D4A574]/20 bg-[#1A1A1A] px-8 py-14 text-center">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Market Pulse Ready</p>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Market Pulse Standing By</p>
                                         <p className="mt-4 text-sm leading-relaxed text-[#FFFFFF]/65">
-                                            Refresh this tab to aggregate the current category benchmark from the Intelligence Vault.
+                                            Refresh this tab to assemble a live benchmark from the current vault, then compare this asset against the active category signal field.
+                                        </p>
+                                        <p className="mt-6 text-[11px] uppercase tracking-[0.18em] text-[#FFFFFF]/40">
+                                            Best used once the vault has multiple processed assets in the same category.
                                         </p>
                                     </div>
                                 )}

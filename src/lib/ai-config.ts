@@ -1,4 +1,4 @@
-export type ClaudeTier = 'free' | 'pro' | 'agency';
+export type ClaudeTier = 'free' | 'pro' | 'professional' | 'agency';
 
 export const CLAUDE_MODELS = {
     HAIKU: 'claude-haiku-4-5-20251001',
