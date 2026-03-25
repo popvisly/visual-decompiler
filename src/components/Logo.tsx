@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
+import logoMark from '../../Logo/Visual_Decompiler_Logo_400px.png';
 
 interface LogoProps {
     href?: string;
@@ -19,8 +21,15 @@ export default function Logo({
 }: LogoProps) {
     const content = (
         <div className={`flex items-center gap-3 group ${className}`}>
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm group-hover:scale-105 transition-transform shadow-sm ${forceDark ? 'bg-white text-[#141414]' : 'bg-[#141414] text-[#FBF7EF]'}`}>
-                V
+            <div className="flex h-8 w-8 items-center justify-center transition-transform group-hover:scale-105">
+                <Image
+                    src={logoMark}
+                    alt="Visual Decompiler logo mark"
+                    width={32}
+                    height={32}
+                    className="h-8 w-8 object-contain"
+                    priority
+                />
             </div>
             <div className="leading-none text-left">
                 <h1 className="text-[13px] font-bold tracking-[-0.01em] uppercase text-[#B8A47E] transition-colors">
