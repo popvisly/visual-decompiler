@@ -1750,17 +1750,17 @@ export default function AssetWorkspace({
                     </aside>
 
                     {showExportModal && (
-                        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/55 px-6 backdrop-blur-sm no-print">
-                            <div className="w-full max-w-xl rounded-[2rem] border border-[#D4A574]/20 bg-[#141414] p-8 text-[#151310] shadow-2xl">
+                        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/40 px-6 backdrop-blur-md no-print">
+                            <div className="w-full max-w-xl rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 text-[#151310] shadow-[0_32px_80px_rgba(0,0,0,0.12)]">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Export Strategic Dossier</p>
                                 <h3 className="mt-4 text-2xl font-light uppercase tracking-tight">Print-safe agency dossier</h3>
                                 <p className="mt-4 text-sm leading-relaxed text-[#151310]/65">
                                     For best results use Chrome, choose Save as PDF, set paper size to A4, and disable browser headers and footers.
                                 </p>
 
-                                <div className="mt-6 space-y-2">
-                                    <label className="block text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Export preset</label>
-                                    <div className="inline-flex rounded-full border border-[#D4A574]/20 bg-black/20 p-1">
+                                <div className="mt-8 space-y-3">
+                                    <label className="block text-[11px] font-bold uppercase tracking-[0.24em] text-[#9B8662]">Export preset</label>
+                                    <div className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBF7F1] p-1.5 shadow-inner">
                                         <button
                                             type="button"
                                             onClick={() => setExportPreset('standard')}
@@ -1781,24 +1781,23 @@ export default function AssetWorkspace({
                                         </button>
                                     </div>
                                     {exportPreset === 'pitch' && (
-                                        <div className="rounded-2xl border border-[#E6DDCF] bg-black/20 p-4 text-sm leading-relaxed text-[#151310]/65">
+                                        <div className="rounded-2xl border border-[#E6DDCF] bg-[#FBF7F1]/60 p-4 text-sm leading-relaxed text-[#151310]/65">
                                             Concise client-facing structure: Problem, Insight, Recommendation, and a Strategic Delta fallback if no comparison is attached yet.
                                         </div>
                                     )}
-                                </div>
 
                                 <div className="mt-6 space-y-2">
-                                    <label className="block text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Client Name</label>
+                                    <label className="block text-[10px] font-bold uppercase tracking-[0.24em] text-[#9B8662]">Client Name</label>
                                     <input
                                         type="text"
                                         value={exportClientName}
                                         onChange={(event) => setExportClientName(event.target.value)}
                                         placeholder="Optional cover-page client name"
-                                        className="w-full rounded-full border border-[#D4A574]/20 bg-black/30 px-5 py-3 text-sm text-[#151310] outline-none transition-colors focus:border-[#D4A574]"
+                                        className="w-full rounded-full border border-[#E6DDCF] bg-[#FBF7F1] px-5 py-3 text-sm text-[#151310] outline-none transition-all focus:border-[#D4A574] focus:ring-1 focus:ring-[#D4A574]/20"
                                     />
                                 </div>
 
-                                <div className="mt-6 rounded-2xl border border-[#E6DDCF] bg-black/20 p-4 text-sm leading-relaxed text-[#151310]/65">
+                                <div className="mt-6 rounded-2xl border border-[#E6DDCF] bg-[#FBF7F1]/60 p-5 text-[13px] leading-relaxed text-[#151310]/70">
                                     {isWhitelabel
                                         ? `Agency branding active — ${dossierAgencyName}`
                                         : 'Visual Decompiler branding active for this export.'}
@@ -1807,13 +1806,13 @@ export default function AssetWorkspace({
                                 <div className="mt-8 flex flex-col gap-3 md:flex-row md:justify-end">
                                     <button
                                         onClick={() => setShowExportModal(false)}
-                                        className="rounded-full border border-[#D4A574]/20 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574] transition-colors hover:bg-[#D4A574]/10"
+                                        className="rounded-full border border-[#D4A574]/30 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#9B8662] transition-all hover:bg-[#D4A574] hover:text-white"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         onClick={handleInitiateExport}
-                                        className="rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition-colors hover:bg-[#c8955b]"
+                                        className="rounded-full bg-[#D4A574] px-8 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-white shadow-sm transition-all hover:bg-[#8B4513]"
                                     >
                                         Initiate Export
                                     </button>
@@ -2141,113 +2140,141 @@ export default function AssetWorkspace({
                                         </button>
                                     </div>
                                 ) : marketPulseData ? (
-                                    <div className="space-y-8">
-                                        <div className="flex flex-col gap-6 rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-8 text-[#151310] md:flex-row md:items-end md:justify-between">
-                                            <div>
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Market Pulse</p>
-                                                <h3 className="mt-3 text-3xl font-light tracking-tight text-[#151310]">
+                                    <div className="space-y-12">
+                                        {/* Market Pulse Header Logic */}
+                                        <div className="flex flex-col gap-6 rounded-[2rem] border border-[#E6DDCF] bg-[#FBF7F1]/40 p-10 md:flex-row md:items-center md:justify-between">
+                                            <div className="max-w-2xl">
+                                                <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662] mb-3">Market Signal Field</p>
+                                                <h3 className="text-3xl font-medium tracking-tight text-[#151310]">
                                                     {marketPulseData.scope}
                                                 </h3>
-                                                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#151310]/65">
-                                                    Vault-wide aggregation of persuasion mechanics, category trigger mix, and chromatic territory for {asset.brand?.market_sector || 'your active market'}.
+                                                <p className="mt-4 text-sm leading-relaxed text-[#151310]/65">
+                                                    Vault-wide aggregation of persuasion mechanics and category trigger pressure for {asset.brand?.market_sector || 'your active market'}.
                                                 </p>
-                                                <p className="mt-5 text-[10px] uppercase tracking-[0.18em] text-[#151310]/45">
-                                                    Last updated {formatMarketPulseDate(marketPulseData.computed_at)}{marketPulseData.cached ? ' · cached 24h layer' : ' · live recompute'}
-                                                </p>
+                                                <div className="mt-6 flex items-center gap-4">
+                                                    <div className="flex -space-x-2">
+                                                        {[1,2,3].map(i => (
+                                                            <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-[#D4A574]/20" />
+                                                        ))}
+                                                    </div>
+                                                    <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">
+                                                        {marketPulseData.assetCount} Assets Sampled · {formatMarketPulseDate(marketPulseData.computed_at)}
+                                                    </span>
+                                                </div>
                                             </div>
                                             <button
                                                 onClick={() => void handleRefreshMarketPulse()}
                                                 disabled={isLoadingMarketPulse}
-                                                className="rounded-full border border-[#D4A574]/25 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574] transition-colors hover:bg-[#D4A574]/10 disabled:opacity-50"
+                                                className="rounded-full border border-[#D4A574]/30 bg-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-[#9B8662] shadow-sm hover:bg-[#D4A574] hover:text-white transition-all disabled:opacity-50"
                                             >
-                                                {isLoadingMarketPulse ? 'Refreshing...' : 'Refresh Pulse'}
+                                                {isLoadingMarketPulse ? 'Syncing...' : 'Refresh Pulse'}
                                             </button>
                                         </div>
 
                                         {marketPulseBelowThreshold && (
-                                            <div className="rounded-3xl border border-[#D4A574]/18 bg-[#FFFCF7] p-6">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Early Signal Read</p>
-                                                <p className="mt-3 text-sm leading-relaxed text-[#151310]/68">
-                                                    This market benchmark is directional rather than conclusive until the vault reaches 20 forensic extractions in the active category.
-                                                </p>
-                                                <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[#151310]/50">
-                                                    {marketPulseData.assetCount} of 20 assets sampled
-                                                </p>
+                                            <div className="rounded-[1.5rem] border border-[#D4A574]/20 bg-[#D4A574]/5 p-6 flex items-start gap-4">
+                                                <div className="p-2 rounded-full bg-white border border-[#D4A574]/20">
+                                                    <Sparkles className="h-4 w-4 text-[#9B8662]" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#9B8662]">Early Signal Read</p>
+                                                    <p className="mt-1 text-[13px] leading-relaxed text-[#6A6257]">
+                                                        Benchmark is directional until vault reaches 20 forensic extractions. Currently at {marketPulseData.assetCount}/20.
+                                                    </p>
+                                                </div>
                                             </div>
                                         )}
 
+                                        {/* Key Stats Grid */}
                                         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                                            <div className="rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-6">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Assets sampled</p>
-                                                <p className="mt-4 text-4xl font-light text-[#151310]">{marketPulseData.assetCount}</p>
+                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/70">Vault Density</p>
+                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseData.assetCount}</p>
+                                                <p className="mt-2 text-[10px] uppercase font-bold tracking-widest text-[#9B8662]/40">Processed Assets</p>
                                             </div>
-                                            <div className="rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-6">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Avg persuasion density</p>
-                                                <p className="mt-4 text-4xl font-light text-[#151310]">{marketPulseData.category_persuasion_benchmark.avg_density}%</p>
+                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/70">Category Mean</p>
+                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseData.category_persuasion_benchmark.avg_density}%</p>
+                                                <p className="mt-2 text-[10px] uppercase font-bold tracking-widest text-[#9B8662]/40">Persuasion Density</p>
                                             </div>
-                                            <div className="rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-6">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Avg cognitive friction</p>
-                                                <p className="mt-4 text-4xl font-light text-[#151310]">{marketPulseData.category_persuasion_benchmark.avg_friction}%</p>
-                                                <p className="mt-3 text-[11px] uppercase tracking-[0.14em] text-[#151310]/45">{marketPulseData.category_persuasion_benchmark.your_rank}</p>
+                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/70">Market Status</p>
+                                                <p className="mt-4 text-3xl font-medium tracking-tight text-[#151310]">{marketPulseData.category_persuasion_benchmark.your_rank}</p>
+                                                <p className="mt-3 text-[10px] uppercase font-bold tracking-widest text-[#9B8662]/40">Rank Logic</p>
                                             </div>
                                         </div>
 
-                                        <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-                                            <div className="rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-6">
-                                                <h3 className="border-b border-[#E6DDCF] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
-                                                    Dominant Mechanics
-                                                </h3>
-                                                <div className="mt-5 space-y-4">
+                                        <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
+                                            {/* Dominant Mechanics */}
+                                            <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm">
+                                                <div className="flex items-center gap-4 mb-8">
+                                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Dominant Mechanics</span>
+                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
+                                                </div>
+                                                <div className="space-y-6">
                                                     {marketPulseData.dominant_mechanics.map((item) => (
-                                                        <div key={item.mechanic} className="rounded-2xl border border-white/6 bg-black/20 p-4">
-                                                            <div className="flex items-center justify-between gap-4">
-                                                                <p className="text-sm font-medium uppercase tracking-[0.08em] text-[#151310]">{item.mechanic}</p>
-                                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{item.share}% share</span>
+                                                        <div key={item.mechanic} className="group">
+                                                            <div className="flex items-center justify-between mb-3">
+                                                                <p className="text-[13px] font-bold uppercase tracking-[0.1em] text-[#151310]">{item.mechanic}</p>
+                                                                <span className="text-[11px] font-mono font-bold text-[#9B8662]">{item.share}%</span>
                                                             </div>
-                                                            <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/5">
-                                                                <div className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574]" style={{ width: `${item.share}%` }} />
+                                                            <div className="h-2 w-full rounded-full bg-[#FBF7F1] overflow-hidden border border-[#E6DDCF]/40 shadow-inner">
+                                                                <div
+                                                                    className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-1000"
+                                                                    style={{ width: `${item.share}%` }}
+                                                                />
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
                                             </div>
 
-                                            <div className="rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-6">
-                                                <h3 className="border-b border-[#E6DDCF] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
-                                                    Trigger Profile
-                                                </h3>
-                                                <div className="mt-4">
+                                            {/* Trigger Profile */}
+                                            <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm">
+                                                <div className="flex items-center gap-4 mb-8">
+                                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Trigger Profile</span>
+                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
+                                                </div>
+                                                <div className="h-[300px] flex items-center justify-center -mt-4">
                                                     <RadarChart data={marketPulseData.category_trigger_profile} forceLight={true} />
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-                                            <div className="rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-6">
-                                                <h3 className="border-b border-[#E6DDCF] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
-                                                    Opportunity Gaps
-                                                </h3>
-                                                <div className="mt-5 grid gap-4">
+                                        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[1.1fr_0.9fr] items-start">
+                                            {/* Opportunity Gaps */}
+                                            <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm">
+                                                <div className="flex items-center gap-4 mb-8">
+                                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Opportunity Gaps</span>
+                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
+                                                </div>
+                                                <div className="grid gap-6">
                                                     {marketPulseData.opportunity_gaps.map((gap, index) => (
-                                                        <div key={`${gap}-${index}`} className="rounded-2xl border border-white/6 bg-black/20 p-4">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Whitespace {(index + 1).toString().padStart(2, '0')}</p>
-                                                            <p className="mt-3 text-sm leading-relaxed text-[#151310]/72">{gap}</p>
+                                                        <div key={`${gap}-${index}`} className="relative pl-6">
+                                                            <div className="absolute left-0 top-1.5 h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
+                                                            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#9B8662]/40">Whitespace {(index + 1).toString().padStart(2, '0')}</span>
+                                                            <p className="mt-2 text-[15px] leading-relaxed text-[#151310] font-medium">{gap}</p>
                                                         </div>
                                                     ))}
                                                 </div>
                                             </div>
 
-                                            <div className="rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-6">
-                                                <h3 className="border-b border-[#E6DDCF] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
-                                                    Chromatic Saturation
-                                                </h3>
-                                                <div className="mt-5 grid grid-cols-2 gap-4">
+                                            {/* Chromatic Saturation */}
+                                            <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm">
+                                                <div className="flex items-center gap-4 mb-8">
+                                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Chromatic Saturation</span>
+                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-6">
                                                     {marketPulseData.chromatic_saturation.map((color) => (
-                                                        <div key={color.hex} className="rounded-2xl border border-white/6 bg-black/20 p-4">
-                                                            <div className="h-16 rounded-xl border border-white/10" style={{ backgroundColor: color.hex }} />
-                                                            <div className="mt-3 flex items-center justify-between gap-3">
-                                                                <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#151310]">{color.hex}</span>
-                                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{color.count}</span>
+                                                        <div key={color.hex} className="group">
+                                                            <div className="h-16 rounded-xl border border-[#E6DDCF] shadow-sm transition-transform group-hover:scale-[1.05]" style={{ backgroundColor: color.hex }} />
+                                                            <div className="mt-4 flex items-center justify-between">
+                                                                <span className="text-[11px] font-bold font-mono text-[#151310]">{color.hex}</span>
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className="text-xs font-bold text-[#9B8662]">{color.count}</span>
+                                                                    <span className="text-[8px] font-bold text-[#9B8662]/40 uppercase tracking-widest">hits</span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -2331,12 +2358,12 @@ export default function AssetWorkspace({
                                                     <span className="text-[11px] font-mono text-[#D4A574]/60 uppercase tracking-widest">Conversion Density</span>
                                                     <span className="text-[32px] font-bold text-[#D4A574] leading-none">{((extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density as number)}%</span>
                                                 </div>
-                                                <div className="w-full bg-white/5 h-2 border border-[#D4A574]/10 rounded-full overflow-hidden">
-                                                    <div
-                                                        className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full transition-all duration-1000"
-                                                        style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density}%` }}
-                                                    />
-                                                </div>
+                                                <div className="w-full bg-[#FBF7F1] h-2.5 border border-[#E6DDCF]/60 rounded-full overflow-hidden shadow-inner">
+                                                     <div
+                                                         className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full transition-all duration-1000"
+                                                         style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density}%` }}
+                                                     />
+                                                 </div>
                                             </div>
                                             <p className="text-[12px] text-[#6A6257] leading-relaxed mt-4 pt-4 border-t border-[#D4A574]/10">
                                                 Measures the creative's informational compression—how efficiently it transfers brand signal into consumer memory structures.
@@ -2355,12 +2382,12 @@ export default function AssetWorkspace({
                                                     <span className="text-[11px] font-mono text-[#8B4513]/80 uppercase tracking-widest">Resistance Index</span>
                                                     <span className="text-[32px] font-bold text-[#8B4513] leading-none">{((extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction as number)}%</span>
                                                 </div>
-                                                <div className="w-full bg-white/5 h-2 border border-[#D4A574]/10 rounded-full overflow-hidden">
-                                                    <div
-                                                        className="h-full bg-[#8B4513]/40 rounded-full transition-all duration-1000"
-                                                        style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction}%` }}
-                                                    />
-                                                </div>
+                                                <div className="w-full bg-[#FBF7F1] h-2.5 border border-[#E6DDCF]/60 rounded-full overflow-hidden shadow-inner">
+                                                     <div
+                                                         className="h-full bg-[#8B4513]/60 rounded-full transition-all duration-1000"
+                                                         style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction}%` }}
+                                                     />
+                                                 </div>
                                             </div>
                                             <p className="text-[12px] text-[#6A6257] leading-relaxed mt-4 pt-4 border-t border-[#D4A574]/10">
                                                 Quantifies neural resistance to message adoption. Low scores indicate frictionless persuasion pathways.
@@ -2428,22 +2455,22 @@ export default function AssetWorkspace({
                                             </div>
                                         )}
                                         {isGeneratingBlueprint && (
-                                            <div className="mb-8 w-full max-w-md rounded-[1.75rem] border border-[#E6DDCF] bg-black/20 px-5 py-5">
-                                                <div className="flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">
-                                                    <span>{BLUEPRINT_STEPS[blueprintStep]}</span>
-                                                    <span>{blueprintProgress}%</span>
-                                                </div>
-                                                <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#2A2722]">
-                                                    <div
-                                                        className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-700"
-                                                        style={{ width: `${blueprintProgress}%` }}
-                                                    />
-                                                </div>
-                                                <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#151310]/45">
-                                                    Building execution constraints, variant prompts, and copy remixes from the live forensic dossier.
-                                                </p>
-                                            </div>
-                                        )}
+                                             <div className="mb-8 w-full max-w-md rounded-[1.75rem] border border-[#E6DDCF] bg-[#FBF7F1]/50 px-6 py-6 shadow-sm">
+                                                 <div className="flex items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[#9B8662]">
+                                                     <span>{BLUEPRINT_STEPS[blueprintStep]}</span>
+                                                     <span className="font-mono text-[13px]">{blueprintProgress}%</span>
+                                                 </div>
+                                                 <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-white border border-[#E6DDCF]/60 shadow-inner">
+                                                     <div
+                                                         className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-700"
+                                                         style={{ width: `${blueprintProgress}%` }}
+                                                     />
+                                                 </div>
+                                                 <p className="mt-5 text-[10px] uppercase font-bold tracking-[0.16em] text-[#9B8662]/60">
+                                                     Synthesizing live forensic dossier into elite production constraints.
+                                                 </p>
+                                             </div>
+                                         )}
                                         <button
                                             onClick={handleGenerateBlueprint}
                                             disabled={isGeneratingBlueprint || !extraction}
@@ -2895,7 +2922,6 @@ export default function AssetWorkspace({
                 </div>
             </div>
             )}
-        </div>
     </>
 );
 }
