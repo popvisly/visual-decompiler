@@ -68,7 +68,7 @@ const CLUSTERS: Cluster[] = [
         name: 'Persuasion',
         color: '#F4A700',
         centerX: 0.5,
-        centerY: 0.5,
+        centerY: 0.85,
         radius: 0.18,
         info: 'Composite influence architecture & decision triggers',
     },
@@ -119,42 +119,13 @@ const PERSONAS: Persona[] = [
     },
 ];
 
-function isInCenterZone(x: number, y: number, width: number, height: number) {
-    const centerX = width / 2;
-    const centerY = height / 2;
-    const exclusionWidth = width * 0.4;
-    const exclusionHeight = height * 0.3;
-
-    return Math.abs(x - centerX) < exclusionWidth / 2 && Math.abs(y - centerY) < exclusionHeight / 2;
-}
-
-function createLabel(clusterIndex: number, width: number, height: number): LabelState {
-    return {
-        clusterIndex,
-        x: CLUSTERS[clusterIndex].centerX * width,
-        y: CLUSTERS[clusterIndex].centerY * height,
-    };
-}
-
 export default function AnalyticalHero() {
     const sectionRef = useRef<HTMLElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [personaIndex, setPersonaIndex] = useState(0);
     const [personaVisible, setPersonaVisible] = useState(true);
-    const [activeLabel, setActiveLabel] = useState<LabelState | null>(null);
-    const [queuedLabel, setQueuedLabel] = useState<LabelState | null>(null);
-    const [isHoveringLabel, setIsHoveringLabel] = useState(false);
-    const activeLabelRef = useRef<LabelState | null>(null);
-    const queuedLabelRef = useRef<LabelState | null>(null);
-    const hoverRef = useRef(false);
-
-    useEffect(() => {
-        activeLabelRef.current = activeLabel;
-    }, [activeLabel]);
-
-    useEffect(() => {
-        queuedLabelRef.current = queuedLabel;
-    }, [queuedLabel]);
+    const [labelIndex, setLabelIndex] = useState(0);
+    const [labelVisible, setLabelVisible] = useState(true);
 
     useEffect(() => {
         let holdTimeout = 0;
@@ -165,11 +136,14 @@ export default function AnalyticalHero() {
             holdTimeout = window.setTimeout(() => {
                 if (cancelled) return;
                 setPersonaVisible(false);
+                setLabelVisible(false);
 
                 fadeTimeout = window.setTimeout(() => {
                     if (cancelled) return;
                     setPersonaIndex((current) => (current + 1) % PERSONAS.length);
+                    setLabelIndex((current) => (current + 1) % CLUSTERS.length);
                     setPersonaVisible(true);
+                    setLabelVisible(true);
                     scheduleCycle();
                 }, 600);
             }, 8000);
@@ -266,46 +240,6 @@ export default function AnalyticalHero() {
 
         let particles: Particle[] = [];
 
-        const pickRandomClusterIndex = (exclude?: number) => {
-            let randomCluster = 0;
-            let attempts = 0;
-
-            do {
-                randomCluster = Math.floor(Math.random() * CLUSTERS.length);
-                attempts += 1;
-            } while (
-                ((randomCluster === exclude) ||
-                    isInCenterZone(CLUSTERS[randomCluster].centerX * width, CLUSTERS[randomCluster].centerY * height, width, height)) &&
-                attempts < 20
-            );
-
-            return randomCluster;
-        };
-
-        const showRandomLabel = () => {
-            const clusterIndex = pickRandomClusterIndex();
-            setActiveLabel(createLabel(clusterIndex, width, height));
-            setQueuedLabel(null);
-            setIsHoveringLabel(false);
-        };
-
-        const showNextLabel = (exclude: number) => {
-            const availableClusterIndex = pickRandomClusterIndex(exclude);
-            setQueuedLabel(createLabel(availableClusterIndex, width, height));
-        };
-
-        const fadeOutCurrentLabel = () => {
-            setIsHoveringLabel(false);
-
-            window.setTimeout(() => {
-                const next = queuedLabelRef.current;
-                if (next) {
-                    setActiveLabel(next);
-                    setQueuedLabel(null);
-                }
-            }, 300);
-        };
-
         const resizeCanvas = () => {
             width = section.clientWidth;
             height = section.clientHeight;
@@ -326,26 +260,6 @@ export default function AnalyticalHero() {
             const rect = canvas.getBoundingClientRect();
             mouse.x = event.clientX - rect.left;
             mouse.y = event.clientY - rect.top;
-
-            const current = activeLabelRef.current;
-            if (!current) return;
-
-            const dx = mouse.x - current.x;
-            const dy = mouse.y - current.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-
-            if (dist < 100) {
-                if (!hoverRef.current) {
-                    hoverRef.current = true;
-                    setIsHoveringLabel(true);
-                    if (!queuedLabelRef.current) {
-                        showNextLabel(current.clusterIndex);
-                    }
-                }
-            } else if (hoverRef.current) {
-                hoverRef.current = false;
-                fadeOutCurrentLabel();
-            }
         };
 
         const handleClick = () => {
@@ -395,20 +309,11 @@ export default function AnalyticalHero() {
         resizeCanvas();
         animate();
 
-        const labelTimeout = window.setTimeout(showRandomLabel, 1000);
-
         window.addEventListener('resize', resizeCanvas);
         canvas.addEventListener('pointermove', handlePointerMove);
-        canvas.addEventListener('pointerleave', () => {
-            if (hoverRef.current) {
-                hoverRef.current = false;
-                fadeOutCurrentLabel();
-            }
-        });
         canvas.addEventListener('click', handleClick);
 
         return () => {
-            window.clearTimeout(labelTimeout);
             window.cancelAnimationFrame(animationFrame);
             window.removeEventListener('resize', resizeCanvas);
             canvas.removeEventListener('pointermove', handlePointerMove);
@@ -417,15 +322,30 @@ export default function AnalyticalHero() {
     }, []);
 
     const persona = PERSONAS[personaIndex];
-    const currentCluster = activeLabel ? CLUSTERS[activeLabel.clusterIndex] : null;
-    const nextCluster = queuedLabel ? CLUSTERS[queuedLabel.clusterIndex] : null;
+    const currentCluster = CLUSTERS[labelIndex];
 
     return (
         <section ref={sectionRef} className="relative isolate min-h-[100svh] overflow-hidden bg-[#141414] text-[#FBFBF6]">
+            <style>{`
+                @keyframes logoPulse {
+                    0%, 100% { opacity: 0.6; transform: scale(0.98); }
+                    50% { opacity: 1; transform: scale(1.04); }
+                }
+                .animate-logo-pulse {
+                    animation: logoPulse 3s ease-in-out infinite;
+                }
+            `}</style>
             <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
             <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 text-center">
-                <div className="max-w-[900px]">
+                <div className="max-w-[900px] flex flex-col items-center">
+                    <div className="mb-6 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center animate-logo-pulse">
+                        <img 
+                            src="/images/logo/visual-decompiler-logo-400px.png" 
+                            alt="Visual Decompiler Logo" 
+                            className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(215,176,122,0.4)]"
+                        />
+                    </div>
                     <h1 className="text-[36px] font-medium leading-[1.2] tracking-[-0.5px] text-[#FBFBF6] sm:text-[44px] md:text-[56px]">
                         Forensic Intelligence
                         <br />
@@ -446,48 +366,23 @@ export default function AnalyticalHero() {
                 </div>
             </div>
 
-            {activeLabel && currentCluster && (
-                <>
-                    <div
-                        className={`pointer-events-none absolute z-20 rounded-md border bg-[#141414]/95 px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-[#D4A574] transition-opacity duration-200 ${
-                            isHoveringLabel ? 'border-[#D7B07A] shadow-[0_0_15px_rgba(215,176,122,0.3),0_0_30px_rgba(215,176,122,0.15)]' : 'border-[#D4A574]/30'
-                        }`}
-                        style={{
-                            left: `${activeLabel.x + 30}px`,
-                            top: `${activeLabel.y - 10}px`,
-                            opacity: 1,
-                        }}
-                    >
-                        {currentCluster.name}
-                    </div>
-
-                    {queuedLabel && nextCluster && (
-                        <div
-                            className="pointer-events-none absolute z-20 rounded-md border border-[#D4A574]/30 bg-[#141414]/95 px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-[#D4A574] transition-opacity duration-200"
-                            style={{
-                                left: `${queuedLabel.x + 30}px`,
-                                top: `${queuedLabel.y - 10}px`,
-                                opacity: 1,
-                            }}
-                        >
-                            {nextCluster.name}
-                        </div>
-                    )}
-
-                    <div
-                        className={`pointer-events-none absolute z-20 max-w-[280px] rounded-[4px] bg-[#141414]/88 px-4 py-2.5 pl-7 text-[12px] leading-[1.55] text-[#D2CCC2] transition-opacity duration-200 ${
-                            isHoveringLabel ? 'opacity-100' : 'opacity-0'
-                        }`}
-                        style={{
-                            left: `${activeLabel.x + 30}px`,
-                            top: `${activeLabel.y + 32}px`,
-                        }}
-                    >
-                        <span className="absolute left-3 top-1/2 h-0 w-0 -translate-y-1/2 border-b-[5px] border-l-[6px] border-r-0 border-t-[5px] border-b-transparent border-l-[#D4A574] border-t-transparent" />
-                        {currentCluster.info}
-                    </div>
-                </>
-            )}
+            <div
+                className={`pointer-events-none absolute z-20 transition-all duration-700 ease-in-out ${labelVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+                style={{
+                    left: `calc(${currentCluster.centerX * 100}% + 20px)`,
+                    top: `calc(${currentCluster.centerY * 100}% - 20px)`,
+                }}
+            >
+                <div className="rounded-md border border-[#D7B07A] bg-[#141414]/95 px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-[#D4A574] shadow-[0_0_15px_rgba(215,176,122,0.3),0_0_30px_rgba(215,176,122,0.15)] animate-[pulse_2s_ease-in-out_infinite]">
+                    {currentCluster.name}
+                </div>
+                
+                <div className="mt-2 max-w-[280px] rounded-[4px] bg-[#141414]/88 px-4 py-2.5 pl-7 text-[12px] leading-[1.55] text-[#D2CCC2] relative text-left">
+                    <span className="absolute left-3 top-1/2 h-0 w-0 -translate-y-1/2 border-b-[5px] border-l-[6px] border-r-0 border-t-[5px] border-b-transparent border-l-[#D4A574] border-t-transparent" />
+                    {currentCluster.info}
+                </div>
+            </div>
+            
         </section>
     );
 }
