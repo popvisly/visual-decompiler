@@ -2231,15 +2231,20 @@ export default function AssetWorkspace({
                                             </div>
 
                                             {/* Trigger Profile */}
-                                            <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm">
-                                                <div className="flex items-center gap-4 mb-8">
-                                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Trigger Profile</span>
-                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
-                                                </div>
-                                                <div className="h-[300px] flex items-center justify-center -mt-4">
-                                                    <RadarChart data={marketPulseData.category_trigger_profile} forceLight={true} />
-                                                </div>
-                                            </div>
+                                             <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm flex flex-col justify-between">
+                                                 <div>
+                                                     <div className="flex items-center gap-4 mb-8">
+                                                         <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Trigger Profile</span>
+                                                         <span className="h-px flex-1 bg-[#E6DDCF]"></span>
+                                                     </div>
+                                                     <div className="h-[300px] flex items-center justify-center -mt-4">
+                                                         <RadarChart data={marketPulseData.category_trigger_profile} forceLight={true} />
+                                                     </div>
+                                                 </div>
+                                                 <p className="text-[12px] text-[#6A6257] leading-relaxed mt-6 pt-6 border-t border-[#D4A574]/10 text-center px-4 w-full">
+                                                     Aggregated psychological pressure across the active category—mapping the dominant aspirational levers currently commanding consumer compliance in the vault.
+                                                 </p>
+                                             </div>
                                         </div>
 
                                         <div className="grid grid-cols-1 gap-8 xl:grid-cols-[1.1fr_0.9fr] items-start">
@@ -2251,11 +2256,20 @@ export default function AssetWorkspace({
                                                 </div>
                                                 <div className="grid gap-6">
                                                     {marketPulseData.opportunity_gaps.map((gap, index) => (
-                                                        <div key={`${gap}-${index}`} className="relative pl-6">
-                                                            <div className="absolute left-0 top-1.5 h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
-                                                            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#9B8662]/40">Whitespace {(index + 1).toString().padStart(2, '0')}</span>
-                                                            <p className="mt-2 text-[15px] leading-relaxed text-[#151310] font-medium">{gap}</p>
-                                                        </div>
+                                                                                         <div key={`${gap}-${index}`} className="group relative rounded-3xl border border-[#E6DDCF]/60 bg-[#FBF7F1]/30 p-6 transition-all hover:bg-white hover:border-[#D4A574]/30 hover:shadow-md">
+                                                             <div className="flex items-center justify-between mb-4">
+                                                                 <div className="flex items-center gap-3">
+                                                                     <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#D4A574]/10 text-[#D4A574]">
+                                                                         <Sparkles className="h-3 w-3" />
+                                                                     </div>
+                                                                     <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/60">Whitespace {(index + 1).toString().padStart(2, '0')}</span>
+                                                                 </div>
+                                                                 <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574]/30 group-hover:bg-[#D4A574]" />
+                                                             </div>
+                                                             <p className="text-[15px] leading-relaxed text-[#151310] font-light selection:bg-[#D4A574]/20 tracking-wide pr-4 italic">
+                                                                 {gap}
+                                                             </p>
+                                                         </div>
                                                     ))}
                                                 </div>
                                             </div>
@@ -2324,29 +2338,34 @@ export default function AssetWorkspace({
                                         </p>
                                     </div>
 
-                                    {/* Strategic Posture Map */}
-                                    <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
-                                        <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
-                                            Strategic Posture
-                                        </h3>
-                                        {extraction?.full_dossier?.archetype_mapping ? (
-                                            <div className="flex-1 flex flex-col justify-between">
-                                                <p className="text-[12px] text-[#6A6257] leading-relaxed mb-6">
-                                                    {extraction.full_dossier.archetype_mapping?.target_posture}
-                                                </p>
-                                                <div className="flex items-center justify-center">
-                                                    <StrategicPostureMap
-                                                        posture={extraction.full_dossier.archetype_mapping?.target_posture || ''}
-                                                        moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
-                                                    />
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div className="flex-1 flex items-center justify-center">
-                                                <div className="text-[10px] uppercase font-bold tracking-widest text-[#D4A574]/30">No Posture Data</div>
-                                            </div>
-                                        )}
-                                    </div>
+                                     {/* Strategic Posture Map */}
+                                     <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
+                                         <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
+                                             Strategic Posture
+                                         </h3>
+                                         {extraction?.full_dossier?.archetype_mapping ? (
+                                             <div className="flex-1 flex flex-col justify-between">
+                                                 <div>
+                                                     <p className="text-[13px] text-[#6A6257] leading-relaxed mb-8 pr-4">
+                                                         {extraction.full_dossier.archetype_mapping?.target_posture}
+                                                     </p>
+                                                     <div className="flex items-center justify-center -mt-2">
+                                                         <StrategicPostureMap
+                                                             posture={extraction.full_dossier.archetype_mapping?.target_posture || ''}
+                                                             moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
+                                                         />
+                                                     </div>
+                                                 </div>
+                                                 <p className="text-[12px] text-[#6A6257] leading-relaxed mt-6 pt-6 border-t border-[#D4A574]/10 text-center px-4 w-full">
+                                                     Current positioning defines the asset's high-level field posture—governing how it addresses consumer cognitive dissonance within the vault.
+                                                 </p>
+                                             </div>
+                                         ) : (
+                                             <div className="flex-1 flex items-center justify-center">
+                                                 <div className="text-[10px] uppercase font-bold tracking-widest text-[#D4A574]/30">No Posture Data</div>
+                                             </div>
+                                         )}
+                                     </div>
 
                                     {/* Persuasion Density */}
                                     {(extraction?.full_dossier as any)?.persuasion_metrics && (
