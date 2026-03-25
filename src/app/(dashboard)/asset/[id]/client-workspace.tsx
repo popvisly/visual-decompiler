@@ -2528,9 +2528,9 @@ export default function AssetWorkspace({
 
                                         {/* Plausible Readings & Objection Dismantled */}
                                         {extraction?.full_dossier && (
-                                            <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+                                            <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.8fr)]">
                                                 <div className="flex flex-col rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8">
-                                                    <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-8">
+                                                    <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-6">
                                                         Plausible Readings
                                                     </h3>
                                                     <div className="space-y-8">
@@ -2540,7 +2540,7 @@ export default function AssetWorkspace({
                                                                 <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662]/60">
                                                                     {i === 0 ? 'Primary Interpretation' : 'Secondary Interpretation'}
                                                                 </span>
-                                                                <p className="mt-2 text-base font-medium text-[#151310] leading-relaxed">
+                                                                <p className="mt-2 text-base font-semibold text-[#151310] leading-relaxed">
                                                                     {reading.reading}
                                                                 </p>
                                                             </div>
@@ -2586,7 +2586,7 @@ export default function AssetWorkspace({
                                         </div>
 
                                          {/* Execution Constraints Checklist */}
-                                         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                                         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
                                              <div className="flex flex-col justify-center rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8">
                                                  <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4">Primary Trigger</span>
                                                  <p className="text-2xl font-medium tracking-tight text-[#151310] leading-snug">{blueprintData.execution_constraints.primary_trigger}</p>
