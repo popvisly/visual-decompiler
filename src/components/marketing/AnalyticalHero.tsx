@@ -341,7 +341,7 @@ export default function AnalyticalHero() {
                 <div className="max-w-[900px] flex flex-col items-center">
                     <div className="mb-6 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center animate-logo-pulse">
                         <img 
-                            src="/images/logo/visual-decompiler-logo-400px.png" 
+                            src="/images/logo/Visual_Decompiler_Logo_v2_400px.png" 
                             alt="Visual Decompiler Logo" 
                             className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(215,176,122,0.4)]"
                         />

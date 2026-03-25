@@ -22,7 +22,7 @@ export default function Logo({
         <div className={`flex items-center gap-3 group ${className}`}>
             <div className="flex h-8 w-8 items-center justify-center transition-transform group-hover:scale-105">
                 <Image
-                    src="/images/logo/visual-decompiler-logo-400px.png"
+                    src="/images/logo/Visual_Decompiler_Logo_v2_400px.png"
                     alt="Visual Decompiler logo mark"
                     width={32}
                     height={32}
