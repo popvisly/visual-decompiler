@@ -2046,7 +2046,7 @@ export default function AssetWorkspace({
                                                         </div>
                                                     ))}
                                                 </div>
-                                                <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] rounded-3xl p-6 shadow-sm">
+                                                <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] rounded-3xl p-6">
                                                     <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 border-b border-[#E6DDCF] pb-4">
                                                         Gaze Analysis
                                                     </h3>
@@ -2100,7 +2100,7 @@ export default function AssetWorkspace({
                                 {!isSovereign ? (
                                     <>
                                         <div className="absolute inset-0 z-10 backdrop-blur-md bg-[#FBFBF6]/60 flex items-center justify-center rounded-3xl">
-                                            <div className="bg-[#FFFCF7] border border-[#E6DDCF] p-8 shadow-[0_4px_16px_rgba(0,0,0,0.02)] rounded-3xl text-center shadow-2xl flex flex-col items-center">
+                                            <div className="bg-[#FFFCF7] border border-[#E6DDCF] p-8 shadow-[0_4px_16px_rgba(0,0,0,0.02)] rounded-3xl text-center flex flex-col items-center">
                                                 <div className="w-12 h-12 rounded-full bg-[#D4A574]/10 flex items-center justify-center border border-[#D4A574]/30 mb-4">
                                                     <svg className="w-5 h-5 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                                                 </div>
@@ -2142,7 +2142,7 @@ export default function AssetWorkspace({
                                     </div>
                                 ) : marketPulseData ? (
                                     <div className="space-y-8">
-                                        <div className="flex flex-col gap-6 rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-8 text-[#151310] shadow-sm md:flex-row md:items-end md:justify-between">
+                                        <div className="flex flex-col gap-6 rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-8 text-[#151310] md:flex-row md:items-end md:justify-between">
                                             <div>
                                                 <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Market Pulse</p>
                                                 <h3 className="mt-3 text-3xl font-light tracking-tight text-[#151310]">
@@ -2417,7 +2417,7 @@ export default function AssetWorkspace({
                                     intro="A production-ready deconstruction of what to keep, what to refine, and what to rebuild for stronger performance."
                                 />
                                 {!blueprintData ? (
-                                <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-10 flex flex-col items-center justify-center text-center rounded-3xl shadow-sm">
+                                <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-10 flex flex-col items-center justify-center text-center rounded-3xl">
                                         <h3 className="text-[#D4A574] text-lg font-medium mb-2">Production Blueprint Uninitialized</h3>
                                         <p className="text-[#6A6257] text-sm max-w-sm mb-4">Synthesize the extraction data into elite execution constraints.</p>
                                         <p className="text-[#D4A574]/60 text-[10px] font-bold uppercase tracking-[0.28em] mb-8">Generated blueprints are now saved to this asset automatically.</p>
@@ -2454,17 +2454,22 @@ export default function AssetWorkspace({
                                     </div>
                                 ) : (
                                     <div className="space-y-12">
-                                        <div className="flex flex-col gap-4 rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-5 md:flex-row md:items-center md:justify-between">
-                                            <div>
-                                                <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-2">Production Blueprint Active</p>
-                                                <p className="text-sm text-[#6A6257]">This blueprint is stored in the Intelligence Vault and will reload when you revisit the asset.</p>
+                                        <div className="flex flex-col gap-6 rounded-[2rem] border border-[#E6DDCF] bg-[#FBF7F1]/40 p-6 md:flex-row md:items-center md:justify-between">
+                                            <div className="flex items-center gap-4">
+                                                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#D4A574]/20 bg-[#D4A574]/5">
+                                                    <Sparkles className="h-5 w-5 text-[#9B8662]" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662]">Production Blueprint Active</p>
+                                                    <p className="text-[13px] text-[#6A6257] mt-1">This deconstruction is indexed in the Intelligence Vault for ongoing retrieval.</p>
+                                                </div>
                                             </div>
                                             <button
                                                 onClick={handleGenerateBlueprint}
                                                 disabled={isGeneratingBlueprint}
-                                                className="border border-[#D4A574]/40 px-5 py-3 text-[10px] font-bold tracking-widest uppercase text-[#D4A574] rounded-full hover:bg-[#D4A574] hover:text-[#1A1A1A] transition-all disabled:opacity-50"
+                                                className="flex items-center gap-2 border border-[#D4A574]/30 bg-white px-6 py-2.5 text-[10px] font-bold tracking-widest uppercase text-[#9B8662] rounded-full hover:bg-[#D4A574] hover:text-white transition-all disabled:opacity-50 shadow-sm"
                                             >
-                                                {isGeneratingBlueprint ? 'Refreshing...' : 'Regenerate Blueprint'}
+                                                {isGeneratingBlueprint ? 'Refreshing...' : 'Regenerate'}
                                             </button>
                                         </div>
 
@@ -2488,135 +2493,190 @@ export default function AssetWorkspace({
 
                                         {/* Iteration Test Plan (Remixing) */}
                                         {extraction?.full_dossier?.test_plan && (
-                                            <div>
-                                                <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Iteration & Test Plan</span>
-                                                <p className="mb-6 border-l-2 border-[#D4A574] pl-4 text-sm leading-relaxed text-[#151310]/86">{extraction.full_dossier.test_plan.hypothesis}</p>
-                                                <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
-                                                    {extraction.full_dossier.test_plan.test_cells.map((cell: any, i: number) => {
-                                                        const isLongCell = `${cell.change ?? ''} ${cell.rationale ?? ''}`.length > 210;
-                                                        return (
-                                                        <div key={i} className={`${ANALYSIS_CARD_CLASS} flex flex-col ${isLongCell ? 'xl:col-span-2' : 'xl:col-span-1'}`}>
-                                                            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662] block mb-3">{cell.lever}</span>
-                                                            <p className="text-sm text-[#151310] mb-4 leading-relaxed">{cell.change}</p>
-                                                            <p className="mt-auto border-t border-[#D4A574]/10 pt-4 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]/72">{cell.rationale}</p>
-                                                        </div>
-                                                    )})}
+                                            <div className="space-y-6">
+                                                <div className="flex items-center gap-4">
+                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
+                                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Iteration & Test Plan</span>
+                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
+                                                </div>
+                                                
+                                                <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-[0_8px_32px_rgba(0,0,0,0.015)]">
+                                                    <div className="mb-10 max-w-3xl">
+                                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662] opacity-60">Hypothesis</span>
+                                                        <p className="mt-3 text-lg font-medium leading-relaxed text-[#151310]">{extraction.full_dossier.test_plan.hypothesis}</p>
+                                                    </div>
+
+                                                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                                        {extraction.full_dossier.test_plan.test_cells.map((cell: any, i: number) => (
+                                                            <div key={i} className="group relative rounded-2xl border border-[#ECE2D4] bg-white p-6 transition-all hover:border-[#D4A574]/40 hover:shadow-md">
+                                                                <div className="flex items-start justify-between mb-4">
+                                                                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662]">{cell.lever}</span>
+                                                                    <span className="text-[9px] font-mono text-[#9B8662]/40">TEST_CELL_0{i + 1}</span>
+                                                                </div>
+                                                                <p className="text-[15px] text-[#151310] leading-relaxed mb-6">{cell.change}</p>
+                                                                <div className="border-t border-[#F3EDE3] pt-4">
+                                                                    <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/70 leading-relaxed italic">
+                                                                        {cell.rationale}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             </div>
                                         )}
 
                                         {/* Plausible Readings & Objection Dismantled */}
                                         {extraction?.full_dossier && (
-                                            <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
-                                                {/* Plausible Readings */}
-                                                {extraction.full_dossier.possible_readings && extraction.full_dossier.possible_readings.length > 0 && (
-                                                    <div className={`${ANALYSIS_CARD_CLASS} flex flex-col min-h-[220px] xl:min-h-[240px]`}>
-                                                        <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
-                                                            Plausible Readings
-                                                        </h3>
-                                                        <div className="flex-1 flex flex-col justify-center space-y-6">
-                                                            {extraction.full_dossier.possible_readings.slice(0, 2).map((reading, i) => (
-                                                                <div key={i} className="space-y-2">
-                                                                    <div className="flex items-center gap-2">
-                                                                        <div className="w-1.5 h-1.5 bg-[#D4A574] rounded-full" />
-                                                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662]">
-                                                                            {i === 0 ? 'Primary' : 'Secondary'}
-                                                                        </span>
-                                                                    </div>
-                                                                    <p className="text-[12px] text-[#6A6257] leading-relaxed pl-[18px]">
-                                                                        {reading.reading}
-                                                                    </p>
-                                                                </div>
-                                                            ))}
-                                                        </div>
+                                            <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+                                                <div className="flex flex-col rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8">
+                                                    <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-8">
+                                                        Plausible Readings
+                                                    </h3>
+                                                    <div className="space-y-8">
+                                                        {extraction.full_dossier.possible_readings?.slice(0, 2).map((reading, i) => (
+                                                            <div key={i} className="relative pl-6">
+                                                                <div className="absolute left-0 top-1.5 h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
+                                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662]/60">
+                                                                    {i === 0 ? 'Primary Interpretation' : 'Secondary Interpretation'}
+                                                                </span>
+                                                                <p className="mt-2 text-base font-medium text-[#151310] leading-relaxed">
+                                                                    {reading.reading}
+                                                                </p>
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                )}
+                                                </div>
 
-                                                {/* Objection Dismantled */}
-                                                {extraction.full_dossier.objection_dismantling && (
-                                                    <div className={`${ANALYSIS_CARD_CLASS} flex flex-col min-h-[220px] xl:min-h-[240px]`}>
-                                                        <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
-                                                            Objection Dismantled
-                                                        </h3>
-                                                        <div className="flex-1 flex flex-col justify-center">
-                                                            <p className="max-w-[62ch] text-[12px] text-[#6A6257] leading-relaxed">
-                                                                {extraction.full_dossier.objection_dismantling}
-                                                            </p>
-                                                        </div>
+                                                <div className="flex flex-col rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8">
+                                                    <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-8">
+                                                        Objection Dismantled
+                                                    </h3>
+                                                    <div className="relative">
+                                                        <div className="absolute -left-4 top-0 bottom-0 w-[1px] bg-[#D4A574]/20" />
+                                                        <p className="text-[15px] leading-relaxed text-[#5E5A53]">
+                                                            {extraction.full_dossier.objection_dismantling}
+                                                        </p>
                                                     </div>
-                                                )}
+                                                </div>
                                             </div>
                                         )}
 
                                         {/* DNA Prompt Code Block */}
-                                        <div>
-                                            <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Verified DNA Prompt (Midjourney Native)</span>
-                                            <div className="relative group">
-                                                <div className="absolute top-4 right-4 text-[8px] font-bold text-[#9B8662] uppercase tracking-widest opacity-40">Forensic Copy</div>
-                                                <pre className="p-5 bg-[#FFFCF7] border border-[#D4A574]/30 text-[#151310] text-[11px] font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap rounded-3xl">
+                                        <div className="space-y-4">
+                                            <div className="flex items-center gap-4">
+                                                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662]">Verified DNA Prompt</span>
+                                                <span className="h-px flex-1 bg-[#E6DDCF]"></span>
+                                            </div>
+                                            <div className="relative group overflow-hidden rounded-[2rem] border border-[#D4A574]/30 bg-[#FBF7F1]/20 shadow-inner">
+                                                <div className="absolute top-4 right-6 flex items-center gap-3">
+                                                    <span className="text-[8px] font-bold text-[#9B8662] uppercase tracking-[0.3em] opacity-40">Forensic Code Layer</span>
+                                                    <button
+                                                        className="flex items-center gap-2 rounded-full border border-[#D4A574]/20 bg-white px-3 py-1 text-[9px] font-bold uppercase tracking-widest text-[#9B8662] hover:bg-[#D4A574] hover:text-white transition-all shadow-sm"
+                                                        onClick={() => navigator.clipboard.writeText(blueprintData.verified_dna_prompt)}
+                                                    >
+                                                        <Copy className="h-2.5 w-2.5" />
+                                                        Copy
+                                                    </button>
+                                                </div>
+                                                <pre className="p-8 pt-12 text-[13px] font-mono leading-relaxed text-[#151310] whitespace-pre-wrap selection:bg-[#D4A574]/40">
                                                     {blueprintData.verified_dna_prompt}
                                                 </pre>
-                                                <button
-                                                    className="absolute bottom-6 right-6 text-[10px] font-bold uppercase tracking-[0.15em] text-[#D4A574]/70 hover:text-[#D4A574] transition-colors bg-[#FFFCF7] px-3 py-1.5 rounded-none border border-[#D4A574]/40"
-                                                    onClick={() => navigator.clipboard.writeText(blueprintData.verified_dna_prompt)}
-                                                >
-                                                    Copy
-                                                </button>
                                             </div>
                                         </div>
 
                                          {/* Execution Constraints Checklist */}
-                                         <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-                                             <div className={ANALYSIS_CARD_CLASS}>
-                                                 <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Primary Trigger</span>
-                                                 <p className="text-xl font-medium tracking-tight text-[#151310] leading-snug">{blueprintData.execution_constraints.primary_trigger}</p>
+                                         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                                             <div className="flex flex-col justify-center rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8">
+                                                 <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4">Primary Trigger</span>
+                                                 <p className="text-2xl font-medium tracking-tight text-[#151310] leading-snug">{blueprintData.execution_constraints.primary_trigger}</p>
                                              </div>
-                                             <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-5 rounded-3xl shadow-sm">
-                                                 <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Technical Specs</span>
-                                                 <ul className="space-y-4 text-sm text-[#151310]/80">
-                                                     <li className="flex flex-col gap-1"><span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Lighting Architecture</span> <span className="max-w-[62ch] text-sm leading-relaxed">{blueprintData.technical_specs.lighting_architecture}</span></li>
-                                                     <li className="flex flex-col gap-1"><span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Gaze Vector</span> <span className="max-w-[62ch] text-sm leading-relaxed">{blueprintData.technical_specs.gaze_vector}</span></li>
-                                                     <li className="flex flex-col gap-1"><span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Material Cues</span> <span className="text-sm leading-relaxed">{blueprintData.technical_specs.material_cues.join(' • ')}</span></li>
-                                                 </ul>
+                                             <div className="rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
+                                                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-6 block">Technical Specs</span>
+                                                 <div className="space-y-6">
+                                                     <div className="flex flex-col gap-1.5">
+                                                         <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Lighting Architecture</span>
+                                                         <span className="text-sm leading-relaxed text-[#151310]/80">{blueprintData.technical_specs.lighting_architecture}</span>
+                                                     </div>
+                                                     <div className="flex flex-col gap-1.5">
+                                                         <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Gaze Vector</span>
+                                                         <span className="text-sm leading-relaxed text-[#151310]/80">{blueprintData.technical_specs.gaze_vector}</span>
+                                                     </div>
+                                                     <div className="flex flex-col gap-1.5">
+                                                         <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Material Cues</span>
+                                                         <div className="flex flex-wrap gap-2 mt-1">
+                                                             {blueprintData.technical_specs.material_cues.map((cue: string, i: number) => (
+                                                                 <span key={i} className="rounded-full border border-[#D4A574]/20 bg-[#D4A574]/5 px-3 py-0.5 text-[11px] text-[#9B8662]">
+                                                                     {cue}
+                                                                 </span>
+                                                             ))}
+                                                         </div>
+                                                     </div>
+                                                 </div>
                                              </div>
                                          </div>
 
                                         {/* Brutalist [+] / [-] constraints */}
-                                        <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-5 rounded-3xl shadow-sm">
-                                            <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-6 border-b border-[#E6DDCF] pb-2">Strict Inclusion/Exclusion Constraints</span>
-                                            <div className="grid grid-cols-1 gap-8 text-xs md:grid-cols-2">
-                                                <div className="space-y-4">
-                                                    <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662] mb-2">[+] Positive Benchmarks</span>
-                                                    {blueprintData.execution_constraints.must_include.map((item: string, i: number) => (
-                                                        <div key={`inc-${i}`} className="flex items-start gap-3 bg-[#FFFCF7]/50 p-3 border border-[#D4A574]/10 rounded-xl">
-                                                            <span className="text-emerald-400 font-bold">✓</span>
-                                                            <span className="text-sm leading-relaxed text-[#151310]">{item}</span>
+                                        {/* Brutalist [+] / [-] constraints */}
+                                        <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
+                                            <div className="flex items-center gap-4 mb-10">
+                                                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662]">Strict Execution Constraints</span>
+                                                <span className="h-px flex-1 bg-[#E6DDCF]"></span>
+                                            </div>
+                                            <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
+                                                <div className="space-y-6">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="h-4 w-4 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                                                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                                                         </div>
-                                                    ))}
+                                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-700/60">[+] Positive Benchmarks</span>
+                                                    </div>
+                                                    <div className="space-y-3">
+                                                        {blueprintData.execution_constraints.must_include.map((item: string, i: number) => (
+                                                            <div key={`inc-${i}`} className="flex items-start gap-4 rounded-xl border border-emerald-100 bg-emerald-50/20 p-4 transition-colors hover:bg-emerald-50/40">
+                                                                <span className="text-emerald-500 mt-0.5">✓</span>
+                                                                <span className="text-[13px] leading-relaxed text-[#151310]">{item}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                                <div className="space-y-4">
-                                                    <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662]/50 mb-2">[-] Critical Exclusions</span>
-                                                    {blueprintData.execution_constraints.must_not_include.map((item: string, i: number) => (
-                                                        <div key={`exc-${i}`} className="flex items-start gap-3 bg-[#FFFCF7]/50 p-3 border border-[#D4A574]/10 rounded-xl opacity-60">
-                                                            <span className="text-rose-400 font-bold">×</span>
-                                                            <span className="text-sm leading-relaxed text-[#151310] line-through">{item}</span>
+                                                <div className="space-y-6">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="h-4 w-4 rounded-full bg-rose-500/10 flex items-center justify-center">
+                                                            <div className="h-1.5 w-1.5 rounded-full bg-rose-500" />
                                                         </div>
-                                                    ))}
+                                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-rose-700/60">[-] Critical Exclusions</span>
+                                                    </div>
+                                                    <div className="space-y-3">
+                                                        {blueprintData.execution_constraints.must_not_include.map((item: string, i: number) => (
+                                                            <div key={`exc-${i}`} className="flex items-start gap-4 rounded-xl border border-[#E6DDCF] bg-[#FBF7F1]/30 p-4 opacity-80 grayscale-[0.5] transition-opacity hover:opacity-100">
+                                                                <span className="text-rose-400 mt-0.5 font-bold">×</span>
+                                                                <span className="text-[13px] leading-relaxed text-[#151310] line-through decoration-[#151310]/30">{item}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         {/* REMIXES AND VARIANTS */}
                                         {blueprintData.ad_copy_remixes && blueprintData.ad_copy_remixes.length > 0 && (
-                                            <div>
-                                                <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Forensic Copy Remixes</span>
+                                            <div className="space-y-6">
+                                                <div className="flex items-center gap-4">
+                                                    <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662]">Forensic Copy Remixes</span>
+                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
+                                                </div>
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                     {blueprintData.ad_copy_remixes.map((remix: any, i: number) => (
-                                                        <div key={i} className="bg-[#FFFCF7] border border-[#D4A574]/20 p-5 rounded-3xl shadow-sm relative group">
-                                                            <div className="absolute -top-3 left-4 bg-[#8B4513] text-[#F5F5DC] px-3 py-1 text-[8px] font-bold tracking-widest uppercase rounded">
-                                                                {remix.angle}
+                                                        <div key={i} className="flex flex-col rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] p-6 shadow-sm transition-all hover:border-[#D4A574]/40">
+                                                            <div className="mb-4">
+                                                                <span className="inline-block rounded border border-[#8B4513]/20 bg-[#8B4513]/5 px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#8B4513]">
+                                                                    {remix.angle}
+                                                                </span>
                                                             </div>
-                                                            <p className="text-sm text-[#151310] font-light mt-2 leading-relaxed whitespace-pre-wrap">{remix.copy}</p>
+                                                            <p className="text-[15px] leading-relaxed text-[#151310] font-medium selection:bg-[#D4A574]/20 italic">
+                                                                "{remix.copy}"
+                                                            </p>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -2624,15 +2684,23 @@ export default function AssetWorkspace({
                                         )}
 
                                         {blueprintData.visual_variant_prompts && blueprintData.visual_variant_prompts.length > 0 && (
-                                            <div>
-                                                <span className="block text-[12px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4 border-b border-[#E6DDCF] pb-2">Visual Concept Variants</span>
+                                            <div className="space-y-6">
+                                                <div className="flex items-center gap-4">
+                                                    <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662]">Visual Concept Variants</span>
+                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
+                                                </div>
                                                 <div className="space-y-6">
                                                     {blueprintData.visual_variant_prompts.map((variant: any, i: number) => (
-                                                        <div key={i} className="bg-[#FFFCF7] border border-[#D4A574]/20 p-5 rounded-3xl shadow-sm relative">
-                                                            <span className="block text-[10px] font-bold uppercase tracking-[0.2em] text-[#9B8662] mb-3">{variant.concept}</span>
-                                                            <pre className="p-4 bg-black/40 border border-[#D4A574]/10 text-[#151310]/80 text-[11px] font-mono leading-relaxed whitespace-pre-wrap rounded-2xl">
-                                                                {variant.prompt}
-                                                            </pre>
+                                                        <div key={i} className="rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
+                                                            <div className="flex items-center justify-between mb-6">
+                                                                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662]">{variant.concept}</span>
+                                                                <span className="text-[9px] font-mono text-[#9B8662]/30">V_{i+1}_CONCEPT</span>
+                                                            </div>
+                                                            <div className="rounded-2xl border border-[#D4A574]/15 bg-[#FBF7F1]/50 p-6 shadow-inner">
+                                                                <pre className="text-[12px] font-mono leading-relaxed text-[#151310]/80 whitespace-pre-wrap selection:bg-[#D4A574]/30">
+                                                                    {variant.prompt}
+                                                                </pre>
+                                                            </div>
                                                         </div>
                                                     ))}
                                                 </div>
