@@ -5,9 +5,10 @@ import React, { useEffect, useState } from 'react';
 type Props = {
     posture: string;
     moves?: string[];
+    forceLight?: boolean;
 };
 
-export default function StrategicPostureMap({ posture, moves = [] }: Props) {
+export default function StrategicPostureMap({ posture, moves = [], forceLight = false }: Props) {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -58,15 +59,15 @@ export default function StrategicPostureMap({ posture, moves = [] }: Props) {
     const activeY = mounted ? targetPos.y : center;
 
     return (
-        <div className="relative w-full max-w-[260px] aspect-square flex items-center justify-center">
+        <div className="relative w-full max-w-[260px] aspect-square flex items-center justify-center pointer-events-none">
             <svg width="100%" height="100%" viewBox={`0 0 ${size} ${size}`} className="overflow-visible">
                 {/* Background Grid */}
-                <circle cx={center} cy={center} r={graphSize/2} fill="transparent" stroke="#D4A57411" strokeWidth="1" />
-                <circle cx={center} cy={center} r={graphSize/4} fill="transparent" stroke="#D4A57408" strokeWidth="1" />
+                <circle cx={center} cy={center} r={graphSize/2} fill="transparent" stroke={forceLight ? "#D4A57444" : "#D4A57411"} strokeWidth="1" />
+                <circle cx={center} cy={center} r={graphSize/4} fill="transparent" stroke={forceLight ? "#D4A57433" : "#D4A57408"} strokeWidth="1" />
                 
                 {/* Crosshair Axes */}
-                <line x1={padding} y1={center} x2={size-padding} y2={center} stroke="#D4A57422" strokeWidth="1" strokeDasharray="2 2" />
-                <line x1={center} y1={padding} x2={center} y2={size-padding} stroke="#D4A57422" strokeWidth="1" strokeDasharray="2 2" />
+                <line x1={padding} y1={center} x2={size-padding} y2={center} stroke={forceLight ? "#D4A57444" : "#D4A57422"} strokeWidth="1" strokeDasharray="2 2" />
+                <line x1={center} y1={padding} x2={center} y2={size-padding} stroke={forceLight ? "#D4A57444" : "#D4A57422"} strokeWidth="1" strokeDasharray="2 2" />
 
                 {/* Axis Labels */}
                 <text x={center} y={padding-10} fill="#D4A574" fontSize="8" textAnchor="middle" className="uppercase tracking-[0.2em] font-bold opacity-40">Emotional</text>
@@ -92,8 +93,8 @@ export default function StrategicPostureMap({ posture, moves = [] }: Props) {
             </svg>
             
             {/* Center HUD Decor */}
-            <div className="absolute inset-0 border border-[#D4A574]/10 rounded-full scale-[1.1] pointer-events-none" />
-            <div className="absolute inset-0 border border-[#D4A574]/5 rounded-full scale-[1.3] pointer-events-none" />
+            <div className={`absolute inset-0 border rounded-full scale-[1.1] pointer-events-none ${forceLight ? 'border-[#D4A574]/30' : 'border-[#D4A574]/10'}`} />
+            <div className={`absolute inset-0 border rounded-full scale-[1.3] pointer-events-none ${forceLight ? 'border-[#D4A574]/15' : 'border-[#D4A574]/5'}`} />
         </div>
     );
 }
