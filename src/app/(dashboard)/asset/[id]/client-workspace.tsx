@@ -2586,31 +2586,39 @@ export default function AssetWorkspace({
                                         </div>
 
                                          {/* Execution Constraints Checklist */}
-                                         <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
-                                             <div className="flex flex-col justify-center rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8">
-                                                 <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4">Primary Trigger</span>
-                                                 <p className="text-2xl font-medium tracking-tight text-[#151310] leading-snug">{blueprintData.execution_constraints.primary_trigger}</p>
-                                             </div>
-                                             <div className="rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
-                                                 <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-6 block">Technical Specs</span>
-                                                 <div className="space-y-6">
-                                                     <div className="flex flex-col gap-1.5">
-                                                         <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Lighting Architecture</span>
-                                                         <span className="text-sm leading-relaxed text-[#151310]/80">{blueprintData.technical_specs.lighting_architecture}</span>
-                                                     </div>
-                                                     <div className="flex flex-col gap-1.5">
-                                                         <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Gaze Vector</span>
-                                                         <span className="text-sm leading-relaxed text-[#151310]/80">{blueprintData.technical_specs.gaze_vector}</span>
-                                                     </div>
-                                                     <div className="flex flex-col gap-1.5">
-                                                         <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Material Cues</span>
-                                                         <div className="flex flex-wrap gap-2 mt-1">
-                                                             {blueprintData.technical_specs.material_cues.map((cue: string, i: number) => (
-                                                                 <span key={i} className="rounded-full border border-[#D4A574]/20 bg-[#D4A574]/5 px-3 py-0.5 text-[11px] text-[#9B8662]">
-                                                                     {cue}
-                                                                 </span>
-                                                             ))}
+                                         <div className="space-y-6">
+                                             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 items-start">
+                                                 <div className="flex flex-col min-h-[160px] justify-center rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8">
+                                                     <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-4">Primary Trigger</span>
+                                                     <p className="text-2xl font-medium tracking-tight text-[#151310] leading-snug">{blueprintData.execution_constraints.primary_trigger}</p>
+                                                 </div>
+                                                 <div className="rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
+                                                     <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#9B8662] mb-6 block">Technical Specs</span>
+                                                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                                                         <div className="flex flex-col gap-1.5">
+                                                             <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Lighting Architecture</span>
+                                                             <span className="text-sm leading-relaxed text-[#151310]/80">{blueprintData.technical_specs.lighting_architecture}</span>
                                                          </div>
+                                                         <div className="flex flex-col gap-1.5">
+                                                             <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">Gaze Vector</span>
+                                                             <span className="text-sm leading-relaxed text-[#151310]/80">{blueprintData.technical_specs.gaze_vector}</span>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+
+                                             <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
+                                                 <div className="flex flex-col gap-6 md:flex-row md:items-center">
+                                                     <div className="min-w-[140px]">
+                                                         <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]">Material Cues</span>
+                                                         <p className="text-[9px] text-[#9B8662]/40 mt-1 uppercase tracking-widest">Texture & Form</p>
+                                                     </div>
+                                                     <div className="flex flex-wrap gap-2.5">
+                                                         {blueprintData.technical_specs.material_cues.map((cue: string, i: number) => (
+                                                             <span key={i} className="rounded-full border border-[#D4A574]/20 bg-[#D4A574]/5 px-4 py-1.5 text-[11px] font-medium text-[#9B8662] transition-colors hover:border-[#D4A574] hover:bg-white">
+                                                                 {cue}
+                                                             </span>
+                                                         ))}
                                                      </div>
                                                  </div>
                                              </div>
