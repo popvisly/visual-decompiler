@@ -326,6 +326,7 @@ export default function AnalyticalHero() {
 
     return (
         <section ref={sectionRef} className="relative isolate min-h-[100svh] overflow-hidden bg-[#141414] text-[#FBFBF6]">
+            <div className="pointer-events-none absolute inset-0 opacity-[0.03] [background-image:linear-gradient(#D4A574_1.5px,transparent_1.5px),linear-gradient(90deg,#D4A574_1.5px,transparent_1.5px)] [background-size:40px_40px]" />
             <style>{`
                 @keyframes logoPulse {
                     0%, 100% { opacity: 0.6; transform: scale(0.98); }
