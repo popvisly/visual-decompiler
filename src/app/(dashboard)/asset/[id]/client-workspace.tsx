@@ -2353,6 +2353,7 @@ export default function AssetWorkspace({
                                                          <StrategicPostureMap
                                                              posture={extraction.full_dossier.archetype_mapping?.target_posture || ''}
                                                              moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
+                                                             forceLight={true}
                                                          />
                                                      </div>
                                                  </div>

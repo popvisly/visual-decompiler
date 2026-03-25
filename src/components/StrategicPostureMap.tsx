@@ -62,18 +62,18 @@ export default function StrategicPostureMap({ posture, moves = [], forceLight = 
         <div className="relative w-full max-w-[260px] aspect-square flex items-center justify-center pointer-events-none">
             <svg width="100%" height="100%" viewBox={`0 0 ${size} ${size}`} className="overflow-visible">
                 {/* Background Grid */}
-                <circle cx={center} cy={center} r={graphSize/2} fill="transparent" stroke={forceLight ? "#D4A57444" : "#D4A57411"} strokeWidth="1" />
-                <circle cx={center} cy={center} r={graphSize/4} fill="transparent" stroke={forceLight ? "#D4A57433" : "#D4A57408"} strokeWidth="1" />
+                <circle cx={center} cy={center} r={graphSize/2} fill="transparent" stroke={forceLight ? "#D4A57444" : "#D4A57422"} strokeWidth="1" />
+                <circle cx={center} cy={center} r={graphSize/4} fill="transparent" stroke={forceLight ? "#D4A57433" : "#D4A57422"} strokeWidth="1" />
                 
                 {/* Crosshair Axes */}
                 <line x1={padding} y1={center} x2={size-padding} y2={center} stroke={forceLight ? "#D4A57444" : "#D4A57422"} strokeWidth="1" strokeDasharray="2 2" />
                 <line x1={center} y1={padding} x2={center} y2={size-padding} stroke={forceLight ? "#D4A57444" : "#D4A57422"} strokeWidth="1" strokeDasharray="2 2" />
 
                 {/* Axis Labels */}
-                <text x={center} y={padding-10} fill="#D4A574" fontSize="8" textAnchor="middle" className="uppercase tracking-[0.2em] font-bold opacity-40">Emotional</text>
-                <text x={center} y={size-padding+18} fill="#D4A574" fontSize="8" textAnchor="middle" className="uppercase tracking-[0.2em] font-bold opacity-40">Rational</text>
-                <text x={size-padding+10} y={center} fill="#D4A574" fontSize="8" textAnchor="start" alignmentBaseline="middle" className="uppercase tracking-[0.2em] font-bold opacity-40">Dominance</text>
-                <text x={padding-10} y={center} fill="#D4A574" fontSize="8" textAnchor="end" alignmentBaseline="middle" className="uppercase tracking-[0.2em] font-bold opacity-40">Submission</text>
+                <text x={center} y={padding-10} fill="#D4A574" fontSize="8" fontWeight="bold" textAnchor="middle" className="uppercase tracking-widest">Emotional</text>
+                <text x={center} y={size-padding+18} fill="#D4A574" fontSize="8" fontWeight="bold" textAnchor="middle" className="uppercase tracking-widest">Rational</text>
+                <text x={size-padding+10} y={center} fill="#D4A574" fontSize="8" fontWeight="bold" textAnchor="start" alignmentBaseline="middle" className="uppercase tracking-widest">Dominance</text>
+                <text x={padding-10} y={center} fill="#D4A574" fontSize="8" fontWeight="bold" textAnchor="end" alignmentBaseline="middle" className="uppercase tracking-widest">Submission</text>
 
                 {/* Target Mapping Area (Glowing Pulse) */}
                 <g className="transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]">
