@@ -1819,7 +1819,8 @@ export default function AssetWorkspace({
                                 </div>
                             </div>
                         </div>
-                    )}
+                    </div>
+                )}
 
                 {/* RIGHT COLUMN: Scrollable Forensic Console (55%) */}
                 <div className="vault-analysis-content-rail w-full min-h-screen bg-[#FBFBF6] relative">
@@ -2757,7 +2758,8 @@ export default function AssetWorkspace({
 
                     </div>
                 </div>
-                </div>
+            </div>
+            </div>
             </div>
             </div>
             </div>
