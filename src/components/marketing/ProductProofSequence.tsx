@@ -369,7 +369,7 @@ function WhyDifferentSection() {
                                 {/* Sovereign / Premium Advantage */}
                                 <div className="relative pl-6 py-4 border-l-[3px] border-[#D4A574] bg-[#F7F1E7]/40 rounded-r-2xl">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574] mb-2">Sovereign Advantage</p>
-                                    <p className="text-[15px] leading-relaxed font-bold text-[#151310] tracking-tight">
+                                    <p className="text-[15px] leading-relaxed font-medium text-[#151310] tracking-tight">
                                         {block.weDo}
                                     </p>
                                 </div>
