@@ -412,13 +412,6 @@ function PlatformSystemGrid() {
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8E7450]">0{index + 1}</p>
                     <h3 className="mt-2 text-[15px] font-semibold leading-snug text-[#141414]">{section.label}</h3>
                     <p className="mt-2 max-w-[25ch] text-sm leading-6 text-[#5E584F]">{STEP_PUNCH[section.id]}</p>
-                    <a
-                        href={`#${section.id}`}
-                        className={`${HOMEPAGE_TEXT_CTA} mt-3`}
-                    >
-                        <span>View Step</span>
-                        <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
-                    </a>
                 </motion.article>
             ))}
         </div>
