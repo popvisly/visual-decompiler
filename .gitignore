@@ -21,10 +21,13 @@ dev_pid.txt
 # clerk configuration (can include secrets)
 /.clerk/
 
-# Temp / Local test files
+# Temp / Local test files (except public assets)
 *.png
 *.jpg
 *.jpeg
+!public/**/*.png
+!public/**/*.jpg
+!public/**/*.jpeg
 *.txt
 *.html
 *.log
