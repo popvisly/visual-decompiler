@@ -219,10 +219,10 @@ function DifferentialDiagnosisSection() {
                     <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">Intelligence Pulse</p>
                 </div>
 
-                <h3 className="max-w-4xl text-[38px] font-bold leading-[1.1] tracking-tight text-[#151310] md:text-6xl">
+                <h3 className="max-w-4xl text-[34px] font-bold leading-[1.1] tracking-tight text-[#151310] md:text-5xl">
                     Differential Diagnosis
                 </h3>
-                <p className="mt-6 max-w-3xl text-[17px] leading-relaxed text-[#6A6257] md:text-[20px] font-medium tracking-tight">
+                <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#6A6257] md:text-[18px] font-medium tracking-tight">
                     Compare two assets and surface strategic delta, persuasion lift, and fatigue risk before you commit creative direction.
                 </p>
 
@@ -302,10 +302,10 @@ function WhyDifferentSection() {
                     <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">
                         WHY TEAMS SWITCH
                     </p>
-                    <h2 className="mt-6 text-[38px] font-bold leading-[1] tracking-tight text-[#151310] md:text-6xl">
+                    <h2 className="mt-5 text-[34px] font-bold leading-[1] tracking-tight text-[#151310] md:text-5xl">
                         Forensic intelligence your team can act on in minutes.
                     </h2>
-                    <p className="mt-6 max-w-3xl text-[17px] leading-relaxed text-[#6A6257] md:text-[20px] font-medium tracking-tight">
+                    <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#6A6257] md:text-[18px] font-medium tracking-tight">
                         See exactly where generic spy tools stop and where Visual Decompiler creates client-ready strategic outputs.
                     </p>
                 </div>
@@ -435,10 +435,10 @@ export default function ProductProofSequence() {
                 >
                     <div className="mb-10 md:mb-14">
                         <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">System Architecture</p>
-                        <h2 className="mt-6 max-w-5xl text-[38px] font-bold leading-[1] tracking-tight text-[#151310] md:text-6xl">
+                        <h2 className="mt-5 max-w-5xl text-[34px] font-bold leading-[1] tracking-tight text-[#151310] md:text-5xl">
                             The operating layer behind every forensic readout.
                         </h2>
-                        <p className="mt-6 max-w-3xl text-[17px] leading-relaxed text-[#6A6257] md:text-[20px] font-medium tracking-tight">
+                        <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#6A6257] md:text-[18px] font-medium tracking-tight">
                             Move from one asset to compounding intelligence, execution-ready outputs, and agency delivery without adding workflow noise.
                         </p>
                     </div>
