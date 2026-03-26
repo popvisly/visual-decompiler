@@ -347,12 +347,15 @@ export default function AnalyticalHero() {
                             className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(215,176,122,0.4)]"
                         />
                     </div>
-                    <h1 className="text-[36px] font-medium leading-[1.2] tracking-[-0.5px] text-[#FBFBF6] sm:text-[44px] md:text-[56px]">
-                        Forensic Intelligence
+                    <div className="flex flex-col gap-3 mb-6 items-center">
+                        <span className="block text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]/80">Forensic Intelligence System</span>
+                        <div className="h-px w-12 bg-[#D4A574]/30" />
+                    </div>
+                    <h1 className="text-[40px] font-bold leading-[1.1] tracking-tight text-[#FBFBF6] sm:text-[48px] md:text-[64px]">
+                        See the strategy
                         <br />
-                        for{' '}
                         <span
-                            className="font-serif font-medium tracking-[-0.04em] drop-shadow-[0_1px_12px_rgba(0,0,0,0.18)] transition-[opacity,color] duration-[600ms] ease-in-out"
+                            className="inline-block transition-[opacity,color] duration-[600ms] ease-in-out border-l-[3px] border-[#D4A574] pl-6 py-1 ml-4 mt-2"
                             style={{ color: persona.color, opacity: personaVisible ? 1 : 0 }}
                         >
                             {persona.role}
@@ -370,17 +373,18 @@ export default function AnalyticalHero() {
             <div
                 className={`pointer-events-none absolute z-20 transition-all duration-700 ease-in-out ${labelVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
                 style={{
-                    left: `calc(${currentCluster.centerX * 100}% + 20px)`,
-                    top: `calc(${currentCluster.centerY * 100}% - 20px)`,
+                    left: `calc(${currentCluster.centerX * 100}% + 24px)`,
+                    top: `calc(${currentCluster.centerY * 100}% - 24px)`,
                 }}
             >
-                <div className="rounded-md border border-[#D7B07A] bg-[#141414]/95 px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-[#D4A574] shadow-[0_0_15px_rgba(215,176,122,0.3),0_0_30px_rgba(215,176,122,0.15)] animate-[pulse_2s_ease-in-out_infinite]">
-                    {currentCluster.name}
-                </div>
-                
-                <div className="mt-2 max-w-[280px] rounded-[4px] bg-[#141414]/88 px-4 py-2.5 pl-7 text-[12px] leading-[1.55] text-[#D2CCC2] relative text-left">
-                    <span className="absolute left-3 top-1/2 h-0 w-0 -translate-y-1/2 border-b-[5px] border-l-[6px] border-r-0 border-t-[5px] border-b-transparent border-l-[#D4A574] border-t-transparent" />
-                    {currentCluster.info}
+                <div className="border-l-[2px] border-[#D7B07A] bg-[#141414]/90 px-5 py-3 shadow-[0_4px_24px_rgba(0,0,0,0.4)] backdrop-blur-sm">
+                    <div className="flex items-center gap-3 mb-1.5 border-b border-[#D7B07A]/20 pb-1.5">
+                        <div className="h-1.5 w-1.5 rounded-full bg-[#D7B07A] animate-pulse" />
+                        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">{currentCluster.name}</span>
+                    </div>
+                    <p className="text-[11px] leading-relaxed text-[#D2CCC2] font-light italic max-w-[240px]">
+                        {currentCluster.info}
+                    </p>
                 </div>
             </div>
             
