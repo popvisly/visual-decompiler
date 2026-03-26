@@ -1920,11 +1920,11 @@ export default function AssetWorkspace({
                                                     <InfoButton section="VISUAL_STYLE" />
                                                 </div>
                                                 <div className="flex flex-col h-full">
-                                                    <p className="mt-2 mb-6 max-w-[62ch] text-sm font-light uppercase leading-relaxed tracking-[0.15em] text-[#151310]">
+                                                    <p className="mt-2 mb-6 max-w-[62ch] text-[15px] font-medium leading-relaxed tracking-tight text-[#151310]">
                                                         {extraction.visual_style}
-                                                     <p className="mt-2 mb-6 max-w-[62ch] text-[15px] font-medium leading-relaxed tracking-tight text-[#151310]">
-                                                         {extraction.visual_style}
-                                                     </p>
+                                                    </p>
+
+                                                    {/* Aesthetic Signature Matrix */}
                                                     <div className="mt-auto pt-6 border-t border-[#D4A574]/10 space-y-4">
                                                         <div className="flex items-center gap-4">
                                                             <span className="text-[10px] font-bold text-[#D4A574]/60 uppercase tracking-[0.2em] w-14">Luma</span>
