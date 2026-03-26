@@ -129,8 +129,6 @@ export default function AnalyticalHero() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [personaIndex, setPersonaIndex] = useState(0);
     const [personaVisible, setPersonaVisible] = useState(true);
-    const [labelIndex, setLabelIndex] = useState(0);
-    const [labelVisible, setLabelVisible] = useState(true);
 
     useEffect(() => {
         let holdTimeout = 0;
@@ -141,14 +139,11 @@ export default function AnalyticalHero() {
             holdTimeout = window.setTimeout(() => {
                 if (cancelled) return;
                 setPersonaVisible(false);
-                setLabelVisible(false);
 
                 fadeTimeout = window.setTimeout(() => {
                     if (cancelled) return;
                     setPersonaIndex((current) => (current + 1) % PERSONAS.length);
-                    setLabelIndex((current) => (current + 1) % CLUSTERS.length);
                     setPersonaVisible(true);
-                    setLabelVisible(true);
                     scheduleCycle();
                 }, 600);
             }, 8000);
@@ -196,34 +191,34 @@ export default function AnalyticalHero() {
                 this.vy = 0;
                 this.size = Math.random() * 2 + 1;
                 this.cluster = CLUSTERS[Math.floor(Math.random() * CLUSTERS.length)];
-                this.opacity = Math.random() * 0.4 + 0.2;
+                this.opacity = Math.random() * 0.35 + 0.12;
                 this.angle = Math.random() * Math.PI * 2;
-                this.orbitSpeed = (Math.random() - 0.5) * 0.001;
+                this.orbitSpeed = (Math.random() - 0.5) * 0.00025;
             }
 
             update() {
                 const dx = mouse.x - this.x;
                 const dy = mouse.y - this.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-                const force = Math.min(100 / (distance + 1), 1);
+                const force = Math.min(80 / (distance + 1), 0.4);
 
                 const clusterX = this.cluster.centerX * width;
                 const clusterY = this.cluster.centerY * height;
                 const cdx = clusterX - this.x;
                 const cdy = clusterY - this.y;
 
-                this.vx += cdx * 0.0005 + dx * 0.02 * force;
-                this.vy += cdy * 0.0005 + dy * 0.02 * force;
+                this.vx += cdx * 0.00012 + dx * 0.004 * force;
+                this.vy += cdy * 0.00012 + dy * 0.004 * force;
 
-                this.vx *= 0.95;
-                this.vy *= 0.95;
+                this.vx *= 0.97;
+                this.vy *= 0.97;
 
                 this.x += this.vx;
                 this.y += this.vy;
 
                 this.angle += this.orbitSpeed;
-                this.x += Math.cos(this.angle) * 0.1;
-                this.y += Math.sin(this.angle) * 0.1;
+                this.x += Math.cos(this.angle) * 0.05;
+                this.y += Math.sin(this.angle) * 0.05;
 
                 if (this.x < 0) this.x = width;
                 if (this.x > width) this.x = 0;
@@ -327,7 +322,6 @@ export default function AnalyticalHero() {
     }, []);
 
     const persona = PERSONAS[personaIndex];
-    const currentCluster = CLUSTERS[labelIndex];
 
     return (
         <section ref={sectionRef} className="relative isolate min-h-[100svh] overflow-hidden bg-[#141414] text-[#FBFBF6]">
@@ -389,23 +383,7 @@ export default function AnalyticalHero() {
                 </div>
             </div>
 
-            <div
-                className={`pointer-events-none absolute z-20 transition-all duration-700 ease-in-out ${labelVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
-                style={{
-                    left: `calc(${currentCluster.centerX * 100}% + 24px)`,
-                    top: `calc(${currentCluster.centerY * 100}% - 24px)`,
-                }}
-            >
-                <div className="border-l-[2px] border-[#D7B07A] bg-[#141414]/90 px-5 py-3 shadow-[0_4px_24px_rgba(0,0,0,0.4)] backdrop-blur-sm">
-                    <div className="flex items-center gap-3 mb-1.5 border-b border-[#D7B07A]/20 pb-1.5">
-                        <div className="h-1.5 w-1.5 rounded-full bg-[#D7B07A] animate-pulse" />
-                        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">{currentCluster.name}</span>
-                    </div>
-                    <p className="text-[11px] leading-relaxed text-[#D2CCC2] font-light italic max-w-[240px]">
-                        {currentCluster.info}
-                    </p>
-                </div>
-            </div>
+
             
         </section>
     );
