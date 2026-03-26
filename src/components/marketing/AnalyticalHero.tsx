@@ -36,7 +36,7 @@ const PERSONAS: Persona[] = [
     {
         role: 'Strategy Directors',
         subtitle: 'Surface the invisible mechanics competitors deploy — signal stacks, trigger distribution, and strategic posture at category scale.',
-        color: '#E7D9C3',
+        color: '#888888',
     },
     {
         role: 'Brand Managers',
@@ -106,6 +106,7 @@ export default function AnalyticalHero() {
                             <span className="inline-flex items-baseline gap-3 mt-2">
                                 <span className="text-[#FBFBF6]/50">for</span>
                                 <span
+                                    className="font-serif font-medium tracking-[-0.02em]"
                                     style={{
                                         color: persona.color,
                                         opacity: personaVisible ? 1 : 0,
