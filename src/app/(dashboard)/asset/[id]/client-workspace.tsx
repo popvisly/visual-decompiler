@@ -1883,13 +1883,24 @@ export default function AssetWorkspace({
                                                      <div className="hidden lg:block w-[1px] h-32 bg-[#E6DDCF]/60 mx-8" />
 
                                                      {/* Right: System Confidence */}
-                                                     <div className="w-full lg:w-48 flex flex-col">
-                                                          <div className="flex justify-between items-center mb-4 border-b border-[#E6DDCF] pb-3">
-                                                              <span className="block text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]">Confidence Score</span>
+                                                      <div className="w-full lg:w-72 flex flex-col h-full">
+                                                          <div className="flex justify-between items-center mb-6 border-b border-[#E6DDCF] pb-4">
+                                                              <div className="flex items-center gap-3">
+                                                                  <div className="h-5 w-5 rounded-full bg-[#D4A574]/10 flex items-center justify-center">
+                                                                      <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
+                                                                  </div>
+                                                                  <span className="block text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]">Confidence Score</span>
+                                                              </div>
                                                               <InfoButton section="SYSTEM_CONFIDENCE" />
                                                           </div>
-                                                          <div className="text-5xl font-sans font-bold text-[#151310] tracking-tighter mt-auto lg:text-right flex items-baseline lg:justify-end gap-1">
-                                                              {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-[18px] text-[#D4A574]">/100</span>
+                                                          <div className="flex flex-col gap-4">
+                                                              <div className="text-5xl font-sans font-bold text-[#151310] tracking-tighter flex items-baseline gap-1">
+                                                                  {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}
+                                                                  <span className="text-[18px] text-[#D4A574] font-medium uppercase tracking-widest">/100</span>
+                                                              </div>
+                                                              <p className="text-[11px] leading-relaxed text-[#6A6257] font-light italic">
+                                                                  AI-weighted validation based on semiotic signal strength and cross-correlational data integrity.
+                                                              </p>
                                                           </div>
                                                       </div>
                                                  </div>
