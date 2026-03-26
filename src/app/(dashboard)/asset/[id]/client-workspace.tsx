@@ -2052,35 +2052,36 @@ export default function AssetWorkspace({
                                             intro="A structural decomposition of the creative signal stack—hooks, pacing, contrast, and attention-routing cues that drive response."
                                         />
                                         
-                                        {/* RADIANT ARCHITECTURE TOGGLE - Premium Card */}
-                                        <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm flex flex-col gap-6 md:flex-row md:items-center justify-between">
-                                            <div className="flex items-center gap-6">
-                                                <div className="h-12 w-12 rounded-2xl bg-[#D4A574]/10 flex items-center justify-center border border-[#D4A574]/20">
-                                                    <Sparkles className="h-6 w-6 text-[#D4A574]" />
+                                        {/* UNIFIED TECHNICAL AUTOPSY CONTAINER */}
+                                        <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm space-y-10">
+                                            {/* Top: Radiant Architecture Toggle */}
+                                            <div className="flex flex-col gap-6 md:flex-row md:items-center justify-between pb-8 border-b border-[#E6DDCF]/60">
+                                                <div className="flex items-center gap-6">
+                                                    <div className="h-12 w-12 rounded-2xl bg-[#D4A574]/10 flex items-center justify-center border border-[#D4A574]/20">
+                                                        <Sparkles className="h-6 w-6 text-[#D4A574]" />
+                                                    </div>
+                                                    <div className="flex flex-col gap-1">
+                                                        <h3 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#9B8662]">Macro-Diagnostic Map</h3>
+                                                        <p className="text-[13px] text-[#6A6257] font-light tracking-wide">Visualize optical trajectories and focal anchors in the creative signal stack.</p>
+                                                    </div>
                                                 </div>
-                                                <div className="flex flex-col gap-1">
-                                                    <h3 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#9B8662]">Macro-Diagnostic Map</h3>
-                                                    <p className="text-[13px] text-[#6A6257] font-light tracking-wide">Visualize optical trajectories and focal anchors in the creative signal stack.</p>
-                                                </div>
+                                                <button 
+                                                    onClick={() => setShowRadiant(!showRadiant)}
+                                                    className={`px-8 py-3 rounded-full border text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-500 flex items-center gap-3 ${showRadiant ? "bg-[#D4A574] text-white border-[#D4A574] shadow-md shadow-[#D4A574]/20" : "bg-transparent text-[#9B8662] border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-[#FBF7F1]"}`}
+                                                >
+                                                    <div className={`h-1.5 w-1.5 rounded-full ${showRadiant ? "bg-white animate-pulse" : "bg-[#D4A574]"}`} />
+                                                    {showRadiant ? "Active: Radiant Architecture" : "Initialize Radiant Architecture"}
+                                                </button>
                                             </div>
-                                            <button 
-                                                onClick={() => setShowRadiant(!showRadiant)}
-                                                className={`px-8 py-3 rounded-full border text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-500 flex items-center gap-3 ${showRadiant ? "bg-[#D4A574] text-white border-[#D4A574] shadow-md shadow-[#D4A574]/20" : "bg-transparent text-[#9B8662] border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-[#FBF7F1]"}`}
-                                            >
-                                                <div className={`h-1.5 w-1.5 rounded-full ${showRadiant ? "bg-white animate-pulse" : "bg-[#D4A574]"}`} />
-                                                {showRadiant ? "Active: Radiant Architecture" : "Initialize Radiant Architecture"}
-                                            </button>
-                                        </div>
 
-                                        <div className="border-t border-[#E6DDCF] pt-8 mt-2" />
-
-                                        {/* Technical Autopsy: Channels Only */}
-                                        <div className="grid grid-cols-1 gap-8">
-                                            <DossierGrid 
-                                                title="Semiotic Subtext" 
-                                                content={extraction.full_dossier.semiotic_subtext || ''} 
-                                                type="CHANNEL" 
-                                            />
+                                            {/* Bottom: Technical Autopsy Channels */}
+                                            <div className="grid grid-cols-1">
+                                                <DossierGrid 
+                                                    title="Semiotic Subtext" 
+                                                    content={extraction.full_dossier.semiotic_subtext || ''} 
+                                                    type="CHANNEL" 
+                                                />
+                                            </div>
                                         </div>
 
                                         {/* ── Gaze Topology ── */}
