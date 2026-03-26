@@ -228,10 +228,6 @@ export default function DossierDecisionSummary({
                 <div className="mt-5 grid items-start gap-3 xl:grid-cols-2">
                     {[
                         {
-                            label: 'Mechanism',
-                            value: extraction?.primary_mechanic || 'Mechanism still resolving.',
-                        },
-                        {
                             label: 'Audience tension',
                             value: audienceTension,
                         },
@@ -307,10 +303,6 @@ export default function DossierDecisionSummary({
                             {
                                 label: 'What it’s doing',
                                 value: summaryWhatItsDoing,
-                            },
-                            {
-                                label: 'Why it matters',
-                                value: summaryWhyItMatters,
                             },
                             {
                                 label: 'Recommended move',

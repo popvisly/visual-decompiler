@@ -1873,9 +1873,11 @@ export default function AssetWorkspace({
                                                              </div>
                                                              <InfoButton section="PRIMARY_MECHANIC" />
                                                          </div>
-                                                         <h2 className="text-3xl font-light uppercase tracking-[0.25em] text-[#151310] leading-tight selection:bg-[#D4A574]/20">
-                                                             {extraction.primary_mechanic}
-                                                         </h2>
+                                                         <div className="max-w-[80ch]">
+                                                              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[#151310] leading-[1.2] selection:bg-[#D4A574]/20 border-l-[3px] border-[#D4A574] pl-6 py-1">
+                                                                  {extraction.primary_mechanic}
+                                                              </h2>
+                                                          </div>
                                                      </div>
 
                                                      {/* Vertical Divider (Desktop Only) */}
@@ -1920,9 +1922,9 @@ export default function AssetWorkspace({
                                                 <div className="flex flex-col h-full">
                                                     <p className="mt-2 mb-6 max-w-[62ch] text-sm font-light uppercase leading-relaxed tracking-[0.15em] text-[#151310]">
                                                         {extraction.visual_style}
-                                                    </p>
-
-                                                    {/* Aesthetic Signature Matrix */}
+                                                     <p className="mt-2 mb-6 max-w-[62ch] text-[15px] font-medium leading-relaxed tracking-tight text-[#151310]">
+                                                         {extraction.visual_style}
+                                                     </p>
                                                     <div className="mt-auto pt-6 border-t border-[#D4A574]/10 space-y-4">
                                                         <div className="flex items-center gap-4">
                                                             <span className="text-[10px] font-bold text-[#D4A574]/60 uppercase tracking-[0.2em] w-14">Luma</span>
