@@ -247,7 +247,7 @@ function DifferentialDiagnosisSection() {
                             Asset B · Target
                         </div>
                         <Image
-                            src="/images/examples/Miss DIOR.jpg"
+                            src="/images/examples/Miss%20DIOR.jpg"
                             alt="Target variant for differential diagnosis"
                             width={1000}
                             height={1333}
