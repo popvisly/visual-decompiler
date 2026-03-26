@@ -341,22 +341,35 @@ export default function AnalyticalHero() {
                 <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
                     <div className="flex flex-col text-center lg:text-left">
                         <div className="mb-8 flex flex-col gap-4 items-center lg:items-start">
-                            <span className="text-[11px] font-bold uppercase tracking-[0.5em] text-[#D4A574]/80">For Creative Strategists</span>
+                            <span className="text-[11px] font-bold uppercase tracking-[0.5em] text-[#D4A574]/80">Forensic Intelligence System</span>
                             <div className="h-px w-12 bg-[#D4A574]/30" />
                         </div>
-                        
-                        <h1 className="text-[44px] font-bold leading-[0.95] tracking-tight text-[#FBFBF6] sm:text-[56px] md:text-[72px] lg:text-[84px]">
-                            See exactly
+
+                        <h1 className="text-[44px] font-bold leading-[1.0] tracking-tight text-[#FBFBF6] sm:text-[56px] md:text-[68px] lg:text-[80px]">
+                            Forensic Intelligence
                             <br />
-                            what any ad
-                            <br />
-                            <span className="inline-block border-l-[4px] border-[#D4A574] pl-6 py-2 mt-4 text-[#D4A574]">
-                                is doing.
+                            <span className="inline-flex items-baseline gap-3 mt-2">
+                                <span className="text-[#FBFBF6]/60">for</span>
+                                <span
+                                    style={{
+                                        color: persona.color,
+                                        opacity: personaVisible ? 1 : 0,
+                                        transition: 'opacity 0.6s ease-in-out, color 0.6s ease-in-out',
+                                    }}
+                                >
+                                    {persona.role}
+                                </span>
                             </span>
                         </h1>
-                        
-                        <p className="mt-8 max-w-[32rem] text-[18px] leading-[1.6] text-[#9A9A94] font-medium tracking-tight md:text-[21px] mx-auto lg:mx-0">
-                            Drop any ad. See the invisible persuasion mechanics, strategic signals, and reconstruction blueprint — in under 60 seconds.
+
+                        <p
+                            className="mt-8 max-w-[32rem] text-[17px] leading-[1.65] text-[#9A9A94] font-medium tracking-tight md:text-[19px] mx-auto lg:mx-0"
+                            style={{
+                                opacity: personaVisible ? 1 : 0,
+                                transition: 'opacity 0.6s ease-in-out',
+                            }}
+                        >
+                            {persona.subtitle}
                         </p>
 
                         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
@@ -369,7 +382,7 @@ export default function AnalyticalHero() {
                                 <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                             </a>
                         </div>
-                        
+
                         <p className="mt-8 text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]/40">
                             No card required · 5 free analyses · White-label ready
                         </p>
