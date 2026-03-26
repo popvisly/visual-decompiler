@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { LinkCta } from '@/types/homepage';
-import HeroAppPreview from '@/components/marketing/HeroAppPreview';
+import AdRolodexScanner from '@/components/marketing/AdRolodexScanner';
 import {
     HOMEPAGE_CTA_ICON,
     HOMEPAGE_PRIMARY_CTA,
@@ -103,7 +103,7 @@ export default function Hero({
                         transition={{ duration: 0.85, ease: 'easeOut', delay: 0.12 }}
                         className="order-2 self-center transition-transform duration-500 ease-out lg:pl-2 lg:[transform:perspective(1200px)_rotateY(-2deg)] lg:hover:[transform:perspective(1200px)_rotateY(0deg)]"
                     >
-                        <HeroAppPreview />
+                        <AdRolodexScanner />
                     </motion.div>
                 </div>
             </div>

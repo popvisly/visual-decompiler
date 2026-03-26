@@ -17,6 +17,7 @@ import {
     HOMEPAGE_SECONDARY_CTA,
     HOMEPAGE_TEXT_CTA,
 } from '@/components/marketing/ctaStyles';
+import HeroAppPreview from '@/components/marketing/HeroAppPreview';
 
 type ProofPoint = {
     label: string;
@@ -449,13 +450,13 @@ function SingleAssetDeconstruction() {
                     <div>
                         <div className="mb-6 flex items-center gap-3">
                             <span className="h-px w-12 bg-gradient-to-r from-[#D4A574] to-transparent" />
-                            <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">Forensic Deconstruction</p>
+                            <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">Dossier Construction</p>
                         </div>
-                        <h2 className="max-w-2xl text-[38px] font-bold leading-[1.1] tracking-tight text-[#151310] md:text-6xl">
-                            See exactly what any ad is doing.
+                        <h2 className="max-w-2xl text-[38px] font-bold leading-[1.1] tracking-tight text-[#151310] md:text-5xl">
+                            Deconstruct the hidden persuasion architecture.
                         </h2>
-                        <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-[#6A6257] md:text-[20px] font-medium tracking-tight">
-                            Feed any competitor asset into the engine. Our agents map the hidden persuasion architecture, trigger signals, and decision layers in seconds.
+                        <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-[#6A6257] md:text-[18px] font-medium tracking-tight">
+                            Upload any competitor ad and get a client-ready strategic dossier — psychology, signals, and a reconstruction blueprint — in under 60 seconds.
                         </p>
 
                         <div className="mt-10 grid gap-6 sm:grid-cols-2">
@@ -472,75 +473,7 @@ function SingleAssetDeconstruction() {
 
                     {/* The "Ad-Cycle" Scanner UI */}
                     <div className="relative">
-                        <div className="relative aspect-[4/5] w-full rounded-[3rem] border border-[#E6DDCF] bg-[#F7F1E7]/30 p-4 shadow-[0_24px_50px_rgba(20,18,15,0.08)]">
-                            <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310]">
-                                <AnimatePresence mode="wait">
-                                    <motion.div
-                                        key={activeAd.src}
-                                        initial={{ opacity: 0, x: 20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: -20 }}
-                                        transition={{ 
-                                            duration: 0.6, 
-                                            ease: SECTION_EASE
-                                        }}
-                                        className="absolute inset-0"
-                                    >
-                                        <Image
-                                            src={activeAd.src}
-                                            alt={activeAd.label}
-                                            fill
-                                            unoptimized
-                                            className="object-cover opacity-60 grayscale-[0.3] transition-all duration-700"
-                                        />
-                                        
-                                        {/* Scanner Overlay Elements */}
-                                        <div className="absolute inset-0 z-20 pointer-events-none">
-                                            <div className="absolute inset-0 border-[0.5px] border-[#D4A574]/30" />
-                                            <motion.div 
-                                                animate={{ top: ['0%', '100%', '0%'] }}
-                                                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                                                className="absolute left-0 right-0 h-px bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.6)]"
-                                            />
-                                            
-                                            {/* Live Labels */}
-                                            <div className="absolute top-8 left-8">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574] animate-pulse" />
-                                                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Extracting: {activeAd.label}</span>
-                                                </div>
-                                            </div>
-                                            
-                                            <motion.div 
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                transition={{ delay: 1 }}
-                                                className="absolute bottom-12 right-12 text-right bg-[#151310]/80 backdrop-blur-md border border-[#D4A574]/20 p-3 rounded-lg"
-                                            >
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] mb-1">{activeAd.mechanic}</p>
-                                                <p className="text-[9px] uppercase tracking-[0.1em] text-[#E7DDCF]">Diagnostic Accuracy 98.4%</p>
-                                            </motion.div>
-                                            
-                                            {/* Scanning Crosshairs */}
-                                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-44 w-44 border-[0.5px] border-[#D4A574]/30 rounded-full">
-                                                <div className="absolute top-[-4px] left-1/2 -translate-x-1/2 h-2 w-px bg-[#D4A574]" />
-                                                <div className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 h-2 w-px bg-[#D4A574]" />
-                                                <div className="absolute left-[-4px] top-1/2 -translate-y-1/2 w-2 h-px bg-[#D4A574]" />
-                                                <div className="absolute right-[-4px] top-1/2 -translate-y-1/2 w-2 h-px bg-[#D4A574]" />
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                </AnimatePresence>
-                            </div>
-                            
-                            {/* Outer "Clinical" Annotations */}
-                            <div className="absolute -left-6 top-1/4 rounded-lg border border-[#D4A574]/20 bg-white/95 backdrop-blur px-3 py-2 shadow-xl">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-[#D4A574]">Sovereign Extract v2.0</p>
-                            </div>
-                            <div className="absolute -right-6 bottom-1/4 rounded-lg border border-[#D4A574]/20 bg-white/95 backdrop-blur px-3 py-2 shadow-xl">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-[#D4A574]">Neural Map Engaged</p>
-                            </div>
-                        </div>
+                        <HeroAppPreview />
                     </div>
                 </div>
             </motion.div>
