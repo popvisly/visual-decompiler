@@ -49,7 +49,7 @@ export default function Hero({
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.75, ease: 'easeOut', delay: 0.05 }}
-                            className="mt-5 max-w-[11ch] text-[34px] font-semibold leading-[0.96] tracking-[-0.03em] text-[#141414] sm:max-w-none sm:text-[42px] md:text-[52px] lg:text-[60px]"
+                            className="mt-5 max-w-[12ch] text-[40px] font-bold leading-[1] tracking-[-0.03em] text-[#141414] sm:max-w-none sm:text-[48px] md:text-[60px] lg:text-[72px]"
                         >
                             {headline}
                         </motion.h2>
@@ -58,7 +58,7 @@ export default function Hero({
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.75, ease: 'easeOut', delay: 0.12 }}
-                            className="mx-auto mt-5 max-w-[32rem] text-[16px] font-normal leading-[1.66] tracking-[-0.01em] text-[#141414]/72 md:text-[18px] lg:mx-0 lg:max-w-[31rem] lg:text-[19px]"
+                            className="mx-auto mt-6 max-w-[34rem] text-[17px] font-medium leading-[1.6] tracking-tight text-[#141414]/80 md:text-[19px] lg:mx-0 lg:max-w-[32rem] lg:text-[21px]"
                         >
                             {subhead}
                         </motion.p>
