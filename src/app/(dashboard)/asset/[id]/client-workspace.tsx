@@ -1913,6 +1913,39 @@ export default function AssetWorkspace({
                                                     onToggleExecutiveSummary={setIsExecutiveSummary}
                                                     evidenceHref="#dossier-evidence"
                                                 />
+
+                                                 {/* Narrative Structural Readout (Acts I-III) */}
+                                                 <div className="space-y-6 pt-10 border-t border-[#E6DDCF]/50">
+                                                     <div className="flex items-center gap-6 mb-8">
+                                                         <div className="flex flex-col gap-2">
+                                                             <h3 className="text-xl font-light uppercase tracking-[0.35em] text-[#8B4513]">Narrative Structural Readout</h3>
+                                                             <p className="text-[10px] text-[#9B8662]/60 font-bold tracking-[0.25em] uppercase">Phase-Aware Persuasion Mechanics</p>
+                                                         </div>
+                                                         <div className="h-px flex-1 bg-[#E6DDCF]/60" />
+                                                     </div>
+                                                     
+                                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                                         {narrativeSections.sections.slice(0, 3).map((act, i) => (
+                                                             <div key={i} className={ANALYSIS_CARD_CLASS + " flex flex-col min-h-[260px] hover:border-[#D4A574]/40 transition-colors group"}>
+                                                                 <div className="flex justify-between items-center mb-5 border-b border-[#E6DDCF] pb-3">
+                                                                     <div className="flex items-center gap-2">
+                                                                         <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
+                                                                         <span className="text-[10px] font-bold text-[#9B8662] uppercase tracking-[0.25em]">{act.label || `ACT ${i+1}`}</span>
+                                                                     </div>
+                                                                     <div className="h-5 w-5 rounded-full bg-[#D4A574]/5 flex items-center justify-center border border-[#D4A574]/10">
+                                                                         <div className="h-1 w-1 rounded-full bg-[#D4A574]/40" />
+                                                                     </div>
+                                                                 </div>
+                                                                 <h4 className="text-[13px] font-bold uppercase tracking-wider text-[#151310] mb-4 min-h-[3em] leading-tight selection:bg-[#D4A574]/10 group-hover:text-[#8B4513] transition-colors">
+                                                                     {act.title || 'Diagnostic Entrance'}
+                                                                 </h4>
+                                                                 <p className="text-[13px] text-[#6A6257] leading-relaxed font-light line-clamp-[6] lg:line-clamp-[8]">
+                                                                     {act.text}
+                                                                 </p>
+                                                             </div>
+                                                         ))}
+                                                     </div>
+                                                 </div>
                                             </>
                                         )}
 
