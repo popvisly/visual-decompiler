@@ -12,14 +12,7 @@ export default function HomePage() {
 
             <AnalyticalHero />
 
-            <Hero
-                eyebrow="For creative strategists"
-                headline="See exactly what any ad is doing."
-                subhead="Drop any ad. Get a client-ready strategic dossier — persuasion mechanics, psychology, signals, and a reconstruction blueprint — in under 60 seconds."
-                ctaPrimary={{ label: 'Start Decompiling Free', href: '/ingest' }}
-                ctaSecondary={{ label: 'Open Sample Dossier', href: SAMPLE_DOSSIER_HREF }}
-                microproof="No card required · 5 free analyses · White-label export ready"
-            />
+            <Hero />
 
             <ProductProofSequence />
 

@@ -119,6 +119,11 @@ const PERSONAS: Persona[] = [
     },
 ];
 
+import AdRolodexScanner from '@/components/marketing/AdRolodexScanner';
+import { ArrowUpRight } from 'lucide-react';
+import { HOMEPAGE_PRIMARY_CTA, HOMEPAGE_SECONDARY_CTA, HOMEPAGE_CTA_ICON } from '@/components/marketing/ctaStyles';
+import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
+
 export default function AnalyticalHero() {
     const sectionRef = useRef<HTMLElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -338,35 +343,49 @@ export default function AnalyticalHero() {
             `}</style>
             <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
-            <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 text-center">
-                <div className="max-w-[900px] flex flex-col items-center">
-                    <div className="mb-6 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center animate-logo-pulse">
-                        <img 
-                            src="/images/logo/Visual_Decompiler_Logo_v2_400px.png" 
-                            alt="Visual Decompiler Logo" 
-                            className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(215,176,122,0.4)]"
-                        />
+            <div className="relative z-10 mx-auto max-w-[1280px] px-6 py-24 md:py-32">
+                <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+                    <div className="flex flex-col text-center lg:text-left">
+                        <div className="mb-8 flex flex-col gap-4 items-center lg:items-start">
+                            <span className="text-[11px] font-bold uppercase tracking-[0.5em] text-[#D4A574]/80">For Creative Strategists</span>
+                            <div className="h-px w-12 bg-[#D4A574]/30" />
+                        </div>
+                        
+                        <h1 className="text-[44px] font-bold leading-[0.95] tracking-tight text-[#FBFBF6] sm:text-[56px] md:text-[72px] lg:text-[84px]">
+                            See exactly
+                            <br />
+                            what any ad
+                            <br />
+                            <span className="inline-block border-l-[4px] border-[#D4A574] pl-6 py-2 mt-4 text-[#D4A574]">
+                                is doing.
+                            </span>
+                        </h1>
+                        
+                        <p className="mt-8 max-w-[32rem] text-[18px] leading-[1.6] text-[#9A9A94] font-medium tracking-tight md:text-[21px] mx-auto lg:mx-0">
+                            Drop any ad. See the invisible persuasion mechanics, strategic signals, and reconstruction blueprint — in under 60 seconds.
+                        </p>
+
+                        <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
+                            <a href="/ingest" className={`${HOMEPAGE_PRIMARY_CTA} w-full sm:w-auto`}>
+                                <span>Start Decompiling Free</span>
+                                <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
+                            </a>
+                            <a href={SAMPLE_DOSSIER_HREF} className={`${HOMEPAGE_SECONDARY_CTA} w-full sm:w-auto !bg-transparent !border-[#D4A574]/30 !text-[#D4A574]`}>
+                                <span>Open Sample Dossier</span>
+                                <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
+                            </a>
+                        </div>
+                        
+                        <p className="mt-8 text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]/40">
+                            No card required · 5 free analyses · White-label ready
+                        </p>
                     </div>
-                    <div className="flex flex-col gap-3 mb-6 items-center">
-                        <span className="block text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]/80">Forensic Intelligence System</span>
-                        <div className="h-px w-12 bg-[#D4A574]/30" />
+
+                    <div className="relative flex justify-center lg:justify-end animate-in fade-in zoom-in duration-1000">
+                        <div className="relative w-full max-w-[500px] lg:max-w-none transform lg:[transform:perspective(1200px)_rotateY(-5deg)] hover:[transform:perspective(1200px)_rotateY(0deg)] transition-transform duration-700">
+                            <AdRolodexScanner />
+                        </div>
                     </div>
-                    <h1 className="text-[40px] font-bold leading-[1.1] tracking-tight text-[#FBFBF6] sm:text-[48px] md:text-[64px]">
-                        See the strategy
-                        <br />
-                        <span
-                            className="inline-block transition-[opacity,color] duration-[600ms] ease-in-out border-l-[3px] border-[#D4A574] pl-6 py-1 ml-4 mt-2"
-                            style={{ color: persona.color, opacity: personaVisible ? 1 : 0 }}
-                        >
-                            {persona.role}
-                        </span>
-                    </h1>
-                    <p
-                        className="mx-auto mt-6 max-w-[600px] text-[16px] leading-[1.6] text-[#9A9A94] transition-opacity duration-[600ms] ease-in-out"
-                        style={{ opacity: personaVisible ? 1 : 0 }}
-                    >
-                        {persona.subtitle}
-                    </p>
                 </div>
             </div>
 

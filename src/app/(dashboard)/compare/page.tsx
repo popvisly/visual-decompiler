@@ -395,13 +395,13 @@ export default function DifferentialDiagnosticsPage() {
                 <div className="flex flex-col gap-8 mb-8">
                     <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 border-b border-[#D4A574]/20 pb-8">
                         <div>
-                            <p className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#D4A574] mb-4">Intelligence Pulse</p>
-                            <h1 className="text-4xl md:text-6xl font-light tracking-tightest uppercase text-[#1A1A1A] leading-[0.92]">
+                            <p className="text-[10px] font-bold tracking-[0.42em] uppercase text-[#D4A574] mb-5">Intelligence Pulse</p>
+                            <h1 className="text-4xl md:text-6xl font-bold tracking-tight uppercase text-[#1A1A1A] leading-[0.92]">
                                 Differential
                                 <br />
                                 Diagnostic
                             </h1>
-                            <p className="mt-5 max-w-2xl text-[12px] font-medium uppercase tracking-[0.18em] text-[#1A1A1A]/45">
+                            <p className="mt-6 max-w-2xl text-[14px] font-medium uppercase tracking-[0.25em] text-[#1A1A1A]/50">
                                 Choose two assets from the Intelligence Vault and surface the strategic delta, persuasion lift, and fatigue gap.
                             </p>
                         </div>
@@ -444,56 +444,56 @@ export default function DifferentialDiagnosticsPage() {
                     )}
                 </div>
 
-                <div className="mb-8 rounded-[2rem] border border-[#D4A574]/18 bg-white px-6 py-6 shadow-sm">
-                    <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-                        <div>
-                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Setup Path</p>
-                            <div className="mt-4 grid gap-3 md:grid-cols-2">
-                                <div className={`rounded-[1.4rem] border px-4 py-4 ${assetA ? 'border-[#D4A574]/40 bg-[#FBF7EF]' : 'border-[#E7DED1] bg-[#FCFAF5]'}`}>
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step A</p>
-                                    <p className="mt-2 text-sm font-semibold uppercase tracking-[0.06em] text-[#1A1A1A]">Select Control Asset</p>
-                                    <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B]">
+                <div className="mb-12 rounded-[3rem] border border-[#D4A574]/20 bg-white px-8 py-8 shadow-sm">
+                    <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+                        <div className="flex-1">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B4513]">Setup Path</p>
+                            <div className="mt-5 grid gap-4 md:grid-cols-2">
+                                <div className={`rounded-[2.2rem] border px-6 py-6 transition-colors ${assetA ? 'border-[#D4A574]/50 bg-[#FBF7EF]' : 'border-[#E7DED1] bg-[#FCFAF5]'}`}>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#8B4513]/70">Step A</p>
+                                    <p className="mt-3 text-sm font-bold uppercase tracking-[0.1em] text-[#1A1A1A]">Select Control Asset</p>
+                                    <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B] font-medium">
                                         {assetA ? `${assetA.brand.name} loaded as control.` : 'Choose the baseline asset you want every other route measured against.'}
                                     </p>
                                 </div>
-                                <div className={`rounded-[1.4rem] border px-4 py-4 ${assetB ? 'border-[#D4A574]/40 bg-[#FBF7EF]' : 'border-[#E7DED1] bg-[#FCFAF5]'}`}>
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step B</p>
-                                    <p className="mt-2 text-sm font-semibold uppercase tracking-[0.06em] text-[#1A1A1A]">Select Proposed Asset</p>
-                                    <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B]">
+                                <div className={`rounded-[2.2rem] border px-6 py-6 transition-colors ${assetB ? 'border-[#D4A574]/50 bg-[#FBF7EF]' : 'border-[#E7DED1] bg-[#FCFAF5]'}`}>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#8B4513]/70">Step B</p>
+                                    <p className="mt-3 text-sm font-bold uppercase tracking-[0.1em] text-[#1A1A1A]">Select Proposed Asset</p>
+                                    <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B] font-medium">
                                         {assetB ? `${assetB.brand.name} loaded as proposed route.` : 'Choose the challenger route so the diagnostic can calculate lift, fatigue, and strategic delta.'}
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="mt-5 rounded-[1.4rem] border border-[#E7DED1] bg-[#FCFAF5] px-4 py-4">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Best first compare move</p>
-                                <div className="mt-3 space-y-2 text-[12px] leading-relaxed text-[#6B6B6B]">
-                                    <p><span className="font-semibold text-[#1A1A1A]">Asset A:</span> Your current strongest route (or latest approved draft).</p>
-                                    <p><span className="font-semibold text-[#1A1A1A]">Asset B:</span> Alternative concept, competitor benchmark, or revised iteration.</p>
-                                    <p><span className="font-semibold text-[#1A1A1A]">Output:</span> Strategic delta, persuasion lift, fatigue gap.</p>
-                                    <p><span className="font-semibold text-[#1A1A1A]">Next:</span> Keep winning route, then save to board.</p>
+                            <div className="mt-6 rounded-[2.2rem] border border-[#E7DED1] bg-[#FCFAF5] px-6 py-6">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#8B4513]/70">Best first compare move</p>
+                                <div className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3 text-[12px] leading-relaxed text-[#6B6B6B] font-medium uppercase tracking-wider">
+                                    <p><span className="text-[#D4A574]">Asset A:</span> Control Route</p>
+                                    <p><span className="text-[#D4A574]">Asset B:</span> Challenger variant</p>
+                                    <p><span className="text-[#D4A574]">Output:</span> Strategic Delta</p>
+                                    <p><span className="text-[#D4A574]">Next:</span> Commit Winner</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="min-w-[210px] space-y-4">
-                            <div className="rounded-[1.4rem] border border-[#D4A574]/18 bg-[#141414] px-5 py-5 text-[#FBF7EF]">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Progress State</p>
-                                <p className="mt-3 text-2xl font-light uppercase tracking-tight">{compareProgressLabel}</p>
-                                <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-white/55">
-                                    {isReady ? 'Differential diagnostic unlocked' : 'Select both assets to unlock the diagnostic'}
+                        <div className="md:w-[320px] space-y-4">
+                            <div className="rounded-[2.2rem] border border-[#D4A574]/20 bg-[#141414] px-7 py-7 text-[#FBF7EF] shadow-xl">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#D4A574]">Progress State</p>
+                                <p className="mt-4 text-3xl font-bold uppercase tracking-tight">{compareProgressLabel}</p>
+                                <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-white/40 font-medium">
+                                    {isReady ? 'Differential diagnostic unlocked' : 'Incomplete parameters'}
                                 </p>
                             </div>
 
-                            <div className="rounded-[1.4rem] border border-[#E7DED1] bg-[#FCFAF5] px-4 py-4">
+                            <div className="rounded-[2.2rem] border border-[#E7DED1] bg-[#FCFAF5] px-6 py-6 border-l-[3px] border-[#D4A574]">
                                 <button
                                     type="button"
                                     onClick={handleUseLatestResultAsAssetA}
-                                    className="inline-flex rounded-full border border-[#D4A574]/30 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513] transition hover:-translate-y-[1px] hover:border-[#D4A574]/45 hover:bg-white"
+                                    className="inline-flex rounded-full border border-[#D4A574]/40 px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.25em] text-[#8B4513] transition hover:-translate-y-[1px] hover:border-[#D4A574] hover:bg-white shadow-sm"
                                 >
                                     Use latest result as Asset A
                                 </button>
-                                <p className="mt-3 text-[11px] leading-relaxed text-[#6B6B6B]">
+                                <p className="mt-4 text-[12px] leading-relaxed text-[#6B6B6B] font-medium tracking-tight">
                                     {compareHelperMessage || 'Load your most recent completed dossier into Asset A when you want the fastest starting point.'}
                                 </p>
                             </div>
@@ -683,12 +683,12 @@ export default function DifferentialDiagnosticsPage() {
                                     </button>
                                 </div>
                             </div>
-                            <div className="mb-16 border-l-[3px] border-[#D4A574] pl-8">
-                                <h2 className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]/40 mb-4">Macro Synthesis</h2>
-                                <h1 className="text-3xl md:text-5xl font-light tracking-tightest text-[#1A1A1A] leading-[1.1] mb-6 uppercase">
+                             <div className="mb-16 border-l-[4px] border-[#D4A574] pl-10">
+                                <h2 className="text-[11px] font-bold tracking-[0.5em] uppercase text-[#1A1A1A]/40 mb-5">Macro Synthesis</h2>
+                                <h1 className="text-3xl md:text-6xl font-bold tracking-tight text-[#1A1A1A] leading-[1] mb-8 uppercase">
                                     {result.macro_synthesis.primary_shift}
                                 </h1>
-                                <p className="text-[#1A1A1A]/60 max-w-3xl text-sm leading-relaxed md:text-base font-medium">
+                                <p className="text-[#1A1A1A]/70 max-w-4xl text-[16px] leading-[1.8] md:text-[18px] font-medium tracking-tight">
                                     {result.macro_synthesis.strategic_delta_summary}
                                 </p>
                             </div>
@@ -1083,43 +1083,44 @@ function AssetSelectorPanel({
     onOpenDrawer: () => void
 }) {
     return (
-        <div className="flex-1 bg-[#1A1A1A] border border-[#D4A574]/20 rounded-[2.5rem] overflow-hidden min-h-[450px] relative transition-all duration-500 hover:border-[#D4A574]/50 group shadow-2xl">
+        <div className="flex-1 bg-[#1A1A1A] border border-[#D4A574]/30 rounded-[3rem] overflow-hidden min-h-[480px] relative transition-all duration-500 hover:border-[#D4A574]/60 group shadow-2xl">
             {/* Background Media View */}
             {selected && (
                 <div className="absolute inset-0">
                     <img
                         src={selected.file_url}
                         alt="Selected Asset"
-                        className="w-full h-full object-cover opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-1000"
+                        className="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-70 transition-all duration-1000"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-[#1A1A1A]/80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/20 to-[#1A1A1A]/60" />
                 </div>
             )}
 
             {/* Panel UI Layer */}
-            <div className="relative z-10 w-full h-full p-10 flex flex-col justify-between">
+            <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between">
                 <div>
-                    <h3 className="text-[11px] font-bold tracking-[0.5em] uppercase text-[#D4A574]">
+                    <h3 className="text-[10px] font-bold tracking-[0.45em] uppercase text-[#D4A574]">
                         {label}
                     </h3>
                     {selected && (
-                        <div className="mt-4 animate-in fade-in slide-in-from-left-4 duration-500">
-                            <span className="block text-2xl font-light tracking-tight text-white uppercase">{selected.brand.name}</span>
-                            <span className="text-[10px] text-[#D4A574]/50 font-mono tracking-widest uppercase">ID: {selected.id.split('-')[0]}</span>
+                        <div className="mt-6 animate-in fade-in slide-in-from-left-4 duration-500">
+                            <span className="block text-3xl font-bold tracking-tight text-white uppercase">{selected.brand.name}</span>
+                            <span className="mt-2 block text-[10px] text-[#D4A574]/60 font-mono tracking-[0.2em] uppercase">ID: {selected.id.split('-')[0]}</span>
                         </div>
                     )}
                 </div>
 
                 <div className="flex justify-center">
-                    <div className="relative w-full max-w-[260px]">
+                    <div className="relative w-full max-w-[280px]">
                         <button
                             onClick={onOpenDrawer}
-                            className="w-full bg-transparent border border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-[#D4A574]/5 py-4 transition-all text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574] rounded-full"
+                            className="group relative w-full bg-white/5 border border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-white/10 py-5 transition-all text-[10px] font-bold tracking-[0.35em] uppercase text-[#D4A574] rounded-full overflow-hidden"
                         >
-                            {selected ? '[ CHANGE ASSET ]' : '[ SELECT ASSET FROM ARCHIVE ]'}
+                            <span className="relative z-10">{selected ? '[ CHANGE ASSET ]' : '[ SELECT FROM ARCHIVE ]'}</span>
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
                         {helperText && (
-                            <p className="mt-3 text-center text-[11px] leading-relaxed text-[#D4A574]/68">
+                            <p className="mt-4 text-center text-[12px] leading-relaxed text-[#D4A574]/70 font-medium tracking-tight px-4">
                                 {helperText}
                             </p>
                         )}
@@ -1128,10 +1129,10 @@ function AssetSelectorPanel({
             </div>
 
             {/* Corner Accents */}
-            <div className="absolute top-8 left-8 w-4 h-4 border-t border-l border-[#D4A574]/20" />
-            <div className="absolute top-8 right-8 w-4 h-4 border-t border-r border-[#D4A574]/20" />
-            <div className="absolute bottom-8 left-8 w-4 h-4 border-b border-l border-[#D4A574]/20" />
-            <div className="absolute bottom-8 right-8 w-4 h-4 border-b border-r border-[#D4A574]/20" />
+            <div className="absolute top-10 left-10 w-6 h-6 border-t border-l border-[#D4A574]/40 group-hover:w-8 group-hover:h-8 transition-all" />
+            <div className="absolute top-10 right-10 w-6 h-6 border-t border-r border-[#D4A574]/40 group-hover:w-8 group-hover:h-8 transition-all" />
+            <div className="absolute bottom-10 left-10 w-6 h-6 border-b border-l border-[#D4A574]/40 group-hover:w-8 group-hover:h-8 transition-all" />
+            <div className="absolute bottom-10 right-10 w-6 h-6 border-b border-r border-[#D4A574]/40 group-hover:w-8 group-hover:h-8 transition-all" />
         </div>
     );
 }

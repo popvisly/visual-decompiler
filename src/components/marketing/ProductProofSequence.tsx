@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
     ArrowUpRight,
     BarChart3,
@@ -15,7 +15,6 @@ import {
     HOMEPAGE_CTA_ICON,
     HOMEPAGE_PRIMARY_CTA,
     HOMEPAGE_SECONDARY_CTA,
-    HOMEPAGE_TEXT_CTA,
 } from '@/components/marketing/ctaStyles';
 import HeroAppPreview from '@/components/marketing/HeroAppPreview';
 
@@ -205,8 +204,6 @@ const STEP_PUNCH: Record<string, string> = {
     operating: 'Run the whole system like an agency engine.',
 };
 
-const SECTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
-const SECONDARY_CARD_RADIUS = 'rounded-[1.7rem]';
 const SECTION_BAND = 'px-6 py-16 md:py-24';
 
 function DifferentialDiagnosisSection() {
@@ -222,10 +219,10 @@ function DifferentialDiagnosisSection() {
                 </div>
 
                 <h3 className="max-w-4xl text-[34px] font-bold leading-[1.1] tracking-tight text-[#151310] md:text-5xl">
-                    Differential Diagnosis
+                    Differential Diagnostic
                 </h3>
                 <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#6A6257] md:text-[18px] font-medium tracking-tight">
-                    Compare two assets and surface strategic delta, persuasion lift, and fatigue risk before you commit creative direction.
+                    Choose two assets and surface the strategic delta, persuasion lift, and fatigue gap before you commit creative direction.
                 </p>
 
                 <div className="mt-8 mx-auto max-w-5xl grid gap-6 lg:grid-cols-2">
@@ -233,11 +230,11 @@ function DifferentialDiagnosisSection() {
                     <div className="group relative overflow-hidden rounded-[3rem] border border-[#E6DDCF] bg-[#F7F1E7]/30 p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
                         <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310]">
                             <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
-                                Asset A · Reference
+                                CONTROL (ASSET A)
                             </div>
                             <Image
                                 src="/images/examples/Chanel_No5.webp"
-                                alt="Reference asset for differential diagnosis"
+                                alt="Control asset for differential diagnostic"
                                 fill
                                 unoptimized
                                 className="object-cover transition-transform duration-500 group-hover:scale-[1.02] opacity-90"
@@ -251,11 +248,11 @@ function DifferentialDiagnosisSection() {
                     <div className="group relative overflow-hidden rounded-[3rem] border border-[#E6DDCF] bg-[#F7F1E7]/30 p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
                         <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310] aspect-[4/5]">
                             <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
-                                Asset B · Target
+                                PROPOSED (ASSET B)
                             </div>
                             <Image
                                 src="/images/examples/Miss_DIOR.jpg"
-                                alt="Target variant for differential diagnosis"
+                                alt="Proposed route for differential diagnostic"
                                 fill
                                 unoptimized
                                 className="object-cover transition-transform duration-500 group-hover:scale-[1.02] opacity-90"
@@ -293,7 +290,7 @@ function DifferentialDiagnosisSection() {
                         href="/compare"
                         className={HOMEPAGE_PRIMARY_CTA}
                     >
-                        <span>Run Differential Diagnosis</span>
+                        <span>Run Differential Diagnostic</span>
                         <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
                     </a>
                 </div>
@@ -353,10 +350,9 @@ function WhyDifferentSection() {
                             initial={{ opacity: 0, y: 16 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.28 }}
-                            transition={{ duration: 0.45, delay: index * 0.06, ease: SECTION_EASE }}
+                            transition={{ duration: 0.45, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
                             className="group relative overflow-hidden rounded-[2.5rem] border border-[#E6DDCF] bg-[#FBFBF6] shadow-[0_4px_20px_rgba(0,0,0,0.02)]"
                         >
-                            {/* Card Header */}
                             <div className="flex items-center gap-4 border-b border-[#E6DDCF]/60 px-8 py-6">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D4A574]/10 border border-[#D4A574]/20">
                                     <block.icon className="h-5 w-5 text-[#D4A574]" strokeWidth={1.5} />
@@ -365,7 +361,6 @@ function WhyDifferentSection() {
                             </div>
 
                             <div className="p-8 space-y-8">
-                                {/* Conventional / Muted Perspective */}
                                 <div className="relative pl-6">
                                     <div className="absolute left-0 top-0 bottom-0 w-px bg-[#E6DDCF]" />
                                     <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/60 mb-2">Conventional</p>
@@ -374,7 +369,6 @@ function WhyDifferentSection() {
                                     </p>
                                 </div>
 
-                                {/* Sovereign / Premium Advantage */}
                                 <div className="relative pl-6 py-4 border-l-[3px] border-[#D4A574] bg-[#F7F1E7]/40 rounded-r-2xl">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574] mb-2">Sovereign Advantage</p>
                                     <p className="text-[15px] leading-relaxed font-medium text-[#151310] tracking-tight">
@@ -410,8 +404,8 @@ function PlatformSystemGrid() {
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
-                    transition={{ delay: index * 0.05, duration: 0.35, ease: SECTION_EASE }}
-                    className={`group relative overflow-hidden ${SECONDARY_CARD_RADIUS} border p-4 ${
+                    transition={{ delay: index * 0.05, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    className={`group relative overflow-hidden rounded-[1.7rem] border p-4 ${
                         index % 2 === 0
                             ? 'border-[#DCCDB7] bg-[#FCF9F3]'
                             : 'border-[#D4C3AA] bg-[#F6EFE3]'
@@ -427,25 +421,6 @@ function PlatformSystemGrid() {
 }
 
 function SingleAssetDeconstruction() {
-    const AD_STACK = [
-        { src: '/images/examples/Miss_DIOR.jpg', label: 'Identity/Beauty', mechanic: 'Identity-Led' },
-        { src: '/images/examples/balenciaga-high-summer-campaign-photosb.webp', label: 'High Fashion', mechanic: 'Avant-Garde' },
-        { src: '/images/examples/Watch.png', label: 'Precision Watch', mechanic: 'Product Authority' },
-        { src: '/images/examples/ACNE.png', label: 'Minimalist Fashion', mechanic: 'Contemporary' },
-        { src: '/images/examples/Chanel_No5.webp', label: 'Heritage Luxury', mechanic: 'Archetypal' },
-    ];
-
-    const [currentIndex, setCurrentIndex] = React.useState(0);
-
-    React.useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % AD_STACK.map(ad => ad.src).length);
-        }, 3500);
-        return () => clearInterval(timer);
-    }, []);
-
-    const activeAd = AD_STACK[currentIndex];
-
     return (
         <section className={`relative overflow-hidden border-b border-[#E3DACB] bg-[#FBFBF6] ${SECTION_BAND}`}>
             <div className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(rgba(20,20,20,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.015)_1px,transparent_1px)] [background-size:64px_64px]" />
@@ -476,7 +451,6 @@ function SingleAssetDeconstruction() {
                         </div>
                     </div>
 
-                    {/* The "Ad-Cycle" Scanner UI */}
                     <div className="relative">
                         <HeroAppPreview />
                     </div>
@@ -498,7 +472,7 @@ export default function ProductProofSequence() {
                     initial={{ opacity: 1, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.06 }}
-                    transition={{ duration: 0.5, ease: SECTION_EASE }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     className="mx-auto max-w-7xl"
                 >
                     <div className="mb-10 md:mb-14">
