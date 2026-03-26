@@ -18,11 +18,13 @@ const PERSONAS: Persona[] = [
         role: 'Advertising',
         subtitle: 'Drop any ad. See the invisible persuasion mechanics, strategic signals, and reconstruction blueprint — in under 60 seconds.',
         color: '#D4A574',
+        weightClass: 'font-semibold',
     },
     {
         role: 'Art Directors',
         subtitle: 'Decode visual hierarchy, chromatic psychology, and composition mechanics — translate competitor creative into actionable design principles.',
         color: '#F4A700',
+        weightClass: 'font-semibold',
     },
     {
         role: 'New Business',
@@ -46,6 +48,7 @@ const PERSONAS: Persona[] = [
         role: 'Brand Managers',
         subtitle: 'Benchmark your creative against category patterns. Identify what drives engagement and where your assets lose persuasion power.',
         color: '#D4A574',
+        weightClass: 'font-semibold',
     },
     {
         role: 'Copywriters',
