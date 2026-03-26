@@ -228,36 +228,41 @@ function DifferentialDiagnosisSection() {
                     Compare two assets and surface strategic delta, persuasion lift, and fatigue risk before you commit creative direction.
                 </p>
 
-                <div className="mt-8 grid gap-4 lg:grid-cols-2">
-                    <div className="group relative overflow-hidden rounded-[26px] border border-[#D8CCB5] bg-[#191713] shadow-[0_18px_40px_rgba(20,20,20,0.08)]">
-                        <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
-                            Asset A · Reference
+                <div className="mt-8 grid gap-6 lg:grid-cols-2">
+                    {/* Asset A */}
+                    <div className="group relative overflow-hidden rounded-[3rem] border border-[#E6DDCF] bg-[#F7F1E7]/30 p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
+                        <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310]">
+                            <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
+                                Asset A · Reference
+                            </div>
+                            <Image
+                                src="/images/examples/Chanel_No5.webp"
+                                alt="Reference asset for differential diagnosis"
+                                fill
+                                unoptimized
+                                className="object-cover transition-transform duration-500 group-hover:scale-[1.02] opacity-90"
+                            />
+                            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0E0D0B] to-transparent" />
+                            <div className="absolute bottom-5 left-6 z-20 text-sm text-[#E7D7BF] font-medium italic">Heritage-led prestige framing</div>
                         </div>
-                        <Image
-                            src="/images/examples/Chanel_No5.webp"
-                            alt="Reference asset for differential diagnosis"
-                            width={1000}
-                            height={1333}
-                            className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                        />
-                        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0E0D0B] to-transparent" />
-                        <div className="absolute bottom-4 left-4 z-20 text-sm text-[#E7D7BF] font-medium italic">Heritage-led prestige framing</div>
                     </div>
 
-                    <div className="group relative overflow-hidden rounded-[26px] border border-[#D8CCB5] bg-[#191713] shadow-[0_18px_40px_rgba(20,20,20,0.08)]">
-                        <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
-                            Asset B · Target
+                    {/* Asset B */}
+                    <div className="group relative overflow-hidden rounded-[3rem] border border-[#E6DDCF] bg-[#F7F1E7]/30 p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
+                        <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310] aspect-[4/5]">
+                            <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
+                                Asset B · Target
+                            </div>
+                            <Image
+                                src="/images/examples/Miss_DIOR.jpg"
+                                alt="Target variant for differential diagnosis"
+                                fill
+                                unoptimized
+                                className="object-cover transition-transform duration-500 group-hover:scale-[1.02] opacity-90"
+                            />
+                            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0E0D0B] to-transparent" />
+                            <div className="absolute bottom-5 left-6 z-20 text-sm text-[#E7D7BF] font-medium italic">Modern identity-led persuasion</div>
                         </div>
-                        <Image
-                            src="/images/examples/Miss_DIOR.jpg"
-                            alt="Target variant for differential diagnosis"
-                            width={1000}
-                            height={1333}
-                            unoptimized
-                            className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                        />
-                        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0E0D0B] to-transparent" />
-                        <div className="absolute bottom-4 left-4 z-20 text-sm text-[#E7D7BF] font-medium italic">Modern identity-led persuasion</div>
                     </div>
                 </div>
 
