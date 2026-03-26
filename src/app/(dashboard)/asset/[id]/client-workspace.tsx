@@ -2006,26 +2006,26 @@ export default function AssetWorkspace({
                                             title="Technical Autopsy"
                                             intro="A structural decomposition of the creative signal stack—hooks, pacing, contrast, and attention-routing cues that drive response."
                                         />
-                                        {/* RADIANT ARCHITECTURE TOGGLE */}
-                                         {/* RADIANT ARCHITECTURE TOGGLE - Premium Card */}
-                                         <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm flex flex-col gap-6 md:flex-row md:items-center justify-between">
-                                             <div className="flex items-center gap-6">
-                                                 <div className="h-12 w-12 rounded-2xl bg-[#D4A574]/10 flex items-center justify-center border border-[#D4A574]/20">
-                                                     <Sparkles className="h-6 w-6 text-[#D4A574]" />
-                                                 </div>
-                                                 <div className="flex flex-col gap-1">
-                                                     <h3 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#9B8662]">Macro-Diagnostic Map</h3>
-                                                     <p className="text-[13px] text-[#6A6257] font-light tracking-wide">Visualize optical trajectories and focal anchors in the creative signal stack.</p>
-                                                 </div>
-                                             </div>
-                                             <button 
-                                                 onClick={() => setShowRadiant(!showRadiant)}
-                                                 className={`px-8 py-3 rounded-full border text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-500 flex items-center gap-3 ${showRadiant ? "bg-[#D4A574] text-white border-[#D4A574] shadow-md shadow-[#D4A574]/20" : "bg-transparent text-[#9B8662] border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-[#FBF7F1]"}`}
-                                             >
-                                                 <div className={`h-1.5 w-1.5 rounded-full ${showRadiant ? "bg-white animate-pulse" : "bg-[#D4A574]"}`} />
-                                                 {showRadiant ? "Active: Radiant Architecture" : "Initialize Radiant Architecture"}
-                                             </button>
-                                         </div>
+                                        
+                                        {/* RADIANT ARCHITECTURE TOGGLE - Premium Card */}
+                                        <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm flex flex-col gap-6 md:flex-row md:items-center justify-between">
+                                            <div className="flex items-center gap-6">
+                                                <div className="h-12 w-12 rounded-2xl bg-[#D4A574]/10 flex items-center justify-center border border-[#D4A574]/20">
+                                                    <Sparkles className="h-6 w-6 text-[#D4A574]" />
+                                                </div>
+                                                <div className="flex flex-col gap-1">
+                                                    <h3 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#9B8662]">Macro-Diagnostic Map</h3>
+                                                    <p className="text-[13px] text-[#6A6257] font-light tracking-wide">Visualize optical trajectories and focal anchors in the creative signal stack.</p>
+                                                </div>
+                                            </div>
+                                            <button 
+                                                onClick={() => setShowRadiant(!showRadiant)}
+                                                className={`px-8 py-3 rounded-full border text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-500 flex items-center gap-3 ${showRadiant ? "bg-[#D4A574] text-white border-[#D4A574] shadow-md shadow-[#D4A574]/20" : "bg-transparent text-[#9B8662] border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-[#FBF7F1]"}`}
+                                            >
+                                                <div className={`h-1.5 w-1.5 rounded-full ${showRadiant ? "bg-white animate-pulse" : "bg-[#D4A574]"}`} />
+                                                {showRadiant ? "Active: Radiant Architecture" : "Initialize Radiant Architecture"}
+                                            </button>
+                                        </div>
 
                                         <div className="border-t border-[#E6DDCF] pt-8 mt-2" />
 
@@ -2040,14 +2040,16 @@ export default function AssetWorkspace({
 
                                         {/* ── Gaze Topology ── */}
                                         {(extraction.full_dossier as any)?.gaze_topology && (
-                                            <section className="signals-section space-y-8">
-                                                <div className="flex items-center gap-6 mb-8">
-                                                     <div className="flex flex-col gap-2">
-                                                         <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#8B4513]">Gaze Topology</h2>
-                                                         <p className="text-[10px] text-[#9B8662]/60 font-bold tracking-[0.25em] uppercase">Mode of Address & Viewer Positioning</p>
-                                                     </div>
-                                                     <div className="h-px flex-1 bg-[#E6DDCF]" />
-                                                 </div>
+                                            <section className="signals-section space-y-12 mt-12 pb-12 border-b border-[#E6DDCF]/50">
+                                                <div className="flex items-center gap-6">
+                                                    <div className="flex flex-col gap-2">
+                                                        <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#8B4513]">Gaze Topology</h2>
+                                                        <p className="text-[10px] text-[#9B8662]/60 font-bold tracking-[0.25em] uppercase">Mode of Address & Viewer Positioning</p>
+                                                    </div>
+                                                    <div className="h-px flex-1 bg-[#E6DDCF]" />
+                                                </div>
+
+                                                <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] lg:grid-cols-3">
                                                     {[
                                                         { label: 'Mode of Address', value: (extraction.full_dossier as any).gaze_topology.mode_of_address },
                                                         { label: 'Viewer Position', value: (extraction.full_dossier as any).gaze_topology.viewer_position },
@@ -2063,11 +2065,12 @@ export default function AssetWorkspace({
                                                         </div>
                                                     ))}
                                                 </div>
-                                                <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] rounded-3xl p-6">
+
+                                                <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] rounded-[2rem] p-8">
                                                     <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 border-b border-[#E6DDCF] pb-4">
-                                                        Gaze Analysis
+                                                        Forensic Diagnostics
                                                     </h3>
-                                                    <p className="text-[12px] text-[#6A6257] leading-relaxed">
+                                                    <p className="text-[13px] text-[#6A6257] leading-relaxed font-light">
                                                         {(extraction.full_dossier as any).gaze_topology.reading}
                                                     </p>
                                                 </div>
@@ -2076,21 +2079,22 @@ export default function AssetWorkspace({
 
                                         {/* ── Counter-Reading Matrix ── */}
                                         {(extraction.full_dossier as any)?.counter_reading_matrix && (
-                                                <div className="flex items-center gap-6 mb-8">
-                                                     <div className="flex flex-col gap-2">
-                                                         <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#8B4513]">Counter-Reading Matrix</h2>
-                                                         <p className="text-[10px] text-[#9B8662]/60 font-bold tracking-[0.25em] uppercase">Polysemic Deconstruction via Critical Theory</p>
-                                                     </div>
-                                                     <div className="h-px flex-1 bg-[#E6DDCF]" />
-                                                 </div>
+                                            <section className="counter-reading-section space-y-12 mt-16">
+                                                <div className="flex items-center gap-6">
+                                                    <div className="flex flex-col gap-2">
+                                                        <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#8B4513]">Counter-Reading Matrix</h2>
+                                                        <p className="text-[10px] text-[#9B8662]/60 font-bold tracking-[0.25em] uppercase">Polysemic Deconstruction via Critical Theory</p>
+                                                    </div>
+                                                    <div className="h-px flex-1 bg-[#E6DDCF]" />
+                                                </div>
                                                 <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
                                                     {((extraction.full_dossier as any).counter_reading_matrix as { lens: string; reading: string }[]).map((item, i) => (
                                                         <div key={i} className={`${ANALYSIS_CARD_CLASS} flex flex-col min-h-[220px] xl:min-h-[240px]`}>
                                                             <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
                                                                 {item.lens}
                                                             </h3>
-                                                            <div className="flex-1 max-h-[400px] overflow-y-auto">
-                                                                <p className="text-[12px] text-[#6A6257] leading-relaxed">{item.reading}</p>
+                                                            <div className="flex-1 max-h-[400px] overflow-y-auto pt-2">
+                                                                <p className="text-[13px] text-[#6A6257] leading-relaxed font-light">{item.reading}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -2104,7 +2108,7 @@ export default function AssetWorkspace({
                                              <Info className="h-5 w-5 text-[#D4A574]/40" />
                                          </div>
                                          <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574] mb-2">Deep Intelligence Required</h3>
-                                         <p className="text-[13px] text-[#6A6257] max-w-xs font-light tracking-wide">Signal interception requires deep architectural extraction of this asset"s semiotic layers.</p>
+                                         <p className="text-[13px] text-[#6A6257] max-w-xs font-light tracking-wide">Signal interception requires deep architectural extraction of this asset's semiotic layers.</p>
                                      </div>
                                 )}
                             </div>
