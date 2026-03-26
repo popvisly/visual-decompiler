@@ -338,7 +338,7 @@ function WhyDifferentSection() {
                     </div>
                 </div>
 
-                <div className="mt-12 grid gap-4 md:grid-cols-2">
+                <div className="mt-16 grid gap-6 md:grid-cols-2">
                     {DIFFERENTIATION_BLOCKS.map((block, index) => (
                         <motion.article
                             key={block.title}
@@ -346,26 +346,45 @@ function WhyDifferentSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.28 }}
                             transition={{ duration: 0.45, delay: index * 0.06, ease: SECTION_EASE }}
-                            className={`${SECONDARY_CARD_RADIUS} border border-[#D6C8B2] bg-[#F4EBDD] px-5 py-5 md:px-6 md:py-6`}
+                            className="group relative overflow-hidden rounded-[2.5rem] border border-[#E6DDCF] bg-[#FBFBF6] shadow-[0_8px_30px_rgba(0,0,0,0.02)]"
                         >
-                            <div className="flex items-center gap-2.5">
-                                <block.icon
-                                    aria-hidden="true"
-                                    className="h-[17px] w-[17px] flex-shrink-0 text-[#8E7450]"
-                                    strokeWidth={1.65}
-                                />
-                                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8E7450]">{block.title}</p>
-                            </div>
-                            <div className="mt-4 space-y-3.5">
-                                <div>
-                                    <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#A19380]">THEY DO</p>
-                                    <p className="mt-2 max-w-[25ch] text-sm leading-[1.5] text-[#635D54]">{block.theyDo}</p>
-                                </div>
-                                <div className="border-t border-[#E4D9C8] pt-4">
-                                    <div className="rounded-[1.25rem] border border-[#E1D4BE] bg-[#F8F1E7] px-5 py-4 border-l-[3px] border-[#D4A574]">
-                                        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-[#7E6948]">SOVEREIGN ADVANTAGE</p>
-                                        <p className="mt-2 max-w-[34ch] text-[15px] leading-relaxed font-medium text-[#151310] tracking-tight">{block.weDo}</p>
+                            {/* Card Header: Perspective & Icon */}
+                            <div className="flex items-center justify-between border-b border-[#E6DDCF]/60 px-8 py-6">
+                                <div className="flex items-center gap-4">
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D4A574]/10 border border-[#D4A574]/20">
+                                        <block.icon className="h-5 w-5 text-[#D4A574]" strokeWidth={1.5} />
                                     </div>
+                                    <h3 className="text-[13px] font-bold uppercase tracking-[0.35em] text-[#9B8662]">{block.title}</h3>
+                                </div>
+                                <div className="h-2 w-2 rounded-full bg-[#D4A574]/40" />
+                            </div>
+
+                            {/* Forensic Split Layout */}
+                            <div className="flex flex-col xl:flex-row min-h-[220px]">
+                                {/* Conventional / Muted Perspective */}
+                                <div className="flex-1 bg-[#151310] p-8 text-[#9A9A94]">
+                                    <div className="mb-4 flex items-center gap-2">
+                                        <span className="h-px w-4 bg-[#9A9A94]/40" />
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.25em]">Conventional</p>
+                                    </div>
+                                    <p className="max-w-[28ch] text-[14px] leading-relaxed font-light italic">
+                                        {block.theyDo}
+                                    </p>
+                                </div>
+
+                                {/* Sovereign / Premium Advantage */}
+                                <div className="flex-1 bg-[#FFFCF7] p-8 relative border-t xl:border-t-0 xl:border-l border-[#E6DDCF]">
+                                    <div className="absolute top-0 right-0 h-10 w-10 overflow-hidden pointer-events-none opacity-10">
+                                        <div className="absolute top-[-20px] right-[-20px] h-[40px] w-[40px] bg-[#D4A574] rotate-45" />
+                                    </div>
+                                    
+                                    <div className="mb-4 flex items-center gap-2">
+                                        <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574] animate-pulse" />
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Sovereign Advantage</p>
+                                    </div>
+                                    <p className="max-w-[30ch] text-[15px] leading-relaxed font-bold text-[#151310] tracking-tight">
+                                        {block.weDo}
+                                    </p>
                                 </div>
                             </div>
                         </motion.article>
