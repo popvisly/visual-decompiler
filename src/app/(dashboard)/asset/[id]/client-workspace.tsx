@@ -2007,18 +2007,25 @@ export default function AssetWorkspace({
                                             intro="A structural decomposition of the creative signal stack—hooks, pacing, contrast, and attention-routing cues that drive response."
                                         />
                                         {/* RADIANT ARCHITECTURE TOGGLE */}
-                                        <div className={`${ANALYSIS_CARD_CLASS} flex flex-col items-start justify-between gap-[clamp(12px,1vw,18px)] md:flex-row md:items-center`}>
-                                            <div className="flex flex-col gap-2">
-                                                <h3 className="text-[13px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Macro-Diagnostic Map</h3>
-                                                <p className="text-[11px] text-[#151310]/50 font-light tracking-wide">Visualize optical trajectories and focal anchors.</p>
-                                            </div>
-                                            <button 
-                                                onClick={() => setShowRadiant(!showRadiant)}
-                                                className={`px-6 py-2.5 rounded-full border text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300 ${showRadiant ? 'bg-[#D4A574] text-[#1A1A1A] border-[#D4A574] hover:bg-[#C1A67B]' : 'bg-transparent text-[#D4A574] border-[#D4A574]/30 hover:border-[#D4A574]/80'}`}
-                                            >
-                                                [ RADIANT ARCHITECTURE ]
-                                            </button>
-                                        </div>
+                                         {/* RADIANT ARCHITECTURE TOGGLE - Premium Card */}
+                                         <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm flex flex-col gap-6 md:flex-row md:items-center justify-between">
+                                             <div className="flex items-center gap-6">
+                                                 <div className="h-12 w-12 rounded-2xl bg-[#D4A574]/10 flex items-center justify-center border border-[#D4A574]/20">
+                                                     <Sparkles className="h-6 w-6 text-[#D4A574]" />
+                                                 </div>
+                                                 <div className="flex flex-col gap-1">
+                                                     <h3 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#9B8662]">Macro-Diagnostic Map</h3>
+                                                     <p className="text-[13px] text-[#6A6257] font-light tracking-wide">Visualize optical trajectories and focal anchors in the creative signal stack.</p>
+                                                 </div>
+                                             </div>
+                                             <button 
+                                                 onClick={() => setShowRadiant(!showRadiant)}
+                                                 className={`px-8 py-3 rounded-full border text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-500 flex items-center gap-3 ${showRadiant ? "bg-[#D4A574] text-white border-[#D4A574] shadow-md shadow-[#D4A574]/20" : "bg-transparent text-[#9B8662] border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-[#FBF7F1]"}`}
+                                             >
+                                                 <div className={`h-1.5 w-1.5 rounded-full ${showRadiant ? "bg-white animate-pulse" : "bg-[#D4A574]"}`} />
+                                                 {showRadiant ? "Active: Radiant Architecture" : "Initialize Radiant Architecture"}
+                                             </button>
+                                         </div>
 
                                         <div className="border-t border-[#E6DDCF] pt-8 mt-2" />
 
@@ -2034,12 +2041,13 @@ export default function AssetWorkspace({
                                         {/* ── Gaze Topology ── */}
                                         {(extraction.full_dossier as any)?.gaze_topology && (
                                             <section className="signals-section space-y-8">
-                                                <div className="border-t border-[#E6DDCF] pt-8 mt-2" />
-                                                <div className="flex flex-col gap-2 mb-4 border-b border-[#E6DDCF] pb-4">
-                                                    <h2 className="text-2xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Gaze Topology</h2>
-                                                    <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Mode of Address &amp; Viewer Positioning</p>
-                                                </div>
-                                                <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] lg:grid-cols-3">
+                                                <div className="flex items-center gap-6 mb-8">
+                                                     <div className="flex flex-col gap-2">
+                                                         <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#8B4513]">Gaze Topology</h2>
+                                                         <p className="text-[10px] text-[#9B8662]/60 font-bold tracking-[0.25em] uppercase">Mode of Address & Viewer Positioning</p>
+                                                     </div>
+                                                     <div className="h-px flex-1 bg-[#E6DDCF]" />
+                                                 </div>
                                                     {[
                                                         { label: 'Mode of Address', value: (extraction.full_dossier as any).gaze_topology.mode_of_address },
                                                         { label: 'Viewer Position', value: (extraction.full_dossier as any).gaze_topology.viewer_position },
@@ -2068,12 +2076,13 @@ export default function AssetWorkspace({
 
                                         {/* ── Counter-Reading Matrix ── */}
                                         {(extraction.full_dossier as any)?.counter_reading_matrix && (
-                                            <section className="counter-reading-section space-y-8">
-                                                <div className="border-t border-[#E6DDCF] pt-8 mt-2" />
-                                                <div className="flex flex-col gap-2 mb-4 border-b border-[#E6DDCF] pb-4">
-                                                    <h2 className="text-2xl font-light uppercase tracking-[0.3em] text-[#8B4513]">Counter-Reading Matrix</h2>
-                                                    <p className="text-[10px] text-[#4A4A4A]/60 font-bold tracking-[0.2em] uppercase">Polysemic Deconstruction via Critical Theory</p>
-                                                </div>
+                                                <div className="flex items-center gap-6 mb-8">
+                                                     <div className="flex flex-col gap-2">
+                                                         <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#8B4513]">Counter-Reading Matrix</h2>
+                                                         <p className="text-[10px] text-[#9B8662]/60 font-bold tracking-[0.25em] uppercase">Polysemic Deconstruction via Critical Theory</p>
+                                                     </div>
+                                                     <div className="h-px flex-1 bg-[#E6DDCF]" />
+                                                 </div>
                                                 <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
                                                     {((extraction.full_dossier as any).counter_reading_matrix as { lens: string; reading: string }[]).map((item, i) => (
                                                         <div key={i} className={`${ANALYSIS_CARD_CLASS} flex flex-col min-h-[220px] xl:min-h-[240px]`}>
@@ -2090,9 +2099,13 @@ export default function AssetWorkspace({
                                         )}
                                     </div>
                                 ) : (
-                                    <div className="h-64 flex flex-col items-center justify-center border border-[#D4A574]/10 border-dashed rounded-3xl opacity-30">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Deep Intelligence Required for Signal Interception</p>
-                                    </div>
+                                     <div className="rounded-[2.5rem] border border-dashed border-[#D4A574]/20 bg-[#FBF7F1]/50 p-20 flex flex-col items-center justify-center text-center">
+                                         <div className="h-12 w-12 rounded-full border border-[#D4A574]/20 flex items-center justify-center mb-6">
+                                             <Info className="h-5 w-5 text-[#D4A574]/40" />
+                                         </div>
+                                         <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574] mb-2">Deep Intelligence Required</h3>
+                                         <p className="text-[13px] text-[#6A6257] max-w-xs font-light tracking-wide">Signal interception requires deep architectural extraction of this asset"s semiotic layers.</p>
+                                     </div>
                                 )}
                             </div>
                         )}
