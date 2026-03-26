@@ -251,6 +251,7 @@ function DifferentialDiagnosisSection() {
                             alt="Target variant for differential diagnosis"
                             width={1000}
                             height={1333}
+                            unoptimized
                             className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0E0D0B] to-transparent" />
