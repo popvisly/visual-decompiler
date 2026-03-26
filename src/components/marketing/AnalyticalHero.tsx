@@ -191,34 +191,34 @@ export default function AnalyticalHero() {
                 this.vy = 0;
                 this.size = Math.random() * 2 + 1;
                 this.cluster = CLUSTERS[Math.floor(Math.random() * CLUSTERS.length)];
-                this.opacity = Math.random() * 0.35 + 0.12;
+                this.opacity = Math.random() * 0.35 + 0.15;
                 this.angle = Math.random() * Math.PI * 2;
-                this.orbitSpeed = (Math.random() - 0.5) * 0.00025;
+                this.orbitSpeed = (Math.random() - 0.5) * 0.0004;
             }
 
             update() {
                 const dx = mouse.x - this.x;
                 const dy = mouse.y - this.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-                const force = Math.min(80 / (distance + 1), 0.4);
+                const force = Math.min(80 / (distance + 1), 0.6);
 
                 const clusterX = this.cluster.centerX * width;
                 const clusterY = this.cluster.centerY * height;
                 const cdx = clusterX - this.x;
                 const cdy = clusterY - this.y;
 
-                this.vx += cdx * 0.00012 + dx * 0.004 * force;
-                this.vy += cdy * 0.00012 + dy * 0.004 * force;
+                this.vx += cdx * 0.00025 + dx * 0.008 * force;
+                this.vy += cdy * 0.00025 + dy * 0.008 * force;
 
-                this.vx *= 0.97;
-                this.vy *= 0.97;
+                this.vx *= 0.96;
+                this.vy *= 0.96;
 
                 this.x += this.vx;
                 this.y += this.vy;
 
                 this.angle += this.orbitSpeed;
-                this.x += Math.cos(this.angle) * 0.05;
-                this.y += Math.sin(this.angle) * 0.05;
+                this.x += Math.cos(this.angle) * 0.07;
+                this.y += Math.sin(this.angle) * 0.07;
 
                 if (this.x < 0) this.x = width;
                 if (this.x > width) this.x = 0;

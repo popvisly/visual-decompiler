@@ -343,35 +343,35 @@ function WhyDifferentSection() {
                     </div>
                 </div>
 
-                <div className="mt-16 grid gap-6 md:grid-cols-2">
+                <div className="mt-16 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
                     {DIFFERENTIATION_BLOCKS.map((block, index) => (
                         <motion.article
                             key={block.title}
                             initial={{ opacity: 0, y: 16 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.28 }}
+                            viewport={{ once: true, amount: 0.2 }}
                             transition={{ duration: 0.45, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                            className="group relative overflow-hidden rounded-[2.5rem] border border-[#E6DDCF] bg-[#FBFBF6] shadow-[0_4px_20px_rgba(0,0,0,0.02)]"
+                            className="group relative overflow-hidden rounded-[2.5rem] border border-[#E6DDCF] bg-[#FBFBF6] shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex flex-col"
                         >
-                            <div className="flex items-center gap-4 border-b border-[#E6DDCF]/60 px-8 py-6">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D4A574]/10 border border-[#D4A574]/20">
-                                    <block.icon className="h-5 w-5 text-[#D4A574]" strokeWidth={1.5} />
+                            <div className="flex items-center gap-3 border-b border-[#E6DDCF]/60 px-6 py-5">
+                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#D4A574]/10 border border-[#D4A574]/20">
+                                    <block.icon className="h-4 w-4 text-[#D4A574]" strokeWidth={1.5} />
                                 </div>
-                                <h3 className="text-[14px] font-bold uppercase tracking-[0.35em] text-[#9B8662]">{block.title}</h3>
+                                <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">{block.title}</h3>
                             </div>
 
-                            <div className="p-8 space-y-8">
-                                <div className="relative pl-6">
+                            <div className="flex flex-col gap-5 p-6 flex-1">
+                                <div className="relative pl-5">
                                     <div className="absolute left-0 top-0 bottom-0 w-px bg-[#E6DDCF]" />
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/60 mb-2">Conventional</p>
-                                    <p className="text-[14px] leading-relaxed text-[#6A6257] font-light">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/55 mb-1.5">Conventional</p>
+                                    <p className="text-[13px] leading-relaxed text-[#6A6257] font-light">
                                         {block.theyDo}
                                     </p>
                                 </div>
 
-                                <div className="relative pl-6 py-4 border-l-[3px] border-[#D4A574] bg-[#F7F1E7]/40 rounded-r-2xl">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574] mb-2">Sovereign Advantage</p>
-                                    <p className="text-[15px] leading-relaxed font-medium text-[#151310] tracking-tight">
+                                <div className="relative pl-5 py-3 border-l-[3px] border-[#D4A574] bg-[#F7F1E7]/50 rounded-r-xl">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#D4A574] mb-1.5">Sovereign</p>
+                                    <p className="text-[13px] leading-relaxed font-semibold text-[#151310] tracking-tight">
                                         {block.weDo}
                                     </p>
                                 </div>
