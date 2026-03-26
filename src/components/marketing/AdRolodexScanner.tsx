@@ -20,7 +20,7 @@ export default function AdRolodexScanner() {
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % AD_STACK.length);
-        }, 3500);
+        }, 4200);
         return () => clearInterval(timer);
     }, []);
 
@@ -30,14 +30,14 @@ export default function AdRolodexScanner() {
         <div className="relative">
             <div className="relative aspect-[4/5] w-full rounded-[3rem] border border-[#E6DDCF] bg-[#F7F1E7]/30 p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
                 <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310]">
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence mode="sync">
                         <motion.div
                             key={activeAd.src}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -20 }}
-                            transition={{ 
-                                duration: 0.6, 
+                            initial={{ opacity: 0, scale: 1.02 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.995 }}
+                            transition={{
+                                duration: 0.85,
                                 ease: SECTION_EASE
                             }}
                             className="absolute inset-0"
@@ -47,7 +47,7 @@ export default function AdRolodexScanner() {
                                 alt={activeAd.label}
                                 fill
                                 unoptimized
-                                className="object-cover opacity-60 grayscale-[0.3] transition-all duration-700"
+                                className="object-cover opacity-60 grayscale-[0.3]"
                             />
                             
                             {/* Scanner Overlay Elements */}
@@ -68,9 +68,9 @@ export default function AdRolodexScanner() {
                                 </div>
                                 
                                 <motion.div 
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 1 }}
+                                    initial={{ opacity: 0, y: 6 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.45, duration: 0.45, ease: SECTION_EASE }}
                                     className="absolute bottom-12 right-12 text-right bg-[#151310]/80 backdrop-blur-md border border-[#D4A574]/20 p-2.5 rounded-lg sm:p-3"
                                 >
                                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] mb-1">{activeAd.mechanic}</p>
