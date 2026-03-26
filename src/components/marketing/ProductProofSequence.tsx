@@ -229,32 +229,32 @@ function DifferentialDiagnosisSection() {
                 <div className="mt-8 grid gap-4 lg:grid-cols-2">
                     <div className="group relative overflow-hidden rounded-[26px] border border-[#D8CCB5] bg-[#191713] shadow-[0_18px_40px_rgba(20,20,20,0.08)]">
                         <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
-                            Asset A · Control
+                            Asset A · Reference
                         </div>
                         <Image
                             src="/images/examples/Chanel_No5.webp"
-                            alt="Control asset for differential diagnosis"
-                            width={1200}
-                            height={1400}
-                            className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                            alt="Reference asset for differential diagnosis"
+                            width={1000}
+                            height={1333}
+                            className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0E0D0B] to-transparent" />
-                        <div className="absolute bottom-4 left-4 z-20 text-sm text-[#E7D7BF]">Heritage-led prestige framing</div>
+                        <div className="absolute bottom-4 left-4 z-20 text-sm text-[#E7D7BF] font-medium italic">Heritage-led prestige framing</div>
                     </div>
 
                     <div className="group relative overflow-hidden rounded-[26px] border border-[#D8CCB5] bg-[#191713] shadow-[0_18px_40px_rgba(20,20,20,0.08)]">
                         <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
-                            Asset B · Variant
+                            Asset B · Target
                         </div>
                         <Image
-                            src="/images/examples/Watch.png"
-                            alt="Variant asset for differential diagnosis"
-                            width={1200}
-                            height={1400}
-                            className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                            src="/images/examples/Natalie Portman Miss Dior Absolutely Blooming.jpg"
+                            alt="Target variant for differential diagnosis"
+                            width={1000}
+                            height={1333}
+                            className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0E0D0B] to-transparent" />
-                        <div className="absolute bottom-4 left-4 z-20 text-sm text-[#E7D7BF]">Precision-led product authority</div>
+                        <div className="absolute bottom-4 left-4 z-20 text-sm text-[#E7D7BF] font-medium italic">Modern identity-led persuasion</div>
                     </div>
                 </div>
 
