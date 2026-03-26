@@ -1857,11 +1857,10 @@ export default function AssetWorkspace({
                                             intro="A consolidated strategic read of this asset: core mechanic, persuasion structure, and the clearest path to action."
                                         />
                                         {(!extraction.primary_mechanic || !extraction.full_dossier) && <SovereignProcessingView assetId={asset.id} agency={agency} />}
-
                                         {extraction.primary_mechanic && extraction.full_dossier && (
                                              <>
-                                                 {/* Unified Primary Intelligence Metric - ELEVATED */}
-                                                 <div className="w-full rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm flex flex-col gap-8 lg:flex-row lg:items-center mb-10">
+                                                 {/* Unified Primary Intelligence Metric - REFINED SCALE */}
+                                                 <div className="w-full rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm flex flex-col gap-6 lg:flex-row lg:items-center mb-6">
                                                      {/* Left: Primary Mechanic */}
                                                      <div className="flex-1">
                                                          <div className="flex justify-between items-center mb-6 border-b border-[#E6DDCF] pb-4">
@@ -1873,37 +1872,37 @@ export default function AssetWorkspace({
                                                              </div>
                                                              <InfoButton section="PRIMARY_MECHANIC" />
                                                          </div>
-                                                         <div className="max-w-[80ch]">
-                                                              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[#151310] leading-[1.2] selection:bg-[#D4A574]/20 border-l-[3px] border-[#D4A574] pl-6 py-1">
-                                                                  {extraction.primary_mechanic}
-                                                              </h2>
-                                                          </div>
+                                                         <div className="max-w-[70ch]">
+                                                            <h2 className="text-xl md:text-2xl font-bold tracking-tight text-[#151310] leading-relaxed selection:bg-[#D4A574]/20 border-l-[3px] border-[#D4A574] pl-6 py-1">
+                                                                {extraction.primary_mechanic}
+                                                            </h2>
+                                                         </div>
                                                      </div>
 
                                                      {/* Vertical Divider (Desktop Only) */}
                                                      <div className="hidden lg:block w-[1px] h-32 bg-[#E6DDCF]/60 mx-8" />
 
                                                      {/* Right: System Confidence */}
-                                                     <div className="w-full lg:w-64 flex flex-col">
-                                                         <div className="flex justify-between items-center mb-6 border-b border-[#E6DDCF] pb-4">
-                                                             <span className="block text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Confidence Score</span>
-                                                             <InfoButton section="SYSTEM_CONFIDENCE" />
-                                                         </div>
-                                                         <div className="text-6xl font-sans font-bold text-[#151310] tracking-tighter mt-auto lg:text-right flex items-baseline lg:justify-end gap-1">
-                                                             {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-[24px] text-[#D4A574]">/100</span>
-                                                         </div>
-                                                     </div>
+                                                     <div className="w-full lg:w-48 flex flex-col">
+                                                          <div className="flex justify-between items-center mb-4 border-b border-[#E6DDCF] pb-3">
+                                                              <span className="block text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]">Confidence Score</span>
+                                                              <InfoButton section="SYSTEM_CONFIDENCE" />
+                                                          </div>
+                                                          <div className="text-5xl font-sans font-bold text-[#151310] tracking-tighter mt-auto lg:text-right flex items-baseline lg:justify-end gap-1">
+                                                              {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-[18px] text-[#D4A574]">/100</span>
+                                                          </div>
+                                                      </div>
                                                  </div>
 
-                                            <DossierDecisionSummary
-                                                extraction={extraction}
-                                                dossier={dossier}
-                                                narrativeIntro={narrativeSections.intro}
-                                                isExecutiveSummary={isExecutiveSummary}
-                                                onToggleExecutiveSummary={setIsExecutiveSummary}
-                                                evidenceHref="#dossier-evidence"
-                                             />
-                                         </>
+                                                <DossierDecisionSummary
+                                                    extraction={extraction}
+                                                    dossier={dossier}
+                                                    narrativeIntro={narrativeSections.intro}
+                                                    isExecutiveSummary={isExecutiveSummary}
+                                                    onToggleExecutiveSummary={setIsExecutiveSummary}
+                                                    evidenceHref="#dossier-evidence"
+                                                />
+                                            </>
                                         )}
 
                                         {!isExecutiveSummary && (
