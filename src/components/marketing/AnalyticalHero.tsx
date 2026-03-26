@@ -36,7 +36,7 @@ const PERSONAS: Persona[] = [
     {
         role: 'Strategy Directors',
         subtitle: 'Surface the invisible mechanics competitors deploy — signal stacks, trigger distribution, and strategic posture at category scale.',
-        color: '#D9D6D0',
+        color: '#E7D9C3',
     },
     {
         role: 'Brand Managers',
@@ -118,7 +118,7 @@ export default function AnalyticalHero() {
                         </h1>
 
                         <p
-                            className="mt-8 max-w-[32rem] text-[17px] leading-[1.65] text-[#9A9A94] font-medium tracking-tight md:text-[19px] mx-auto lg:mx-0"
+                            className="mt-8 max-w-[32rem] text-[17px] leading-[1.65] text-[#B5B0A7] font-medium tracking-tight md:text-[19px] mx-auto lg:mx-0"
                             style={{
                                 opacity: personaVisible ? 1 : 0,
                                 transition: 'opacity 0.6s ease-in-out',

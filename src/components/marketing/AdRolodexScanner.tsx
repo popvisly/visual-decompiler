@@ -89,10 +89,6 @@ export default function AdRolodexScanner() {
                     </AnimatePresence>
                 </div>
                 
-                {/* Outer "Clinical" Annotations */}
-                <div className="absolute -left-4 top-1/4 rounded-lg border border-[#D4A574]/20 bg-white/95 backdrop-blur px-2.5 py-1.5 shadow-xl sm:-left-6 sm:px-3 sm:py-2">
-                    <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-[#D4A574]">Sovereign Extract v2.0</p>
-                </div>
                 <div className="absolute -right-4 bottom-1/4 rounded-lg border border-[#D4A574]/20 bg-white/95 backdrop-blur px-2.5 py-1.5 shadow-xl sm:-right-6 sm:px-3 sm:py-2">
                     <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-[#D4A574]">Neural Map Engaged</p>
                 </div>
