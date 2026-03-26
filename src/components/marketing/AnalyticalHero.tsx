@@ -10,6 +10,7 @@ type Persona = {
     role: string;
     subtitle: string;
     color: string;
+    weightClass?: string;
 };
 
 const PERSONAS: Persona[] = [
@@ -27,16 +28,19 @@ const PERSONAS: Persona[] = [
         role: 'New Business',
         subtitle: 'Walk into pitches with forensic proof of what works in the category — competitive intelligence that positions you as the strategic authority.',
         color: '#D4A574',
+        weightClass: 'font-semibold',
     },
     {
         role: 'Creative Directors',
         subtitle: 'Stop guessing what resonates. Get structured creative briefs, persuasion maps, and rebuild blueprints for every asset you analyze.',
         color: '#F4A700',
+        weightClass: 'font-semibold',
     },
     {
         role: 'Strategy Directors',
         subtitle: 'Surface the invisible mechanics competitors deploy — signal stacks, trigger distribution, and strategic posture at category scale.',
         color: '#888888',
+        weightClass: 'font-semibold',
     },
     {
         role: 'Brand Managers',
@@ -47,6 +51,7 @@ const PERSONAS: Persona[] = [
         role: 'Copywriters',
         subtitle: 'Extract narrative frameworks, hook mechanics, and objection dismantling patterns from any ad — ready to adapt into your next brief.',
         color: '#C8230A',
+        weightClass: 'font-semibold',
     },
 ];
 
@@ -106,7 +111,7 @@ export default function AnalyticalHero() {
                             <span className="inline-flex items-baseline gap-3 mt-2">
                                 <span className="text-[#FBFBF6]/50">for</span>
                                 <span
-                                    className="font-serif font-medium tracking-[-0.02em]"
+                                    className={`font-serif tracking-[-0.02em] ${persona.weightClass || 'font-medium'}`}
                                     style={{
                                         color: persona.color,
                                         opacity: personaVisible ? 1 : 0,
