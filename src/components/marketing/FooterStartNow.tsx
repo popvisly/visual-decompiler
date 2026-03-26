@@ -17,18 +17,18 @@ export default function FooterStartNow() {
 
                         {/* Left: Headline */}
                         <div className="flex-1 text-center lg:text-left">
-                            <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">
+                            <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.42em] text-[#C1A67B]">
                                 Observer Tier
                             </p>
                             <motion.h2
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className="mb-4 text-4xl font-semibold uppercase leading-[0.95] tracking-tighter text-[#141414] md:text-6xl"
+                                className="mb-5 text-[34px] font-bold uppercase leading-[1] tracking-tight text-[#141414] md:text-5xl"
                             >
                                 {FINAL_CTA_HEADLINE}
                             </motion.h2>
-                            <p className="mx-auto max-w-xl text-base leading-relaxed text-[#5E5A53] md:text-lg lg:mx-0">
+                            <p className="mx-auto max-w-xl text-[16px] leading-relaxed text-[#5E5A53] md:text-[18px] font-medium tracking-tight lg:mx-0">
                                 Upload a competitor ad and get your first client-ready dossier. No card required.
                             </p>
                         </div>
@@ -51,38 +51,38 @@ export default function FooterStartNow() {
                     </div>
                 </div>
 
-                <div className="mb-6 rounded-[2rem] border border-[#D8CCB5] bg-[#F8F3EA] px-6 py-6 md:px-8">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8A7B64]">About Visual Decompiler</p>
-                    <p className="mt-3 max-w-5xl text-[15px] leading-7 text-[#5E5A53] md:text-base">
+                <div className="mb-6 rounded-[2rem] border border-[#D8CCB5] bg-[#F8F3EA] px-6 py-6 md:px-8 border-l-[3px] border-[#D4A574]">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8A7B64]">About Visual Decompiler</p>
+                    <p className="mt-4 max-w-5xl text-[15px] leading-7 text-[#5E5A53] md:text-base font-medium tracking-tight">
                         Visual Decompiler is a Forensic Advertising Intelligence OS designed to be faster than manual analysis and deeper than ChatGPT alone. It combines forensic diagnosis, strategic readouts, compounding intelligence, and white-label agency delivery into outputs teams can trust and hand to clients confidently.
                     </p>
                 </div>
 
                 <div className="mb-6 grid gap-4 md:grid-cols-3">
-                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896]">
-                        <div className="mb-3 h-px w-16 bg-gradient-to-r from-[#D0B896] to-transparent opacity-60 transition-opacity group-hover:opacity-100" />
-                        <p className="text-lg font-semibold leading-snug text-[#141414]">
+                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896] border-l-[3px] border-[#D4A574]/40">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C1A67B] mb-2">INTELLIGENCE FAQ</p>
+                        <p className="text-lg font-bold leading-snug text-[#141414] tracking-tight">
                             Is this just another AI writer?
                         </p>
-                        <p className="mt-3 text-[15px] leading-7 text-[#5E5A53]">
+                        <p className="mt-3 text-[15px] leading-relaxed text-[#5E5A53] font-medium tracking-tight">
                             No. Visual Decompiler analyses existing ads and returns structured strategic intelligence.
                         </p>
                     </div>
-                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896]">
-                        <div className="mb-3 h-px w-16 bg-gradient-to-r from-[#D0B896] to-transparent opacity-60 transition-opacity group-hover:opacity-100" />
-                        <p className="text-lg font-semibold leading-snug text-[#141414]">
+                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896] border-l-[3px] border-[#D4A574]/40">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C1A67B] mb-2">SYSTEM DELTA</p>
+                        <p className="text-lg font-bold leading-snug text-[#141414] tracking-tight">
                             How is this different from ad libraries?
                         </p>
-                        <p className="mt-3 text-[15px] leading-7 text-[#5E5A53]">
+                        <p className="mt-3 text-[15px] leading-relaxed text-[#5E5A53] font-medium tracking-tight">
                             Libraries show what exists; Visual Decompiler explains why it works and how to act on it.
                         </p>
                     </div>
-                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896]">
-                        <div className="mb-3 h-px w-16 bg-gradient-to-r from-[#D0B896] to-transparent opacity-60 transition-opacity group-hover:opacity-100" />
-                        <p className="text-lg font-semibold leading-snug text-[#141414]">
+                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896] border-l-[3px] border-[#D4A574]/40">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C1A67B] mb-2">AGENCY ADOPTION</p>
+                        <p className="text-lg font-bold leading-snug text-[#141414] tracking-tight">
                             Will my team actually use this?
                         </p>
-                        <p className="mt-3 text-[15px] leading-7 text-[#5E5A53]">
+                        <p className="mt-3 text-[15px] leading-relaxed text-[#5E5A53] font-medium tracking-tight">
                             Yes — built for team workflows: boards, vault memory, white-label export, and shared seats.
                         </p>
                     </div>
