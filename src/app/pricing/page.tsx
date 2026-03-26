@@ -26,13 +26,13 @@ function CheckItem({ children, dark = false }: { children: React.ReactNode; dark
 export default function PricingPage() {
     const [loading, setLoading] = useState<string | null>(null);
 
-    const handleCheckout = async (planId: string) => {
-        setLoading(planId);
+    const handleCheckout = async (planKey: string) => {
+        setLoading(planKey);
         try {
             const res = await fetch('/api/billing/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ planId }),
+                body: JSON.stringify({ planKey }),
             });
             const { url, error } = await res.json();
 
@@ -183,11 +183,11 @@ export default function PricingPage() {
                             </p>
 
                             <button
-                                onClick={() => handleCheckout(PRICING.strategic.checkoutPriceId)}
+                                onClick={() => handleCheckout(PRICING.strategic.checkoutPlanKey)}
                                 disabled={loading !== null}
                                 className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[#141414] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black disabled:cursor-wait disabled:opacity-60"
                             >
-                                {loading === PRICING.strategic.checkoutPriceId ? 'Initializing…' : PRICING.strategic.ctaLabel}
+                                {loading === PRICING.strategic.checkoutPlanKey ? 'Initializing…' : PRICING.strategic.ctaLabel}
                             </button>
                             <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
                                 {PRICING.strategic.trialLabel}
@@ -229,11 +229,11 @@ export default function PricingPage() {
                             </p>
 
                             <button
-                                onClick={() => handleCheckout(PRICING.professional.checkoutPriceId)}
+                                onClick={() => handleCheckout(PRICING.professional.checkoutPlanKey)}
                                 disabled={loading !== null}
                                 className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[#141414] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black disabled:cursor-wait disabled:opacity-60"
                             >
-                                {loading === PRICING.professional.checkoutPriceId ? 'Initializing…' : PRICING.professional.ctaLabel}
+                                {loading === PRICING.professional.checkoutPlanKey ? 'Initializing…' : PRICING.professional.ctaLabel}
                             </button>
                             <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
                                 {PRICING.professional.trialLabel}

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from '@/lib/auth-server';
+import { resolveBillingPlan } from '@/lib/billing-plans';
 import { stripe } from '@/lib/stripe';
 import { getSupabaseAdmin } from '@/lib/supabase';
 
@@ -11,10 +12,15 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { planId } = await req.json();
+        const { planKey } = await req.json();
 
-        if (!planId) {
-            return NextResponse.json({ error: 'Plan ID is required' }, { status: 400 });
+        if (!planKey) {
+            return NextResponse.json({ error: 'Plan key is required' }, { status: 400 });
+        }
+
+        const plan = resolveBillingPlan(planKey);
+        if (!plan) {
+            return NextResponse.json({ error: 'That billing plan is not configured yet.' }, { status: 400 });
         }
 
         // 1. Get or create internal user record
@@ -52,7 +58,7 @@ export async function POST(req: Request) {
         }
 
         // 3. Determine if this is a subscription or one-time payment
-        const isOneTime = planId === process.env.STRIPE_PRICE_PRO_ONETIME; // $5 one-time analysis
+        const isOneTime = plan.stripePriceId === process.env.STRIPE_PRICE_PRO_ONETIME;
 
         // 4. Create Checkout Session
         try {
@@ -60,7 +66,7 @@ export async function POST(req: Request) {
                 customer: stripeCustomerId,
                 line_items: [
                     {
-                        price: planId,
+                        price: plan.stripePriceId,
                         quantity: 1,
                     },
                 ],
@@ -69,7 +75,8 @@ export async function POST(req: Request) {
                 cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/pricing?billing=cancel`,
                 metadata: {
                     supabaseId: userId,
-                    priceId: planId,
+                    priceId: plan.stripePriceId,
+                    planKey: plan.key,
                 },
             };
 
@@ -78,7 +85,8 @@ export async function POST(req: Request) {
                 sessionConfig.subscription_data = {
                     metadata: {
                         supabaseId: userId,
-                        priceId: planId,
+                        priceId: plan.stripePriceId,
+                        planKey: plan.key,
                     },
                 };
             }

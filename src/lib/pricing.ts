@@ -30,7 +30,7 @@ export const PRICING = {
         ctaLabel: 'Start Strategic Unit',
         trialLabel: '14-day free trial included',
         whoItsFor: 'Art Directors, Creative Directors, Copywriters, and Brand Managers who need analysis on demand — not five times a month.',
-        checkoutPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY || 'price_1T64QL0LZZUO4xz44Cwvqdzk',
+        checkoutPlanKey: 'strategic',
         features: [
             'Unlimited analyses',
             'Full Intelligence Vault access',
@@ -56,7 +56,7 @@ export const PRICING = {
         ctaLabel: 'Start Professional',
         trialLabel: '14-day free trial included',
         whoItsFor: 'Small creative studios and in-house strategy teams (2-5 people) who need collaboration features.',
-        checkoutPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PROFESSIONAL_MONTHLY || 'price_professional_placeholder',
+        checkoutPlanKey: 'professional',
         features: [
             'All Strategic Unit features',
             '3-5 team seats',

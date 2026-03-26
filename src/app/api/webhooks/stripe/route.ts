@@ -1,27 +1,10 @@
 import { NextResponse } from 'next/server';
+import { getTierFromPriceId } from '@/lib/billing-plans';
 import { stripe } from '@/lib/stripe';
 import { getSupabaseAdmin } from '@/lib/supabase';
 import Stripe from 'stripe';
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-// Map Price IDs to tiers (from environment variables)
-function getTierFromPriceId(priceId: string): 'free' | 'pro' | 'professional' | 'agency' {
-    // Pro tier: $49/mo subscription
-    if (priceId === process.env.STRIPE_PRICE_PRO_MONTHLY) return 'pro';
-
-    // Professional tier: $249/mo subscription
-    if (priceId === process.env.STRIPE_PRICE_PROFESSIONAL_MONTHLY) return 'professional';
-
-    // Agency tier: $199/mo subscription
-    if (priceId === process.env.STRIPE_PRICE_AGENCY_MONTHLY) return 'agency';
-
-    // Pro tier: $5 one-time payment (gets Pro-level analysis)
-    if (priceId === process.env.STRIPE_PRICE_PRO_ONETIME) return 'pro';
-
-    // Default to free tier if price ID not recognized
-    return 'free';
-}
 
 export async function POST(req: Request) {
     const body = await req.text();
