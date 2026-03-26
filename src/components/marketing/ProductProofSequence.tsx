@@ -215,14 +215,14 @@ function DifferentialDiagnosisSection() {
 
             <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
                 <div className="mb-6 flex items-center gap-3">
-                    <span className="h-px w-10 bg-gradient-to-r from-[#CDA468] to-transparent" />
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#A8895F]">Intelligence Pulse</p>
+                    <span className="h-px w-12 bg-gradient-to-r from-[#D4A574] to-transparent" />
+                    <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">Intelligence Pulse</p>
                 </div>
 
-                <h3 className="max-w-4xl text-3xl font-semibold leading-[1] tracking-tight text-[#141414] md:text-5xl">
+                <h3 className="max-w-4xl text-[38px] font-bold leading-[1.1] tracking-tight text-[#151310] md:text-6xl">
                     Differential Diagnosis
                 </h3>
-                <p className="mt-4 max-w-3xl text-[16px] leading-relaxed text-[#5E5A53] md:text-[18px]">
+                <p className="mt-6 max-w-3xl text-[17px] leading-relaxed text-[#6A6257] md:text-[20px] font-medium tracking-tight">
                     Compare two assets and surface strategic delta, persuasion lift, and fatigue risk before you commit creative direction.
                 </p>
 
@@ -299,13 +299,13 @@ function WhyDifferentSection() {
         <section className={`border-b border-[#E3DACB] bg-[#F7F1E7] ${SECTION_BAND}`}>
             <motion.div {...REVEAL} className="mx-auto max-w-7xl">
                 <div className="max-w-4xl">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8E7450]">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">
                         WHY TEAMS SWITCH
                     </p>
-                    <h2 className="mt-4 text-3xl font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-5xl">
+                    <h2 className="mt-6 text-[38px] font-bold leading-[1] tracking-tight text-[#151310] md:text-6xl">
                         Forensic intelligence your team can act on in minutes.
                     </h2>
-                    <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#5E5A53] md:text-lg">
+                    <p className="mt-6 max-w-3xl text-[17px] leading-relaxed text-[#6A6257] md:text-[20px] font-medium tracking-tight">
                         See exactly where generic spy tools stop and where Visual Decompiler creates client-ready strategic outputs.
                     </p>
                 </div>
@@ -362,9 +362,9 @@ function WhyDifferentSection() {
                                     <p className="mt-2 max-w-[25ch] text-sm leading-[1.5] text-[#635D54]">{block.theyDo}</p>
                                 </div>
                                 <div className="border-t border-[#E4D9C8] pt-4">
-                                    <div className="rounded-[1.05rem] border border-[#E1D4BE] bg-[#F8F1E7] px-4 py-3.5">
-                                        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#7E6948]">WE DO</p>
-                                        <p className="mt-2 max-w-[30ch] text-sm leading-[1.55] text-[#141414]">{block.weDo}</p>
+                                    <div className="rounded-[1.25rem] border border-[#E1D4BE] bg-[#F8F1E7] px-5 py-4 border-l-[3px] border-[#D4A574]">
+                                        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-[#7E6948]">SOVEREIGN ADVANTAGE</p>
+                                        <p className="mt-2 max-w-[34ch] text-[15px] leading-relaxed font-medium text-[#151310] tracking-tight">{block.weDo}</p>
                                     </div>
                                 </div>
                             </div>
@@ -433,12 +433,12 @@ export default function ProductProofSequence() {
                     transition={{ duration: 0.5, ease: SECTION_EASE }}
                     className="mx-auto max-w-7xl"
                 >
-                    <div className="mb-7 md:mb-10">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C1A67B]">System Architecture</p>
-                        <h2 className="mt-4 max-w-5xl text-[34px] font-semibold leading-[0.98] tracking-tight text-[#141414] md:text-[44px] lg:text-[54px]">
+                    <div className="mb-10 md:mb-14">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">System Architecture</p>
+                        <h2 className="mt-6 max-w-5xl text-[38px] font-bold leading-[1] tracking-tight text-[#151310] md:text-6xl">
                             The operating layer behind every forensic readout.
                         </h2>
-                        <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#5E5A53] md:text-lg">
+                        <p className="mt-6 max-w-3xl text-[17px] leading-relaxed text-[#6A6257] md:text-[20px] font-medium tracking-tight">
                             Move from one asset to compounding intelligence, execution-ready outputs, and agency delivery without adding workflow noise.
                         </p>
                     </div>
