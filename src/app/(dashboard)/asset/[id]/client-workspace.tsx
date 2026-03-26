@@ -1859,6 +1859,40 @@ export default function AssetWorkspace({
                                         {(!extraction.primary_mechanic || !extraction.full_dossier) && <SovereignProcessingView assetId={asset.id} agency={agency} />}
 
                                         {extraction.primary_mechanic && extraction.full_dossier && (
+                                             <>
+                                                 {/* Unified Primary Intelligence Metric - ELEVATED */}
+                                                 <div className="w-full rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm flex flex-col gap-8 lg:flex-row lg:items-center mb-10">
+                                                     {/* Left: Primary Mechanic */}
+                                                     <div className="flex-1">
+                                                         <div className="flex justify-between items-center mb-6 border-b border-[#E6DDCF] pb-4">
+                                                             <div className="flex items-center gap-3">
+                                                                 <div className="h-5 w-5 rounded-full bg-[#D4A574]/10 flex items-center justify-center">
+                                                                     <div className="h-2 w-2 rounded-full bg-[#D4A574]" />
+                                                                 </div>
+                                                                 <span className="block text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Primary Mechanic</span>
+                                                             </div>
+                                                             <InfoButton section="PRIMARY_MECHANIC" />
+                                                         </div>
+                                                         <h2 className="text-3xl font-light uppercase tracking-[0.25em] text-[#151310] leading-tight selection:bg-[#D4A574]/20">
+                                                             {extraction.primary_mechanic}
+                                                         </h2>
+                                                     </div>
+
+                                                     {/* Vertical Divider (Desktop Only) */}
+                                                     <div className="hidden lg:block w-[1px] h-32 bg-[#E6DDCF]/60 mx-8" />
+
+                                                     {/* Right: System Confidence */}
+                                                     <div className="w-full lg:w-64 flex flex-col">
+                                                         <div className="flex justify-between items-center mb-6 border-b border-[#E6DDCF] pb-4">
+                                                             <span className="block text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Confidence Score</span>
+                                                             <InfoButton section="SYSTEM_CONFIDENCE" />
+                                                         </div>
+                                                         <div className="text-6xl font-sans font-bold text-[#151310] tracking-tighter mt-auto lg:text-right flex items-baseline lg:justify-end gap-1">
+                                                             {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-[24px] text-[#D4A574]">/100</span>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
                                             <DossierDecisionSummary
                                                 extraction={extraction}
                                                 dossier={dossier}
@@ -1866,7 +1900,8 @@ export default function AssetWorkspace({
                                                 isExecutiveSummary={isExecutiveSummary}
                                                 onToggleExecutiveSummary={setIsExecutiveSummary}
                                                 evidenceHref="#dossier-evidence"
-                                            />
+                                             />
+                                         </>
                                         )}
 
                                         {!isExecutiveSummary && (
@@ -1874,33 +1909,7 @@ export default function AssetWorkspace({
                                         {/* Top 4 Extraction Metrics as Intelligence Cards */}
                                         <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] pb-2 xl:grid-cols-3">
                                             
-                                            {/* Unified Primary Intelligence Metric */}
-                                            <div className={`col-span-1 xl:col-span-3 ${ANALYSIS_CARD_CLASS} flex flex-col gap-[clamp(12px,1vw,18px)] lg:flex-row lg:items-center min-h-[120px]`}>
-                                                {/* Left: Primary Mechanic */}
-                                                <div className="flex-1">
-                                                    <div className="flex justify-between items-center mb-4 border-b border-[#E6DDCF] pb-2">
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Primary Mechanic</span>
-                                                        <InfoButton section="PRIMARY_MECHANIC" />
-                                                    </div>
-                                                    <h2 className="text-xl lg:text-2xl font-light uppercase tracking-[0.2em] text-[#151310] leading-snug">
-                                                        {extraction.primary_mechanic}
-                                                    </h2>
-                                                </div>
 
-                                                {/* Vertical Divider (Desktop Only) */}
-                                                <div className="hidden lg:block w-[1px] h-24 bg-[#D4A574]/20 mx-4" />
-
-                                                {/* Right: System Confidence */}
-                                                <div className="w-full lg:w-48 flex flex-col">
-                                                    <div className="flex justify-between items-center mb-4 border-b border-[#E6DDCF] pb-2">
-                                                        <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Confidence</span>
-                                                        <InfoButton section="SYSTEM_CONFIDENCE" />
-                                                    </div>
-                                                    <div className="text-5xl font-mono text-[#151310] tracking-tighter mt-auto lg:text-right">
-                                                        {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}<span className="text-[#D4A574]/50">%</span>
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                             {/* Visual Style */}
                                             <div className={`col-span-1 xl:col-span-2 ${ANALYSIS_CARD_CLASS} flex flex-col min-h-[120px]`}>
