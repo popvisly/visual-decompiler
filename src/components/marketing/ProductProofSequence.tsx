@@ -419,9 +419,127 @@ function PlatformSystemGrid() {
     );
 }
 
+function SingleAssetDeconstruction() {
+    const AD_STACK = [
+        { src: '/images/examples/Miss_DIOR.jpg', label: 'Identity Model', mechanic: 'Identity-Led' },
+        { src: '/images/examples/Chanel_No5.webp', label: 'Symbolic Power', mechanic: 'Heritage-Led' },
+        { src: '/images/examples/CHLOE.jpg', label: 'Lifestyle Framing', mechanic: 'Atmospheric' },
+        { src: '/images/examples/valentino-voce-viva.png', label: 'Voice Authority', mechanic: 'Identity-Led' },
+    ];
+
+    return (
+        <section className={`relative overflow-hidden border-b border-[#E3DACB] bg-[#FBFBF6] ${SECTION_BAND}`}>
+            <div className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(rgba(20,20,20,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.015)_1px,transparent_1px)] [background-size:64px_64px]" />
+            
+            <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
+                <div className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                    <div>
+                        <div className="mb-6 flex items-center gap-3">
+                            <span className="h-px w-12 bg-gradient-to-r from-[#D4A574] to-transparent" />
+                            <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">Forensic Deconstruction</p>
+                        </div>
+                        <h2 className="max-w-2xl text-[38px] font-bold leading-[1.1] tracking-tight text-[#151310] md:text-6xl">
+                            See exactly what any ad is doing.
+                        </h2>
+                        <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-[#6A6257] md:text-[20px] font-medium tracking-tight">
+                            Feed any competitor asset into the engine. Our agents map the hidden persuasion architecture, trigger signals, and decision layers in seconds.
+                        </p>
+
+                        <div className="mt-10 grid gap-6 sm:grid-cols-2">
+                            <div className="border-l-[3px] border-[#D4A574] pl-6 py-1">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] mb-2">Automated Extraction</p>
+                                <p className="text-[14px] text-[#6A6257] leading-relaxed">Hidden signals and subtext surfaced instantly.</p>
+                            </div>
+                            <div className="border-l-[3px] border-[#D4A574] pl-6 py-1">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] mb-2">Strategic Interpretation</p>
+                                <p className="text-[14px] text-[#6A6257] leading-relaxed">Raw data turned into clinical, action-ready moves.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* The "Rolodex" Scanner UI */}
+                    <div className="relative">
+                        <div className="relative aspect-[4/5] w-full rounded-[3rem] border border-[#E6DDCF] bg-[#F7F1E7]/30 p-4 shadow-[0_24px_50px_rgba(20,18,15,0.08)]">
+                            <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310]">
+                                {/* Animated Background Ad Stack */}
+                                {AD_STACK.map((ad, i) => (
+                                    <motion.div
+                                        key={ad.src}
+                                        initial={{ opacity: 0, scale: 0.9, y: 100 }}
+                                        animate={{ 
+                                            opacity: 1, 
+                                            scale: 1 - (i * 0.05), 
+                                            y: - (i * 20),
+                                            zIndex: 10 - i 
+                                        }}
+                                        transition={{ 
+                                            duration: 0.8, 
+                                            delay: i * 0.2,
+                                            repeat: Infinity,
+                                            repeatType: "reverse",
+                                            repeatDelay: 2
+                                        }}
+                                        className="absolute inset-0"
+                                    >
+                                        <Image
+                                            src={ad.src}
+                                            alt={ad.label}
+                                            fill
+                                            unoptimized
+                                            className="object-cover opacity-60 grayscale-[0.5]"
+                                        />
+                                        
+                                        {/* Scanner Overlay Elements */}
+                                        <div className="absolute inset-0 z-20 pointer-events-none">
+                                            <div className="absolute inset-0 border-[0.5px] border-[#D4A574]/30" />
+                                            <motion.div 
+                                                animate={{ top: ['0%', '100%', '0%'] }}
+                                                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                                                className="absolute left-0 right-0 h-px bg-[#D4A574]/60 shadow-[0_0_15px_rgba(212,165,116,0.5)]"
+                                            />
+                                            
+                                            {/* Micro-Labels */}
+                                            <div className="absolute top-8 left-8">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574] animate-pulse" />
+                                                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">Extracting Signals...</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="absolute bottom-12 right-12 text-right">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{ad.mechanic}</p>
+                                                <p className="text-[8px] uppercase tracking-[0.1em] text-[#D4A574]/60">System Match 98.4%</p>
+                                            </div>
+                                            
+                                            {/* Crosshairs */}
+                                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden h-32 w-32 border border-[#D4A574]/20 rounded-full">
+                                                <div className="absolute h-full w-px left-1/2 -translate-x-1/2 bg-[#D4A574]/10" />
+                                                <div className="absolute w-full h-px top-1/2 -translate-y-1/2 bg-[#D4A574]/10" />
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                            
+                            {/* Outer Labels */}
+                            <div className="absolute -left-6 top-1/4 rounded-lg border border-[#D4A574]/20 bg-white/90 backdrop-blur px-3 py-2 shadow-xl">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-[#D4A574]">Semiotic Layer 01</p>
+                            </div>
+                            <div className="absolute -right-6 bottom-1/4 rounded-lg border border-[#D4A574]/20 bg-white/90 backdrop-blur px-3 py-2 shadow-xl">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-[#D4A574]">Persuasion Architecture</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        </section>
+    );
+}
+
 export default function ProductProofSequence() {
     return (
         <div id="funnel" className="bg-[#FBFBF6]">
+            <SingleAssetDeconstruction />
             <DifferentialDiagnosisSection />
             <WhyDifferentSection />
 
