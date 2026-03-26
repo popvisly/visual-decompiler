@@ -228,7 +228,7 @@ function DifferentialDiagnosisSection() {
                     Compare two assets and surface strategic delta, persuasion lift, and fatigue risk before you commit creative direction.
                 </p>
 
-                <div className="mt-8 grid gap-6 lg:grid-cols-2">
+                <div className="mt-8 mx-auto max-w-5xl grid gap-6 lg:grid-cols-2">
                     {/* Asset A */}
                     <div className="group relative overflow-hidden rounded-[3rem] border border-[#E6DDCF] bg-[#F7F1E7]/30 p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
                         <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310]">
