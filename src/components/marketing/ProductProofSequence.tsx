@@ -65,22 +65,6 @@ const DIFFERENTIATION_BLOCKS = [
     },
 ] as const;
 
-const DIFFERENTIATION_PROOF_ROWS = [
-    {
-        label: 'Signals',
-        value: 'Trigger profile, friction cues, and narrative pressure in one readout.',
-    },
-    {
-        label: 'Mechanics',
-        value: 'Primary persuasion system, blueprint logic, and strategic posture.',
-    },
-    {
-        label: 'Dossier',
-        value: 'A client-ready object built for review rooms, decks, and follow-up moves.',
-    },
-] as const;
-
-
 const FUNNEL_SECTIONS: FunnelSection[] = [
     {
         id: 'deconstruction',
@@ -316,30 +300,13 @@ function WhyDifferentSection() {
                 </div>
 
                 <div className="mt-12 rounded-[1.8rem] border border-[#2B2721] bg-[#171512] px-5 py-5 text-[#F5EFE3] shadow-[0_18px_44px_rgba(18,16,12,0.10)] md:px-6 md:py-6">
-                    <div className="grid gap-5 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
-                        <div className="max-w-[26rem]">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">
-                                SAMPLE PROOF OBJECT
-                            </p>
-                            <p className="mt-3 text-lg leading-relaxed text-[#EEE4D3] md:text-lg">
-                                Signals, mechanics, blueprint logic, and recommendation layers held in one restrained dossier object.
-                            </p>
-                        </div>
-                        <div className="grid gap-3 md:grid-cols-3">
-                            {DIFFERENTIATION_PROOF_ROWS.map((row) => (
-                                <div
-                                    key={row.label}
-                                    className="min-h-[112px] rounded-[1.15rem] border border-[#3A342B] bg-[#201C17] px-4 py-4"
-                                >
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">
-                                        {row.label}
-                                    </p>
-                                    <p className="mt-2 text-sm leading-[1.55] text-[#E5D9C7]">
-                                        {row.value}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
+                    <div className="max-w-[30rem]">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">
+                            SAMPLE PROOF OBJECT
+                        </p>
+                        <p className="mt-3 text-lg leading-relaxed text-[#EEE4D3] md:text-lg">
+                            Signals, mechanics, blueprint logic, and recommendation layers held in one restrained dossier object.
+                        </p>
                     </div>
                 </div>
 
