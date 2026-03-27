@@ -62,7 +62,7 @@ export default function AdRolodexScanner() {
                                 />
                                 
                                 {/* Live Labels */}
-                                <div className="absolute top-8 left-8">
+                                <div className="absolute top-8 left-8 rounded-md border border-white/10 bg-black/70 px-4 py-2 backdrop-blur-md">
                                     <div className="flex items-center gap-2">
                                         <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574] animate-pulse" />
                                         <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Extracting: {activeAd.label}</span>
@@ -91,9 +91,6 @@ export default function AdRolodexScanner() {
                     </AnimatePresence>
                 </div>
                 
-                <div className="absolute -right-4 bottom-1/4 rounded-lg border border-[#D4A574]/20 bg-white/95 backdrop-blur px-2.5 py-1.5 shadow-xl sm:-right-6 sm:px-3 sm:py-2">
-                    <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-[#D4A574]">Neural Map Engaged</p>
-                </div>
             </div>
         </div>
     );
