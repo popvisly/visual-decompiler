@@ -13,8 +13,7 @@ export default function Hero({
 }: Props) {
     return (
         <section className="relative z-20 -mt-8 overflow-hidden rounded-t-[32px] border-t border-[#2B241A] bg-[#141414] pb-14 pt-14 text-[#FBFBF6] md:-mt-12 md:rounded-t-[44px] md:pb-16 md:pt-16 lg:-mt-16 lg:rounded-t-[56px] lg:pb-20 lg:pt-18">
-            <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:64px_64px]" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_0%,rgba(212,165,116,0.08)_0%,transparent_72%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_78%_56%_at_28%_8%,rgba(212,165,116,0.08)_0%,transparent_70%)]" />
 
             <div className="relative z-10 mx-auto max-w-7xl px-6">
                 <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start lg:gap-12">

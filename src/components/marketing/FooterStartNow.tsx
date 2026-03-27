@@ -7,8 +7,7 @@ import { HOMEPAGE_CTA_ICON, HOMEPAGE_PRIMARY_CTA } from '@/components/marketing/
 export default function FooterStartNow() {
     return (
         <footer className="relative overflow-hidden border-t border-[#2B241A] bg-[#141414] px-6 pb-8 pt-14 text-[#FBFBF6] md:pt-[4.5rem]">
-            <div className="pointer-events-none absolute inset-0 opacity-[0.045] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:56px_56px]" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,rgba(212,165,116,0.08)_0%,transparent_72%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_78%_58%_at_24%_6%,rgba(212,165,116,0.08)_0%,transparent_70%)]" />
             <div className="max-w-7xl mx-auto">
 
                 {/* Main CTA Section */}

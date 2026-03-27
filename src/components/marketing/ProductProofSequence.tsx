@@ -202,7 +202,6 @@ const STEP_PUNCH: Record<string, string> = {
 
 const SECTION_BAND = 'px-6 py-16 md:py-24';
 const DARK_SURFACE = 'border-b border-[#2B241A] bg-[#141414]';
-const DARK_GRID = 'pointer-events-none absolute inset-0 opacity-[0.045] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:56px_56px]';
 const TAN_CTA =
     'group inline-flex items-center justify-center gap-2 rounded-full border border-[#D4A574] bg-[#D4A574] px-7 py-3.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#141414] shadow-[0_12px_24px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-[1px] hover:bg-[#D7B07A] hover:border-[#D7B07A] hover:shadow-[0_16px_30px_rgba(0,0,0,0.22)] sm:min-w-[220px] sm:w-auto sm:px-8 sm:py-4 sm:text-[12px] sm:tracking-[0.2em]';
 const OUTLINE_TAN_CTA =
@@ -211,8 +210,7 @@ const OUTLINE_TAN_CTA =
 function DifferentialDiagnosisSection() {
     return (
         <section className={`relative overflow-hidden ${DARK_SURFACE} ${SECTION_BAND}`}>
-            <div className={DARK_GRID} />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(212,165,116,0.08)_0%,rgba(212,165,116,0)_60%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_62%_42%_at_74%_12%,rgba(212,165,116,0.08)_0%,rgba(212,165,116,0)_62%)]" />
 
             <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
                 <div className="mb-6 flex items-center gap-3">
@@ -307,7 +305,7 @@ function DifferentialDiagnosisSection() {
 function WhyDifferentSection() {
     return (
         <section className={`relative overflow-hidden ${DARK_SURFACE} ${SECTION_BAND}`}>
-            <div className={DARK_GRID} />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_58%_38%_at_20%_14%,rgba(212,165,116,0.06)_0%,rgba(212,165,116,0)_66%)]" />
             <motion.div {...REVEAL} className="mx-auto max-w-7xl">
                 <div className="max-w-4xl">
                     <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">
@@ -409,8 +407,7 @@ function PlatformSystemGrid() {
 function SingleAssetDeconstruction() {
     return (
         <section className="relative overflow-hidden border-b border-[#2B241A] bg-[#141414] px-6 py-14 md:py-16">
-            <div className={DARK_GRID} />
-            
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_38%_at_72%_10%,rgba(212,165,116,0.06)_0%,rgba(212,165,116,0)_64%)]" />
             <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
                 <div className="grid gap-10 lg:grid-cols-[1.05fr_0.8fr] lg:items-start lg:gap-12">
                     <div>
@@ -457,7 +454,7 @@ export default function ProductProofSequence() {
             <WhyDifferentSection />
 
             <section className={`relative overflow-hidden ${DARK_SURFACE} ${SECTION_BAND}`}>
-                <div className={DARK_GRID} />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_56%_34%_at_82%_18%,rgba(212,165,116,0.05)_0%,rgba(212,165,116,0)_64%)]" />
                 <motion.div
                     initial={{ opacity: 1, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
