@@ -112,7 +112,7 @@ export default function AnalyticalHero() {
                             Forensic Intelligence
                             <br />
                             <span className="inline-flex items-baseline gap-3 mt-2">
-                                <span className="text-[#FBFBF6]/50">for</span>
+                                <span className="font-serif text-[#D4A574]/82 italic tracking-[-0.03em]">for</span>
                                 <span
                                     className={`font-serif tracking-[-0.02em] ${persona.weightClass || 'font-medium'}`}
                                     style={{
