@@ -76,9 +76,9 @@ export default function Hero({
 
                 <div className="mt-20 grid gap-6 sm:grid-cols-3">
                     {[
-                        { label: 'Signals', body: 'Trigger profile, friction cues, and narrative pressure.' },
-                        { label: 'Mechanics', body: 'Primary persuasion system and blueprint logic.' },
-                        { label: 'Archive', body: 'Compounds strategic memory with every analysis.' }
+                        { label: 'Signals', body: 'Trigger distribution, friction points, and narrative pressure in one strategic readout.' },
+                        { label: 'Mechanics', body: 'Dominant persuasion system, blueprint logic, and the structure behind response.' },
+                        { label: 'Archive', body: 'A compounding intelligence memory that sharpens with every asset you deconstruct.' }
                     ].map((item, i) => (
                         <motion.div
                             key={item.label}
