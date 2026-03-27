@@ -37,16 +37,16 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     const displayBrandName = agency?.is_whitelabel_active ? (agency.name || 'Decompiler') : 'Decompiler';
 
     return (
-        <div className="flex min-h-screen bg-[#FBFBF6] text-[#1A1A1A]">
-            {/* Global Sidebar - Minimalist, 1px geometric borders */}
-            <aside className="w-64 border-r border-[#E5E5E1] flex flex-col justify-between py-8 px-6 hidden md:flex bg-white/40 backdrop-blur-sm sticky top-0 h-screen z-50">
+        <div className="flex min-h-screen bg-[#141414] text-[#FBFBF6]">
+            {/* Global Sidebar - Minimalist, app interior aesthetic */}
+            <aside className="sticky top-0 z-50 hidden h-screen w-64 flex-col justify-between border-r border-[rgba(212,165,116,0.18)] bg-[#171512] px-6 py-8 md:flex">
 
                 <div className="relative z-10">
                     {/* Logo / Brand Mark */}
                     <div className="mb-12 flex items-start justify-between gap-3">
                         <Link href="/" className="group flex items-center gap-2 min-w-0">
-                            <div className="w-4 h-4 bg-[#1A1A1A] rounded-sm group-hover:bg-[#D4A574] transition-colors flex-shrink-0" />
-                            <span className="font-sans text-[11px] font-bold tracking-[0.3em] uppercase opacity-90 group-hover:opacity-100 transition-opacity text-[#1A1A1A] group-hover:text-[#D4A574] truncate">
+                            <div className="h-4 w-4 flex-shrink-0 rounded-sm bg-[#D4A574] transition-colors group-hover:bg-[#D7B07A]" />
+                            <span className="truncate font-sans text-[11px] font-bold uppercase tracking-[0.3em] text-[#FBFBF6]/88 transition-opacity group-hover:opacity-100 group-hover:text-[#D4A574]">
                                 {displayBrandName}
                             </span>
                         </Link>
@@ -63,7 +63,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                                 <Link
                                     key={item.href}
                                     href={item.href}
-                                    className={`flex items-center gap-4 pl-4 py-2 -ml-4 group transition-all duration-300 border-l ${isActive ? 'text-[#8B4513] border-[#8B4513] bg-[#8B4513]/5 select-none' : 'text-[#4A4A4A]/60 border-transparent hover:text-[#1A1A1A] hover:border-[#E5E5E1]'
+                                    className={`-ml-4 flex items-center gap-4 border-l pl-4 py-2 transition-all duration-300 group ${isActive ? 'select-none border-[#D4A574] bg-[#D4A574]/8 text-[#D4A574]' : 'border-transparent text-[#9A9A94] hover:border-[rgba(212,165,116,0.18)] hover:text-[#FBFBF6]'
                                         }`}
                                 >
                                     <Icon className="w-4 h-4 stroke-[1px]" />
