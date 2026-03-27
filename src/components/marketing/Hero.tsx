@@ -78,7 +78,7 @@ export default function Hero({
                     {[
                         { label: 'Signals', body: 'Trigger distribution, friction points, and narrative pressure in one strategic readout.' },
                         { label: 'Mechanics', body: 'Dominant persuasion system, blueprint logic, and the structure behind response.' },
-                        { label: 'Archive', body: 'A compounding intelligence memory that sharpens with every asset you deconstruct.' }
+                        { label: 'Vault', body: 'A compounding intelligence memory that sharpens with every asset you deconstruct.' }
                     ].map((item, i) => (
                         <motion.div
                             key={item.label}
