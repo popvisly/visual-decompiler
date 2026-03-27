@@ -20,7 +20,7 @@ export default function AdRolodexScanner() {
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % AD_STACK.length);
-        }, 4200);
+        }, 5600);
         return () => clearInterval(timer);
     }, []);
 
@@ -53,9 +53,11 @@ export default function AdRolodexScanner() {
                             {/* Scanner Overlay Elements */}
                             <div className="absolute inset-0 z-20 pointer-events-none">
                                 <div className="absolute inset-0 border-[0.5px] border-[#D4A574]/22" />
+                                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(212,165,116,0.04)_0%,rgba(212,165,116,0.01)_38%,rgba(0,0,0,0)_100%)]" />
+                                <div className="absolute inset-x-0 top-0 h-full opacity-[0.08] [background-image:linear-gradient(rgba(212,165,116,0.7)_1px,transparent_1px)] [background-size:100%_24px]" />
                                 <motion.div 
                                     animate={{ top: ['0%', '100%', '0%'] }}
-                                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                                    transition={{ duration: 6.5, repeat: Infinity, ease: "linear" }}
                                     className="absolute left-0 right-0 h-px bg-[#D4A574]/80 shadow-[0_0_12px_rgba(212,165,116,0.35)]"
                                 />
                                 
