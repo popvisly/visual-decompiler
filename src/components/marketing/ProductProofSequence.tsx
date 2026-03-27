@@ -189,29 +189,35 @@ const STEP_PUNCH: Record<string, string> = {
 };
 
 const SECTION_BAND = 'px-6 py-16 md:py-24';
+const DARK_SURFACE = 'border-b border-[#2B241A] bg-[#141414]';
+const DARK_GRID = 'pointer-events-none absolute inset-0 opacity-[0.045] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:56px_56px]';
+const TAN_CTA =
+    'group inline-flex items-center justify-center gap-2 rounded-full border border-[#D4A574] bg-[#D4A574] px-7 py-3.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#141414] shadow-[0_12px_24px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-[1px] hover:bg-[#D7B07A] hover:border-[#D7B07A] hover:shadow-[0_16px_30px_rgba(0,0,0,0.22)] sm:min-w-[220px] sm:w-auto sm:px-8 sm:py-4 sm:text-[12px] sm:tracking-[0.2em]';
+const OUTLINE_TAN_CTA =
+    'group inline-flex items-center justify-center gap-2 rounded-full border border-[rgba(212,165,116,0.32)] px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#D4A574] transition-all duration-300 hover:-translate-y-[1px] hover:border-[#D7B07A] hover:bg-[#1B1814] hover:text-[#D7B07A] sm:min-w-[220px] sm:w-auto sm:px-6 sm:text-[11px] sm:tracking-[0.2em]';
 
 function DifferentialDiagnosisSection() {
     return (
-        <section className={`relative overflow-hidden border-b border-[#E3DACB] bg-[#FBFBF6] ${SECTION_BAND}`}>
-            <div className="pointer-events-none absolute inset-0 opacity-[0.55] [background-image:linear-gradient(rgba(20,20,20,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.028)_1px,transparent_1px)] [background-size:48px_48px]" />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0)_60%)]" />
+        <section className={`relative overflow-hidden ${DARK_SURFACE} ${SECTION_BAND}`}>
+            <div className={DARK_GRID} />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(212,165,116,0.08)_0%,rgba(212,165,116,0)_60%)]" />
 
             <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
                 <div className="mb-6 flex items-center gap-3">
                     <span className="h-px w-12 bg-gradient-to-r from-[#D4A574] to-transparent" />
-                    <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">Intelligence Pulse</p>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">Intelligence Pulse</p>
                 </div>
 
-                <h3 className="max-w-4xl text-[34px] font-bold leading-[1.1] tracking-tight text-[#151310] md:text-5xl">
+                <h3 className="max-w-4xl text-[34px] font-bold leading-[1.1] tracking-tight text-[#FBFBF6] md:text-5xl">
                     Differential Diagnostic
                 </h3>
-                <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#6A6257] md:text-[18px] font-medium tracking-tight">
+                <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#9A9A94] md:text-[18px] font-medium tracking-tight">
                     Choose two assets and surface the strategic delta, persuasion lift, and fatigue gap before you commit creative direction.
                 </p>
 
                 <div className="mt-8 mx-auto max-w-5xl grid gap-6 lg:grid-cols-2">
                     {/* Asset A */}
-                    <div className="group relative overflow-hidden rounded-[3rem] border border-[#E6DDCF] bg-[#F7F1E7]/30 p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
+                    <div className="group relative overflow-hidden rounded-[3rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-3 sm:p-4">
                         <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310]">
                             <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
                                 CONTROL (ASSET A)
@@ -229,7 +235,7 @@ function DifferentialDiagnosisSection() {
                     </div>
 
                     {/* Asset B */}
-                    <div className="group relative overflow-hidden rounded-[3rem] border border-[#E6DDCF] bg-[#F7F1E7]/30 p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
+                    <div className="group relative overflow-hidden rounded-[3rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-3 sm:p-4">
                         <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310] aspect-[4/5]">
                             <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
                                 PROPOSED (ASSET B)
@@ -248,7 +254,7 @@ function DifferentialDiagnosisSection() {
                 </div>
 
                 <div className="mt-4 flex items-center justify-center">
-                    <span className="rounded-full border border-[#D8CCB5] bg-[#F8F3EA] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8E7450]">
+                    <span className="rounded-full border border-[rgba(212,165,116,0.24)] bg-[#1F1F1F] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">
                         Differential Read
                     </span>
                 </div>
@@ -261,10 +267,10 @@ function DifferentialDiagnosisSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.35 }}
                             transition={{ delay: i * 0.08, duration: 0.45 }}
-                            className="rounded-xl border border-[#D8CCB5] bg-[#FBF8F2] px-4 py-4 shadow-[0_10px_24px_rgba(20,20,20,0.04)]"
+                            className="rounded-xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-4 py-4"
                         >
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">{metric.label}</p>
-                            <p className="mt-2 text-base font-semibold text-[#141414]">{metric.value}</p>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{metric.label}</p>
+                            <p className="mt-2 text-base font-semibold text-[#FBFBF6]">{metric.value}</p>
                         </motion.div>
                     ))}
                 </div>
@@ -272,7 +278,7 @@ function DifferentialDiagnosisSection() {
                 <div className="mt-6">
                     <a
                         href="/compare"
-                        className={HOMEPAGE_PRIMARY_CTA}
+                        className={TAN_CTA}
                     >
                         <span>Run Differential Diagnostic</span>
                         <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
@@ -285,16 +291,17 @@ function DifferentialDiagnosisSection() {
 
 function WhyDifferentSection() {
     return (
-        <section className={`border-b border-[#E3DACB] bg-[#F7F1E7] ${SECTION_BAND}`}>
+        <section className={`relative overflow-hidden ${DARK_SURFACE} ${SECTION_BAND}`}>
+            <div className={DARK_GRID} />
             <motion.div {...REVEAL} className="mx-auto max-w-7xl">
                 <div className="max-w-4xl">
                     <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">
                         WHY TEAMS SWITCH
                     </p>
-                    <h2 className="mt-5 text-[34px] font-bold leading-[1] tracking-tight text-[#151310] md:text-5xl">
+                    <h2 className="mt-5 text-[34px] font-bold leading-[1] tracking-tight text-[#FBFBF6] md:text-5xl">
                         Forensic intelligence your team can act on in minutes.
                     </h2>
-                    <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#6A6257] md:text-[18px] font-medium tracking-tight">
+                    <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#9A9A94] md:text-[18px] font-medium tracking-tight">
                         See exactly where generic spy tools stop and where Visual Decompiler creates client-ready strategic outputs.
                     </p>
                 </div>
@@ -318,27 +325,27 @@ function WhyDifferentSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.2 }}
                             transition={{ duration: 0.45, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                            className="group relative overflow-hidden rounded-[2.5rem] border border-[#E6DDCF] bg-[#FBFBF6] shadow-[0_4px_20px_rgba(0,0,0,0.02)] flex flex-col"
+                            className="group relative flex flex-col overflow-hidden rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F]"
                         >
-                            <div className="flex items-center gap-3 border-b border-[#E6DDCF]/60 px-6 py-5">
-                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#D4A574]/10 border border-[#D4A574]/20">
+                            <div className="flex items-center gap-3 border-b border-[rgba(212,165,116,0.16)] px-6 py-5">
+                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-[rgba(212,165,116,0.2)] bg-[#171512]">
                                     <block.icon className="h-4 w-4 text-[#D4A574]" strokeWidth={1.5} />
                                 </div>
-                                <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">{block.title}</h3>
+                                <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">{block.title}</h3>
                             </div>
 
                             <div className="flex flex-col gap-5 p-6 flex-1">
                                 <div className="relative pl-5">
-                                    <div className="absolute left-0 top-0 bottom-0 w-px bg-[#E6DDCF]" />
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/55 mb-1.5">Conventional</p>
-                                    <p className="text-[13px] leading-relaxed text-[#6A6257] font-light">
+                                    <div className="absolute left-0 top-0 bottom-0 w-px bg-[rgba(212,165,116,0.14)]" />
+                                    <p className="mb-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-[#9A9A94]">They Do</p>
+                                    <p className="text-[13px] leading-relaxed text-[#9A9A94] font-light">
                                         {block.theyDo}
                                     </p>
                                 </div>
 
-                                <div className="relative pl-5 py-3 border-l-[3px] border-[#D4A574] bg-[#F7F1E7]/50 rounded-r-xl">
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#D4A574] mb-1.5">Sovereign</p>
-                                    <p className="text-[13px] leading-relaxed font-semibold text-[#151310] tracking-tight">
+                                <div className="relative rounded-r-xl border-l-[3px] border-[#D4A574] bg-[#171512] py-3 pl-5">
+                                    <p className="mb-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">We Do</p>
+                                    <p className="text-[13px] leading-relaxed font-semibold tracking-tight text-[#FBFBF6]">
                                         {block.weDo}
                                     </p>
                                 </div>
@@ -350,7 +357,7 @@ function WhyDifferentSection() {
                 <div className="mt-8 flex justify-start md:justify-center">
                     <a
                         href={SAMPLE_DOSSIER_HREF}
-                        className={HOMEPAGE_SECONDARY_CTA}
+                        className={OUTLINE_TAN_CTA}
                     >
                         <span>View Sample Dossier</span>
                         <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
@@ -372,15 +379,11 @@ function PlatformSystemGrid() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ delay: index * 0.05, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                    className={`group relative overflow-hidden rounded-[1.7rem] border p-4 ${
-                        index % 2 === 0
-                            ? 'border-[#DCCDB7] bg-[#FCF9F3]'
-                            : 'border-[#D4C3AA] bg-[#F6EFE3]'
-                    }`}
+                    className="group relative overflow-hidden rounded-[1.7rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-4"
                 >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8E7450]">0{index + 1}</p>
-                    <h3 className="mt-2 text-[15px] font-semibold leading-snug text-[#141414]">{section.label}</h3>
-                    <p className="mt-2 max-w-[25ch] text-sm leading-6 text-[#5E584F]">{STEP_PUNCH[section.id]}</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">0{index + 1}</p>
+                    <h3 className="mt-2 text-[15px] font-semibold leading-snug text-[#FBFBF6]">{section.label}</h3>
+                    <p className="mt-2 max-w-[25ch] text-sm leading-6 text-[#9A9A94]">{STEP_PUNCH[section.id]}</p>
                 </motion.article>
             ))}
         </div>
@@ -389,31 +392,31 @@ function PlatformSystemGrid() {
 
 function SingleAssetDeconstruction() {
     return (
-        <section className="relative overflow-hidden border-b border-[#E3DACB] bg-[#FBFBF6] px-6 py-14 md:py-16">
-            <div className="pointer-events-none absolute inset-0 opacity-[0.24] [background-image:linear-gradient(rgba(20,20,20,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.015)_1px,transparent_1px)] [background-size:64px_64px]" />
+        <section className="relative overflow-hidden border-b border-[#2B241A] bg-[#141414] px-6 py-14 md:py-16">
+            <div className={DARK_GRID} />
             
             <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
                 <div className="grid gap-10 lg:grid-cols-[1.05fr_0.8fr] lg:items-start lg:gap-12">
                     <div>
                         <div className="mb-5 flex items-center gap-3">
                             <span className="h-px w-12 bg-gradient-to-r from-[#D4A574] to-transparent" />
-                            <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">Dossier Construction</p>
+                            <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">Dossier Construction</p>
                         </div>
-                        <h2 className="max-w-2xl text-[32px] font-bold leading-[1.06] tracking-tight text-[#151310] md:text-[42px]">
+                        <h2 className="max-w-2xl text-[32px] font-bold leading-[1.06] tracking-tight text-[#FBFBF6] md:text-[42px]">
                             Deconstruct the hidden persuasion architecture.
                         </h2>
-                        <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#6A6257] md:text-[17px] font-medium tracking-tight">
+                        <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#9A9A94] md:text-[17px] font-medium tracking-tight">
                             Upload any competitor ad and get a client-ready strategic dossier — psychology, signals, and a reconstruction blueprint — in under 60 seconds.
                         </p>
 
                         <div className="mt-8 grid gap-5 sm:grid-cols-2">
-                            <div className="border-l-[3px] border-[#D4A574] pl-6 py-1">
+                            <div className="rounded-r-xl border-l-[3px] border-[#D4A574] bg-[#1B1814] py-3 pl-6">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] mb-2">Automated Extraction</p>
-                                <p className="text-[14px] text-[#6A6257] leading-relaxed">Hidden signals and subtext surfaced instantly.</p>
+                                <p className="text-[14px] leading-relaxed text-[#9A9A94]">Hidden signals and subtext surfaced instantly.</p>
                             </div>
-                            <div className="border-l-[3px] border-[#D4A574] pl-6 py-1">
+                            <div className="rounded-r-xl border-l-[3px] border-[#D4A574] bg-[#1B1814] py-3 pl-6">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] mb-2">Strategic Interpretation</p>
-                                <p className="text-[14px] text-[#6A6257] leading-relaxed">Raw data turned into clinical, action-ready moves.</p>
+                                <p className="text-[14px] leading-relaxed text-[#9A9A94]">Raw data turned into clinical, action-ready moves.</p>
                             </div>
                         </div>
                     </div>
@@ -431,12 +434,13 @@ function SingleAssetDeconstruction() {
 
 export default function ProductProofSequence() {
     return (
-        <div id="funnel" className="bg-[#FBFBF6]">
+        <div id="funnel" className="bg-[#141414]">
             <SingleAssetDeconstruction />
             <DifferentialDiagnosisSection />
             <WhyDifferentSection />
 
-            <section className={`border-b border-[#E3DACB] bg-[#FBFBF6] ${SECTION_BAND}`}>
+            <section className={`relative overflow-hidden ${DARK_SURFACE} ${SECTION_BAND}`}>
+                <div className={DARK_GRID} />
                 <motion.div
                     initial={{ opacity: 1, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -446,10 +450,10 @@ export default function ProductProofSequence() {
                 >
                     <div className="mb-10 md:mb-14">
                         <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">System Architecture</p>
-                        <h2 className="mt-5 max-w-5xl text-[34px] font-bold leading-[1] tracking-tight text-[#151310] md:text-5xl">
+                        <h2 className="mt-5 max-w-5xl text-[34px] font-bold leading-[1] tracking-tight text-[#FBFBF6] md:text-5xl">
                             The operating layer behind every forensic readout.
                         </h2>
-                        <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#6A6257] md:text-[18px] font-medium tracking-tight">
+                        <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#9A9A94] md:text-[18px] font-medium tracking-tight">
                             Move from one asset to compounding intelligence, execution-ready outputs, and agency delivery without adding workflow noise.
                         </p>
                     </div>

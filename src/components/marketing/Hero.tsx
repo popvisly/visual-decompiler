@@ -12,8 +12,9 @@ export default function Hero({
     eyebrow = 'Strategic Architecture',
 }: Props) {
     return (
-        <section className="relative z-20 -mt-8 overflow-hidden rounded-t-[32px] border-t border-black/5 bg-[#FBFBF6] pb-14 pt-14 text-[#141414] md:-mt-12 md:rounded-t-[44px] md:pb-16 md:pt-16 lg:-mt-16 lg:rounded-t-[56px] lg:pb-20 lg:pt-18">
-            <div className="pointer-events-none absolute inset-0 opacity-[0.32] [background-image:linear-gradient(rgba(20,20,20,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.02)_1px,transparent_1px)] [background-size:64px_64px]" />
+        <section className="relative z-20 -mt-8 overflow-hidden rounded-t-[32px] border-t border-[#2B241A] bg-[#141414] pb-14 pt-14 text-[#FBFBF6] md:-mt-12 md:rounded-t-[44px] md:pb-16 md:pt-16 lg:-mt-16 lg:rounded-t-[56px] lg:pb-20 lg:pt-18">
+            <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:64px_64px]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_0%,rgba(212,165,116,0.08)_0%,transparent_72%)]" />
 
             <div className="relative z-10 mx-auto max-w-7xl px-6">
                 <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start lg:gap-12">
@@ -29,12 +30,12 @@ export default function Hero({
                             <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#B8A47E]">{eyebrow}</p>
                         </div>
 
-                        <h2 className="max-w-xl text-[30px] font-bold leading-[1.04] tracking-tight text-[#141414] md:text-[38px]">
+                        <h2 className="max-w-xl text-[30px] font-bold leading-[1.04] tracking-tight text-[#FBFBF6] md:text-[38px]">
                             Strategy beyond the
-                            <span className="mt-2 block text-[#1A1A1A]/78">creative surface.</span>
+                            <span className="mt-2 block text-[#FBFBF6]/74">creative surface.</span>
                         </h2>
 
-                        <p className="mt-5 max-w-lg text-[15px] font-medium leading-[1.65] text-[#6A6257] md:text-[17px]">
+                        <p className="mt-5 max-w-lg text-[15px] font-medium leading-[1.65] text-[#9A9A94] md:text-[17px]">
                             Visual Decompiler maps the hidden persuasion architecture that drives category movement — from high-concept prestige storytelling to utility-led performance.
                         </p>
                     </motion.div>
@@ -51,10 +52,10 @@ export default function Hero({
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.3 + i * 0.1 }}
-                            className="rounded-[1.6rem] border border-[#E6DDCF] bg-white/92 p-6 text-left shadow-[0_8px_24px_rgba(20,18,15,0.05)]"
+                            className="rounded-[1.6rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-left"
                         >
                             <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">{item.label}</p>
-                            <p className="text-[14px] font-medium leading-relaxed text-[#141414]">{item.body}</p>
+                            <p className="text-[14px] font-medium leading-relaxed text-[#9A9A94]">{item.body}</p>
                         </motion.div>
                         ))}
                     </div>
