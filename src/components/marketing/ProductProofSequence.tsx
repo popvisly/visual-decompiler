@@ -322,7 +322,7 @@ function WhyDifferentSection() {
                     </p>
                 </div>
 
-                <div className="mt-12 rounded-[1.8rem] border border-[#2B2721] bg-[#171512] px-5 py-5 text-[#F5EFE3] shadow-[0_18px_44px_rgba(18,16,12,0.10)] md:px-6 md:py-6">
+                <div className="mt-12 rounded-[1.8rem] border border-[rgba(212,165,116,0.18)] bg-transparent px-5 py-5 text-[#F5EFE3] md:px-6 md:py-6">
                     <div className="max-w-[30rem]">
                         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">
                             SAMPLE PROOF OBJECT
