@@ -32,6 +32,18 @@ type FunnelSection = {
     points: ProofPoint[];
 };
 
+function AccentBar() {
+    return (
+        <div className="flex items-center gap-1.5">
+            <span className="h-1.5 w-8 rounded-full bg-[#F4A700]" />
+            <span className="h-1.5 w-5 rounded-full bg-[#C8230A]" />
+            <span className="h-1.5 w-4 rounded-full bg-[#D4A574]" />
+            <span className="h-1.5 w-3 rounded-full bg-[#F5EDE3]" />
+            <span className="h-1.5 w-5 rounded-full bg-[#D7B07A]" />
+        </div>
+    );
+}
+
 const DIFFERENTIAL_METRICS = [
     { label: 'Strategic Delta', value: '+27% novelty advantage' },
     { label: 'Persuasion Lift', value: '+18% identity pull' },
@@ -207,9 +219,10 @@ function DifferentialDiagnosisSection() {
                     <span className="h-px w-12 bg-gradient-to-r from-[#D4A574] to-transparent" />
                     <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">Intelligence Pulse</p>
                 </div>
+                <AccentBar />
 
                 <h3 className="max-w-4xl text-[34px] font-bold leading-[1.1] tracking-tight text-[#FBFBF6] md:text-5xl">
-                    Differential Diagnostic
+                    Differential <span className="text-[#F4A700]">Diagnostic</span>
                 </h3>
                 <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#9A9A94] md:text-[18px] font-medium tracking-tight">
                     Choose two assets and surface the strategic delta, persuasion lift, and fatigue gap before you commit creative direction.
@@ -269,7 +282,9 @@ function DifferentialDiagnosisSection() {
                             transition={{ delay: i * 0.08, duration: 0.45 }}
                             className="rounded-xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-4 py-4"
                         >
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{metric.label}</p>
+                            <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${
+                                i === 0 ? 'text-[#F4A700]' : i === 1 ? 'text-[#D4A574]' : 'text-[#C8230A]'
+                            }`}>{metric.label}</p>
                             <p className="mt-2 text-base font-semibold text-[#FBFBF6]">{metric.value}</p>
                         </motion.div>
                     ))}
@@ -298,8 +313,9 @@ function WhyDifferentSection() {
                     <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">
                         WHY TEAMS SWITCH
                     </p>
+                    <AccentBar />
                     <h2 className="mt-5 text-[34px] font-bold leading-[1] tracking-tight text-[#FBFBF6] md:text-5xl">
-                        Forensic intelligence your team can act on in minutes.
+                        Forensic intelligence your team can <span className="text-[#D4A574]">act</span> on in minutes.
                     </h2>
                     <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#9A9A94] md:text-[18px] font-medium tracking-tight">
                         See exactly where generic spy tools stop and where Visual Decompiler creates client-ready strategic outputs.
@@ -328,8 +344,8 @@ function WhyDifferentSection() {
                             className="group relative flex flex-col overflow-hidden rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F]"
                         >
                             <div className="flex items-center gap-3 border-b border-[rgba(212,165,116,0.16)] px-6 py-5">
-                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-[rgba(212,165,116,0.2)] bg-[#171512]">
-                                    <block.icon className="h-4 w-4 text-[#D4A574]" strokeWidth={1.5} />
+                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-[rgba(212,165,116,0.2)] bg-[#171512]">
+                                    <block.icon className="h-5 w-5 text-[#D4A574]" strokeWidth={1.5} />
                                 </div>
                                 <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">{block.title}</h3>
                             </div>
@@ -402,8 +418,9 @@ function SingleAssetDeconstruction() {
                             <span className="h-px w-12 bg-gradient-to-r from-[#D4A574] to-transparent" />
                             <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">Dossier Construction</p>
                         </div>
+                        <AccentBar />
                         <h2 className="max-w-2xl text-[32px] font-bold leading-[1.06] tracking-tight text-[#FBFBF6] md:text-[42px]">
-                            Deconstruct the hidden persuasion architecture.
+                            Deconstruct the hidden <span className="text-[#D7B07A]">persuasion</span> architecture.
                         </h2>
                         <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#9A9A94] md:text-[17px] font-medium tracking-tight">
                             Upload any competitor ad and get a client-ready strategic dossier — psychology, signals, and a reconstruction blueprint — in under 60 seconds.
@@ -450,8 +467,9 @@ export default function ProductProofSequence() {
                 >
                     <div className="mb-10 md:mb-14">
                         <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">System Architecture</p>
+                        <AccentBar />
                         <h2 className="mt-5 max-w-5xl text-[34px] font-bold leading-[1] tracking-tight text-[#FBFBF6] md:text-5xl">
-                            The operating layer behind every forensic readout.
+                            The <span className="text-[#F5EDE3]">operating</span> layer behind every forensic readout.
                         </h2>
                         <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#9A9A94] md:text-[18px] font-medium tracking-tight">
                             Move from one asset to compounding intelligence, execution-ready outputs, and agency delivery without adding workflow noise.

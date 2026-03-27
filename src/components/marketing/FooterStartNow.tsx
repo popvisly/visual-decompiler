@@ -4,8 +4,6 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { HOMEPAGE_CTA_ICON, HOMEPAGE_PRIMARY_CTA } from '@/components/marketing/ctaStyles';
 
-const FINAL_CTA_HEADLINE = 'Start free. See real output in minutes.'
-
 export default function FooterStartNow() {
     return (
         <footer className="relative overflow-hidden border-t border-[#2B241A] bg-[#141414] px-6 pb-8 pt-14 text-[#FBFBF6] md:pt-[4.5rem]">
@@ -28,13 +26,20 @@ export default function FooterStartNow() {
                                     Observer Tier
                                 </p>
                             </div>
+                            <div className="mb-5 flex items-center justify-center gap-1.5 lg:justify-start">
+                                <span className="h-1.5 w-8 rounded-full bg-[#F4A700]" />
+                                <span className="h-1.5 w-5 rounded-full bg-[#C8230A]" />
+                                <span className="h-1.5 w-4 rounded-full bg-[#D4A574]" />
+                                <span className="h-1.5 w-3 rounded-full bg-[#F5EDE3]" />
+                                <span className="h-1.5 w-5 rounded-full bg-[#D7B07A]" />
+                            </div>
                             <motion.h2
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 className="mb-5 max-w-3xl text-[34px] font-bold uppercase leading-[0.96] tracking-tight text-[#FBFBF6] md:text-5xl lg:max-w-2xl"
                             >
-                                {FINAL_CTA_HEADLINE}
+                                Start free. See real <span className="text-[#F4A700]">output</span> in minutes.
                             </motion.h2>
                             <p className="mx-auto max-w-xl text-[16px] leading-relaxed text-[#B9B1A4] md:text-[18px] font-medium tracking-tight lg:mx-0">
                                 Upload a competitor ad and get your first client-ready dossier. No card required.

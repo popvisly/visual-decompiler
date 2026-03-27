@@ -29,10 +29,17 @@ export default function Hero({
                             <span className="h-px w-8 bg-gradient-to-r from-[#D4A574] to-transparent" />
                             <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#B8A47E]">{eyebrow}</p>
                         </div>
+                        <div className="mb-5 flex items-center gap-1.5">
+                            <span className="h-1.5 w-8 rounded-full bg-[#F4A700]" />
+                            <span className="h-1.5 w-5 rounded-full bg-[#C8230A]" />
+                            <span className="h-1.5 w-4 rounded-full bg-[#D4A574]" />
+                            <span className="h-1.5 w-3 rounded-full bg-[#F5EDE3]" />
+                            <span className="h-1.5 w-5 rounded-full bg-[#D7B07A]" />
+                        </div>
 
                         <h2 className="max-w-xl text-[30px] font-bold leading-[1.04] tracking-tight text-[#FBFBF6] md:text-[38px]">
                             Strategy beyond the
-                            <span className="mt-2 block text-[#FBFBF6]/74">creative surface.</span>
+                            <span className="mt-2 block text-[#D7B07A]">creative surface.</span>
                         </h2>
 
                         <p className="mt-5 max-w-lg text-[15px] font-medium leading-[1.65] text-[#9A9A94] md:text-[17px]">
