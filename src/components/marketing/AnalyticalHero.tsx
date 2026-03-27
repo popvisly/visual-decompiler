@@ -153,7 +153,7 @@ export default function AnalyticalHero() {
                     </div>
 
                     <div className="relative flex justify-center lg:justify-end animate-in fade-in zoom-in duration-1000">
-                        <div className="relative w-full max-w-[500px] lg:max-w-none transform lg:[transform:perspective(1200px)_rotateY(-5deg)] hover:[transform:perspective(1200px)_rotateY(0deg)] transition-transform duration-700">
+                        <div className="relative w-full max-w-[425px] lg:max-w-[690px] transform lg:[transform:perspective(1200px)_rotateY(-5deg)] hover:[transform:perspective(1200px)_rotateY(0deg)] transition-transform duration-700">
                             <AdRolodexScanner />
                         </div>
                     </div>
