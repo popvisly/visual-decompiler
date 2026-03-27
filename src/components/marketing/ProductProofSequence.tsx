@@ -422,24 +422,24 @@ function PlatformSystemGrid() {
 
 function SingleAssetDeconstruction() {
     return (
-        <section className={`relative overflow-hidden border-b border-[#E3DACB] bg-[#FBFBF6] ${SECTION_BAND}`}>
-            <div className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(rgba(20,20,20,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.015)_1px,transparent_1px)] [background-size:64px_64px]" />
+        <section className="relative overflow-hidden border-b border-[#E3DACB] bg-[#FBFBF6] px-6 py-14 md:py-16">
+            <div className="pointer-events-none absolute inset-0 opacity-[0.24] [background-image:linear-gradient(rgba(20,20,20,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.015)_1px,transparent_1px)] [background-size:64px_64px]" />
             
             <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
-                <div className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                <div className="grid gap-10 lg:grid-cols-[1.05fr_0.8fr] lg:items-start lg:gap-12">
                     <div>
-                        <div className="mb-6 flex items-center gap-3">
+                        <div className="mb-5 flex items-center gap-3">
                             <span className="h-px w-12 bg-gradient-to-r from-[#D4A574] to-transparent" />
                             <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">Dossier Construction</p>
                         </div>
-                        <h2 className="max-w-2xl text-[38px] font-bold leading-[1.1] tracking-tight text-[#151310] md:text-5xl">
+                        <h2 className="max-w-2xl text-[32px] font-bold leading-[1.06] tracking-tight text-[#151310] md:text-[42px]">
                             Deconstruct the hidden persuasion architecture.
                         </h2>
-                        <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-[#6A6257] md:text-[18px] font-medium tracking-tight">
+                        <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#6A6257] md:text-[17px] font-medium tracking-tight">
                             Upload any competitor ad and get a client-ready strategic dossier — psychology, signals, and a reconstruction blueprint — in under 60 seconds.
                         </p>
 
-                        <div className="mt-10 grid gap-6 sm:grid-cols-2">
+                        <div className="mt-8 grid gap-5 sm:grid-cols-2">
                             <div className="border-l-[3px] border-[#D4A574] pl-6 py-1">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] mb-2">Automated Extraction</p>
                                 <p className="text-[14px] text-[#6A6257] leading-relaxed">Hidden signals and subtext surfaced instantly.</p>
@@ -451,8 +451,10 @@ function SingleAssetDeconstruction() {
                         </div>
                     </div>
 
-                    <div className="relative">
-                        <HeroAppPreview />
+                    <div className="relative lg:pt-1">
+                        <div className="mx-auto max-w-[520px] lg:mr-0">
+                            <HeroAppPreview />
+                        </div>
                     </div>
                 </div>
             </motion.div>

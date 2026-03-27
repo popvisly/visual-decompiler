@@ -1,14 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
-import { LinkCta } from '@/types/homepage';
-import AdRolodexScanner from '@/components/marketing/AdRolodexScanner';
-import {
-    HOMEPAGE_CTA_ICON,
-    HOMEPAGE_PRIMARY_CTA,
-    HOMEPAGE_SECONDARY_CTA,
-} from '@/components/marketing/ctaStyles';
 
 type Props = {
     eyebrow?: string;
@@ -20,78 +12,52 @@ export default function Hero({
     eyebrow = 'Strategic Architecture',
 }: Props) {
     return (
-        <section className="relative z-20 -mt-12 overflow-hidden rounded-t-[40px] border-t border-black/5 bg-[#FBFBF6] pb-24 pt-24 text-[#141414] shadow-[0_-24px_50px_rgba(0,0,0,0.5)] md:-mt-20 md:rounded-t-[60px] md:pt-32 lg:-mt-24 lg:rounded-t-[80px]">
-            <div className="pointer-events-none absolute inset-0 opacity-[0.45] [background-image:linear-gradient(rgba(20,20,20,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.025)_1px,transparent_1px)] [background-size:64px_64px]" />
-            
-            <div className="relative z-10 mx-auto max-w-[1280px] px-6 text-center">
-                <div className="flex flex-col items-center">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="mb-12 flex h-24 w-24 items-center justify-center rounded-3xl bg-[#1A1A1A] p-5 shadow-2xl"
-                    >
-                        <img 
-                            src="/images/logo/Visual_Decompiler_Logo_v2_400px.png" 
-                            alt="Visual Decompiler Graphic" 
-                            className="h-full w-full object-contain"
-                        />
-                    </motion.div>
+        <section className="relative z-20 -mt-8 overflow-hidden rounded-t-[32px] border-t border-black/5 bg-[#FBFBF6] pb-14 pt-14 text-[#141414] md:-mt-12 md:rounded-t-[44px] md:pb-16 md:pt-16 lg:-mt-16 lg:rounded-t-[56px] lg:pb-20 lg:pt-18">
+            <div className="pointer-events-none absolute inset-0 opacity-[0.32] [background-image:linear-gradient(rgba(20,20,20,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.02)_1px,transparent_1px)] [background-size:64px_64px]" />
 
+            <div className="relative z-10 mx-auto max-w-7xl px-6">
+                <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start lg:gap-12">
                     <motion.div
                         initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.65 }}
-                        className="mb-6 flex items-center gap-4"
+                        className="max-w-xl"
                     >
-                        <span className="h-px w-8 bg-[#D4A574]" />
-                        <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#B8A47E]">{eyebrow}</p>
-                        <span className="h-px w-8 bg-[#D4A574]" />
+                        <div className="mb-5 flex items-center gap-3">
+                            <span className="h-px w-8 bg-gradient-to-r from-[#D4A574] to-transparent" />
+                            <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#B8A47E]">{eyebrow}</p>
+                        </div>
+
+                        <h2 className="max-w-xl text-[30px] font-bold leading-[1.04] tracking-tight text-[#141414] md:text-[38px]">
+                            Strategy beyond the
+                            <span className="mt-2 block text-[#1A1A1A]/78">creative surface.</span>
+                        </h2>
+
+                        <p className="mt-5 max-w-lg text-[15px] font-medium leading-[1.65] text-[#6A6257] md:text-[17px]">
+                            Visual Decompiler maps the hidden persuasion architecture that drives category movement — from high-concept prestige storytelling to utility-led performance.
+                        </p>
                     </motion.div>
 
-                    <motion.h2
-                        initial={{ opacity: 0, y: 15 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.75, delay: 0.1 }}
-                        className="max-w-4xl text-[38px] font-bold leading-[1.05] tracking-tight text-[#141414] sm:text-[48px] md:text-[64px]"
-                    >
-                        Strategy beyond the
-                        <br />
-                        <span className="inline-block border-l-[4px] border-[#D4A574] pl-6 mt-2 italic text-[#1A1A1A]/80">creative surface.</span>
-                    </motion.h2>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.75, delay: 0.2 }}
-                        className="mt-8 max-w-2xl text-[17px] font-medium leading-[1.6] text-[#6A6257] md:text-[19px] lg:text-[21px]"
-                    >
-                        Visual Decompiler maps the hidden persuasion architecture that drives category movement — from high-concept prestige storytelling to utility-led performance.
-                    </motion.p>
-                </div>
-
-                <div className="mt-20 grid gap-6 sm:grid-cols-3">
-                    {[
-                        { label: 'Signals', body: 'Trigger distribution, friction points, and narrative pressure in one strategic readout.' },
-                        { label: 'Mechanics', body: 'Dominant persuasion system, blueprint logic, and the structure behind response.' },
-                        { label: 'Vault', body: 'A compounding intelligence memory that sharpens with every asset you deconstruct.' }
-                    ].map((item, i) => (
+                    <div className="grid gap-4 sm:grid-cols-3 lg:gap-5">
+                        {[
+                            { label: 'Signals', body: 'Trigger distribution, friction points, and narrative pressure in one strategic readout.' },
+                            { label: 'Mechanics', body: 'Dominant persuasion system, blueprint logic, and the structure behind response.' },
+                            { label: 'Vault', body: 'A compounding intelligence memory that sharpens with every asset you deconstruct.' }
+                        ].map((item, i) => (
                         <motion.div
                             key={item.label}
                             initial={{ opacity: 0, y: 15 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.3 + i * 0.1 }}
-                            className="rounded-[2rem] border border-[#E6DDCF] bg-white p-8 text-left shadow-sm"
+                            className="rounded-[1.6rem] border border-[#E6DDCF] bg-white/92 p-6 text-left shadow-[0_8px_24px_rgba(20,18,15,0.05)]"
                         >
-                            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#D4A574] mb-3">{item.label}</p>
-                            <p className="text-[15px] font-medium text-[#141414] leading-relaxed">{item.body}</p>
+                            <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">{item.label}</p>
+                            <p className="text-[14px] font-medium leading-relaxed text-[#141414]">{item.body}</p>
                         </motion.div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
