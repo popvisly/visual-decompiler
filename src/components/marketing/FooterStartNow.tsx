@@ -58,36 +58,6 @@ export default function FooterStartNow() {
                     </p>
                 </div>
 
-                <div className="mb-6 grid gap-4 md:grid-cols-3">
-                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896] border-l-[3px] border-[#D4A574]/40">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C1A67B] mb-2">INTELLIGENCE FAQ</p>
-                        <p className="text-lg font-bold leading-snug text-[#141414] tracking-tight">
-                            Is this just another AI writer?
-                        </p>
-                        <p className="mt-3 text-[15px] leading-relaxed text-[#5E5A53] font-medium tracking-tight">
-                            No. Visual Decompiler analyses existing ads and returns structured strategic intelligence.
-                        </p>
-                    </div>
-                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896] border-l-[3px] border-[#D4A574]/40">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C1A67B] mb-2">SYSTEM DELTA</p>
-                        <p className="text-lg font-bold leading-snug text-[#141414] tracking-tight">
-                            How is this different from ad libraries?
-                        </p>
-                        <p className="mt-3 text-[15px] leading-relaxed text-[#5E5A53] font-medium tracking-tight">
-                            Libraries show what exists; Visual Decompiler explains why it works and how to act on it.
-                        </p>
-                    </div>
-                    <div className="group rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-6 transition-colors hover:border-[#D0B896] border-l-[3px] border-[#D4A574]/40">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C1A67B] mb-2">AGENCY ADOPTION</p>
-                        <p className="text-lg font-bold leading-snug text-[#141414] tracking-tight">
-                            Will my team actually use this?
-                        </p>
-                        <p className="mt-3 text-[15px] leading-relaxed text-[#5E5A53] font-medium tracking-tight">
-                            Yes — built for team workflows: boards, vault memory, white-label export, and shared seats.
-                        </p>
-                    </div>
-                </div>
-
                 {/* Footer Links Bar */}
                 <div className="flex flex-col items-center justify-between gap-5 border-t border-[#E2D8C8] px-4 py-5 md:flex-row">
 
