@@ -1925,25 +1925,62 @@ export default function AssetWorkspace({
                                                      </div>
                                                      
                                                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                                         {narrativeSections.sections.slice(0, 3).map((act, i) => (
-                                                             <div key={i} className="group flex min-h-[260px] flex-col rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-[clamp(16px,1.2vw,24px)] transition-colors hover:border-[#D4A574]/40">
-                                                                 <div className="mb-5 flex items-center justify-between border-b border-[#D4A574]/18 pb-3">
-                                                                     <div className="flex items-center gap-2">
-                                                                         <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
-                                                                         <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#B9B19F]">{act.label || `ACT ${i+1}`}</span>
+                                                         {narrativeSections.sections.slice(0, 3).map((act, i) => {
+                                                             const accent =
+                                                                 i === 0
+                                                                     ? {
+                                                                           border: 'border-[#6B4B1F]',
+                                                                           glow: 'from-[#F4A700]/10 via-transparent to-transparent',
+                                                                           dot: 'bg-[#F4A700]',
+                                                                           label: 'text-[#F4A700]',
+                                                                           title: 'group-hover:text-[#F4A700]',
+                                                                           marker: 'bg-[#F4A700]/55',
+                                                                       }
+                                                                     : i === 1
+                                                                         ? {
+                                                                               border: 'border-[#5B2418]',
+                                                                               glow: 'from-[#C8230A]/10 via-transparent to-transparent',
+                                                                               dot: 'bg-[#C8230A]',
+                                                                               label: 'text-[#C8230A]',
+                                                                               title: 'group-hover:text-[#F5EDE3]',
+                                                                               marker: 'bg-[#C8230A]/55',
+                                                                           }
+                                                                         : {
+                                                                               border: 'border-[#5F4A32]',
+                                                                               glow: 'from-[#D4A574]/10 via-transparent to-transparent',
+                                                                               dot: 'bg-[#D4A574]',
+                                                                               label: 'text-[#D4A574]',
+                                                                               title: 'group-hover:text-[#D7B07A]',
+                                                                               marker: 'bg-[#FBFBF6]/60',
+                                                                           };
+
+                                                             return (
+                                                                 <div
+                                                                     key={i}
+                                                                     className={`group flex min-h-[260px] flex-col rounded-3xl border bg-[#1F1F1F] bg-gradient-to-br ${accent.glow} p-[clamp(16px,1.2vw,24px)] transition-colors ${accent.border}`}
+                                                                 >
+                                                                     <div className="mb-5 flex items-center justify-between border-b border-[#4E3D2A] pb-3">
+                                                                         <div className="flex items-center gap-2">
+                                                                             <div className={`h-1.5 w-1.5 rounded-full ${accent.dot}`} />
+                                                                             <span className={`text-[10px] font-bold uppercase tracking-[0.25em] ${accent.label}`}>
+                                                                                 {act.label || `ACT ${i + 1}`}
+                                                                             </span>
+                                                                         </div>
+                                                                         <div className="flex h-5 w-5 items-center justify-center rounded-full border border-[#3E3225] bg-[#171512]">
+                                                                             <div className={`h-1 w-1 rounded-full ${accent.marker}`} />
+                                                                         </div>
                                                                      </div>
-                                                                     <div className="flex h-5 w-5 items-center justify-center rounded-full border border-[#D4A574]/10 bg-[#171512]">
-                                                                         <div className="h-1 w-1 rounded-full bg-[#D4A574]/40" />
-                                                                     </div>
+                                                                     <h4
+                                                                         className={`mb-4 min-h-[3em] text-[13px] font-bold uppercase leading-tight tracking-wider text-[#F3F1ED] transition-colors selection:bg-[#D4A574]/10 ${accent.title}`}
+                                                                     >
+                                                                         {act.title || 'Diagnostic Entrance'}
+                                                                     </h4>
+                                                                     <p className="line-clamp-[6] text-[13px] font-light leading-relaxed text-[#B9B19F] lg:line-clamp-[8]">
+                                                                         {act.text}
+                                                                     </p>
                                                                  </div>
-                                                                 <h4 className="mb-4 min-h-[3em] text-[13px] font-bold uppercase leading-tight tracking-wider text-[#F3F1ED] transition-colors selection:bg-[#D4A574]/10 group-hover:text-[#D7B07A]">
-                                                                     {act.title || 'Diagnostic Entrance'}
-                                                                 </h4>
-                                                                 <p className="line-clamp-[6] text-[13px] font-light leading-relaxed text-[#B9B19F] lg:line-clamp-[8]">
-                                                                     {act.text}
-                                                                 </p>
-                                                             </div>
-                                                         ))}
+                                                             );
+                                                         })}
                                                      </div>
                                                  </div>
                                             </>
@@ -2053,23 +2090,23 @@ export default function AssetWorkspace({
                                         />
                                         
                                         {/* UNIFIED TECHNICAL AUTOPSY CONTAINER */}
-                                        <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm space-y-10">
+                                        <div className="rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 space-y-10 text-[#FBFBF6]">
                                             {/* Top: Radiant Architecture Toggle */}
-                                            <div className="flex flex-col gap-6 md:flex-row md:items-center justify-between pb-8 border-b border-[#E6DDCF]/60">
+                                            <div className="flex flex-col gap-6 md:flex-row md:items-center justify-between pb-8 border-b border-[#4E3D2A]">
                                                 <div className="flex items-center gap-6">
-                                                    <div className="h-12 w-12 rounded-2xl bg-[#D4A574]/10 flex items-center justify-center border border-[#D4A574]/20">
+                                                    <div className="h-12 w-12 rounded-2xl bg-[#171512] flex items-center justify-center border border-[#4E3D2A]">
                                                         <Sparkles className="h-6 w-6 text-[#D4A574]" />
                                                     </div>
                                                     <div className="flex flex-col gap-1">
-                                                        <h3 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#9B8662]">Macro-Diagnostic Map</h3>
-                                                        <p className="text-[13px] text-[#6A6257] font-light tracking-wide">Visualize optical trajectories and focal anchors in the creative signal stack.</p>
+                                                        <h3 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#D4A574]">Macro-Diagnostic Map</h3>
+                                                        <p className="text-[13px] text-[#B9B19F] font-light tracking-wide">Visualize optical trajectories and focal anchors in the creative signal stack.</p>
                                                     </div>
                                                 </div>
                                                 <button 
                                                     onClick={() => setShowRadiant(!showRadiant)}
-                                                    className={`px-8 py-3 rounded-full border text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-500 flex items-center gap-3 ${showRadiant ? "bg-[#D4A574] text-white border-[#D4A574] shadow-md shadow-[#D4A574]/20" : "bg-transparent text-[#9B8662] border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-[#FBF7F1]"}`}
+                                                    className={`px-8 py-3 rounded-full border text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-500 flex items-center gap-3 ${showRadiant ? "bg-[#D4A574] text-[#141414] border-[#D4A574] shadow-md shadow-[#D4A574]/20" : "bg-[#171512] text-[#D4A574] border-[#4E3D2A] hover:border-[#D4A574]/60 hover:bg-[#201b15]"}`}
                                                 >
-                                                    <div className={`h-1.5 w-1.5 rounded-full ${showRadiant ? "bg-white animate-pulse" : "bg-[#D4A574]"}`} />
+                                                    <div className={`h-1.5 w-1.5 rounded-full ${showRadiant ? "bg-[#141414] animate-pulse" : "bg-[#D4A574]"}`} />
                                                     {showRadiant ? "Active: Radiant Architecture" : "Initialize Radiant Architecture"}
                                                 </button>
                                             </div>
@@ -2086,13 +2123,13 @@ export default function AssetWorkspace({
 
                                         {/* ── Gaze Topology ── */}
                                         {(extraction.full_dossier as any)?.gaze_topology && (
-                                            <section className="signals-section space-y-12 mt-12 pb-12 border-b border-[#E6DDCF]/50">
+                                            <section className="signals-section mt-12 space-y-12 border-b border-[#4E3D2A] pb-12">
                                                 <div className="flex items-center gap-6">
                                                     <div className="flex flex-col gap-2">
-                                                        <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#8B4513]">Gaze Topology</h2>
-                                                        <p className="text-[10px] text-[#9B8662]/60 font-bold tracking-[0.25em] uppercase">Mode of Address & Viewer Positioning</p>
+                                                        <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#D4A574]">Gaze Topology</h2>
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#B9B19F]">Mode of Address & Viewer Positioning</p>
                                                     </div>
-                                                    <div className="h-px flex-1 bg-[#E6DDCF]" />
+                                                    <div className="h-px flex-1 bg-[#4E3D2A]" />
                                                 </div>
 
                                                 <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] lg:grid-cols-3">
@@ -2101,22 +2138,22 @@ export default function AssetWorkspace({
                                                         { label: 'Viewer Position', value: (extraction.full_dossier as any).gaze_topology.viewer_position },
                                                         { label: 'Power Holder', value: (extraction.full_dossier as any).gaze_topology.power_holder },
                                                     ].map((item, i) => (
-                                                        <div key={i} className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
-                                                            <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
+                                                        <div key={i} className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
+                                                            <h3 className="mb-4 w-full border-b border-[#4E3D2A] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
                                                                 {item.label}
                                                             </h3>
                                                             <div className="flex-1 flex items-center justify-center">
-                                                                <span className="text-[24px] font-bold uppercase tracking-tight text-[#151310]">{item.value}</span>
+                                                                <span className="text-[24px] font-bold uppercase tracking-tight text-[#F3F1ED]">{item.value}</span>
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                <div className="border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] rounded-[2rem] p-8">
-                                                    <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 border-b border-[#E6DDCF] pb-4">
+                                                <div className="rounded-[2rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8">
+                                                    <h3 className="mb-4 border-b border-[#4E3D2A] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
                                                         Forensic Diagnostics
                                                     </h3>
-                                                    <p className="text-[13px] text-[#6A6257] leading-relaxed font-light">
+                                                    <p className="text-[13px] font-light leading-relaxed text-[#B9B19F]">
                                                         {(extraction.full_dossier as any).gaze_topology.reading}
                                                     </p>
                                                 </div>
@@ -2125,22 +2162,22 @@ export default function AssetWorkspace({
 
                                         {/* ── Counter-Reading Matrix ── */}
                                         {(extraction.full_dossier as any)?.counter_reading_matrix && (
-                                            <section className="counter-reading-section space-y-12 mt-16">
+                                            <section className="counter-reading-section mt-16 space-y-12">
                                                 <div className="flex items-center gap-6">
                                                     <div className="flex flex-col gap-2">
-                                                        <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#8B4513]">Counter-Reading Matrix</h2>
-                                                        <p className="text-[10px] text-[#9B8662]/60 font-bold tracking-[0.25em] uppercase">Polysemic Deconstruction via Critical Theory</p>
+                                                        <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#D4A574]">Counter-Reading Matrix</h2>
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#B9B19F]">Polysemic Deconstruction via Critical Theory</p>
                                                     </div>
-                                                    <div className="h-px flex-1 bg-[#E6DDCF]" />
+                                                    <div className="h-px flex-1 bg-[#4E3D2A]" />
                                                 </div>
                                                 <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
                                                     {((extraction.full_dossier as any).counter_reading_matrix as { lens: string; reading: string }[]).map((item, i) => (
-                                                        <div key={i} className={`${ANALYSIS_CARD_CLASS} flex flex-col min-h-[220px] xl:min-h-[240px]`}>
-                                                            <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
+                                                        <div key={i} className="flex min-h-[220px] flex-col rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
+                                                            <h3 className="mb-4 w-full border-b border-[#4E3D2A] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
                                                                 {item.lens}
                                                             </h3>
                                                             <div className="flex-1 max-h-[400px] overflow-y-auto pt-2">
-                                                                <p className="text-[13px] text-[#6A6257] leading-relaxed font-light">{item.reading}</p>
+                                                                <p className="text-[13px] font-light leading-relaxed text-[#B9B19F]">{item.reading}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -2149,12 +2186,12 @@ export default function AssetWorkspace({
                                         )}
                                     </div>
                                 ) : (
-                                     <div className="rounded-[2.5rem] border border-dashed border-[#D4A574]/20 bg-[#FBF7F1]/50 p-20 flex flex-col items-center justify-center text-center">
-                                         <div className="h-12 w-12 rounded-full border border-[#D4A574]/20 flex items-center justify-center mb-6">
-                                             <Info className="h-5 w-5 text-[#D4A574]/40" />
+                                     <div className="rounded-[2.5rem] border border-dashed border-[#4E3D2A] bg-[#1F1F1F]/70 p-20 flex flex-col items-center justify-center text-center">
+                                         <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#4E3D2A] bg-[#171512]">
+                                             <Info className="h-5 w-5 text-[#D4A574]/50" />
                                          </div>
                                          <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574] mb-2">Deep Intelligence Required</h3>
-                                         <p className="text-[13px] text-[#6A6257] max-w-xs font-light tracking-wide">Signal interception requires deep architectural extraction of this asset's semiotic layers.</p>
+                                         <p className="max-w-xs text-[13px] font-light tracking-wide text-[#B9B19F]">Signal interception requires deep architectural extraction of this asset's semiotic layers.</p>
                                      </div>
                                 )}
                             </div>
