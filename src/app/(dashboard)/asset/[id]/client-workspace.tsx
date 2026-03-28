@@ -484,16 +484,16 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
         <div className="space-y-8">
             {/* Semiotic Subtext Header Card */}
             {(title || overture) && (
-                <div className="border border-[#E6DDCF] bg-[#FFFCF7] p-6 rounded-3xl shadow-[0_4px_16px_rgba(0,0,0,0.02)]">
-                    <div className="flex justify-between items-center mb-4 border-b border-[#E6DDCF] pb-4">
+                <div className="rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6]">
+                    <div className="mb-4 flex items-center justify-between border-b border-[#4E3D2A] pb-4">
                         <h3 className="text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">{title}</h3>
-                        <span className="text-[10px] font-mono text-[#9B8662]/60 uppercase tracking-widest">Forensic Map v2.0</span>
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-[#B9B19F]">Forensic Map v2.0</span>
                     </div>
 
                     {/* Overture */}
                     {overture && (
                         <div className="max-h-[400px] overflow-y-auto">
-                            <p className="text-[12px] text-[#6A6257] leading-relaxed">
+                            <p className="text-[12px] leading-relaxed text-[#B9B19F]">
                                 {overture}
                             </p>
                         </div>
@@ -521,17 +521,17 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                             {type === 'ACT' ? (
                                 <>
                                     <div className="flex items-center gap-3 mb-5">
-                                        <div className={`w-2 h-2 rounded-full transition-all ${activeAct === block.label ? 'bg-[#D4A574] shadow-[0_0_14px_rgba(212,165,116,0.45)]' : 'bg-[#D4A574]/60'}`} />
-                                        <span className="text-[11px] font-bold text-[#9B8662] uppercase tracking-[0.35em]">{block.label}</span>
+                                        <div className={`w-2 h-2 rounded-full transition-all ${activeAct === block.label ? 'bg-[#D4A882] shadow-[0_0_14px_rgba(212,168,130,0.45)]' : 'bg-[#D4A882]/75'}`} />
+                                        <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#D4A882]">{block.label}</span>
                                     </div>
-                                    <h3 className="text-[2rem] md:text-[2.5rem] font-bold uppercase tracking-tight text-[#151310] pb-5 border-b border-[#E6DDCF]">
+                                    <h3 className="border-b border-[#4E3D2A] pb-5 text-[2rem] font-bold uppercase tracking-tight text-[#F3F1ED] md:text-[2.5rem]">
                                         {block.title}
                                     </h3>
                                     <AnalyticWaveMap index={i} isActive={activeAct === block.label} />
                                     <div className="flex-1">
                                         <div className="max-w-[62ch] space-y-5">
                                             {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
-                                                <p key={pi} className="text-[15px] text-[#6A6257] leading-9 font-light">
+                                                <p key={pi} className="text-[15px] font-light leading-9 text-[#D6D0C6]">
                                                     {paragraph.trim()}
                                                 </p>
                                             ))}
@@ -542,15 +542,15 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                 <>
                                     <div className="flex items-center gap-3 mb-5">
                                         <div className="w-2 h-2 rounded-full bg-[#D4A574]/60" />
-                                        <span className="text-[11px] font-bold text-[#9B8662] uppercase tracking-[0.35em]">{block.label}</span>
+                                        <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.35em]">{block.label}</span>
                                     </div>
-                                    <h3 className="text-[1.75rem] md:text-[2rem] font-bold uppercase tracking-tight text-[#151310] pb-5 border-b border-[#E6DDCF]">
+                                    <h3 className="border-b border-[#4E3D2A] pb-5 text-[1.75rem] font-bold uppercase tracking-tight text-[#F3F1ED] md:text-[2rem]">
                                         {block.title}
                                     </h3>
                                     <div className="flex-1 pt-6">
                                         <div className="max-w-[62ch] space-y-4">
                                             {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
-                                                <p key={pi} className="text-[15px] text-[#6A6257] leading-9 font-light">
+                                                <p key={pi} className="text-[15px] font-light leading-9 text-[#D6D0C6]">
                                                     {paragraph.trim()}
                                                 </p>
                                             ))}
@@ -1914,75 +1914,6 @@ export default function AssetWorkspace({
                                                     evidenceHref="#dossier-evidence"
                                                 />
 
-                                                 {/* Narrative Structural Readout (Acts I-III) */}
-                                                 <div className="space-y-6 border-t border-[#D4A574]/10 pt-10">
-                                                     <div className="flex items-center gap-6 mb-8">
-                                                         <div className="flex flex-col gap-2">
-                                                             <h3 className="text-xl font-light uppercase tracking-[0.35em] text-[#D4A574]">Narrative Structural Readout</h3>
-                                                             <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#B9B19F]">Phase-Aware Persuasion Mechanics</p>
-                                                         </div>
-                                                         <div className="h-px flex-1 bg-[#D4A574]/14" />
-                                                     </div>
-                                                     
-                                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                                         {narrativeSections.sections.slice(0, 3).map((act, i) => {
-                                                             const accent =
-                                                                 i === 0
-                                                                     ? {
-                                                                           border: 'border-[#6B4B1F]',
-                                                                           glow: 'from-[#F4A700]/10 via-transparent to-transparent',
-                                                                           dot: 'bg-[#F4A700]',
-                                                                           label: 'text-[#F4A700]',
-                                                                           title: 'group-hover:text-[#F4A700]',
-                                                                           marker: 'bg-[#F4A700]/55',
-                                                                       }
-                                                                     : i === 1
-                                                                         ? {
-                                                                               border: 'border-[#5B2418]',
-                                                                               glow: 'from-[#C8230A]/10 via-transparent to-transparent',
-                                                                               dot: 'bg-[#C8230A]',
-                                                                               label: 'text-[#C8230A]',
-                                                                               title: 'group-hover:text-[#F5EDE3]',
-                                                                               marker: 'bg-[#C8230A]/55',
-                                                                           }
-                                                                         : {
-                                                                               border: 'border-[#5F4A32]',
-                                                                               glow: 'from-[#D4A574]/10 via-transparent to-transparent',
-                                                                               dot: 'bg-[#D4A574]',
-                                                                               label: 'text-[#D4A574]',
-                                                                               title: 'group-hover:text-[#D7B07A]',
-                                                                               marker: 'bg-[#FBFBF6]/60',
-                                                                           };
-
-                                                             return (
-                                                                 <div
-                                                                     key={i}
-                                                                     className={`group flex min-h-[260px] flex-col rounded-3xl border bg-[#1F1F1F] bg-gradient-to-br ${accent.glow} p-[clamp(16px,1.2vw,24px)] transition-colors ${accent.border}`}
-                                                                 >
-                                                                     <div className="mb-5 flex items-center justify-between border-b border-[#4E3D2A] pb-3">
-                                                                         <div className="flex items-center gap-2">
-                                                                             <div className={`h-1.5 w-1.5 rounded-full ${accent.dot}`} />
-                                                                             <span className={`text-[10px] font-bold uppercase tracking-[0.25em] ${accent.label}`}>
-                                                                                 {act.label || `ACT ${i + 1}`}
-                                                                             </span>
-                                                                         </div>
-                                                                         <div className="flex h-5 w-5 items-center justify-center rounded-full border border-[#3E3225] bg-[#171512]">
-                                                                             <div className={`h-1 w-1 rounded-full ${accent.marker}`} />
-                                                                         </div>
-                                                                     </div>
-                                                                     <h4
-                                                                         className={`mb-4 min-h-[3em] text-[13px] font-bold uppercase leading-tight tracking-wider text-[#F3F1ED] transition-colors selection:bg-[#D4A574]/10 ${accent.title}`}
-                                                                     >
-                                                                         {act.title || 'Diagnostic Entrance'}
-                                                                     </h4>
-                                                                     <p className="line-clamp-[6] text-[13px] font-light leading-relaxed text-[#B9B19F] lg:line-clamp-[8]">
-                                                                         {act.text}
-                                                                     </p>
-                                                                 </div>
-                                                             );
-                                                         })}
-                                                     </div>
-                                                 </div>
                                             </>
                                         )}
 
