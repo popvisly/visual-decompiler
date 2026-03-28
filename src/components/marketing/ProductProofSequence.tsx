@@ -201,7 +201,7 @@ const STEP_PUNCH: Record<string, string> = {
 };
 
 const SECTION_BAND = 'px-6 py-16 md:py-24';
-const DARK_SURFACE = 'border-b border-[#2B241A] bg-transparent';
+const DARK_SURFACE = 'bg-transparent';
 const TAN_CTA =
     'group inline-flex items-center justify-center gap-2 rounded-full border border-[#D4A574] bg-[#D4A574] px-7 py-3.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#141414] shadow-[0_12px_24px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-[1px] hover:bg-[#D7B07A] hover:border-[#D7B07A] hover:shadow-[0_16px_30px_rgba(0,0,0,0.22)] sm:min-w-[220px] sm:w-auto sm:px-8 sm:py-4 sm:text-[12px] sm:tracking-[0.2em]';
 const OUTLINE_TAN_CTA =
@@ -406,7 +406,7 @@ function PlatformSystemGrid() {
 
 function SingleAssetDeconstruction() {
     return (
-        <section className="relative overflow-hidden border-b border-[#2B241A] bg-transparent px-6 py-14 md:py-16">
+        <section className="relative overflow-hidden bg-transparent px-6 py-14 md:py-16">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_38%_at_72%_10%,rgba(212,165,116,0.06)_0%,rgba(212,165,116,0)_64%)]" />
             <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
                 <div className="grid gap-10 lg:grid-cols-[1.05fr_0.8fr] lg:items-start lg:gap-12">
