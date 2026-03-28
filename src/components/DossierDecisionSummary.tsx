@@ -190,7 +190,7 @@ export default function DossierDecisionSummary({
                     </div>
                     <a
                         href={evidenceHref}
-                        className="inline-flex items-center justify-center rounded-full border border-[#D4A574]/24 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10 hover:text-[#F3F1ED]"
+                        className="inline-flex items-center justify-center rounded-full border border-[#6B5337] bg-[#171512] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#201b15] hover:text-[#F3F1ED]"
                     >
                         Jump to Evidence
                     </a>
@@ -202,8 +202,8 @@ export default function DossierDecisionSummary({
                             key={state}
                             className={`rounded-[1.4rem] border px-4 py-4 ${
                                 state === decision
-                                    ? 'border-[#D4A574]/28 bg-[#171512]'
-                                    : 'border-[#D4A574]/14 bg-[#171512]'
+                                    ? 'border-[#6B5337] bg-[#171512]'
+                                    : 'border-[#4E3D2A] bg-[#171512]'
                             }`}
                         >
                             <p className={`text-[10px] font-bold uppercase tracking-[0.22em] ${state === decision ? 'text-[#D4A574]' : DARK_TEXT_MUTED}`}>
@@ -240,7 +240,7 @@ export default function DossierDecisionSummary({
                             value: summaryRecommendedMove,
                         },
                     ].map((item) => (
-                        <div key={item.label} className="rounded-[1.4rem] border border-[#D4A574]/14 bg-[#171512] px-4 py-4">
+                        <div key={item.label} className="rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
                             <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
                             <p className={`mt-3 text-[14px] leading-6 ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
                         </div>
@@ -252,7 +252,7 @@ export default function DossierDecisionSummary({
                 <div className="rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-5 md:p-6">
                     <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Brief Alignment</p>
                     <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                        <span className="inline-flex w-fit rounded-full border border-[#D4A574]/24 bg-[#171512] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">
+                        <span className="inline-flex w-fit rounded-full border border-[#6B5337] bg-[#171512] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">
                             {briefAlignment}
                         </span>
                         <p className={`max-w-[62ch] text-sm leading-relaxed ${DARK_TEXT_SECONDARY}`}>
@@ -286,7 +286,7 @@ export default function DossierDecisionSummary({
                                 span: 'xl:col-span-2',
                             },
                         ].map((item) => (
-                            <div key={item.label} className={`rounded-[1.4rem] border border-[#D4A574]/14 bg-[#171512] px-4 py-4 ${item.span}`}>
+                            <div key={item.label} className={`rounded-[1.4rem] border border-[#5A4630] bg-[#171512] px-4 py-4 ${item.span}`}>
                                 <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
                                 <p className={`mt-3 text-[14px] leading-6 ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
                             </div>
@@ -313,7 +313,7 @@ export default function DossierDecisionSummary({
                                 value: confidenceNote(confidenceScore),
                             },
                         ].map((item) => (
-                            <div key={item.label} className="rounded-[1.4rem] border border-[#D4A574]/14 bg-[#171512] px-4 py-4">
+                            <div key={item.label} className="rounded-[1.4rem] border border-[#5A4630] bg-[#171512] px-4 py-4">
                                 <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
                                 <p className={`mt-3 text-[14px] leading-6 ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
                             </div>

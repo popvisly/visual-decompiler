@@ -2442,8 +2442,8 @@ export default function AssetWorkspace({
 
                                     {/* Persuasion Density */}
                                     {(extraction?.full_dossier as any)?.persuasion_metrics && (
-                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
-                                            <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
+                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[#3E3225] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
+                                            <h3 className="mb-4 w-full border-b border-[#4E3D2A] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
                                                 Persuasion Density
                                             </h3>
                                             <div className="flex-1 flex flex-col justify-center">
@@ -2466,8 +2466,8 @@ export default function AssetWorkspace({
 
                                     {/* Cognitive Friction */}
                                     {(extraction?.full_dossier as any)?.persuasion_metrics && (
-                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
-                                            <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
+                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[#3E3225] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
+                                            <h3 className="mb-4 w-full border-b border-[#4E3D2A] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
                                                 Cognitive Friction
                                             </h3>
                                             <div className="flex-1 flex flex-col justify-center">
@@ -2490,16 +2490,16 @@ export default function AssetWorkspace({
 
                                     {/* Predictive Longevity */}
                                     {(extraction?.full_dossier as any)?.persuasion_metrics && (
-                                        <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
-                                            <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
+                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
+                                            <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
                                                 Predictive Longevity
                                             </h3>
                                             <div className="flex-1 flex flex-col justify-center">
                                                 <div className="flex items-center gap-2 mb-4">
                                                     <svg className="w-4 h-4 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                                    <span className="text-[11px] font-mono text-[#D4A574]/60 uppercase tracking-widest">Fatigue Analysis</span>
+                                                    <span className="text-[11px] font-mono uppercase tracking-widest text-[#B9B19F]">Fatigue Analysis</span>
                                                 </div>
-                                                <p className="text-[12px] text-[#6A6257] leading-relaxed">
+                                                <p className="text-[12px] leading-relaxed text-[#B9B19F]">
                                                     {((extraction?.full_dossier as any)?.persuasion_metrics?.predictive_longevity as string)}
                                                 </p>
                                             </div>
@@ -2508,15 +2508,15 @@ export default function AssetWorkspace({
 
                                     {/* Behavioral Deconstruction */}
                                     {extraction?.full_dossier?.archetype_mapping && (
-                                        <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
-                                            <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
+                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
+                                            <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
                                                 Behavioral Deconstruction
                                             </h3>
                                             <div className="flex-1 flex flex-col justify-center space-y-4">
                                                 {((extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []).slice(0, 3).map((move: string, i: number) => (
                                                     <div key={i} className="flex gap-3 items-start">
                                                         <div className="w-1.5 h-1.5 bg-[#D4A574] rounded-full mt-2 flex-shrink-0" />
-                                                        <p className="text-[12px] text-[#6A6257] leading-relaxed">{move}</p>
+                                                        <p className="text-[12px] leading-relaxed text-[#D6D0C6]">{move}</p>
                                                     </div>
                                                 ))}
                                             </div>
