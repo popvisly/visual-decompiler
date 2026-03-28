@@ -2451,7 +2451,7 @@ export default function AssetWorkspace({
                                                     <span className="text-[11px] font-mono uppercase tracking-widest text-[#B9B19F]">Conversion Density</span>
                                                     <span className="text-[32px] font-bold text-[#D4A574] leading-none">{((extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density as number)}%</span>
                                                 </div>
-                                                <div className="h-2.5 w-full overflow-hidden rounded-full border border-[#D4A574]/18 bg-[#171512] shadow-inner">
+                                                <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#2A2723] shadow-inner">
                                                      <div
                                                          className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full transition-all duration-1000"
                                                          style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density}%` }}
@@ -2475,7 +2475,7 @@ export default function AssetWorkspace({
                                                     <span className="text-[11px] font-mono uppercase tracking-widest text-[#B9B19F]">Resistance Index</span>
                                                     <span className="text-[32px] font-bold text-[#8B4513] leading-none">{((extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction as number)}%</span>
                                                 </div>
-                                                <div className="h-2.5 w-full overflow-hidden rounded-full border border-[#D4A574]/18 bg-[#171512] shadow-inner">
+                                                <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#2A2723] shadow-inner">
                                                      <div
                                                          className="h-full bg-[#8B4513]/60 rounded-full transition-all duration-1000"
                                                          style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction}%` }}
