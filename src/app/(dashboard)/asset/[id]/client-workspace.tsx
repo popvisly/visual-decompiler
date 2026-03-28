@@ -414,7 +414,7 @@ const AnalyticWaveMap = ({ index, isActive }: { index: number, isActive?: boolea
     const currentWaves = waves[index] || waves[0];
     
     return (
-        <div className={`w-full h-32 relative transition-all duration-700 my-8 ${isActive ? 'opacity-100 scale-[1.02]' : 'opacity-40 group-hover/block:opacity-80'}`}>
+        <div className={`relative my-5 h-24 w-full transition-all duration-700 ${isActive ? 'opacity-100 scale-[1.02]' : 'opacity-40 group-hover/block:opacity-80'}`}>
             <svg className="w-full h-full" viewBox="0 0 100 85" preserveAspectRatio="none">
                 <defs>
                     <linearGradient id={`grad-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
@@ -524,14 +524,14 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                         <div className={`w-2 h-2 rounded-full transition-all ${activeAct === block.label ? 'bg-[#D4A882] shadow-[0_0_14px_rgba(212,168,130,0.45)]' : 'bg-[#D4A882]/75'}`} />
                                         <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#D4A882]">{block.label}</span>
                                     </div>
-                                    <h3 className="border-b border-[#4E3D2A] pb-5 text-[2rem] font-bold uppercase tracking-tight text-[#F3F1ED] md:text-[2.5rem]">
+                                    <h3 className="border-b border-[#4E3D2A] pb-4 text-[2rem] font-bold uppercase tracking-tight text-[#F3F1ED] md:text-[2.5rem]">
                                         {block.title}
                                     </h3>
                                     <AnalyticWaveMap index={i} isActive={activeAct === block.label} />
-                                    <div className="flex-1">
-                                        <div className="max-w-[62ch] space-y-5">
+                                    <div className="flex-1 pt-1">
+                                        <div className="max-w-[62ch] space-y-4">
                                             {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
-                                                <p key={pi} className="text-[15px] font-light leading-9 text-[#D6D0C6]">
+                                                <p key={pi} className="text-[15px] font-light leading-8 text-[#D6D0C6]">
                                                     {paragraph.trim()}
                                                 </p>
                                             ))}
