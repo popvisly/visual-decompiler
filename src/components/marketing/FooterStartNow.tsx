@@ -7,14 +7,11 @@ import { HOMEPAGE_CTA_ICON, HOMEPAGE_PRIMARY_CTA } from '@/components/marketing/
 export default function FooterStartNow() {
     return (
         <footer className="relative overflow-hidden bg-transparent px-6 pb-8 pt-14 text-[#FBFBF6] md:pt-[4.5rem]">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_78%_58%_at_24%_6%,rgba(212,165,116,0.08)_0%,transparent_70%)]" />
             <div className="max-w-7xl mx-auto">
 
                 {/* Main CTA Section */}
-                <div className="relative mb-6 overflow-hidden rounded-[2.25rem] border border-[#2B241A] bg-[radial-gradient(circle_at_top_left,rgba(212,165,116,0.12),transparent_34%),linear-gradient(180deg,#181614_0%,#12100E_100%)] px-8 py-10 shadow-[0_24px_60px_rgba(0,0,0,0.28)] md:rounded-[3rem] md:px-10 md:py-12 lg:px-14 lg:py-14">
+                <div className="relative mb-6 overflow-hidden rounded-[2.25rem] border border-[#2B241A] bg-[#141210] px-8 py-10 shadow-[0_24px_60px_rgba(0,0,0,0.28)] md:rounded-[3rem] md:px-10 md:py-12 lg:px-14 lg:py-14">
                     <div className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:56px_56px]" />
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(212,165,116,0.18),rgba(212,165,116,0)_72%)]" />
-
                     <div className="relative z-10 grid gap-8 lg:grid-cols-[1.05fr_0.72fr] lg:items-center lg:gap-10">
 
                         {/* Left: Headline */}
@@ -70,13 +67,6 @@ export default function FooterStartNow() {
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div className="mb-6 rounded-[2rem] border border-[#2B241A] bg-[#171512] px-6 py-6 md:px-8 border-l-[3px] border-[#D4A574]">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#A9987E]">About Visual Decompiler</p>
-                    <p className="mt-4 max-w-5xl text-[15px] leading-7 text-[#C7BFB0] md:text-base font-medium tracking-tight">
-                        Visual Decompiler is a Forensic Advertising Intelligence OS designed to be faster than manual analysis and deeper than ChatGPT alone. It combines forensic diagnosis, strategic readouts, compounding intelligence, and white-label agency delivery into outputs teams can trust and hand to clients confidently.
-                    </p>
                 </div>
 
                 {/* Footer Links Bar */}
