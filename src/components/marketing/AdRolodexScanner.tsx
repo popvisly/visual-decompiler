@@ -28,7 +28,7 @@ export default function AdRolodexScanner() {
 
     return (
         <div className="relative">
-            <div className="relative aspect-[4/5] w-full rounded-[3rem] border border-[#FBFBF6] bg-transparent p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
+            <div className="relative aspect-[4/5] w-full rounded-[3rem] border border-[#FBFBF6] bg-[#F3EEE6] p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
                 <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310]">
                     <AnimatePresence mode="sync">
                         <motion.div
