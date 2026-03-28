@@ -165,7 +165,8 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
     };
 
     return (
-        <div className="p-8 md:p-12 lg:p-16 text-[#1A1A1A] min-h-screen bg-[#FBFBF6] relative">
+        <div className="relative min-h-screen bg-[#FBFBF6] p-8 text-[#1A1A1A] md:p-12 lg:p-16">
+            <div className="pointer-events-none absolute inset-0 opacity-[0.02] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]" />
             <div className="relative z-10 w-full">
                 
                 {/* Header Action Bar - Slides in when assets are selected */}
@@ -220,16 +221,19 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                 </div>
 
                 {/* Main Header */}
-                <header className="mb-12 border-b border-[#E5E5E1] pb-8 pt-4">
-                    <h1 className="text-4xl md:text-5xl font-light tracking-tightest uppercase mb-4 text-[#8B4513]">
-                        The Intelligence Vault
+                <header className="mb-12 border-b border-[#D4A574]/18 pb-8 pt-2">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Intelligence Vault</p>
+                    <h1 className="mt-4 text-4xl font-light uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
+                        Vault Memory
                     </h1>
-                    <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                        <div className="flex items-center gap-3">
-                            <p className="text-[#4A4A4A]/60 font-sans text-[11px] font-bold tracking-[0.2em] uppercase">
-                                {filteredAssets.length} Forensic Extractions {query || sectorFilter !== 'ALL SECTORS' || mechanicFilter !== 'ALL MECHANICS' || tagFilter !== 'ALL TAGS' ? 'Matching' : 'Secured'}
+                    <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+                        <div className="max-w-3xl space-y-3">
+                            <p className="text-sm leading-relaxed text-[#6B6B6B]">
+                                Search, sort, and retrieve processed assets from the Intelligence Vault without losing the strategic memory attached to each extraction.
                             </p>
-                            <div className="h-px w-8 bg-[#D4A574]" />
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A7B64]">
+                                {filteredAssets.length} forensic extractions {query || sectorFilter !== 'ALL SECTORS' || mechanicFilter !== 'ALL MECHANICS' || tagFilter !== 'ALL TAGS' ? 'matching' : 'secured'}
+                            </p>
                         </div>
 
                         <div className="w-full max-w-4xl space-y-3">

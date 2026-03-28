@@ -390,19 +390,17 @@ export default function DifferentialDiagnosticsPage() {
             {/* 2.5% Geometric Grid Overlay */}
             <div className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:40px_40px]" />
 
-            <div className="relative z-10 p-8 md:p-12 lg:p-16 max-w-[1600px] mx-auto">
+            <div className="relative z-10 mx-auto max-w-[1600px] p-8 md:p-12 lg:p-16">
                 {/* Header Actions */}
                 <div className="flex flex-col gap-8 mb-8">
-                    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 border-b border-[#D4A574]/20 pb-8">
+                    <div className="flex flex-col gap-6 border-b border-[#D4A574]/18 pb-8 md:flex-row md:items-end md:justify-between">
                         <div>
-                            <p className="text-[10px] font-bold tracking-[0.42em] uppercase text-[#D4A574] mb-5">Intelligence Pulse</p>
-                            <h1 className="text-4xl md:text-6xl font-bold tracking-tight uppercase text-[#1A1A1A] leading-[0.92]">
-                                Differential
-                                <br />
-                                Diagnostic
+                            <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Differential Diagnostic</p>
+                            <h1 className="mt-4 text-4xl font-light uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
+                                Compare Routes
                             </h1>
-                            <p className="mt-6 max-w-2xl text-[14px] font-medium uppercase tracking-[0.25em] text-[#1A1A1A]/50">
-                                Choose two assets from the Intelligence Vault and surface the strategic delta, persuasion lift, and fatigue gap.
+                            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
+                                Choose two assets from the Intelligence Vault and surface the strategic delta, persuasion lift, fatigue gap, and the stronger route for review.
                             </p>
                         </div>
 

@@ -11,8 +11,9 @@ export default async function BoardsPage() {
 
     if (!userId) {
         return (
-            <div className="min-h-screen bg-[#FBFBF6] text-[#1A1A1A] flex items-center justify-center font-mono text-xs uppercase tracking-widest">
-                Unauthorized access to Sovereign Boards.
+            <div className="relative flex min-h-screen items-center justify-center bg-[#FBFBF6] text-[#1A1A1A] font-mono text-xs uppercase tracking-widest">
+                <div className="pointer-events-none absolute inset-0 opacity-[0.02] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]" />
+                <div className="relative z-10">Unauthorized access to Sovereign Boards.</div>
             </div>
         );
     }
@@ -68,14 +69,17 @@ export default async function BoardsPage() {
     });
 
     return (
-        <div className="min-h-screen bg-[#FBFBF6] text-[#1A1A1A] p-8 md:p-12">
-            <header className="mb-16 flex flex-col gap-6 border-b border-[#D4A574]/15 pb-10 md:flex-row md:items-end md:justify-between">
+        <div className="relative min-h-screen bg-[#FBFBF6] p-8 text-[#1A1A1A] md:p-12">
+            <div className="pointer-events-none absolute inset-0 opacity-[0.02] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]" />
+            <div className="relative z-10">
+            <header className="mb-16 flex flex-col gap-6 border-b border-[#D4A574]/18 pb-8 md:flex-row md:items-end md:justify-between">
                 <div>
-                    <h1 className="text-3xl lg:text-5xl font-sans tracking-tighter uppercase whitespace-nowrap overflow-hidden text-ellipsis">
-                        Sovereign Boards
+                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Sovereign Boards</p>
+                    <h1 className="mt-4 text-4xl font-light uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
+                        Board Collections
                     </h1>
-                    <p className="mt-4 text-[#6B6B6B] font-mono text-xs tracking-widest uppercase">
-                        Curated client intelligence & forensic collections
+                    <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
+                        Curate grouped intelligence, pitch-ready collections, and client-facing strategic clusters from assets already secured in the vault.
                     </p>
                 </div>
                 <CreateBoardModal />
@@ -133,6 +137,7 @@ export default async function BoardsPage() {
                     ))}
                 </div>
             )}
+            </div>
         </div>
     );
 }
