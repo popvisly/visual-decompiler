@@ -2843,7 +2843,7 @@ export default function AssetWorkspace({
                                                     {blueprintData.ad_copy_remixes.map((remix: any, i: number) => (
                                                         <div key={i} className="flex flex-col rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] transition-all hover:border-[#D4A574]/40">
                                                             <div className="mb-4">
-                                                                <span className="inline-block rounded border border-[#5B2418] bg-[#271612] px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest text-[#F4A700]">
+                                                                <span className="inline-block text-[10px] font-bold uppercase tracking-[0.2em] text-[#F4A700]">
                                                                     {remix.angle}
                                                                 </span>
                                                             </div>
