@@ -17,7 +17,7 @@ const HERO_PERSONA_ROTATION_VERSION = 'v2-no-copywriters';
 
 const PERSONAS: Persona[] = [
     {
-        role: 'Advertising',
+        role: 'Ad Analysis',
         subtitle: 'Drop any ad. See the invisible persuasion mechanics, strategic signals, and reconstruction blueprint — in under 60 seconds.',
         color: '#D4A574',
         weightClass: 'font-semibold',
