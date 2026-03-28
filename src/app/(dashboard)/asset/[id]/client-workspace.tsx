@@ -1860,45 +1860,45 @@ export default function AssetWorkspace({
                                         {extraction.primary_mechanic && extraction.full_dossier && (
                                              <>
                                                  {/* Unified Primary Intelligence Metric - REFINED SCALE */}
-                                                 <div className="w-full rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm flex flex-col gap-6 lg:flex-row lg:items-center mb-6">
+                                                 <div className="mb-6 flex w-full flex-col gap-6 rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 text-[#FBFBF6] lg:flex-row lg:items-center">
                                                      {/* Left: Primary Mechanic */}
                                                      <div className="flex-1">
-                                                         <div className="flex justify-between items-center mb-6 border-b border-[#E6DDCF] pb-4">
+                                                         <div className="mb-6 flex items-center justify-between border-b border-[#D4A574]/18 pb-4">
                                                              <div className="flex items-center gap-3">
-                                                                 <div className="h-5 w-5 rounded-full bg-[#D4A574]/10 flex items-center justify-center">
+                                                                 <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#D4A574]/10">
                                                                      <div className="h-2 w-2 rounded-full bg-[#D4A574]" />
                                                                  </div>
-                                                                 <span className="block text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Primary Mechanic</span>
+                                                                 <span className="block text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Primary Mechanic</span>
                                                              </div>
                                                              <InfoButton section="PRIMARY_MECHANIC" />
                                                          </div>
                                                          <div className="max-w-[70ch]">
-                                                            <h2 className="text-xl md:text-2xl font-bold tracking-tight text-[#151310] leading-relaxed selection:bg-[#D4A574]/20 border-l-[3px] border-[#D4A574] pl-6 py-1">
+                                                            <h2 className="border-l-[3px] border-[#D4A574] py-1 pl-6 text-xl font-bold leading-relaxed tracking-tight text-[#F3F1ED] selection:bg-[#D4A574]/20 md:text-2xl">
                                                                 {extraction.primary_mechanic}
                                                             </h2>
                                                          </div>
                                                      </div>
 
                                                      {/* Vertical Divider (Desktop Only) */}
-                                                     <div className="hidden lg:block w-[1px] h-32 bg-[#E6DDCF]/60 mx-8" />
+                                                     <div className="mx-8 hidden h-32 w-[1px] bg-[#D4A574]/18 lg:block" />
 
                                                      {/* Right: System Confidence */}
                                                       <div className="w-full lg:w-72 flex flex-col h-full">
-                                                          <div className="flex justify-between items-center mb-6 border-b border-[#E6DDCF] pb-4">
+                                                          <div className="mb-6 flex items-center justify-between border-b border-[#D4A574]/18 pb-4">
                                                               <div className="flex items-center gap-3">
-                                                                  <div className="h-5 w-5 rounded-full bg-[#D4A574]/10 flex items-center justify-center">
+                                                                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#D4A574]/10">
                                                                       <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
                                                                   </div>
-                                                                  <span className="block text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]">Confidence Score</span>
+                                                                  <span className="block text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Confidence Score</span>
                                                               </div>
                                                               <InfoButton section="SYSTEM_CONFIDENCE" />
                                                           </div>
                                                           <div className="flex flex-col gap-4">
-                                                              <div className="text-5xl font-sans font-bold text-[#151310] tracking-tighter flex items-baseline gap-1">
+                                                              <div className="flex items-baseline gap-1 text-5xl font-sans font-bold tracking-tighter text-[#F3F1ED]">
                                                                   {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}
                                                                   <span className="text-[18px] text-[#D4A574] font-medium uppercase tracking-widest">/100</span>
                                                               </div>
-                                                              <p className="text-[11px] leading-relaxed text-[#6A6257] font-light italic">
+                                                              <p className="text-[11px] italic leading-relaxed text-[#B9B19F]">
                                                                   AI-weighted validation based on semiotic signal strength and cross-correlational data integrity.
                                                               </p>
                                                           </div>
@@ -1915,31 +1915,31 @@ export default function AssetWorkspace({
                                                 />
 
                                                  {/* Narrative Structural Readout (Acts I-III) */}
-                                                 <div className="space-y-6 pt-10 border-t border-[#E6DDCF]/50">
+                                                 <div className="space-y-6 border-t border-[#D4A574]/10 pt-10">
                                                      <div className="flex items-center gap-6 mb-8">
                                                          <div className="flex flex-col gap-2">
-                                                             <h3 className="text-xl font-light uppercase tracking-[0.35em] text-[#8B4513]">Narrative Structural Readout</h3>
-                                                             <p className="text-[10px] text-[#9B8662]/60 font-bold tracking-[0.25em] uppercase">Phase-Aware Persuasion Mechanics</p>
+                                                             <h3 className="text-xl font-light uppercase tracking-[0.35em] text-[#D4A574]">Narrative Structural Readout</h3>
+                                                             <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#B9B19F]">Phase-Aware Persuasion Mechanics</p>
                                                          </div>
-                                                         <div className="h-px flex-1 bg-[#E6DDCF]/60" />
+                                                         <div className="h-px flex-1 bg-[#D4A574]/14" />
                                                      </div>
                                                      
                                                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                                          {narrativeSections.sections.slice(0, 3).map((act, i) => (
-                                                             <div key={i} className={ANALYSIS_CARD_CLASS + " flex flex-col min-h-[260px] hover:border-[#D4A574]/40 transition-colors group"}>
-                                                                 <div className="flex justify-between items-center mb-5 border-b border-[#E6DDCF] pb-3">
+                                                             <div key={i} className="group flex min-h-[260px] flex-col rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-[clamp(16px,1.2vw,24px)] transition-colors hover:border-[#D4A574]/40">
+                                                                 <div className="mb-5 flex items-center justify-between border-b border-[#D4A574]/18 pb-3">
                                                                      <div className="flex items-center gap-2">
                                                                          <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
-                                                                         <span className="text-[10px] font-bold text-[#9B8662] uppercase tracking-[0.25em]">{act.label || `ACT ${i+1}`}</span>
+                                                                         <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#B9B19F]">{act.label || `ACT ${i+1}`}</span>
                                                                      </div>
-                                                                     <div className="h-5 w-5 rounded-full bg-[#D4A574]/5 flex items-center justify-center border border-[#D4A574]/10">
+                                                                     <div className="flex h-5 w-5 items-center justify-center rounded-full border border-[#D4A574]/10 bg-[#171512]">
                                                                          <div className="h-1 w-1 rounded-full bg-[#D4A574]/40" />
                                                                      </div>
                                                                  </div>
-                                                                 <h4 className="text-[13px] font-bold uppercase tracking-wider text-[#151310] mb-4 min-h-[3em] leading-tight selection:bg-[#D4A574]/10 group-hover:text-[#8B4513] transition-colors">
+                                                                 <h4 className="mb-4 min-h-[3em] text-[13px] font-bold uppercase leading-tight tracking-wider text-[#F3F1ED] transition-colors selection:bg-[#D4A574]/10 group-hover:text-[#D7B07A]">
                                                                      {act.title || 'Diagnostic Entrance'}
                                                                  </h4>
-                                                                 <p className="text-[13px] text-[#6A6257] leading-relaxed font-light line-clamp-[6] lg:line-clamp-[8]">
+                                                                 <p className="line-clamp-[6] text-[13px] font-light leading-relaxed text-[#B9B19F] lg:line-clamp-[8]">
                                                                      {act.text}
                                                                  </p>
                                                              </div>
@@ -1957,35 +1957,35 @@ export default function AssetWorkspace({
 
 
                                             {/* Visual Style */}
-                                            <div className={`col-span-1 xl:col-span-2 ${ANALYSIS_CARD_CLASS} flex flex-col min-h-[120px]`}>
-                                                <div className="flex justify-between items-center mb-4 border-b border-[#E6DDCF] pb-2">
+                                            <div className="col-span-1 flex min-h-[120px] flex-col rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-[clamp(16px,1.2vw,24px)] text-[#FBFBF6] xl:col-span-2">
+                                                <div className="mb-4 flex items-center justify-between border-b border-[#D4A574]/18 pb-2">
                                                     <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Synthesized Visual Style</span>
                                                     <InfoButton section="VISUAL_STYLE" />
                                                 </div>
                                                 <div className="flex flex-col h-full">
-                                                    <p className="mt-2 mb-6 max-w-[62ch] text-[15px] font-medium leading-relaxed tracking-tight text-[#151310]">
+                                                    <p className="mt-2 mb-6 max-w-[62ch] text-[15px] font-medium leading-relaxed tracking-tight text-[#F3F1ED]">
                                                         {extraction.visual_style}
                                                     </p>
 
                                                     {/* Aesthetic Signature Matrix */}
-                                                    <div className="mt-auto pt-6 border-t border-[#D4A574]/10 space-y-4">
+                                                    <div className="mt-auto space-y-4 border-t border-[#D4A574]/10 pt-6">
                                                         <div className="flex items-center gap-4">
-                                                            <span className="text-[10px] font-bold text-[#D4A574]/60 uppercase tracking-[0.2em] w-14">Luma</span>
-                                                            <div className="flex-1 h-2 bg-[#FFFCF7] border border-[#D4A574]/20 rounded-full overflow-hidden">
+                                                            <span className="w-14 text-[10px] font-bold uppercase tracking-[0.2em] text-[#B9B19F]">Luma</span>
+                                                            <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#2A2723]">
                                                                 <div className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full w-[72%] animate-pulse" />
                                                             </div>
                                                             <span className="text-[10px] font-mono text-[#D4A574]">0.82V</span>
                                                         </div>
                                                         <div className="flex items-center gap-4">
-                                                            <span className="text-[10px] font-bold text-[#D4A574]/60 uppercase tracking-[0.2em] w-14">Chromat</span>
-                                                            <div className="flex-1 h-2 bg-[#FFFCF7] border border-[#D4A574]/20 rounded-full overflow-hidden">
+                                                            <span className="w-14 text-[10px] font-bold uppercase tracking-[0.2em] text-[#B9B19F]">Chromat</span>
+                                                            <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#2A2723]">
                                                                 <div className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full w-[45%] animate-pulse [animation-delay:200ms]" />
                                                             </div>
                                                             <span className="text-[10px] font-mono text-[#D4A574]">0.44Δ</span>
                                                         </div>
                                                         <div className="flex items-center gap-4">
-                                                            <span className="text-[10px] font-bold text-[#D4A574]/60 uppercase tracking-[0.2em] w-14">Vector</span>
-                                                            <div className="flex-1 h-2 bg-[#FFFCF7] border border-[#D4A574]/20 rounded-full overflow-hidden">
+                                                            <span className="w-14 text-[10px] font-bold uppercase tracking-[0.2em] text-[#B9B19F]">Vector</span>
+                                                            <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#2A2723]">
                                                                 <div className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full w-[89%] animate-pulse [animation-delay:400ms]" />
                                                             </div>
                                                             <span className="text-[10px] font-mono text-[#D4A574]">0.91Λ</span>
@@ -1995,8 +1995,8 @@ export default function AssetWorkspace({
                                             </div>
 
                                             {/* Color Palette */}
-                                            <div className={`col-span-1 ${ANALYSIS_CARD_CLASS} flex flex-col min-h-[120px]`}>
-                                                <div className="flex justify-between items-center mb-4 border-b border-[#E6DDCF] pb-2">
+                                            <div className="col-span-1 flex min-h-[120px] flex-col rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-[clamp(16px,1.2vw,24px)] text-[#FBFBF6]">
+                                                <div className="mb-4 flex items-center justify-between border-b border-[#D4A574]/18 pb-2">
                                                     <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Chromatic Base</span>
                                                     <InfoButton section="CHROMATIC_BASE" />
                                                 </div>
@@ -2004,9 +2004,9 @@ export default function AssetWorkspace({
                                                     {extraction.color_palette && extraction.color_palette.length > 0 ? (
                                                         <div className="flex flex-wrap gap-2">
                                                             {extraction.color_palette.map((hex: string, i: number) => (
-                                                                <div key={i} className="group border border-[#D4A574]/30 p-1.5 bg-[#FFFCF7]/80 flex items-center gap-2 rounded-full pr-3 relative hover:scale-[1.02] transition-transform">
+                                                                <div key={i} className="group relative flex items-center gap-2 rounded-full border border-[#D4A574]/24 bg-[#171512] p-1.5 pr-3 transition-transform hover:scale-[1.02]">
                                                                     <div className="w-4 h-4 flex-shrink-0 border border-[#D4A574]/20 rounded-full" style={{ backgroundColor: hex }} />
-                                                                    <span className="text-[8px] font-mono tracking-widest text-[#6A6257] group-hover:text-[#D4A574] transition-colors">{hex}</span>
+                                                                    <span className="text-[8px] font-mono tracking-widest text-[#B9B19F] transition-colors group-hover:text-[#D4A574]">{hex}</span>
                                                                 </div>
                                                             ))}
                                                         </div>
