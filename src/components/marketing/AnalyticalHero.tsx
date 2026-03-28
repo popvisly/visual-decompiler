@@ -13,6 +13,8 @@ type Persona = {
     weightClass?: string;
 };
 
+const HERO_PERSONA_ROTATION_VERSION = 'v2-no-copywriters';
+
 const PERSONAS: Persona[] = [
     {
         role: 'Advertising',
@@ -48,12 +50,6 @@ const PERSONAS: Persona[] = [
         role: 'Brand Managers',
         subtitle: 'Benchmark your creative against category patterns. Identify what drives engagement and where your assets lose persuasion power.',
         color: '#D4A574',
-        weightClass: 'font-semibold',
-    },
-    {
-        role: 'Copywriters',
-        subtitle: 'Extract narrative frameworks, hook mechanics, and objection dismantling patterns from any ad — ready to adapt into your next brief.',
-        color: '#C8230A',
         weightClass: 'font-semibold',
     },
 ];
@@ -93,7 +89,10 @@ export default function AnalyticalHero() {
     const persona = PERSONAS[personaIndex];
 
     return (
-        <section className="relative isolate min-h-[100svh] overflow-hidden bg-[#141414] text-[#FBFBF6]">
+        <section
+            className="relative isolate min-h-[100svh] overflow-hidden bg-[#141414] text-[#FBFBF6]"
+            data-hero-rotation={HERO_PERSONA_ROTATION_VERSION}
+        >
             {/* Subtle gold grid */}
             <div className="pointer-events-none absolute inset-0 z-[1] opacity-[0.045] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:56px_56px]" />
 
