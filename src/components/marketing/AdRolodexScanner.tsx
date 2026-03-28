@@ -28,7 +28,7 @@ export default function AdRolodexScanner() {
 
     return (
         <div className="relative">
-            <div className="relative aspect-[4/5] w-full rounded-[3rem] border border-[#FBFBF6] bg-[#F7F1E7]/30 p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
+            <div className="relative aspect-[4/5] w-full rounded-[3rem] border border-[#FBFBF6] bg-transparent p-3 shadow-[0_24px_50px_rgba(20,18,15,0.08)] sm:p-4">
                 <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#151310]">
                     <AnimatePresence mode="sync">
                         <motion.div
@@ -47,13 +47,12 @@ export default function AdRolodexScanner() {
                                 alt={activeAd.label}
                                 fill
                                 unoptimized
-                                className="object-cover opacity-90 saturate-[1.03] contrast-[1.02]"
+                                className="object-cover"
                             />
                             
                             {/* Scanner Overlay Elements */}
                             <div className="absolute inset-0 z-20 pointer-events-none">
-                                <div className="absolute inset-0 border-[0.5px] border-[#D4A574]/22" />
-                                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(212,165,116,0.04)_0%,rgba(212,165,116,0.01)_38%,rgba(0,0,0,0)_100%)]" />
+                                <div className="absolute inset-0 border-[0.5px] border-[#D4A574]/18" />
                                 <div className="absolute inset-x-0 top-0 h-full opacity-[0.08] [background-image:linear-gradient(rgba(212,165,116,0.7)_1px,transparent_1px)] [background-size:100%_24px]" />
                                 <motion.div 
                                     animate={{ top: ['0%', '100%', '0%'] }}
