@@ -158,12 +158,12 @@ export default function DossierDecisionSummary({
                         Toggle between the executive read and the full forensic surface without losing the underlying analysis.
                     </p>
                 </div>
-                <div className="inline-flex rounded-full border border-[#D4A574]/18 bg-[#171512] p-1">
+                <div className="inline-flex rounded-full border border-[#4E3D2A] bg-[#171512] p-1">
                     <button
                         type="button"
                         onClick={() => onToggleExecutiveSummary(false)}
                         className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] transition ${
-                            !isExecutiveSummary ? 'bg-[#D4A574] text-[#141414]' : 'text-[#B9B19F] hover:bg-white/5'
+                            !isExecutiveSummary ? 'bg-[#D4A574] text-[#141414]' : 'text-[#B9B19F] hover:bg-[#201b15]'
                         }`}
                     >
                         Full Analysis
@@ -172,7 +172,7 @@ export default function DossierDecisionSummary({
                         type="button"
                         onClick={() => onToggleExecutiveSummary(true)}
                         className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] transition ${
-                            isExecutiveSummary ? 'bg-[#D4A574] text-[#141414]' : 'text-[#B9B19F] hover:bg-white/5'
+                            isExecutiveSummary ? 'bg-[#D4A574] text-[#141414]' : 'text-[#B9B19F] hover:bg-[#201b15]'
                         }`}
                     >
                         Executive Summary
