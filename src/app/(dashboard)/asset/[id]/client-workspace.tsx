@@ -508,14 +508,14 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                         <div
                             key={i}
                             id={type === 'ACT' ? block.label : undefined}
-                            className={`border border-[#E6DDCF] bg-[#FFFCF7] p-6 rounded-3xl shadow-[0_4px_16px_rgba(0,0,0,0.02)] flex flex-col ${
+                            className={`rounded-3xl border p-6 flex flex-col ${
                                 type === 'ACT'
                                     ? 'forensic-act-block min-h-[320px] xl:min-h-[360px] scroll-mt-24'
                                     : 'min-h-[220px] xl:min-h-[240px]'
                             } ${
                                 type === 'ACT' && activeAct === block.label
-                                    ? 'border-[#D4A574]/50 shadow-[0_0_0_1px_rgba(212,165,116,0.18)]'
-                                    : 'border-[#D4A574]/20'
+                                    ? 'border-[#6B5337] bg-[#1F1F1F]'
+                                    : 'border-[#4E3D2A] bg-[#1F1F1F]'
                             }`}
                         >
                             {type === 'ACT' ? (
