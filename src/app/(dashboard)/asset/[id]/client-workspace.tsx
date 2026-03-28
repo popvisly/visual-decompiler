@@ -2395,41 +2395,41 @@ export default function AssetWorkspace({
                                     />
                                     <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                                     {/* Trigger Distribution Radar */}
-                                    <div className={`${ANALYSIS_CARD_CLASS} flex flex-col items-center justify-between min-h-[220px] xl:min-h-[240px]`}>
-                                        <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
+                                    <div className="flex min-h-[220px] flex-col items-center justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
+                                        <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
                                             Trigger Distribution Map
                                         </h3>
                                         <div className="w-full max-w-[320px] flex-1 flex items-center justify-center -mt-6">
                                             <RadarChart
                                                 data={Object.entries((extraction?.full_dossier as any)?.archetype_mapping?.trigger_distribution || {}).map(([label, value]) => ({ label, value: value as number }))}
-                                                forceLight={true}
+                                                forceLight={false}
                                             />
                                         </div>
-                                        <p className="text-[12px] text-[#6A6257] leading-relaxed mt-4 pt-4 border-t border-[#D4A574]/10 text-center px-4 w-full">
+                                        <p className="mt-4 w-full border-t border-[#D4A574]/10 px-4 pt-4 text-center text-[12px] leading-relaxed text-[#B9B19F]">
                                             This distribution quantifies the creative's psychological surface area—identifying which aspiration levers are being engaged to command consumer compliance.
                                         </p>
                                     </div>
 
                                      {/* Strategic Posture Map */}
-                                     <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
-                                         <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
+                                     <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
+                                         <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
                                              Strategic Posture
                                          </h3>
                                          {extraction?.full_dossier?.archetype_mapping ? (
                                              <div className="flex-1 flex flex-col justify-between">
                                                  <div>
-                                                     <p className="text-[13px] text-[#6A6257] leading-relaxed mb-8 pr-4">
+                                                     <p className="mb-8 pr-4 text-[13px] leading-relaxed text-[#D6D0C6]">
                                                          {extraction.full_dossier.archetype_mapping?.target_posture}
                                                      </p>
                                                      <div className="flex items-center justify-center -mt-2">
                                                          <StrategicPostureMap
                                                              posture={extraction.full_dossier.archetype_mapping?.target_posture || ''}
                                                              moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
-                                                             forceLight={true}
+                                                             forceLight={false}
                                                          />
                                                      </div>
                                                  </div>
-                                                 <p className="text-[12px] text-[#6A6257] leading-relaxed mt-6 pt-6 border-t border-[#D4A574]/10 text-center px-4 w-full">
+                                                 <p className="mt-6 w-full border-t border-[#D4A574]/10 px-4 pt-6 text-center text-[12px] leading-relaxed text-[#B9B19F]">
                                                      Current positioning defines the asset's high-level field posture—governing how it addresses consumer cognitive dissonance within the vault.
                                                  </p>
                                              </div>
@@ -2442,23 +2442,23 @@ export default function AssetWorkspace({
 
                                     {/* Persuasion Density */}
                                     {(extraction?.full_dossier as any)?.persuasion_metrics && (
-                                        <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
-                                            <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
+                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
+                                            <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
                                                 Persuasion Density
                                             </h3>
                                             <div className="flex-1 flex flex-col justify-center">
                                                 <div className="flex justify-between items-end mb-4">
-                                                    <span className="text-[11px] font-mono text-[#D4A574]/60 uppercase tracking-widest">Conversion Density</span>
+                                                    <span className="text-[11px] font-mono uppercase tracking-widest text-[#B9B19F]">Conversion Density</span>
                                                     <span className="text-[32px] font-bold text-[#D4A574] leading-none">{((extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density as number)}%</span>
                                                 </div>
-                                                <div className="w-full bg-[#FBF7F1] h-2.5 border border-[#E6DDCF]/60 rounded-full overflow-hidden shadow-inner">
+                                                <div className="h-2.5 w-full overflow-hidden rounded-full border border-[#D4A574]/18 bg-[#171512] shadow-inner">
                                                      <div
                                                          className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full transition-all duration-1000"
                                                          style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density}%` }}
                                                      />
                                                  </div>
                                             </div>
-                                            <p className="text-[12px] text-[#6A6257] leading-relaxed mt-4 pt-4 border-t border-[#D4A574]/10">
+                                            <p className="mt-4 border-t border-[#D4A574]/10 pt-4 text-[12px] leading-relaxed text-[#B9B19F]">
                                                 Measures the creative's informational compression—how efficiently it transfers brand signal into consumer memory structures.
                                             </p>
                                         </div>
@@ -2466,23 +2466,23 @@ export default function AssetWorkspace({
 
                                     {/* Cognitive Friction */}
                                     {(extraction?.full_dossier as any)?.persuasion_metrics && (
-                                        <div className={`${ANALYSIS_CARD_CLASS} flex flex-col justify-between min-h-[220px] xl:min-h-[240px]`}>
-                                            <h3 className="text-[12px] font-bold text-[#9B8662] uppercase tracking-widest mb-4 w-full border-b border-[#E6DDCF] pb-4">
+                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
+                                            <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
                                                 Cognitive Friction
                                             </h3>
                                             <div className="flex-1 flex flex-col justify-center">
                                                 <div className="flex justify-between items-end mb-4">
-                                                    <span className="text-[11px] font-mono text-[#8B4513]/80 uppercase tracking-widest">Resistance Index</span>
+                                                    <span className="text-[11px] font-mono uppercase tracking-widest text-[#B9B19F]">Resistance Index</span>
                                                     <span className="text-[32px] font-bold text-[#8B4513] leading-none">{((extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction as number)}%</span>
                                                 </div>
-                                                <div className="w-full bg-[#FBF7F1] h-2.5 border border-[#E6DDCF]/60 rounded-full overflow-hidden shadow-inner">
+                                                <div className="h-2.5 w-full overflow-hidden rounded-full border border-[#D4A574]/18 bg-[#171512] shadow-inner">
                                                      <div
                                                          className="h-full bg-[#8B4513]/60 rounded-full transition-all duration-1000"
                                                          style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction}%` }}
                                                      />
                                                  </div>
                                             </div>
-                                            <p className="text-[12px] text-[#6A6257] leading-relaxed mt-4 pt-4 border-t border-[#D4A574]/10">
+                                            <p className="mt-4 border-t border-[#D4A574]/10 pt-4 text-[12px] leading-relaxed text-[#B9B19F]">
                                                 Quantifies neural resistance to message adoption. Low scores indicate frictionless persuasion pathways.
                                             </p>
                                         </div>
