@@ -489,60 +489,26 @@ export default function DifferentialDiagnosticsPage() {
                     />
                 </div>
 
-                <div className="mb-12 rounded-[3rem] border border-[#D4A574]/20 bg-white px-8 py-8 shadow-sm">
-                    <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-                        <div className="flex-1">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B4513]">Setup Path</p>
-                            <div className="mt-5 grid gap-4 md:grid-cols-2">
-                                <div className={`rounded-[2.2rem] border px-6 py-6 transition-colors ${assetA ? 'border-[#D4A574]/50 bg-[#FBF7EF]' : 'border-[#E7DED1] bg-[#FCFAF5]'}`}>
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#8B4513]/70">Step A</p>
-                                    <p className="mt-3 text-sm font-bold uppercase tracking-[0.1em] text-[#1A1A1A]">Select Control Asset</p>
-                                    <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B] font-medium">
-                                        {assetA ? `${assetA.brand.name} loaded as control.` : 'Choose the baseline asset you want every other route measured against.'}
-                                    </p>
-                                </div>
-                                <div className={`rounded-[2.2rem] border px-6 py-6 transition-colors ${assetB ? 'border-[#D4A574]/50 bg-[#FBF7EF]' : 'border-[#E7DED1] bg-[#FCFAF5]'}`}>
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#8B4513]/70">Step B</p>
-                                    <p className="mt-3 text-sm font-bold uppercase tracking-[0.1em] text-[#1A1A1A]">Select Proposed Asset</p>
-                                    <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B] font-medium">
-                                        {assetB ? `${assetB.brand.name} loaded as proposed route.` : 'Choose the challenger route so the diagnostic can calculate lift, fatigue, and strategic delta.'}
-                                    </p>
-                                </div>
-                            </div>
+                <div className="mb-12 grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
+                    <div className="rounded-[2.2rem] border border-[#E7DED1] bg-[#FCFAF5] px-6 py-6 border-l-[3px] border-[#D4A574]">
+                        <button
+                            type="button"
+                            onClick={handleUseLatestResultAsAssetA}
+                            className="inline-flex rounded-full border border-[#D4A574]/40 px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.25em] text-[#8B4513] transition hover:-translate-y-[1px] hover:border-[#D4A574] hover:bg-white shadow-sm"
+                        >
+                            Use latest result as Asset A
+                        </button>
+                        <p className="mt-4 text-[12px] leading-relaxed text-[#6B6B6B] font-medium tracking-tight">
+                            {compareHelperMessage || 'Load your most recent completed dossier into Asset A when you want the fastest starting point.'}
+                        </p>
+                    </div>
 
-                            <div className="mt-6 rounded-[2.2rem] border border-[#E7DED1] bg-[#FCFAF5] px-6 py-6">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#8B4513]/70">Best first compare move</p>
-                                <div className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3 text-[12px] leading-relaxed text-[#6B6B6B] font-medium uppercase tracking-wider">
-                                    <p><span className="text-[#D4A574]">Asset A:</span> Control Route</p>
-                                    <p><span className="text-[#D4A574]">Asset B:</span> Challenger variant</p>
-                                    <p><span className="text-[#D4A574]">Output:</span> Strategic Delta</p>
-                                    <p><span className="text-[#D4A574]">Next:</span> Commit Winner</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="md:w-[320px] space-y-4">
-                            <div className="rounded-[2.2rem] border border-[#D4A574]/20 bg-[#141414] px-7 py-7 text-[#FBF7EF] shadow-xl">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#D4A574]">Progress State</p>
-                                <p className="mt-4 text-3xl font-bold uppercase tracking-tight">{compareProgressLabel}</p>
-                                <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-white/40 font-medium">
-                                    {isReady ? 'Differential diagnostic unlocked' : 'Incomplete parameters'}
-                                </p>
-                            </div>
-
-                            <div className="rounded-[2.2rem] border border-[#E7DED1] bg-[#FCFAF5] px-6 py-6 border-l-[3px] border-[#D4A574]">
-                                <button
-                                    type="button"
-                                    onClick={handleUseLatestResultAsAssetA}
-                                    className="inline-flex rounded-full border border-[#D4A574]/40 px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.25em] text-[#8B4513] transition hover:-translate-y-[1px] hover:border-[#D4A574] hover:bg-white shadow-sm"
-                                >
-                                    Use latest result as Asset A
-                                </button>
-                                <p className="mt-4 text-[12px] leading-relaxed text-[#6B6B6B] font-medium tracking-tight">
-                                    {compareHelperMessage || 'Load your most recent completed dossier into Asset A when you want the fastest starting point.'}
-                                </p>
-                            </div>
-                        </div>
+                    <div className="rounded-[2.2rem] border border-[#D4A574]/20 bg-[#141414] px-7 py-7 text-[#FBF7EF] shadow-xl">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#D4A574]">Progress State</p>
+                        <p className="mt-4 text-3xl font-bold uppercase tracking-tight">{compareProgressLabel}</p>
+                        <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-white/40 font-medium">
+                            {isReady ? 'Differential diagnostic unlocked' : 'Incomplete parameters'}
+                        </p>
                     </div>
                 </div>
 
