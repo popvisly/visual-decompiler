@@ -463,7 +463,7 @@ export default function DifferentialDiagnosticsPage() {
                                 </span>
                                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity rounded-full" />
                             </button>
-                            <p className="max-w-[220px] text-center text-[10px] font-bold uppercase tracking-[0.18em] text-[#1A1A1A]/45">
+                            <p className="max-w-[260px] rounded-full bg-[#141414] px-5 py-3 text-center text-[10px] font-bold uppercase tracking-[0.18em] text-white/70 shadow-lg">
                                 {isReady ? 'Both assets selected. Run the differential now.' : 'Select control and proposed assets to enable the diagnostic.'}
                             </p>
                         </div>
