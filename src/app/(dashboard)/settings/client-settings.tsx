@@ -158,26 +158,21 @@ export default function SettingsClient({ initialAgency }: { initialAgency: Agenc
         setLogoUploadError('');
 
         try {
-            const fileExt = file.name.split('.').pop() || 'png';
-            const filePath = `agency-logos/${initialAgency.id}-${Date.now()}.${fileExt}`;
+            const formData = new FormData();
+            formData.append('file', file);
 
-            const { error: uploadError } = await supabaseClient.storage
-                .from('ad-media')
-                .upload(filePath, file, {
-                    cacheControl: '3600',
-                    upsert: true,
-                    contentType: file.type,
-                });
+            const response = await fetch('/api/settings/logo', {
+                method: 'POST',
+                body: formData,
+            });
 
-            if (uploadError) {
-                throw uploadError;
+            const payload = await response.json();
+
+            if (!response.ok) {
+                throw new Error(payload.error || 'Logo upload failed.');
             }
 
-            const { data: publicUrlData } = supabaseClient.storage
-                .from('ad-media')
-                .getPublicUrl(filePath);
-
-            setLogoUrl(publicUrlData.publicUrl);
+            setLogoUrl(payload.publicUrl);
             setLogoUploadState('idle');
         } catch (err) {
             setLogoUploadState('error');
