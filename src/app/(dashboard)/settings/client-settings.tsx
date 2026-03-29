@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Check, Upload } from 'lucide-react';
 import { supabaseClient } from '@/lib/supabase-client';
 
@@ -136,11 +136,54 @@ export default function SettingsClient({ initialAgency }: { initialAgency: Agenc
     const [contactEmail, setContactEmail] = useState(initialAgency.contact_email || '');
     const [confidentialityNotice, setConfidentialityNotice] = useState(initialAgency.confidentiality_notice || DEFAULT_NOTICE);
     const [isWhitelabelActive, setIsWhitelabelActive] = useState(initialAgency.is_whitelabel_active || false);
+    const [logoUploadState, setLogoUploadState] = useState<'idle' | 'uploading' | 'error'>('idle');
+    const [logoUploadError, setLogoUploadError] = useState('');
+    const logoInputRef = useRef<HTMLInputElement | null>(null);
 
     const [status, setStatus] = useState<'idle' | 'saving' | 'success' | 'error'>('idle');
     const [errorMsg, setErrorMsg] = useState('');
 
     const normalizedHex = useMemo(() => normalizeHex(primaryHex), [primaryHex]);
+
+    const handleLogoUpload = async (file: File | null) => {
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+            setLogoUploadState('error');
+            setLogoUploadError('Please upload an image file.');
+            return;
+        }
+
+        setLogoUploadState('uploading');
+        setLogoUploadError('');
+
+        try {
+            const fileExt = file.name.split('.').pop() || 'png';
+            const filePath = `agency-logos/${initialAgency.id}-${Date.now()}.${fileExt}`;
+
+            const { error: uploadError } = await supabaseClient.storage
+                .from('ad-media')
+                .upload(filePath, file, {
+                    cacheControl: '3600',
+                    upsert: true,
+                    contentType: file.type,
+                });
+
+            if (uploadError) {
+                throw uploadError;
+            }
+
+            const { data: publicUrlData } = supabaseClient.storage
+                .from('ad-media')
+                .getPublicUrl(filePath);
+
+            setLogoUrl(publicUrlData.publicUrl);
+            setLogoUploadState('idle');
+        } catch (err) {
+            setLogoUploadState('error');
+            setLogoUploadError(err instanceof Error ? err.message : 'Logo upload failed.');
+        }
+    };
 
     const handleSave = async (e?: React.FormEvent) => {
         if (e) {
@@ -212,16 +255,59 @@ export default function SettingsClient({ initialAgency }: { initialAgency: Agenc
                                     </SettingsField>
 
                                     <SettingsField
-                                        label="Agency Logo URL"
-                                        helperText="Paste a publicly accessible URL to your agency logo (SVG or PNG recommended). This will appear on exported dossiers and white-labelled reports."
+                                        label="Agency Logo"
+                                        helperText="Upload a PNG, SVG, or JPG logo. This is the easiest option for white-labelled exports."
                                     >
-                                        <input
-                                            type="url"
-                                            value={logoUrl}
-                                            onChange={(e) => setLogoUrl(e.target.value)}
-                                            className="w-full rounded-full border border-white/10 bg-white/5 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-white/25 focus:border-[#D4A574]/60"
-                                            placeholder="https://youragency.com/logo.svg"
-                                        />
+                                        <div className="space-y-4">
+                                            <input
+                                                ref={logoInputRef}
+                                                type="file"
+                                                accept="image/*"
+                                                className="hidden"
+                                                onChange={(e) => {
+                                                    const file = e.target.files?.[0] || null;
+                                                    void handleLogoUpload(file);
+                                                    e.currentTarget.value = '';
+                                                }}
+                                            />
+
+                                            <div className="flex flex-wrap items-center gap-3">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => logoInputRef.current?.click()}
+                                                    disabled={logoUploadState === 'uploading'}
+                                                    className="inline-flex items-center gap-3 rounded-full border border-[#D4A574]/25 bg-white/5 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574] transition-all hover:border-[#D4A574]/50 hover:bg-white/10 disabled:opacity-60"
+                                                >
+                                                    <Upload className="h-4 w-4" />
+                                                    {logoUploadState === 'uploading' ? 'Uploading Logo...' : 'Upload Logo File'}
+                                                </button>
+
+                                                {logoUrl && (
+                                                    <span className="text-[11px] uppercase tracking-[0.2em] text-[#D4A574]/70">
+                                                        Logo ready
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                            {logoUploadState === 'error' && (
+                                                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-red-400">
+                                                    {logoUploadError}
+                                                </p>
+                                            )}
+
+                                            <div className="rounded-[1.25rem] border border-white/10 bg-black/10 p-4">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">
+                                                    Optional fallback: logo URL
+                                                </p>
+                                                <input
+                                                    type="url"
+                                                    value={logoUrl}
+                                                    onChange={(e) => setLogoUrl(e.target.value)}
+                                                    className="mt-3 w-full rounded-full border border-white/10 bg-white/5 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-white/25 focus:border-[#D4A574]/60"
+                                                    placeholder="https://youragency.com/logo.svg"
+                                                />
+                                            </div>
+                                        </div>
                                     </SettingsField>
                                 </div>
 
