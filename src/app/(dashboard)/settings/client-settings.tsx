@@ -289,19 +289,6 @@ export default function SettingsClient({ initialAgency }: { initialAgency: Agenc
                                                     {logoUploadError}
                                                 </p>
                                             )}
-
-                                            <div className="rounded-[1.25rem] border border-white/10 bg-black/10 p-4">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">
-                                                    Optional fallback: logo URL
-                                                </p>
-                                                <input
-                                                    type="url"
-                                                    value={logoUrl}
-                                                    onChange={(e) => setLogoUrl(e.target.value)}
-                                                    className="mt-3 w-full rounded-full border border-white/10 bg-white/5 px-6 py-4 text-sm text-white outline-none transition-all placeholder:text-white/25 focus:border-[#D4A574]/60"
-                                                    placeholder="https://youragency.com/logo.svg"
-                                                />
-                                            </div>
                                         </div>
                                     </SettingsField>
                                 </div>
