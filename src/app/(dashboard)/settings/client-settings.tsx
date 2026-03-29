@@ -37,7 +37,7 @@ function SettingsField({
 }) {
     return (
         <div className="space-y-3">
-            <label className="block text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">
+            <label className="block text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">
                 {label}
             </label>
             {children}
@@ -260,7 +260,7 @@ export default function SettingsClient({ initialAgency }: { initialAgency: Agenc
                             </div>
 
                             <div className="rounded-[2rem] border border-[#D4A574]/20 bg-white p-8 shadow-sm">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Sovereign Whitelabel Mode</p>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Sovereign Whitelabel Mode</p>
                                 <p className="mt-4 whitespace-pre-line text-[13px] leading-relaxed text-[#6B6B6B]">
                                     {`When enabled:
 • Your Agency Identity String replaces "VISUAL DECOMPILER" in all navigation headers
@@ -284,7 +284,7 @@ Your agency identity and logo must be configured above before enabling.`}
 
                         <div className="rounded-[2rem] border border-[#D4A574]/20 bg-white p-8 shadow-sm">
                             <div className="mb-8 border-b border-[#D4A574]/10 pb-5">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Dossier Identity</p>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Dossier Identity</p>
                                 <p className="mt-3 text-sm leading-relaxed text-[#6B6B6B]">
                                     These fields are printed on exported reports and used to make the dossier cover feel like it came from your agency, not a software vendor.
                                 </p>
