@@ -20,7 +20,7 @@ const PROCESS_STEPS = [
     {
         number: '01',
         label: 'Drop Your Ad',
-        description: 'Upload any static ad asset. Print, digital, social, or out-of-home all work cleanly.',
+        description: 'Upload the ad your team actually needs to read. Print, digital, social, and out-of-home all process cleanly.',
     },
     {
         number: '02',
@@ -30,7 +30,7 @@ const PROCESS_STEPS = [
     {
         number: '03',
         label: 'Retrieve From Vault',
-        description: 'Your completed dossier is stored in the Intelligence Vault and available as soon as processing completes.',
+        description: 'Your completed dossier lands in the Intelligence Vault, ready for compare, boards, and client review.',
     },
 ];
 
@@ -445,24 +445,24 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                         )}
 
                         {!observerLimitReached && (
-                            <div className="mt-6 rounded-[1.5rem] border border-[#D4A574]/15 bg-white/80 px-5 py-5">
+                            <div className="mt-6 rounded-[1.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-5 py-5 text-[#FBFBF6]">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">Best first move</p>
                                 <div className="mt-4 grid gap-4 md:grid-cols-3">
                                     <div>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A7B64]">Best first upload</p>
-                                        <p className="mt-2 text-[14px] leading-6 text-[#4A4A4A]">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">Best first upload</p>
+                                        <p className="mt-2 text-[14px] leading-6 text-[#D6D0C6]">
                                             Your current concept or the latest client ad you need to review today.
                                         </p>
                                     </div>
                                     <div>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A7B64]">What you&apos;ll get in try #1</p>
-                                        <p className="mt-2 text-[14px] leading-6 text-[#4A4A4A]">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">What you&apos;ll get in try #1</p>
+                                        <p className="mt-2 text-[14px] leading-6 text-[#D6D0C6]">
                                             Primary mechanic, friction profile, and a strategic move your team can act on immediately.
                                         </p>
                                     </div>
                                     <div>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A7B64]">What to do next</p>
-                                        <p className="mt-2 text-[14px] leading-6 text-[#4A4A4A]">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">What to do next</p>
+                                        <p className="mt-2 text-[14px] leading-6 text-[#D6D0C6]">
                                             Compare it against a second route, then save the best result into a board.
                                         </p>
                                     </div>
@@ -478,7 +478,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                             });
                                             document.getElementById('file-upload')?.click();
                                         }}
-                                        className="mt-5 inline-flex items-center rounded-full border border-[#D4A574]/25 bg-[#FBFBF6] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#5F4724] transition hover:border-[#D4A574]/45 hover:bg-white"
+                                        className="mt-5 inline-flex items-center rounded-full border border-[#4E3D2A] bg-[#171512] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574] transition hover:border-[#D4A574]/60 hover:bg-[#201b15] hover:text-[#F3F1ED]"
                                     >
                                         Run First Analysis
                                     </button>
@@ -487,18 +487,18 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                         )}
 
                         {!usageLoading && usageStatus && (
-                            <div className="mt-6 rounded-[1.5rem] border border-[#D4A574]/15 bg-white/70 px-5 py-4">
+                            <div className="mt-6 rounded-[1.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-5 py-4 text-[#FBFBF6]">
                                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                                     <div>
                                         <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">
                                             {isObserverTrial ? 'Trial Progress' : 'Usage Status'}
                                         </p>
-                                        <p className="mt-2 text-sm text-[#4A4A4A]">
+                                        <p className="mt-2 text-sm text-[#D6D0C6]">
                                             {usageStatus.usageCount} of {usageStatus.limit} extractions used this cycle.
                                         </p>
                                     </div>
                                     {isObserverTrial && (
-                                        <div className="grid gap-1 text-[11px] leading-5 text-[#5B554D] md:text-right">
+                                        <div className="grid gap-1 text-[11px] leading-5 text-[#B9B19F] md:text-right">
                                             <p>Try 1: Baseline read</p>
                                             <p>Try 2: Compare route</p>
                                             <p>Try 3: Save to board</p>
@@ -506,7 +506,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                     )}
                                 </div>
                                 {showTrialReminder && (
-                                    <p className="mt-4 text-[12px] leading-6 text-[#4A4A4A]">
+                                    <p className="mt-4 text-[12px] leading-6 text-[#B9B19F]">
                                         You&apos;re seeing surface-level gains. Unlock full workflow: boards, compounding memory, and team collaboration.
                                     </p>
                                 )}
@@ -520,14 +520,14 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                             {PROCESS_STEPS.map((step, index) => (
                                 <div
                                     key={step.number}
-                                    className="relative grid gap-4 rounded-[1.9rem] border border-[#D4A574]/15 bg-white/75 p-5 shadow-[0_12px_24px_rgba(20,20,20,0.03)] md:grid-cols-[88px_1fr] md:items-center md:p-7"
+                                    className="relative grid gap-4 rounded-[1.9rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-5 shadow-[0_12px_24px_rgba(20,20,20,0.18)] md:grid-cols-[88px_1fr] md:items-center md:p-7"
                                 >
-                                    <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border border-[#D4A574]/20 bg-[#FBFBF6] md:h-16 md:w-16">
-                                        <span className="text-[24px] font-semibold leading-none text-[#C1A67B] md:text-[28px]">{step.number}</span>
+                                    <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border border-[#4E3D2A] bg-[#171512] md:h-16 md:w-16">
+                                        <span className="text-[24px] font-semibold leading-none text-[#D4A574] md:text-[28px]">{step.number}</span>
                                     </div>
                                     <div className="text-left">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#1A1A1A]">{step.label}</p>
-                                        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#4A4A4A] md:text-[15px]">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">{step.label}</p>
+                                        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#D6D0C6] md:text-[15px]">
                                             {step.description}
                                         </p>
                                     </div>
