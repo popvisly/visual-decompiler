@@ -442,6 +442,53 @@ export default function DifferentialDiagnosticsPage() {
                     )}
                 </div>
 
+                {/* Lab Panels Section */}
+                <div className="flex flex-col lg:flex-row gap-8 mb-12 relative">
+                    <AssetSelectorPanel
+                        label="CONTROL (ASSET A)"
+                        selected={assetA}
+                        onOpenDrawer={() => setDrawerState({ open: true, target: 'A' })}
+                    />
+                    
+                    {/* Central Command Hub Action */}
+                    <div className="flex items-center justify-center lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 z-20">
+                        <div className="flex flex-col items-center gap-3">
+                            <button
+                                onClick={handleAnalyse}
+                                disabled={!isReady}
+                                className={`group relative px-8 py-5 bg-[#D4A574] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all disabled:opacity-50 disabled:grayscale ${isReady ? 'tan-pulse hover:scale-105 active:scale-95' : ''}`}
+                            >
+                                <span className="relative z-10">
+                                    {buttonLabel}
+                                </span>
+                                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity rounded-full" />
+                            </button>
+                            <p className="max-w-[220px] text-center text-[10px] font-bold uppercase tracking-[0.18em] text-[#1A1A1A]/45">
+                                {isReady ? 'Both assets selected. Run the differential now.' : 'Select control and proposed assets to enable the diagnostic.'}
+                            </p>
+                        </div>
+                    </div>
+
+                    <AssetSelectorPanel
+                        label="PROPOSED (ASSET B)"
+                        selected={assetB}
+                        helperText="Tip: Asset B should be meaningfully different from Asset A (concept, framing, or category benchmark) so the delta is decision-useful."
+                        onOpenDrawer={() => setDrawerState({ open: true, target: 'B' })}
+                    />
+
+                    {/* New Forensic Archive Drawer */}
+                        <IntelligenceArchiveDrawer 
+                        isOpen={drawerState.open}
+                        label={drawerState.target === 'A' ? 'CONTROL (ASSET A)' : 'PROPOSED (ASSET B)'}
+                        onClose={() => setDrawerState({ open: false, target: null })}
+                        onSelect={(asset) => {
+                            if (drawerState.target === 'A') setAssetA(asset as PulseAsset);
+                            else setAssetB(asset as PulseAsset);
+                            setDrawerState({ open: false, target: null });
+                        }}
+                    />
+                </div>
+
                 <div className="mb-12 rounded-[3rem] border border-[#D4A574]/20 bg-white px-8 py-8 shadow-sm">
                     <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
                         <div className="flex-1">
@@ -497,53 +544,6 @@ export default function DifferentialDiagnosticsPage() {
                             </div>
                         </div>
                     </div>
-                </div>
-
-                {/* Lab Panels Section */}
-                <div className="flex flex-col lg:flex-row gap-8 mb-12 relative">
-                    <AssetSelectorPanel
-                        label="CONTROL (ASSET A)"
-                        selected={assetA}
-                        onOpenDrawer={() => setDrawerState({ open: true, target: 'A' })}
-                    />
-                    
-                    {/* Central Command Hub Action */}
-                    <div className="flex items-center justify-center lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 z-20">
-                        <div className="flex flex-col items-center gap-3">
-                            <button
-                                onClick={handleAnalyse}
-                                disabled={!isReady}
-                                className={`group relative px-8 py-5 bg-[#D4A574] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all disabled:opacity-50 disabled:grayscale ${isReady ? 'tan-pulse hover:scale-105 active:scale-95' : ''}`}
-                            >
-                                <span className="relative z-10">
-                                    {buttonLabel}
-                                </span>
-                                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity rounded-full" />
-                            </button>
-                            <p className="max-w-[220px] text-center text-[10px] font-bold uppercase tracking-[0.18em] text-[#1A1A1A]/45">
-                                {isReady ? 'Both assets selected. Run the differential now.' : 'Select control and proposed assets to enable the diagnostic.'}
-                            </p>
-                        </div>
-                    </div>
-
-                    <AssetSelectorPanel
-                        label="PROPOSED (ASSET B)"
-                        selected={assetB}
-                        helperText="Tip: Asset B should be meaningfully different from Asset A (concept, framing, or category benchmark) so the delta is decision-useful."
-                        onOpenDrawer={() => setDrawerState({ open: true, target: 'B' })}
-                    />
-
-                    {/* New Forensic Archive Drawer */}
-                        <IntelligenceArchiveDrawer 
-                        isOpen={drawerState.open}
-                        label={drawerState.target === 'A' ? 'CONTROL (ASSET A)' : 'PROPOSED (ASSET B)'}
-                        onClose={() => setDrawerState({ open: false, target: null })}
-                        onSelect={(asset) => {
-                            if (drawerState.target === 'A') setAssetA(asset as PulseAsset);
-                            else setAssetB(asset as PulseAsset);
-                            setDrawerState({ open: false, target: null });
-                        }}
-                    />
                 </div>
 
                 {/* Diagnostic Ledger Section */}
