@@ -70,7 +70,7 @@ function DossierCoverPreview({
         : 'Forensic Intelligence System';
 
     return (
-        <div className="rounded-[2rem] border border-[#D4A574]/20 bg-[#141414] p-5 shadow-2xl">
+        <div className="rounded-[2rem] border border-[#D4A574]/20 bg-white p-5 shadow-sm">
             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574] mb-4">Live Dossier Preview</p>
             <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0F0F0F] p-6 min-h-[520px]">
                 <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(#C9A96E_1px,transparent_1px),linear-gradient(90deg,#C9A96E_1px,transparent_1px)] [background-size:28px_28px]" />
