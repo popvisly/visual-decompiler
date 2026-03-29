@@ -72,16 +72,16 @@ function DossierCoverPreview({
     return (
         <div className="rounded-[2rem] border border-[#D4A574]/20 bg-white p-5 shadow-sm">
             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574] mb-4">Live Dossier Preview</p>
-            <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0F0F0F] p-6 min-h-[520px]">
-                <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(#C9A96E_1px,transparent_1px),linear-gradient(90deg,#C9A96E_1px,transparent_1px)] [background-size:28px_28px]" />
+            <div className="relative overflow-hidden rounded-[1.75rem] border border-[#D4A574]/18 bg-[#F6F1E8] p-6 min-h-[520px] shadow-inner">
+                <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:28px_28px]" />
                 <div className="relative z-10 flex h-full flex-col">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+                            <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-[#D4A574]/20 bg-white/65">
                                 {logoUrl ? (
                                     <img src={logoUrl} alt={displayName} className="h-full w-full object-contain p-2" />
                                 ) : (
-                                    <div className="flex flex-col items-center gap-1 text-white/50">
+                                    <div className="flex flex-col items-center gap-1 text-[#6B6B6B]">
                                         <Upload className="h-4 w-4" />
                                         <span className="text-[8px] font-bold uppercase tracking-[0.2em]">Logo</span>
                                     </div>
@@ -91,12 +91,12 @@ function DossierCoverPreview({
                                 <p className="text-[10px] font-bold uppercase tracking-[0.26em]" style={{ color: accent }}>
                                     {displayName}
                                 </p>
-                                <p className="mt-1 text-[9px] uppercase tracking-[0.18em] text-white/35">
+                                <p className="mt-1 text-[9px] uppercase tracking-[0.18em] text-[#8B7B62]">
                                     Prepared by: {displayName}
                                 </p>
                             </div>
                         </div>
-                        <div className="rounded-full border border-white/10 px-3 py-1 text-[8px] uppercase tracking-[0.2em] text-white/45">
+                        <div className="rounded-full border border-[#D4A574]/20 bg-white/45 px-3 py-1 text-[8px] uppercase tracking-[0.2em] text-[#6B6B6B]">
                             Classification: Sovereign
                         </div>
                     </div>
@@ -105,20 +105,20 @@ function DossierCoverPreview({
                         <p className="text-[10px] font-bold uppercase tracking-[0.34em]" style={{ color: accent }}>
                             Strategic Dossier
                         </p>
-                        <h2 className="mt-5 text-4xl font-light uppercase tracking-tight text-white leading-tight">
+                        <h2 className="mt-5 text-4xl font-light uppercase tracking-tight text-[#1A1A1A] leading-tight">
                             Forensic Intelligence Report
                         </h2>
-                        <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/60">
+                        <p className="mt-5 max-w-sm text-sm leading-relaxed text-[#6B6B6B]">
                             {displayDescriptor}
                         </p>
                     </div>
 
-                    <div className="mt-auto rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+                    <div className="mt-auto rounded-[1.5rem] border border-[#D4A574]/18 bg-white/55 p-5">
                         <div className="h-1 w-24 rounded-full" style={{ backgroundColor: accent }} />
-                        <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
+                        <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B7B62]">
                             Cover Accent
                         </p>
-                        <p className="mt-2 text-[12px] leading-relaxed text-white/58">
+                        <p className="mt-2 text-[12px] leading-relaxed text-[#5E5A53]">
                             This preview mirrors the white-labelled dossier cover language and branding surfaces used across exports.
                         </p>
                     </div>
