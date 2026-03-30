@@ -279,14 +279,14 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                 <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Observer Limit Reached</p>
                                 <h2 className="mt-4 text-3xl font-light uppercase tracking-tight text-[#F5F5DC]">No further extractions this cycle</h2>
                                 <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/70">
-                                    You have used all available forensic extractions for your current Observer cycle. Upgrade to Strategic Unit to keep decompiling without interruption.
+                                    You have used all available forensic extractions for your current Observer cycle. Upgrade to Pro to keep decompiling without interruption.
                                 </p>
                                 <div className="mt-8 flex flex-col items-center gap-4">
                                     <Link
                                         href="/pricing"
                                         className="rounded-full bg-[#D4A574] px-8 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#1A1A1A] transition-all hover:bg-[#F5F5DC]"
                                     >
-                                        Upgrade To Strategic Unit
+                                        Upgrade To Pro
                                     </Link>
                                     <p className="text-[11px] uppercase tracking-[0.16em] text-white/45">Resets {resetLabel}</p>
                                 </div>

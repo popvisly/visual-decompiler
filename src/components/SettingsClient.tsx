@@ -373,7 +373,7 @@ export default function SettingsClient() {
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-4">
                                         <h4 className="text-4xl font-light text-[#141414] tracking-tightest uppercase">
-                                            {settings.tier === 'agency' ? 'Agency Sovereignty' : settings.tier === 'professional' ? 'Professional' : settings.tier === 'pro' ? 'Strategic Unit' : 'The Observer'}
+                                            {settings.tier === 'agency' ? 'Agency Sovereignty' : settings.tier === 'professional' ? 'Professional' : settings.tier === 'pro' ? 'Pro' : 'The Observer'}
                                         </h4>
                                         <span className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border ${settings.tier !== 'free' ? 'bg-accent/10 border-accent/20 text-accent' : 'bg-[#E7DED1]/20 border-[#E7DED1]/40 text-[#6B6B6B]'}`}>
                                             {settings.tier !== 'free' ? 'Premium active' : 'Standard'}

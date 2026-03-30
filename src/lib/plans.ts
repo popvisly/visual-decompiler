@@ -34,7 +34,7 @@ const TIER_ENTITLEMENTS: Record<AppTier, TierEntitlements> = {
     },
     pro: {
         key: 'pro',
-        label: 'Strategic Unit',
+        label: 'Pro',
         monthlyAnalysisLimit: 100,
         seatLimit: 1,
         hasPremiumAnalysis: true,
@@ -104,4 +104,3 @@ export function getTierEntitlements(rawTier?: string | null): TierEntitlements {
 export function getTierLabel(rawTier?: string | null): string {
     return getTierEntitlements(rawTier).label;
 }
-
