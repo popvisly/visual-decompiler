@@ -92,7 +92,7 @@ export default function PricingPage() {
                         transition={{ duration: 0.75, ease: EASE, delay: 0.18 }}
                         className="mt-8 max-w-3xl border-l border-[#D8CCB5] pl-5 text-sm uppercase tracking-[0.14em] text-[#756D61] md:text-[13px]"
                     >
-                        Observer is free forever. Pro is for individual practitioners. Professional is for small teams. Agency Sovereignty is infrastructure — priced for teams that bill it back to clients.
+                        Observer is free forever. Strategic is for individual practitioners. Professional is for small teams. Agency Sovereignty is infrastructure — priced for teams that bill it back to clients.
                     </motion.p>
                 </div>
             </section>
@@ -213,7 +213,7 @@ export default function PricingPage() {
                             <p className="mt-4 text-base leading-relaxed text-[#5E5A53]">{PRICING.professional.subline}</p>
 
                             <div className="mt-8 border-t border-[#E1D4C0] pt-6">
-                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#8A6840]">Everything in Pro, plus:</p>
+                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#8A6840]">Everything in Strategic, plus:</p>
                                 <ul className="mt-4 space-y-4">
                                     {PRICING.professional.features.map((feature) => (
                                         <CheckItem key={feature}>{feature}</CheckItem>
@@ -295,7 +295,7 @@ export default function PricingPage() {
                                 <tr>
                                     <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Feature</th>
                                     <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Observer</th>
-                                    <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Pro</th>
+                                    <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Strategic</th>
                                     <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Professional</th>
                                     <th className="px-6 py-5 text-left text-[10px] font-bold uppercase tracking-[0.26em] text-[#8A7B64]">Agency Sovereignty</th>
                                 </tr>
@@ -328,7 +328,7 @@ export default function PricingPage() {
                                 a: 'Observer gives you five complete analyses each cycle. All five intelligence surfaces. Full dossier output. No artificial limits on what the analysis returns. It’s free because we’d rather you see the real product than a version of it.',
                             },
                             {
-                                q: 'When does Pro make sense over Observer?',
+                                q: 'When does Strategic make sense over Observer?',
                                 a: 'The moment you find yourself wanting a sixth analysis. Or when you want Differential Diagnosis, Clone Engine, or the full Vault. Most practitioners hit that point in the first two weeks.',
                             },
                             {
@@ -336,8 +336,8 @@ export default function PricingPage() {
                                 a: 'Because it’s not a per-seat tool — it’s billable intelligence infrastructure. The white-label output alone is worth more than the subscription cost when it’s presented to a single client as a premium strategic deliverable.',
                             },
                             {
-                                q: 'Can I white-label the output on Pro?',
-                                a: 'Yes — every tier from Pro up includes white-label export. Agency Sovereignty adds the full dossier identity layer: custom logo, cover design, and agency branding controls.',
+                                q: 'Can I white-label the output on Strategic?',
+                                a: 'Yes — every tier from Strategic up includes white-label export. Agency Sovereignty adds the full dossier identity layer: custom logo, cover design, and agency branding controls.',
                             },
                             {
                                 q: 'We’re a small agency — do we need Agency Sovereignty?',
@@ -385,7 +385,7 @@ export default function PricingPage() {
                     </div>
 
                     <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A7B64]">
-                        Observer includes 5 free analyses each cycle · Pro and Professional unlock unlimited use · Agency Sovereignty includes dedicated onboarding
+                        Observer includes 5 free analyses each cycle · Strategic and Professional unlock unlimited use · Agency Sovereignty includes dedicated onboarding
                     </p>
                 </div>
             </section>

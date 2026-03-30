@@ -34,7 +34,7 @@ const TIER_ENTITLEMENTS: Record<AppTier, TierEntitlements> = {
     },
     pro: {
         key: 'pro',
-        label: 'Pro',
+        label: 'Strategic',
         monthlyAnalysisLimit: 100,
         seatLimit: 1,
         hasPremiumAnalysis: true,

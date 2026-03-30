@@ -19,7 +19,7 @@ export const PRICING = {
         ],
     },
     strategic: {
-        name: 'Pro',
+        name: 'Strategic',
         monthlyPrice: 99,
         yearlyPrice: 990,
         monthlyLabel: '$99 / month',
@@ -27,7 +27,7 @@ export const PRICING = {
         savingsLabel: 'Save 20%',
         tagline: 'For practitioners who use it every week.',
         subline: 'One seat. Unlimited analyses. Everything you need to work faster and present stronger.',
-        ctaLabel: 'Start Pro',
+        ctaLabel: 'Start Strategic',
         whoItsFor: 'Art Directors, Creative Directors, Copywriters, and Brand Managers who need analysis on demand — not five times a month.',
         checkoutPlanKey: 'strategic',
         features: [
@@ -56,7 +56,7 @@ export const PRICING = {
         whoItsFor: 'Small creative studios and in-house strategy teams (2-5 people) who need collaboration features.',
         checkoutPlanKey: 'professional',
         features: [
-            'All Pro features',
+            'All Strategic features',
             '3-5 team seats',
             'Shared Intelligence Vault',
             'Shared Boards',
