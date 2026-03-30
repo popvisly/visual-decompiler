@@ -189,9 +189,6 @@ export default function PricingPage() {
                             >
                                 {loading === PRICING.strategic.checkoutPlanKey ? 'Initializing…' : PRICING.strategic.ctaLabel}
                             </button>
-                            <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
-                                {PRICING.strategic.trialLabel}
-                            </p>
                         </motion.article>
 
                         <motion.article
@@ -235,9 +232,6 @@ export default function PricingPage() {
                             >
                                 {loading === PRICING.professional.checkoutPlanKey ? 'Initializing…' : PRICING.professional.ctaLabel}
                             </button>
-                            <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">
-                                {PRICING.professional.trialLabel}
-                            </p>
                         </motion.article>
 
                         <motion.article
@@ -331,7 +325,7 @@ export default function PricingPage() {
                         {[
                             {
                                 q: 'Is Observer really free — or is it a crippled trial?',
-                                a: 'Observer gives you five complete analyses every month, permanently. All five intelligence surfaces. Full dossier output. No artificial limits on what the analysis returns. It’s free because we’d rather you see the real product than a version of it.',
+                                a: 'Observer gives you five complete analyses each cycle. All five intelligence surfaces. Full dossier output. No artificial limits on what the analysis returns. It’s free because we’d rather you see the real product than a version of it.',
                             },
                             {
                                 q: 'When does Strategic Unit make sense over Observer?',
@@ -391,7 +385,7 @@ export default function PricingPage() {
                     </div>
 
                     <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A7B64]">
-                        Observer is free forever · Strategic Unit includes a 14-day trial · Agency Sovereignty includes a dedicated onboarding session
+                        Observer includes 5 free analyses each cycle · Strategic Unit and Professional unlock unlimited use · Agency Sovereignty includes dedicated onboarding
                     </p>
                 </div>
             </section>

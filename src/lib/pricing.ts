@@ -28,7 +28,6 @@ export const PRICING = {
         tagline: 'For practitioners who use it every week.',
         subline: 'One seat. Unlimited analyses. Everything you need to work faster and present stronger.',
         ctaLabel: 'Start Strategic Unit',
-        trialLabel: '14-day free trial included',
         whoItsFor: 'Art Directors, Creative Directors, Copywriters, and Brand Managers who need analysis on demand — not five times a month.',
         checkoutPlanKey: 'strategic',
         features: [
@@ -54,7 +53,6 @@ export const PRICING = {
         tagline: 'For strategists who present to clients and teams.',
         subline: '3-5 seats. Shared intelligence. Every tool you need to build client-ready outcomes.',
         ctaLabel: 'Start Professional',
-        trialLabel: '14-day free trial included',
         whoItsFor: 'Small creative studios and in-house strategy teams (2-5 people) who need collaboration features.',
         checkoutPlanKey: 'professional',
         features: [
