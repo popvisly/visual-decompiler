@@ -454,7 +454,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
 
                         {!observerLimitReached && (
                             <div className="mt-6 rounded-[1.5rem] border border-[rgba(212,165,116,0.18)] bg-[#1F1F1F] px-5 py-5 text-[#FBFBF6]">
-                                <div className="grid gap-5 md:grid-cols-[1.1fr_1fr_auto] md:items-start">
+                                <div className="grid gap-5 md:grid-cols-[1.1fr_1fr] md:items-start">
                                     <div>
                                         <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">Best first move</p>
                                         <p className="mt-3 text-[15px] leading-7 text-[#D6D0C6]">
@@ -484,30 +484,34 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                             Compare it against a second route, then save the strongest direction into a board.
                                         </p>
                                     </div>
+                                </div>
+                            </div>
+                        )}
 
-                                    {!usageLoading && usageStatus && (
-                                        <div className="rounded-[1.25rem] border border-[rgba(212,165,116,0.14)] bg-[#171512] px-4 py-4 md:min-w-[280px]">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">
-                                                {isObserverTrial ? 'Trial Progress' : 'Usage Status'}
-                                            </p>
-                                            <p className="mt-3 text-[14px] leading-6 text-[#D6D0C6]">
-                                                {formatUsageLine(usageStatus)}
-                                            </p>
-                                            {isObserverTrial && (
-                                                <div className="mt-3 grid gap-1 text-[11px] leading-5 text-[#B9B19F]">
-                                                    <p>Try 1: Baseline read</p>
-                                                    <p>Try 2: Compare route</p>
-                                                    <p>Try 3: Save to board</p>
-                                                </div>
-                                            )}
-                                            {showTrialReminder && (
-                                                <p className="mt-3 text-[12px] leading-6 text-[#B9B19F]">
-                                                    You&apos;re seeing surface-level gains. Unlock full workflow: boards, compounding memory, and team collaboration.
-                                                </p>
-                                            )}
+                        {!usageLoading && usageStatus && !observerLimitReached && (
+                            <div className="mt-6 rounded-[1.5rem] border border-[#D8CCB5] bg-[#FBFBF6] px-5 py-5 text-[#141414] shadow-[0_12px_28px_rgba(20,20,20,0.04)]">
+                                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">
+                                            {isObserverTrial ? 'Trial Progress' : 'Usage Status'}
+                                        </p>
+                                        <p className="mt-3 text-[15px] leading-7 text-[#4F4A43]">
+                                            {formatUsageLine(usageStatus)}
+                                        </p>
+                                    </div>
+                                    {isObserverTrial && (
+                                        <div className="grid gap-1 text-[11px] leading-5 text-[#756D61] md:text-right">
+                                            <p>Try 1: Baseline read</p>
+                                            <p>Try 2: Compare route</p>
+                                            <p>Try 3: Save to board</p>
                                         </div>
                                     )}
                                 </div>
+                                {showTrialReminder && (
+                                    <p className="mt-4 text-[12px] leading-6 text-[#756D61]">
+                                        You&apos;re seeing surface-level gains. Unlock full workflow: boards, compounding memory, and team collaboration.
+                                    </p>
+                                )}
                             </div>
                         )}
                     </div>
