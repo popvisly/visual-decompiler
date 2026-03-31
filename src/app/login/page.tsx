@@ -89,13 +89,30 @@ function LoginPageContent() {
 
     const handleAuth = async (e: React.FormEvent) => {
         e.preventDefault();
+        const form = e.currentTarget as HTMLFormElement;
+        const formData = new FormData(form);
+        const submittedEmail = String(formData.get('email') || '').trim();
+        const submittedPassword = String(formData.get('password') || '');
+
+        setEmail(submittedEmail);
+        setPassword(submittedPassword);
         setStatus('loading');
         setMessage('');
 
         try {
-            const authResult = mode === 'signup'
-                ? await supabaseClient.auth.signUp({ email, password })
-                : await supabaseClient.auth.signInWithPassword({ email, password });
+            if (!submittedEmail || !submittedPassword) {
+                throw new Error('Enter your email and passkey to continue.');
+            }
+
+            const authPromise = mode === 'signup'
+                ? supabaseClient.auth.signUp({ email: submittedEmail, password: submittedPassword })
+                : supabaseClient.auth.signInWithPassword({ email: submittedEmail, password: submittedPassword });
+
+            const timeoutPromise = new Promise<never>((_, reject) => {
+                window.setTimeout(() => reject(new Error('Authentication timed out. Please try again.')), 12000);
+            });
+
+            const authResult = await Promise.race([authPromise, timeoutPromise]);
 
             const { data, error } = authResult;
 
@@ -205,8 +222,10 @@ function LoginPageShell({
                         <input
                             type="email"
                             id="email"
+                            name="email"
                             value={email}
                             onChange={(e) => setEmail?.(e.target.value)}
+                            autoComplete="email"
                             className="w-full bg-transparent border-b border-neutral-800 pb-3 text-lg font-light text-white outline-none focus:border-white transition-colors peer placeholder-transparent"
                             placeholder="Email"
                             required
@@ -223,8 +242,10 @@ function LoginPageShell({
                         <input
                             type="password"
                             id="password"
+                            name="password"
                             value={password}
                             onChange={(e) => setPassword?.(e.target.value)}
+                            autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
                             className="w-full bg-transparent border-b border-neutral-800 pb-3 text-lg font-light text-white outline-none focus:border-white transition-colors peer placeholder-transparent"
                             placeholder="Password"
                             required
