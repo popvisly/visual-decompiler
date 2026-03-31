@@ -4,12 +4,12 @@ export const PRICING = {
         priceLabel: 'Free',
         cadenceLabel: 'Forever',
         tagline: 'See what the product actually does.',
-        subline: 'No card required. No time limit. Five complete analyses, not a watered-down preview.',
+        subline: 'No card required. Five complete analyses each cycle, with the full dossier intact.',
         ctaLabel: 'Start Decompiling Free',
         ctaHref: '/ingest',
         whoItsFor: 'For practitioners who want to see real output before committing.',
         features: [
-            '5 full analyses per month',
+            '5 full analyses each cycle',
             'All five intelligence surfaces',
             'Primary mechanic read + Recommended Move',
             'Trigger distribution map',
@@ -26,12 +26,12 @@ export const PRICING = {
         yearlyLabel: '$990 / year',
         savingsLabel: 'Save 20%',
         tagline: 'For practitioners who use it every week.',
-        subline: 'One seat. Unlimited analyses. Everything you need to work faster and present stronger.',
+        subline: 'One seat. 250 analyses each cycle. Everything you need to work faster and present stronger.',
         ctaLabel: 'Start Strategic',
-        whoItsFor: 'Art Directors, Creative Directors, Copywriters, and Brand Managers who need analysis on demand — not five times a month.',
+        whoItsFor: 'Art Directors, Creative Directors, Copywriters, and Brand Managers who need analysis on demand — not five times each cycle.',
         checkoutPlanKey: 'strategic',
         features: [
-            'Unlimited analyses',
+            '250 analyses each cycle',
             'Full Intelligence Vault access',
             'Differential Diagnosis',
             'Clone Engine',
@@ -91,7 +91,7 @@ export const PRICING = {
 } as const;
 
 export const PRICING_COMPARISON_ROWS = [
-    ['Analyses per month', '5', 'Unlimited', 'Unlimited', 'Unlimited'],
+    ['Analyses per cycle', '5', '250', 'Unlimited', 'Unlimited'],
     ['Intelligence surfaces (all 5)', '✦', '✦', '✦', '✦'],
     ['Recommended Move', '✦', '✦', '✦', '✦'],
     ['Differential Diagnosis', '—', '✦', '✦', '✦'],

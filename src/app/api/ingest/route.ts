@@ -163,7 +163,7 @@ export async function POST(req: Request) {
         }
 
         const tierLimit = getTierEntitlements(user.tier).monthlyAnalysisLimit;
-        if (user.usage_count >= tierLimit) {
+        if (tierLimit !== null && user.usage_count >= tierLimit) {
             return NextResponse.json({
                 error: 'LIMIT_REACHED',
                 message: `You have reached your ${user.tier} plan limit of ${tierLimit} reports per month.`

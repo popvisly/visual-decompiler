@@ -3,7 +3,7 @@ export type AppTier = 'free' | 'pro' | 'professional' | 'agency';
 export type TierEntitlements = {
     key: AppTier;
     label: string;
-    monthlyAnalysisLimit: number;
+    monthlyAnalysisLimit: number | null;
     seatLimit: number;
     hasPremiumAnalysis: boolean;
     hasSharedVault: boolean;
@@ -35,7 +35,7 @@ const TIER_ENTITLEMENTS: Record<AppTier, TierEntitlements> = {
     pro: {
         key: 'pro',
         label: 'Strategic',
-        monthlyAnalysisLimit: 100,
+        monthlyAnalysisLimit: 250,
         seatLimit: 1,
         hasPremiumAnalysis: true,
         hasSharedVault: false,
@@ -50,7 +50,7 @@ const TIER_ENTITLEMENTS: Record<AppTier, TierEntitlements> = {
     professional: {
         key: 'professional',
         label: 'Professional',
-        monthlyAnalysisLimit: 250,
+        monthlyAnalysisLimit: null,
         seatLimit: 5,
         hasPremiumAnalysis: true,
         hasSharedVault: true,

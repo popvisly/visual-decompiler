@@ -8,9 +8,9 @@ import { supabaseClient } from '@/lib/supabase-client';
 
 type UsageStatus = {
     usageCount: number;
-    limit: number;
+    limit: number | null;
     percentUsed: number;
-    remaining: number;
+    remaining: number | null;
     tier: 'free' | 'pro' | 'professional' | 'agency';
     reachedLimit: boolean;
 };
@@ -64,7 +64,7 @@ export default function SidebarFooter() {
                             {showTrialMilestones ? 'Trial Progress' : 'Usage'}
                         </span>
                         <span className="font-mono text-[10px] text-[#D4A574]">
-                            {usage.usageCount}/{usage.limit}
+                            {usage.limit === null ? `${usage.usageCount}/unlimited` : `${usage.usageCount}/${usage.limit}`}
                         </span>
                     </div>
                     <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#2A2A2A]">
@@ -73,10 +73,12 @@ export default function SidebarFooter() {
                             style={{ width: `${usage.percentUsed}%` }}
                         />
                     </div>
-                    <p className="mt-3 text-[9px] font-mono uppercase tracking-[0.16em] text-[#9A9A94]">
+                        <p className="mt-3 text-[9px] font-mono uppercase tracking-[0.16em] text-[#9A9A94]">
                         {usage.reachedLimit
                             ? 'Cycle limit reached. Upgrade to keep extracting.'
-                            : `${usage.remaining} analyses remaining this cycle.`}
+                            : usage.limit === null
+                                ? 'Unlimited analyses active this cycle.'
+                                : `${usage.remaining} analyses remaining this cycle.`}
                     </p>
                     {showTrialMilestones && (
                         <>

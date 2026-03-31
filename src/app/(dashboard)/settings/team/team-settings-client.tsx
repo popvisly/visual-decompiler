@@ -42,7 +42,7 @@ function getSeatSummary(rawTier?: string | null) {
     const tier = (rawTier || '').toLowerCase().trim();
     if (tier === 'professional') return 'Professional includes collaborative team workflows and shared operating surfaces.';
     if (tier === 'agency' || tier === 'agency sovereignty' || tier === 'enterprise') return 'Agency Sovereignty supports larger team operations, white-label delivery, and onboarding support.';
-    if (tier === 'pro' || tier === 'strategic' || tier === 'strategic unit') return 'Strategic is optimized for a single operator running unlimited forensic reads.';
+    if (tier === 'pro' || tier === 'strategic' || tier === 'strategic unit') return 'Strategic is optimized for a single operator running up to 250 forensic reads each cycle.';
     return 'Observer is designed for individual evaluation before upgrading into shared team access.';
 }
 

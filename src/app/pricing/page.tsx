@@ -385,7 +385,7 @@ export default function PricingPage() {
                     </div>
 
                     <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A7B64]">
-                        Observer includes 5 free analyses each cycle · Strategic and Professional unlock unlimited use · Agency Sovereignty includes dedicated onboarding
+                        Observer includes 5 free analyses each cycle · Strategic includes 250 analyses each cycle · Professional unlocks unlimited use · Agency Sovereignty includes dedicated onboarding
                     </p>
                 </div>
             </section>

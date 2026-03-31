@@ -6,8 +6,8 @@ export type UsageTier = AppTier;
 export type UsageStatus = {
     tier: UsageTier;
     usageCount: number;
-    limit: number;
-    remaining: number;
+    limit: number | null;
+    remaining: number | null;
     percentUsed: number;
     billingCycleReset: string | null;
     reachedLimit: boolean;
@@ -29,8 +29,8 @@ function buildUsageStatus(user: { tier?: string | null; usage_count?: number | n
     const tier = normalizeUsageTier(user.tier);
     const usageCount = Math.max(0, user.usage_count || 0);
     const limit = getTierEntitlements(tier).monthlyAnalysisLimit;
-    const remaining = Math.max(0, limit - usageCount);
-    const percentUsed = limit > 0 ? Math.min(100, Math.round((usageCount / limit) * 100)) : 0;
+    const remaining = limit === null ? null : Math.max(0, limit - usageCount);
+    const percentUsed = limit && limit > 0 ? Math.min(100, Math.round((usageCount / limit) * 100)) : 0;
 
     return {
         tier,
@@ -39,7 +39,7 @@ function buildUsageStatus(user: { tier?: string | null; usage_count?: number | n
         remaining,
         percentUsed,
         billingCycleReset: user.billing_cycle_reset || null,
-        reachedLimit: usageCount >= limit,
+        reachedLimit: limit === null ? false : usageCount >= limit,
     };
 }
 

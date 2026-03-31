@@ -44,7 +44,7 @@ function getTierStatusCopy(rawTier?: string | null) {
         return 'Shared intelligence, collaborative boards, and team-ready workflows are active.';
     }
     if (tier === 'pro' || tier === 'strategic' || tier === 'strategic unit') {
-        return 'Unlimited individual analysis is active for your strategic workflow.';
+        return '250 individual analyses are active for your current cycle.';
     }
     return 'Observer access includes 5 free analyses each cycle before upgrade is required.';
 }

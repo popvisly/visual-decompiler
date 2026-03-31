@@ -20,17 +20,17 @@ const PROCESS_STEPS = [
     {
         number: '01',
         label: 'Drop Your Ad',
-        description: 'Upload the ad your team actually needs to read. Print, digital, social, and out-of-home all process cleanly.',
+        description: 'Upload the live asset your team actually needs to read.',
     },
     {
         number: '02',
         label: 'Forensic Extraction',
-        description: 'We decode persuasion architecture, semiotic subtext, trigger mechanics, and evidence anchors in roughly 2-3 minutes.',
+        description: 'Mechanics, signals, and pressure points land in one dossier.',
     },
     {
         number: '03',
         label: 'Retrieve From Vault',
-        description: 'Your completed dossier lands in the Intelligence Vault, ready for compare, boards, and client review.',
+        description: 'Completed output is ready for compare, boards, and client review.',
     },
 ];
 
@@ -64,6 +64,14 @@ function resolvePlanLabel(tier?: UsageStatus['tier']) {
     if (tier === 'pro') return 'strategic_unit';
     if (tier === 'free') return 'observer';
     return 'unknown';
+}
+
+function formatUsageLine(usageStatus: UsageStatus) {
+    if (usageStatus.limit === null) {
+        return `${usageStatus.usageCount} analyses run this cycle. Unlimited access is active.`;
+    }
+
+    return `${usageStatus.usageCount} of ${usageStatus.limit} extractions used this cycle.`;
 }
 
 export default function IngestClient({ isSovereign }: { isSovereign: boolean }) {
@@ -445,95 +453,79 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                         )}
 
                         {!observerLimitReached && (
-                            <div className="mt-6 rounded-[1.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-5 py-5 text-[#FBFBF6]">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">Best first move</p>
-                                <div className="mt-4 grid gap-4 md:grid-cols-3">
+                            <div className="mt-6 rounded-[1.5rem] border border-[rgba(212,165,116,0.18)] bg-[#1F1F1F] px-5 py-5 text-[#FBFBF6]">
+                                <div className="grid gap-5 md:grid-cols-[1.1fr_1fr_auto] md:items-start">
                                     <div>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">Best first upload</p>
-                                        <p className="mt-2 text-[14px] leading-6 text-[#D6D0C6]">
-                                            Your current concept or the latest client ad you need to review today.
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">Best first move</p>
+                                        <p className="mt-3 text-[15px] leading-7 text-[#D6D0C6]">
+                                            Start with the current concept or the latest client ad you need to review today. The first read gives you primary mechanic, friction profile, and a next strategic move.
                                         </p>
+                                        {!stagedFile && !isProcessing && (
+                                            <button
+                                                onClick={() => {
+                                                    posthog.capture('trial_run_first_analysis_click', {
+                                                        surface: 'ingest',
+                                                        step: 'try_1',
+                                                        plan: resolvePlanLabel(usageStatus?.tier),
+                                                        href: '/ingest',
+                                                    });
+                                                    document.getElementById('file-upload')?.click();
+                                                }}
+                                                className="mt-5 inline-flex items-center rounded-full border border-[#4E3D2A] bg-[#171512] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574] transition hover:border-[#D4A574]/60 hover:bg-[#201b15] hover:text-[#F3F1ED]"
+                                            >
+                                                Run First Analysis
+                                            </button>
+                                        )}
                                     </div>
-                                    <div>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">What you&apos;ll get in try #1</p>
-                                        <p className="mt-2 text-[14px] leading-6 text-[#D6D0C6]">
-                                            Primary mechanic, friction profile, and a strategic move your team can act on immediately.
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">What to do next</p>
-                                        <p className="mt-2 text-[14px] leading-6 text-[#D6D0C6]">
-                                            Compare it against a second route, then save the best result into a board.
-                                        </p>
-                                    </div>
-                                </div>
-                                {!stagedFile && !isProcessing && (
-                                    <button
-                                        onClick={() => {
-                                            posthog.capture('trial_run_first_analysis_click', {
-                                                surface: 'ingest',
-                                                step: 'try_1',
-                                                plan: resolvePlanLabel(usageStatus?.tier),
-                                                href: '/ingest',
-                                            });
-                                            document.getElementById('file-upload')?.click();
-                                        }}
-                                        className="mt-5 inline-flex items-center rounded-full border border-[#4E3D2A] bg-[#171512] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574] transition hover:border-[#D4A574]/60 hover:bg-[#201b15] hover:text-[#F3F1ED]"
-                                    >
-                                        Run First Analysis
-                                    </button>
-                                )}
-                            </div>
-                        )}
 
-                        {!usageLoading && usageStatus && (
-                            <div className="mt-6 rounded-[1.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-5 py-4 text-[#FBFBF6]">
-                                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                                    <div>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">
-                                            {isObserverTrial ? 'Trial Progress' : 'Usage Status'}
-                                        </p>
-                                        <p className="mt-2 text-sm text-[#D6D0C6]">
-                                            {usageStatus.usageCount} of {usageStatus.limit} extractions used this cycle.
+                                    <div className="rounded-[1.25rem] border border-[rgba(212,165,116,0.14)] bg-[#171512] px-4 py-4">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">What to do next</p>
+                                        <p className="mt-3 text-[14px] leading-6 text-[#D6D0C6]">
+                                            Compare it against a second route, then save the strongest direction into a board.
                                         </p>
                                     </div>
-                                    {isObserverTrial && (
-                                        <div className="grid gap-1 text-[11px] leading-5 text-[#B9B19F] md:text-right">
-                                            <p>Try 1: Baseline read</p>
-                                            <p>Try 2: Compare route</p>
-                                            <p>Try 3: Save to board</p>
+
+                                    {!usageLoading && usageStatus && (
+                                        <div className="rounded-[1.25rem] border border-[rgba(212,165,116,0.14)] bg-[#171512] px-4 py-4 md:min-w-[280px]">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">
+                                                {isObserverTrial ? 'Trial Progress' : 'Usage Status'}
+                                            </p>
+                                            <p className="mt-3 text-[14px] leading-6 text-[#D6D0C6]">
+                                                {formatUsageLine(usageStatus)}
+                                            </p>
+                                            {isObserverTrial && (
+                                                <div className="mt-3 grid gap-1 text-[11px] leading-5 text-[#B9B19F]">
+                                                    <p>Try 1: Baseline read</p>
+                                                    <p>Try 2: Compare route</p>
+                                                    <p>Try 3: Save to board</p>
+                                                </div>
+                                            )}
+                                            {showTrialReminder && (
+                                                <p className="mt-3 text-[12px] leading-6 text-[#B9B19F]">
+                                                    You&apos;re seeing surface-level gains. Unlock full workflow: boards, compounding memory, and team collaboration.
+                                                </p>
+                                            )}
                                         </div>
                                     )}
                                 </div>
-                                {showTrialReminder && (
-                                    <p className="mt-4 text-[12px] leading-6 text-[#B9B19F]">
-                                        You&apos;re seeing surface-level gains. Unlock full workflow: boards, compounding memory, and team collaboration.
-                                    </p>
-                                )}
                             </div>
                         )}
                     </div>
 
-                    <div className="mt-12 w-full max-w-5xl">
-                        <div className="relative space-y-4 md:space-y-5">
-                            <div className="pointer-events-none absolute bottom-8 left-[2.15rem] top-8 hidden w-px bg-[#D4A574]/18 md:block" />
-                            {PROCESS_STEPS.map((step, index) => (
+                    <div className="mt-10 w-full max-w-5xl">
+                        <div className="grid gap-4 md:grid-cols-3">
+                            {PROCESS_STEPS.map((step) => (
                                 <div
                                     key={step.number}
-                                    className="relative grid gap-4 rounded-[1.9rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-5 shadow-[0_12px_24px_rgba(20,20,20,0.18)] md:grid-cols-[88px_1fr] md:items-center md:p-7"
+                                    className="rounded-[1.6rem] border border-[rgba(212,165,116,0.16)] bg-[#1F1F1F] px-5 py-5"
                                 >
-                                    <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border border-[#4E3D2A] bg-[#171512] md:h-16 md:w-16">
-                                        <span className="text-[24px] font-semibold leading-none text-[#D4A574] md:text-[28px]">{step.number}</span>
+                                    <div className="flex items-center gap-3">
+                                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#4E3D2A] bg-[#171512] text-[18px] font-semibold leading-none text-[#D4A574]">
+                                            {step.number}
+                                        </span>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">{step.label}</p>
                                     </div>
-                                    <div className="text-left">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">{step.label}</p>
-                                        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#D6D0C6] md:text-[15px]">
-                                            {step.description}
-                                        </p>
-                                    </div>
-                                    {index < PROCESS_STEPS.length - 1 && (
-                                        <div className="ml-7 h-5 text-[#C1A67B]/65 md:hidden">↓</div>
-                                    )}
+                                    <p className="mt-4 text-sm leading-6 text-[#D6D0C6]">{step.description}</p>
                                 </div>
                             ))}
                         </div>
