@@ -37,17 +37,16 @@ export async function POST(req: Request) {
 
         let stripeCustomerId = dbUser?.stripe_customer_id;
 
-        // 2. Create Stripe customer if they don't exist
-        if (!stripeCustomerId) {
+        const createAndPersistCustomer = async () => {
             const customer = await stripe.customers.create({
                 email: email || '',
                 metadata: {
                     supabaseId: userId,
                 },
             });
+
             stripeCustomerId = customer.id;
 
-            // Sync back to Supabase
             await supabase
                 .from('users')
                 .upsert({
@@ -55,13 +54,17 @@ export async function POST(req: Request) {
                     email: email || '',
                     stripe_customer_id: stripeCustomerId,
                 });
+        };
+
+        // 2. Create Stripe customer if they don't exist
+        if (!stripeCustomerId) {
+            await createAndPersistCustomer();
         }
 
         // 3. Determine if this is a subscription or one-time payment
         const isOneTime = plan.stripePriceId === process.env.STRIPE_PRICE_PRO_ONETIME;
 
-        // 4. Create Checkout Session
-        try {
+        const createSession = async () => {
             const sessionConfig: any = {
                 customer: stripeCustomerId,
                 line_items: [
@@ -80,7 +83,6 @@ export async function POST(req: Request) {
                 },
             };
 
-            // Add subscription metadata only for recurring payments
             if (!isOneTime) {
                 sessionConfig.subscription_data = {
                     metadata: {
@@ -91,10 +93,27 @@ export async function POST(req: Request) {
                 };
             }
 
-            const session = await stripe.checkout.sessions.create(sessionConfig);
+            return stripe.checkout.sessions.create(sessionConfig);
+        };
+
+        // 4. Create Checkout Session
+        try {
+            const session = await createSession();
 
             return NextResponse.json({ url: session.url });
         } catch (stripeErr: any) {
+            const isMissingCustomer =
+                stripeErr?.type === 'StripeInvalidRequestError' &&
+                stripeErr?.code === 'resource_missing' &&
+                stripeErr?.param === 'customer';
+
+            if (isMissingCustomer) {
+                console.warn('[Billing Checkout] Stored customer invalid for current Stripe mode, recreating customer.');
+                await createAndPersistCustomer();
+                const session = await createSession();
+                return NextResponse.json({ url: session.url });
+            }
+
             console.error('[Billing Checkout] Stripe Session Error:', stripeErr);
             return NextResponse.json({ error: `Stripe Error: ${stripeErr.message}` }, { status: 400 });
         }
