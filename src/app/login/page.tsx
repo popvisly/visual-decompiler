@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { supabaseClient } from '@/lib/supabase-client';
+import { isSupabaseClientConfigured, supabaseClient } from '@/lib/supabase-client';
 import type { Session } from '@supabase/supabase-js';
 
 export default function LoginPage() {
@@ -34,6 +34,11 @@ function LoginPageContent() {
 
         if (inviteMode === 'signup') {
             setMode('signup');
+        }
+
+        if (!isSupabaseClientConfigured) {
+            setStatus('error');
+            setMessage('Local auth is not configured. Add NEXT_PUBLIC_SUPABASE_ANON_KEY to .env.local and restart dev.');
         }
     }, [searchParams]);
 
@@ -100,6 +105,10 @@ function LoginPageContent() {
         setMessage('');
 
         try {
+            if (!isSupabaseClientConfigured) {
+                throw new Error('Local auth is not configured. Add NEXT_PUBLIC_SUPABASE_ANON_KEY to .env.local and restart dev.');
+            }
+
             if (!submittedEmail || !submittedPassword) {
                 throw new Error('Enter your email and passkey to continue.');
             }
