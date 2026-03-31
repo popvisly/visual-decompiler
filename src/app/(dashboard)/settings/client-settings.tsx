@@ -151,7 +151,13 @@ function DossierCoverPreview({
     );
 }
 
-export default function SettingsClient({ initialAgency }: { initialAgency: Agency }) {
+export default function SettingsClient({
+    initialAgency,
+    currentTier,
+}: {
+    initialAgency: Agency;
+    currentTier?: string | null;
+}) {
     const [agencyName, setAgencyName] = useState(initialAgency.name || '');
     const [primaryHex, setPrimaryHex] = useState(initialAgency.primary_hex || '#141414');
     const [logoUrl, setLogoUrl] = useState(initialAgency.logo_url || initialAgency.whitelabel_logo || '');
@@ -167,8 +173,9 @@ export default function SettingsClient({ initialAgency }: { initialAgency: Agenc
     const [errorMsg, setErrorMsg] = useState('');
 
     const normalizedHex = useMemo(() => normalizeHex(primaryHex), [primaryHex]);
-    const tierLabel = useMemo(() => getTierLabel(initialAgency.tier), [initialAgency.tier]);
-    const tierStatusCopy = useMemo(() => getTierStatusCopy(initialAgency.tier), [initialAgency.tier]);
+    const resolvedTier = currentTier || initialAgency.tier || 'free';
+    const tierLabel = useMemo(() => getTierLabel(resolvedTier), [resolvedTier]);
+    const tierStatusCopy = useMemo(() => getTierStatusCopy(resolvedTier), [resolvedTier]);
 
     const handleLogoUpload = async (file: File | null) => {
         if (!file) return;

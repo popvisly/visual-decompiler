@@ -1,9 +1,12 @@
+import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import SettingsClient from './client-settings';
 
 export const dynamic = 'force-dynamic';
 
 export default async function SettingsPage() {
+    const session = await getServerSession();
+
     // Fetch the first agency since we don't have explicit user mappings in this schema
     // We'll treat the system as a single-tenant agency OS for Phase 2 demonstration
     const { data: agency, error } = await supabaseAdmin
@@ -20,5 +23,17 @@ export default async function SettingsPage() {
         );
     }
 
-    return <SettingsClient initialAgency={agency} />;
+    let currentTier: string | null = null;
+
+    if (session.userId) {
+        const { data: user } = await supabaseAdmin
+            .from('users')
+            .select('tier')
+            .eq('id', session.userId)
+            .maybeSingle();
+
+        currentTier = user?.tier || null;
+    }
+
+    return <SettingsClient initialAgency={agency} currentTier={currentTier} />;
 }

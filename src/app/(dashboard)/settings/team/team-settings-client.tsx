@@ -23,6 +23,7 @@ type TeamInvitation = {
 
 type TeamPayload = {
     agency?: { id: string; name?: string; tier?: string | null };
+    currentTier?: string | null;
     members: TeamMember[];
     invitations: TeamInvitation[];
 };
@@ -68,8 +69,9 @@ export default function TeamSettingsClient() {
     );
 
     const pendingInvites = payload.invitations.length;
-    const tierLabel = useMemo(() => getTierLabel(payload.agency?.tier), [payload.agency?.tier]);
-    const seatSummary = useMemo(() => getSeatSummary(payload.agency?.tier), [payload.agency?.tier]);
+    const resolvedTier = payload.currentTier || payload.agency?.tier || 'free';
+    const tierLabel = useMemo(() => getTierLabel(resolvedTier), [resolvedTier]);
+    const seatSummary = useMemo(() => getSeatSummary(resolvedTier), [resolvedTier]);
 
     const loadTeam = async () => {
         setLoading(true);
@@ -83,6 +85,7 @@ export default function TeamSettingsClient() {
 
             setPayload({
                 agency: data.agency,
+                currentTier: data.currentTier || null,
                 members: Array.isArray(data.members) ? data.members : [],
                 invitations: Array.isArray(data.invitations) ? data.invitations : [],
             });

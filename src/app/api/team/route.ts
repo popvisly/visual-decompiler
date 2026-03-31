@@ -59,7 +59,7 @@ export async function GET(req: Request) {
         const agency = await getPrimaryAgency();
         await ensureOwnerMember(agency.id, session.userId, session.email);
 
-        const [{ data: members, error: membersError }, { data: invitations, error: invitationsError }] = await Promise.all([
+        const [{ data: members, error: membersError }, { data: invitations, error: invitationsError }, { data: currentUser, error: userError }] = await Promise.all([
             supabaseAdmin
                 .from('agency_members')
                 .select('*')
@@ -71,13 +71,20 @@ export async function GET(req: Request) {
                 .eq('agency_id', agency.id)
                 .is('revoked_at', null)
                 .order('created_at', { ascending: false }),
+            supabaseAdmin
+                .from('users')
+                .select('tier')
+                .eq('id', session.userId)
+                .maybeSingle(),
         ]);
 
         if (membersError) throw membersError;
         if (invitationsError) throw invitationsError;
+        if (userError) throw userError;
 
         return NextResponse.json({
             agency,
+            currentTier: currentUser?.tier || null,
             members: members || [],
             invitations: invitations || [],
         });
