@@ -1,8 +1,9 @@
 "use client";
 
-import { Suspense, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { supabaseClient } from '@/lib/supabase-client';
+import type { Session } from '@supabase/supabase-js';
 
 export default function LoginPage() {
     return (
@@ -13,7 +14,6 @@ export default function LoginPage() {
 }
 
 function LoginPageContent() {
-    const router = useRouter();
     const searchParams = useSearchParams();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,6 +22,7 @@ function LoginPageContent() {
     const [message, setMessage] = useState('');
     const inviteToken = searchParams.get('invite');
     const cookieSecureAttr = typeof window !== 'undefined' && window.location.protocol === 'https:' ? '; secure' : '';
+    const redirectingRef = useRef(false);
 
     useEffect(() => {
         const inviteEmail = searchParams.get('email');
@@ -35,6 +36,39 @@ function LoginPageContent() {
             setMode('signup');
         }
     }, [searchParams]);
+
+    const finalizeLogin = async (session: Session) => {
+        if (redirectingRef.current) return;
+        redirectingRef.current = true;
+
+        const expiresIn = session.expires_in || 3600;
+        document.cookie = `sb-access-token=${session.access_token}; path=/; max-age=${expiresIn}; SameSite=Lax${cookieSecureAttr}`;
+
+        await acceptInviteIfNeeded();
+        window.location.assign(inviteToken ? '/settings/team' : '/vault');
+    };
+
+    useEffect(() => {
+        let active = true;
+
+        const settleExistingSession = async () => {
+            const { data } = await supabaseClient.auth.getSession();
+            if (!active || !data.session) return;
+            await finalizeLogin(data.session);
+        };
+
+        settleExistingSession();
+
+        const { data: listener } = supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+            if (!active || !session) return;
+            await finalizeLogin(session);
+        });
+
+        return () => {
+            active = false;
+            listener.subscription.unsubscribe();
+        };
+    }, [inviteToken]);
 
     const acceptInviteIfNeeded = async () => {
         if (!inviteToken) {
@@ -72,13 +106,8 @@ function LoginPageContent() {
             }
 
             if (data.session) {
-                // Explicitly set a cookie so Next.js middleware can read the session
-                const expiresIn = data.session.expires_in || 3600;
-                document.cookie = `sb-access-token=${data.session.access_token}; path=/; max-age=${expiresIn}; SameSite=Lax${cookieSecureAttr}`;
-                await acceptInviteIfNeeded();
-                router.push(inviteToken ? '/settings/team' : '/vault');
-                // Force refresh to ensure middleware picks up the new cookie and renders layouts correctly
-                router.refresh();
+                await finalizeLogin(data.session);
+                return;
             } else {
                 setStatus('success');
                 setMessage(mode === 'signup'
