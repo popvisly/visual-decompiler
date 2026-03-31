@@ -22,13 +22,14 @@ if (typeof window !== 'undefined') {
 
 export function CSPostHogProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
+        const cookieSecureAttr = window.location.protocol === 'https:' ? '; secure' : '';
         const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(
             (event, session) => {
                 if (session) {
                     const expiresIn = session.expires_in || 3600;
-                    document.cookie = `sb-access-token=${session.access_token}; path=/; max-age=${expiresIn}; SameSite=Lax; secure`;
+                    document.cookie = `sb-access-token=${session.access_token}; path=/; max-age=${expiresIn}; SameSite=Lax${cookieSecureAttr}`;
                 } else {
-                    document.cookie = 'sb-access-token=; path=/; max-age=0; SameSite=Lax; secure';
+                    document.cookie = `sb-access-token=; path=/; max-age=0; SameSite=Lax${cookieSecureAttr}`;
                 }
             }
         );

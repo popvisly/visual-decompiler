@@ -21,6 +21,7 @@ function LoginPageContent() {
     const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
     const [message, setMessage] = useState('');
     const inviteToken = searchParams.get('invite');
+    const cookieSecureAttr = typeof window !== 'undefined' && window.location.protocol === 'https:' ? '; secure' : '';
 
     useEffect(() => {
         const inviteEmail = searchParams.get('email');
@@ -73,7 +74,7 @@ function LoginPageContent() {
             if (data.session) {
                 // Explicitly set a cookie so Next.js middleware can read the session
                 const expiresIn = data.session.expires_in || 3600;
-                document.cookie = `sb-access-token=${data.session.access_token}; path=/; max-age=${expiresIn}; SameSite=Lax; secure`;
+                document.cookie = `sb-access-token=${data.session.access_token}; path=/; max-age=${expiresIn}; SameSite=Lax${cookieSecureAttr}`;
                 await acceptInviteIfNeeded();
                 router.push(inviteToken ? '/settings/team' : '/vault');
                 // Force refresh to ensure middleware picks up the new cookie and renders layouts correctly
