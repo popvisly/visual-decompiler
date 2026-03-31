@@ -29,6 +29,22 @@ type TeamPayload = {
 
 const ROLE_OPTIONS: Array<TeamMember['role']> = ['owner', 'admin', 'analyst'];
 
+function getTierLabel(rawTier?: string | null) {
+    const tier = (rawTier || '').toLowerCase().trim();
+    if (tier === 'agency' || tier === 'agency sovereignty' || tier === 'enterprise') return 'Agency Sovereignty';
+    if (tier === 'professional') return 'Professional';
+    if (tier === 'pro' || tier === 'strategic' || tier === 'strategic unit') return 'Strategic';
+    return 'Observer';
+}
+
+function getSeatSummary(rawTier?: string | null) {
+    const tier = (rawTier || '').toLowerCase().trim();
+    if (tier === 'professional') return 'Professional includes collaborative team workflows and shared operating surfaces.';
+    if (tier === 'agency' || tier === 'agency sovereignty' || tier === 'enterprise') return 'Agency Sovereignty supports larger team operations, white-label delivery, and onboarding support.';
+    if (tier === 'pro' || tier === 'strategic' || tier === 'strategic unit') return 'Strategic is optimized for a single operator running unlimited forensic reads.';
+    return 'Observer is designed for individual evaluation before upgrading into shared team access.';
+}
+
 function formatDate(value?: string | null) {
     if (!value) return 'Pending';
     const date = new Date(value);
@@ -52,6 +68,8 @@ export default function TeamSettingsClient() {
     );
 
     const pendingInvites = payload.invitations.length;
+    const tierLabel = useMemo(() => getTierLabel(payload.agency?.tier), [payload.agency?.tier]);
+    const seatSummary = useMemo(() => getSeatSummary(payload.agency?.tier), [payload.agency?.tier]);
 
     const loadTeam = async () => {
         setLoading(true);
@@ -194,6 +212,21 @@ export default function TeamSettingsClient() {
                     <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
                         Invite strategists, control seat roles, and manage who can operate inside the Intelligence Vault as owner, admin, or analyst.
                     </p>
+                    <div className="mt-6 inline-flex flex-col gap-3 rounded-[1.5rem] border border-[#D4A574]/16 bg-white/80 px-6 py-4 shadow-sm backdrop-blur-sm">
+                        <div className="flex items-center gap-3">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Current Plan</p>
+                            <span className={`rounded-full border px-3 py-1 text-[9px] font-bold uppercase tracking-[0.24em] ${
+                                tierLabel === 'Observer'
+                                    ? 'border-[#D4A574]/18 bg-[#FBFBF6] text-[#8A7B64]'
+                                    : 'border-[#D4A574]/28 bg-[#D4A574]/10 text-[#8B4513]'
+                            }`}>
+                                {tierLabel}
+                            </span>
+                        </div>
+                        <p className="max-w-xl text-[12px] leading-relaxed text-[#6B6B6B]">
+                            {seatSummary}
+                        </p>
+                    </div>
                 </div>
 
                 <div className="grid gap-8 xl:grid-cols-[minmax(0,1.1fr)_380px]">

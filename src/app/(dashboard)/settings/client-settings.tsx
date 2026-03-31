@@ -14,6 +14,7 @@ interface Agency {
     contact_email?: string;
     confidentiality_notice?: string;
     is_whitelabel_active?: boolean;
+    tier?: string | null;
 }
 
 const DEFAULT_NOTICE = 'This Strategic Dossier is prepared exclusively for the named recipient. Contents are confidential and may not be distributed without written consent.';
@@ -24,6 +25,28 @@ function normalizeHex(value: string) {
     }
 
     return value.startsWith('#') ? value.toUpperCase() : `#${value.toUpperCase()}`;
+}
+
+function getTierLabel(rawTier?: string | null) {
+    const tier = (rawTier || '').toLowerCase().trim();
+    if (tier === 'agency' || tier === 'agency sovereignty' || tier === 'enterprise') return 'Agency Sovereignty';
+    if (tier === 'professional') return 'Professional';
+    if (tier === 'pro' || tier === 'strategic' || tier === 'strategic unit') return 'Strategic';
+    return 'Observer';
+}
+
+function getTierStatusCopy(rawTier?: string | null) {
+    const tier = (rawTier || '').toLowerCase().trim();
+    if (tier === 'agency' || tier === 'agency sovereignty' || tier === 'enterprise') {
+        return 'Dedicated onboarding, advanced team controls, and full agency-grade delivery are active.';
+    }
+    if (tier === 'professional') {
+        return 'Shared intelligence, collaborative boards, and team-ready workflows are active.';
+    }
+    if (tier === 'pro' || tier === 'strategic' || tier === 'strategic unit') {
+        return 'Unlimited individual analysis is active for your strategic workflow.';
+    }
+    return 'Observer access includes 5 free analyses each cycle before upgrade is required.';
 }
 
 function SettingsField({
@@ -144,6 +167,8 @@ export default function SettingsClient({ initialAgency }: { initialAgency: Agenc
     const [errorMsg, setErrorMsg] = useState('');
 
     const normalizedHex = useMemo(() => normalizeHex(primaryHex), [primaryHex]);
+    const tierLabel = useMemo(() => getTierLabel(initialAgency.tier), [initialAgency.tier]);
+    const tierStatusCopy = useMemo(() => getTierStatusCopy(initialAgency.tier), [initialAgency.tier]);
 
     const handleLogoUpload = async (file: File | null) => {
         if (!file) return;
@@ -231,6 +256,21 @@ export default function SettingsClient({ initialAgency }: { initialAgency: Agenc
                     <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
                         Configure the identity, logo, descriptor, and confidentiality language that appear across your white-labelled dossiers and premium client-facing exports.
                     </p>
+                    <div className="mt-6 inline-flex flex-col gap-3 rounded-[1.5rem] border border-[#D4A574]/16 bg-white/80 px-6 py-4 shadow-sm backdrop-blur-sm">
+                        <div className="flex items-center gap-3">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Current Plan</p>
+                            <span className={`rounded-full border px-3 py-1 text-[9px] font-bold uppercase tracking-[0.24em] ${
+                                tierLabel === 'Observer'
+                                    ? 'border-[#D4A574]/18 bg-[#FBFBF6] text-[#8A7B64]'
+                                    : 'border-[#D4A574]/28 bg-[#D4A574]/10 text-[#8B4513]'
+                            }`}>
+                                {tierLabel}
+                            </span>
+                        </div>
+                        <p className="max-w-xl text-[12px] leading-relaxed text-[#6B6B6B]">
+                            {tierStatusCopy}
+                        </p>
+                    </div>
                 </div>
 
                 <form onSubmit={handleSave} className="grid gap-8 xl:grid-cols-[minmax(0,1.15fr)_420px]">
