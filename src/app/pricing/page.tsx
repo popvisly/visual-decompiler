@@ -84,7 +84,7 @@ export default function PricingPage() {
                         transition={{ duration: 0.75, ease: EASE, delay: 0.12 }}
                         className="mt-8 max-w-2xl text-lg leading-relaxed text-[#5E5A53] md:text-xl"
                     >
-                        Every tier includes real analysis — not a demo. Observer gives you five complete dossiers to prove the product works before you spend a dollar.
+                        Every tier includes real intelligence depth. Observer proves the diagnostic system. Strategic and Professional expand analysis coverage, decision confidence, and delivery readiness.
                     </motion.p>
                     <motion.p
                         initial={{ opacity: 0, y: 18 }}
@@ -101,7 +101,7 @@ export default function PricingPage() {
                 <div className="mx-auto max-w-7xl">
                     <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#F8F3EA] px-6 py-6 md:px-8">
                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8A7B64]">Category Positioning</p>
-                        <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.18em] text-[#6F675B]">You’re not selling analysis. You’re selling what agencies hand to clients.</p>
+                        <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.18em] text-[#6F675B]">We don’t generate ads. We judge, diagnose, and direct quality.</p>
                         <div className="mt-4 grid gap-4 md:grid-cols-3">
                             {PRICING_POSITIONING_LINES.map((line) => (
                                 <p key={line} className="text-base leading-relaxed text-[#3F3A33] md:text-lg">
@@ -252,7 +252,7 @@ export default function PricingPage() {
                             </p>
 
                             <div className="mt-8 border-t border-[#342D24] pt-6">
-                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D7B07A]">Everything in Strategic Unit, plus:</p>
+                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D7B07A]">Everything in Professional, plus:</p>
                                 <ul className="mt-4 space-y-4">
                                     {PRICING.agency.features.map((feature) => (
                                         <CheckItem key={feature} dark>
@@ -287,8 +287,11 @@ export default function PricingPage() {
             <section className="border-t border-[#E2D8C8] bg-[#F8F3EA] px-6 py-14 md:py-16">
                 <div className="mx-auto max-w-7xl">
                     <h2 className="text-3xl font-semibold tracking-tight text-[#141414] md:text-4xl">
-                        What’s included at each tier
+                        Capability Matrix
                     </h2>
+                    <p className="mt-3 max-w-3xl text-base leading-relaxed text-[#5E5A53]">
+                        Lower tiers unlock the core diagnostic layer. Higher tiers expand intelligence depth, collaborative use, and client-ready delivery output.
+                    </p>
                     <div className="mt-8 overflow-x-auto rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6]">
                         <table className="min-w-[860px] w-full">
                             <thead className="border-b border-[#E2D8C8] bg-[#F8F3EA]">
@@ -312,6 +315,35 @@ export default function PricingPage() {
                                 ))}
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </section>
+
+            <section className="border-t border-[#E2D8C8] px-6 py-14 md:py-16">
+                <div className="mx-auto max-w-7xl">
+                    <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] px-6 py-7 md:px-8">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8A7B64]">What VD is / What VD is not</p>
+                        <div className="mt-6 grid gap-5 md:grid-cols-2">
+                            <div>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">VD is</p>
+                                <ul className="mt-4 space-y-3 text-[15px] leading-relaxed text-[#4E493F]">
+                                    <li>A forensic intelligence system for ad quality decisions</li>
+                                    <li>A diagnostic layer for creative mechanism and risk</li>
+                                    <li>A strategic direction tool for teams and agencies</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">VD is not</p>
+                                <ul className="mt-4 space-y-3 text-[15px] leading-relaxed text-[#4E493F]">
+                                    <li>An ad generator</li>
+                                    <li>A design editor</li>
+                                    <li>A prompt factory</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p className="mt-6 text-sm leading-relaxed text-[#756D61]">
+                            Blueprint reconstruction paths are provided for audit transparency and reproducibility—not generation inside VD.
+                        </p>
                     </div>
                 </div>
             </section>

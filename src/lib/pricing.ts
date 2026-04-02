@@ -91,23 +91,16 @@ export const PRICING = {
 } as const;
 
 export const PRICING_COMPARISON_ROWS = [
-    ['Analyses per cycle', '5', '250', 'Unlimited', 'Unlimited'],
-    ['Intelligence surfaces (all 5)', '✦', '✦', '✦', '✦'],
-    ['Recommended Move', '✦', '✦', '✦', '✦'],
-    ['Differential Diagnosis', '—', '✦', '✦', '✦'],
-    ['Clone Engine', '—', '✦', '✦', '✦'],
-    ['Blueprint Tab', '—', '✦', '✦', '✦'],
-    ['Audience Tab', '—', '✦', '✦', '✦'],
-    ['Intelligence Vault', 'Read', 'Full', 'Shared', 'Shared'],
-    ['White-label export', '—', '✦', '✦', '✦'],
-    ['Embed widget', '—', '✦', '✦', '✦'],
-    ['Boards', '—', 'Personal', 'Shared', 'Shared'],
-    ['Team seats', '1', '1', '3-5', 'Up to 10'],
-    ['Agency branding & dossier identity', '—', '—', '—', '✦'],
-    ['Team & Seats management', '—', '—', '✦', '✦'],
-    ['Usage reporting', '—', '—', '—', '✦'],
-    ['Dedicated onboarding', '—', '—', '—', '✦'],
-    ['Priority support', '—', '—', '✦', '✦'],
+    ['Forensic Quality Score', 'Core', 'Full', 'Full', 'Full'],
+    ['Mechanic Extraction Depth', 'Core', 'Deep', 'Deep', 'Full stack'],
+    ['Execution DNA Detail', 'Core', 'Deep', 'Deep', 'Full stack'],
+    ['Stress Test Modules', '—', 'Core', 'Expanded', 'Full'],
+    ['Constraint Mapping', '—', 'Core', 'Expanded', 'Full'],
+    ['Comparative Diagnostics (A/B)', '—', 'Included', 'Included', 'Included'],
+    ['Market Pulse Context', '—', 'Snapshot', 'Included', 'Full'],
+    ['Dossier Export Depth', 'Standard', 'Client-ready', 'Client-ready', 'Agency-grade'],
+    ['Team Collaboration', 'Solo', 'Solo', 'Shared', 'Agency operating layer'],
+    ['White-label / Agency Delivery', '—', 'Export only', 'Shared delivery', 'Full sovereignty'],
 ] as const;
 
 export const PRICING_POSITIONING_LINES = [

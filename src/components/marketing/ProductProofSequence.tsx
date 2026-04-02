@@ -3,34 +3,9 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import {
-    ArrowUpRight,
-    BarChart3,
-    FlaskConical,
-    MessageSquare,
-    Sparkles,
-} from 'lucide-react';
-import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
-import {
-    HOMEPAGE_CTA_ICON,
-    HOMEPAGE_PRIMARY_CTA,
-    HOMEPAGE_SECONDARY_CTA,
-} from '@/components/marketing/ctaStyles';
+import { ArrowUpRight } from 'lucide-react';
+import { HOMEPAGE_CTA_ICON } from '@/components/marketing/ctaStyles';
 import HeroAppPreview from '@/components/marketing/HeroAppPreview';
-
-type ProofPoint = {
-    label: string;
-    body: string;
-};
-
-type FunnelSection = {
-    id: string;
-    label: string;
-    title: string;
-    body: string;
-    tone: 'light' | 'dark';
-    points: ProofPoint[];
-};
 
 function AccentBar() {
     return (
@@ -50,154 +25,11 @@ const DIFFERENTIAL_METRICS = [
     { label: 'Fatigue Gap', value: '-22% repetition risk' },
 ] as const;
 
-const DIFFERENTIATION_BLOCKS = [
-    {
-        title: 'Other Tools: Generation',
-        theyDo: 'Create ad variations fast.',
-        weDo: 'Map persuasion mechanics, trigger signals, and friction risk into a forensic dossier.',
-        icon: Sparkles,
-    },
-    {
-        title: 'Other Tools: Dashboards',
-        theyDo: 'Track spend, distribution, and movement.',
-        weDo: 'Turn creative signals into strategic readouts, decision layers, and next moves.',
-        icon: BarChart3,
-    },
-    {
-        title: 'Other Tools: One-Off Testing',
-        theyDo: 'Validate single assets in isolation.',
-        weDo: 'Store pattern memory, cross-asset deltas, and reusable blueprint context.',
-        icon: FlaskConical,
-    },
-    {
-        title: 'Other Tools: AI Chat',
-        theyDo: 'Offer broad reasoning on demand.',
-        weDo: 'Produce structured signals, dossier logic, and client-ready strategic outputs.',
-        icon: MessageSquare,
-    },
-] as const;
-
-const FUNNEL_SECTIONS: FunnelSection[] = [
-    {
-        id: 'deconstruction',
-        label: 'Single-Asset Deconstruction',
-        title: 'Open one ad. See exactly why it works.',
-        body: 'Start with one competitor asset and get a complete strategic read: dominant mechanic, confidence score, trigger distribution, friction profile, and action-ready interpretation.',
-        tone: 'dark',
-        points: [
-            {
-                label: 'Primary Mechanic',
-                body: 'Identify the winning persuasion system instantly',
-            },
-            {
-                label: 'Confidence Layer',
-                body: 'Scored readout you can defend in client rooms',
-            },
-            {
-                label: 'Psychology Map',
-                body: 'Trigger density and friction surfaced clearly',
-            },
-        ],
-    },
-    {
-        id: 'vault',
-        label: 'Intelligence Vault',
-        title: 'Build strategic memory, not one-off reports.',
-        body: 'Every dossier compounds future value inside Vault: searchable assets, deduplicated analyses, shared tags/boards, and stronger benchmarking with every ingest.',
-        tone: 'light',
-        points: [
-            {
-                label: 'Searchable Recall',
-                body: 'Find assets by brand, category, mechanic, or tag',
-            },
-            {
-                label: 'Deduplication',
-                body: 'Avoid re-analysing the same asset twice',
-            },
-            {
-                label: 'Benchmark Depth',
-                body: 'Comparative intelligence gets sharper over time',
-            },
-        ],
-    },
-    {
-        id: 'execution',
-        label: 'Execution Outputs',
-        title: 'Turn analysis into client-ready execution.',
-        body: 'Visual Decompiler doesn’t stop at diagnosis. Convert dossier intelligence into deployable outputs your team can pitch, build from, and ship.',
-        tone: 'dark',
-        points: [
-            {
-                label: 'Blueprint Output',
-                body: 'Structural pattern and strategic route extracted',
-            },
-            {
-                label: 'Clone Engine',
-                body: 'Generate fresh directions from winning mechanics',
-            },
-            {
-                label: 'White-Label Export',
-                body: 'Boardroom-ready strategic artifact in minutes',
-            },
-        ],
-    },
-    {
-        id: 'intelligence',
-        label: 'Mechanic Intelligence',
-        title: 'See category patterns, not just single ads.',
-        body: 'Market Pulse reveals mechanic velocity, saturation, whitespace, and strategic deltas across assets — so decisions are based on market structure, not isolated examples.',
-        tone: 'light',
-        points: [
-            {
-                label: 'Velocity Tracking',
-                body: 'See which mechanics are rising or flattening',
-            },
-            {
-                label: 'Whitespace Detection',
-                body: 'Spot underexploited strategic positions',
-            },
-            {
-                label: 'Differential Diagnostic',
-                body: 'Compare assets by lift, fatigue, and delta',
-            },
-        ],
-    },
-    {
-        id: 'operating',
-        label: 'Agency Operating Layer',
-        title: 'Run intelligence like an agency system.',
-        body: 'Boards, team seats, settings, and export controls turn forensic analysis into a repeatable operating layer across strategy, creative, and leadership.',
-        tone: 'light',
-        points: [
-            {
-                label: 'Boards',
-                body: 'Shared strategic workspaces for ongoing programs',
-            },
-            {
-                label: 'Agency Settings',
-                body: 'White-label identity and output standards',
-            },
-            {
-                label: 'Team & Seats',
-                body: 'Analysts and strategists in one coordinated system',
-            },
-        ],
-    },
-];
-
 const REVEAL = {
     initial: { opacity: 0, y: 24 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, amount: 0.2 },
     transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-};
-
-const STEP_PUNCH: Record<string, string> = {
-    deconstruction: 'From creative surface to true mechanism.',
-    vault: 'Turn one-off findings into strategic memory.',
-    execution: 'Move from diagnosis to deployable output.',
-    intelligence: 'Read category momentum before competitors do.',
-    operating: 'Run the whole system like an agency engine.',
 };
 
 const SECTION_BAND = 'px-6 py-18 md:py-24';
@@ -300,104 +132,62 @@ function DifferentialDiagnosisSection() {
     );
 }
 
-function WhyDifferentSection() {
+function TrustBoundaryPanel() {
     return (
         <section className={`relative overflow-hidden scroll-mt-20 ${LIGHT_SURFACE} ${SECTION_BAND} md:scroll-mt-24 lg:scroll-mt-[104px]`}>
             <motion.div {...REVEAL} className="mx-auto max-w-7xl rounded-[2.5rem] border border-[#D9CCB8] bg-[rgba(255,251,244,0.74)] px-6 py-8 shadow-[0_24px_58px_rgba(20,20,20,0.05)] backdrop-blur-[2px] md:px-8 md:py-10">
                 <div className="max-w-4xl">
                     <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">
-                        WHY TEAMS SWITCH
+                        What VD is / What VD is not
                     </p>
                     <AccentBar />
-                    <h2 className="mt-5 max-w-[13ch] text-[34px] font-bold leading-[0.98] tracking-tight text-[#141414] md:text-5xl">
-                        Forensic intelligence your team can <span className="text-[#D4A574]">act</span> on in minutes.
+                    <h2 className="mt-5 max-w-4xl text-[34px] font-bold leading-[1] tracking-tight text-[#141414] md:text-5xl">
+                        A forensic intelligence system for <span className="text-[#D4A574]">creative quality</span> decisions.
                     </h2>
                     <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#474238] md:text-[18px] font-medium tracking-tight">
-                        See exactly where generic spy tools stop and where Visual Decompiler creates client-ready strategic outputs.
+                        Visual Decompiler exists to judge, diagnose, and direct quality. It explains why an ad is working, where it is fragile, and what decision the team should make next.
                     </p>
                 </div>
 
-                <div className="mt-12 rounded-[1.8rem] border border-[#D3C4AD] bg-transparent px-5 py-5 text-[#141414] shadow-[0_12px_28px_rgba(20,20,20,0.03)] md:px-6 md:py-6">
-                    <div className="max-w-[30rem]">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B89A70]">
-                            SAMPLE PROOF OBJECT
-                        </p>
-                        <p className="mt-3 text-lg leading-relaxed text-[#3F3A33] md:text-lg">
-                            Signals, mechanics, blueprint logic, and recommendation layers held in one restrained dossier object.
-                        </p>
+                <div className="mt-12 grid gap-5 lg:grid-cols-2">
+                    <div className="rounded-[2rem] border border-[#D3C4AD] bg-[#FBFBF6] p-6 shadow-[0_16px_34px_rgba(20,20,20,0.04)]">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">VD is</p>
+                        <ul className="mt-5 space-y-4">
+                            {[
+                                'A forensic intelligence system for ad quality decisions',
+                                'A diagnostic layer for creative mechanism and risk',
+                                'A strategic direction tool for teams and agencies',
+                            ].map((item) => (
+                                <li key={item} className="flex items-start gap-3 text-[15px] leading-relaxed text-[#474238]">
+                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4A574]" />
+                                    <span>{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className="rounded-[2rem] border border-[#D3C4AD] bg-[#FBFBF6] p-6 shadow-[0_16px_34px_rgba(20,20,20,0.04)]">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">VD is not</p>
+                        <ul className="mt-5 space-y-4">
+                            {[
+                                'An ad generator',
+                                'A design editor',
+                                'A prompt factory',
+                            ].map((item) => (
+                                <li key={item} className="flex items-start gap-3 text-[15px] leading-relaxed text-[#474238]">
+                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C8230A]" />
+                                    <span>{item}</span>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
 
-                <div className="mt-16 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-                    {DIFFERENTIATION_BLOCKS.map((block, index) => (
-                        <motion.article
-                            key={block.title}
-                            initial={{ opacity: 0, y: 16 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.2 }}
-                            transition={{ duration: 0.45, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                            className="group relative flex flex-col overflow-hidden rounded-[2.5rem] border border-[#D3C4AD] bg-[#FBFBF6] shadow-[0_20px_38px_rgba(20,20,20,0.06)]"
-                        >
-                            <div className="flex items-center gap-3 border-b border-[#E4DACC] px-6 py-5">
-                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-[#DDD0BC] bg-[#FFFDF8]">
-                                    <block.icon className="h-5 w-5 text-[#D4A574]" strokeWidth={1.5} />
-                                </div>
-                                <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">{block.title}</h3>
-                            </div>
-
-                            <div className="flex flex-col gap-5 p-6 flex-1">
-                                <div className="relative pl-5">
-                                    <div className="absolute left-0 top-0 bottom-0 w-px bg-[#E4DACC]" />
-                                    <p className="mb-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-[#9A9A94]">They Do</p>
-                                    <p className="text-[13px] leading-relaxed text-[#5D554A] font-light">
-                                        {block.theyDo}
-                                    </p>
-                                </div>
-
-                                <div className="relative rounded-r-xl border-l-[3px] border-[#D4A574] bg-[#F8F3EA] py-3 pl-5">
-                                    <p className="mb-1.5 text-[9px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">We Do</p>
-                                    <p className="text-[13px] leading-relaxed font-semibold tracking-tight text-[#141414]">
-                                        {block.weDo}
-                                    </p>
-                                </div>
-                            </div>
-                        </motion.article>
-                    ))}
-                </div>
-
-                <div className="mt-8 flex justify-start md:justify-center">
-                    <a
-                        href={SAMPLE_DOSSIER_HREF}
-                        className={OUTLINE_TAN_CTA}
-                    >
-                        <span>View Sample Dossier</span>
-                        <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
-                    </a>
-                </div>
+                <p className="mt-8 max-w-4xl text-sm leading-relaxed text-[#5B5449]">
+                    Blueprint reconstruction paths are provided for audit transparency and reproducibility — not generation inside VD.
+                </p>
             </motion.div>
         </section>
-    );
-}
-
-function PlatformSystemGrid() {
-    return (
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
-            {FUNNEL_SECTIONS.map((section, index) => (
-                <motion.article
-                    key={section.id}
-                    id={section.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ delay: index * 0.05, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                    className="group relative overflow-hidden rounded-[1.7rem] border border-[#D3C4AD] bg-[#FBFBF6] p-4 shadow-[0_16px_32px_rgba(20,20,20,0.06)] scroll-mt-20 md:scroll-mt-24 lg:scroll-mt-[104px]"
-                >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">0{index + 1}</p>
-                    <h3 className="mt-2 text-[15px] font-semibold leading-snug text-[#141414]">{section.label}</h3>
-                    <p className="mt-2 max-w-[25ch] text-sm leading-6 text-[#474238]">{STEP_PUNCH[section.id]}</p>
-                </motion.article>
-            ))}
-        </div>
     );
 }
 
@@ -447,30 +237,7 @@ export default function ProductProofSequence() {
         <div id="funnel" className="bg-transparent">
             <SingleAssetDeconstruction />
             <DifferentialDiagnosisSection />
-            <WhyDifferentSection />
-
-            <section className={`relative overflow-hidden scroll-mt-20 ${LIGHT_SURFACE} ${SECTION_BAND} md:scroll-mt-24 lg:scroll-mt-[104px]`}>
-                <motion.div
-                    initial={{ opacity: 1, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.06 }}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="mx-auto max-w-7xl rounded-[2.5rem] border border-[#D9CCB8] bg-[rgba(255,251,244,0.74)] px-6 py-8 shadow-[0_24px_58px_rgba(20,20,20,0.05)] backdrop-blur-[2px] md:px-8 md:py-10"
-                >
-                    <div className="mb-10 md:mb-14">
-                        <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">System Architecture</p>
-                        <AccentBar />
-                        <h2 className="mt-5 max-w-5xl text-[34px] font-bold leading-[1] tracking-tight text-[#141414] md:text-5xl">
-                            The <span className="text-[#D4A574]">operating</span> layer behind every forensic readout.
-                        </h2>
-                        <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#474238] md:text-[18px] font-medium tracking-tight">
-                            Move from one asset to compounding intelligence, execution-ready outputs, and agency delivery without adding workflow noise.
-                        </p>
-                    </div>
-
-                    <PlatformSystemGrid />
-                </motion.div>
-            </section>
+            <TrustBoundaryPanel />
         </div>
     );
 }
