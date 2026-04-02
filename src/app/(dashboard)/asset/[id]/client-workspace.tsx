@@ -171,7 +171,7 @@ const SAMPLE_DOSSIER_TABS: readonly DossierTab[] = [
 const DOSSIER_TAB_LABELS: Record<DossierTab, string> = {
     'QUALITY GATE': 'QUALITY GATE',
     'INTELLIGENCE': 'INTELLIGENCE',
-    'SIGNALS': 'SIGNALS / MECHANICS',
+    'SIGNALS': 'MECHANICS',
     'PSYCHOLOGY': 'PSYCHOLOGY',
     'CONSTRAINT MAP': 'CONSTRAINT MAP',
     'BLUEPRINT': 'BLUEPRINT TRACE',
@@ -256,6 +256,34 @@ type DecisionLogEntry = {
     rationale: string;
     p1Fix: string;
     teamNote?: string;
+};
+
+type TrustLevel = 'High' | 'Medium' | 'Low';
+type EvidenceStrength = 'Strong' | 'Moderate' | 'Weak';
+type AssumptionLoad = 'Low' | 'Medium' | 'High';
+
+type ModuleScore = {
+    label: 'Decision Quality' | 'Causal Confidence' | 'Strategic Fit' | 'Context Continuity';
+    score: number;
+};
+
+type IntegratedRecommendationData = {
+    thesis: string;
+    whyNow: string;
+    riskRewardTension: string;
+    recommendedDirection: string;
+    decision: string;
+    rationale: string;
+    executionNext3: string[];
+    watchouts: string;
+    fallback: string;
+    confidence: TrustLevel;
+    evidenceStrength: EvidenceStrength;
+    assumptionLoad: AssumptionLoad;
+    knownUnknowns: string[];
+    facts: string[];
+    inferences: string[];
+    moduleScores: ModuleScore[];
 };
 
 const parseBlueprint = (value: BlueprintData | string | null | undefined): BlueprintData | null => {
@@ -641,6 +669,211 @@ const deriveMarketPulseFallback = ({
         timingSignal,
         interpretation,
         confidenceLabel: 'Directional estimate',
+    };
+};
+
+const confidenceTierFromScore = (confidenceScore: number | null): TrustLevel => {
+    if (confidenceScore === null) return 'Low';
+    if (confidenceScore >= 85) return 'High';
+    if (confidenceScore >= 60) return 'Medium';
+    return 'Low';
+};
+
+const evidenceStrengthFromState = ({
+    confidenceScore,
+    blueprintData,
+    marketPulseData,
+    frictionScore,
+}: {
+    confidenceScore: number | null;
+    blueprintData: BlueprintData | null;
+    marketPulseData: MarketPulseData | null;
+    frictionScore: number | null;
+}): EvidenceStrength => {
+    const evidencePoints = [
+        confidenceScore !== null && confidenceScore >= 80,
+        Boolean(blueprintData?.verified_dna_prompt),
+        Boolean(marketPulseData),
+        frictionScore !== null,
+    ].filter(Boolean).length;
+
+    if (evidencePoints >= 4) return 'Strong';
+    if (evidencePoints >= 2) return 'Moderate';
+    return 'Weak';
+};
+
+const assumptionLoadFromState = ({
+    marketPulseData,
+    marketPulseBelowThreshold,
+    blueprintData,
+    confidenceScore,
+}: {
+    marketPulseData: MarketPulseData | null;
+    marketPulseBelowThreshold: boolean;
+    blueprintData: BlueprintData | null;
+    confidenceScore: number | null;
+}): AssumptionLoad => {
+    const assumptionPoints = [
+        !marketPulseData || marketPulseBelowThreshold,
+        !blueprintData,
+        confidenceScore === null || confidenceScore < 60,
+    ].filter(Boolean).length;
+
+    if (assumptionPoints >= 2) return 'High';
+    if (assumptionPoints === 1) return 'Medium';
+    return 'Low';
+};
+
+const scoreClamp = (value: number) => Math.max(0, Math.min(5, Math.round(value)));
+
+const deriveIntegratedRecommendation = ({
+    qualityVerdict,
+    confidenceScore,
+    frictionScore,
+    persuasionDensity,
+    failureReasons,
+    fixPriorities,
+    stressLabRows,
+    mustKeepConstraints,
+    mustAvoidConstraints,
+    marketPulseData,
+    marketPulseBelowThreshold,
+    marketPulseFallback,
+    extraction,
+    dossier,
+    blueprintData,
+    decisionLogEntries,
+}: {
+    qualityVerdict: QualityVerdict;
+    confidenceScore: number | null;
+    frictionScore: number | null;
+    persuasionDensity: number | null;
+    failureReasons: QualityReason[];
+    fixPriorities: FixPriority[];
+    stressLabRows: StressLabRow[];
+    mustKeepConstraints: ConstraintItem[];
+    mustAvoidConstraints: ConstraintItem[];
+    marketPulseData: MarketPulseData | null;
+    marketPulseBelowThreshold: boolean;
+    marketPulseFallback: ReturnType<typeof deriveMarketPulseFallback>;
+    extraction: any;
+    dossier: any;
+    blueprintData: BlueprintData | null;
+    decisionLogEntries: DecisionLogEntry[];
+}): IntegratedRecommendationData => {
+    const confidence = confidenceTierFromScore(confidenceScore);
+    const evidenceStrength = evidenceStrengthFromState({
+        confidenceScore,
+        blueprintData,
+        marketPulseData,
+        frictionScore,
+    });
+    const assumptionLoad = assumptionLoadFromState({
+        marketPulseData,
+        marketPulseBelowThreshold,
+        blueprintData,
+        confidenceScore,
+    });
+
+    const primaryTest =
+        stressLabRows.find((row) => row.recommendation === 'Test' && row.predictedLift === 'High') ||
+        stressLabRows.find((row) => row.recommendation === 'Test') ||
+        stressLabRows[0];
+
+    const timingLine = marketPulseData
+        ? marketPulseBelowThreshold
+            ? `Category timing is promising but still directional at ${marketPulseData.assetCount}/20 sampled assets.`
+            : `Category timing currently supports ${marketPulseData.category_persuasion_benchmark.your_rank.toLowerCase()} movement if the working mechanic is preserved.`
+        : marketPulseFallback.timingSignal;
+
+    const knownUnknowns = [
+        !marketPulseData || marketPulseBelowThreshold ? 'Full external category pressure is still partially inferred.' : '',
+        !blueprintData ? 'Blueprint Trace is not fully populated yet.' : '',
+        frictionScore === null ? 'Cognitive friction is not fully resolved yet.' : '',
+    ].filter(Boolean);
+
+    const facts = [
+        extraction?.primary_mechanic ? `Primary mechanic resolved as ${extraction.primary_mechanic}.` : '',
+        confidenceScore !== null ? `Confidence is ${confidenceScore}/100.` : '',
+        frictionScore !== null ? `Cognitive friction is ${frictionScore}%.` : '',
+        persuasionDensity !== null ? `Persuasion density is ${persuasionDensity}%.` : '',
+        mustKeepConstraints[0]?.text ? `Must keep: ${mustKeepConstraints[0].text}` : '',
+    ].filter(Boolean);
+
+    const inferences = [
+        failureReasons[0]?.detail || '',
+        timingLine,
+        primaryTest ? `${primaryTest.variable} is the highest-value next variable to test.` : '',
+    ].filter(Boolean);
+
+    const decisionQualityScore = scoreClamp(
+        ((confidenceScore ?? 45) / 20) -
+            ((frictionScore ?? 20) > 25 ? 1 : 0) +
+            (qualityVerdict === 'Ship' ? 1 : qualityVerdict === 'Revise' ? 0 : -1),
+    );
+    const causalConfidenceScore = scoreClamp(
+        2 +
+            (primaryTest?.predictedLift === 'High' ? 2 : primaryTest?.predictedLift === 'Medium' ? 1 : 0) -
+            (primaryTest?.risk === 'High' ? 1 : 0),
+    );
+    const strategicFitScore = scoreClamp(
+        2 +
+            ((marketPulseData && !marketPulseBelowThreshold) ? 2 : 1) +
+            ((persuasionDensity ?? 0) >= 70 ? 1 : 0) -
+            ((frictionScore ?? 0) > 30 ? 1 : 0),
+    );
+    const contextContinuityScore = scoreClamp(
+        1 +
+            (blueprintData ? 2 : 0) +
+            (marketPulseData ? 1 : 0) +
+            (decisionLogEntries.length > 0 ? 1 : 0),
+    );
+
+    const recommendedDirection =
+        qualityVerdict === 'Ship'
+            ? `Ship the route with controlled refinement around ${primaryTest?.variable?.toLowerCase() || 'the strongest working variable'}.`
+            : qualityVerdict === 'Revise'
+                ? `Revise the route before presentation, starting with ${primaryTest?.variable?.toLowerCase() || 'the highest-value variable'} and preserving the core mechanic.`
+                : `Reject the current route and rebuild from the diagnosed mechanic boundary rather than defending the current execution.`;
+
+    const thesis = `${recommendedDirection} ${extraction?.primary_mechanic ? `The core thesis remains ${extraction.primary_mechanic.toLowerCase()},` : 'The core mechanic is still unstable,'} and the decision should be driven by whether that mechanism can survive refinement without increasing friction.`;
+    const whyNow = timingLine;
+    const riskRewardTension =
+        primaryTest
+            ? `The reward is in testing ${primaryTest.variable.toLowerCase()} for lift without breaking ${mustKeepConstraints[0]?.text?.toLowerCase() || 'the strongest working signal'}. The risk is ${mustAvoidConstraints[0]?.text?.toLowerCase() || 'introducing avoidable message drift'}.`
+            : `The reward is in protecting the working mechanism. The risk is introducing avoidable drift before the route is pressure-tested.`;
+
+    const executionNext3 = [
+        `Lock ${mustKeepConstraints[0]?.text || 'the strongest working mechanic'} before any broader revision.`,
+        `${fixPriorities[0]?.title || 'Reduce the primary failure mode'} by executing ${primaryTest?.proposedShift?.toLowerCase() || 'the highest-value controlled test'}.`,
+        `Re-check the route against ${mustAvoidConstraints[0]?.text?.toLowerCase() || 'the top avoidable failure mode'} before export or client review.`,
+    ];
+
+    const watchouts = mustAvoidConstraints[0]?.text || failureReasons[0]?.detail || 'Do not let refinement increase friction faster than it increases persuasion pressure.';
+    const fallback = `If the assumption that ${primaryTest?.variable?.toLowerCase() || 'the next test variable'} can improve lift without damaging the core mechanic fails, revert to ${mustKeepConstraints[0]?.text?.toLowerCase() || 'the current strongest working route'} and hold the asset at ${qualityVerdict === 'Ship' ? 'ship-ready refinement' : 'revise'} rather than forcing another speculative change.`;
+
+    return {
+        thesis,
+        whyNow,
+        riskRewardTension,
+        recommendedDirection,
+        decision: qualityVerdict,
+        rationale: failureReasons[0]?.detail || `Current evidence supports a ${qualityVerdict.toLowerCase()} decision.`,
+        executionNext3,
+        watchouts,
+        fallback,
+        confidence,
+        evidenceStrength,
+        assumptionLoad,
+        knownUnknowns: knownUnknowns.length > 0 ? knownUnknowns : ['No material unknowns are currently blocking decision confidence.'],
+        facts,
+        inferences,
+        moduleScores: [
+            { label: 'Decision Quality', score: decisionQualityScore },
+            { label: 'Causal Confidence', score: causalConfidenceScore },
+            { label: 'Strategic Fit', score: strategicFitScore },
+            { label: 'Context Continuity', score: contextContinuityScore },
+        ],
     };
 };
 
@@ -1171,6 +1404,7 @@ export default function AssetWorkspace({
     const [cloneStep, setCloneStep] = useState(0);
     const [decisionLogEntries, setDecisionLogEntries] = useState<DecisionLogEntry[]>([]);
     const [decisionNote, setDecisionNote] = useState('');
+    const [showDecisionSummary, setShowDecisionSummary] = useState(false);
 
     const [sequenceData, setSequenceData] = useState<SequenceData | null>(null);
     const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(
@@ -1260,6 +1494,80 @@ export default function AssetWorkspace({
         frictionScore,
         persuasionDensity,
     });
+    const integratedRecommendation = deriveIntegratedRecommendation({
+        qualityVerdict,
+        confidenceScore,
+        frictionScore,
+        persuasionDensity,
+        failureReasons,
+        fixPriorities,
+        stressLabRows,
+        mustKeepConstraints,
+        mustAvoidConstraints,
+        marketPulseData,
+        marketPulseBelowThreshold,
+        marketPulseFallback,
+        extraction,
+        dossier,
+        blueprintData,
+        decisionLogEntries,
+    });
+    const marketPulseInterpretation = marketPulseData
+        ? marketPulseBelowThreshold
+            ? `This route has signal, but category context is still directional at ${marketPulseData.assetCount}/20 sampled assets. Use the read to guide action, not overclaim precision.`
+            : `Current category pressure suggests ${marketPulseData.category_persuasion_benchmark.your_rank.toLowerCase()} standing. Protect the working mechanic, then differentiate execution rather than rebuilding from zero.`
+        : marketPulseFallback.interpretation;
+    const marketPulseTrustLabel = marketPulseData
+        ? marketPulseBelowThreshold
+            ? 'Directional estimate'
+            : 'Live benchmark'
+        : marketPulseFallback.confidenceLabel;
+    const primaryStressTest = stressLabRows.find((row) => row.recommendation === 'Test') || stressLabRows[0];
+    const decisionSummaryTimestamp = new Date().toLocaleString('en-AU', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+    });
+    const assetLabel = asset.brand?.name
+        ? `${asset.brand.name} · ${asset.id}`
+        : asset.id;
+    const decisionSummaryText = [
+        '## Integrated Recommendation',
+        `${integratedRecommendation.thesis} ${integratedRecommendation.whyNow} ${integratedRecommendation.riskRewardTension}`.trim(),
+        '',
+        `**Asset:** ${assetLabel}`,
+        `**Timestamp:** ${decisionSummaryTimestamp}`,
+        '',
+        `**Decision:** ${integratedRecommendation.decision}`,
+        `**Rationale:** ${integratedRecommendation.rationale}`,
+        '**Execution Next 3:**',
+        ...integratedRecommendation.executionNext3.map((step, index) => `${index + 1}. ${step}`),
+        '',
+        `**P1 Fix:** ${fixPriorities[0]?.detail || 'No priority fix recorded.'}`,
+        `**P2 Fix:** ${fixPriorities[1]?.detail || 'No secondary fix recorded.'}`,
+        `**P3 Fix:** ${fixPriorities[2]?.detail || 'No tertiary fix recorded.'}`,
+        '',
+        `**Must Keep:** ${mustKeepConstraints.map((item) => item.text).join(' | ') || 'None recorded.'}`,
+        `**Must Avoid:** ${mustAvoidConstraints.map((item) => item.text).join(' | ') || 'None recorded.'}`,
+        `**Suggested Next Test:** ${primaryStressTest ? `${primaryStressTest.variable} -> ${primaryStressTest.proposedShift}` : 'No next test recorded.'}`,
+        `**Market Pulse:** ${marketPulseInterpretation}`,
+        '',
+        `**Watchouts:** ${integratedRecommendation.watchouts}`,
+        `**Fallback:** ${integratedRecommendation.fallback}`,
+        '',
+        `**Confidence:** ${integratedRecommendation.confidence}`,
+        `**Evidence Strength:** ${integratedRecommendation.evidenceStrength}`,
+        `**Assumption Load:** ${integratedRecommendation.assumptionLoad}`,
+        `**Known Unknowns:** ${integratedRecommendation.knownUnknowns.join(' ')}`,
+        '',
+        '**Facts:**',
+        ...integratedRecommendation.facts.map((fact, index) => `${index + 1}. ${fact}`),
+        '',
+        '**Inferences:**',
+        ...integratedRecommendation.inferences.map((inference, index) => `${index + 1}. ${inference}`),
+    ].join('\n');
     const decisionLogStorageKey = `vd_decision_log_${asset.id}`;
     
     // Parse visual style string if it's stringified JSON
@@ -1582,7 +1890,7 @@ export default function AssetWorkspace({
             timestamp: new Date().toISOString(),
             verdict: qualityVerdict,
             confidence: confidenceScore,
-            rationale: failureReasons[0]?.detail || 'Decision captured from current quality gate state.',
+            rationale: integratedRecommendation.rationale,
             p1Fix: fixPriorities[0]?.detail || 'No priority fix recorded.',
             teamNote: decisionNote.trim() || undefined,
         };
@@ -2357,9 +2665,117 @@ export default function AssetWorkspace({
                                     <div className="space-y-10">
                                         <WorkspaceTabHeader
                                             kicker="Diagnosis Workflow"
-                                            title="Quality Gate"
+                                            title="Decision Quality"
                                             intro="VD does not generate ads or act as an AI design app. VD judges, diagnoses, and directs creative quality."
                                         />
+
+                                        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Integrated Recommendation</p>
+                                                <p className="mt-4 text-[15px] leading-7 text-[#16120D]">{integratedRecommendation.thesis}</p>
+                                                <p className="mt-4 text-[14px] leading-7 text-[#1A1A1A]/72">{integratedRecommendation.whyNow}</p>
+                                                <p className="mt-4 rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4 text-[13px] leading-6 text-[#1A1A1A]/72">
+                                                    {integratedRecommendation.riskRewardTension}
+                                                </p>
+                                                <div className="mt-5 rounded-[1.25rem] border border-[#E6DDCF] bg-white px-4 py-4">
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">Operator Summary</p>
+                                                    <div className="mt-3 grid gap-3 md:grid-cols-3">
+                                                        <div>
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Decision</p>
+                                                            <p className="mt-2 text-[14px] leading-6 text-[#16120D]">{integratedRecommendation.decision}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Primary risk</p>
+                                                            <p className="mt-2 text-[14px] leading-6 text-[#16120D]">{integratedRecommendation.watchouts}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Timing</p>
+                                                            <p className="mt-2 text-[14px] leading-6 text-[#16120D]">{integratedRecommendation.whyNow}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="mt-4 border-t border-[#E6DDCF] pt-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Highest-impact actions</p>
+                                                        <div className="mt-3 space-y-2">
+                                                            {integratedRecommendation.executionNext3.map((step, index) => (
+                                                                <p key={index} className="text-[13px] leading-6 text-[#1A1A1A]/74">
+                                                                    <span className="font-bold text-[#8B4513]">{index + 1}.</span> {step}
+                                                                </p>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-6">
+                                                <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Trust Cues</p>
+                                                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                                                        {[
+                                                            ['Confidence', integratedRecommendation.confidence],
+                                                            ['Evidence Strength', integratedRecommendation.evidenceStrength],
+                                                            ['Assumption Load', integratedRecommendation.assumptionLoad],
+                                                        ].map(([label, value]) => (
+                                                            <div key={label} className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
+                                                                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B7B62]">{label}</p>
+                                                                <p className="mt-2 text-[14px] leading-6 text-[#16120D]">{value}</p>
+                                                            </div>
+                                                        ))}
+                                                        <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4 sm:col-span-2">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Known Unknowns</p>
+                                                            <p className="mt-2 text-[14px] leading-6 text-[#16120D]">
+                                                                {integratedRecommendation.knownUnknowns.join(' ')}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="mt-4 border-t border-[#E6DDCF] pt-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Based on</p>
+                                                        <p className="mt-2 text-[13px] leading-6 text-[#1A1A1A]/72">
+                                                            Blueprint trace, friction, persuasion density, gaze routing, and comparative memory.
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Module Scores</p>
+                                                    <div className="mt-4 space-y-3">
+                                                        {integratedRecommendation.moduleScores.map((score) => (
+                                                            <div key={score.label} className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
+                                                                <div className="flex items-center justify-between gap-4">
+                                                                    <p className="text-[13px] font-semibold text-[#16120D]">{score.label}</p>
+                                                                    <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">{score.score}/5</span>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Fact vs Inference</p>
+                                                    <div className="mt-4 grid gap-4">
+                                                        <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Facts</p>
+                                                            <div className="mt-3 space-y-2">
+                                                                {integratedRecommendation.facts.map((fact, index) => (
+                                                                    <p key={index} className="text-[13px] leading-6 text-[#1A1A1A]/74">
+                                                                        <span className="font-bold text-[#8B4513]">{index + 1}.</span> {fact}
+                                                                    </p>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                        <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Inferences</p>
+                                                            <div className="mt-3 space-y-2">
+                                                                {integratedRecommendation.inferences.map((inference, index) => (
+                                                                    <p key={index} className="text-[13px] leading-6 text-[#1A1A1A]/74">
+                                                                        <span className="font-bold text-[#8B4513]">{index + 1}.</span> {inference}
+                                                                    </p>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
                                             <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
@@ -2587,7 +3003,7 @@ export default function AssetWorkspace({
                                     <div className="space-y-10">
                                         <WorkspaceTabHeader
                                             kicker="Pattern Extraction"
-                                            title="Signals / Mechanics"
+                                            title="Mechanics"
                                             intro="A structural decomposition of the signal stack and mechanic architecture—hooks, pacing, contrast, and attention-routing cues that drive response."
                                         />
                                         
@@ -2779,8 +3195,8 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <WorkspaceTabHeader
                                     kicker="Competitive Context"
-                                    title="Market Pulse"
-                                    intro="How this mechanic maps against live category behavior, saturation risk, and emerging creative opportunity zones."
+                                    title="Strategic Fit"
+                                    intro="How the route fits current category pressure, novelty conditions, and timing opportunity."
                                 />
                                 <div className="relative">
                                 {!isSovereign ? (
@@ -2814,6 +3230,20 @@ export default function AssetWorkspace({
                                     </div>
                                 ) : marketPulseError ? (
                                     <div className="space-y-6">
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
+                                                Confidence {integratedRecommendation.confidence}
+                                            </span>
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                Evidence {integratedRecommendation.evidenceStrength}
+                                            </span>
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                Assumption {integratedRecommendation.assumptionLoad}
+                                            </span>
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                Based on comparative memory and dossier pressure
+                                            </span>
+                                        </div>
                                         <div className="flex items-center justify-between gap-4 rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
                                             <div>
                                                 <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Directional estimate</p>
@@ -2859,6 +3289,20 @@ export default function AssetWorkspace({
                                     </div>
                                 ) : marketPulseData ? (
                                     <div className="space-y-6">
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
+                                                Confidence {integratedRecommendation.confidence}
+                                            </span>
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                Evidence {integratedRecommendation.evidenceStrength}
+                                            </span>
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                Assumption {integratedRecommendation.assumptionLoad}
+                                            </span>
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                Based on benchmark depth, comparative memory, and category pressure
+                                            </span>
+                                        </div>
                                         <div className="flex items-center justify-between gap-4 rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
                                             <div>
                                                 <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">
@@ -2923,6 +3367,20 @@ export default function AssetWorkspace({
                                     </div>
                                 ) : (
                                     <div className="space-y-6">
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
+                                                Confidence {integratedRecommendation.confidence}
+                                            </span>
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                Evidence {integratedRecommendation.evidenceStrength}
+                                            </span>
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                Assumption {integratedRecommendation.assumptionLoad}
+                                            </span>
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                Based on comparative memory and dossier pressure
+                                            </span>
+                                        </div>
                                         <div className="flex items-center justify-between gap-4 rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
                                             <div>
                                                 <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Directional estimate</p>
@@ -3447,7 +3905,7 @@ export default function AssetWorkspace({
                                 <div className="space-y-8">
                                     <WorkspaceTabHeader
                                         kicker="Causal Intelligence"
-                                        title="Stress Lab"
+                                        title="Causal Confidence"
                                         intro="Controlled what-if deltas for the variables most likely to change performance without breaking the diagnosed mechanism."
                                     />
                                     <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
@@ -3455,6 +3913,14 @@ export default function AssetWorkspace({
                                         <p className="mt-3 max-w-[66ch] text-[15px] leading-7 text-[#1A1A1A]/76">
                                             Stress Lab is causal testing guidance, not a prompt feed. VD judges, diagnoses, and directs quality before any adaptation move is made.
                                         </p>
+                                        <div className="mt-4 flex flex-wrap gap-3">
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
+                                                Confidence {integratedRecommendation.confidence}
+                                            </span>
+                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
+                                                Based on blueprint trace, friction, and gaze
+                                            </span>
+                                        </div>
                                     </div>
                                     <div className="overflow-hidden rounded-[2rem] border border-[#E6DDCF] bg-white/80 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
                                         <div className="grid grid-cols-[minmax(150px,1fr)_minmax(220px,1.2fr)_minmax(220px,1.2fr)_120px_120px_120px] gap-px bg-[#E6DDCF] overflow-x-auto">
@@ -3494,7 +3960,7 @@ export default function AssetWorkspace({
                                 <div className="space-y-8">
                                     <WorkspaceTabHeader
                                         kicker="Audit Trail"
-                                        title="Decision Log"
+                                        title="Context Continuity"
                                         intro="A compact operating log for what was approved, revised, or rejected so diagnosis turns into accountable creative direction."
                                     />
                                     <div className="grid gap-6 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
@@ -3503,6 +3969,63 @@ export default function AssetWorkspace({
                                             <p className="mt-3 text-[14px] leading-6 text-[#1A1A1A]/72">
                                                 Capture the current verdict, confidence, top rationale, and the active P1 fix so the decision trail survives reloads and review-room drift.
                                             </p>
+                                            <div className="mt-5 flex flex-wrap gap-3">
+                                                <button
+                                                    onClick={() => setShowDecisionSummary((current) => !current)}
+                                                    className="rounded-full border border-[#D4A574]/20 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#D4A574]/10"
+                                                >
+                                                    {showDecisionSummary ? 'Hide Decision Summary' : 'Generate Decision Summary'}
+                                                </button>
+                                                <button
+                                                    onClick={() => navigator.clipboard.writeText(decisionSummaryText)}
+                                                    className="rounded-full border border-[#D4A574]/20 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#D4A574]/10"
+                                                >
+                                                    Copy Summary
+                                                </button>
+                                            </div>
+                                            {showDecisionSummary && (
+                                                <div className="mt-5 space-y-4">
+                                                    <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">Compact card view</p>
+                                                        <div className="mt-3 space-y-3">
+                                                            <p className="text-[14px] leading-6 text-[#16120D]">{integratedRecommendation.recommendedDirection}</p>
+                                                            <p className="text-[12px] leading-6 text-[#1A1A1A]/68">
+                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Asset</span> · {assetLabel}
+                                                            </p>
+                                                            <p className="text-[12px] leading-6 text-[#1A1A1A]/68">
+                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Timestamp</span> · {decisionSummaryTimestamp}
+                                                            </p>
+                                                            <p className="text-[13px] leading-6 text-[#1A1A1A]/68">
+                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Decision</span> · {integratedRecommendation.decision}
+                                                            </p>
+                                                            <p className="text-[13px] leading-6 text-[#1A1A1A]/68">
+                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Rationale</span> · {integratedRecommendation.rationale}
+                                                            </p>
+                                                            <p className="text-[13px] leading-6 text-[#1A1A1A]/68">
+                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Next test</span> · {integratedRecommendation.executionNext3[0]}
+                                                            </p>
+                                                            <p className="text-[13px] leading-6 text-[#1A1A1A]/68">
+                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Market pulse</span> · {marketPulseInterpretation}
+                                                            </p>
+                                                            <div className="flex flex-wrap gap-2 pt-1">
+                                                                <span className="inline-flex rounded-full bg-white px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
+                                                                    Confidence {integratedRecommendation.confidence}
+                                                                </span>
+                                                                <span className="inline-flex rounded-full bg-white px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                                    Evidence {integratedRecommendation.evidenceStrength}
+                                                                </span>
+                                                                <span className="inline-flex rounded-full bg-white px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                                    Assumption {integratedRecommendation.assumptionLoad}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#171512] px-4 py-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">Copyable handoff block</p>
+                                                        <pre className="mt-3 whitespace-pre-wrap text-[12px] leading-6 text-[#D6D0C6]">{decisionSummaryText}</pre>
+                                                    </div>
+                                                </div>
+                                            )}
                                             <div className="mt-5 rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
                                                 <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">Optional team note</p>
                                                 <textarea
