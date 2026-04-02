@@ -10,7 +10,7 @@ export default function FooterStartNow() {
             <div className="max-w-7xl mx-auto">
 
                 {/* Main CTA Section */}
-                <div className="relative mb-6 overflow-hidden rounded-[2.25rem] border border-[#D8CCB5] bg-[#FBFBF6] px-8 py-10 shadow-[0_24px_60px_rgba(20,20,20,0.06)] md:rounded-[3rem] md:px-10 md:py-12 lg:px-14 lg:py-14">
+                <div className="relative mb-6 overflow-hidden rounded-[2.25rem] border border-[#D8CCB5] bg-[#FBFBF6] px-8 py-10 shadow-[0_28px_70px_rgba(20,20,20,0.08)] md:rounded-[3rem] md:px-10 md:py-12 lg:px-14 lg:py-14">
                     <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:56px_56px]" />
                     <div className="relative z-10 grid gap-8 lg:grid-cols-[1.05fr_0.72fr] lg:items-center lg:gap-10">
 
@@ -44,7 +44,7 @@ export default function FooterStartNow() {
 
                         {/* Right: CTA */}
                         <div className="w-full">
-                            <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#F8F3EA] px-6 py-7 text-center shadow-[0_18px_40px_rgba(20,20,20,0.05)] md:px-8 md:py-8 lg:text-left">
+                            <div className="rounded-[2rem] border border-[#D8CCB5] bg-[#F5EDE3] px-6 py-7 text-center shadow-[0_18px_44px_rgba(20,20,20,0.08)] md:px-8 md:py-8 lg:text-left">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A56F]">
                                     Start with Observer
                                 </p>
@@ -56,7 +56,7 @@ export default function FooterStartNow() {
                                     href="/ingest"
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
-                                    className={`${HOMEPAGE_PRIMARY_CTA} mt-6 w-full text-base sm:w-auto sm:px-10 sm:py-5 sm:text-lg`}
+                                    className={`${HOMEPAGE_PRIMARY_CTA} mt-6 w-full !shadow-[0_18px_36px_rgba(20,20,20,0.18)] text-base sm:w-auto sm:px-10 sm:py-5 sm:text-lg`}
                                 >
                                     <span>Start Decompiling Free</span>
                                     <ArrowUpRight className={HOMEPAGE_CTA_ICON} />

@@ -210,7 +210,7 @@ const OUTLINE_TAN_CTA =
 function DifferentialDiagnosisSection() {
     return (
         <section className={`relative overflow-hidden ${LIGHT_SURFACE} ${SECTION_BAND}`}>
-            <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
+            <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl rounded-[2.5rem] border border-[#E2D8C8] bg-[rgba(255,251,244,0.72)] px-6 py-8 shadow-[0_20px_54px_rgba(20,20,20,0.04)] backdrop-blur-[2px] md:px-8 md:py-10">
                 <div className="mb-6 flex items-center gap-3">
                     <span className="h-px w-12 bg-gradient-to-r from-[#D4A574] to-transparent" />
                     <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">Intelligence Pulse</p>
@@ -303,7 +303,7 @@ function DifferentialDiagnosisSection() {
 function WhyDifferentSection() {
     return (
         <section className={`relative overflow-hidden ${LIGHT_SURFACE} ${SECTION_BAND}`}>
-            <motion.div {...REVEAL} className="mx-auto max-w-7xl">
+            <motion.div {...REVEAL} className="mx-auto max-w-7xl rounded-[2.5rem] border border-[#E2D8C8] bg-[rgba(255,251,244,0.72)] px-6 py-8 shadow-[0_20px_54px_rgba(20,20,20,0.04)] backdrop-blur-[2px] md:px-8 md:py-10">
                 <div className="max-w-4xl">
                     <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">
                         WHY TEAMS SWITCH
@@ -455,7 +455,7 @@ export default function ProductProofSequence() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.06 }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="mx-auto max-w-7xl"
+                    className="mx-auto max-w-7xl rounded-[2.5rem] border border-[#E2D8C8] bg-[rgba(255,251,244,0.72)] px-6 py-8 shadow-[0_20px_54px_rgba(20,20,20,0.04)] backdrop-blur-[2px] md:px-8 md:py-10"
                 >
                     <div className="mb-10 md:mb-14">
                         <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">System Architecture</p>

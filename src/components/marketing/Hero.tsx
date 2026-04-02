@@ -14,6 +14,7 @@ export default function Hero({
     return (
         <section className="relative z-20 mt-8 overflow-hidden rounded-t-[32px] bg-transparent pb-14 pt-14 text-[#141414] md:mt-10 md:rounded-t-[44px] md:pb-16 md:pt-16 lg:mt-12 lg:rounded-t-[56px] lg:pb-20 lg:pt-18">
             <div className="relative z-10 mx-auto max-w-7xl px-6">
+                <div className="rounded-[2.25rem] border border-[#E2D8C8] bg-[rgba(255,251,244,0.74)] px-6 py-8 shadow-[0_20px_50px_rgba(20,20,20,0.04)] backdrop-blur-[2px] md:px-8 md:py-9">
                 <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-start lg:gap-12">
                     <motion.div
                         initial={{ opacity: 0, y: 12 }}
@@ -63,6 +64,7 @@ export default function Hero({
                         </motion.div>
                         ))}
                     </div>
+                </div>
                 </div>
             </div>
         </section>
