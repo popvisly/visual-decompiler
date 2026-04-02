@@ -136,10 +136,49 @@ interface SequenceData {
     }[];
 }
 
-type DossierTab = 'INTELLIGENCE' | 'SIGNALS' | 'PSYCHOLOGY' | 'BLUEPRINT' | 'MARKET PULSE';
+type DossierTab =
+    | 'QUALITY GATE'
+    | 'INTELLIGENCE'
+    | 'SIGNALS'
+    | 'PSYCHOLOGY'
+    | 'CONSTRAINT MAP'
+    | 'BLUEPRINT'
+    | 'STRESS LAB'
+    | 'MARKET PULSE'
+    | 'DECISION LOG';
 
-const FULL_DOSSIER_TABS: readonly DossierTab[] = ['INTELLIGENCE', 'SIGNALS', 'PSYCHOLOGY', 'BLUEPRINT', 'MARKET PULSE'] as const;
-const SAMPLE_DOSSIER_TABS: readonly DossierTab[] = ['INTELLIGENCE', 'SIGNALS', 'PSYCHOLOGY', 'BLUEPRINT'] as const;
+const FULL_DOSSIER_TABS: readonly DossierTab[] = [
+    'QUALITY GATE',
+    'INTELLIGENCE',
+    'SIGNALS',
+    'PSYCHOLOGY',
+    'CONSTRAINT MAP',
+    'BLUEPRINT',
+    'STRESS LAB',
+    'MARKET PULSE',
+    'DECISION LOG',
+] as const;
+
+const SAMPLE_DOSSIER_TABS: readonly DossierTab[] = [
+    'QUALITY GATE',
+    'INTELLIGENCE',
+    'SIGNALS',
+    'PSYCHOLOGY',
+    'CONSTRAINT MAP',
+    'BLUEPRINT',
+] as const;
+
+const DOSSIER_TAB_LABELS: Record<DossierTab, string> = {
+    'QUALITY GATE': 'QUALITY GATE',
+    'INTELLIGENCE': 'INTELLIGENCE',
+    'SIGNALS': 'SIGNALS',
+    'PSYCHOLOGY': 'PSYCHOLOGY',
+    'CONSTRAINT MAP': 'CONSTRAINT MAP',
+    'BLUEPRINT': 'BLUEPRINT TRACE',
+    'STRESS LAB': 'STRESS LAB',
+    'MARKET PULSE': 'MARKET PULSE',
+    'DECISION LOG': 'DECISION LOG',
+};
 
 function formatMarketPulseDate(value?: string) {
     if (!value) return 'Just now';
@@ -180,6 +219,25 @@ interface BlueprintData {
         prompt: string;
     }[];
 }
+
+type QualityVerdict = 'Ship' | 'Revise' | 'Reject';
+type ConstraintSeverity = 'critical' | 'high' | 'optional';
+
+type ConstraintItem = {
+    text: string;
+    severity: ConstraintSeverity;
+};
+
+type QualityReason = {
+    title: string;
+    detail: string;
+};
+
+type FixPriority = {
+    priority: 'P1' | 'P2' | 'P3';
+    title: string;
+    detail: string;
+};
 
 const parseBlueprint = (value: BlueprintData | string | null | undefined): BlueprintData | null => {
     if (!value) {
@@ -244,6 +302,186 @@ const firstSentence = (value: string | undefined | null) => {
     const match = trimmed.match(/^.*?[.!?](?:\s|$)/);
     return (match?.[0] || trimmed).trim();
 };
+
+const normalizeConfidenceScore = (value?: number | null) => {
+    if (value == null) return null;
+    return value <= 1 ? Math.round(value * 100) : Math.round(value);
+};
+
+const deriveQualityVerdict = (
+    confidenceScore: number | null,
+    frictionScore: number | null,
+    persuasionDensity: number | null,
+): QualityVerdict => {
+    if (
+        confidenceScore !== null &&
+        confidenceScore >= 85 &&
+        (frictionScore === null || frictionScore <= 20) &&
+        (persuasionDensity === null || persuasionDensity >= 70)
+    ) {
+        return 'Ship';
+    }
+
+    if (confidenceScore !== null && confidenceScore >= 60) {
+        return 'Revise';
+    }
+
+    return 'Reject';
+};
+
+const qualityFailureReasons = ({
+    confidenceScore,
+    frictionScore,
+    persuasionDensity,
+    extraction,
+    dossier,
+}: {
+    confidenceScore: number | null;
+    frictionScore: number | null;
+    persuasionDensity: number | null;
+    extraction: any;
+    dossier: any;
+}): QualityReason[] => {
+    const reasons: QualityReason[] = [];
+
+    if (confidenceScore === null || confidenceScore < 70) {
+        reasons.push({
+            title: 'Confidence is below presentation threshold',
+            detail:
+                confidenceScore === null
+                    ? 'System confidence is still unresolved, so this route is not yet safe to defend in a review room.'
+                    : `Confidence is sitting at ${confidenceScore}/100, which is below the threshold for a clean client-room recommendation.`,
+        });
+    }
+
+    if (frictionScore !== null && frictionScore > 25) {
+        reasons.push({
+            title: 'Cognitive friction is still elevated',
+            detail: `Cognitive friction is at ${frictionScore}%, which signals message resistance and weakens immediate uptake.`,
+        });
+    }
+
+    if (persuasionDensity !== null && persuasionDensity < 70) {
+        reasons.push({
+            title: 'Persuasion density is underpowered',
+            detail: `Persuasion density is ${persuasionDensity}%, so the mechanism is not carrying enough strategic pressure yet.`,
+        });
+    }
+
+    if (!extraction?.primary_mechanic) {
+        reasons.push({
+            title: 'Primary mechanic is unresolved',
+            detail: 'The asset still lacks a clearly resolved persuasion engine, so the diagnosis cannot be locked with confidence.',
+        });
+    }
+
+    if (!dossier?.objection_dismantling) {
+        reasons.push({
+            title: 'Objection handling is too thin',
+            detail: 'The diagnostic layer is not yet surfacing a strong objection-dismantling case for why this route should win.',
+        });
+    }
+
+    if ((dossier?.possible_readings?.length ?? 0) === 0) {
+        reasons.push({
+            title: 'Interpretive clarity is incomplete',
+            detail: 'The dossier is missing enough stable reading paths to show how the creative will be interpreted under pressure.',
+        });
+    }
+
+    if (reasons.length === 0) {
+        reasons.push(
+            {
+                title: 'Mechanic is defensible',
+                detail: 'The core persuasion system is stable enough to move forward without immediate structural concern.',
+            },
+            {
+                title: 'Friction is under control',
+                detail: 'Resistance is low enough that the route should travel cleanly into review and deployment.',
+            },
+            {
+                title: 'The signal stack is coherent',
+                detail: 'Execution DNA and narrative pressure are aligned closely enough to preserve decision confidence.',
+            },
+        );
+    }
+
+    return reasons.slice(0, 3);
+};
+
+const qualityFixPriorities = ({
+    confidenceScore,
+    frictionScore,
+    persuasionDensity,
+    dossier,
+    extraction,
+}: {
+    confidenceScore: number | null;
+    frictionScore: number | null;
+    persuasionDensity: number | null;
+    dossier: any;
+    extraction: any;
+}): FixPriority[] => {
+    const priorities: FixPriority[] = [];
+
+    if (frictionScore !== null && frictionScore > 25) {
+        priorities.push({
+            priority: 'P1',
+            title: 'Reduce message resistance',
+            detail: `Lower the ${frictionScore}% friction score by tightening the headline-to-visual handoff and removing avoidable ambiguity.`,
+        });
+    } else {
+        priorities.push({
+            priority: 'P1',
+            title: 'Protect the winning mechanic',
+            detail: `Keep ${extraction?.primary_mechanic?.toLowerCase() || 'the primary persuasion engine'} intact while pressure-testing only secondary execution choices.`,
+        });
+    }
+
+    if (confidenceScore === null || confidenceScore < 85) {
+        priorities.push({
+            priority: 'P2',
+            title: 'Raise decision confidence',
+            detail:
+                confidenceScore === null
+                    ? 'Clarify the strategic posture and supporting evidence before this route is taken into a client-facing room.'
+                    : `Move confidence beyond ${confidenceScore}/100 by making the strategic case more explicit and easier to defend.`,
+        });
+    } else {
+        priorities.push({
+            priority: 'P2',
+            title: 'Sharpen execution DNA',
+            detail: 'Refine compositional hierarchy, gaze routing, and chromatic punctuation without disturbing the route’s core logic.',
+        });
+    }
+
+    if (persuasionDensity !== null && persuasionDensity < 70) {
+        priorities.push({
+            priority: 'P3',
+            title: 'Increase persuasion pressure',
+            detail: `Lift the ${persuasionDensity}% density score by tightening the value signal and making the mechanism land faster.`,
+        });
+    } else {
+        priorities.push({
+            priority: 'P3',
+            title: 'Document the adaptation boundary',
+            detail:
+                firstSentence(dossier?.test_plan?.hypothesis) ||
+                'Record what can change safely so future refinements do not break the route’s strongest working signals.',
+        });
+    }
+
+    return priorities;
+};
+
+const withSeverity = (items: string[], order: ConstraintSeverity[]): ConstraintItem[] =>
+    items
+        .map((item) => item?.trim())
+        .filter(Boolean)
+        .map((text, index) => ({
+            text,
+            severity: order[index] || order[order.length - 1] || 'optional',
+        }));
 
 const parseDossierSections = (content: string | undefined, type: 'ACT' | 'CHANNEL') => {
     if (!content) {
@@ -748,7 +986,7 @@ export default function AssetWorkspace({
     sampleMode?: boolean,
 }) {
     const [asset, setAsset] = useState(initialAsset);
-    const [activeTab, setActiveTab] = useState<DossierTab>('INTELLIGENCE');
+    const [activeTab, setActiveTab] = useState<DossierTab>('QUALITY GATE');
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
     const [isGeneratingBlueprint, setIsGeneratingBlueprint] = useState(false);
     const [isGeneratingClone, setIsGeneratingClone] = useState(false);
@@ -790,6 +1028,62 @@ export default function AssetWorkspace({
     const { lead: cloneIntroLead, remainder: cloneIntroRemainder } = splitLeadSentence(cloneIntroSource);
     const marketPulseBelowThreshold = (marketPulseData?.assetCount ?? 0) > 0 && (marketPulseData?.assetCount ?? 0) < 20;
     const dossierTabs = sampleMode ? SAMPLE_DOSSIER_TABS : FULL_DOSSIER_TABS;
+    const confidenceScore = normalizeConfidenceScore(extraction?.confidence_score);
+    const frictionScore =
+        typeof dossier?.persuasion_metrics?.cognitive_friction === 'number'
+            ? dossier.persuasion_metrics.cognitive_friction
+            : null;
+    const persuasionDensity =
+        typeof dossier?.persuasion_metrics?.persuasion_density === 'number'
+            ? dossier.persuasion_metrics.persuasion_density
+            : null;
+    const qualityVerdict = deriveQualityVerdict(confidenceScore, frictionScore, persuasionDensity);
+    const failureReasons = qualityFailureReasons({
+        confidenceScore,
+        frictionScore,
+        persuasionDensity,
+        extraction,
+        dossier,
+    });
+    const fixPriorities = qualityFixPriorities({
+        confidenceScore,
+        frictionScore,
+        persuasionDensity,
+        dossier,
+        extraction,
+    });
+    const mustKeepConstraints = withSeverity(
+        blueprintData?.execution_constraints.must_include?.length
+            ? blueprintData.execution_constraints.must_include
+            : [
+                  extraction?.primary_mechanic ? `Protect the primary mechanic: ${extraction.primary_mechanic}` : '',
+                  firstSentence(dossier?.archetype_mapping?.target_posture),
+                  firstSentence(dossier?.possible_readings?.[0]?.reading),
+              ],
+        ['critical', 'high', 'optional'],
+    );
+    const mustAvoidConstraints = withSeverity(
+        blueprintData?.execution_constraints.must_not_include?.length
+            ? blueprintData.execution_constraints.must_not_include
+            : [
+                  firstSentence(dossier?.objection_dismantling),
+                  frictionScore !== null && frictionScore > 25
+                      ? `Do not increase message friction beyond the current ${frictionScore}% resistance level.`
+                      : '',
+                  persuasionDensity !== null && persuasionDensity < 70
+                      ? 'Avoid weakening the central value signal any further.'
+                      : '',
+              ],
+        ['critical', 'high', 'optional'],
+    );
+    const safeAdaptationZone = withSeverity(
+        blueprintData?.visual_variant_prompts?.length
+            ? blueprintData.visual_variant_prompts.map((variant) => variant.concept)
+            : blueprintData?.ad_copy_remixes?.length
+                ? blueprintData.ad_copy_remixes.map((remix) => remix.angle)
+                : dossier?.test_plan?.test_cells?.map((cell: any) => `${cell.lever}: ${cell.change}`) || [],
+        ['high', 'optional', 'optional'],
+    );
     
     // Parse visual style string if it's stringified JSON
     let parsedStyle = extraction?.visual_style;
@@ -1836,7 +2130,7 @@ export default function AssetWorkspace({
                                 className={`pb-4 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors relative ${activeTab === tab ? 'text-[#8B4513]' : 'text-[#1A1A1A]/50 hover:text-[#8B4513]/80'
                                     }`}
                             >
-                                {tab}
+                                {DOSSIER_TAB_LABELS[tab]}
                                 {activeTab === tab && (
                                     <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#8B4513]" />
                                 )}
@@ -1846,6 +2140,81 @@ export default function AssetWorkspace({
 
                     {/* Tab Content Area */}
                     <div className="px-[clamp(16px,2vw,32px)] py-[clamp(16px,1.6vw,28px)]">
+                        {activeTab === 'QUALITY GATE' && (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                {extraction ? (
+                                    <div className="space-y-10">
+                                        <WorkspaceTabHeader
+                                            kicker="Diagnosis Workflow"
+                                            title="Quality Gate"
+                                            intro="VD does not generate ads or act as an AI design app. VD judges, diagnoses, and directs creative quality."
+                                        />
+
+                                        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                                <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                                                    <div>
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Verdict</p>
+                                                        <h3 className="mt-3 text-[2rem] font-semibold tracking-tight text-[#16120D] md:text-[2.5rem]">
+                                                            {qualityVerdict}
+                                                        </h3>
+                                                    </div>
+                                                    <div className="rounded-[1.5rem] border border-[#E6DDCF] bg-[#FBFBF6] px-5 py-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Confidence Score</p>
+                                                        <div className="mt-3 flex items-end gap-1">
+                                                            <span className="text-4xl font-semibold tracking-tight text-[#16120D]">
+                                                                {confidenceScore ?? '—'}
+                                                            </span>
+                                                            <span className="pb-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#8B7B62]">/100</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p className="mt-5 max-w-[58ch] text-[15px] leading-7 text-[#1A1A1A]/76">
+                                                    We don&apos;t generate ads. We judge, diagnose, and direct quality.
+                                                </p>
+                                            </div>
+
+                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Top 3 Failure Reasons</p>
+                                                <div className="mt-5 space-y-4">
+                                                    {failureReasons.map((reason, index) => (
+                                                        <div key={`${reason.title}-${index}`} className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B4513]">{reason.title}</p>
+                                                            <p className="mt-2 text-[14px] leading-6 text-[#1A1A1A]/74">{reason.detail}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Fix Priority Order</p>
+                                            <div className="mt-5 grid gap-4 lg:grid-cols-3">
+                                                {fixPriorities.map((item) => (
+                                                    <div key={item.priority} className="rounded-[1.4rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B4513]">{item.priority}</p>
+                                                        <p className="mt-3 text-[15px] font-semibold tracking-tight text-[#16120D]">{item.title}</p>
+                                                        <p className="mt-2 text-[13px] leading-6 text-[#1A1A1A]/72">{item.detail}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <DossierDecisionSummary
+                                            extraction={extraction}
+                                            dossier={dossier}
+                                            narrativeIntro={parseDossierSections(dossier?.narrative_framework, 'ACT').intro}
+                                            isExecutiveSummary={isExecutiveSummary}
+                                            onToggleExecutiveSummary={setIsExecutiveSummary}
+                                            evidenceHref="#dossier-evidence"
+                                        />
+                                    </div>
+                                ) : (
+                                    <SovereignProcessingView assetId={asset.id} />
+                                )}
+                            </div>
+                        )}
+
                         {/* TAB 1: INTELLIGENCE */}
                         {activeTab === 'INTELLIGENCE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -1904,15 +2273,6 @@ export default function AssetWorkspace({
                                                           </div>
                                                       </div>
                                                  </div>
-
-                                                <DossierDecisionSummary
-                                                    extraction={extraction}
-                                                    dossier={dossier}
-                                                    narrativeIntro={narrativeSections.intro}
-                                                    isExecutiveSummary={isExecutiveSummary}
-                                                    onToggleExecutiveSummary={setIsExecutiveSummary}
-                                                    evidenceHref="#dossier-evidence"
-                                                />
 
                                             </>
                                         )}
@@ -2016,8 +2376,8 @@ export default function AssetWorkspace({
                                     <div className="space-y-10">
                                         <WorkspaceTabHeader
                                             kicker="Pattern Extraction"
-                                            title="Technical Autopsy"
-                                            intro="A structural decomposition of the creative signal stack—hooks, pacing, contrast, and attention-routing cues that drive response."
+                                            title="Signals / Mechanics"
+                                            intro="A structural decomposition of the signal stack and mechanic architecture—hooks, pacing, contrast, and attention-routing cues that drive response."
                                         />
                                         
                                         {/* UNIFIED TECHNICAL AUTOPSY CONTAINER */}
@@ -2125,6 +2485,81 @@ export default function AssetWorkspace({
                                          <p className="max-w-xs text-[13px] font-light tracking-wide text-[#B9B19F]">Signal interception requires deep architectural extraction of this asset's semiotic layers.</p>
                                      </div>
                                 )}
+                            </div>
+                        )}
+
+                        {activeTab === 'CONSTRAINT MAP' && (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="space-y-10">
+                                    <WorkspaceTabHeader
+                                        kicker="Operational Guardrails"
+                                        title="Constraint Map"
+                                        intro="The non-negotiables, avoidances, and safe adaptation boundaries that keep refinement inside the working forensic logic."
+                                    />
+
+                                    <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Product Boundary</p>
+                                        <p className="mt-4 max-w-[66ch] text-[15px] leading-7 text-[#1A1A1A]/76">
+                                            VD does not generate ads or act as an AI design app. VD judges, diagnoses, and directs creative quality.
+                                        </p>
+                                    </div>
+
+                                    <div className="grid gap-6 xl:grid-cols-3">
+                                        {[
+                                            {
+                                                title: 'Must Keep',
+                                                items: mustKeepConstraints,
+                                                accent: 'text-[#D4A882]',
+                                                bg: 'bg-white/80',
+                                            },
+                                            {
+                                                title: 'Must Avoid',
+                                                items: mustAvoidConstraints,
+                                                accent: 'text-[#C8230A]',
+                                                bg: 'bg-white/80',
+                                            },
+                                            {
+                                                title: 'Safe Adaptation Zone',
+                                                items: safeAdaptationZone,
+                                                accent: 'text-[#8B4513]',
+                                                bg: 'bg-white/80',
+                                            },
+                                        ].map((group) => (
+                                            <div
+                                                key={group.title}
+                                                className={`rounded-[2rem] border border-[#E6DDCF] ${group.bg} p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]`}
+                                            >
+                                                <p className={`text-[10px] font-bold uppercase tracking-[0.28em] ${group.accent}`}>{group.title}</p>
+                                                <div className="mt-5 space-y-3">
+                                                    {group.items.length > 0 ? (
+                                                        group.items.map((item, index) => (
+                                                            <div key={`${group.title}-${index}`} className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
+                                                                <div className="flex items-center justify-between gap-4">
+                                                                    <p className="text-[14px] leading-6 text-[#16120D]">{item.text}</p>
+                                                                    <span
+                                                                        className={`shrink-0 rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
+                                                                            item.severity === 'critical'
+                                                                                ? 'bg-[#C8230A]/10 text-[#C8230A]'
+                                                                                : item.severity === 'high'
+                                                                                    ? 'bg-[#D4A882]/12 text-[#8B4513]'
+                                                                                    : 'bg-[#16120D]/6 text-[#6F6659]'
+                                                                        }`}
+                                                                    >
+                                                                        {item.severity}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        ))
+                                                    ) : (
+                                                        <div className="rounded-[1.25rem] border border-dashed border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4 text-[13px] leading-6 text-[#1A1A1A]/60">
+                                                            Blueprint Trace will populate this boundary once reconstruction data is available.
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         )}
 
@@ -2500,18 +2935,18 @@ export default function AssetWorkspace({
                         {activeTab === 'BLUEPRINT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <WorkspaceTabHeader
-                                    kicker="Execution Logic"
-                                    title="Rebuild Blueprint"
-                                    intro="A production-ready deconstruction of what to keep, what to refine, and what to rebuild for stronger performance."
+                                    kicker="Audit & Reproducibility"
+                                    title="Blueprint Trace"
+                                    intro="A reproducible reconstruction path showing what was diagnosed, what can change safely, and how the route can be audited without turning VD into generation tooling."
                                 />
                                 {!blueprintData ? (
                                 <div className="flex flex-col items-center justify-center rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-10 text-center text-[#FBFBF6]">
-                                        <h3 className="text-[#D4A574] text-lg font-medium mb-2">Production Blueprint Uninitialized</h3>
-                                        <p className="mb-4 max-w-sm text-sm text-[#B9B19F]">Synthesize the extraction data into elite execution constraints.</p>
-                                        <p className="text-[#D4A574]/60 text-[10px] font-bold uppercase tracking-[0.28em] mb-8">Generated blueprints are now saved to this asset automatically.</p>
+                                        <h3 className="text-[#D4A574] text-lg font-medium mb-2">Blueprint Trace Uninitialized</h3>
+                                        <p className="mb-4 max-w-sm text-sm text-[#B9B19F]">Build the reproducibility layer for this diagnosis so the working route can be audited and pressure-tested.</p>
+                                        <p className="text-[#D4A574]/60 text-[10px] font-bold uppercase tracking-[0.28em] mb-8">This trace is saved to the asset for audit transparency, not ad generation.</p>
                                         {blueprintError && (
                                             <div className="mb-6 max-w-md rounded-2xl border border-[#5B2418] bg-[#271612] px-5 py-4">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574] mb-2">Blueprint Generation Failed</p>
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574] mb-2">Blueprint Trace Failed</p>
                                                 <p className="text-sm leading-relaxed text-[#D6D0C6]">{blueprintError}</p>
                                             </div>
                                         )}
@@ -2528,7 +2963,7 @@ export default function AssetWorkspace({
                                                      />
                                                  </div>
                                                  <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#B9B19F]">
-                                                     Synthesizing live forensic dossier into elite production constraints.
+                                                     Converting the live forensic dossier into an auditable reconstruction path.
                                                  </p>
                                              </div>
                                          )}
@@ -2537,7 +2972,7 @@ export default function AssetWorkspace({
                                             disabled={isGeneratingBlueprint || !extraction}
                                             className="bg-[#D4A574] text-[#1A1A1A] px-8 py-3.5 text-[10px] font-bold tracking-widest uppercase hover:bg-[#FFFCF7] hover:text-[#151310] rounded-full transition-all disabled:opacity-50"
                                         >
-                                            {isGeneratingBlueprint ? 'Synthesizing Execution Constraints...' : 'Generate Blueprint'}
+                                            {isGeneratingBlueprint ? 'Building Blueprint Trace...' : 'Generate Blueprint Trace'}
                                         </button>
                                     </div>
                                 ) : (
@@ -2548,8 +2983,8 @@ export default function AssetWorkspace({
                                                     <Sparkles className="h-5 w-5 text-[#D4A574]" />
                                                 </div>
                                                 <div>
-                                                    <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Production Blueprint Active</p>
-                                                    <p className="mt-1 text-[13px] text-[#B9B19F]">This deconstruction is indexed in the Intelligence Vault for ongoing retrieval.</p>
+                                                    <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Blueprint Trace Active</p>
+                                                    <p className="mt-1 text-[13px] text-[#B9B19F]">This audit trail is indexed in the Intelligence Vault for reproducibility and review.</p>
                                                 </div>
                                             </div>
                                             <button
@@ -2557,8 +2992,15 @@ export default function AssetWorkspace({
                                                 disabled={isGeneratingBlueprint}
                                                 className="flex items-center gap-2 rounded-full border border-[#4E3D2A] bg-[#171512] px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#D4A574] transition-all hover:border-[#D4A574]/60 hover:bg-[#201b15] hover:text-[#F3F1ED] disabled:opacity-50"
                                             >
-                                                {isGeneratingBlueprint ? 'Refreshing...' : 'Regenerate'}
+                                                {isGeneratingBlueprint ? 'Refreshing...' : 'Refresh Trace'}
                                             </button>
+                                        </div>
+
+                                        <div className="rounded-[2rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5 text-[#FBFBF6]">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Product Boundary</p>
+                                            <p className="mt-3 max-w-[68ch] text-[14px] leading-7 text-[#D6D0C6]">
+                                                Blueprint Trace preserves reconstruction paths for audit transparency and reproducibility. It does not turn VD into generation or design tooling.
+                                            </p>
                                         </div>
 
                                         {isGeneratingBlueprint && (
@@ -2574,7 +3016,7 @@ export default function AssetWorkspace({
                                                     />
                                                 </div>
                                                 <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#B9B19F]">
-                                                    Regenerating the production blueprint against the current forensic dossier.
+                                                    Regenerating the blueprint trace against the current forensic dossier.
                                                 </p>
                                             </div>
                                         )}
@@ -2653,18 +3095,18 @@ export default function AssetWorkspace({
                                         {/* DNA Prompt Code Block */}
                                         <div className="space-y-4">
                                             <div className="flex items-center gap-4">
-                                                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Verified DNA Prompt</span>
+                                                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Reconstruction Trace</span>
                                                 <span className="h-px flex-1 bg-[#4E3D2A]"></span>
                                             </div>
                                             <div className="relative group overflow-hidden rounded-[2rem] border border-[#4E3D2A] bg-[#171512] shadow-inner">
                                                 <div className="absolute top-4 right-6 flex items-center gap-3">
-                                                    <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#B9B19F]">Forensic Code Layer</span>
+                                                    <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#B9B19F]">Audit Trace Layer</span>
                                                     <button
                                                         className="flex items-center gap-2 rounded-full border border-[#4E3D2A] bg-[#1F1F1F] px-3 py-1 text-[9px] font-bold uppercase tracking-widest text-[#D4A574] transition-all hover:border-[#D4A574]/60 hover:bg-[#201b15] hover:text-[#F3F1ED]"
                                                         onClick={() => navigator.clipboard.writeText(blueprintData.verified_dna_prompt)}
                                                     >
                                                         <Copy className="h-2.5 w-2.5" />
-                                                        Copy
+                                                        Copy Trace
                                                     </button>
                                                 </div>
                                                 <pre className="whitespace-pre-wrap p-8 pt-12 text-[13px] font-mono leading-relaxed text-[#D6D0C6] selection:bg-[#D4A574]/40">
@@ -2790,7 +3232,7 @@ export default function AssetWorkspace({
                                         {blueprintData.visual_variant_prompts && blueprintData.visual_variant_prompts.length > 0 && (
                                             <div className="space-y-6">
                                                 <div className="flex items-center gap-4">
-                                                    <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Visual Concept Variants</span>
+                                                    <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Adaptation Trace Variants</span>
                                                     <span className="h-px flex-1 bg-[#4E3D2A]"></span>
                                                 </div>
                                                 <div className="space-y-6">
@@ -2813,6 +3255,42 @@ export default function AssetWorkspace({
 
                                     </div>
                                 )}
+                            </div>
+                        )}
+
+                        {activeTab === 'STRESS LAB' && (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="space-y-8">
+                                    <WorkspaceTabHeader
+                                        kicker="Phase 2 Placeholder"
+                                        title="Stress Lab"
+                                        intro="Controlled variable shifts will land here next, so teams can isolate causal leverage without leaving the diagnosis workflow."
+                                    />
+                                    <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Coming Next</p>
+                                        <p className="mt-4 max-w-[62ch] text-[15px] leading-7 text-[#1A1A1A]/76">
+                                            Stress Lab will use the current mechanic, constraint map, and confidence state to test controlled changes without turning VD into an ad generator.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'DECISION LOG' && (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="space-y-8">
+                                    <WorkspaceTabHeader
+                                        kicker="Phase 2 Placeholder"
+                                        title="Decision Log"
+                                        intro="A compact operating log for what was approved, revised, or rejected so diagnosis turns into accountable creative direction."
+                                    />
+                                    <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Coming Next</p>
+                                        <p className="mt-4 max-w-[62ch] text-[15px] leading-7 text-[#1A1A1A]/76">
+                                            Decision Log will sit after Quality Gate so teams can record what moved forward, what was revised, and why the call was made.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         )}
 
