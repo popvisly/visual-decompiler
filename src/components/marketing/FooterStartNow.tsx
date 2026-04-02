@@ -37,7 +37,7 @@ export default function FooterStartNow() {
                             >
                                 Start free. See real <span className="text-[#F4A700]">output</span> in minutes.
                             </motion.h2>
-                            <p className="mx-auto max-w-xl text-[16px] leading-relaxed text-[#4F4941] md:text-[18px] font-medium tracking-tight lg:mx-0">
+                            <p className="mx-auto max-w-xl text-[16px] leading-relaxed text-[#474238] md:text-[18px] font-medium tracking-tight lg:mx-0">
                                 Upload a competitor ad and get your first client-ready dossier. No card required.
                             </p>
                         </div>
@@ -48,7 +48,7 @@ export default function FooterStartNow() {
                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A56F]">
                                     Start with Observer
                                 </p>
-                                <p className="mt-3 text-[15px] leading-relaxed text-[#4F4941]">
+                                <p className="mt-3 text-[15px] leading-relaxed text-[#474238]">
                                     Get real analysis first, then scale into team workflows when it matters.
                                 </p>
 

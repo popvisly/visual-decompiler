@@ -200,7 +200,7 @@ const STEP_PUNCH: Record<string, string> = {
     operating: 'Run the whole system like an agency engine.',
 };
 
-const SECTION_BAND = 'px-6 py-16 md:py-24';
+const SECTION_BAND = 'px-6 py-18 md:py-24';
 const LIGHT_SURFACE = 'bg-transparent';
 const TAN_CTA =
     'group inline-flex items-center justify-center gap-2 rounded-full border border-[#D4A574] bg-[#D4A574] px-7 py-3.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#141414] shadow-[0_16px_34px_rgba(20,20,20,0.2)] transition-all duration-300 hover:-translate-y-[1px] hover:bg-[#D7B07A] hover:border-[#D7B07A] hover:shadow-[0_20px_38px_rgba(20,20,20,0.24)] sm:min-w-[220px] sm:w-auto sm:px-8 sm:py-4 sm:text-[12px] sm:tracking-[0.2em]';
@@ -220,7 +220,7 @@ function DifferentialDiagnosisSection() {
                 <h3 className="max-w-4xl text-[34px] font-bold leading-[1.1] tracking-tight text-[#141414] md:text-5xl">
                     Differential <span className="text-[#F4A700]">Diagnostic</span>
                 </h3>
-                <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#4F4941] md:text-[18px] font-medium tracking-tight">
+                <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#474238] md:text-[18px] font-medium tracking-tight">
                     Choose two assets and surface the strategic delta, persuasion lift, and fatigue gap before you commit creative direction.
                 </p>
 
@@ -309,10 +309,10 @@ function WhyDifferentSection() {
                         WHY TEAMS SWITCH
                     </p>
                     <AccentBar />
-                    <h2 className="mt-5 text-[34px] font-bold leading-[1] tracking-tight text-[#141414] md:text-5xl">
+                    <h2 className="mt-5 max-w-[13ch] text-[34px] font-bold leading-[0.98] tracking-tight text-[#141414] md:text-5xl">
                         Forensic intelligence your team can <span className="text-[#D4A574]">act</span> on in minutes.
                     </h2>
-                    <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#4F4941] md:text-[18px] font-medium tracking-tight">
+                    <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#474238] md:text-[18px] font-medium tracking-tight">
                         See exactly where generic spy tools stop and where Visual Decompiler creates client-ready strategic outputs.
                     </p>
                 </div>
@@ -394,7 +394,7 @@ function PlatformSystemGrid() {
                 >
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">0{index + 1}</p>
                     <h3 className="mt-2 text-[15px] font-semibold leading-snug text-[#141414]">{section.label}</h3>
-                    <p className="mt-2 max-w-[25ch] text-sm leading-6 text-[#4F4941]">{STEP_PUNCH[section.id]}</p>
+                    <p className="mt-2 max-w-[25ch] text-sm leading-6 text-[#474238]">{STEP_PUNCH[section.id]}</p>
                 </motion.article>
             ))}
         </div>
@@ -403,7 +403,7 @@ function PlatformSystemGrid() {
 
 function SingleAssetDeconstruction() {
     return (
-        <section className="relative overflow-hidden scroll-mt-20 bg-transparent px-6 py-14 md:scroll-mt-24 md:py-16 lg:scroll-mt-[104px]">
+        <section className="relative overflow-hidden scroll-mt-20 bg-transparent px-6 py-18 md:scroll-mt-24 md:py-24 lg:scroll-mt-[104px]">
             <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
                 <div className="grid gap-10 lg:grid-cols-[1.05fr_0.8fr] lg:items-start lg:gap-12">
                     <div>
@@ -415,18 +415,18 @@ function SingleAssetDeconstruction() {
                         <h2 className="max-w-2xl text-[32px] font-bold leading-[1.06] tracking-tight text-[#141414] md:text-[42px]">
                             Deconstruct the hidden <span className="text-[#D7B07A]">persuasion</span> architecture.
                         </h2>
-                        <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#4F4941] md:text-[17px] font-medium tracking-tight">
+                        <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#474238] md:text-[17px] font-medium tracking-tight">
                             Upload any competitor ad and get a client-ready strategic dossier — psychology, signals, and a reconstruction blueprint — in under 60 seconds.
                         </p>
 
                         <div className="mt-8 grid gap-5 sm:grid-cols-2">
                             <div className="rounded-r-xl border-l-[3px] border-[#D4A574] bg-[#F8F3EA] py-3 pl-6 shadow-[0_10px_22px_rgba(20,20,20,0.03)]">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] mb-2">Automated Extraction</p>
-                                <p className="text-[14px] leading-relaxed text-[#4F4941]">Hidden signals and subtext surfaced instantly.</p>
+                                <p className="text-[14px] leading-relaxed text-[#474238]">Hidden signals and subtext surfaced instantly.</p>
                             </div>
                             <div className="rounded-r-xl border-l-[3px] border-[#D4A574] bg-[#F8F3EA] py-3 pl-6 shadow-[0_10px_22px_rgba(20,20,20,0.03)]">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] mb-2">Strategic Interpretation</p>
-                                <p className="text-[14px] leading-relaxed text-[#4F4941]">Raw data turned into clinical, action-ready moves.</p>
+                                <p className="text-[14px] leading-relaxed text-[#474238]">Raw data turned into clinical, action-ready moves.</p>
                             </div>
                         </div>
                     </div>
@@ -463,7 +463,7 @@ export default function ProductProofSequence() {
                         <h2 className="mt-5 max-w-5xl text-[34px] font-bold leading-[1] tracking-tight text-[#141414] md:text-5xl">
                             The <span className="text-[#D4A574]">operating</span> layer behind every forensic readout.
                         </h2>
-                        <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#4F4941] md:text-[18px] font-medium tracking-tight">
+                        <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#474238] md:text-[18px] font-medium tracking-tight">
                             Move from one asset to compounding intelligence, execution-ready outputs, and agency delivery without adding workflow noise.
                         </p>
                     </div>

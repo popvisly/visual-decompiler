@@ -40,7 +40,7 @@ export default function Hero({
                                 <span className="mt-2 block text-[#D7B07A]">creative surface.</span>
                             </h2>
 
-                            <p className="mt-5 max-w-lg text-[15px] font-medium leading-[1.65] text-[#4F4941] md:text-[17px]">
+                            <p className="mt-5 max-w-lg text-[15px] font-medium leading-[1.65] text-[#474238] md:text-[17px]">
                                 Visual Decompiler maps the hidden persuasion architecture that drives category movement — from high-concept prestige storytelling to utility-led performance.
                             </p>
                         </motion.div>
@@ -60,7 +60,7 @@ export default function Hero({
                                     className="rounded-[1.6rem] border border-[#D3C4AD] bg-[#FBFBF6] p-6 text-left shadow-[0_18px_36px_rgba(20,20,20,0.06)]"
                                 >
                                     <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">{item.label}</p>
-                                    <p className="text-[14px] font-medium leading-relaxed text-[#504A41]">{item.body}</p>
+                                    <p className="text-[14px] font-medium leading-relaxed text-[#474238]">{item.body}</p>
                                 </motion.div>
                             ))}
                         </div>
