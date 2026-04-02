@@ -171,7 +171,7 @@ const SAMPLE_DOSSIER_TABS: readonly DossierTab[] = [
 const DOSSIER_TAB_LABELS: Record<DossierTab, string> = {
     'QUALITY GATE': 'QUALITY GATE',
     'INTELLIGENCE': 'INTELLIGENCE',
-    'SIGNALS': 'SIGNALS',
+    'SIGNALS': 'SIGNALS / MECHANICS',
     'PSYCHOLOGY': 'PSYCHOLOGY',
     'CONSTRAINT MAP': 'CONSTRAINT MAP',
     'BLUEPRINT': 'BLUEPRINT TRACE',
@@ -237,6 +237,25 @@ type FixPriority = {
     priority: 'P1' | 'P2' | 'P3';
     title: string;
     detail: string;
+};
+
+type StressLabRow = {
+    variable: string;
+    currentState: string;
+    proposedShift: string;
+    predictedLift: 'Low' | 'Medium' | 'High';
+    risk: 'Low' | 'Medium' | 'High';
+    recommendation: 'Test' | 'Avoid' | 'Hold';
+};
+
+type DecisionLogEntry = {
+    id: string;
+    timestamp: string;
+    verdict: QualityVerdict;
+    confidence: number | null;
+    rationale: string;
+    p1Fix: string;
+    teamNote?: string;
 };
 
 const parseBlueprint = (value: BlueprintData | string | null | undefined): BlueprintData | null => {
@@ -482,6 +501,148 @@ const withSeverity = (items: string[], order: ConstraintSeverity[]): ConstraintI
             text,
             severity: order[index] || order[order.length - 1] || 'optional',
         }));
+
+const deriveStressLabRows = ({
+    dossier,
+    blueprintData,
+    frictionScore,
+    persuasionDensity,
+    confidenceScore,
+}: {
+    dossier: any;
+    blueprintData: BlueprintData | null;
+    frictionScore: number | null;
+    persuasionDensity: number | null;
+    confidenceScore: number | null;
+}): StressLabRow[] => {
+    const materialCueCount = blueprintData?.technical_specs.material_cues?.length ?? 0;
+    const hasStrongPalette = materialCueCount >= 2;
+    const hasGazeSignal = Boolean(blueprintData?.technical_specs.gaze_vector || dossier?.gaze_topology?.viewer_position);
+    const hypothesis = firstSentence(dossier?.test_plan?.hypothesis);
+
+    return [
+        {
+            variable: 'Composition emphasis',
+            currentState: firstSentence(dossier?.archetype_mapping?.target_posture) || 'Current composition is carrying the main brand posture.',
+            proposedShift:
+                frictionScore !== null && frictionScore > 25
+                    ? 'Tighten hierarchy around the dominant focal object and remove secondary visual noise.'
+                    : 'Hold the current frame structure and only test minor hierarchy compression.',
+            predictedLift: frictionScore !== null && frictionScore > 25 ? 'High' : 'Medium',
+            risk: confidenceScore !== null && confidenceScore >= 85 ? 'Medium' : 'Low',
+            recommendation: frictionScore !== null && frictionScore > 25 ? 'Test' : 'Hold',
+        },
+        {
+            variable: 'Chromatic intensity',
+            currentState: hasStrongPalette ? 'Chromatic punctuation is already doing meaningful persuasion work.' : 'Color signal is present but not yet carrying enough pressure.',
+            proposedShift:
+                persuasionDensity !== null && persuasionDensity < 70
+                    ? 'Increase controlled contrast around the main value cue rather than broad saturation.'
+                    : 'Preserve current palette and test only small accent intensification.',
+            predictedLift: persuasionDensity !== null && persuasionDensity < 70 ? 'Medium' : 'Low',
+            risk: hasStrongPalette ? 'Low' : 'Medium',
+            recommendation: persuasionDensity !== null && persuasionDensity < 70 ? 'Test' : 'Hold',
+        },
+        {
+            variable: 'Gaze direction',
+            currentState: firstSentence(blueprintData?.technical_specs.gaze_vector) || firstSentence(dossier?.gaze_topology?.reading) || 'Viewer address is stable but still open to routing refinement.',
+            proposedShift: hasGazeSignal
+                ? 'Sharpen eyeflow toward the product or message endpoint without changing the subject role.'
+                : 'Do not introduce a new gaze vector until the current posture is clearer.',
+            predictedLift: hasGazeSignal ? 'Medium' : 'Low',
+            risk: hasGazeSignal ? 'Low' : 'High',
+            recommendation: hasGazeSignal ? 'Test' : 'Avoid',
+        },
+        {
+            variable: 'Copy compression',
+            currentState: firstSentence(dossier?.possible_readings?.[0]?.reading) || 'Message pressure is readable but could land faster.',
+            proposedShift:
+                frictionScore !== null && frictionScore > 25
+                    ? 'Compress the message into one harder-working value line and strip explanatory excess.'
+                    : 'Preserve the message spine and only tighten non-essential wording.',
+            predictedLift: frictionScore !== null && frictionScore > 25 ? 'High' : 'Medium',
+            risk: persuasionDensity !== null && persuasionDensity >= 80 ? 'Medium' : 'Low',
+            recommendation: frictionScore !== null && frictionScore > 25 ? 'Test' : 'Hold',
+        },
+        {
+            variable: 'CTA prominence',
+            currentState: hypothesis || 'Call-to-action pressure is currently implied through the broader mechanism.',
+            proposedShift:
+                persuasionDensity !== null && persuasionDensity < 70
+                    ? 'Increase CTA prominence only if it supports the existing mechanic rather than competing with it.'
+                    : 'Keep CTA pressure restrained and aligned with the current status/value signal.',
+            predictedLift: persuasionDensity !== null && persuasionDensity < 70 ? 'Medium' : 'Low',
+            risk: confidenceScore !== null && confidenceScore >= 85 ? 'Medium' : 'Low',
+            recommendation: persuasionDensity !== null && persuasionDensity < 70 ? 'Test' : 'Hold',
+        },
+    ];
+};
+
+const deriveMarketPulseFallback = ({
+    dossier,
+    confidenceScore,
+    frictionScore,
+    persuasionDensity,
+}: {
+    dossier: any;
+    confidenceScore: number | null;
+    frictionScore: number | null;
+    persuasionDensity: number | null;
+}) => {
+    const saturation = Math.max(
+        38,
+        Math.min(
+            88,
+            Math.round(
+                (persuasionDensity ?? 60) * 0.55 +
+                (frictionScore ?? 20) * 0.35 +
+                ((dossier?.possible_readings?.length ?? 1) * 6),
+            ),
+        ),
+    );
+    const novelty = Math.max(
+        24,
+        Math.min(
+            90,
+            Math.round(
+                (confidenceScore ?? 60) * 0.45 +
+                Math.max(0, 100 - saturation) * 0.35 +
+                ((dossier?.archetype_mapping?.strategic_moves?.length ?? 1) * 7),
+            ),
+        ),
+    );
+    const fatigue = Math.max(
+        18,
+        Math.min(
+            86,
+            Math.round(
+                saturation * 0.5 +
+                ((frictionScore ?? 20) * 0.3) +
+                Math.max(0, 70 - novelty) * 0.25,
+            ),
+        ),
+    );
+
+    let timingSignal = 'Window open for measured deployment.';
+    if (fatigue >= 65) timingSignal = 'Use selectively. The category is already showing fatigue pressure.';
+    else if (novelty >= 72) timingSignal = 'Push now. The route still has timing advantage.';
+
+    let interpretation = 'This read is directional because it is inferred from current dossier signals rather than a full external benchmark set.';
+    if (saturation >= 70) {
+        interpretation = 'Category pressure is elevated, so the route needs sharper differentiation and tighter execution discipline before scaling.';
+    } else if (novelty >= 72) {
+        interpretation = 'The route is still carrying novelty relative to current category pressure, so measured rollout has strategic upside now.';
+    }
+
+    return {
+        saturation,
+        novelty,
+        fatigue,
+        timingSignal,
+        interpretation,
+        confidenceLabel: 'Directional estimate',
+    };
+};
 
 const parseDossierSections = (content: string | undefined, type: 'ACT' | 'CHANNEL') => {
     if (!content) {
@@ -1008,6 +1169,8 @@ export default function AssetWorkspace({
     const [blueprintStep, setBlueprintStep] = useState(0);
     const [cloneProgress, setCloneProgress] = useState(0);
     const [cloneStep, setCloneStep] = useState(0);
+    const [decisionLogEntries, setDecisionLogEntries] = useState<DecisionLogEntry[]>([]);
+    const [decisionNote, setDecisionNote] = useState('');
 
     const [sequenceData, setSequenceData] = useState<SequenceData | null>(null);
     const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(
@@ -1084,6 +1247,20 @@ export default function AssetWorkspace({
                 : dossier?.test_plan?.test_cells?.map((cell: any) => `${cell.lever}: ${cell.change}`) || [],
         ['high', 'optional', 'optional'],
     );
+    const stressLabRows = deriveStressLabRows({
+        dossier,
+        blueprintData,
+        frictionScore,
+        persuasionDensity,
+        confidenceScore,
+    });
+    const marketPulseFallback = deriveMarketPulseFallback({
+        dossier,
+        confidenceScore,
+        frictionScore,
+        persuasionDensity,
+    });
+    const decisionLogStorageKey = `vd_decision_log_${asset.id}`;
     
     // Parse visual style string if it's stringified JSON
     let parsedStyle = extraction?.visual_style;
@@ -1121,6 +1298,25 @@ export default function AssetWorkspace({
             clearInterval(stepInterval);
         };
     }, [isGeneratingBlueprint]);
+
+    useEffect(() => {
+        try {
+            const stored = window.localStorage.getItem(decisionLogStorageKey);
+            if (!stored) {
+                setDecisionLogEntries([]);
+                return;
+            }
+
+            const parsed = JSON.parse(stored) as DecisionLogEntry[];
+            setDecisionLogEntries(Array.isArray(parsed) ? parsed : []);
+        } catch {
+            setDecisionLogEntries([]);
+        }
+    }, [decisionLogStorageKey]);
+
+    useEffect(() => {
+        window.localStorage.setItem(decisionLogStorageKey, JSON.stringify(decisionLogEntries));
+    }, [decisionLogEntries, decisionLogStorageKey]);
 
     useEffect(() => {
         if (!extraction?.full_dossier) {
@@ -1378,6 +1574,21 @@ export default function AssetWorkspace({
         await navigator.clipboard.writeText(prompt);
         setCopiedPromptIndex(index);
         window.setTimeout(() => setCopiedPromptIndex((current) => (current === index ? null : current)), 1800);
+    };
+
+    const handleLogDecision = () => {
+        const nextEntry: DecisionLogEntry = {
+            id: `${asset.id}-${Date.now()}`,
+            timestamp: new Date().toISOString(),
+            verdict: qualityVerdict,
+            confidence: confidenceScore,
+            rationale: failureReasons[0]?.detail || 'Decision captured from current quality gate state.',
+            p1Fix: fixPriorities[0]?.detail || 'No priority fix recorded.',
+            teamNote: decisionNote.trim() || undefined,
+        };
+
+        setDecisionLogEntries((current) => [nextEntry, ...current]);
+        setDecisionNote('');
     };
 
     const handleRefreshMarketPulse = async () => {
@@ -2595,192 +2806,165 @@ export default function AssetWorkspace({
                                     <div className="rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] px-8 py-16 text-center">
                                         <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Synthesising Market Pulse</p>
                                         <p className="mt-4 text-sm leading-relaxed text-[#151310]/65">
-                                            Aggregating live category mechanics, trigger pressure, and chromatic territory from the Intelligence Vault.
+                                            Aggregating category saturation, novelty pressure, and timing risk from the Intelligence Vault.
                                         </p>
                                         <p className="mt-6 text-[11px] uppercase tracking-[0.18em] text-[#151310]/40">
                                             Building the current market benchmark for {asset.brand?.market_sector || 'your active market'}.
                                         </p>
                                     </div>
                                 ) : marketPulseError ? (
-                                    <div className="rounded-3xl border border-[#8B4513]/20 bg-[#FFFCF7] px-8 py-12">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Market Pulse Interrupted</p>
-                                        <p className="mt-4 text-sm leading-relaxed text-[#6A6257]">
-                                            The benchmark layer could not be refreshed for this asset right now.
-                                        </p>
-                                        <p className="mt-3 text-sm leading-relaxed text-[#151310]/55">{marketPulseError}</p>
-                                        <button
-                                            onClick={() => void handleRefreshMarketPulse()}
-                                            className="mt-6 rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414]"
-                                        >
-                                            Recompute Pulse
-                                        </button>
+                                    <div className="space-y-6">
+                                        <div className="flex items-center justify-between gap-4 rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                            <div>
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Directional estimate</p>
+                                                <p className="mt-3 text-[15px] leading-7 text-[#1A1A1A]/76">
+                                                    Market Pulse could not resolve a live category benchmark, so this read is being derived from dossier pattern memory and comparative signals.
+                                                </p>
+                                            </div>
+                                            <button
+                                                onClick={() => void handleRefreshMarketPulse()}
+                                                className="shrink-0 rounded-full border border-[#D4A574]/20 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#D4A574]/10"
+                                            >
+                                                Recompute Pulse
+                                            </button>
+                                        </div>
+                                        <div className="grid gap-5 lg:grid-cols-3">
+                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Category Saturation Index</p>
+                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.saturation}</p>
+                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Directional estimate from current dossier pressure.</p>
+                                            </div>
+                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Novelty Score</p>
+                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.novelty}</p>
+                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Directional estimate from current signal differentiation.</p>
+                                            </div>
+                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Fatigue Risk + Timing Signal</p>
+                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.fatigue}</p>
+                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">{marketPulseFallback.timingSignal}</p>
+                                            </div>
+                                        </div>
+                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                                <div>
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">What this means now</p>
+                                                    <p className="mt-3 max-w-[72ch] text-[15px] leading-7 text-[#1A1A1A]/76">{marketPulseFallback.interpretation}</p>
+                                                </div>
+                                                <span className="inline-flex w-fit rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
+                                                    {marketPulseFallback.confidenceLabel}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 ) : marketPulseData ? (
-                                    <div className="space-y-12">
-                                        {/* Market Pulse Header Logic */}
-                                        <div className="flex flex-col gap-6 rounded-[2rem] border border-[#E6DDCF] bg-[#FBF7F1]/40 p-10 md:flex-row md:items-center md:justify-between">
-                                            <div className="max-w-2xl">
-                                                <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662] mb-3">Market Signal Field</p>
-                                                <h3 className="text-3xl font-medium tracking-tight text-[#151310]">
-                                                    {marketPulseData.scope}
-                                                </h3>
-                                                <p className="mt-4 text-sm leading-relaxed text-[#151310]/65">
-                                                    Vault-wide aggregation of persuasion mechanics and category trigger pressure for {asset.brand?.market_sector || 'your active market'}.
+                                    <div className="space-y-6">
+                                        <div className="flex items-center justify-between gap-4 rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                            <div>
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">
+                                                    {marketPulseBelowThreshold ? 'Directional estimate' : 'Live benchmark'}
                                                 </p>
-                                                <div className="mt-6 flex items-center gap-4">
-                                                    <div className="flex -space-x-2">
-                                                        {[1,2,3].map(i => (
-                                                            <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-[#D4A574]/20" />
-                                                        ))}
-                                                    </div>
-                                                    <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#9B8662]/60">
-                                                        {marketPulseData.assetCount} Assets Sampled · {formatMarketPulseDate(marketPulseData.computed_at)}
-                                                    </span>
-                                                </div>
+                                                <p className="mt-3 text-[15px] leading-7 text-[#1A1A1A]/76">
+                                                    Market Pulse is reading against {marketPulseData.assetCount} vault assets in {marketPulseData.scope}.
+                                                </p>
                                             </div>
                                             <button
                                                 onClick={() => void handleRefreshMarketPulse()}
                                                 disabled={isLoadingMarketPulse}
-                                                className="rounded-full border border-[#D4A574]/30 bg-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-[#9B8662] shadow-sm hover:bg-[#D4A574] hover:text-white transition-all disabled:opacity-50"
+                                                className="shrink-0 rounded-full border border-[#D4A574]/20 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#D4A574]/10 disabled:opacity-50"
                                             >
                                                 {isLoadingMarketPulse ? 'Syncing...' : 'Refresh Pulse'}
                                             </button>
                                         </div>
 
-                                        {marketPulseBelowThreshold && (
-                                            <div className="rounded-[1.5rem] border border-[#D4A574]/20 bg-[#D4A574]/5 p-6 flex items-start gap-4">
-                                                <div className="p-2 rounded-full bg-white border border-[#D4A574]/20">
-                                                    <Sparkles className="h-4 w-4 text-[#9B8662]" />
-                                                </div>
+                                        <div className="grid gap-5 lg:grid-cols-3">
+                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Category Saturation Index</p>
+                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">
+                                                    {Math.min(95, Math.round((marketPulseData.category_persuasion_benchmark.avg_density * 0.7) + (marketPulseData.assetCount * 0.8)))}
+                                                </p>
+                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Live category density and mechanic repetition.</p>
+                                            </div>
+                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Novelty Score</p>
+                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">
+                                                    {Math.max(22, Math.min(92, 100 - Math.round((marketPulseData.category_persuasion_benchmark.avg_density * 0.45) + (marketPulseData.assetCount * 0.35))))}
+                                                </p>
+                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Fresh strategic room relative to current category behavior.</p>
+                                            </div>
+                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Fatigue Risk + Timing Signal</p>
+                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">
+                                                    {Math.min(90, Math.round((marketPulseData.assetCount * 0.9) + (marketPulseData.category_persuasion_benchmark.avg_density * 0.4)))}
+                                                </p>
+                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">
+                                                    {marketPulseBelowThreshold
+                                                        ? 'Directional estimate until sample depth increases.'
+                                                        : 'Live timing read from repetition and category pressure.'}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                                                 <div>
-                                                    <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#9B8662]">Early Signal Read</p>
-                                                    <p className="mt-1 text-[13px] leading-relaxed text-[#6A6257]">
-                                                        Benchmark is directional until vault reaches 20 forensic extractions. Currently at {marketPulseData.assetCount}/20.
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">What this means now</p>
+                                                    <p className="mt-3 max-w-[72ch] text-[15px] leading-7 text-[#1A1A1A]/76">
+                                                        {marketPulseBelowThreshold
+                                                            ? `This route has signal, but category context is still directional at ${marketPulseData.assetCount}/20 sampled assets. Use the read to guide action, not overclaim precision.`
+                                                            : `Current category pressure suggests ${marketPulseData.category_persuasion_benchmark.your_rank.toLowerCase()} standing. Protect the working mechanic, then differentiate execution rather than rebuilding from zero.`}
                                                     </p>
                                                 </div>
-                                            </div>
-                                        )}
-
-                                        {/* Key Stats Grid */}
-                                        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/70">Vault Density</p>
-                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseData.assetCount}</p>
-                                                <p className="mt-2 text-[10px] uppercase font-bold tracking-widest text-[#9B8662]/40">Processed Assets</p>
-                                            </div>
-                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/70">Category Mean</p>
-                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseData.category_persuasion_benchmark.avg_density}%</p>
-                                                <p className="mt-2 text-[10px] uppercase font-bold tracking-widest text-[#9B8662]/40">Persuasion Density</p>
-                                            </div>
-                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-[#FFFCF7] p-8 shadow-sm">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/70">Market Status</p>
-                                                <p className="mt-4 text-3xl font-medium tracking-tight text-[#151310]">{marketPulseData.category_persuasion_benchmark.your_rank}</p>
-                                                <p className="mt-3 text-[10px] uppercase font-bold tracking-widest text-[#9B8662]/40">Rank Logic</p>
-                                            </div>
-                                        </div>
-
-                                        <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
-                                            {/* Dominant Mechanics */}
-                                            <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm">
-                                                <div className="flex items-center gap-4 mb-8">
-                                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Dominant Mechanics</span>
-                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
-                                                </div>
-                                                <div className="space-y-6">
-                                                    {marketPulseData.dominant_mechanics.map((item) => (
-                                                        <div key={item.mechanic} className="group">
-                                                            <div className="flex items-center justify-between mb-3">
-                                                                <p className="text-[13px] font-bold uppercase tracking-[0.1em] text-[#151310]">{item.mechanic}</p>
-                                                                <span className="text-[11px] font-mono font-bold text-[#9B8662]">{item.share}%</span>
-                                                            </div>
-                                                            <div className="h-2 w-full rounded-full bg-[#FBF7F1] overflow-hidden border border-[#E6DDCF]/40 shadow-inner">
-                                                                <div
-                                                                    className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-1000"
-                                                                    style={{ width: `${item.share}%` }}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            {/* Trigger Profile */}
-                                             <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm flex flex-col justify-between">
-                                                 <div>
-                                                     <div className="flex items-center gap-4 mb-8">
-                                                         <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Trigger Profile</span>
-                                                         <span className="h-px flex-1 bg-[#E6DDCF]"></span>
-                                                     </div>
-                                                     <div className="h-[300px] flex items-center justify-center -mt-4">
-                                                         <RadarChart data={marketPulseData.category_trigger_profile} forceLight={true} />
-                                                     </div>
-                                                 </div>
-                                                 <p className="text-[12px] text-[#6A6257] leading-relaxed mt-6 pt-6 border-t border-[#D4A574]/10 text-center px-4 w-full">
-                                                     Aggregated psychological pressure across the active category—mapping the dominant aspirational levers currently commanding consumer compliance in the vault.
-                                                 </p>
-                                             </div>
-                                        </div>
-
-                                        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[1.1fr_0.9fr] items-start">
-                                            {/* Opportunity Gaps */}
-                                            <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm">
-                                                <div className="flex items-center gap-4 mb-8">
-                                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Opportunity Gaps</span>
-                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
-                                                </div>
-                                                <div className="grid gap-6">
-                                                    {marketPulseData.opportunity_gaps.map((gap, index) => (
-                                                                                         <div key={`${gap}-${index}`} className="group relative rounded-3xl border border-[#E6DDCF]/60 bg-[#FBF7F1]/30 p-6 transition-all hover:bg-white hover:border-[#D4A574]/30 hover:shadow-md">
-                                                             <div className="flex items-center justify-between mb-4">
-                                                                 <div className="flex items-center gap-3">
-                                                                     <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#D4A574]/10 text-[#D4A574]">
-                                                                         <Sparkles className="h-3 w-3" />
-                                                                     </div>
-                                                                     <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#9B8662]/60">Whitespace {(index + 1).toString().padStart(2, '0')}</span>
-                                                                 </div>
-                                                                 <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574]/30 group-hover:bg-[#D4A574]" />
-                                                             </div>
-                                                             <p className="text-[15px] leading-relaxed text-[#151310] font-light selection:bg-[#D4A574]/20 tracking-wide pr-4 italic">
-                                                                 {gap}
-                                                             </p>
-                                                         </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            {/* Chromatic Saturation */}
-                                            <div className="rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 shadow-sm">
-                                                <div className="flex items-center gap-4 mb-8">
-                                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#9B8662]">Chromatic Saturation</span>
-                                                    <span className="h-px flex-1 bg-[#E6DDCF]"></span>
-                                                </div>
-                                                <div className="grid grid-cols-2 gap-6">
-                                                    {marketPulseData.chromatic_saturation.map((color) => (
-                                                        <div key={color.hex} className="group">
-                                                            <div className="h-16 rounded-xl border border-[#E6DDCF] shadow-sm transition-transform group-hover:scale-[1.05]" style={{ backgroundColor: color.hex }} />
-                                                            <div className="mt-4 flex items-center justify-between">
-                                                                <span className="text-[11px] font-bold font-mono text-[#151310]">{color.hex}</span>
-                                                                <div className="flex items-center gap-2">
-                                                                    <span className="text-xs font-bold text-[#9B8662]">{color.count}</span>
-                                                                    <span className="text-[8px] font-bold text-[#9B8662]/40 uppercase tracking-widest">hits</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
+                                                <span className="inline-flex w-fit rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
+                                                    {marketPulseBelowThreshold ? 'Directional estimate' : 'Live benchmark'}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="rounded-3xl border border-dashed border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] px-8 py-14 text-center">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Market Pulse Standing By</p>
-                                        <p className="mt-4 text-sm leading-relaxed text-[#151310]/65">
-                                            Refresh this tab to assemble a live benchmark from the current vault, then compare this asset against the active category signal field.
-                                        </p>
-                                        <p className="mt-6 text-[11px] uppercase tracking-[0.18em] text-[#151310]/40">
-                                            Best used once the vault has multiple processed assets in the same category.
-                                        </p>
+                                    <div className="space-y-6">
+                                        <div className="flex items-center justify-between gap-4 rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                            <div>
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Directional estimate</p>
+                                                <p className="mt-3 text-[15px] leading-7 text-[#1A1A1A]/76">
+                                                    No live benchmark is loaded yet, so Market Pulse is reading from dossier pattern memory and comparative signal pressure.
+                                                </p>
+                                            </div>
+                                            <button
+                                                onClick={() => void handleRefreshMarketPulse()}
+                                                className="shrink-0 rounded-full border border-[#D4A574]/20 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#D4A574]/10"
+                                            >
+                                                Run Market Pulse
+                                            </button>
+                                        </div>
+                                        <div className="grid gap-5 lg:grid-cols-3">
+                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Category Saturation Index</p>
+                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.saturation}</p>
+                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Directional estimate from current dossier pressure.</p>
+                                            </div>
+                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Novelty Score</p>
+                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.novelty}</p>
+                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Directional estimate from current signal differentiation.</p>
+                                            </div>
+                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Fatigue Risk + Timing Signal</p>
+                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.fatigue}</p>
+                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">{marketPulseFallback.timingSignal}</p>
+                                            </div>
+                                        </div>
+                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                                <div>
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">What this means now</p>
+                                                    <p className="mt-3 max-w-[72ch] text-[15px] leading-7 text-[#1A1A1A]/76">{marketPulseFallback.interpretation}</p>
+                                                </div>
+                                                <span className="inline-flex w-fit rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
+                                                    {marketPulseFallback.confidenceLabel}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
                                 </div>
@@ -3262,15 +3446,44 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="space-y-8">
                                     <WorkspaceTabHeader
-                                        kicker="Phase 2 Placeholder"
+                                        kicker="Causal Intelligence"
                                         title="Stress Lab"
-                                        intro="Controlled variable shifts will land here next, so teams can isolate causal leverage without leaving the diagnosis workflow."
+                                        intro="Controlled what-if deltas for the variables most likely to change performance without breaking the diagnosed mechanism."
                                     />
                                     <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Coming Next</p>
-                                        <p className="mt-4 max-w-[62ch] text-[15px] leading-7 text-[#1A1A1A]/76">
-                                            Stress Lab will use the current mechanic, constraint map, and confidence state to test controlled changes without turning VD into an ad generator.
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Product Boundary</p>
+                                        <p className="mt-3 max-w-[66ch] text-[15px] leading-7 text-[#1A1A1A]/76">
+                                            Stress Lab is causal testing guidance, not a prompt feed. VD judges, diagnoses, and directs quality before any adaptation move is made.
                                         </p>
+                                    </div>
+                                    <div className="overflow-hidden rounded-[2rem] border border-[#E6DDCF] bg-white/80 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                        <div className="grid grid-cols-[minmax(150px,1fr)_minmax(220px,1.2fr)_minmax(220px,1.2fr)_120px_120px_120px] gap-px bg-[#E6DDCF] overflow-x-auto">
+                                            {['Variable', 'Current state', 'Proposed shift', 'Predicted lift', 'Risk', 'Recommendation'].map((label) => (
+                                                <div key={label} className="bg-[#FBFBF6] px-4 py-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B7B62]">
+                                                    {label}
+                                                </div>
+                                            ))}
+                                            {stressLabRows.flatMap((row) => ([
+                                                <div key={`${row.variable}-variable`} className="bg-white px-4 py-4 text-[13px] font-semibold text-[#16120D]">{row.variable}</div>,
+                                                <div key={`${row.variable}-current`} className="bg-white px-4 py-4 text-[13px] leading-6 text-[#1A1A1A]/72">{row.currentState}</div>,
+                                                <div key={`${row.variable}-shift`} className="bg-white px-4 py-4 text-[13px] leading-6 text-[#1A1A1A]/72">{row.proposedShift}</div>,
+                                                <div key={`${row.variable}-lift`} className="bg-white px-4 py-4">
+                                                    <span className={`inline-flex rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
+                                                        row.predictedLift === 'High' ? 'bg-[#D4A882]/15 text-[#8B4513]' : row.predictedLift === 'Medium' ? 'bg-[#F4A700]/10 text-[#8B4513]' : 'bg-[#16120D]/6 text-[#6F6659]'
+                                                    }`}>{row.predictedLift}</span>
+                                                </div>,
+                                                <div key={`${row.variable}-risk`} className="bg-white px-4 py-4">
+                                                    <span className={`inline-flex rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
+                                                        row.risk === 'High' ? 'bg-[#C8230A]/10 text-[#C8230A]' : row.risk === 'Medium' ? 'bg-[#D4A882]/15 text-[#8B4513]' : 'bg-[#16120D]/6 text-[#6F6659]'
+                                                    }`}>{row.risk}</span>
+                                                </div>,
+                                                <div key={`${row.variable}-recommendation`} className="bg-white px-4 py-4">
+                                                    <span className={`inline-flex rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
+                                                        row.recommendation === 'Test' ? 'bg-[#D4A882]/15 text-[#8B4513]' : row.recommendation === 'Avoid' ? 'bg-[#C8230A]/10 text-[#C8230A]' : 'bg-[#16120D]/6 text-[#6F6659]'
+                                                    }`}>{row.recommendation}</span>
+                                                </div>,
+                                            ]))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -3280,15 +3493,76 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="space-y-8">
                                     <WorkspaceTabHeader
-                                        kicker="Phase 2 Placeholder"
+                                        kicker="Audit Trail"
                                         title="Decision Log"
                                         intro="A compact operating log for what was approved, revised, or rejected so diagnosis turns into accountable creative direction."
                                     />
-                                    <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Coming Next</p>
-                                        <p className="mt-4 max-w-[62ch] text-[15px] leading-7 text-[#1A1A1A]/76">
-                                            Decision Log will sit after Quality Gate so teams can record what moved forward, what was revised, and why the call was made.
-                                        </p>
+                                    <div className="grid gap-6 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Log Current Decision</p>
+                                            <p className="mt-3 text-[14px] leading-6 text-[#1A1A1A]/72">
+                                                Capture the current verdict, confidence, top rationale, and the active P1 fix so the decision trail survives reloads and review-room drift.
+                                            </p>
+                                            <div className="mt-5 rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">Optional team note</p>
+                                                <textarea
+                                                    value={decisionNote}
+                                                    onChange={(e) => setDecisionNote(e.target.value)}
+                                                    rows={4}
+                                                    className="mt-3 w-full resize-none border-0 bg-transparent p-0 text-[14px] leading-6 text-[#16120D] outline-none placeholder:text-[#1A1A1A]/35"
+                                                    placeholder="Add context for why this call was made."
+                                                />
+                                            </div>
+                                            <button
+                                                onClick={handleLogDecision}
+                                                className="mt-5 rounded-full bg-[#D4A574] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition-colors hover:bg-[#c8955b]"
+                                            >
+                                                Save decision entry
+                                            </button>
+                                        </div>
+
+                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Decision History</p>
+                                            <div className="mt-5 space-y-4">
+                                                {decisionLogEntries.length > 0 ? (
+                                                    decisionLogEntries.map((entry) => (
+                                                        <div key={entry.id} className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
+                                                            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                                                                <div className="flex items-center gap-3">
+                                                                    <span className={`inline-flex rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
+                                                                        entry.verdict === 'Ship' ? 'bg-[#D4A882]/15 text-[#8B4513]' : entry.verdict === 'Revise' ? 'bg-[#F4A700]/10 text-[#8B4513]' : 'bg-[#C8230A]/10 text-[#C8230A]'
+                                                                    }`}>
+                                                                        {entry.verdict}
+                                                                    </span>
+                                                                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
+                                                                        {new Date(entry.timestamp).toLocaleString('en-AU', {
+                                                                            day: '2-digit',
+                                                                            month: 'short',
+                                                                            hour: 'numeric',
+                                                                            minute: '2-digit',
+                                                                        })}
+                                                                    </span>
+                                                                </div>
+                                                                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
+                                                                    Confidence {entry.confidence ?? '—'}/100
+                                                                </span>
+                                                            </div>
+                                                            <p className="mt-3 text-[14px] leading-6 text-[#16120D]">{entry.rationale}</p>
+                                                            <p className="mt-3 text-[12px] leading-6 text-[#1A1A1A]/68">
+                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">P1 fix</span> · {entry.p1Fix}
+                                                            </p>
+                                                            {entry.teamNote && (
+                                                                <p className="mt-3 border-t border-[#E6DDCF] pt-3 text-[12px] leading-6 text-[#1A1A1A]/68">{entry.teamNote}</p>
+                                                            )}
+                                                        </div>
+                                                    ))
+                                                ) : (
+                                                    <div className="rounded-[1.25rem] border border-dashed border-[#E6DDCF] bg-[#FBFBF6] px-4 py-6 text-[14px] leading-6 text-[#1A1A1A]/62">
+                                                        No decisions logged yet. Save the current verdict from this dossier to create the first audit entry.
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
