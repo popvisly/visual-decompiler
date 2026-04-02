@@ -11,9 +11,8 @@ export default function HomePage() {
 
             <AnalyticalHero />
 
-            <div className="relative overflow-hidden bg-[#141414]">
-                <div className="pointer-events-none absolute inset-0 opacity-[0.045] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:56px_56px]" />
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_50%_0%,rgba(212,165,116,0.06)_0%,transparent_68%)]" />
+            <div className="relative overflow-hidden bg-[#FBFBF6]">
+                <div className="pointer-events-none absolute inset-0 opacity-[0.06] [background-image:linear-gradient(#CDBA9A_1px,transparent_1px),linear-gradient(90deg,#CDBA9A_1px,transparent_1px)] [background-size:56px_56px]" />
 
                 <div className="relative z-10">
                     <Hero />
@@ -21,7 +20,6 @@ export default function HomePage() {
                     <FooterStartNow />
                 </div>
             </div>
-
         </main>
     );
 }
