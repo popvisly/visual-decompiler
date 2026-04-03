@@ -29,7 +29,7 @@ const PERSONAS: Persona[] = [
         weightClass: 'font-semibold',
     },
     {
-        role: 'New Business',
+        role: 'Pitch Teams',
         subtitle: 'Walk into pitches with forensic proof of what works in the category — competitive intelligence that positions you as the strategic authority.',
         color: '#D4A574',
         weightClass: 'font-semibold',

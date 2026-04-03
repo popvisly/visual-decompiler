@@ -21,7 +21,7 @@ export type VisionInput =
 export async function decompileAd(
     inputs: VisionInput[],
     version: string = 'V1',
-    tier: 'free' | 'pro' | 'agency' = 'pro',
+    tier: 'free' | 'pro' | 'professional' | 'agency' = 'pro',
     useCache: boolean = true
 ) {
     // 1. Select the strict prompt (inlined at build time)
@@ -77,7 +77,7 @@ async function performAnalysis(
     systemPrompt: string,
     anthropic: any,
     isClaude: boolean,
-    tier: 'free' | 'pro' | 'agency',
+    tier: 'free' | 'pro' | 'professional' | 'agency',
     version: string,
     imageHash?: string,
     modelName?: string
@@ -85,7 +85,13 @@ async function performAnalysis(
 
     if (isClaude) {
         const selectedModel = getClaudeModel(tier);
-        const modelLabel = tier === 'free' ? 'Haiku (Fast)' : tier === 'agency' ? 'Opus (Premium)' : 'Sonnet (Pro)';
+        const modelLabel = tier === 'free'
+            ? 'Haiku (Fast)'
+            : tier === 'agency'
+                ? 'Opus (Premium)'
+                : tier === 'professional'
+                    ? 'Sonnet (Professional)'
+                    : 'Sonnet (Pro)';
         console.log(`[Vision] Using Claude ${modelLabel} for deconstruction (${version})`);
 
         const messageContent: any[] = [
@@ -134,7 +140,7 @@ async function performAnalysis(
             // Extended thinking for complex strategic analysis (disabled for Haiku)
             thinking: tier !== 'free' ? {
                 type: "enabled",
-                budget_tokens: tier === 'agency' ? 4000 : 2000
+                budget_tokens: tier === 'agency' ? 4000 : tier === 'professional' ? 3000 : 2000
             } : undefined,
             messages: [
                 { role: "user", content: messageContent }

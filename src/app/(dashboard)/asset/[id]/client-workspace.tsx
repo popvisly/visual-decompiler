@@ -2669,36 +2669,36 @@ export default function AssetWorkspace({
                                             intro="VD does not generate ads or act as an AI design app. VD judges, diagnoses, and directs creative quality."
                                         />
 
-                                        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Integrated Recommendation</p>
-                                                <p className="mt-4 text-[15px] leading-7 text-[#16120D]">{integratedRecommendation.thesis}</p>
-                                                <p className="mt-4 text-[14px] leading-7 text-[#1A1A1A]/72">{integratedRecommendation.whyNow}</p>
-                                                <p className="mt-4 rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4 text-[13px] leading-6 text-[#1A1A1A]/72">
+                                        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
+                                            <div className="rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 text-[#FBFBF6] shadow-[0_24px_60px_rgba(11,10,8,0.22)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Integrated Recommendation</p>
+                                                <p className="mt-5 max-w-[56ch] text-[16px] leading-8 text-[#F3F1ED]">{integratedRecommendation.thesis}</p>
+                                                <p className="mt-4 max-w-[58ch] text-[14px] leading-7 text-[#B9B19F]">{integratedRecommendation.whyNow}</p>
+                                                <p className="mt-5 rounded-[1.5rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5 text-[13px] leading-6 text-[#D6D0C6]">
                                                     {integratedRecommendation.riskRewardTension}
                                                 </p>
-                                                <div className="mt-5 rounded-[1.25rem] border border-[#E6DDCF] bg-white px-4 py-4">
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">Operator Summary</p>
-                                                    <div className="mt-3 grid gap-3 md:grid-cols-3">
-                                                        <div>
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Decision</p>
-                                                            <p className="mt-2 text-[14px] leading-6 text-[#16120D]">{integratedRecommendation.decision}</p>
+                                                <div className="mt-6 rounded-[1.75rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5">
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">Operator Summary</p>
+                                                    <div className="mt-4 grid gap-3 md:grid-cols-2">
+                                                        <div className="rounded-[1.25rem] border border-[#3A3027] bg-[#1E1A16] px-4 py-4">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Decision</p>
+                                                            <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">{integratedRecommendation.decision}</p>
                                                         </div>
-                                                        <div>
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Primary risk</p>
-                                                            <p className="mt-2 text-[14px] leading-6 text-[#16120D]">{integratedRecommendation.watchouts}</p>
+                                                        <div className="rounded-[1.25rem] border border-[#3A3027] bg-[#1E1A16] px-4 py-4">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Primary risk</p>
+                                                            <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">{integratedRecommendation.watchouts}</p>
                                                         </div>
-                                                        <div>
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Timing</p>
-                                                            <p className="mt-2 text-[14px] leading-6 text-[#16120D]">{integratedRecommendation.whyNow}</p>
+                                                        <div className="rounded-[1.25rem] border border-[#3A3027] bg-[#1E1A16] px-4 py-4 md:col-span-2">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Timing</p>
+                                                            <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">{integratedRecommendation.whyNow}</p>
                                                         </div>
                                                     </div>
-                                                    <div className="mt-4 border-t border-[#E6DDCF] pt-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Highest-impact actions</p>
-                                                        <div className="mt-3 space-y-2">
+                                                    <div className="mt-5 border-t border-[#4E3D2A] pt-5">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Highest-impact actions</p>
+                                                        <div className="mt-4 space-y-3">
                                                             {integratedRecommendation.executionNext3.map((step, index) => (
-                                                                <p key={index} className="text-[13px] leading-6 text-[#1A1A1A]/74">
-                                                                    <span className="font-bold text-[#8B4513]">{index + 1}.</span> {step}
+                                                                <p key={index} className="text-[13px] leading-6 text-[#D6D0C6]">
+                                                                    <span className="font-bold text-[#D4A574]">{index + 1}.</span> {step}
                                                                 </p>
                                                             ))}
                                                         </div>
@@ -2707,67 +2707,67 @@ export default function AssetWorkspace({
                                             </div>
 
                                             <div className="space-y-6">
-                                                <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Trust Cues</p>
+                                                <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Trust Cues</p>
                                                     <div className="mt-4 grid gap-3 sm:grid-cols-2">
                                                         {[
                                                             ['Confidence', integratedRecommendation.confidence],
                                                             ['Evidence Strength', integratedRecommendation.evidenceStrength],
                                                             ['Assumption Load', integratedRecommendation.assumptionLoad],
                                                         ].map(([label, value]) => (
-                                                            <div key={label} className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
-                                                                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B7B62]">{label}</p>
-                                                                <p className="mt-2 text-[14px] leading-6 text-[#16120D]">{value}</p>
+                                                            <div key={label} className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
+                                                                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">{label}</p>
+                                                                <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">{value}</p>
                                                             </div>
                                                         ))}
-                                                        <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4 sm:col-span-2">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Known Unknowns</p>
-                                                            <p className="mt-2 text-[14px] leading-6 text-[#16120D]">
+                                                        <div className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4 sm:col-span-2">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Known Unknowns</p>
+                                                            <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">
                                                                 {integratedRecommendation.knownUnknowns.join(' ')}
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div className="mt-4 border-t border-[#E6DDCF] pt-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Based on</p>
-                                                        <p className="mt-2 text-[13px] leading-6 text-[#1A1A1A]/72">
+                                                    <div className="mt-4 border-t border-[#4E3D2A] pt-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Based on</p>
+                                                        <p className="mt-2 text-[13px] leading-6 text-[#B9B19F]">
                                                             Blueprint trace, friction, persuasion density, gaze routing, and comparative memory.
                                                         </p>
                                                     </div>
                                                 </div>
 
-                                                <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Module Scores</p>
+                                                <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Module Scores</p>
                                                     <div className="mt-4 space-y-3">
                                                         {integratedRecommendation.moduleScores.map((score) => (
-                                                            <div key={score.label} className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
+                                                            <div key={score.label} className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
                                                                 <div className="flex items-center justify-between gap-4">
-                                                                    <p className="text-[13px] font-semibold text-[#16120D]">{score.label}</p>
-                                                                    <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">{score.score}/5</span>
+                                                                    <p className="text-[13px] font-semibold text-[#F3F1ED]">{score.label}</p>
+                                                                    <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">{score.score}/5</span>
                                                                 </div>
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
 
-                                                <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Fact vs Inference</p>
+                                                <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Fact vs Inference</p>
                                                     <div className="mt-4 grid gap-4">
-                                                        <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Facts</p>
+                                                        <div className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Facts</p>
                                                             <div className="mt-3 space-y-2">
                                                                 {integratedRecommendation.facts.map((fact, index) => (
-                                                                    <p key={index} className="text-[13px] leading-6 text-[#1A1A1A]/74">
-                                                                        <span className="font-bold text-[#8B4513]">{index + 1}.</span> {fact}
+                                                                    <p key={index} className="text-[13px] leading-6 text-[#D6D0C6]">
+                                                                        <span className="font-bold text-[#D4A574]">{index + 1}.</span> {fact}
                                                                     </p>
                                                                 ))}
                                                             </div>
                                                         </div>
-                                                        <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8B4513]">Inferences</p>
+                                                        <div className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Inferences</p>
                                                             <div className="mt-3 space-y-2">
                                                                 {integratedRecommendation.inferences.map((inference, index) => (
-                                                                    <p key={index} className="text-[13px] leading-6 text-[#1A1A1A]/74">
-                                                                        <span className="font-bold text-[#8B4513]">{index + 1}.</span> {inference}
+                                                                    <p key={index} className="text-[13px] leading-6 text-[#D6D0C6]">
+                                                                        <span className="font-bold text-[#D4A574]">{index + 1}.</span> {inference}
                                                                     </p>
                                                                 ))}
                                                             </div>
@@ -2777,51 +2777,54 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
 
-                                        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                                <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                                        <div className="grid gap-6 xl:grid-cols-[minmax(320px,0.74fr)_minmax(0,1.26fr)]">
+                                            <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
+                                                <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-start">
                                                     <div>
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Verdict</p>
-                                                        <h3 className="mt-3 text-[2rem] font-semibold tracking-tight text-[#16120D] md:text-[2.5rem]">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Verdict</p>
+                                                        <h3 className="mt-3 max-w-[12ch] text-[1.9rem] font-semibold leading-tight tracking-tight text-[#F3F1ED] md:text-[2.25rem]">
                                                             {qualityVerdict}
                                                         </h3>
+                                                        <p className="mt-4 max-w-[34ch] text-[13px] leading-6 text-[#B9B19F]">
+                                                            Final call on whether this creative is working strongly enough to preserve, refine, or replace at native review width.
+                                                        </p>
                                                     </div>
-                                                    <div className="rounded-[1.5rem] border border-[#E6DDCF] bg-[#FBFBF6] px-5 py-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Confidence Score</p>
+                                                    <div className="rounded-[1.5rem] border border-[#4E3D2A] bg-[#171512] px-5 py-4 xl:min-w-[180px]">
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Confidence Score</p>
                                                         <div className="mt-3 flex items-end gap-1">
-                                                            <span className="text-4xl font-semibold tracking-tight text-[#16120D]">
+                                                            <span className="text-4xl font-semibold tracking-tight text-[#F3F1ED]">
                                                                 {confidenceScore ?? '—'}
                                                             </span>
-                                                            <span className="pb-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#8B7B62]">/100</span>
+                                                            <span className="pb-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">/100</span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <p className="mt-5 max-w-[58ch] text-[15px] leading-7 text-[#1A1A1A]/76">
+                                                <p className="mt-5 max-w-[44ch] text-[14px] leading-7 text-[#D6D0C6]">
                                                     We don&apos;t generate ads. We judge, diagnose, and direct quality.
                                                 </p>
                                             </div>
 
-                                            <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Top 3 Failure Reasons</p>
-                                                <div className="mt-5 space-y-4">
+                                            <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Top 3 Failure Reasons</p>
+                                                <div className="mt-5 grid gap-4 xl:grid-cols-3">
                                                     {failureReasons.map((reason, index) => (
-                                                        <div key={`${reason.title}-${index}`} className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B4513]">{reason.title}</p>
-                                                            <p className="mt-2 text-[14px] leading-6 text-[#1A1A1A]/74">{reason.detail}</p>
+                                                        <div key={`${reason.title}-${index}`} className="rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{reason.title}</p>
+                                                            <p className="mt-3 text-[14px] leading-6 text-[#D6D0C6]">{reason.detail}</p>
                                                         </div>
                                                     ))}
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Fix Priority Order</p>
-                                            <div className="mt-5 grid gap-4 lg:grid-cols-3">
-                                                {fixPriorities.map((item) => (
-                                                    <div key={item.priority} className="rounded-[1.4rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B4513]">{item.priority}</p>
-                                                        <p className="mt-3 text-[15px] font-semibold tracking-tight text-[#16120D]">{item.title}</p>
-                                                        <p className="mt-2 text-[13px] leading-6 text-[#1A1A1A]/72">{item.detail}</p>
+                                        <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Fix Priority Order</p>
+                                            <div className="mt-5 grid gap-4 lg:grid-cols-2">
+                                                {fixPriorities.map((item, index) => (
+                                                    <div key={item.priority} className={`rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5 ${index === fixPriorities.length - 1 ? 'lg:col-span-2' : ''}`}>
+                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{item.priority}</p>
+                                                        <p className="mt-3 text-[15px] font-semibold tracking-tight text-[#F3F1ED]">{item.title}</p>
+                                                        <p className="mt-2 max-w-[56ch] text-[13px] leading-6 text-[#D6D0C6]">{item.detail}</p>
                                                     </div>
                                                 ))}
                                             </div>
@@ -3124,52 +3127,52 @@ export default function AssetWorkspace({
                                         intro="The non-negotiables, avoidances, and safe adaptation boundaries that keep refinement inside the working forensic logic."
                                     />
 
-                                    <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Product Boundary</p>
-                                        <p className="mt-4 max-w-[66ch] text-[15px] leading-7 text-[#1A1A1A]/76">
+                                    <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Product Boundary</p>
+                                        <p className="mt-4 max-w-[60ch] text-[15px] leading-7 text-[#D6D0C6]">
                                             VD does not generate ads or act as an AI design app. VD judges, diagnoses, and directs creative quality.
                                         </p>
                                     </div>
 
-                                    <div className="grid gap-6 xl:grid-cols-3">
+                                    <div className="grid gap-6 xl:grid-cols-2">
                                         {[
                                             {
                                                 title: 'Must Keep',
                                                 items: mustKeepConstraints,
-                                                accent: 'text-[#D4A882]',
-                                                bg: 'bg-white/80',
+                                                accent: 'text-[#D4A574]',
+                                                tone: 'border-[#4E3D2A] bg-[#171512]',
                                             },
                                             {
                                                 title: 'Must Avoid',
                                                 items: mustAvoidConstraints,
                                                 accent: 'text-[#C8230A]',
-                                                bg: 'bg-white/80',
+                                                tone: 'border-[#5B2418] bg-[#1C1311]',
                                             },
                                             {
                                                 title: 'Safe Adaptation Zone',
                                                 items: safeAdaptationZone,
-                                                accent: 'text-[#8B4513]',
-                                                bg: 'bg-white/80',
+                                                accent: 'text-[#D4A574]',
+                                                tone: 'border-[#3F342A] bg-[#161311]',
                                             },
-                                        ].map((group) => (
+                                        ].map((group, index) => (
                                             <div
                                                 key={group.title}
-                                                className={`rounded-[2rem] border border-[#E6DDCF] ${group.bg} p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]`}
+                                                className={`rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)] ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
                                                 <p className={`text-[10px] font-bold uppercase tracking-[0.28em] ${group.accent}`}>{group.title}</p>
                                                 <div className="mt-5 space-y-3">
                                                     {group.items.length > 0 ? (
                                                         group.items.map((item, index) => (
-                                                            <div key={`${group.title}-${index}`} className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
-                                                                <div className="flex items-center justify-between gap-4">
-                                                                    <p className="text-[14px] leading-6 text-[#16120D]">{item.text}</p>
+                                                            <div key={`${group.title}-${index}`} className={`rounded-[1.4rem] border px-4 py-4 ${group.tone}`}>
+                                                                <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                                                                    <p className="max-w-[58ch] text-[14px] leading-6 text-[#F3F1ED]">{item.text}</p>
                                                                     <span
-                                                                        className={`shrink-0 rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
+                                                                        className={`shrink-0 self-start rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
                                                                             item.severity === 'critical'
-                                                                                ? 'bg-[#C8230A]/10 text-[#C8230A]'
+                                                                                ? 'bg-[#C8230A]/16 text-[#F06B55]'
                                                                                 : item.severity === 'high'
-                                                                                    ? 'bg-[#D4A882]/12 text-[#8B4513]'
-                                                                                    : 'bg-[#16120D]/6 text-[#6F6659]'
+                                                                                    ? 'bg-[#D4A574]/14 text-[#D4A574]'
+                                                                                    : 'bg-[#FBFBF6]/8 text-[#B9B19F]'
                                                                         }`}
                                                                     >
                                                                         {item.severity}
@@ -3178,7 +3181,7 @@ export default function AssetWorkspace({
                                                             </div>
                                                         ))
                                                     ) : (
-                                                        <div className="rounded-[1.25rem] border border-dashed border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4 text-[13px] leading-6 text-[#1A1A1A]/60">
+                                                        <div className="rounded-[1.4rem] border border-dashed border-[#4E3D2A] bg-[#171512] px-4 py-4 text-[13px] leading-6 text-[#B9B19F]">
                                                             Blueprint Trace will populate this boundary once reconstruction data is available.
                                                         </div>
                                                     )}

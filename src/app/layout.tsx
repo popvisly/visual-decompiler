@@ -10,12 +10,59 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: "Decompiler — Drop an ad. See the invisible.",
-    description: "AI-powered psychological deep analysis of any advertisement. Uncover trigger mechanics, semiotic subtext, and hidden persuasion strategies in seconds.",
+    metadataBase: new URL('https://www.visualdecompiler.com'),
+    title: {
+        default: 'Visual Decompiler — Forensic Intelligence for Advertising',
+        template: '%s | Visual Decompiler',
+    },
+    description: 'Visual Decompiler deconstructs any ad in under 60 seconds. Uncover persuasion mechanics, trigger signals, semiotic layers, and a reconstruction blueprint — AI-powered forensic intelligence for creative strategists.',
+    keywords: [
+        'ad analysis tool',
+        'advertising intelligence',
+        'creative strategy AI',
+        'ad deconstruction',
+        'persuasion mechanics',
+        'semiotic analysis',
+        'competitive creative intelligence',
+        'visual decompiler',
+        'forensic advertising',
+        'ad teardown tool',
+    ],
+    authors: [{ name: 'Visual Decompiler', url: 'https://www.visualdecompiler.com' }],
+    creator: 'Visual Decompiler',
     openGraph: {
-        title: "Decompiler — Advertising Intelligence",
-        description: "Drop an ad. Get a full psychological X-ray. Trigger mechanics, semiotic subtext, evidence anchors — powered by AI.",
-        type: "website",
+        type: 'website',
+        locale: 'en_US',
+        url: 'https://www.visualdecompiler.com',
+        siteName: 'Visual Decompiler',
+        title: 'Visual Decompiler — Forensic Intelligence for Advertising',
+        description: 'Drop any ad. Get the persuasion mechanics, trigger signals, and strategic blueprint behind it — in under 60 seconds.',
+        images: [
+            {
+                url: '/analytics.png',
+                width: 1200,
+                height: 630,
+                alt: 'Visual Decompiler — Ad Forensic Intelligence Platform',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Visual Decompiler — Forensic Intelligence for Advertising',
+        description: 'Drop any ad. Get the persuasion mechanics, trigger signals, and strategic blueprint — in under 60 seconds.',
+        images: ['/analytics.png'],
+        creator: '@visualdecompiler',
+    },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
     },
 };
 
