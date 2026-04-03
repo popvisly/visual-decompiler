@@ -21,7 +21,7 @@ export default function HeroSection() {
                 {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-txt-primary text-surface text-[11px] font-bold uppercase tracking-[0.1em] mb-8">
                     <span className="w-1.5 h-1.5 rounded-full bg-canvas-alt" />
-                    AI-Powered Ad Intelligence
+                    Forensic Creative Intelligence
                 </div>
 
                 {/* Headline */}
@@ -32,8 +32,8 @@ export default function HeroSection() {
 
                 {/* Subtitle */}
                 <p className="text-lg md:text-xl text-txt-secondary max-w-xl mx-auto leading-relaxed mb-10">
-                    Drop any advertisement. Our AI deconstructs the architecture of persuasion
-                    to understand & comprehend the hidden mechanics in seconds.
+                    Drop any advertisement. Visual Decompiler deconstructs the persuasion architecture
+                    and surfaces the hidden mechanics for decision use in seconds.
                 </p>
 
                 {/* CTA */}
@@ -42,7 +42,7 @@ export default function HeroSection() {
                         href="/ingest"
                         className="bg-txt-primary text-surface px-8 py-3.5 rounded-full text-[15px] font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
                     >
-                        Start Analyzing — Free
+                        Start Decompiling — Free
                     </Link>
                     <a
                         href="#how-it-works"

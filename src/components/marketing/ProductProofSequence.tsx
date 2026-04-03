@@ -173,6 +173,7 @@ function TrustBoundaryPanel() {
                                 'An ad generator',
                                 'A design editor',
                                 'A prompt factory',
+                                'An ad-spy tool',
                             ].map((item) => (
                                 <li key={item} className="flex items-start gap-3 text-[15px] leading-relaxed text-[#474238]">
                                     <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C8230A]" />

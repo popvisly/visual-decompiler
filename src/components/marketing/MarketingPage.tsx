@@ -33,8 +33,8 @@ export default function MarketingPage() {
                                 </div>
                             </div>
                             <p className="text-[13px] text-[rgba(255,255,255,0.5)] leading-relaxed max-w-xs">
-                                AI-powered advertising intelligence. See the hidden psychology,
-                                trigger mechanics, and persuasion strategies behind any ad.
+                                Forensic advertising intelligence for strategic decisions,
+                                not ad-spy browsing or generic AI commentary.
                             </p>
                         </div>
 
