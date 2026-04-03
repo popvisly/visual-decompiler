@@ -8,6 +8,7 @@ const AD_STACK = [
     { src: '/images/examples/Miss_DIOR.jpg', label: 'Identity/Beauty', mechanic: 'Identity-Led' },
     { src: '/images/examples/balenciaga-high-summer-campaign-photosb.webp', label: 'High Fashion', mechanic: 'Avant-Garde' },
     { src: '/images/examples/Watch.png', label: 'Precision Watch', mechanic: 'Product Authority' },
+    { src: '/images/examples/Sony.jpg', label: 'Consumer Electronics', mechanic: 'Tech Authority' },
     { src: '/images/examples/ACNE.png', label: 'Minimalist Fashion', mechanic: 'Contemporary' },
     { src: '/images/examples/Chanel_No5.webp', label: 'Heritage Luxury', mechanic: 'Archetypal' },
 ];
