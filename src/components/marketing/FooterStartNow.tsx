@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Plus, Minus } from 'lucide-react';
 
@@ -12,19 +13,19 @@ const FAQS = [
     },
     {
         q: 'Is this a generation tool?',
-        a: 'No. Visual Decompiler judges, diagnoses, and directs. It explains why an ad works, where it is fragile, and what decision to make next. It does not generate ads.',
+        a: 'No. Visual Decompiler reads, judges, and directs. It shows why an ad holds, where it is fragile, and what decision to make next. It does not generate ads.',
     },
     {
         q: 'How is this different from an ad-spy tool?',
-        a: 'Spy tools show you what ads are running. VD tells you why they work — the hidden persuasion mechanics, execution risks, and strategic posture behind every creative.',
+        a: 'Spy tools show you what ads are running. VD gives you the sharper read: why the work holds attention, where it weakens, and what kind of move it is making.',
     },
     {
         q: 'What does the free tier include?',
-        a: '5 full forensic decompiles. No card required. Each readout includes mechanic extraction, execution DNA, stress test, and a rebuild blueprint.',
+        a: '5 free decompiles. No card required. Each readout includes the creative read, execution DNA, stress test, and a rebuild direction.',
     },
     {
         q: 'Can I use this with clients or in pitches?',
-        a: 'Yes — dossiers are export-ready. White-label output is available on team tiers. Pitches built on forensic creative rationale consistently outperform generic decks.',
+        a: 'Yes. The reads are built to travel into client rooms, pitch decks, strategy sessions, and creative reviews. White-label output is available on team tiers.',
     },
 ] as const;
 
@@ -83,7 +84,7 @@ export default function FooterStartNow() {
                     transition={{ duration: 0.6 }}
                     className="mb-8 text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]"
                 >
-                    Start free · 5 analyses · No card
+                    Start free · 5 decompiles · No card
                 </motion.p>
 
                 {/* Massive CTA headline */}
@@ -95,9 +96,18 @@ export default function FooterStartNow() {
                     className="font-black leading-[0.88] tracking-[-0.05em] text-white"
                     style={{ fontSize: 'clamp(52px, 10vw, 140px)' }}
                 >
-                    Drop an ad.<br />
-                    <span className="text-[#D4A574]">See the invisible.</span>
+                    Bring in the work.<br />
+                    <span className="text-[#D4A574]">Get the sharper read.</span>
                 </motion.h2>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, delay: 0.15 }}
+                    className="mt-8 max-w-2xl text-[16px] leading-[1.7] text-white/55"
+                >
+                    Built for designers, strategists, founders, art directors, agencies, and teams shaping how a brand is perceived.
+                </motion.p>
 
                 {/* CTA row */}
                 <motion.div
@@ -105,11 +115,12 @@ export default function FooterStartNow() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.7, delay: 0.2 }}
-                    className="mt-12 flex items-center gap-6"
+                    className="mt-12 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-6"
                 >
                     <a
                         href="/ingest"
                         className="inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] text-[#141414] transition hover:bg-[#E0B882] hover:-translate-y-0.5"
+                        data-presence-target="cta"
                     >
                         Start Decompiling Free
                         <ArrowUpRight size={15} />
@@ -117,6 +128,7 @@ export default function FooterStartNow() {
                     <a
                         href="/pricing"
                         className="text-[11px] font-bold uppercase tracking-[0.3em] text-white/40 transition hover:text-white/70"
+                        data-presence-target="inspect"
                     >
                         View Pricing →
                     </a>
@@ -174,14 +186,16 @@ export default function FooterStartNow() {
 
                     {/* Brand */}
                     <div className="flex items-center gap-3">
-                        <img
+                        <Image
                             src="/images/logo/Visual_Decompiler_Logo_v2_400px.png"
                             alt="Visual Decompiler"
+                            width={24}
+                            height={24}
                             className="h-6 w-6 object-contain invert opacity-60"
                         />
                         <div>
                             <span className="block text-[11px] font-black uppercase tracking-[0.2em] text-white/60">Visual Decompiler</span>
-                            <span className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-white/30">Forensic Creative Intelligence</span>
+                            <span className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-white/30">Visual Judgment For Working Creatives</span>
                         </div>
                     </div>
 

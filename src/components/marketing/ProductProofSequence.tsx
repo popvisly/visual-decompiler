@@ -51,7 +51,7 @@ function SingleAssetDeconstruction() {
             <motion.div style={{ y: imageY }} className="absolute inset-0 will-change-transform">
                 <Image
                     src="/images/examples/Natalie Portman Miss Dior Absolutely Blooming.jpg"
-                    alt="Miss Dior — forensic analysis"
+                    alt="Miss Dior — creative reading"
                     fill
                     className="object-cover object-top"
                     priority
@@ -78,11 +78,12 @@ function SingleAssetDeconstruction() {
                         <span className="text-[#D4A574]">is really doing.</span>
                     </h2>
                     <p className="mt-8 max-w-md text-[16px] leading-[1.6] text-white/60">
-                        A close read of hierarchy, posture, restraint, and where the work either holds or slips.
+                        A close read of hierarchy, posture, restraint, and where the work starts to loosen.
                     </p>
                     <a
                         href="/ingest"
                         className="mt-10 inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-8 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#0E0C0A] transition hover:bg-[#E0B882]"
+                        data-presence-target="cta"
                     >
                         Start Decompiling Free
                         <ArrowUpRight size={14} />
@@ -91,7 +92,7 @@ function SingleAssetDeconstruction() {
 
                 <div className="mt-12 grid gap-3 sm:max-w-xl lg:hidden">
                     {ANNOTATIONS.map((ann) => (
-                        <div key={ann.id} className="rounded-[1.25rem] border border-white/10 bg-white/[0.04] px-4 py-4 backdrop-blur-sm">
+                        <div key={ann.id} className="rounded-[1.25rem] border border-white/10 bg-white/[0.04] px-4 py-4 backdrop-blur-sm" data-presence-target="annotation">
                             <div className="flex items-start gap-3">
                                 <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#D4A574] bg-[#D4A574]/20 text-[9px] font-black text-[#D4A574]">
                                     {ann.id}
@@ -114,6 +115,8 @@ function SingleAssetDeconstruction() {
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.6, delay: 0.4 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                         className="absolute hidden lg:block"
+                        whileHover={{ scale: 1.03, x: 4 }}
+                        data-presence-target="annotation"
                         style={{
                             top: ann.top ?? undefined,
                             bottom: ann.bottom ?? undefined,
@@ -148,9 +151,9 @@ function SingleAssetDeconstruction() {
 // Three stats displayed as a huge horizontal row between or below.
 // ─────────────────────────────────────────────────────────────────────────────
 const DIFF_METRICS = [
-    { label: 'Identity pull', value: '+27%', sub: 'the challenger lands with a more distinct point of view' },
-    { label: 'Visual hierarchy', value: '+18%', sub: 'the product arrives earlier without losing mood' },
-    { label: 'Repeat wear', value: '-22%', sub: 'the reference feels more familiar, but less memorable' },
+    { label: 'Identity read', title: 'Stronger identity pull', value: '+27% signal', sub: 'The challenger lands with a clearer point of view and stays with you longer.' },
+    { label: 'Product read', title: 'Cleaner product arrival', value: '+18% earlier read', sub: 'The product gets there sooner without collapsing the mood.' },
+    { label: 'Wear pattern', title: 'More likely to fatigue', value: '-22% freshness', sub: 'The reference feels more familiar, but it gives away more on repeat exposure.' },
 ] as const;
 
 function DifferentialDiagnosisSection() {
@@ -195,6 +198,8 @@ function DifferentialDiagnosisSection() {
                         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                         className="relative overflow-hidden rounded-[1.75rem] will-change-transform"
                         style={{ aspectRatio: '4/5', y: imgAY }}
+                        data-presence-target="compare"
+                        whileHover={{ y: '2%' }}
                     >
                         <Image
                             src="/images/examples/Chanel_No5.webp"
@@ -220,6 +225,8 @@ function DifferentialDiagnosisSection() {
                         transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
                         className="relative overflow-hidden rounded-[1.75rem] will-change-transform"
                         style={{ aspectRatio: '4/5', y: imgBY }}
+                        data-presence-target="compare"
+                        whileHover={{ y: '-2%' }}
                     >
                         <Image
                             src="/images/examples/Miss_DIOR.jpg"
@@ -246,7 +253,7 @@ function DifferentialDiagnosisSection() {
 
             {/* ── Reading cards ── */}
             <div className="mx-auto mt-12 max-w-[1400px] px-6 sm:px-8 lg:px-10">
-                <div className="grid gap-4 md:grid-cols-3">
+                <div className="grid gap-5 md:grid-cols-3">
                     {DIFF_METRICS.map((m, i) => (
                         <motion.div
                             key={m.label}
@@ -254,13 +261,18 @@ function DifferentialDiagnosisSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.5 }}
                             transition={{ duration: 0.6, delay: i * 0.1 }}
-                            className="rounded-[1.5rem] border border-[#E7DED1] bg-[#FBF7EF] px-7 py-7 shadow-[0_14px_28px_rgba(20,20,20,0.05)]"
+                            whileHover={{ y: -6 }}
+                            data-presence-target="compare"
+                            className="rounded-[1.75rem] border border-[#E7DED1] bg-[linear-gradient(180deg,#FCF9F2_0%,#F7F1E7_100%)] px-7 py-7 shadow-[0_18px_34px_rgba(20,20,20,0.05)]"
                         >
-                            <div className="flex items-baseline justify-between gap-4">
+                            <div className="flex items-center justify-between gap-4">
                                 <p className="text-[9px] font-black uppercase tracking-[0.35em] text-[#9A8A72]">{m.label}</p>
-                                <p className="text-[17px] font-black leading-none tracking-[-0.04em] text-[#D4A574]">{m.value}</p>
+                                <span className="rounded-full border border-[#D4A574]/24 bg-white/60 px-3 py-1 text-[9px] font-black uppercase tracking-[0.26em] text-[#9B7B52]">
+                                    {m.value}
+                                </span>
                             </div>
-                            <p className="mt-4 text-[16px] font-semibold leading-tight tracking-tight text-[#141414]">{m.sub}</p>
+                            <p className="mt-5 text-[24px] font-black leading-[1.02] tracking-[-0.04em] text-[#141414]">{m.title}</p>
+                            <p className="mt-3 max-w-[20rem] text-[15px] leading-[1.6] text-[#51483D]">{m.sub}</p>
                         </motion.div>
                     ))}
                 </div>
@@ -377,11 +389,12 @@ function TrustBoundaryPanel() {
                     className="mt-20 flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-12 md:flex-row md:items-end"
                 >
                     <p className="max-w-sm text-[14px] leading-relaxed text-white/40">
-                        Rebuild direction is there to sharpen the next creative decision, not replace the person making it.
+                        The rigor stays in the read, the comparison, and the next move. It never replaces the person making the judgment.
                     </p>
                     <a
                         href="/ingest"
                         className="inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-8 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#141414] transition hover:bg-[#E0B882] hover:-translate-y-0.5"
+                        data-presence-target="cta"
                     >
                         Start Decompiling Free
                         <ArrowUpRight size={14} />

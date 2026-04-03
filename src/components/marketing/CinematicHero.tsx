@@ -206,6 +206,7 @@ export default function CinematicHero() {
                 onHoverStart={() => setIsFocused(true)}
                 onHoverEnd={() => setIsFocused(false)}
                 whileHover={{ y: -8 }}
+                data-presence-target="annotation"
             >
                 <div className="rounded-[2rem] border border-[#D9CCB8] bg-[rgba(255,251,244,0.9)] p-5 shadow-[0_40px_80px_rgba(20,20,20,0.18)] backdrop-blur-xl sm:p-6">
                     {/* Header row */}
@@ -235,13 +236,15 @@ export default function CinematicHero() {
                         <a
                             href="/ingest"
                             className={`${HOMEPAGE_PRIMARY_CTA} flex-1 text-center justify-center`}
+                            data-presence-target="cta"
                         >
-                            <span>Start Reading</span>
+                            <span>Start Decompiling</span>
                             <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                         </a>
                         <a
                             href={SAMPLE_DOSSIER_HREF}
                             className="flex items-center gap-1.5 rounded-full border border-[#D4A574]/30 bg-transparent px-4 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#D4A574] transition hover:border-[#D4A574]/60"
+                            data-presence-target="inspect"
                         >
                             See Sample
                         </a>
@@ -261,11 +264,11 @@ export default function CinematicHero() {
                 className="absolute left-4 top-28 z-30 max-w-[220px] sm:left-6 sm:top-32 sm:max-w-[260px] md:left-10"
             >
                 <p className="text-[10px] font-black uppercase tracking-[0.42em] text-[#D4A574]">
-                    Visual Intelligence For Creatives
+                    For Working Creatives
                 </p>
                 <p className="mt-3 text-[14px] font-semibold leading-snug tracking-tight text-[#141414] sm:text-[15px]">
-                    Bring sharper eyes into the review.<br />
-                    See what the creative is really doing.
+                    Bring a sharper read into the room.<br />
+                    See what the work is really doing.
                 </p>
             </motion.div>
 
@@ -280,16 +283,20 @@ export default function CinematicHero() {
                     Hold the distinctiveness.
                 </p>
                 <p className="mt-5 max-w-[34rem] text-[15px] leading-[1.7] text-[#4F493F] sm:mt-6 sm:text-[16px]">
-                    Visual Decompiler helps creatives read hierarchy, tension, identity pull, and what weakens a piece before it goes into the room.
+                    Decompile the work into a sharper read of hierarchy, tension, identity pull, and where it starts giving too much away.
+                </p>
+                <p className="mt-4 max-w-[32rem] text-[11px] font-bold uppercase tracking-[0.24em] text-[#8A7B64]">
+                    Designers, strategists, founders, art directors, and teams shaping perception.
                 </p>
                 <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row">
-                    <a href="/ingest" className={HOMEPAGE_PRIMARY_CTA}>
+                    <a href="/ingest" className={HOMEPAGE_PRIMARY_CTA} data-presence-target="cta">
                         <span>Start Decompiling Free</span>
                         <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                     </a>
                     <a
                         href={SAMPLE_DOSSIER_HREF}
                         className="inline-flex items-center gap-2 rounded-full border border-[#D4A574]/28 bg-[#FBF7EF]/70 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#7B6544] transition hover:border-[#D4A574]/60 hover:bg-[#FBF7EF]"
+                        data-presence-target="inspect"
                     >
                         Open Sample Read
                         <ArrowUpRight size={14} />
