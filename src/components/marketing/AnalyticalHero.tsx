@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import AdRolodexScanner from '@/components/marketing/AdRolodexScanner';
+import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { HOMEPAGE_PRIMARY_CTA, HOMEPAGE_SECONDARY_CTA, HOMEPAGE_CTA_ICON } from '@/components/marketing/ctaStyles';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
@@ -14,6 +14,27 @@ type Persona = {
 };
 
 const HERO_PERSONA_ROTATION_VERSION = 'v2-no-copywriters';
+const HERO_AD_IMAGE = '/images/examples/Miss_DIOR.jpg';
+const HERO_FINDINGS = [
+    {
+        label: 'Primary Mechanic',
+        value: 'Status-coded restraint creates desire without verbal selling.',
+    },
+    {
+        label: 'Risk Signal',
+        value: 'Message clarity drops if elegance overwhelms product proof.',
+    },
+    {
+        label: 'Decision',
+        value: 'Preserve the authority layer. Tighten the value transfer.',
+    },
+] as const;
+
+const HERO_EVIDENCE = [
+    'Semiotic luxury posture is coherent across image, palette, and distance.',
+    'Fragrance skepticism is neutralized through control, not explanation.',
+    'Memory potential is driven by composition and archetypal restraint.',
+] as const;
 
 const PERSONAS: Persona[] = [
     {
@@ -93,28 +114,24 @@ export default function AnalyticalHero() {
             className="relative isolate min-h-[100svh] overflow-hidden bg-[#141414] text-[#FBFBF6]"
             data-hero-rotation={HERO_PERSONA_ROTATION_VERSION}
         >
-            {/* Ambient forensic field */}
+            {/* Editorial forensic field */}
             <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
-                <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:56px_56px]" />
-                <div className="hero-drift-grid absolute inset-[-8%] opacity-[0.045] [background-image:linear-gradient(rgba(212,165,116,0.4)_1px,transparent_1px),linear-gradient(90deg,rgba(212,165,116,0.4)_1px,transparent_1px)] [background-size:112px_112px]" />
-                <div className="hero-scanlines absolute inset-0 opacity-[0.1]" />
+                <div className="absolute inset-0 opacity-[0.045] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:64px_64px]" />
                 <div
-                    className="hero-bloom absolute left-[-12%] top-[8%] h-[420px] w-[420px] rounded-full blur-3xl"
-                    style={{ background: `radial-gradient(circle, ${persona.color}22 0%, transparent 68%)` }}
-                />
-                <div
-                    className="hero-bloom-delayed absolute right-[-6%] top-[18%] h-[360px] w-[360px] rounded-full blur-3xl"
+                    className="absolute left-[-14%] top-[6%] h-[420px] w-[420px] rounded-full blur-3xl"
                     style={{ background: `radial-gradient(circle, ${persona.color}18 0%, transparent 70%)` }}
                 />
-                <div className="hero-gold-bloom absolute bottom-[-12%] left-[20%] h-[320px] w-[320px] rounded-full bg-[radial-gradient(circle,rgba(212,165,116,0.12)_0%,transparent_72%)] blur-3xl" />
-                <div className="hero-sweep absolute inset-y-0 left-[-20%] w-[22%] bg-[linear-gradient(90deg,transparent_0%,rgba(212,165,116,0.08)_45%,rgba(212,165,116,0.18)_50%,rgba(212,165,116,0.08)_55%,transparent_100%)] blur-xl" />
-                <div className="hero-ring absolute left-[8%] top-[18%] h-[420px] w-[420px] rounded-full border border-[#D4A574]/[0.08]" />
-                <div className="hero-ring-delayed absolute right-[10%] bottom-[12%] h-[280px] w-[280px] rounded-full border border-[#D4A574]/[0.07]" />
+                <div
+                    className="absolute right-[-8%] top-[16%] h-[360px] w-[360px] rounded-full blur-3xl"
+                    style={{ background: `radial-gradient(circle, ${persona.color}14 0%, transparent 72%)` }}
+                />
+                <div className="absolute bottom-[-10%] left-[18%] h-[320px] w-[320px] rounded-full bg-[radial-gradient(circle,rgba(212,165,116,0.09)_0%,transparent_72%)] blur-3xl" />
+                <div className="absolute right-[10%] bottom-[14%] h-[300px] w-[300px] rounded-full border border-[#D4A574]/[0.07]" />
+                <div className="absolute left-[6%] top-[16%] h-[420px] w-[420px] rounded-full border border-[#D4A574]/[0.06]" />
             </div>
 
-            {/* Radial vignette */}
-            <div className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(ellipse_80%_60%_at_30%_50%,rgba(212,165,116,0.07)_0%,transparent_70%)]" />
-            <div className="pointer-events-none absolute inset-0 z-[3] bg-[radial-gradient(ellipse_90%_75%_at_50%_50%,transparent_42%,rgba(0,0,0,0.22)_100%)]" />
+            <div className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(ellipse_80%_60%_at_30%_50%,rgba(212,165,116,0.05)_0%,transparent_70%)]" />
+            <div className="pointer-events-none absolute inset-0 z-[3] bg-[radial-gradient(ellipse_90%_75%_at_50%_50%,transparent_40%,rgba(0,0,0,0.26)_100%)]" />
 
             <div className="relative z-10 mx-auto max-w-[1280px] px-6 py-24 md:py-32">
                 <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
@@ -169,87 +186,68 @@ export default function AnalyticalHero() {
                     </div>
 
                     <div className="relative flex justify-center lg:justify-end animate-in fade-in zoom-in duration-1000">
-                        <div className="relative w-full max-w-[425px] lg:max-w-[690px] transform lg:[transform:perspective(1200px)_rotateY(-5deg)] hover:[transform:perspective(1200px)_rotateY(0deg)] transition-transform duration-700">
-                            <AdRolodexScanner />
+                        <div className="relative w-full max-w-[430px] lg:max-w-[700px] lg:[transform:perspective(1200px)_rotateY(-4deg)] transition-transform duration-700">
+                            <div className="rounded-[2rem] border border-[#D4A574]/20 bg-[rgba(20,20,20,0.74)] p-3 shadow-[0_32px_90px_rgba(0,0,0,0.34)] backdrop-blur-md">
+                                <div className="rounded-[1.65rem] border border-[#D4A574]/14 bg-[#181512] p-5 sm:p-6">
+                                    <div className="flex items-center justify-between gap-4 border-b border-[#D4A574]/12 pb-4">
+                                        <div>
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Forensic Dossier</p>
+                                            <p className="mt-2 text-[12px] uppercase tracking-[0.18em] text-[#B9B19F]">Decision-quality creative judgment</p>
+                                        </div>
+                                        <div className="rounded-full border border-[#D4A574]/18 bg-[#100E0C] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">
+                                            Confidence 94
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-5 grid gap-5 lg:grid-cols-[0.88fr_1.12fr]">
+                                        <div className="space-y-4">
+                                            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.35rem] border border-[#D4A574]/16 bg-[#0F0D0B]">
+                                                <Image
+                                                    src={HERO_AD_IMAGE}
+                                                    alt="Luxury fragrance ad under forensic analysis"
+                                                    fill
+                                                    className="object-cover"
+                                                    priority
+                                                />
+                                                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.42)_100%)]" />
+                                                <div className="absolute left-3 top-3 rounded-full border border-[#FBFBF6]/12 bg-black/45 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.22em] text-[#FBFBF6]/82 backdrop-blur-md">
+                                                    Source Asset
+                                                </div>
+                                            </div>
+                                            <div className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#100E0C] px-4 py-4">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">Verdict</p>
+                                                <p className="mt-2 text-[28px] font-semibold leading-none tracking-tight text-[#F3F1ED]">Preserve. Tighten.</p>
+                                                <p className="mt-3 text-[13px] leading-6 text-[#B9B19F]">Strong authority structure. Improve value transfer before scale-up.</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            {HERO_FINDINGS.map((item) => (
+                                                <div key={item.label} className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#100E0C] px-4 py-4">
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{item.label}</p>
+                                                    <p className="mt-2 text-[14px] leading-7 text-[#F3F1ED]">{item.value}</p>
+                                                </div>
+                                            ))}
+
+                                            <div className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#100E0C] px-4 py-4">
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">Evidence Notes</p>
+                                                <div className="mt-3 space-y-3">
+                                                    {HERO_EVIDENCE.map((item, index) => (
+                                                        <p key={item} className="text-[13px] leading-6 text-[#D6D0C6]">
+                                                            <span className="mr-2 font-bold text-[#D4A574]">{index + 1}.</span>
+                                                            {item}
+                                                        </p>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <style jsx>{`
-                .hero-drift-grid {
-                    animation: heroDriftGrid 28s linear infinite;
-                }
-
-                .hero-scanlines {
-                    background-image: linear-gradient(
-                        to bottom,
-                        transparent 0%,
-                        rgba(212, 165, 116, 0.08) 48%,
-                        transparent 100%
-                    );
-                    background-size: 100% 18px;
-                    animation: heroScanlines 18s linear infinite;
-                }
-
-                .hero-bloom {
-                    animation: heroBloomFloat 16s ease-in-out infinite;
-                }
-
-                .hero-bloom-delayed {
-                    animation: heroBloomFloat 20s ease-in-out infinite reverse;
-                }
-
-                .hero-gold-bloom {
-                    animation: heroBloomPulse 14s ease-in-out infinite;
-                }
-
-                .hero-sweep {
-                    animation: heroSweep 13s ease-in-out infinite;
-                }
-
-                .hero-ring {
-                    animation: heroRingPulse 12s ease-in-out infinite;
-                }
-
-                .hero-ring-delayed {
-                    animation: heroRingPulse 16s ease-in-out infinite reverse;
-                }
-
-                @keyframes heroDriftGrid {
-                    0% { transform: translate3d(0, 0, 0); }
-                    50% { transform: translate3d(-18px, 12px, 0); }
-                    100% { transform: translate3d(0, 0, 0); }
-                }
-
-                @keyframes heroScanlines {
-                    0% { transform: translateY(0); }
-                    100% { transform: translateY(18px); }
-                }
-
-                @keyframes heroBloomFloat {
-                    0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.8; }
-                    50% { transform: translate3d(20px, -18px, 0) scale(1.08); opacity: 1; }
-                }
-
-                @keyframes heroBloomPulse {
-                    0%, 100% { transform: scale(1); opacity: 0.7; }
-                    50% { transform: scale(1.14); opacity: 1; }
-                }
-
-                @keyframes heroSweep {
-                    0% { transform: translateX(0); opacity: 0; }
-                    12% { opacity: 0.45; }
-                    50% { transform: translateX(420%); opacity: 0.2; }
-                    88% { opacity: 0; }
-                    100% { transform: translateX(420%); opacity: 0; }
-                }
-
-                @keyframes heroRingPulse {
-                    0%, 100% { transform: scale(1); opacity: 0.45; }
-                    50% { transform: scale(1.04); opacity: 0.85; }
-                }
-            `}</style>
         </section>
     );
 }
