@@ -98,7 +98,7 @@ export default function UnifiedSovereignHeader({
                 >
                     {/* ── Left: Logo ── */}
                     <div className="flex items-center flex-1">
-                        <Logo href="/" sublabel="Advertising Intelligence" forceDark={forceDark} />
+                        <Logo href="/" sublabel="For Working Creatives" forceDark={forceDark} />
                     </div>
 
                     {/* ── Center: Desktop Pillars ── */}

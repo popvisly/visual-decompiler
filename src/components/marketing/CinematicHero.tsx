@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
@@ -19,15 +19,15 @@ const AD_IMAGES = [
 
 // ── Marquee words ─────────────────────────────────────────────────────────────
 const MARQUEE_WORDS = [
-    'DECODE', '·', 'DIAGNOSE', '·', 'DIRECT', '·',
-    'DECODE', '·', 'DIAGNOSE', '·', 'DIRECT', '·',
+    'LOOK CLOSER', '·', 'HOLD ATTENTION', '·', 'SHAPE DESIRE', '·',
+    'LOOK CLOSER', '·', 'HOLD ATTENTION', '·', 'SHAPE DESIRE', '·',
 ];
 
 // ── Dossier findings ──────────────────────────────────────────────────────────
 const FINDINGS = [
-    { label: 'Primary Mechanic', value: 'Status-coded restraint creates desire without verbal selling.' },
-    { label: 'Risk Signal',      value: 'Message clarity drops if elegance overwhelms product proof.' },
-    { label: 'Direction',        value: 'Preserve the authority layer. Tighten the value transfer.' },
+    { label: `What it's doing`, value: 'Status-coded restraint creates desire without verbal selling.' },
+    { label: 'What weakens it', value: 'Message clarity slips when elegance outruns product read.' },
+    { label: 'Push this',       value: 'Keep the authority. Increase the sense of product arrival.' },
 ] as const;
 
 // ── Individual parallax image tile ────────────────────────────────────────────
@@ -129,6 +129,7 @@ function TextMaskLayer({ scrollYProgress }: { scrollYProgress: ReturnType<typeof
 export default function CinematicHero() {
     const containerRef = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end start'] });
+    const [isFocused, setIsFocused] = useState(false);
 
     // Parallax for mosaic background — faster than scroll
     const mosaicY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
@@ -140,40 +141,43 @@ export default function CinematicHero() {
         <section
             ref={containerRef}
             className="relative w-full overflow-hidden bg-[#F0EDE6]"
-            style={{ minHeight: '100svh' }}
+            style={{ minHeight: '980px' }}
+            data-presence-tone="bone"
         >
             {/* ── LAYER 1: Full-bleed parallax photo mosaic ───────────────── */}
             <motion.div
-                style={{ y: mosaicY }}
-                className="absolute inset-0 z-0 grid grid-cols-3 gap-4 px-4 pt-8 pb-8 will-change-transform"
+                style={{ y: mosaicY, filter: isFocused ? 'saturate(1)' : 'saturate(0.92)' }}
+                className="absolute inset-0 z-0 grid grid-cols-2 gap-3 px-3 pt-24 pb-8 will-change-transform sm:gap-4 sm:px-4 sm:pt-28 md:grid-cols-3 md:pt-8"
                 aria-hidden="true"
             >
                 {/* Column 1 — offset down */}
-                <div className="flex flex-col gap-4 pt-12">
+                <div className="flex flex-col gap-3 pt-12 sm:gap-4">
                     <ParallaxTile src={AD_IMAGES[0].src} alt={AD_IMAGES[0].alt} delay={0}    speed={0.3} offsetY={40} rotation={-1.5} />
                     <ParallaxTile src={AD_IMAGES[3].src} alt={AD_IMAGES[3].alt} delay={0.1}  speed={0.4} offsetY={50} rotation={0.5}  />
                 </div>
                 {/* Column 2 — starts higher, slight overlap feel */}
-                <div className="flex flex-col gap-4 -mt-6">
+                <div className="flex flex-col gap-3 -mt-6 sm:gap-4">
                     <ParallaxTile src={AD_IMAGES[1].src} alt={AD_IMAGES[1].alt} delay={0.05} speed={0.5} offsetY={60} rotation={1.0}  />
                     <ParallaxTile src={AD_IMAGES[4].src} alt={AD_IMAGES[4].alt} delay={0.15} speed={0.3} offsetY={30} rotation={-0.8} />
                 </div>
                 {/* Column 3 — offset down again */}
-                <div className="flex flex-col gap-4 pt-8">
+                <div className="hidden flex-col gap-4 pt-8 md:flex">
                     <ParallaxTile src={AD_IMAGES[2].src} alt={AD_IMAGES[2].alt} delay={0.08} speed={0.4} offsetY={55} rotation={1.8}  />
                     <ParallaxTile src={AD_IMAGES[5].src} alt={AD_IMAGES[5].alt} delay={0.18} speed={0.5} offsetY={45} rotation={-1.2} />
                 </div>
 
                 {/* Overlay to unify the mosaic into the bone background */}
-                <div className="absolute inset-0 bg-[#F0EDE6]/60 pointer-events-none" />
+                <div className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ${isFocused ? 'bg-[#F0EDE6]/56' : 'bg-[#F0EDE6]/66'}`} />
             </motion.div>
 
             {/* ── LAYER 2: Giant SVG text ──────────────────────────────────── */}
-            <TextMaskLayer scrollYProgress={scrollYProgress} />
+            <div className="hidden md:block">
+                <TextMaskLayer scrollYProgress={scrollYProgress} />
+            </div>
 
             {/* ── LAYER 3: Kinetic marquee strip ──────────────────────────── */}
             <div
-                className="absolute top-[62%] left-0 right-0 z-20 overflow-hidden whitespace-nowrap border-y border-[#141414]/10 bg-[#141414]/[0.03] py-3 backdrop-blur-[2px]"
+                className="absolute left-0 right-0 top-[62%] z-20 hidden overflow-hidden whitespace-nowrap border-y border-[#141414]/10 bg-[#141414]/[0.03] py-3 backdrop-blur-[2px] md:block"
                 aria-hidden="true"
             >
                 <div className="marquee-track inline-flex gap-0">
@@ -198,18 +202,21 @@ export default function CinematicHero() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.0, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute bottom-10 right-10 z-30 w-[400px]"
+                className="absolute bottom-6 left-4 right-4 z-30 sm:bottom-8 sm:left-6 sm:right-6 md:bottom-10 md:left-auto md:right-10 md:w-[400px]"
+                onHoverStart={() => setIsFocused(true)}
+                onHoverEnd={() => setIsFocused(false)}
+                whileHover={{ y: -8 }}
             >
-                <div className="rounded-[2rem] border border-[#D9CCB8] bg-[rgba(255,251,244,0.88)] p-6 shadow-[0_40px_80px_rgba(20,20,20,0.18)] backdrop-blur-xl">
+                <div className="rounded-[2rem] border border-[#D9CCB8] bg-[rgba(255,251,244,0.9)] p-5 shadow-[0_40px_80px_rgba(20,20,20,0.18)] backdrop-blur-xl sm:p-6">
                     {/* Header row */}
                     <div className="flex items-center justify-between mb-5">
                         <div>
-                            <p className="text-[9px] font-black uppercase tracking-[0.38em] text-[#D4A574]">Campaign Dossier</p>
-                            <p className="mt-1 text-[12px] font-medium tracking-tight text-[#5E5A53]">Miss Dior · Print Campaign</p>
+                            <p className="text-[9px] font-black uppercase tracking-[0.38em] text-[#D4A574]">Creative Reading</p>
+                            <p className="mt-1 text-[12px] font-medium tracking-tight text-[#5E5A53]">Miss Dior · print still</p>
                         </div>
                         <div className="flex items-center gap-1.5 rounded-full border border-[#D4A574]/30 bg-[#F8F3EA] px-3 py-1.5">
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#00b85e]" />
-                            <span className="text-[10px] font-bold text-[#5E5A53]">94 confidence</span>
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
+                            <span className="text-[10px] font-bold text-[#5E5A53]">Held read</span>
                         </div>
                     </div>
 
@@ -224,12 +231,12 @@ export default function CinematicHero() {
                     </div>
 
                     {/* CTAs */}
-                    <div className="mt-5 flex gap-3">
+                    <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                         <a
                             href="/ingest"
                             className={`${HOMEPAGE_PRIMARY_CTA} flex-1 text-center justify-center`}
                         >
-                            <span>Start Decompiling</span>
+                            <span>Start Reading</span>
                             <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                         </a>
                         <a
@@ -241,7 +248,7 @@ export default function CinematicHero() {
                     </div>
 
                     <p className="mt-4 text-center text-[9px] font-bold uppercase tracking-[0.25em] text-[#9A9486]">
-                        No card · 5 free analyses
+                        No card · 5 free reads
                     </p>
                 </div>
             </motion.div>
@@ -251,15 +258,43 @@ export default function CinematicHero() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute top-32 left-10 z-30 max-w-[260px]"
+                className="absolute left-4 top-28 z-30 max-w-[220px] sm:left-6 sm:top-32 sm:max-w-[260px] md:left-10"
             >
                 <p className="text-[10px] font-black uppercase tracking-[0.42em] text-[#D4A574]">
-                    Forensic Creative Intelligence
+                    Visual Intelligence For Creatives
                 </p>
-                <p className="mt-3 text-[15px] font-semibold leading-snug tracking-tight text-[#141414]">
-                    Drop any ad.<br />
-                    See the invisible.
+                <p className="mt-3 text-[14px] font-semibold leading-snug tracking-tight text-[#141414] sm:text-[15px]">
+                    Bring sharper eyes into the review.<br />
+                    See what the creative is really doing.
                 </p>
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, y: 28 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute left-4 right-4 top-[20rem] z-30 sm:left-6 sm:right-6 sm:top-[22rem] md:left-10 md:right-auto md:top-[38%] md:max-w-[460px]"
+            >
+                <p className="text-[38px] font-black leading-[0.92] tracking-[-0.05em] text-[#141414] sm:text-[54px] lg:text-[78px]">
+                    Read the posture.<br />
+                    Hold the distinctiveness.
+                </p>
+                <p className="mt-5 max-w-[34rem] text-[15px] leading-[1.7] text-[#4F493F] sm:mt-6 sm:text-[16px]">
+                    Visual Decompiler helps creatives read hierarchy, tension, identity pull, and what weakens a piece before it goes into the room.
+                </p>
+                <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row">
+                    <a href="/ingest" className={HOMEPAGE_PRIMARY_CTA}>
+                        <span>Start Decompiling Free</span>
+                        <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
+                    </a>
+                    <a
+                        href={SAMPLE_DOSSIER_HREF}
+                        className="inline-flex items-center gap-2 rounded-full border border-[#D4A574]/28 bg-[#FBF7EF]/70 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#7B6544] transition hover:border-[#D4A574]/60 hover:bg-[#FBF7EF]"
+                    >
+                        Open Sample Read
+                        <ArrowUpRight size={14} />
+                    </a>
+                </div>
             </motion.div>
 
             {/* Bottom gradient fade into next section */}

@@ -46,7 +46,7 @@ function SingleAssetDeconstruction() {
     const imageY = useTransform(scrollYProgress, [0, 1], ['-6%', '6%']);
 
     return (
-        <section ref={ref} className="relative w-full overflow-hidden bg-[#0E0C0A]" style={{ minHeight: '90vh' }}>
+        <section ref={ref} className="relative w-full overflow-hidden bg-[#0E0C0A]" style={{ minHeight: '90vh' }} data-presence-tone="ink">
             {/* ── Full-bleed ad image with parallax ── */}
             <motion.div style={{ y: imageY }} className="absolute inset-0 will-change-transform">
                 <Image
@@ -62,24 +62,23 @@ function SingleAssetDeconstruction() {
             </motion.div>
 
             {/* ── Section content ── */}
-            <div className="relative z-10 mx-auto max-w-[1400px] px-10 py-24 lg:py-32">
+            <div className="relative z-10 mx-auto max-w-[1400px] px-6 py-24 sm:px-8 lg:px-10 lg:py-32">
 
                 {/* Top label */}
                 <motion.div {...REVEAL_FAST} className="mb-16">
                     <p className="text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]">
-                        Single Asset · Deconstruction
+                        Single Asset · Reading
                     </p>
                 </motion.div>
 
                 {/* Giant headline */}
                 <motion.div {...REVEAL} className="max-w-2xl">
-                    <h2 className="text-[56px] font-black leading-[0.92] tracking-[-0.04em] text-white lg:text-[80px]">
-                        Deconstruct<br />
-                        <span className="text-[#D4A574]">the invisible</span><br />
-                        architecture.
+                    <h2 className="text-[42px] font-black leading-[0.92] tracking-[-0.04em] text-white sm:text-[56px] lg:text-[80px]">
+                        Read what the ad<br />
+                        <span className="text-[#D4A574]">is really doing.</span>
                     </h2>
                     <p className="mt-8 max-w-md text-[16px] leading-[1.6] text-white/60">
-                        Upload any ad. Get the persuasion mechanics, execution risk, and strategic direction — in under 60 seconds.
+                        A close read of hierarchy, posture, restraint, and where the work either holds or slips.
                     </p>
                     <a
                         href="/ingest"
@@ -89,6 +88,22 @@ function SingleAssetDeconstruction() {
                         <ArrowUpRight size={14} />
                     </a>
                 </motion.div>
+
+                <div className="mt-12 grid gap-3 sm:max-w-xl lg:hidden">
+                    {ANNOTATIONS.map((ann) => (
+                        <div key={ann.id} className="rounded-[1.25rem] border border-white/10 bg-white/[0.04] px-4 py-4 backdrop-blur-sm">
+                            <div className="flex items-start gap-3">
+                                <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#D4A574] bg-[#D4A574]/20 text-[9px] font-black text-[#D4A574]">
+                                    {ann.id}
+                                </div>
+                                <div>
+                                    <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#D4A574]">{ann.label}</p>
+                                    <p className="mt-1.5 text-[13px] leading-[1.55] text-white/70">{ann.desc}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
 
                 {/* Annotation pins */}
                 {ANNOTATIONS.map((ann, i) => (
@@ -133,9 +148,9 @@ function SingleAssetDeconstruction() {
 // Three stats displayed as a huge horizontal row between or below.
 // ─────────────────────────────────────────────────────────────────────────────
 const DIFF_METRICS = [
-    { label: 'Strategic Delta',  value: '+27%', sub: 'novelty advantage' },
-    { label: 'Persuasion Lift',  value: '+18%', sub: 'identity pull'     },
-    { label: 'Fatigue Gap',      value: '−22%', sub: 'repetition risk'   },
+    { label: 'Identity pull', value: '+27%', sub: 'the challenger lands with a more distinct point of view' },
+    { label: 'Visual hierarchy', value: '+18%', sub: 'the product arrives earlier without losing mood' },
+    { label: 'Repeat wear', value: '-22%', sub: 'the reference feels more familiar, but less memorable' },
 ] as const;
 
 function DifferentialDiagnosisSection() {
@@ -145,33 +160,33 @@ function DifferentialDiagnosisSection() {
     const imgBY = useTransform(scrollYProgress, [0, 1], ['-4%', '4%']);
 
     return (
-        <section ref={ref} className="relative w-full overflow-hidden bg-[#FBFBF6] py-24 lg:py-32">
+        <section ref={ref} className="relative w-full overflow-hidden bg-[#FBFBF6] py-24 lg:py-32" data-presence-tone="bone">
             {/* ── Section label ── */}
-            <motion.div {...REVEAL_FAST} className="mx-auto max-w-[1400px] px-10 mb-10">
-                <div className="flex items-center justify-between">
+            <motion.div {...REVEAL_FAST} className="mx-auto mb-10 max-w-[1400px] px-6 sm:px-8 lg:px-10">
+                <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
                     <p className="text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]">
-                        Differential · Diagnostic
+                        Comparison · Discernment
                     </p>
                     <a
                         href="/compare"
                         className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-[#141414] hover:text-[#D4A574] transition"
                     >
-                        Run Comparison <ArrowUpRight size={12} />
+                        Open Comparison <ArrowUpRight size={12} />
                     </a>
                 </div>
             </motion.div>
 
             {/* ── Giant section headline ── */}
-            <motion.div {...REVEAL} className="mx-auto max-w-[1400px] px-10 mb-12">
-                <h2 className="text-[52px] font-black leading-[0.9] tracking-[-0.04em] text-[#141414] lg:text-[72px]">
-                    Choose two.<br />
-                    <span className="text-[#D4A574]">Surface the delta.</span>
+            <motion.div {...REVEAL} className="mx-auto mb-12 max-w-[1400px] px-6 sm:px-8 lg:px-10">
+                <h2 className="text-[40px] font-black leading-[0.9] tracking-[-0.04em] text-[#141414] sm:text-[52px] lg:text-[72px]">
+                    Put two in the room.<br />
+                    <span className="text-[#D4A574]">Feel the difference.</span>
                 </h2>
             </motion.div>
 
             {/* ── Raw two-image spread ── */}
-            <div className="relative mx-auto max-w-[1400px] px-10">
-                <div className="grid grid-cols-2 gap-4 lg:gap-6">
+            <div className="relative mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-10">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
                     {/* Control */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
@@ -190,7 +205,7 @@ function DifferentialDiagnosisSection() {
                         <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/70 via-transparent to-transparent" />
                         {/* Label */}
                         <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/50 px-3.5 py-1.5 backdrop-blur-sm">
-                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/80">Control · Asset A</p>
+                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/80">Reference · Asset A</p>
                         </div>
                         <div className="absolute bottom-6 left-6 right-6">
                             <p className="text-[13px] font-semibold italic text-white/80">Heritage-led prestige framing</p>
@@ -215,7 +230,7 @@ function DifferentialDiagnosisSection() {
                         <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/70 via-transparent to-transparent" />
                         {/* Label */}
                         <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/50 px-3.5 py-1.5 backdrop-blur-sm">
-                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/80">Proposed · Asset B</p>
+                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/80">Challenger · Asset B</p>
                         </div>
                         <div className="absolute bottom-6 left-6 right-6">
                             <p className="text-[13px] font-semibold italic text-white/80">Modern identity-led persuasion</p>
@@ -224,14 +239,14 @@ function DifferentialDiagnosisSection() {
                 </div>
 
                 {/* Connecting bridge label */}
-                <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#D4A574]/40 bg-[#FBFBF6] px-4 py-2 shadow-lg">
+                <div className="absolute left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#D4A574]/40 bg-[#FBFBF6] px-4 py-2 shadow-lg md:block">
                     <p className="text-[9px] font-black uppercase tracking-[0.4em] text-[#D4A574]">vs</p>
                 </div>
             </div>
 
-            {/* ── Huge stat row ── */}
-            <div className="mx-auto max-w-[1400px] px-10 mt-12">
-                <div className="grid grid-cols-3 divide-x divide-[#E7DED1] border border-[#E7DED1] rounded-[1.5rem] overflow-hidden">
+            {/* ── Reading cards ── */}
+            <div className="mx-auto mt-12 max-w-[1400px] px-6 sm:px-8 lg:px-10">
+                <div className="grid gap-4 md:grid-cols-3">
                     {DIFF_METRICS.map((m, i) => (
                         <motion.div
                             key={m.label}
@@ -239,11 +254,13 @@ function DifferentialDiagnosisSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.5 }}
                             transition={{ duration: 0.6, delay: i * 0.1 }}
-                            className="flex flex-col px-10 py-8"
+                            className="rounded-[1.5rem] border border-[#E7DED1] bg-[#FBF7EF] px-7 py-7 shadow-[0_14px_28px_rgba(20,20,20,0.05)]"
                         >
-                            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-[#9A8A72]">{m.label}</p>
-                            <p className="mt-3 text-[52px] font-black leading-none tracking-[-0.04em] text-[#141414] lg:text-[64px]">{m.value}</p>
-                            <p className="mt-2 text-[12px] font-medium text-[#7A6A55]">{m.sub}</p>
+                            <div className="flex items-baseline justify-between gap-4">
+                                <p className="text-[9px] font-black uppercase tracking-[0.35em] text-[#9A8A72]">{m.label}</p>
+                                <p className="text-[17px] font-black leading-none tracking-[-0.04em] text-[#D4A574]">{m.value}</p>
+                            </div>
+                            <p className="mt-4 text-[16px] font-semibold leading-tight tracking-tight text-[#141414]">{m.sub}</p>
                         </motion.div>
                     ))}
                 </div>
@@ -257,32 +274,32 @@ function DifferentialDiagnosisSection() {
 // huge black tracked type. Right column: clean lists. Dark background island.
 // ─────────────────────────────────────────────────────────────────────────────
 const VD_IS = [
-    'A forensic intelligence system for creative quality decisions',
-    'A diagnostic layer for mechanism and strategic risk',
-    'A direction tool for teams and agencies who build ads',
-    'A credibility layer for pitches and client rationale',
+    'A visual judgment partner for people making the work',
+    'A close read of hierarchy, posture, tension, and distinctiveness',
+    'A sharper way to explain why a piece holds attention or loses it',
+    'A stronger foundation for reviews, pitches, and creative direction',
 ] as const;
 
 const VD_IS_NOT = [
-    'An ad generator or copy factory',
-    'A design editor or creative suite',
-    'An ad-spy or inspiration feed',
-    'A performance dashboard',
+    'A generic inspiration feed',
+    'A dashboard built around score-chasing',
+    'A generation wrapper posing as taste',
+    'A spy tool with prettier language',
 ] as const;
 
 function TrustBoundaryPanel() {
     return (
-        <section className="relative w-full overflow-hidden bg-[#141414] py-24 lg:py-32">
+        <section className="relative w-full overflow-hidden bg-[#141414] py-24 lg:py-32" data-presence-tone="ink">
 
             {/* ── Section label ── */}
-            <motion.div {...REVEAL_FAST} className="mx-auto max-w-[1400px] px-10 mb-16">
+            <motion.div {...REVEAL_FAST} className="mx-auto mb-16 max-w-[1400px] px-6 sm:px-8 lg:px-10">
                 <p className="text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]">
-                    What Visual Decompiler is — and is not
+                    Category clarity
                 </p>
             </motion.div>
 
             {/* ── Swiss two-column poster split ── */}
-            <div className="mx-auto max-w-[1400px] px-10">
+            <div className="mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-10">
                 <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-0 lg:divide-x lg:divide-white/10">
 
                     {/* LEFT: IS */}
@@ -299,7 +316,7 @@ function TrustBoundaryPanel() {
                             IS
                         </p>
                         <div className="-mt-2 lg:-mt-4">
-                            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-[#D4A574] mb-8">VD is</p>
+                            <p className="mb-8 text-[10px] font-black uppercase tracking-[0.5em] text-[#D4A574]">What it is</p>
                             <ul className="space-y-5">
                                 {VD_IS.map((item, i) => (
                                     <motion.li
@@ -334,7 +351,7 @@ function TrustBoundaryPanel() {
                             NOT
                         </p>
                         <div className="-mt-2 lg:-mt-4">
-                            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-[#D4A574] mb-8">VD is not</p>
+                            <p className="mb-8 text-[10px] font-black uppercase tracking-[0.5em] text-[#D4A574]">What it is not</p>
                             <ul className="space-y-5">
                                 {VD_IS_NOT.map((item, i) => (
                                     <motion.li
@@ -357,10 +374,10 @@ function TrustBoundaryPanel() {
                 {/* ── Bottom CTA row ── */}
                 <motion.div
                     {...REVEAL}
-                    className="mt-20 flex items-end justify-between border-t border-white/10 pt-12"
+                    className="mt-20 flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-12 md:flex-row md:items-end"
                 >
                     <p className="max-w-sm text-[14px] leading-relaxed text-white/40">
-                        Blueprint reconstruction paths are provided for audit transparency and reproducibility — not generation inside VD.
+                        Rebuild direction is there to sharpen the next creative decision, not replace the person making it.
                     </p>
                     <a
                         href="/ingest"
