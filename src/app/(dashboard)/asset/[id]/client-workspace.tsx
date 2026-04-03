@@ -2679,7 +2679,7 @@ export default function AssetWorkspace({
                                                 </p>
                                                 <div className="mt-6 rounded-[1.75rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5">
                                                     <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">Operator Summary</p>
-                                                    <div className="mt-4 grid gap-3 md:grid-cols-2">
+                                                    <div className="mt-4 space-y-3">
                                                         <div className="rounded-[1.25rem] border border-[#3A3027] bg-[#1E1A16] px-4 py-4">
                                                             <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Decision</p>
                                                             <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">{integratedRecommendation.decision}</p>
@@ -2688,7 +2688,7 @@ export default function AssetWorkspace({
                                                             <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Primary risk</p>
                                                             <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">{integratedRecommendation.watchouts}</p>
                                                         </div>
-                                                        <div className="rounded-[1.25rem] border border-[#3A3027] bg-[#1E1A16] px-4 py-4 md:col-span-2">
+                                                        <div className="rounded-[1.25rem] border border-[#3A3027] bg-[#1E1A16] px-4 py-4">
                                                             <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Timing</p>
                                                             <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">{integratedRecommendation.whyNow}</p>
                                                         </div>
@@ -2777,38 +2777,34 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
 
-                                        <div className="grid gap-6 xl:grid-cols-[minmax(320px,0.74fr)_minmax(0,1.26fr)]">
+                                        <div className="space-y-6">
                                             <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
-                                                <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_auto] xl:items-start">
-                                                    <div>
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Verdict</p>
-                                                        <h3 className="mt-3 max-w-[12ch] text-[1.9rem] font-semibold leading-tight tracking-tight text-[#F3F1ED] md:text-[2.25rem]">
-                                                            {qualityVerdict}
-                                                        </h3>
-                                                        <p className="mt-4 max-w-[34ch] text-[13px] leading-6 text-[#B9B19F]">
-                                                            Final call on whether this creative is working strongly enough to preserve, refine, or replace at native review width.
-                                                        </p>
-                                                    </div>
-                                                    <div className="rounded-[1.5rem] border border-[#4E3D2A] bg-[#171512] px-5 py-4 xl:min-w-[180px]">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Confidence Score</p>
-                                                        <div className="mt-3 flex items-end gap-1">
-                                                            <span className="text-4xl font-semibold tracking-tight text-[#F3F1ED]">
-                                                                {confidenceScore ?? '—'}
-                                                            </span>
-                                                            <span className="pb-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">/100</span>
-                                                        </div>
+                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Verdict</p>
+                                                <h3 className="mt-4 text-[2.2rem] font-semibold leading-none tracking-tight text-[#F3F1ED] md:text-[2.8rem]">
+                                                    {qualityVerdict}
+                                                </h3>
+                                                <p className="mt-4 max-w-[62ch] text-[14px] leading-7 text-[#B9B19F]">
+                                                    Final call on whether this creative is working strongly enough to preserve, refine, or replace at native review width.
+                                                </p>
+                                                <div className="mt-6 rounded-[1.5rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5">
+                                                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Confidence Score</p>
+                                                    <div className="mt-3 flex items-end gap-1">
+                                                        <span className="text-4xl font-semibold tracking-tight text-[#F3F1ED]">
+                                                            {confidenceScore ?? '—'}
+                                                        </span>
+                                                        <span className="pb-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">/100</span>
                                                     </div>
                                                 </div>
-                                                <p className="mt-5 max-w-[44ch] text-[14px] leading-7 text-[#D6D0C6]">
+                                                <p className="mt-5 max-w-[58ch] text-[14px] leading-7 text-[#D6D0C6]">
                                                     We don&apos;t generate ads. We judge, diagnose, and direct quality.
                                                 </p>
                                             </div>
 
                                             <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
                                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Top 3 Failure Reasons</p>
-                                                <div className="mt-5 grid gap-4 xl:grid-cols-3">
+                                                <div className="mt-5 space-y-4">
                                                     {failureReasons.map((reason, index) => (
-                                                        <div key={`${reason.title}-${index}`} className="rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
+                                                        <div key={`${reason.title}-${index}`} className="rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5">
                                                             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{reason.title}</p>
                                                             <p className="mt-3 text-[14px] leading-6 text-[#D6D0C6]">{reason.detail}</p>
                                                         </div>
