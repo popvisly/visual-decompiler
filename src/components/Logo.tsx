@@ -13,7 +13,7 @@ interface LogoProps {
 
 export default function Logo({
     href = "/",
-    sublabel = "Advertising Intelligence",
+    sublabel = "For Working Creatives",
     className = "",
     forceDark = false,
     onClick

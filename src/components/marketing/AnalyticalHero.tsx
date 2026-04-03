@@ -36,6 +36,29 @@ const HERO_EVIDENCE = [
     'Memory potential is driven by composition and archetypal restraint.',
 ] as const;
 
+const CREATIVE_LENS = [
+    'Composition tension',
+    'Silhouette legibility',
+    'Focal hierarchy',
+    'Emotional temperature',
+    'Brand-code consistency',
+] as const;
+
+const CREATIVE_TRUST = [
+    {
+        role: 'For art directors',
+        value: 'Defend visual direction with craft-grounded rationale clients can trust.',
+    },
+    {
+        role: 'For brand designers',
+        value: 'Protect brand codes while evolving form, pacing, and emotional impact.',
+    },
+    {
+        role: 'For performance creatives',
+        value: 'Tighten conversion pressure without flattening the brand into generic direct response.',
+    },
+] as const;
+
 const PERSONAS: Persona[] = [
     {
         role: 'Creative Diagnosis',
@@ -137,12 +160,12 @@ export default function AnalyticalHero() {
                 <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
                     <div className="flex flex-col text-center lg:text-left">
                         <div className="mb-8 flex flex-col gap-4 items-center lg:items-start">
-                            <span className="text-[11px] font-bold uppercase tracking-[0.5em] text-[#D4A574]/80">Forensic Intelligence System</span>
+                            <span className="text-[11px] font-bold uppercase tracking-[0.5em] text-[#D4A574]/80">Credibility With Creatives Wins</span>
                             <div className="h-px w-12 bg-[#D4A574]/30" />
                         </div>
 
                         <h1 className="text-[44px] font-bold leading-[1.0] tracking-tight text-[#141414] sm:text-[56px] md:text-[68px] lg:text-[80px]">
-                            Forensic Intelligence
+                            Craft Intelligence
                             <br />
                             <span className="inline-flex items-baseline gap-3 mt-2">
                                 <span className="font-serif text-[#D4A574]/82 italic tracking-[-0.03em]">for</span>
@@ -169,6 +192,17 @@ export default function AnalyticalHero() {
                             {persona.subtitle}
                         </p>
 
+                        <div className="mt-7 flex flex-wrap justify-center gap-2 lg:justify-start">
+                            {CREATIVE_LENS.map((item) => (
+                                <span
+                                    key={item}
+                                    className="rounded-full border border-[#D8CCB5] bg-[#F8F3EA] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[#7B6A52]"
+                                >
+                                    {item}
+                                </span>
+                            ))}
+                        </div>
+
                         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
                             <a href="/ingest" className={`${HOMEPAGE_PRIMARY_CTA} w-full sm:w-auto`}>
                                 <span>Start Decompiling Free</span>
@@ -191,7 +225,7 @@ export default function AnalyticalHero() {
                                 <div className="rounded-[1.65rem] border border-[#E2D8C8] bg-[#FBFBF6] p-5 sm:p-6">
                                     <div className="flex items-center justify-between gap-4 border-b border-[#E7DED1] pb-4">
                                         <div>
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Forensic Dossier</p>
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Campaign Plate</p>
                                             <p className="mt-2 text-[12px] uppercase tracking-[0.18em] text-[#7C6F5B]">Decision-quality creative judgment</p>
                                         </div>
                                         <div className="rounded-full border border-[#D4A574]/24 bg-[#F8F3EA] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A6840]">
@@ -245,6 +279,48 @@ export default function AnalyticalHero() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div className="mt-12 grid gap-4 md:grid-cols-3">
+                    <article className="rounded-[1.7rem] border border-[#D8CCB5] bg-[#FBFBF6] p-4 shadow-[0_14px_32px_rgba(20,20,20,0.06)]">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8A6840]">Original</p>
+                        <div className="mt-3 relative h-52 overflow-hidden rounded-[1.1rem] border border-[#E7DED1] bg-[#F3ECE0]">
+                            <Image src={HERO_AD_IMAGE} alt="Original creative asset" fill className="object-cover" />
+                        </div>
+                    </article>
+
+                    <article className="rounded-[1.7rem] border border-[#D8CCB5] bg-[#FBFBF6] p-4 shadow-[0_14px_32px_rgba(20,20,20,0.06)]">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8A6840]">Deconstruction Overlay</p>
+                        <div className="mt-3 relative h-52 overflow-hidden rounded-[1.1rem] border border-[#E7DED1] bg-[#F3ECE0]">
+                            <Image src={HERO_AD_IMAGE} alt="Deconstruction overlay view" fill className="object-cover saturate-75" />
+                            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,20,20,0.08)_0%,rgba(20,20,20,0.32)_100%)]" />
+                            <div className="absolute left-3 top-3 rounded-full bg-white/82 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.15em] text-[#6D5A40]">Focal Pull</div>
+                            <div className="absolute right-3 bottom-3 rounded-full bg-white/82 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.15em] text-[#6D5A40]">Hierarchy Lock</div>
+                        </div>
+                    </article>
+
+                    <article className="rounded-[1.7rem] border border-[#D8CCB5] bg-[#FBFBF6] p-4 shadow-[0_14px_32px_rgba(20,20,20,0.06)]">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8A6840]">Rebuild Direction</p>
+                        <div className="mt-3 h-52 rounded-[1.1rem] border border-[#E7DED1] bg-[#F8F3EA] p-4">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">Move</p>
+                            <p className="mt-2 text-[16px] font-semibold leading-tight text-[#141414]">Protect silhouette authority. Increase product read 12%.</p>
+                            <p className="mt-4 text-[11px] leading-relaxed text-[#5E5A53]">
+                                Keep emotional temperature high, but tighten value transfer in the first scan path.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+
+                <div className="mt-8 rounded-[2rem] border border-[#D8CCB5] bg-[#FBFBF6] p-6 md:p-8 shadow-[0_14px_32px_rgba(20,20,20,0.05)]">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8A6840]">Built For Creatives</p>
+                    <div className="mt-5 grid gap-4 md:grid-cols-3">
+                        {CREATIVE_TRUST.map((item) => (
+                            <div key={item.role} className="rounded-[1.2rem] border border-[#E6DDCF] bg-[#F8F3EA] p-4">
+                                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#6D5A40]">{item.role}</p>
+                                <p className="mt-2 text-[14px] leading-relaxed text-[#474238]">{item.value}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

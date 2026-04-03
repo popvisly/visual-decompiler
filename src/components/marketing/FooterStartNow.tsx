@@ -49,7 +49,7 @@ export default function FooterStartNow() {
                                     Start with Observer
                                 </p>
                                 <p className="mt-3 text-[15px] leading-relaxed text-[#474238]">
-                                    Get real analysis first, then scale into team workflows when it matters.
+                                    Get real creative readouts first, then scale into team workflows when it matters.
                                 </p>
 
                                 <motion.a
@@ -62,7 +62,7 @@ export default function FooterStartNow() {
                                     <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                                 </motion.a>
                                 <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64] lg:text-left">
-                                    Observer tier: 5 free analyses (no card required)
+                                    Observer tier: 5 free decompiles (no card required)
                                 </p>
                             </div>
                         </div>
