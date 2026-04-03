@@ -1,241 +1,379 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import { HOMEPAGE_CTA_ICON } from '@/components/marketing/ctaStyles';
-import HeroAppPreview from '@/components/marketing/HeroAppPreview';
 
-function AccentBar() {
+// ─── Shared reveal preset ────────────────────────────────────────────────────
+const REVEAL = {
+    initial: { opacity: 0, y: 32 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.15 },
+    transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+};
+
+const REVEAL_FAST = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.2 },
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+};
+
+// ─── 1. SINGLE ASSET DECONSTRUCTION ─────────────────────────────────────────
+// Full-bleed dark section. Large ad image bleeds edge-to-edge.
+// Dossier findings float as annotation pins layered on top.
+// ─────────────────────────────────────────────────────────────────────────────
+const ANNOTATIONS = [
+    { id: 'A', label: 'Focal Pull', desc: 'Subject gaze locks viewer — active eye-contact triggers status recognition before copy reads.', top: '12%', left: '5%' },
+    { id: 'B', label: 'Chromatic Restraint', desc: 'Palette compressed to 2 tones. Scarcity of colour signals rarity and editorial authority.', top: '38%', right: '4%' },
+    { id: 'C', label: 'Hierarchy Lock', desc: 'Product occupies lower-right — desire is established by posture before product is consciously noticed.', bottom: '18%', left: '7%' },
+] as const;
+
+function SingleAssetDeconstruction() {
+    const ref = useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+    const imageY = useTransform(scrollYProgress, [0, 1], ['-6%', '6%']);
+
     return (
-        <div className="flex items-center gap-1.5">
-            <span className="h-1.5 w-8 rounded-full bg-[#F4A700]" />
-            <span className="h-1.5 w-5 rounded-full bg-[#C8230A]" />
-            <span className="h-1.5 w-4 rounded-full bg-[#D4A574]" />
-            <span className="h-1.5 w-3 rounded-full bg-[#F5EDE3]" />
-            <span className="h-1.5 w-5 rounded-full bg-[#D7B07A]" />
-        </div>
+        <section ref={ref} className="relative w-full overflow-hidden bg-[#0E0C0A]" style={{ minHeight: '90vh' }}>
+            {/* ── Full-bleed ad image with parallax ── */}
+            <motion.div style={{ y: imageY }} className="absolute inset-0 will-change-transform">
+                <Image
+                    src="/images/examples/Natalie Portman Miss Dior Absolutely Blooming.jpg"
+                    alt="Miss Dior — forensic analysis"
+                    fill
+                    className="object-cover object-top"
+                    priority
+                />
+                {/* Heavy vignette so text reads over image */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0E0C0A]/90 via-[#0E0C0A]/40 to-[#0E0C0A]/60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0E0C0A] via-transparent to-[#0E0C0A]/30" />
+            </motion.div>
+
+            {/* ── Section content ── */}
+            <div className="relative z-10 mx-auto max-w-[1400px] px-10 py-24 lg:py-32">
+
+                {/* Top label */}
+                <motion.div {...REVEAL_FAST} className="mb-16">
+                    <p className="text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]">
+                        Single Asset · Deconstruction
+                    </p>
+                </motion.div>
+
+                {/* Giant headline */}
+                <motion.div {...REVEAL} className="max-w-2xl">
+                    <h2 className="text-[56px] font-black leading-[0.92] tracking-[-0.04em] text-white lg:text-[80px]">
+                        Deconstruct<br />
+                        <span className="text-[#D4A574]">the invisible</span><br />
+                        architecture.
+                    </h2>
+                    <p className="mt-8 max-w-md text-[16px] leading-[1.6] text-white/60">
+                        Upload any ad. Get the persuasion mechanics, execution risk, and strategic direction — in under 60 seconds.
+                    </p>
+                    <a
+                        href="/ingest"
+                        className="mt-10 inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-8 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#0E0C0A] transition hover:bg-[#E0B882]"
+                    >
+                        Start Decompiling Free
+                        <ArrowUpRight size={14} />
+                    </a>
+                </motion.div>
+
+                {/* Annotation pins */}
+                {ANNOTATIONS.map((ann, i) => (
+                    <motion.div
+                        key={ann.id}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.6, delay: 0.4 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                        className="absolute hidden lg:block"
+                        style={{
+                            top: ann.top ?? undefined,
+                            bottom: (ann as { bottom?: string }).bottom ?? undefined,
+                            left: (ann as { left?: string }).left ?? undefined,
+                            right: (ann as { right?: string }).right ?? undefined,
+                        }}
+                    >
+                        <div className="flex items-start gap-3 max-w-[200px]">
+                            {/* Pin dot */}
+                            <div className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#D4A574] bg-[#D4A574]/20 text-[9px] font-black text-[#D4A574]">
+                                {ann.id}
+                            </div>
+                            <div>
+                                <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#D4A574]">{ann.label}</p>
+                                <p className="mt-1.5 text-[12px] leading-[1.5] text-white/70">{ann.desc}</p>
+                            </div>
+                        </div>
+                        {/* Connecting line */}
+                        <div className="mt-2 ml-2.5 h-px w-16 bg-gradient-to-r from-[#D4A574]/60 to-transparent" />
+                    </motion.div>
+                ))}
+            </div>
+
+            {/* Bottom fade into next section */}
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#FBFBF6] to-transparent pointer-events-none z-20" />
+        </section>
     );
 }
 
-const DIFFERENTIAL_METRICS = [
-    { label: 'Strategic Delta', value: '+27% novelty advantage' },
-    { label: 'Persuasion Lift', value: '+18% identity pull' },
-    { label: 'Fatigue Gap', value: '-22% repetition risk' },
+// ─── 2. DIFFERENTIAL DIAGNOSIS ───────────────────────────────────────────────
+// Two raw images side-by-side, full section width, no containing card.
+// Three stats displayed as a huge horizontal row between or below.
+// ─────────────────────────────────────────────────────────────────────────────
+const DIFF_METRICS = [
+    { label: 'Strategic Delta',  value: '+27%', sub: 'novelty advantage' },
+    { label: 'Persuasion Lift',  value: '+18%', sub: 'identity pull'     },
+    { label: 'Fatigue Gap',      value: '−22%', sub: 'repetition risk'   },
 ] as const;
 
-const REVEAL = {
-    initial: { opacity: 0, y: 24 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.2 },
-    transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-};
-
-const SECTION_BAND = 'px-6 py-18 md:py-24';
-const LIGHT_SURFACE = 'bg-transparent';
-const TAN_CTA =
-    'group inline-flex items-center justify-center gap-2 rounded-full border border-[#D4A574] bg-[#D4A574] px-7 py-3.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#141414] shadow-[0_16px_34px_rgba(20,20,20,0.2)] transition-all duration-300 hover:-translate-y-[1px] hover:bg-[#D7B07A] hover:border-[#D7B07A] hover:shadow-[0_20px_38px_rgba(20,20,20,0.24)] sm:min-w-[220px] sm:w-auto sm:px-8 sm:py-4 sm:text-[12px] sm:tracking-[0.2em]';
-const OUTLINE_TAN_CTA =
-    'group inline-flex items-center justify-center gap-2 rounded-full border border-[rgba(212,165,116,0.28)] px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#B8925B] transition-all duration-300 hover:-translate-y-[1px] hover:border-[#D7B07A] hover:bg-[#1B1814] hover:text-[#D7B07A] sm:min-w-[220px] sm:w-auto sm:px-6 sm:text-[11px] sm:tracking-[0.2em]';
-
 function DifferentialDiagnosisSection() {
+    const ref = useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+    const imgAY = useTransform(scrollYProgress, [0, 1], ['4%', '-4%']);
+    const imgBY = useTransform(scrollYProgress, [0, 1], ['-4%', '4%']);
+
     return (
-        <section className={`relative overflow-hidden scroll-mt-20 ${LIGHT_SURFACE} ${SECTION_BAND} md:scroll-mt-24 lg:scroll-mt-[104px]`}>
-            <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl rounded-[2.5rem] border border-[#D9CCB8] bg-[rgba(255,251,244,0.74)] px-6 py-8 shadow-[0_24px_58px_rgba(20,20,20,0.05)] backdrop-blur-[2px] md:px-8 md:py-10">
-                <div className="mb-6 flex items-center gap-3">
-                    <span className="h-px w-12 bg-gradient-to-r from-[#D4A574] to-transparent" />
-                    <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">Intelligence Pulse</p>
-                </div>
-                <AccentBar />
-
-                <h3 className="max-w-4xl text-[34px] font-bold leading-[1.1] tracking-tight text-[#141414] md:text-5xl">
-                    Differential <span className="text-[#F4A700]">Diagnostic</span>
-                </h3>
-                <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#474238] md:text-[18px] font-medium tracking-tight">
-                    Choose two assets and surface the strategic delta, persuasion lift, and fatigue gap before you commit creative direction.
-                </p>
-
-                <div className="mt-8 mx-auto max-w-5xl grid gap-6 lg:grid-cols-2">
-                    {/* Asset A */}
-                    <div className="group relative overflow-hidden rounded-[3rem] border border-[#D3C4AD] bg-[#FBFBF6] p-3 shadow-[0_20px_42px_rgba(20,20,20,0.07)] sm:p-4">
-                        <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#EEE6D8]">
-                            <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
-                                CONTROL (ASSET A)
-                            </div>
-                            <Image
-                                src="/images/examples/Chanel_No5.webp"
-                                alt="Control asset for differential diagnostic"
-                                fill
-                                unoptimized
-                                className="object-cover transition-transform duration-500 group-hover:scale-[1.02] opacity-90"
-                            />
-                            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0E0D0B] to-transparent" />
-                            <div className="absolute bottom-5 left-6 z-20 text-sm text-[#E7D7BF] font-medium italic">Heritage-led prestige framing</div>
-                        </div>
-                    </div>
-
-                    {/* Asset B */}
-                    <div className="group relative overflow-hidden rounded-[3rem] border border-[#D3C4AD] bg-[#FBFBF6] p-3 shadow-[0_20px_42px_rgba(20,20,20,0.07)] sm:p-4">
-                        <div className="relative h-full w-full overflow-hidden rounded-[2.2rem] bg-[#EEE6D8] aspect-[4/5]">
-                            <div className="absolute left-4 top-4 z-20 rounded-full border border-[#5A4A34] bg-[#171510]/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D5B386]">
-                                PROPOSED (ASSET B)
-                            </div>
-                            <Image
-                                src="/images/examples/Miss_DIOR.jpg"
-                                alt="Proposed route for differential diagnostic"
-                                fill
-                                unoptimized
-                                className="object-cover transition-transform duration-500 group-hover:scale-[1.02] opacity-90"
-                            />
-                            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0E0D0B] to-transparent" />
-                            <div className="absolute bottom-5 left-6 z-20 text-sm text-[#E7D7BF] font-medium italic">Modern identity-led persuasion</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="mt-4 flex items-center justify-center">
-                    <span className="rounded-full border border-[#D3C4AD] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] shadow-[0_12px_28px_rgba(20,20,20,0.05)]">
-                        Differential Read
-                    </span>
-                </div>
-
-                <div className="mt-6 grid gap-3 md:grid-cols-3">
-                    {DIFFERENTIAL_METRICS.map((metric, i) => (
-                        <motion.div
-                            key={metric.label}
-                            initial={{ opacity: 0, y: 12 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.35 }}
-                            transition={{ delay: i * 0.08, duration: 0.45 }}
-                            className="rounded-xl border border-[#D3C4AD] bg-[#FBFBF6] px-4 py-4 shadow-[0_14px_28px_rgba(20,20,20,0.05)]"
-                        >
-                            <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${
-                                i === 0 ? 'text-[#F4A700]' : i === 1 ? 'text-[#D4A574]' : 'text-[#C8230A]'
-                            }`}>{metric.label}</p>
-                            <p className="mt-2 text-base font-semibold text-[#141414]">{metric.value}</p>
-                        </motion.div>
-                    ))}
-                </div>
-
-                <div className="mt-6">
+        <section ref={ref} className="relative w-full overflow-hidden bg-[#FBFBF6] py-24 lg:py-32">
+            {/* ── Section label ── */}
+            <motion.div {...REVEAL_FAST} className="mx-auto max-w-[1400px] px-10 mb-10">
+                <div className="flex items-center justify-between">
+                    <p className="text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]">
+                        Differential · Diagnostic
+                    </p>
                     <a
                         href="/compare"
-                        className={TAN_CTA}
+                        className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-[#141414] hover:text-[#D4A574] transition"
                     >
-                        <span>Run Differential Diagnostic</span>
-                        <ArrowUpRight aria-hidden="true" className={HOMEPAGE_CTA_ICON} />
+                        Run Comparison <ArrowUpRight size={12} />
                     </a>
                 </div>
             </motion.div>
+
+            {/* ── Giant section headline ── */}
+            <motion.div {...REVEAL} className="mx-auto max-w-[1400px] px-10 mb-12">
+                <h2 className="text-[52px] font-black leading-[0.9] tracking-[-0.04em] text-[#141414] lg:text-[72px]">
+                    Choose two.<br />
+                    <span className="text-[#D4A574]">Surface the delta.</span>
+                </h2>
+            </motion.div>
+
+            {/* ── Raw two-image spread ── */}
+            <div className="relative mx-auto max-w-[1400px] px-10">
+                <div className="grid grid-cols-2 gap-4 lg:gap-6">
+                    {/* Control */}
+                    <motion.div
+                        style={{ y: imgAY }}
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                        className="relative overflow-hidden rounded-[1.75rem] will-change-transform"
+                        style={{ aspectRatio: '4/5', y: imgAY }}
+                    >
+                        <Image
+                            src="/images/examples/Chanel_No5.webp"
+                            alt="Control asset"
+                            fill
+                            className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/70 via-transparent to-transparent" />
+                        {/* Label */}
+                        <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/50 px-3.5 py-1.5 backdrop-blur-sm">
+                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/80">Control · Asset A</p>
+                        </div>
+                        <div className="absolute bottom-6 left-6 right-6">
+                            <p className="text-[13px] font-semibold italic text-white/80">Heritage-led prestige framing</p>
+                        </div>
+                    </motion.div>
+
+                    {/* Proposed */}
+                    <motion.div
+                        style={{ y: imgBY }}
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.9, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                        className="relative overflow-hidden rounded-[1.75rem] will-change-transform"
+                        style={{ aspectRatio: '4/5', y: imgBY }}
+                    >
+                        <Image
+                            src="/images/examples/Miss_DIOR.jpg"
+                            alt="Proposed asset"
+                            fill
+                            className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/70 via-transparent to-transparent" />
+                        {/* Label */}
+                        <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/50 px-3.5 py-1.5 backdrop-blur-sm">
+                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/80">Proposed · Asset B</p>
+                        </div>
+                        <div className="absolute bottom-6 left-6 right-6">
+                            <p className="text-[13px] font-semibold italic text-white/80">Modern identity-led persuasion</p>
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* Connecting bridge label */}
+                <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#D4A574]/40 bg-[#FBFBF6] px-4 py-2 shadow-lg">
+                    <p className="text-[9px] font-black uppercase tracking-[0.4em] text-[#D4A574]">vs</p>
+                </div>
+            </div>
+
+            {/* ── Huge stat row ── */}
+            <div className="mx-auto max-w-[1400px] px-10 mt-12">
+                <div className="grid grid-cols-3 divide-x divide-[#E7DED1] border border-[#E7DED1] rounded-[1.5rem] overflow-hidden">
+                    {DIFF_METRICS.map((m, i) => (
+                        <motion.div
+                            key={m.label}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.5 }}
+                            transition={{ duration: 0.6, delay: i * 0.1 }}
+                            className="flex flex-col px-10 py-8"
+                        >
+                            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-[#9A8A72]">{m.label}</p>
+                            <p className="mt-3 text-[52px] font-black leading-none tracking-[-0.04em] text-[#141414] lg:text-[64px]">{m.value}</p>
+                            <p className="mt-2 text-[12px] font-medium text-[#7A6A55]">{m.sub}</p>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
         </section>
     );
 }
+
+// ─── 3. TRUST BOUNDARY PANEL ─────────────────────────────────────────────────
+// Swiss editorial poster split. Left column: massive "IS" / "IS NOT" in
+// huge black tracked type. Right column: clean lists. Dark background island.
+// ─────────────────────────────────────────────────────────────────────────────
+const VD_IS = [
+    'A forensic intelligence system for creative quality decisions',
+    'A diagnostic layer for mechanism and strategic risk',
+    'A direction tool for teams and agencies who build ads',
+    'A credibility layer for pitches and client rationale',
+] as const;
+
+const VD_IS_NOT = [
+    'An ad generator or copy factory',
+    'A design editor or creative suite',
+    'An ad-spy or inspiration feed',
+    'A performance dashboard',
+] as const;
 
 function TrustBoundaryPanel() {
     return (
-        <section className={`relative overflow-hidden scroll-mt-20 ${LIGHT_SURFACE} ${SECTION_BAND} md:scroll-mt-24 lg:scroll-mt-[104px]`}>
-            <motion.div {...REVEAL} className="mx-auto max-w-7xl rounded-[2.5rem] border border-[#D9CCB8] bg-[rgba(255,251,244,0.74)] px-6 py-8 shadow-[0_24px_58px_rgba(20,20,20,0.05)] backdrop-blur-[2px] md:px-8 md:py-10">
-                <div className="max-w-4xl">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#9B8662]">
-                        What VD is / What VD is not
-                    </p>
-                    <AccentBar />
-                    <h2 className="mt-5 max-w-4xl text-[34px] font-bold leading-[1] tracking-tight text-[#141414] md:text-5xl">
-                        A forensic intelligence system for <span className="text-[#D4A574]">creative quality</span> decisions.
-                    </h2>
-                    <p className="mt-5 max-w-3xl text-[16px] leading-relaxed text-[#474238] md:text-[18px] font-medium tracking-tight">
-                        Visual Decompiler exists to judge, diagnose, and direct quality. It explains why an ad is working, where it is fragile, and what decision the team should make next.
-                    </p>
-                </div>
+        <section className="relative w-full overflow-hidden bg-[#141414] py-24 lg:py-32">
 
-                <div className="mt-12 grid gap-5 lg:grid-cols-2">
-                    <div className="rounded-[2rem] border border-[#D3C4AD] bg-[#FBFBF6] p-6 shadow-[0_16px_34px_rgba(20,20,20,0.04)]">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">VD is</p>
-                        <ul className="mt-5 space-y-4">
-                            {[
-                                'A forensic intelligence system for ad quality decisions',
-                                'A diagnostic layer for creative mechanism and risk',
-                                'A strategic direction tool for teams and agencies',
-                            ].map((item) => (
-                                <li key={item} className="flex items-start gap-3 text-[15px] leading-relaxed text-[#474238]">
-                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4A574]" />
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className="rounded-[2rem] border border-[#D3C4AD] bg-[#FBFBF6] p-6 shadow-[0_16px_34px_rgba(20,20,20,0.04)]">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">VD is not</p>
-                        <ul className="mt-5 space-y-4">
-                            {[
-                                'An ad generator',
-                                'A design editor',
-                                'A prompt factory',
-                                'An ad-spy tool',
-                            ].map((item) => (
-                                <li key={item} className="flex items-start gap-3 text-[15px] leading-relaxed text-[#474238]">
-                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C8230A]" />
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-
-                <p className="mt-8 max-w-4xl text-sm leading-relaxed text-[#5B5449]">
-                    Blueprint reconstruction paths are provided for audit transparency and reproducibility — not generation inside VD.
+            {/* ── Section label ── */}
+            <motion.div {...REVEAL_FAST} className="mx-auto max-w-[1400px] px-10 mb-16">
+                <p className="text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]">
+                    What Visual Decompiler is — and is not
                 </p>
             </motion.div>
-        </section>
-    );
-}
 
-function SingleAssetDeconstruction() {
-    return (
-        <section className="relative overflow-hidden scroll-mt-20 bg-transparent px-6 py-18 md:scroll-mt-24 md:py-24 lg:scroll-mt-[104px]">
-            <motion.div {...REVEAL} className="relative z-10 mx-auto max-w-7xl">
-                <div className="grid gap-10 lg:grid-cols-[1.05fr_0.8fr] lg:items-start lg:gap-12">
-                    <div>
-                        <div className="mb-5 flex items-center gap-3">
-                            <span className="h-px w-12 bg-gradient-to-r from-[#D4A574] to-transparent" />
-                            <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">Dossier Construction</p>
-                        </div>
-                        <AccentBar />
-                        <h2 className="max-w-2xl text-[32px] font-bold leading-[1.06] tracking-tight text-[#141414] md:text-[42px]">
-                            Deconstruct the hidden <span className="text-[#D7B07A]">persuasion</span> architecture.
-                        </h2>
-                        <p className="mt-5 max-w-xl text-[16px] leading-relaxed text-[#474238] md:text-[17px] font-medium tracking-tight">
-                            Upload any competitor ad and get a client-ready strategic dossier — psychology, signals, and a reconstruction blueprint — in under 60 seconds.
+            {/* ── Swiss two-column poster split ── */}
+            <div className="mx-auto max-w-[1400px] px-10">
+                <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-0 lg:divide-x lg:divide-white/10">
+
+                    {/* LEFT: IS */}
+                    <motion.div
+                        {...REVEAL}
+                        className="lg:pr-16"
+                    >
+                        {/* Big label acting as a design element */}
+                        <p
+                            className="font-black uppercase leading-none text-white/[0.06] select-none pointer-events-none"
+                            style={{ fontSize: 'clamp(80px, 14vw, 180px)', letterSpacing: '-0.06em', lineHeight: 0.85 }}
+                            aria-hidden="true"
+                        >
+                            IS
                         </p>
-
-                        <div className="mt-8 grid gap-5 sm:grid-cols-2">
-                            <div className="rounded-r-xl border-l-[3px] border-[#D4A574] bg-[#F8F3EA] py-3 pl-6 shadow-[0_10px_22px_rgba(20,20,20,0.03)]">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] mb-2">Automated Extraction</p>
-                                <p className="text-[14px] leading-relaxed text-[#474238]">Hidden signals and subtext surfaced instantly.</p>
-                            </div>
-                            <div className="rounded-r-xl border-l-[3px] border-[#D4A574] bg-[#F8F3EA] py-3 pl-6 shadow-[0_10px_22px_rgba(20,20,20,0.03)]">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] mb-2">Strategic Interpretation</p>
-                                <p className="text-[14px] leading-relaxed text-[#474238]">Raw data turned into clinical, action-ready moves.</p>
-                            </div>
+                        <div className="-mt-2 lg:-mt-4">
+                            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-[#D4A574] mb-8">VD is</p>
+                            <ul className="space-y-5">
+                                {VD_IS.map((item, i) => (
+                                    <motion.li
+                                        key={item}
+                                        initial={{ opacity: 0, x: -16 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true, amount: 0.5 }}
+                                        transition={{ duration: 0.5, delay: i * 0.08 }}
+                                        className="flex items-start gap-4"
+                                    >
+                                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4A574]" />
+                                        <span className="text-[17px] font-medium leading-snug text-white/75">{item}</span>
+                                    </motion.li>
+                                ))}
+                            </ul>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="relative lg:pt-1">
-                        <div className="mx-auto max-w-[520px] lg:mr-0">
-                            <HeroAppPreview />
+                    {/* RIGHT: IS NOT */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 32 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.15 }}
+                        transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                        className="lg:pl-16"
+                    >
+                        <p
+                            className="font-black uppercase leading-none text-white/[0.06] select-none pointer-events-none"
+                            style={{ fontSize: 'clamp(80px, 14vw, 180px)', letterSpacing: '-0.06em', lineHeight: 0.85 }}
+                            aria-hidden="true"
+                        >
+                            NOT
+                        </p>
+                        <div className="-mt-2 lg:-mt-4">
+                            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-[#D4A574] mb-8">VD is not</p>
+                            <ul className="space-y-5">
+                                {VD_IS_NOT.map((item, i) => (
+                                    <motion.li
+                                        key={item}
+                                        initial={{ opacity: 0, x: 16 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true, amount: 0.5 }}
+                                        transition={{ duration: 0.5, delay: i * 0.08 }}
+                                        className="flex items-start gap-4"
+                                    >
+                                        <span className="mt-2 h-px w-4 shrink-0 bg-white/30" />
+                                        <span className="text-[17px] font-medium leading-snug text-white/40 line-through decoration-white/20">{item}</span>
+                                    </motion.li>
+                                ))}
+                            </ul>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
-            </motion.div>
+
+                {/* ── Bottom CTA row ── */}
+                <motion.div
+                    {...REVEAL}
+                    className="mt-20 flex items-end justify-between border-t border-white/10 pt-12"
+                >
+                    <p className="max-w-sm text-[14px] leading-relaxed text-white/40">
+                        Blueprint reconstruction paths are provided for audit transparency and reproducibility — not generation inside VD.
+                    </p>
+                    <a
+                        href="/ingest"
+                        className="inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-8 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#141414] transition hover:bg-[#E0B882] hover:-translate-y-0.5"
+                    >
+                        Start Decompiling Free
+                        <ArrowUpRight size={14} />
+                    </a>
+                </motion.div>
+            </div>
+
+            {/* Bottom fade into FooterStartNow */}
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#FBFBF6] to-transparent pointer-events-none" />
         </section>
     );
 }
 
+// ─── Export ──────────────────────────────────────────────────────────────────
 export default function ProductProofSequence() {
     return (
-        <div id="funnel" className="bg-transparent">
+        <div id="funnel">
             <SingleAssetDeconstruction />
             <DifferentialDiagnosisSection />
             <TrustBoundaryPanel />

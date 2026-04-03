@@ -1,109 +1,217 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
-import { HOMEPAGE_CTA_ICON, HOMEPAGE_PRIMARY_CTA } from '@/components/marketing/ctaStyles';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, Plus, Minus } from 'lucide-react';
 
+// ─── FAQ data ────────────────────────────────────────────────────────────────
+const FAQS = [
+    {
+        q: 'What kind of ads can I analyse?',
+        a: 'Any static or video ad — print, digital, social, OOH. Upload JPG, PNG, WebP, MP4, or drop a URL. VD reads the creative, not the platform.',
+    },
+    {
+        q: 'Is this a generation tool?',
+        a: 'No. Visual Decompiler judges, diagnoses, and directs. It explains why an ad works, where it is fragile, and what decision to make next. It does not generate ads.',
+    },
+    {
+        q: 'How is this different from an ad-spy tool?',
+        a: 'Spy tools show you what ads are running. VD tells you why they work — the hidden persuasion mechanics, execution risks, and strategic posture behind every creative.',
+    },
+    {
+        q: 'What does the free tier include?',
+        a: '5 full forensic decompiles. No card required. Each readout includes mechanic extraction, execution DNA, stress test, and a rebuild blueprint.',
+    },
+    {
+        q: 'Can I use this with clients or in pitches?',
+        a: 'Yes — dossiers are export-ready. White-label output is available on team tiers. Pitches built on forensic creative rationale consistently outperform generic decks.',
+    },
+] as const;
+
+// ─── FAQ accordion row ───────────────────────────────────────────────────────
+function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
+    const [open, setOpen] = useState(false);
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.5, delay: index * 0.07 }}
+            className="border-t border-white/10"
+        >
+            <button
+                onClick={() => setOpen((v) => !v)}
+                className="flex w-full items-start justify-between gap-6 py-6 text-left"
+                aria-expanded={open}
+            >
+                <span className="text-[15px] font-semibold leading-snug text-white/80 lg:text-[16px]">{q}</span>
+                <span className="mt-0.5 shrink-0 text-[#D4A574]">
+                    {open ? <Minus size={16} /> : <Plus size={16} />}
+                </span>
+            </button>
+            <AnimatePresence initial={false}>
+                {open && (
+                    <motion.div
+                        key="content"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden"
+                    >
+                        <p className="pb-6 text-[14px] leading-relaxed text-white/45">{a}</p>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
+    );
+}
+
+// ─── Main component ───────────────────────────────────────────────────────────
 export default function FooterStartNow() {
     return (
-        <footer className="relative overflow-hidden scroll-mt-20 bg-transparent px-6 pb-8 pt-14 text-[#141414] md:scroll-mt-24 md:pt-[4.5rem] lg:scroll-mt-[104px]">
-            <div className="max-w-7xl mx-auto">
+        <footer className="relative overflow-hidden bg-[#141414]">
 
-                {/* Main CTA Section */}
-                <div className="relative mb-6 overflow-hidden rounded-[2.25rem] border border-[#D2C3AA] bg-[#FBFBF6] px-8 py-10 shadow-[0_30px_76px_rgba(20,20,20,0.09)] md:rounded-[3rem] md:px-10 md:py-12 lg:px-14 lg:py-14">
-                    <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:56px_56px]" />
-                    <div className="relative z-10 grid gap-8 lg:grid-cols-[1.05fr_0.72fr] lg:items-center lg:gap-10">
+            {/* ── OUTRO CTA BLOCK ── */}
+            <div className="mx-auto max-w-[1400px] px-10 pt-24 pb-20 lg:pt-32">
 
-                        {/* Left: Headline */}
-                        <div className="text-center lg:text-left">
-                            <div className="mb-4 flex items-center justify-center gap-3 lg:justify-start">
-                                <span className="h-px w-8 bg-gradient-to-r from-[#D4A574] to-transparent" />
-                                <p className="text-[10px] font-bold uppercase tracking-[0.42em] text-[#C1A67B]">
-                                    Observer Tier
-                                </p>
-                            </div>
-                            <div className="mb-5 flex items-center justify-center gap-1.5 lg:justify-start">
-                                <span className="h-1.5 w-8 rounded-full bg-[#F4A700]" />
-                                <span className="h-1.5 w-5 rounded-full bg-[#C8230A]" />
-                                <span className="h-1.5 w-4 rounded-full bg-[#D4A574]" />
-                                <span className="h-1.5 w-3 rounded-full bg-[#F5EDE3]" />
-                                <span className="h-1.5 w-5 rounded-full bg-[#D7B07A]" />
-                            </div>
-                            <motion.h2
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="mb-5 max-w-3xl text-[34px] font-bold uppercase leading-[0.96] tracking-tight text-[#141414] md:text-5xl lg:max-w-2xl"
-                            >
-                                Start free. See real <span className="text-[#F4A700]">output</span> in minutes.
-                            </motion.h2>
-                            <p className="mx-auto max-w-xl text-[16px] leading-relaxed text-[#474238] md:text-[18px] font-medium tracking-tight lg:mx-0">
-                                Upload a competitor ad and get your first client-ready dossier. No card required.
-                            </p>
-                        </div>
+                {/* Top label */}
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="mb-8 text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]"
+                >
+                    Start free · 5 analyses · No card
+                </motion.p>
 
-                        {/* Right: CTA */}
-                        <div className="w-full">
-                            <div className="rounded-[2rem] border border-[#D2C3AA] bg-[#F5EDE3] px-6 py-7 text-center shadow-[0_22px_48px_rgba(20,20,20,0.1)] md:px-8 md:py-8 lg:text-left">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C9A56F]">
-                                    Start with Observer
-                                </p>
-                                <p className="mt-3 text-[15px] leading-relaxed text-[#474238]">
-                                    Get real creative readouts first, then scale into team workflows when it matters.
-                                </p>
+                {/* Massive CTA headline */}
+                <motion.h2
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                    className="font-black leading-[0.88] tracking-[-0.05em] text-white"
+                    style={{ fontSize: 'clamp(52px, 10vw, 140px)' }}
+                >
+                    Drop an ad.<br />
+                    <span className="text-[#D4A574]">See the invisible.</span>
+                </motion.h2>
 
-                                <motion.a
-                                    href="/ingest"
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className={`${HOMEPAGE_PRIMARY_CTA} mt-6 w-full !shadow-[0_18px_36px_rgba(20,20,20,0.18)] text-base sm:w-auto sm:px-10 sm:py-5 sm:text-lg`}
-                                >
-                                    <span>Start Decompiling Free</span>
-                                    <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
-                                </motion.a>
-                                <p className="mt-4 text-center text-[10px] font-bold uppercase tracking-[0.22em] text-[#8A7B64] lg:text-left">
-                                    Observer tier: 5 free decompiles (no card required)
-                                </p>
-                            </div>
-                        </div>
+                {/* CTA row */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, delay: 0.2 }}
+                    className="mt-12 flex items-center gap-6"
+                >
+                    <a
+                        href="/ingest"
+                        className="inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] text-[#141414] transition hover:bg-[#E0B882] hover:-translate-y-0.5"
+                    >
+                        Start Decompiling Free
+                        <ArrowUpRight size={15} />
+                    </a>
+                    <a
+                        href="/pricing"
+                        className="text-[11px] font-bold uppercase tracking-[0.3em] text-white/40 transition hover:text-white/70"
+                    >
+                        View Pricing →
+                    </a>
+                </motion.div>
+            </div>
+
+            {/* ── DIVIDER ── */}
+            <div className="mx-auto max-w-[1400px] px-10">
+                <div className="h-px bg-white/10" />
+            </div>
+
+            {/* ── FAQ STRIP ── */}
+            <div className="mx-auto max-w-[1400px] px-10 py-16 lg:py-20">
+                <div className="grid grid-cols-1 gap-0 lg:grid-cols-[0.4fr_0.6fr] lg:gap-20">
+
+                    {/* Left: label */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.7 }}
+                        className="mb-8 lg:mb-0 lg:pt-6"
+                    >
+                        <p
+                            className="font-black uppercase leading-none text-white/[0.05] select-none pointer-events-none"
+                            style={{ fontSize: 'clamp(56px, 8vw, 100px)', letterSpacing: '-0.05em' }}
+                            aria-hidden="true"
+                        >
+                            FAQ
+                        </p>
+                        <p className="-mt-1 text-[11px] font-black uppercase tracking-[0.5em] text-[#D4A574]">
+                            Common questions
+                        </p>
+                    </motion.div>
+
+                    {/* Right: accordion rows */}
+                    <div>
+                        {FAQS.map((item, i) => (
+                            <FaqRow key={item.q} q={item.q} a={item.a} index={i} />
+                        ))}
+                        {/* Final border */}
+                        <div className="border-t border-white/10" />
                     </div>
                 </div>
+            </div>
 
-                {/* Footer Links Bar */}
-                <div className="flex flex-col items-center justify-between gap-5 px-4 py-5 md:flex-row">
+            {/* ── DIVIDER ── */}
+            <div className="mx-auto max-w-[1400px] px-10">
+                <div className="h-px bg-white/10" />
+            </div>
 
-                    {/* Branding */}
+            {/* ── FOOTER BAR ── */}
+            <div className="mx-auto max-w-[1400px] px-10 py-8">
+                <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+
+                    {/* Brand */}
                     <div className="flex items-center gap-3">
                         <img
                             src="/images/logo/Visual_Decompiler_Logo_v2_400px.png"
-                            alt="Visual Decompiler Graphic"
-                            className="h-7 w-7 object-contain"
+                            alt="Visual Decompiler"
+                            className="h-6 w-6 object-contain invert opacity-60"
                         />
-                        <div className="flex flex-col">
-                            <span className="text-sm font-bold leading-none tracking-tight uppercase text-[#141414]">Visual Decompiler</span>
-                            <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-[#8A7B64]">Advertising Intelligence</span>
+                        <div>
+                            <span className="block text-[11px] font-black uppercase tracking-[0.2em] text-white/60">Visual Decompiler</span>
+                            <span className="block text-[9px] font-semibold uppercase tracking-[0.2em] text-white/30">Forensic Creative Intelligence</span>
                         </div>
                     </div>
 
-                    {/* Links */}
-                    <div className="flex max-w-[34rem] flex-wrap justify-center gap-x-4 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A7B64]">
-                        <a href="/about" className="transition-colors hover:text-[#141414]">About</a>
-                        <a href="/pricing" className="transition-colors hover:text-[#141414]">Pricing</a>
-                        <a href="/for-art-directors" className="transition-colors hover:text-[#141414]">Persona Guides</a>
-                        <a href="/trust-method" className="transition-colors hover:text-[#141414]">Trust & Method</a>
-                        <a href="/vault" className="transition-colors hover:text-[#141414]">Vault</a>
-                        <a href="/docs/user-guide" className="transition-colors hover:text-[#141414]">Help Center</a>
-                        <a href="/login" className="transition-colors hover:text-[#141414]">Login</a>
+                    {/* Nav links */}
+                    <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                        {[
+                            { label: 'About', href: '/about' },
+                            { label: 'Pricing', href: '/pricing' },
+                            { label: 'Trust & Method', href: '/trust-method' },
+                            { label: 'Vault', href: '/vault' },
+                            { label: 'Help', href: '/docs/user-guide' },
+                            { label: 'Login', href: '/login' },
+                        ].map((link) => (
+                            <a
+                                key={link.label}
+                                href={link.href}
+                                className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/35 transition hover:text-white/70"
+                            >
+                                {link.label}
+                            </a>
+                        ))}
                     </div>
 
                     {/* Legal */}
-                    <div className="flex gap-4 text-[10px] font-medium uppercase tracking-[0.14em] text-[#8F8476]">
-                        <a href="#" className="transition-colors hover:text-[#141414]">Terms</a>
-                        <a href="#" className="transition-colors hover:text-[#141414]">Privacy</a>
+                    <div className="flex items-center gap-5 text-[10px] font-medium uppercase tracking-[0.15em] text-white/25">
+                        <a href="/legal/terms" className="hover:text-white/50 transition">Terms</a>
+                        <a href="/legal/privacy" className="hover:text-white/50 transition">Privacy</a>
                         <span>© 2026</span>
                     </div>
                 </div>
-
             </div>
         </footer>
     );
