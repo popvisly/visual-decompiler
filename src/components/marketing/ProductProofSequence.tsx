@@ -24,11 +24,21 @@ const REVEAL_FAST = {
 // Full-bleed dark section. Large ad image bleeds edge-to-edge.
 // Dossier findings float as annotation pins layered on top.
 // ─────────────────────────────────────────────────────────────────────────────
-const ANNOTATIONS = [
+type Annotation = {
+    id: string;
+    label: string;
+    desc: string;
+    top?: string;
+    right?: string;
+    bottom?: string;
+    left?: string;
+};
+
+const ANNOTATIONS: readonly Annotation[] = [
     { id: 'A', label: 'Focal Pull', desc: 'Subject gaze locks viewer — active eye-contact triggers status recognition before copy reads.', top: '12%', left: '5%' },
     { id: 'B', label: 'Chromatic Restraint', desc: 'Palette compressed to 2 tones. Scarcity of colour signals rarity and editorial authority.', top: '38%', right: '4%' },
     { id: 'C', label: 'Hierarchy Lock', desc: 'Product occupies lower-right — desire is established by posture before product is consciously noticed.', bottom: '18%', left: '7%' },
-] as const;
+];
 
 function SingleAssetDeconstruction() {
     const ref = useRef<HTMLElement>(null);
@@ -91,9 +101,9 @@ function SingleAssetDeconstruction() {
                         className="absolute hidden lg:block"
                         style={{
                             top: ann.top ?? undefined,
-                            bottom: (ann as { bottom?: string }).bottom ?? undefined,
-                            left: (ann as { left?: string }).left ?? undefined,
-                            right: (ann as { right?: string }).right ?? undefined,
+                            bottom: ann.bottom ?? undefined,
+                            left: ann.left ?? undefined,
+                            right: ann.right ?? undefined,
                         }}
                     >
                         <div className="flex items-start gap-3 max-w-[200px]">
@@ -164,7 +174,6 @@ function DifferentialDiagnosisSection() {
                 <div className="grid grid-cols-2 gap-4 lg:gap-6">
                     {/* Control */}
                     <motion.div
-                        style={{ y: imgAY }}
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
@@ -190,7 +199,6 @@ function DifferentialDiagnosisSection() {
 
                     {/* Proposed */}
                     <motion.div
-                        style={{ y: imgBY }}
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
