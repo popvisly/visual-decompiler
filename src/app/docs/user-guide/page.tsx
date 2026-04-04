@@ -2,133 +2,194 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, ArrowRight, MousePointer2, Scan, Timer, ShieldAlert, TrendingUp } from 'lucide-react';
+import { ArrowRight, Scan, MousePointer2, TrendingUp, Info } from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
+import FooterStartNow from '@/components/marketing/FooterStartNow';
 import Link from 'next/link';
 
 const SECTIONS = [
     {
-        title: "The Forensic Mindset",
-        icon: <Scan className="w-5 h-5 text-accent" />,
-        content: "The v2.0 dashboard is no longer just a summary; it is an auditable evidence base powered by the Claude Sonnet engine.",
+        title: "Forensic Intelligence",
+        icon: <Scan className="w-6 h-6" />,
+        content: "The v2.0 dashboard is an auditable evidence base powered by our proprietary Neural Pipeline. Move past high-level summaries into concrete proof-points.",
         subsections: [
             {
                 subtitle: "1. Unified Persuasion Stack",
-                desc: "A weighted DNA of the ad's psychological architecture. Look for the \"Primary Driver\" (highest weight) to duplicate or defeat."
+                desc: "A weighted DNA of the ad's psychological architecture. Identify the 'Primary Driver'—the strongest visual weight—to either duplicate or counter-program."
             },
             {
-                subtitle: "2. Evidence Layer (\"Receipts\")",
-                desc: "Interactive bounding boxes (0-1000 scale) pointing to concrete cues. Use these for \"Proof Points\" in client presentations."
+                subtitle: "2. Evidence Layer ('The Receipts')",
+                desc: "Precise coordinate-based bounding boxes pointing to concrete visual cues. Use these as 'Proof Points' for strategy decks and client presentations."
             },
             {
                 subtitle: "3. 14-Day Tactical Sprint",
-                desc: "A hypothesis-driven test plan. Focus on \"High Impact\" cells to resolve detected visual density bottlenecks."
+                desc: "A hypothesis-driven test plan generated from the reading. Focus on 'High Impact' cells to resolve detected visual density bottlenecks."
             }
         ]
     },
     {
-        title: "Platform Optimization",
-        icon: <MousePointer2 className="w-5 h-5 text-accent" />,
-        content: "Ensure your creative survives the platform UI before you spend.",
+        title: "Platform Forensics",
+        icon: <MousePointer2 className="w-6 h-6" />,
+        content: "Ensure your creative survives the platform constraints before a single dollar is spent. We deconstruct the UI layer to protect your narrative.",
         subsections: [
             {
                 subtitle: "Safe Zone Overlays",
-                desc: "Toggle overlays for TikTok/IG to ensure CTA buttons aren't occluded by sidebar navigation."
+                desc: "Toggle interactive overlays for TikTok, IG, and YouTube to ensure CTA buttons aren't occluded by native sidebar navigation."
             },
             {
-                subtitle: "Regulatory Risk",
-                desc: "Scores > 70 indicate high ban risk. Review the \"Why\" section for detect policy violations."
+                subtitle: "Regulatory Risk Scoring",
+                desc: "Scores > 70 indicate high algorithmic ban risk. Review the 'Diagnostic' section for potential policy-triggering visual cues."
             }
         ]
     }
 ];
 
 const RELATED_ARTICLES = [
-    { title: "Visual Decompiler v2.0 Overview", href: "/docs/v1-overview" },
-    { title: "QA Checklist", href: "/docs/qa-checklist" },
-    { title: "Schema Contract v1.0", href: "/docs/schema-contract" },
-    { title: "v2.0 Release Notes", href: "/docs/release-notes" }
+    { title: "v2.0 Neural Engine Overview", href: "/docs/v1-overview" },
+    { title: "The Forensic QA Checklist", href: "/docs/qa-checklist" },
+    { title: "Standard Schema v1.0", href: "/docs/schema-contract" },
+    { title: "Release Archive", href: "/docs/release-notes" }
 ];
 
 export default function UserGuidePage() {
     return (
-        <main className="bg-[#F6F1E7] min-h-screen">
-            <UnifiedSovereignHeader />
-            <section className="pt-48 pb-32 px-6">
-                <div className="max-w-4xl mx-auto">
-                    <div className="flex items-center gap-2 mb-12 text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B6B6B]">
-                        <Link href="/docs" className="hover:text-[#141414] transition-colors">Help Center</Link>
-                        <ArrowRight className="w-3 h-3" />
-                        <span className="text-[#141414]">User Guide</span>
+        <main className="bg-[#050505] min-h-screen text-white">
+            <UnifiedSovereignHeader forceDark />
+            
+            <section className="pt-48 pb-32 px-6 lg:pt-64 lg:pb-64">
+                <div className="max-w-[1400px] mx-auto">
+                    
+                    {/* Navigation Breadcrumb */}
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="flex items-center gap-4 mb-24 text-[10px] font-black uppercase tracking-[0.4em] text-white/30"
+                    >
+                        <Link href="/vault" className="hover:text-white transition-colors">Intelligence Hub</Link>
+                        <div className="w-1 h-1 rounded-full bg-white/20" />
+                        <span className="text-white">User Guide</span>
+                    </motion.div>
+
+                    {/* Hero Branding */}
+                    <div className="mb-48">
+                        <motion.p 
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="text-[12px] font-black uppercase tracking-[0.6em] text-[#00E5FF] mb-10"
+                        >
+                            Training Protocol 001
+                        </motion.p>
+                        <motion.h1 
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1, duration: 0.8 }}
+                            className="text-[10vw] lg:text-[7vw] font-black leading-[0.85] tracking-[-0.05em] text-white mb-12 uppercase max-w-[12ch]"
+                        >
+                            The Agency <br />
+                            <span className="text-white/20">Handoff.</span>
+                        </motion.h1>
+                        <motion.p 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                            className="text-xl lg:text-2xl text-white/50 leading-relaxed max-w-3xl font-medium"
+                        >
+                            Welcome to the new standard in advertising intelligence. 
+                            Move from browsing surface-level insights to executing forensic deconstruction.
+                        </motion.p>
                     </div>
 
-                    <div className="mb-20">
-                        <h1 className="text-5xl font-light tracking-tightest text-[#141414] mb-6 uppercase">
-                            Agency Handoff: <br />
-                            <span className="italic font-serif lowercase tracking-normal">Master the ResultsView v2.0</span>
-                        </h1>
-                        <p className="text-xl text-[#6B6B6B] font-light leading-relaxed max-w-2xl">
-                            Welcome to the new standard in advertising intelligence. Move from browsing insights to executing deconstruction.
-                        </p>
-                    </div>
-
-                    <div className="space-y-20">
+                    {/* Core Intelligence Briefs */}
+                    <div className="space-y-48 lg:space-y-64">
                         {SECTIONS.map((section, idx) => (
-                            <div key={idx}>
-                                <div className="flex items-center gap-4 mb-8">
-                                    <div className="p-3 bg-white border border-[#E7DED1] rounded-2xl text-[#141414]">
-                                        {section.icon}
-                                    </div>
-                                    <h2 className="text-2xl font-light text-[#141414] uppercase tracking-tight">{section.title}</h2>
-                                </div>
-                                <p className="text-base text-[#6B6B6B] font-light leading-relaxed mb-10 pb-8 border-b border-[#E7DED1]">
-                                    {section.content}
-                                </p>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    {section.subsections.map((sub, sIdx) => (
-                                        <div key={sIdx} className="space-y-3">
-                                            <h3 className="text-[11px] font-extrabold uppercase tracking-widest text-[#141414]">{sub.subtitle}</h3>
-                                            <p className="text-[13px] text-[#6B6B6B] leading-relaxed font-light">{sub.desc}</p>
+                            <motion.div 
+                                key={idx}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.8 }}
+                            >
+                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 border-t border-white/10 pt-16">
+                                    <div className="lg:col-span-5">
+                                        <div className="flex items-center gap-6 mb-12">
+                                            <div className="text-[#00E5FF]">
+                                                {section.icon}
+                                            </div>
+                                            <h2 className="text-4xl font-black text-white uppercase tracking-[-0.03em]">{section.title}</h2>
                                         </div>
-                                    ))}
+                                        <p className="text-[20px] lg:text-[24px] text-white font-medium leading-[1.5] mb-12">
+                                            {section.content}
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="lg:col-span-6 lg:col-start-7">
+                                        <div className="space-y-16">
+                                            {section.subsections.map((sub, sIdx) => (
+                                                <div key={sIdx} className="space-y-5">
+                                                    <h3 className="text-[12px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">{sub.subtitle}</h3>
+                                                    <p className="text-[18px] text-white/50 leading-relaxed max-w-xl">{sub.desc}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
 
-                    <div className="mt-32 p-12 bg-white rounded-[3rem] border border-[#E7DED1] shadow-xl">
-                        <div className="flex items-center gap-3 mb-6">
-                            <TrendingUp className="w-5 h-5 text-accent" />
-                            <h2 className="text-xl font-light uppercase tracking-tight text-[#141414]">Standard Workflow</h2>
+                    {/* Process UI */}
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        className="mt-64 p-12 lg:p-24 bg-white/5 rounded-[4rem] border border-white/10 backdrop-blur-3xl"
+                    >
+                        <div className="flex items-center gap-4 mb-16">
+                            <TrendingUp className="w-6 h-6 text-[#00E5FF]" />
+                            <h2 className="text-3xl font-black uppercase tracking-[-0.02em] text-white">Execution Cycle</h2>
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                            {['Ingest competitor ad', 'Locate Persuasion Stack', 'Execute Strategic Move'].map((step, i) => (
-                                <div key={i} className="p-6 bg-[#FBF7EF] rounded-2xl border border-[#E7DED1]">
-                                    <span className="text-[10px] font-bold text-accent mb-2 block uppercase">Step {i + 1}</span>
-                                    <p className="text-sm font-medium text-[#141414]">{step}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-12">
+                            {['Ingest competitor asset', 'Identify Persuasion DNA', 'Deconstruct Strategic Move'].map((step, i) => (
+                                <div key={i} className="space-y-6 relative">
+                                    <span className="text-[10px] font-black text-[#00E5FF] block uppercase tracking-[0.4em]">Phase 0{i + 1}</span>
+                                    <p className="text-2xl font-black text-white uppercase leading-tight">{step}</p>
+                                    {i < 2 && (
+                                        <div className="hidden lg:block absolute -right-6 top-1/2 -translate-y-1/2 text-white/10">
+                                            <ArrowRight size={32} />
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </motion.div>
 
-                    {/* ── Related Articles ── */}
-                    <div className="pt-20 mt-32 border-t border-[#E7DED1]">
-                        <h2 className="text-[9px] font-bold uppercase tracking-[0.4em] text-[#6B6B6B] mb-8">Related articles</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {RELATED_ARTICLES.map((article) => (
-                                <Link
-                                    key={article.title}
-                                    href={article.href}
-                                    className="group flex items-center justify-between p-6 bg-white border border-[#E7DED1] rounded-2xl hover:border-accent transition-all"
-                                >
-                                    <span className="text-[11px] font-bold uppercase tracking-widest text-[#141414] group-hover:text-accent transition-colors">{article.title}</span>
-                                    <ArrowRight className="w-4 h-4 text-[#6B6B6B] group-hover:text-accent transition-all" />
-                                </Link>
-                            ))}
+                    {/* Resources Area */}
+                    <div className="pt-32 mt-64 border-t border-white/10">
+                        <div className="flex flex-col lg:flex-row justify-between items-start gap-16">
+                            <div className="max-w-sm">
+                                <h2 className="text-[12px] font-black uppercase tracking-[0.6em] text-[#00E5FF] mb-8">Intelligence Archive</h2>
+                                <p className="text-white/40 text-lg leading-relaxed">
+                                    Access the full technical specifications of the Visual Decompiler OS pipeline.
+                                </p>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1 w-full max-w-2xl">
+                                {RELATED_ARTICLES.map((article) => (
+                                    <Link
+                                        key={article.title}
+                                        href={article.href}
+                                        className="group flex items-center justify-between p-8 bg-white/5 border border-white/10 rounded-[2rem] hover:bg-[#00E5FF] transition-all duration-500"
+                                    >
+                                        <span className="text-[12px] font-black uppercase tracking-[0.2em] text-white group-hover:text-black transition-colors">{article.title}</span>
+                                        <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-black group-hover:translate-x-1 transition-all" />
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
+            
+            <FooterStartNow />
         </main>
     );
 }
