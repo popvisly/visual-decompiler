@@ -17,12 +17,6 @@ const AD_IMAGES = [
     { src: '/images/examples/Watch.png',              alt: 'Watch campaign',             aspect: 'portrait' },
 ];
 
-// ── Marquee words ─────────────────────────────────────────────────────────────
-const MARQUEE_WORDS = [
-    'LOOK CLOSER', '·', 'HOLD ATTENTION', '·', 'SHAPE DESIRE', '·',
-    'LOOK CLOSER', '·', 'HOLD ATTENTION', '·', 'SHAPE DESIRE', '·',
-];
-
 // ── Dossier findings ──────────────────────────────────────────────────────────
 const FINDINGS = [
     { label: `What it's doing`, value: 'Status-coded restraint creates desire without verbal selling.' },
@@ -68,62 +62,7 @@ function ParallaxTile({
     );
 }
 
-// ── SVG Text Mask over the mosaic ─────────────────────────────────────────────
-function TextMaskLayer({ scrollYProgress }: { scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'] }) {
-    const maskY = useTransform(scrollYProgress, [0, 1], ['0%', '14%']);
 
-    return (
-        <motion.div
-            style={{ y: maskY }}
-            className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center"
-        >
-            {/* The SVG text used as a clipping mask to reveal the images underneath */}
-            <svg
-                className="w-full h-auto select-none"
-                viewBox="0 0 1400 280"
-                xmlns="http://www.w3.org/2000/svg"
-                style={{ overflow: 'visible' }}
-            >
-                <defs>
-                    <style>{`
-                        .hero-text {
-                            font-family: 'Inter', -apple-system, sans-serif;
-                            font-weight: 900;
-                            font-size: 192px;
-                            letter-spacing: -0.06em;
-                            fill: #141414;
-                        }
-                    `}</style>
-                </defs>
-                <text className="hero-text" x="50%" y="160" textAnchor="middle" dominantBaseline="middle">
-                    VISUAL
-                </text>
-            </svg>
-            <svg
-                className="w-full h-auto select-none -mt-8"
-                viewBox="0 0 1400 280"
-                xmlns="http://www.w3.org/2000/svg"
-                style={{ overflow: 'visible' }}
-            >
-                <defs>
-                    <style>{`
-                        .hero-text-2 {
-                            font-family: 'Inter', -apple-system, sans-serif;
-                            font-weight: 900;
-                            font-size: 192px;
-                            letter-spacing: -0.06em;
-                            fill: transparent;
-                            -webkit-text-stroke: 2px #141414;
-                        }
-                    `}</style>
-                </defs>
-                <text className="hero-text-2" x="50%" y="160" textAnchor="middle" dominantBaseline="middle">
-                    DECOMPILER
-                </text>
-            </svg>
-        </motion.div>
-    );
-}
 
 // ── Main component ─────────────────────────────────────────────────────────────
 export default function CinematicHero() {
@@ -170,31 +109,7 @@ export default function CinematicHero() {
                 <div className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ${isFocused ? 'bg-[#F0EDE6]/56' : 'bg-[#F0EDE6]/66'}`} />
             </motion.div>
 
-            {/* ── LAYER 2: Giant SVG text ──────────────────────────────────── */}
-            <div className="hidden md:block">
-                <TextMaskLayer scrollYProgress={scrollYProgress} />
-            </div>
 
-            {/* ── LAYER 3: Kinetic marquee strip ──────────────────────────── */}
-            <div
-                className="absolute left-0 right-0 top-[62%] z-20 hidden overflow-hidden whitespace-nowrap border-y border-[#141414]/10 bg-[#141414]/[0.03] py-3 backdrop-blur-[2px] md:block"
-                aria-hidden="true"
-            >
-                <div className="marquee-track inline-flex gap-0">
-                    {[...MARQUEE_WORDS, ...MARQUEE_WORDS].map((word, i) => (
-                        <span
-                            key={i}
-                            className={`
-                                inline-block px-5
-                                text-[11px] font-black uppercase tracking-[0.45em]
-                                ${word === '·' ? 'text-[#D4A574]' : 'text-[#141414]'}
-                            `}
-                        >
-                            {word}
-                        </span>
-                    ))}
-                </div>
-            </div>
 
             {/* ── LAYER 4: Floating dossier card ──────────────────────────── */}
             <motion.div
@@ -307,16 +222,7 @@ export default function CinematicHero() {
             {/* Bottom gradient fade into next section */}
             <div className="absolute bottom-0 left-0 right-0 z-20 h-32 bg-gradient-to-t from-[#FBFBF6] to-transparent pointer-events-none" />
 
-            <style>{`
-                /* Infinite marquee scroll */
-                .marquee-track {
-                    animation: marquee-scroll 22s linear infinite;
-                }
-                @keyframes marquee-scroll {
-                    0%   { transform: translateX(0); }
-                    100% { transform: translateX(-50%); }
-                }
-            `}</style>
+
         </section>
     );
 }

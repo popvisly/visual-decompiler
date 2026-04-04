@@ -62,7 +62,7 @@ function SingleAssetDeconstruction() {
             </motion.div>
 
             {/* ── Section content ── */}
-            <div className="relative z-10 mx-auto max-w-[1400px] px-6 py-24 sm:px-8 lg:px-10 lg:py-32">
+            <div className="relative z-10 mx-auto max-w-[1400px] px-6 py-40 sm:px-8 lg:px-10 lg:py-64">
 
                 {/* Top label */}
                 <motion.div {...REVEAL_FAST} className="mb-16">
@@ -141,7 +141,38 @@ function SingleAssetDeconstruction() {
             </div>
 
             {/* Bottom fade into next section */}
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#FBFBF6] to-transparent pointer-events-none z-20" />
+            <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#FBFBF6] to-transparent pointer-events-none z-20" />
+        </section>
+    );
+}
+
+// ─── INTERSTITIAL STATEMENT (Editorial Flow) ──────────────────────────────────
+function StatementInterstitial() {
+    const ref = useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+    const y = useTransform(scrollYProgress, [0, 1], ['15%', '-5%']);
+
+    return (
+        <section ref={ref} className="relative w-full overflow-hidden bg-[#FBFBF6] py-32 lg:py-56" data-presence-tone="bone">
+            <div className="mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-10">
+                <motion.div
+                    style={{ y }}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="max-w-[1100px]"
+                >
+                    <p className="text-[11px] font-black uppercase tracking-[0.5em] text-[#D4A574] mb-12 sm:mb-16">
+                        The Subtext
+                    </p>
+                    <h2 className="text-[38px] font-black leading-[0.92] tracking-[-0.04em] text-[#141414] sm:text-[60px] lg:text-[84px] xl:text-[96px]">
+                        Advertising is not magic.<br />
+                        It is architecture.<br />
+                        <span className="text-[#8A8476]">We reverse-engineer the blueprint.</span>
+                    </h2>
+                </motion.div>
+            </div>
         </section>
     );
 }
@@ -163,7 +194,7 @@ function DifferentialDiagnosisSection() {
     const imgBY = useTransform(scrollYProgress, [0, 1], ['-4%', '4%']);
 
     return (
-        <section ref={ref} className="relative w-full overflow-hidden bg-[#FBFBF6] py-24 lg:py-32" data-presence-tone="bone">
+        <section ref={ref} className="relative w-full overflow-hidden bg-[#FBFBF6] py-32 lg:py-48" data-presence-tone="bone">
             {/* ── Section label ── */}
             <motion.div {...REVEAL_FAST} className="mx-auto mb-10 max-w-[1400px] px-6 sm:px-8 lg:px-10">
                 <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
@@ -251,8 +282,11 @@ function DifferentialDiagnosisSection() {
                 </div>
             </div>
 
+            {/* ── Spacer block in place of dense layout ── */}
+            <div className="h-24 lg:h-40" />
+
             {/* ── Reading cards ── */}
-            <div className="mx-auto mt-12 max-w-[1400px] px-6 sm:px-8 lg:px-10">
+            <div className="mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-10">
                 <div className="grid gap-5 md:grid-cols-3">
                     {DIFF_METRICS.map((m, i) => (
                         <motion.div
@@ -301,7 +335,7 @@ const VD_IS_NOT = [
 
 function TrustBoundaryPanel() {
     return (
-        <section className="relative w-full overflow-hidden bg-[#141414] py-24 lg:py-32" data-presence-tone="ink">
+        <section className="relative w-full overflow-hidden bg-[#141414] py-40 lg:py-64" data-presence-tone="ink">
 
             {/* ── Section label ── */}
             <motion.div {...REVEAL_FAST} className="mx-auto mb-16 max-w-[1400px] px-6 sm:px-8 lg:px-10">
@@ -319,14 +353,7 @@ function TrustBoundaryPanel() {
                         {...REVEAL}
                         className="lg:pr-16"
                     >
-                        {/* Big label acting as a design element */}
-                        <p
-                            className="font-black uppercase leading-none text-white/[0.06] select-none pointer-events-none"
-                            style={{ fontSize: 'clamp(80px, 14vw, 180px)', letterSpacing: '-0.06em', lineHeight: 0.85 }}
-                            aria-hidden="true"
-                        >
-                            IS
-                        </p>
+
                         <div className="-mt-2 lg:-mt-4">
                             <p className="mb-8 text-[10px] font-black uppercase tracking-[0.5em] text-[#D4A574]">What it is</p>
                             <ul className="space-y-5">
@@ -355,13 +382,7 @@ function TrustBoundaryPanel() {
                         transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                         className="lg:pl-16"
                     >
-                        <p
-                            className="font-black uppercase leading-none text-white/[0.06] select-none pointer-events-none"
-                            style={{ fontSize: 'clamp(80px, 14vw, 180px)', letterSpacing: '-0.06em', lineHeight: 0.85 }}
-                            aria-hidden="true"
-                        >
-                            NOT
-                        </p>
+
                         <div className="-mt-2 lg:-mt-4">
                             <p className="mb-8 text-[10px] font-black uppercase tracking-[0.5em] text-[#D4A574]">What it is not</p>
                             <ul className="space-y-5">
@@ -413,6 +434,7 @@ export default function ProductProofSequence() {
     return (
         <div id="funnel">
             <SingleAssetDeconstruction />
+            <StatementInterstitial />
             <DifferentialDiagnosisSection />
             <TrustBoundaryPanel />
         </div>

@@ -74,7 +74,7 @@ export default function FooterStartNow() {
         <footer className="relative overflow-hidden bg-[#141414]">
 
             {/* ── OUTRO CTA BLOCK ── */}
-            <div className="mx-auto max-w-[1400px] px-10 pt-24 pb-20 lg:pt-32">
+            <div className="mx-auto max-w-[1400px] px-10 pt-32 pb-24 lg:pt-56 lg:pb-32">
 
                 {/* Top label */}
                 <motion.p
@@ -141,7 +141,7 @@ export default function FooterStartNow() {
             </div>
 
             {/* ── FAQ STRIP ── */}
-            <div className="mx-auto max-w-[1400px] px-10 py-16 lg:py-20">
+            <div className="mx-auto max-w-[1400px] px-10 py-24 lg:py-40">
                 <div className="grid grid-cols-1 gap-0 lg:grid-cols-[0.4fr_0.6fr] lg:gap-20">
 
                     {/* Left: label */}
@@ -152,13 +152,7 @@ export default function FooterStartNow() {
                         transition={{ duration: 0.7 }}
                         className="mb-8 lg:mb-0 lg:pt-6"
                     >
-                        <p
-                            className="font-black uppercase leading-none text-white/[0.05] select-none pointer-events-none"
-                            style={{ fontSize: 'clamp(56px, 8vw, 100px)', letterSpacing: '-0.05em' }}
-                            aria-hidden="true"
-                        >
-                            FAQ
-                        </p>
+
                         <p className="-mt-1 text-[11px] font-black uppercase tracking-[0.5em] text-[#D4A574]">
                             Common questions
                         </p>
