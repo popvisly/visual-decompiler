@@ -84,23 +84,27 @@ function ImageReveal({ src, alt }: { src: string, alt: string }) {
             ref={containerRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="group relative aspect-[0.75] w-full max-w-[640px] overflow-hidden rounded-[40px] border border-white/20 shadow-2xl transition-transform duration-700 hover:scale-[1.02]"
+            className="group relative aspect-[0.75] w-full max-w-[640px] overflow-hidden rounded-[40px] border border-white/20 shadow-2xl transition-transform duration-700 hover:scale-[1.02] cursor-crosshair select-none"
         >
-            {/* Grayscale Base Layer */}
-            <div className="absolute inset-0 grayscale contrast-125 opacity-40 transition-opacity duration-700 group-hover:opacity-100">
-                <Image src={src} alt={alt} fill className="object-cover" />
+            {/* Obscured Base Layer (Blurry/Grayscale/Noisy) */}
+            <div className="absolute inset-0 grayscale blur-xl opacity-20 scale-110 transition-all duration-700 group-hover:opacity-40">
+                <Image 
+                    src={src} 
+                    alt={alt} 
+                    fill 
+                    className="object-cover pointer-events-none" 
+                    draggable={false}
+                />
             </div>
 
-            {/* Color Reveal Layer */}
+            {/* High-Fidelity Clarity Reveal Layer */}
             <motion.div 
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                    maskImage: `radial-gradient(circle 200px at var(--mouse-x) var(--mouse-y), black 100%, transparent 100%)`,
-                    WebkitMaskImage: `radial-gradient(circle 200px at var(--mouse-x) var(--mouse-y), black 100%, transparent 100%)`,
-                    // Using CSS variables to drive the mask position
+                    maskImage: `radial-gradient(circle 240px at var(--mouse-x) var(--mouse-y), black 100%, transparent 100%)`,
+                    WebkitMaskImage: `radial-gradient(circle 240px at var(--mouse-x) var(--mouse-y), black 100%, transparent 100%)`,
                 } as any}
             >
-                {/* Internal container to apply spring values to CSS variables */}
                 <motion.div 
                     className="absolute inset-0"
                     style={{
@@ -108,24 +112,32 @@ function ImageReveal({ src, alt }: { src: string, alt: string }) {
                         '--mouse-y': useTransform(mouseY, y => `${y}px`),
                     } as any}
                 >
-                    <Image src={src} alt={alt} fill className="object-cover" />
+                    <Image 
+                        src={src} 
+                        alt={alt} 
+                        fill 
+                        className="object-cover pointer-events-none" 
+                        draggable={false}
+                    />
                 </motion.div>
             </motion.div>
             
-            {/* Minimal Lens Circle UI */}
+            {/* Target HUD UI */}
             <motion.div 
-                className="absolute pointer-events-none border border-white/50 rounded-full w-[400px] h-[400px] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="absolute pointer-events-none border border-white/30 rounded-full w-[480px] h-[480px] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{
                     left: mouseX,
                     top: mouseY,
                 }}
             >
-                <div className="w-4 h-4 border border-white border-dashed rounded-full" />
+                <div className="w-10 h-10 border border-white/40 border-dashed rounded-full animate-[spin_8s_linear_infinite]" />
+                <div className="absolute w-full h-px bg-white/10" />
+                <div className="absolute h-full w-px bg-white/10" />
             </motion.div>
 
-            {/* Target HUD Badge */}
+            {/* Status Badge */}
             <div className="absolute top-10 lg:top-14 left-10 lg:left-14 border border-white/20 bg-black/40 px-5 py-2.5 backdrop-blur-3xl rounded-full">
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Neural Scan Active</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Neurolensing Active</p>
             </div>
         </div>
     );
