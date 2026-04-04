@@ -1,15 +1,15 @@
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import CinematicHero from '@/components/marketing/CinematicHero';
-import ObservingPresence from '@/components/marketing/ObservingPresence';
+import VisualAnalyticsAtlas from '@/components/marketing/VisualAnalyticsAtlas';
 import ProductProofSequence from '@/components/marketing/ProductProofSequence';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 
 export default function HomePage() {
     return (
         <main className="bg-[#FBFBF6]">
-            <ObservingPresence />
-            <UnifiedSovereignHeader primaryCta={{ label: 'Start Decompiling Free', href: '/ingest' }} />
+            <UnifiedSovereignHeader primaryCta={{ label: 'Open Sample Read', href: '/share/sample-dossier' }} />
             <CinematicHero />
+            <VisualAnalyticsAtlas />
             <ProductProofSequence />
             <FooterStartNow />
         </main>

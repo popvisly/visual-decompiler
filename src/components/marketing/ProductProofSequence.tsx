@@ -35,9 +35,9 @@ type Annotation = {
 };
 
 const ANNOTATIONS: readonly Annotation[] = [
-    { id: 'A', label: 'Focal Pull', desc: 'Subject gaze locks viewer — active eye-contact triggers status recognition before copy reads.', top: '12%', left: '5%' },
-    { id: 'B', label: 'Chromatic Restraint', desc: 'Palette compressed to 2 tones. Scarcity of colour signals rarity and editorial authority.', top: '38%', right: '4%' },
-    { id: 'C', label: 'Hierarchy Lock', desc: 'Product occupies lower-right — desire is established by posture before product is consciously noticed.', bottom: '18%', left: '7%' },
+    { id: 'A', label: 'Focal Pull', desc: 'The gaze locks first contact before any copy or product information has time to work.', top: '12%', left: '5%' },
+    { id: 'B', label: 'Chromatic Restraint', desc: 'A compressed palette keeps the frame expensive, controlled, and editorial.', top: '38%', right: '4%' },
+    { id: 'C', label: 'Hierarchy Lock', desc: 'The product arrives second, which preserves desire but slightly delays clarity.', bottom: '18%', left: '7%' },
 ];
 
 function SingleAssetDeconstruction() {
@@ -67,25 +67,24 @@ function SingleAssetDeconstruction() {
                 {/* Top label */}
                 <motion.div {...REVEAL_FAST} className="mb-16">
                     <p className="text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]">
-                        Single Asset · Reading
+                        Single Frame · Reading
                     </p>
                 </motion.div>
 
                 {/* Giant headline */}
                 <motion.div {...REVEAL} className="max-w-2xl">
                     <h2 className="text-[42px] font-black leading-[0.92] tracking-[-0.04em] text-white sm:text-[56px] lg:text-[80px]">
-                        Read what the ad<br />
-                        <span className="text-[#D4A574]">is really doing.</span>
+                        Read the frame.<br />
+                        <span className="text-[#D4A574]">Then read the intention.</span>
                     </h2>
                     <p className="mt-8 max-w-md text-[16px] leading-[1.6] text-white/60">
-                        A close read of hierarchy, posture, restraint, and where the work starts to loosen.
+                        Not a score. Not a dashboard. A close creative read of hierarchy, posture, restraint, and where the work starts to loosen.
                     </p>
                     <a
-                        href="/ingest"
+                        href="/share/sample-dossier"
                         className="mt-10 inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-8 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#0E0C0A] transition hover:bg-[#E0B882]"
-                        data-presence-target="cta"
                     >
-                        Start Decompiling Free
+                        Open Sample Read
                         <ArrowUpRight size={14} />
                     </a>
                 </motion.div>
@@ -167,9 +166,9 @@ function StatementInterstitial() {
                         The Subtext
                     </p>
                     <h2 className="text-[38px] font-black leading-[0.92] tracking-[-0.04em] text-[#141414] sm:text-[60px] lg:text-[84px] xl:text-[96px]">
-                        Advertising is not magic.<br />
-                        It is architecture.<br />
-                        <span className="text-[#8A8476]">We reverse-engineer the blueprint.</span>
+                        Creative analysis for people<br />
+                        inside the work.<br />
+                        <span className="text-[#8A8476]">Visual on the surface. Rigorous underneath.</span>
                     </h2>
                 </motion.div>
             </div>
@@ -182,10 +181,113 @@ function StatementInterstitial() {
 // Three stats displayed as a huge horizontal row between or below.
 // ─────────────────────────────────────────────────────────────────────────────
 const DIFF_METRICS = [
-    { label: 'Identity read', title: 'Stronger identity pull', value: '+27% signal', sub: 'The challenger lands with a clearer point of view and stays with you longer.' },
-    { label: 'Product read', title: 'Cleaner product arrival', value: '+18% earlier read', sub: 'The product gets there sooner without collapsing the mood.' },
-    { label: 'Wear pattern', title: 'More likely to fatigue', value: '-22% freshness', sub: 'The reference feels more familiar, but it gives away more on repeat exposure.' },
+    { label: 'Identity pull', title: 'The point of view is clearer', value: 'Stronger read', sub: 'One frame carries a more distinct identity signal, so the work stays with you longer.' },
+    { label: 'Product arrival', title: 'The product lands at the right moment', value: 'Cleaner timing', sub: 'The reveal arrives without breaking the atmosphere or over-explaining itself.' },
+    { label: 'Fatigue risk', title: 'One of them gives away too much', value: 'Lower freshness', sub: 'The more familiar frame is easier on first read, but it wears out faster on repeat exposure.' },
 ] as const;
+
+const ROOM_MOMENTS = [
+    {
+        label: 'Creative Review',
+        title: 'When the room knows something is off, but no one has the language yet.',
+        read: 'The frame is holding attention, but the product arrives after the emotional peak.',
+        move: 'Bring the product into the moment of tension instead of letting atmosphere do all the work.',
+    },
+    {
+        label: 'Client Pitch',
+        title: 'When you need to defend why one route carries more authority than another.',
+        read: 'One concept feels more expensive because it withholds more and signals a stronger point of view.',
+        move: 'Present the route as the one with more identity pull, not just the prettier composition.',
+    },
+    {
+        label: 'Internal Reset',
+        title: 'When the work has drifted and the team needs a sharper next move.',
+        read: 'The campaign is becoming easier to read, but less distinct each round.',
+        move: 'Protect the tension, reduce the explanation, and rebuild around the core posture.',
+    },
+] as const;
+
+function RouteDivider() {
+    return (
+        <div className="flex items-center justify-center py-10 text-[#857A6C]" aria-hidden="true">
+            <svg viewBox="0 0 420 56" className="h-10 w-full max-w-[420px]">
+                <g fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10 42 H88 L144 14 L196 38 L274 16 L326 40 H410" opacity="0.3" />
+                    <path d="M10 42 H88 L144 14 L196 38 L274 16 L326 40 H410" />
+                </g>
+                <circle cx="10" cy="42" r="3.5" fill="#4E9A67" />
+                <circle cx="410" cy="40" r="3.5" fill="#4C72E0" />
+            </svg>
+        </div>
+    );
+}
+
+function InTheRoomSection() {
+    return (
+        <section className="relative overflow-hidden bg-[#F3EEE4] py-32 lg:py-48" data-presence-tone="bone">
+            <div className="absolute inset-0 opacity-[0.35]" aria-hidden="true">
+                <div className="absolute left-[-8%] top-16 h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(212,165,116,0.16)_0%,rgba(212,165,116,0)_72%)]" />
+                <div className="absolute right-[-10%] bottom-0 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(20,20,20,0.08)_0%,rgba(20,20,20,0)_74%)]" />
+            </div>
+
+            <div className="relative mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-10">
+                <RouteDivider />
+                <motion.div {...REVEAL_FAST} className="mb-10">
+                    <p className="text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]">
+                        In The Room
+                    </p>
+                </motion.div>
+
+                <motion.div {...REVEAL} className="grid gap-16 lg:grid-cols-[0.44fr_0.56fr] lg:gap-20">
+                    <div>
+                        <h2 className="max-w-[8ch] text-[42px] font-black leading-[0.9] tracking-[-0.05em] text-[#141414] sm:text-[56px] lg:text-[84px]">
+                            Built for the moment after the work goes up.
+                        </h2>
+                        <p className="mt-8 max-w-md text-[16px] leading-[1.75] text-[#51483D]">
+                            Not for collecting ads. Not for scraping feeds. For the actual creative conversation: what is the frame doing, where is it slipping, and what do we do next.
+                        </p>
+                    </div>
+
+                    <div className="space-y-5">
+                        {ROOM_MOMENTS.map((moment, index) => (
+                            <motion.div
+                                key={moment.label}
+                                initial={{ opacity: 0, y: 28 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, amount: 0.35 }}
+                                transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                                className="rounded-[2rem] border border-[#DED4C3] bg-[#FBF8F1]/88 p-7 shadow-[0_22px_44px_rgba(20,20,20,0.05)]"
+                            >
+                                <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+                                    <div className="max-w-[30rem]">
+                                        <p className="text-[10px] font-black uppercase tracking-[0.34em] text-[#A9875E]">{moment.label}</p>
+                                        <p className="mt-3 text-[28px] font-black leading-[1.02] tracking-[-0.04em] text-[#141414]">
+                                            {moment.title}
+                                        </p>
+                                    </div>
+                                    <div className="shrink-0 rounded-full border border-[#D4A574]/28 bg-white/70 px-4 py-2 text-[10px] font-black uppercase tracking-[0.26em] text-[#8B6F49]">
+                                        Room Use {index + 1}
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 grid gap-4 md:grid-cols-2">
+                                    <div className="rounded-[1.4rem] border border-[#E8DFD1] bg-white/65 p-5">
+                                        <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#A9875E]">The Read</p>
+                                        <p className="mt-3 text-[15px] leading-[1.7] text-[#413A31]">{moment.read}</p>
+                                    </div>
+                                    <div className="rounded-[1.4rem] border border-[#E8DFD1] bg-[#F6EFE3] p-5">
+                                        <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#A9875E]">The Move</p>
+                                        <p className="mt-3 text-[15px] leading-[1.7] text-[#413A31]">{moment.move}</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+    );
+}
 
 function DifferentialDiagnosisSection() {
     const ref = useRef<HTMLElement>(null);
@@ -199,13 +301,13 @@ function DifferentialDiagnosisSection() {
             <motion.div {...REVEAL_FAST} className="mx-auto mb-10 max-w-[1400px] px-6 sm:px-8 lg:px-10">
                 <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
                     <p className="text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]">
-                        Comparison · Discernment
+                        Side-By-Side · Reading
                     </p>
                     <a
                         href="/compare"
                         className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-[#141414] hover:text-[#D4A574] transition"
                     >
-                        Open Comparison <ArrowUpRight size={12} />
+                        Read Two Frames <ArrowUpRight size={12} />
                     </a>
                 </div>
             </motion.div>
@@ -213,8 +315,8 @@ function DifferentialDiagnosisSection() {
             {/* ── Giant section headline ── */}
             <motion.div {...REVEAL} className="mx-auto mb-12 max-w-[1400px] px-6 sm:px-8 lg:px-10">
                 <h2 className="text-[40px] font-black leading-[0.9] tracking-[-0.04em] text-[#141414] sm:text-[52px] lg:text-[72px]">
-                    Put two in the room.<br />
-                    <span className="text-[#D4A574]">Feel the difference.</span>
+                    Put two frames together.<br />
+                    <span className="text-[#D4A574]">See what shifts.</span>
                 </h2>
             </motion.div>
 
@@ -244,7 +346,7 @@ function DifferentialDiagnosisSection() {
                             <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/80">Reference · Asset A</p>
                         </div>
                         <div className="absolute bottom-6 left-6 right-6">
-                            <p className="text-[13px] font-semibold italic text-white/80">Heritage-led prestige framing</p>
+                            <p className="text-[13px] font-semibold italic text-white/80">Prestige framing through familiarity</p>
                         </div>
                     </motion.div>
 
@@ -271,7 +373,7 @@ function DifferentialDiagnosisSection() {
                             <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/80">Challenger · Asset B</p>
                         </div>
                         <div className="absolute bottom-6 left-6 right-6">
-                            <p className="text-[13px] font-semibold italic text-white/80">Modern identity-led persuasion</p>
+                            <p className="text-[13px] font-semibold italic text-white/80">Identity-led persuasion with more edge</p>
                         </div>
                     </motion.div>
                 </div>
@@ -329,8 +431,9 @@ const VD_IS = [
 const VD_IS_NOT = [
     'A generic inspiration feed',
     'A dashboard built around score-chasing',
-    'A generation wrapper posing as taste',
-    'A spy tool with prettier language',
+    'An AI assistant pretending to have taste',
+    'An ad spy tool with prettier language',
+    'A scraping workflow dressed up as strategy',
 ] as const;
 
 function TrustBoundaryPanel() {
@@ -410,14 +513,13 @@ function TrustBoundaryPanel() {
                     className="mt-20 flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-12 md:flex-row md:items-end"
                 >
                     <p className="max-w-sm text-[14px] leading-relaxed text-white/40">
-                        The rigor stays in the read, the comparison, and the next move. It never replaces the person making the judgment.
+                        The rigor lives underneath the surface: in the read, the comparison, and the direction that follows. The judgment still belongs to the creative.
                     </p>
                     <a
-                        href="/ingest"
+                        href="/share/sample-dossier"
                         className="inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-8 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#141414] transition hover:bg-[#E0B882] hover:-translate-y-0.5"
-                        data-presence-target="cta"
                     >
-                        Start Decompiling Free
+                        Open Sample Read
                         <ArrowUpRight size={14} />
                     </a>
                 </motion.div>
@@ -436,6 +538,7 @@ export default function ProductProofSequence() {
             <SingleAssetDeconstruction />
             <StatementInterstitial />
             <DifferentialDiagnosisSection />
+            <InTheRoomSection />
             <TrustBoundaryPanel />
         </div>
     );

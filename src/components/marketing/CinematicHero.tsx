@@ -1,228 +1,260 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { HOMEPAGE_PRIMARY_CTA, HOMEPAGE_CTA_ICON } from '@/components/marketing/ctaStyles';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
-// ── Ad images for the parallax mosaic ──────────────────────────────────────────
-const AD_IMAGES = [
-    { src: '/images/examples/Miss_DIOR.jpg',          alt: 'Miss Dior campaign',         aspect: 'portrait' },
-    { src: '/images/examples/Chanel_No5.webp',        alt: 'Chanel No.5',                aspect: 'portrait' },
-    { src: '/images/examples/valentino-voce-viva.png',alt: 'Valentino Voce Viva',        aspect: 'portrait' },
-    { src: '/images/examples/ACNE.png',               alt: 'ACNE Studios',               aspect: 'portrait' },
-    { src: '/images/examples/CHLOE.jpg',              alt: 'Chloé campaign',             aspect: 'portrait' },
-    { src: '/images/examples/Watch.png',              alt: 'Watch campaign',             aspect: 'portrait' },
-];
-
-// ── Dossier findings ──────────────────────────────────────────────────────────
 const FINDINGS = [
-    { label: `What it's doing`, value: 'Status-coded restraint creates desire without verbal selling.' },
-    { label: 'What weakens it', value: 'Message clarity slips when elegance outruns product read.' },
-    { label: 'Push this',       value: 'Keep the authority. Increase the sense of product arrival.' },
+    { label: `What it's doing`, value: 'Status-coded restraint creates desire without tipping into explanation.' },
+    { label: 'What weakens it', value: 'The product read lands a touch late once atmosphere takes over.' },
+    { label: 'What to change', value: 'Keep the authority. Tighten the moment of product arrival.' },
 ] as const;
 
-// ── Individual parallax image tile ────────────────────────────────────────────
-function ParallaxTile({
-    src, alt, delay, speed, offsetY, rotation
+function EditorialPanel({
+    src,
+    alt,
+    y,
+    className,
+    priority = false,
+    caption,
 }: {
-    src: string; alt: string; delay: number;
-    speed: number; offsetY: number; rotation: number;
+    src: string;
+    alt: string;
+    y: MotionValue<string>;
+    className: string;
+    priority?: boolean;
+    caption?: string;
 }) {
-    const ref = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-    const y = useTransform(scrollYProgress, [0, 1], [offsetY, -offsetY * speed]);
-
     return (
         <motion.div
-            ref={ref}
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.1, delay, ease: [0.16, 1, 0.3, 1] }}
-            className="relative overflow-hidden rounded-[1.6rem] will-change-transform"
-            style={{
-                y,
-                rotate: rotation,
-                boxShadow: '0 32px 72px rgba(20,20,20,0.18)',
-            }}
+            style={{ y }}
+            className={`relative overflow-hidden border border-[#D8CCB5] bg-[#F7F1E7] shadow-[0_24px_48px_rgba(20,20,20,0.08)] ${className}`}
         >
-            <Image
-                src={src}
-                alt={alt}
-                width={380}
-                height={520}
-                className="w-full h-full object-cover"
-                priority
-            />
-            {/* subtle dark vignette */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
+            <Image src={src} alt={alt} fill className="object-cover" priority={priority} />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-transparent" />
+            {caption ? (
+                <div className="absolute bottom-0 left-0 right-0 border-t border-white/20 bg-[linear-gradient(180deg,rgba(20,20,20,0)_0%,rgba(20,20,20,0.34)_100%)] px-5 py-4">
+                    <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/74">{caption}</p>
+                </div>
+            ) : null}
         </motion.div>
     );
 }
 
+function HeroSignalGlyph() {
+    return (
+        <svg viewBox="0 0 96 96" className="h-full w-full" aria-hidden="true">
+            <g fill="none" stroke="currentColor" strokeWidth="3.25" strokeLinecap="square">
+                <path d="M48 10 A38 38 0 1 1 21 21" />
+                <path d="M48 24 A24 24 0 1 1 31 31" />
+                <path d="M48 86 V58 H58 V48" />
+                <path d="M18 48 H28" />
+                <path d="M68 48 H78" />
+                <path d="M48 10 V18" />
+            </g>
+        </svg>
+    );
+}
 
-
-// ── Main component ─────────────────────────────────────────────────────────────
 export default function CinematicHero() {
     const containerRef = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end start'] });
-    const [isFocused, setIsFocused] = useState(false);
 
-    // Parallax for mosaic background — faster than scroll
-    const mosaicY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
-
-    // Dossier card floats up slightly on scroll
-    const dossierY = useTransform(scrollYProgress, [0, 1], ['0px', '-40px']);
+    const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '10%']);
+    const leftRailY = useTransform(scrollYProgress, [0, 1], ['0px', '32px']);
+    const mainPanelY = useTransform(scrollYProgress, [0, 1], ['0px', '-26px']);
+    const rightRailY = useTransform(scrollYProgress, [0, 1], ['0px', '18px']);
+    const dossierY = useTransform(scrollYProgress, [0, 1], ['0px', '-34px']);
 
     return (
         <section
             ref={containerRef}
-            className="relative w-full overflow-hidden bg-[#F0EDE6]"
+            className="relative overflow-hidden bg-[#F3EEE4]"
             style={{ minHeight: '980px' }}
             data-presence-tone="bone"
         >
-            {/* ── LAYER 1: Full-bleed parallax photo mosaic ───────────────── */}
-            <motion.div
-                style={{ y: mosaicY, filter: isFocused ? 'saturate(1)' : 'saturate(0.92)' }}
-                className="absolute inset-0 z-0 grid grid-cols-2 gap-3 px-3 pt-24 pb-8 will-change-transform sm:gap-4 sm:px-4 sm:pt-28 md:grid-cols-3 md:pt-8"
-                aria-hidden="true"
-            >
-                {/* Column 1 — offset down */}
-                <div className="flex flex-col gap-3 pt-12 sm:gap-4">
-                    <ParallaxTile src={AD_IMAGES[0].src} alt={AD_IMAGES[0].alt} delay={0}    speed={0.3} offsetY={40} rotation={-1.5} />
-                    <ParallaxTile src={AD_IMAGES[3].src} alt={AD_IMAGES[3].alt} delay={0.1}  speed={0.4} offsetY={50} rotation={0.5}  />
-                </div>
-                {/* Column 2 — starts higher, slight overlap feel */}
-                <div className="flex flex-col gap-3 -mt-6 sm:gap-4">
-                    <ParallaxTile src={AD_IMAGES[1].src} alt={AD_IMAGES[1].alt} delay={0.05} speed={0.5} offsetY={60} rotation={1.0}  />
-                    <ParallaxTile src={AD_IMAGES[4].src} alt={AD_IMAGES[4].alt} delay={0.15} speed={0.3} offsetY={30} rotation={-0.8} />
-                </div>
-                {/* Column 3 — offset down again */}
-                <div className="hidden flex-col gap-4 pt-8 md:flex">
-                    <ParallaxTile src={AD_IMAGES[2].src} alt={AD_IMAGES[2].alt} delay={0.08} speed={0.4} offsetY={55} rotation={1.8}  />
-                    <ParallaxTile src={AD_IMAGES[5].src} alt={AD_IMAGES[5].alt} delay={0.18} speed={0.5} offsetY={45} rotation={-1.2} />
-                </div>
+            <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+                <motion.div
+                    style={{ y: heroY }}
+                    className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,165,116,0.18)_0%,rgba(212,165,116,0)_34%),radial-gradient(circle_at_80%_18%,rgba(20,20,20,0.07)_0%,rgba(20,20,20,0)_32%)]"
+                />
+                <div className="absolute inset-x-0 top-0 h-px bg-[#DED4C3]" />
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#FBFBF6] to-transparent" />
+            </div>
 
-                {/* Overlay to unify the mosaic into the bone background */}
-                <div className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ${isFocused ? 'bg-[#F0EDE6]/56' : 'bg-[#F0EDE6]/66'}`} />
-            </motion.div>
-
-
-
-            {/* ── LAYER 4: Floating dossier card ──────────────────────────── */}
-            <motion.div
-                style={{ y: dossierY }}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute bottom-6 left-4 right-4 z-30 sm:bottom-8 sm:left-6 sm:right-6 md:bottom-10 md:left-auto md:right-10 md:w-[400px]"
-                onHoverStart={() => setIsFocused(true)}
-                onHoverEnd={() => setIsFocused(false)}
-                whileHover={{ y: -8 }}
-                data-presence-target="annotation"
-            >
-                <div className="rounded-[2rem] border border-[#D9CCB8] bg-[rgba(255,251,244,0.9)] p-5 shadow-[0_40px_80px_rgba(20,20,20,0.18)] backdrop-blur-xl sm:p-6">
-                    {/* Header row */}
-                    <div className="flex items-center justify-between mb-5">
-                        <div>
-                            <p className="text-[9px] font-black uppercase tracking-[0.38em] text-[#D4A574]">Creative Reading</p>
-                            <p className="mt-1 text-[12px] font-medium tracking-tight text-[#5E5A53]">Miss Dior · print still</p>
-                        </div>
-                        <div className="flex items-center gap-1.5 rounded-full border border-[#D4A574]/30 bg-[#F8F3EA] px-3 py-1.5">
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
-                            <span className="text-[10px] font-bold text-[#5E5A53]">Held read</span>
-                        </div>
-                    </div>
-
-                    {/* Findings list */}
-                    <div className="space-y-3">
-                        {FINDINGS.map((f) => (
-                            <div key={f.label} className="rounded-[1.2rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-3">
-                                <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#D4A574]">{f.label}</p>
-                                <p className="mt-1.5 text-[13px] leading-snug text-[#141414]">{f.value}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* CTAs */}
-                    <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                        <a
-                            href="/ingest"
-                            className={`${HOMEPAGE_PRIMARY_CTA} flex-1 text-center justify-center`}
-                            data-presence-target="cta"
-                        >
-                            <span>Start Decompiling</span>
-                            <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
-                        </a>
-                        <a
-                            href={SAMPLE_DOSSIER_HREF}
-                            className="flex items-center gap-1.5 rounded-full border border-[#D4A574]/30 bg-transparent px-4 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#D4A574] transition hover:border-[#D4A574]/60"
-                            data-presence-target="inspect"
-                        >
-                            See Sample
-                        </a>
-                    </div>
-
-                    <p className="mt-4 text-center text-[9px] font-bold uppercase tracking-[0.25em] text-[#9A9486]">
-                        No card · 5 free reads
-                    </p>
-                </div>
-            </motion.div>
-
-            {/* ── LAYER 5: Top-left brand statement ───────────────────────── */}
-            <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute left-4 top-28 z-30 max-w-[220px] sm:left-6 sm:top-32 sm:max-w-[260px] md:left-10"
-            >
-                <p className="text-[10px] font-black uppercase tracking-[0.42em] text-[#D4A574]">
-                    For Working Creatives
-                </p>
-                <p className="mt-3 text-[14px] font-semibold leading-snug tracking-tight text-[#141414] sm:text-[15px]">
-                    Bring a sharper read into the room.<br />
-                    See what the work is really doing.
-                </p>
-            </motion.div>
-
-            <motion.div
-                initial={{ opacity: 0, y: 28 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute left-4 right-4 top-[20rem] z-30 sm:left-6 sm:right-6 sm:top-[22rem] md:left-10 md:right-auto md:top-[38%] md:max-w-[460px]"
-            >
-                <p className="text-[38px] font-black leading-[0.92] tracking-[-0.05em] text-[#141414] sm:text-[54px] lg:text-[78px]">
-                    Read the posture.<br />
-                    Hold the distinctiveness.
-                </p>
-                <p className="mt-5 max-w-[34rem] text-[15px] leading-[1.7] text-[#4F493F] sm:mt-6 sm:text-[16px]">
-                    Decompile the work into a sharper read of hierarchy, tension, identity pull, and where it starts giving too much away.
-                </p>
-                <p className="mt-4 max-w-[32rem] text-[11px] font-bold uppercase tracking-[0.24em] text-[#8A7B64]">
-                    Designers, strategists, founders, art directors, and teams shaping perception.
-                </p>
-                <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row">
-                    <a href="/ingest" className={HOMEPAGE_PRIMARY_CTA} data-presence-target="cta">
-                        <span>Start Decompiling Free</span>
-                        <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
-                    </a>
-                    <a
-                        href={SAMPLE_DOSSIER_HREF}
-                        className="inline-flex items-center gap-2 rounded-full border border-[#D4A574]/28 bg-[#FBF7EF]/70 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#7B6544] transition hover:border-[#D4A574]/60 hover:bg-[#FBF7EF]"
-                        data-presence-target="inspect"
+            <div className="relative mx-auto max-w-[1400px] px-6 pb-20 pt-28 sm:px-8 lg:px-10 lg:pb-28 lg:pt-36">
+                <div className="grid gap-14 lg:grid-cols-[0.37fr_0.63fr] lg:items-end lg:gap-12">
+                    <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                        className="relative z-10 max-w-[440px] lg:pb-20"
                     >
-                        Open Sample Read
-                        <ArrowUpRight size={14} />
-                    </a>
+                        <div className="flex items-end gap-4 border-t border-[#D8CCB5] pt-5">
+                            <div className="h-12 w-12 text-[#141414]">
+                                <HeroSignalGlyph />
+                            </div>
+                            <p className="pb-1 text-[10px] font-black uppercase tracking-[0.46em] text-[#B18B5E]">
+                                Analysis For Creatives
+                            </p>
+                        </div>
+
+                        <h1 className="mt-10 text-[42px] font-black leading-[0.9] tracking-[-0.06em] text-[#141414] sm:text-[60px] lg:text-[92px]">
+                            See the creative.
+                            <br />
+                            Read the structure.
+                        </h1>
+
+                        <p className="mt-8 max-w-[32rem] text-[16px] leading-[1.78] text-[#4E463C]">
+                            Visual Decompiler is built for art directors, strategists, founders, and teams shaping perception. It reads hierarchy, posture, identity pull, and where a piece starts giving too much away.
+                        </p>
+
+                        <p className="mt-5 max-w-[26rem] text-[10px] font-black uppercase tracking-[0.26em] text-[#8C7A60]">
+                            Not an ad spy tool. Not a scraper. Not AI taste theatre.
+                        </p>
+
+                        <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row">
+                            <a href={SAMPLE_DOSSIER_HREF} className={HOMEPAGE_PRIMARY_CTA}>
+                                <span>Open Sample Read</span>
+                                <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
+                            </a>
+                            <a
+                                href="/ingest"
+                                className="inline-flex items-center gap-2 border-b border-transparent pb-1 text-[10px] font-black uppercase tracking-[0.28em] text-[#7D6748] transition hover:border-[#7D6748]/30 hover:text-[#1A1712]"
+                            >
+                                Bring In A Frame
+                                <ArrowUpRight size={14} />
+                            </a>
+                        </div>
+                        <div className="mt-10 flex items-center gap-4 text-[#8C7A60]">
+                            <div className="h-px w-14 bg-[#D8CCB5]" />
+                            <div className="h-7 w-7">
+                                <HeroSignalGlyph />
+                            </div>
+                            <div className="h-px w-24 bg-[#D8CCB5]" />
+                        </div>
+                    </motion.div>
+
+                    <div className="relative min-h-[760px] lg:min-h-[840px]">
+                        <motion.div
+                            style={{ y: leftRailY }}
+                            className="absolute left-0 top-8 z-10 hidden w-[19%] flex-col gap-6 lg:flex"
+                        >
+                            <EditorialPanel
+                                src="/images/examples/Miss_DIOR.jpg"
+                                alt="Miss Dior campaign"
+                                y={leftRailY}
+                                className="aspect-[0.72] rounded-[1.8rem]"
+                                caption="Held posture"
+                            />
+                            <div className="border-t border-[#D8CCB5] pt-4">
+                                <p className="text-[10px] font-black uppercase tracking-[0.34em] text-[#B18B5E]">For Working Creatives</p>
+                                <p className="mt-3 text-[14px] leading-[1.7] text-[#534A3E]">
+                                    A visual read that belongs in reviews, pitches, and internal creative rooms.
+                                </p>
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 24 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+                            style={{ y: mainPanelY }}
+                            className="absolute left-0 right-0 top-0 mx-auto w-full max-w-[760px] lg:left-[18%] lg:right-[16%]"
+                        >
+                            <EditorialPanel
+                                src="/images/examples/Chanel_No5.webp"
+                                alt="Chanel No.5 campaign"
+                                y={mainPanelY}
+                                className="aspect-[0.9] rounded-[2.4rem]"
+                                priority
+                                caption="Reference frame"
+                            />
+                        </motion.div>
+
+                        <motion.div
+                            style={{ y: rightRailY }}
+                            className="absolute right-0 top-10 z-10 hidden w-[22%] flex-col gap-6 lg:flex"
+                        >
+                            <EditorialPanel
+                                src="/images/examples/valentino-voce-viva.png"
+                                alt="Valentino Voce Viva campaign"
+                                y={rightRailY}
+                                className="aspect-[0.72] rounded-[1.8rem]"
+                                caption="Identity signal"
+                            />
+                            <EditorialPanel
+                                src="/images/examples/ACNE.png"
+                                alt="ACNE Studios campaign"
+                                y={rightRailY}
+                                className="aspect-[0.78] rounded-[1.8rem]"
+                                caption="Texture restraint"
+                            />
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                            style={{ y: dossierY }}
+                            className="absolute bottom-0 left-0 right-0 z-20 lg:left-auto lg:right-[2%] lg:w-[390px]"
+                        >
+                            <div className="border border-[#D9CCB8] bg-[rgba(255,251,244,0.96)] p-5 shadow-[0_34px_68px_rgba(20,20,20,0.14)] backdrop-blur-xl sm:p-6">
+                                <div className="mb-5 flex items-center justify-between gap-4">
+                                    <div>
+                                        <p className="text-[9px] font-black uppercase tracking-[0.38em] text-[#D4A574]">Creative Reading</p>
+                                        <p className="mt-1 text-[12px] font-medium tracking-tight text-[#5E5A53]">Miss Dior · print still</p>
+                                    </div>
+                                    <div className="flex items-center gap-1.5 border border-[#D4A574]/30 bg-[#F8F3EA] px-3 py-1.5">
+                                        <span className="h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
+                                        <span className="text-[10px] font-bold text-[#5E5A53]">Creative read</span>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-3">
+                                    {FINDINGS.map((f) => (
+                                        <div key={f.label} className="border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-3">
+                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#D4A574]">{f.label}</p>
+                                            <p className="mt-1.5 text-[13px] leading-snug text-[#141414]">{f.value}</p>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                                    <a href={SAMPLE_DOSSIER_HREF} className={`${HOMEPAGE_PRIMARY_CTA} flex-1 text-center justify-center`}>
+                                        <span>Open Sample Read</span>
+                                        <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
+                                    </a>
+                                    <a
+                                        href="/ingest"
+                                        className="inline-flex items-center justify-center gap-2 border border-[#D4A574]/30 px-4 py-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#7B6544] transition hover:border-[#D4A574]/60"
+                                    >
+                                        Bring In A Frame
+                                    </a>
+                                </div>
+
+                                <p className="mt-4 text-center text-[9px] font-black uppercase tracking-[0.25em] text-[#9A9486]">
+                                    Built for reviews, pitches, and internal creative rooms
+                                </p>
+                            </div>
+                        </motion.div>
+
+                        <div className="mt-10 grid gap-4 pt-[28rem] sm:pt-[34rem] lg:hidden">
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="relative aspect-[0.76] overflow-hidden rounded-[1.5rem] border border-[#D8CCB5]">
+                                    <Image src="/images/examples/valentino-voce-viva.png" alt="Valentino Voce Viva campaign" fill className="object-cover" />
+                                </div>
+                                <div className="relative aspect-[0.76] overflow-hidden rounded-[1.5rem] border border-[#D8CCB5]">
+                                    <Image src="/images/examples/ACNE.png" alt="ACNE Studios campaign" fill className="object-cover" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </motion.div>
-
-            {/* Bottom gradient fade into next section */}
-            <div className="absolute bottom-0 left-0 right-0 z-20 h-32 bg-gradient-to-t from-[#FBFBF6] to-transparent pointer-events-none" />
-
-
+            </div>
         </section>
     );
 }
