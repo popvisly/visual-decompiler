@@ -1,39 +1,93 @@
+'use client';
+
+import { motion } from 'framer-motion';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
+import FooterStartNow from '@/components/marketing/FooterStartNow';
 
 export default function AboutPage() {
     return (
-        <main className="min-h-screen bg-[#FBFBF6]">
-            <UnifiedSovereignHeader primaryCta={{ label: 'Start Decompiling Free', href: '/ingest' }} />
+        <main className="min-h-screen bg-[#050505] text-white">
+            <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Open Sample Read', href: '/share/sample-dossier' }} />
 
-            <section className="px-6 pb-16 pt-32 md:pt-40">
-                <div className="mx-auto max-w-5xl">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">About Visual Decompiler</p>
-                    <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8A7B64]">Forensic Advertising Intelligence OS</p>
-                    <h1 className="mt-4 text-[38px] font-semibold leading-[0.95] tracking-tight text-[#141414] md:text-[64px]">
-                        Advertising intelligence for agencies that need defensible decisions.
-                    </h1>
+            {/* Hero Section */}
+            <section className="px-6 pb-32 pt-48 lg:pt-64 lg:pb-64">
+                <div className="mx-auto max-w-[1400px]">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                        <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-8">
+                            A Forensic Intelligence OS
+                        </p>
+                        <h1 className="text-[12vw] lg:text-[8vw] font-black leading-[0.88] tracking-[-0.05em] uppercase text-white max-w-[15ch]">
+                            Built for defensible decisions.
+                        </h1>
+                    </motion.div>
 
-                    <div className="mt-8 space-y-6 text-[17px] leading-relaxed text-[#5E5A53] md:text-[19px]">
-                        <p>
-                            Visual Decompiler was built for teams who need more than generic AI outputs and more than subjective creative opinion.
-                            It is designed to be more convenient than manual analysis, while going significantly deeper than using ChatGPT alone.
-                        </p>
-                        <p>
-                            By combining visual signal detection, strategic structure, and market context, Visual Decompiler turns creative assets
-                            into strategic readouts teams can trust, reuse, and hand to clients with confidence.
-                        </p>
-                        <p>
-                            What began as a forensic prototype has evolved into a full agency intelligence platform. Teams can ingest and compare assets,
-                            generate structured dossiers, build persistent vault memory, collaborate through boards, and move from diagnosis to execution
-                            without losing context.
-                        </p>
-                        <p>
-                            With white-label controls, agencies and consultants can deliver this intelligence as their own premium client-facing system —
-                            turning analysis into branded strategic authority.
-                        </p>
+                    <div className="mt-24 lg:mt-48 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-0 items-start">
+                        <motion.div 
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.5, delay: 0.2 }}
+                            className="lg:col-span-12 border-t border-white/10 pt-10"
+                        >
+                            <div className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-24">
+                                <div className="max-w-[500px]">
+                                    <h2 className="text-[28px] font-black leading-tight uppercase tracking-[-0.02em] mb-6">
+                                        More than generic AI outputs.
+                                    </h2>
+                                    <p className="text-[18px] leading-[1.7] text-[#A0A0A0]">
+                                        Visual Decompiler was built for teams who need more than subjective creative opinion. 
+                                        It is designed to be more convenient than manual analysis, while going significantly 
+                                        deeper than using ChatGPT alone.
+                                    </p>
+                                </div>
+                                <div className="max-w-[500px]">
+                                    <h2 className="text-[28px] font-black leading-tight uppercase tracking-[-0.02em] mb-6">
+                                        Trust, reuse, and authority.
+                                    </h2>
+                                    <p className="text-[18px] leading-[1.7] text-[#A0A0A0]">
+                                        By combining visual signal detection, strategic structure, and market context, 
+                                        we turn creative assets into strategic readouts teams can trust and hand to 
+                                        clients with absolute confidence.
+                                    </p>
+                                </div>
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
+
+            {/* Split Narrative Section */}
+            <section className="px-6 pb-64 lg:pb-96">
+                <div className="mx-auto max-w-[1400px]">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 lg:gap-0 border-t border-white/10 pt-24">
+                        <div className="lg:col-span-5">
+                            <h2 className="text-[42px] lg:text-[64px] font-black leading-[0.95] tracking-[-0.04em] uppercase">
+                                From forensic prototype to agency standard.
+                            </h2>
+                        </div>
+                        <div className="lg:col-span-6 lg:col-start-7">
+                            <div className="space-y-12 text-[20px] leading-[1.65] text-[#A0A0A0]">
+                                <p>
+                                    What began as a forensic prototype has evolved into a full agency intelligence platform. 
+                                    Teams can ingest and compare assets, generate structured dossiers, build persistent 
+                                    vault memory, and collaborate through boards—without losing context.
+                                </p>
+                                <div className="h-px w-24 bg-[#FF003C]" />
+                                <p className="text-white font-bold italic">
+                                    With white-label controls, agencies and consultants can deliver this intelligence 
+                                    as their own premium client-facing system — turning analysis into branded strategic authority.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <FooterStartNow />
         </main>
     );
 }
