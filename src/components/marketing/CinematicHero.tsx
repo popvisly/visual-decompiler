@@ -2,7 +2,7 @@
 
 import { startTransition, useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
+import { motion, type MotionValue } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { HOMEPAGE_PRIMARY_CTA, HOMEPAGE_CTA_ICON } from '@/components/marketing/ctaStyles';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
@@ -76,7 +76,7 @@ function EditorialPanel({
 }: {
     src: string;
     alt: string;
-    y: MotionValue<string>;
+    y: MotionValue<string> | string;
     className: string;
     priority?: boolean;
     caption?: string;
@@ -157,13 +157,6 @@ function HeroRouteOverlay({ mode }: { mode: HeroMode }) {
 export default function CinematicHero() {
     const containerRef = useRef<HTMLElement>(null);
     const [activeMode, setActiveMode] = useState<HeroMode>('posture');
-    const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end start'] });
-
-    const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '10%']);
-    const leftRailY = useTransform(scrollYProgress, [0, 1], ['0px', '28px']);
-    const mainPanelY = useTransform(scrollYProgress, [0, 1], ['0px', '-22px']);
-    const rightRailY = useTransform(scrollYProgress, [0, 1], ['0px', '16px']);
-    const dossierY = useTransform(scrollYProgress, [0, 1], ['0px', '-28px']);
     const activeHeroMode = HERO_MODES.find((mode) => mode.id === activeMode) ?? HERO_MODES[0];
 
     const mainCaption =
@@ -177,10 +170,7 @@ export default function CinematicHero() {
             data-presence-tone="bone"
         >
             <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-                <motion.div
-                    style={{ y: heroY }}
-                    className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,165,116,0.18)_0%,rgba(212,165,116,0)_34%),radial-gradient(circle_at_80%_18%,rgba(20,20,20,0.07)_0%,rgba(20,20,20,0)_32%)]"
-                />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(212,165,116,0.18)_0%,rgba(212,165,116,0)_34%),radial-gradient(circle_at_80%_18%,rgba(20,20,20,0.07)_0%,rgba(20,20,20,0)_32%)]" />
                 <div className="absolute inset-x-0 top-0 h-px bg-[#DED4C3]" />
                 <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#FBFBF6] to-transparent" />
             </div>
@@ -283,14 +273,11 @@ export default function CinematicHero() {
                     </motion.div>
 
                     <div className="relative min-h-[780px] lg:min-h-[860px]">
-                        <motion.div
-                            style={{ y: leftRailY }}
-                            className="absolute left-0 top-12 z-10 hidden w-[18%] flex-col gap-6 lg:flex"
-                        >
+                        <div className="absolute left-0 top-12 z-10 hidden w-[18%] flex-col gap-6 lg:flex">
                             <EditorialPanel
                                 src="/images/examples/Miss_DIOR.jpg"
                                 alt="Miss Dior campaign"
-                                y={leftRailY}
+                                y="0px"
                                 className="aspect-[0.72] rounded-[1.8rem]"
                                 caption="Held posture"
                                 active={activeMode === 'posture'}
@@ -301,20 +288,19 @@ export default function CinematicHero() {
                                     A visual read that belongs in reviews, pitches, and internal creative rooms.
                                 </p>
                             </div>
-                        </motion.div>
+                        </div>
 
                         <motion.div
                             initial={{ opacity: 0, y: 24 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-                            style={{ y: mainPanelY }}
                             className="absolute left-0 right-0 top-0 mx-auto w-full max-w-[760px] lg:left-[16%] lg:right-[12%]"
                         >
                             <div className="relative">
                                 <EditorialPanel
                                     src="/images/examples/Chanel_No5.webp"
                                     alt="Chanel No.5 campaign"
-                                    y={mainPanelY}
+                                    y="0px"
                                     className="aspect-[0.9] rounded-[2.8rem]"
                                     priority
                                     caption={mainCaption}
@@ -338,14 +324,11 @@ export default function CinematicHero() {
                             </div>
                         </motion.div>
 
-                        <motion.div
-                            style={{ y: rightRailY }}
-                            className="absolute right-0 top-14 z-10 hidden w-[22%] flex-col gap-6 lg:flex"
-                        >
+                        <div className="absolute right-0 top-14 z-10 hidden w-[22%] flex-col gap-6 lg:flex">
                             <EditorialPanel
                                 src="/images/examples/valentino-voce-viva.png"
                                 alt="Valentino Voce Viva campaign"
-                                y={rightRailY}
+                                y="0px"
                                 className="aspect-[0.72] rounded-[1.8rem]"
                                 caption="Product arrival"
                                 active={activeMode === 'arrival'}
@@ -353,18 +336,17 @@ export default function CinematicHero() {
                             <EditorialPanel
                                 src="/images/examples/ACNE.png"
                                 alt="ACNE Studios campaign"
-                                y={rightRailY}
+                                y="0px"
                                 className="aspect-[0.78] rounded-[1.8rem]"
                                 caption="Texture restraint"
                                 active={activeMode === 'restraint'}
                             />
-                        </motion.div>
+                        </div>
 
                         <motion.div
                             initial={{ opacity: 0, y: 40 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 1, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                            style={{ y: dossierY }}
                             className="absolute bottom-0 left-0 right-0 z-20 lg:left-auto lg:right-[1%] lg:w-[410px]"
                         >
                             <motion.div
