@@ -46,7 +46,7 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
                 aria-expanded={open}
             >
                 <span className="text-[15px] font-semibold leading-snug text-white/80 lg:text-[16px]">{q}</span>
-                <span className="mt-0.5 shrink-0 text-[#D4A574]">
+                <span className="mt-0.5 shrink-0 text-[#00E5FF]">
                     {open ? <Minus size={16} /> : <Plus size={16} />}
                 </span>
             </button>
@@ -71,11 +71,11 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function FooterStartNow() {
     return (
-        <footer className="relative overflow-hidden bg-[#141414]">
+        <footer className="relative overflow-hidden bg-[#050505]">
             <div className="pointer-events-none absolute inset-0 opacity-[0.22]" aria-hidden="true">
-                <div className="absolute inset-x-0 top-0 h-px bg-white/20" />
-                <div className="absolute left-[8%] top-24 h-[320px] w-[320px] bg-[radial-gradient(circle,rgba(212,165,116,0.2)_0%,rgba(212,165,116,0)_72%)]" />
-                <div className="absolute right-[4%] bottom-16 h-[380px] w-[380px] bg-[radial-gradient(circle,rgba(255,255,255,0.09)_0%,rgba(255,255,255,0)_74%)]" />
+                <div className="absolute inset-x-0 top-0 h-px bg-white/10" />
+                <div className="absolute left-[8%] top-24 h-[320px] w-[320px] bg-[radial-gradient(circle,rgba(0,229,255,0.15)_0%,rgba(0,229,255,0)_72%)]" />
+                <div className="absolute right-[4%] bottom-16 h-[380px] w-[380px] bg-[radial-gradient(circle,rgba(255,0,60,0.1)_0%,rgba(255,0,60,0)_74%)]" />
             </div>
 
             {/* ── OUTRO CTA BLOCK ── */}
@@ -87,7 +87,7 @@ export default function FooterStartNow() {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="mb-8 border-t border-white/12 pt-5 text-[10px] font-black uppercase tracking-[0.55em] text-[#D4A574]"
+                    className="mb-8 border-t border-white/12 pt-5 text-[10px] font-black uppercase tracking-[0.55em] text-[#00E5FF]"
                 >
                     Bring in the work · Leave with a sharper read
                 </motion.p>
@@ -102,7 +102,7 @@ export default function FooterStartNow() {
                     style={{ fontSize: 'clamp(52px, 10vw, 140px)' }}
                 >
                     Bring in the frame.<br />
-                    <span className="text-[#D4A574]">Get the creative read.</span>
+                    <span className="text-[#00E5FF]">Get the creative read.</span>
                 </motion.h2>
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
@@ -124,7 +124,7 @@ export default function FooterStartNow() {
                 >
                     <a
                         href="/share/sample-dossier"
-                        className="inline-flex items-center gap-2.5 border border-[#D4A574] bg-[#D4A574] px-8 py-4 text-[11px] font-black uppercase tracking-[0.24em] text-[#141414] transition hover:bg-[#E0B882] hover:border-[#E0B882]"
+                        className="inline-flex items-center gap-2.5 border border-[#00E5FF] bg-[#00E5FF] px-8 py-4 text-[11px] font-black uppercase tracking-[0.24em] text-black transition hover:bg-transparent hover:text-[#00E5FF] hover:border-[#00E5FF]"
                     >
                         Open Sample Read
                         <ArrowUpRight size={15} />
@@ -152,7 +152,7 @@ export default function FooterStartNow() {
                         className="mb-8 lg:mb-0 lg:pt-6"
                     >
 
-                        <p className="-mt-1 text-[11px] font-black uppercase tracking-[0.5em] text-[#D4A574]">
+                        <p className="-mt-1 text-[11px] font-black uppercase tracking-[0.5em] text-[#00E5FF]">
                             Common questions
                         </p>
                     </motion.div>

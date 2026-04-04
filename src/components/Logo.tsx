@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 
 interface LogoProps {
     href?: string;
@@ -13,44 +12,32 @@ interface LogoProps {
 
 export default function Logo({
     href = "/",
-    sublabel = "For Working Creatives",
+    sublabel = "BUILT FOR CREATIVES",
     className = "",
     forceDark = false,
     onClick
 }: LogoProps) {
     const content = (
-        <div className={`flex items-center gap-3 group ${className}`}>
-            <div className="flex h-8 w-8 items-center justify-center transition-transform group-hover:scale-105">
-                <Image
-                    src="/images/logo/Visual_Decompiler_Logo_v2_400px.png"
-                    alt="Visual Decompiler logo mark"
-                    width={32}
-                    height={32}
-                    className="h-8 w-8 object-contain"
-                    priority
-                />
-            </div>
-            <div className="text-left">
-                <h1 className="text-[12px] font-black uppercase tracking-[0.18em] text-[#B8A47E] transition-colors">
-                    Visual Decompiler
-                </h1>
-                <p className={`mt-1 uppercase tracking-[0.28em] transition-colors ${forceDark ? 'text-white/60' : 'text-[#6B6B6B]'}`} style={{ fontSize: '8px' }}>
-                    {sublabel}
-                </p>
-            </div>
+        <div className={`flex flex-col text-left group ${className}`}>
+            <h1 className={`text-[16px] lg:text-[18px] font-black uppercase tracking-[0.22em] transition-colors ${forceDark ? 'text-white group-hover:text-[#00E5FF]' : 'text-black group-hover:text-[#FF003C]'}`}>
+                Visual Decompiler
+            </h1>
+            <p className={`mt-0.5 font-bold uppercase tracking-[0.3em] transition-colors ${forceDark ? 'text-white/40' : 'text-[#8A8A8A]'}`} style={{ fontSize: '9px' }}>
+                {sublabel}
+            </p>
         </div>
     );
 
     if (onClick) {
         return (
-            <button onClick={onClick} className="focus:outline-none">
+            <button onClick={onClick} className="focus:outline-none shrink-0">
                 {content}
             </button>
         );
     }
 
     return (
-        <Link href={href} className="focus:outline-none">
+        <Link href={href} className="focus:outline-none shrink-0">
             {content}
         </Link>
     );

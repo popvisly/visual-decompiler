@@ -6,18 +6,11 @@ import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import Logo from '@/components/Logo';
 import { supabaseClient } from '@/lib/supabase-client';
-import { HOMEPAGE_PRIMARY_CTA_COMPACT } from '@/components/marketing/ctaStyles';
 
 type HeaderCta = {
     href: string;
     label: string;
 };
-
-function isActive(pathname: string, href: string): boolean {
-    if (href === '/vault') return pathname === '/vault';
-    if (href.startsWith('/#')) return pathname === '/';
-    return pathname.startsWith(href);
-}
 
 export default function UnifiedSovereignHeader({
     forceDark = false,
@@ -53,7 +46,7 @@ export default function UnifiedSovereignHeader({
 
     useEffect(() => {
         const syncScroll = () => {
-            setIsScrolled(window.scrollY > 18);
+            setIsScrolled(window.scrollY > 40);
         };
 
         syncScroll();
@@ -75,69 +68,55 @@ export default function UnifiedSovereignHeader({
             { key: 'reading', label: 'Sample Read', href: '/share/sample-dossier' },
             { key: 'about', label: 'About', href: '/about' },
             { key: 'help', label: 'Help Center', href: '/docs/user-guide' },
-        ] as const;
+        ];
 
     return (
-        <header className={`fixed inset-x-0 z-50 pointer-events-none px-3 transition-all duration-300 sm:px-4 md:px-8 ${isScrolled ? 'top-2 sm:top-3 md:top-4' : 'top-3 sm:top-4 md:top-8'}`}>
-            <div className="mx-auto max-w-[1400px]">
+        <header className={`fixed inset-x-0 z-50 pointer-events-none transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? 'top-0' : 'top-6'}`}>
+            <div className="mx-auto max-w-[1500px] px-6 lg:px-12">
                 <div
                     className={`
                         pointer-events-auto
                         flex items-center justify-between
-                        px-4 sm:px-6 md:px-0
-                        ${isScrolled ? 'py-3' : 'py-4'}
-                        border-b
-                        min-h-[56px] sm:min-h-[60px]
-                        transition-all duration-300
+                        transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]
+                        ${isScrolled ? 'py-4 lg:py-5' : 'py-5 lg:py-6'}
                         ${forceDark
-                            ? `${isScrolled ? 'bg-[#141414]/88 border-[#D4A574]/20' : 'bg-[#141414]/72 border-[#D4A574]/12'} backdrop-blur-xl`
-                            : `${isScrolled ? 'bg-[#F6F1E7]/88 border-[#D8CCB5]' : 'bg-[#F6F1E7]/68 border-[#E7DED1]'} backdrop-blur-xl`
+                            ? `${isScrolled ? 'bg-[#050505]/70 backdrop-blur-2xl' : 'bg-transparent'}`
+                            : `${isScrolled ? 'bg-[#F6F1E7]/80 backdrop-blur-2xl' : 'bg-transparent'}`
                         }
                     `}
                 >
                     {/* ── Left: Logo ── */}
-                    <div className="flex items-center flex-1">
-                        <Logo href="/" sublabel="For Working Creatives" forceDark={forceDark} />
+                    <div className="flex flex-1 items-center">
+                        <Logo href="/" sublabel="BUILT FOR CREATIVES" forceDark={forceDark} className="origin-left scale-90 lg:scale-100 transition-transform" />
                     </div>
 
                     {/* ── Center: Desktop Pillars ── */}
-                    <nav className="hidden md:flex flex-1 justify-center items-center gap-1">
+                    <nav className="hidden lg:flex flex-[2] justify-center items-center gap-10">
                         {isAuthenticated === null ? (
-                            <div className="flex items-center gap-4 opacity-50" aria-hidden="true">
-                                {[0, 1, 2].map((index) => (
-                                    <div
-                                        key={index}
-                                        className={`
-                                            h-8 rounded-none border border-transparent
-                                            ${forceDark ? 'bg-white/10' : 'bg-black/5'}
-                                        `}
-                                        style={{ width: index === 1 ? 110 : 86 }}
-                                    />
-                                ))}
+                            <div className="flex items-center gap-10 opacity-30" aria-hidden="true">
+                                {[0, 1, 2].map((i) => <div key={i} className={`h-1 w-8 ${forceDark ? 'bg-white/20' : 'bg-black/20'}`} />)}
                             </div>
                         ) : (
                             <>
                                 {navItems.map((p) => {
-                                    const active = isActive(pathname, p.href);
+                                    const active = p.href === '/' ? pathname === '/' : pathname.startsWith(p.href);
                                     return (
                                         <Link
                                             key={p.key}
                                             href={p.href}
                                             className={`
-                                                inline-flex min-w-[118px] items-center justify-center px-4 py-2 text-center whitespace-nowrap border-y border-transparent
-                                                text-[10px] font-black uppercase tracking-[0.22em]
-                                                transition-all duration-300
+                                                relative px-2 py-2 text-[10px] font-black uppercase tracking-[0.25em]
+                                                transition-colors duration-500
                                                 ${active
-                                                    ? forceDark
-                                                        ? 'text-white border-white/45'
-                                                        : 'text-[#141414] border-[#141414]'
-                                                    : forceDark
-                                                        ? 'text-white/58 hover:text-[#F3E5CF] hover:border-[#D4A574]/34'
-                                                        : 'text-[#79736A] hover:text-[#8A6840] hover:border-[#D4A574]/40'
+                                                    ? forceDark ? 'text-white' : 'text-[#141414]'
+                                                    : forceDark ? 'text-white/40 hover:text-white' : 'text-[#8A8A8A] hover:text-[#141414]'
                                                 }
                                             `}
                                         >
                                             {p.label}
+                                            {active && (
+                                                <span className={`absolute -bottom-1 left-1/2 h-px w-4 -translate-x-1/2 ${forceDark ? 'bg-white' : 'bg-[#141414]'}`} />
+                                            )}
                                         </Link>
                                     );
                                 })}
@@ -146,44 +125,38 @@ export default function UnifiedSovereignHeader({
                     </nav>
 
                     {/* ── Right: Utility Bar ── */}
-                    <div className="flex items-center justify-end flex-1 gap-4">
-                        <div className="hidden md:block">
+                    <div className="flex flex-1 items-center justify-end gap-6">
+                        <div className="hidden lg:flex items-center">
                             {primaryCta ? (
-                                <div className="flex items-center justify-end gap-3">
-                                    <Link
-                                        href={primaryCta.href}
-                                        className={`${HOMEPAGE_PRIMARY_CTA_COMPACT} whitespace-nowrap ${forceDark ? 'border-white/28 bg-white text-[#141414] hover:bg-[#F6F2EA]' : ''}`}
-                                    >
-                                        {primaryCta.label}
-                                    </Link>
-                                </div>
+                                <Link
+                                    href={primaryCta.href}
+                                    className={`group relative overflow-hidden px-8 py-4 text-[10px] font-black uppercase tracking-[0.28em] transition-colors duration-500 ${
+                                        forceDark 
+                                        ? 'bg-white/5 text-white hover:bg-white hover:text-black border border-white/10' 
+                                        : 'bg-black/5 text-black hover:bg-black hover:text-white border border-black/10'
+                                    }`}
+                                >
+                                    {primaryCta.label}
+                                </Link>
                             ) : isAuthenticated === null ? (
-                                <div
-                                    className={`h-10 w-[132px] border ${forceDark ? 'border-white/20 bg-white/10' : 'border-black/10 bg-black/5'}`}
-                                    aria-hidden="true"
-                                />
+                                <div className={`h-[46px] w-[140px] border ${forceDark ? 'border-white/10' : 'border-black/10'}`} />
                             ) : isAuthenticated ? (
-                                <div className="flex items-center justify-end gap-3">
-                                    <Link
-                                        href="/ingest"
-                                        className={`${HOMEPAGE_PRIMARY_CTA_COMPACT} whitespace-nowrap ${forceDark ? 'border-white/28 bg-white text-[#141414] hover:bg-[#F6F2EA]' : ''}`}
-                                    >
-                                        Bring In The Work
-                                    </Link>
-                                </div>
+                                <Link
+                                    href="/ingest"
+                                    className={`group relative overflow-hidden px-8 py-4 text-[10px] font-black uppercase tracking-[0.28em] transition-colors duration-500 ${
+                                        forceDark 
+                                        ? 'bg-white/5 text-white hover:bg-[#00E5FF] hover:text-black hover:border-transparent border border-white/10' 
+                                        : 'bg-black/5 text-black hover:bg-black hover:text-white border border-black/10'
+                                    }`}
+                                >
+                                    Bring In The Work
+                                </Link>
                             ) : (
-                                    <Link
-                                        href="/login"
-                                        className={`
-                                            inline-flex items-center justify-center
-                                            border px-6 py-2.5
-                                            text-[10px] font-black tracking-[0.24em] uppercase
-                                            transition-all duration-300
-                                            ${forceDark
-                                            ? 'bg-transparent text-white border-neutral-700 hover:border-white'
-                                            : 'bg-transparent text-black border-neutral-300 hover:border-black'
-                                        }
-                                    `}
+                                <Link
+                                    href="/login"
+                                    className={`px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${
+                                        forceDark ? 'text-white/60 hover:text-white' : 'text-black/60 hover:text-black'
+                                    }`}
                                 >
                                     Login
                                 </Link>
@@ -193,70 +166,73 @@ export default function UnifiedSovereignHeader({
                         {/* Mobile hamburger */}
                         <button
                             onClick={() => setMobileOpen(!mobileOpen)}
-                            className="md:hidden border border-[#D8CCB5] bg-[#FBF7EF]/90 p-1.5 text-[#6B6B6B] hover:text-[#141414] transition-all"
+                            className={`lg:hidden p-2 transition-colors ${forceDark ? 'text-white' : 'text-black'}`}
                             aria-label="Toggle menu"
                         >
-                            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                            {mobileOpen ? <X size={24} strokeWidth={1} /> : <Menu size={24} strokeWidth={1} />}
                         </button>
                     </div>
                 </div>
 
                 {/* ── Mobile Menu ── */}
                 {mobileOpen && (
-                    <div className="pointer-events-auto md:hidden mt-2 border border-[#D8CCB5] bg-[#FBFBF6] p-3 space-y-2 shadow-[0_18px_40px_rgba(20,20,20,0.12)] animate-in fade-in slide-in-from-top-2 duration-200">
-                        {navItems.map((p) => {
-                            const active = isActive(pathname, p.href);
-                            return (
+                    <div className={`pointer-events-auto lg:hidden fixed inset-0 z-40 flex flex-col justify-center px-8 ${forceDark ? 'bg-[#050505] text-white' : 'bg-[#F6F1E7] text-black'} animate-in fade-in zoom-in-95 duration-500`}>
+                        <button onClick={() => setMobileOpen(false)} className="absolute top-8 right-8 p-4">
+                            <X size={32} strokeWidth={1} />
+                        </button>
+                        
+                        <div className="flex flex-col gap-8 text-center">
+                            {navItems.map((p) => (
                                 <Link
                                     key={p.key}
                                     href={p.href}
                                     onClick={() => setMobileOpen(false)}
-                                    className={`
-                                        block border border-transparent px-4 py-3 text-center
-                                        text-[10px] font-black uppercase tracking-[0.2em]
-                                        transition-all
-                                        ${active
-                                            ? 'text-[#141414] border-[#D0B896] bg-[#F6EFE3]'
-                                            : 'text-[#6B6B6B] hover:text-[#8A6840] hover:border-[#D4A574]/28'
-                                        }
-                                    `}
+                                    className={`text-[20px] font-black uppercase tracking-[0.2em] transition-colors ${
+                                        forceDark ? 'hover:text-[#00E5FF]' : 'hover:text-[#FF003C]'
+                                    }`}
                                 >
                                     {p.label}
                                 </Link>
-                            );
-                        })}
+                            ))}
 
-                        {/* Mobile Direct Access */}
-                        <div className="pt-3 mt-2 border-t border-[#E2D8C8]">
-                            {primaryCta ? (
-                                <Link
-                                    href={primaryCta.href}
-                                    onClick={() => setMobileOpen(false)}
-                                    className="block w-full border border-[#141414] bg-[#141414] px-4 py-3 text-center text-[11px] font-black uppercase tracking-[0.22em] text-[#FBF7EF] transition-colors hover:bg-black"
-                                >
-                                    {primaryCta.label}
-                                </Link>
-                            ) : isAuthenticated ? (
-                                <Link
-                                    href="/ingest"
-                                    onClick={() => setMobileOpen(false)}
-                                    className="block w-full border border-[#141414] bg-[#141414] px-4 py-3 text-center text-[11px] font-black uppercase tracking-[0.22em] text-[#FBF7EF] transition-colors hover:bg-black"
-                                >
-                                    Bring In The Work
-                                </Link>
-                            ) : (
-                                <Link
-                                    href="/login"
-                                    onClick={() => setMobileOpen(false)}
-                                    className="block w-full border border-[#D8CCB5] px-4 py-3 text-center text-[11px] font-black uppercase tracking-[0.22em] text-[#141414] transition-colors hover:border-[#141414]"
-                                >
-                                    Login
-                                </Link>
-                            )}
+                            <div className="mt-12 flex flex-col items-center gap-6">
+                                {primaryCta ? (
+                                    <Link
+                                        href={primaryCta.href}
+                                        onClick={() => setMobileOpen(false)}
+                                        className={`px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] ${
+                                            forceDark ? 'bg-white text-black' : 'bg-black text-white'
+                                        }`}
+                                    >
+                                        {primaryCta.label}
+                                    </Link>
+                                ) : isAuthenticated ? (
+                                    <Link
+                                        href="/ingest"
+                                        onClick={() => setMobileOpen(false)}
+                                        className={`px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] ${
+                                            forceDark ? 'bg-[#00E5FF] text-black' : 'bg-black text-white'
+                                        }`}
+                                    >
+                                        Bring In The Work
+                                    </Link>
+                                ) : (
+                                    <Link
+                                        href="/login"
+                                        onClick={() => setMobileOpen(false)}
+                                        className="text-[12px] font-black uppercase tracking-[0.2em] underline underline-offset-8"
+                                    >
+                                        Login
+                                    </Link>
+                                )}
+                            </div>
                         </div>
                     </div>
                 )}
             </div>
+            
+            {/* Extremely subtle hairline bottom border when scrolled */}
+            <div className={`absolute bottom-0 inset-x-0 h-px transition-opacity duration-[1s] ${isScrolled ? 'opacity-100' : 'opacity-0'} ${forceDark ? 'bg-white/[0.04]' : 'bg-black/[0.04]'}`} />
         </header>
     );
 }
