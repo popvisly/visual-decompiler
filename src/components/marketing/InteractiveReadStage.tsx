@@ -1,7 +1,8 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
@@ -11,6 +12,8 @@ const SHOWCASE_ITEMS = [
         label: 'Held Posture',
         kicker: 'Authority Read',
         statement: 'Read how the frame holds authority before a single word explains it.',
+        highlightWord: 'authority',
+        highlightColor: '#00E5FF', // Cyan
         detail: 'Status-coded restraint creates desire without tipping into explanation. The strongest luxury work arrives already decided. The posture is what makes the room trust the image.',
         metrics: [
             { label: 'Signal', value: 'Authority' },
@@ -24,6 +27,8 @@ const SHOWCASE_ITEMS = [
         label: 'Product Arrival',
         kicker: 'Moment of entry',
         statement: 'Trace the exact moment the product enters the read and earns its place.',
+        highlightWord: 'product',
+        highlightColor: '#FF00E5', // Pink
         detail: 'This is where strategy becomes visible. Too late and the work floats. Too early and it collapses into selling. The read evaluates narrative timing and inevitability.',
         metrics: [
             { label: 'Signal', value: 'Arrival Timing' },
@@ -37,6 +42,8 @@ const SHOWCASE_ITEMS = [
         label: 'Texture Restraint',
         kicker: 'Signal compression',
         statement: 'See where the image withholds, compresses, and stays expensive.',
+        highlightWord: 'expensive',
+        highlightColor: '#7B00FF', // Purple
         detail: 'Restraint keeps the frame alive. Once every signal is obvious, the image loses its aftertaste. We map the exact compression of palette and texture.',
         metrics: [
             { label: 'Signal', value: 'Restraint' },
@@ -46,6 +53,96 @@ const SHOWCASE_ITEMS = [
         alt: 'ACNE Studios campaign analyzing texture'
     }
 ];
+
+function ImageReveal({ src, alt }: { src: string, alt: string }) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
+    const springConfig = { damping: 25, stiffness: 150 };
+    const mouseX = useSpring(mousePos.x, springConfig);
+    const mouseY = useSpring(mousePos.y, springConfig);
+
+    useEffect(() => {
+        mouseX.set(mousePos.x);
+        mouseY.set(mousePos.y);
+    }, [mousePos, mouseX, mouseY]);
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        setMousePos({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        });
+    };
+
+    const handleMouseLeave = () => {
+        setMousePos({ x: -1000, y: -1000 });
+    };
+
+    return (
+        <div 
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="group relative aspect-[0.75] w-full max-w-[640px] overflow-hidden rounded-[40px] border border-white/20 shadow-2xl transition-transform duration-700 hover:scale-[1.02]"
+        >
+            {/* Grayscale Base Layer */}
+            <div className="absolute inset-0 grayscale contrast-125 opacity-40 transition-opacity duration-700 group-hover:opacity-100">
+                <Image src={src} alt={alt} fill className="object-cover" />
+            </div>
+
+            {/* Color Reveal Layer */}
+            <motion.div 
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                    maskImage: `radial-gradient(circle 200px at var(--mouse-x) var(--mouse-y), black 100%, transparent 100%)`,
+                    WebkitMaskImage: `radial-gradient(circle 200px at var(--mouse-x) var(--mouse-y), black 100%, transparent 100%)`,
+                    // Using CSS variables to drive the mask position
+                } as any}
+            >
+                {/* Internal container to apply spring values to CSS variables */}
+                <motion.div 
+                    className="absolute inset-0"
+                    style={{
+                        '--mouse-x': useTransform(mouseX, x => `${x}px`),
+                        '--mouse-y': useTransform(mouseY, y => `${y}px`),
+                    } as any}
+                >
+                    <Image src={src} alt={alt} fill className="object-cover" />
+                </motion.div>
+            </motion.div>
+            
+            {/* Minimal Lens Circle UI */}
+            <motion.div 
+                className="absolute pointer-events-none border border-white/50 rounded-full w-[400px] h-[400px] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{
+                    left: mouseX,
+                    top: mouseY,
+                }}
+            >
+                <div className="w-4 h-4 border border-white border-dashed rounded-full" />
+            </motion.div>
+
+            {/* Target HUD Badge */}
+            <div className="absolute top-10 lg:top-14 left-10 lg:left-14 border border-white/20 bg-black/40 px-5 py-2.5 backdrop-blur-3xl rounded-full">
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Neural Scan Active</p>
+            </div>
+        </div>
+    );
+}
+
+function HighlightedStatement({ text, word, color }: { text: string, word: string, color: string }) {
+    const parts = text.split(new RegExp(`(${word})`, 'gi'));
+    return (
+        <h3 className="text-[42px] lg:text-[64px] xl:text-[84px] font-black leading-[0.88] tracking-[-0.05em] mb-12 text-white uppercase">
+            {parts.map((part, i) => 
+                part.toLowerCase() === word.toLowerCase() ? (
+                    <span key={i} style={{ color }}>{part}</span>
+                ) : part
+            )}
+        </h3>
+    );
+}
 
 export default function InteractiveReadStage() {
     return (
@@ -61,8 +158,8 @@ export default function InteractiveReadStage() {
                     className="mb-32 lg:mb-64 border-t border-white/10 pt-10"
                 >
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
-                        <h2 className="text-[12vw] lg:text-[7vw] font-black leading-[0.88] tracking-[-0.05em] uppercase text-white max-w-[12ch]">
-                            Extract the absolute signals.
+                        <h2 className="text-[12vw] lg:text-[7vw] font-black leading-[0.82] tracking-[-0.05em] uppercase text-white max-w-[12ch]">
+                            Extract the <span className="text-[#00E5FF]">absolute</span> signals.
                         </h2>
                         <div className="max-w-[400px]">
                             <p className="text-[18px] leading-[1.6] text-[#A0A0A0] mb-8">
@@ -77,64 +174,55 @@ export default function InteractiveReadStage() {
                 </motion.div>
 
                 {/* Staggered Grid List */}
-                <div className="flex flex-col gap-32 lg:gap-64">
+                <div className="flex flex-col gap-48 lg:gap-80">
                     {SHOWCASE_ITEMS.map((item, idx) => {
                         const isEven = idx % 2 === 0;
 
                         return (
-                            <div key={item.id} className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 items-center">
+                            <div key={item.id} className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-0 items-center">
                                 
-                                {/* Image Column */}
+                                {/* Image Column - Slimmer to reduce blur and add presence */}
                                 <motion.div 
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: true, margin: "-20%" }}
+                                    initial={{ opacity: 0, x: isEven ? -40 : 40 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true, margin: "-10%" }}
                                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                                    className={`relative ${isEven ? 'lg:col-span-7 lg:col-start-1' : 'lg:col-span-7 lg:col-start-6 lg:row-start-1'}`}
+                                    className={`relative flex ${isEven ? 'lg:col-span-6 lg:col-start-1 justify-start' : 'lg:col-span-6 lg:col-start-7 lg:row-start-1 justify-end'}`}
                                 >
-                                    <div className="relative aspect-[0.75] w-full overflow-hidden bg-[#0A0A0A] border border-white/10">
-                                        <Image 
-                                            src={item.img} 
-                                            alt={item.alt} 
-                                            fill 
-                                            className="object-cover mix-blend-luminosity hover:mix-blend-normal hover:scale-105 transition-all duration-[1.5s] ease-[cubic-bezier(0.16,1,0.3,1)]" 
-                                        />
-                                        
-                                        {/* Minimal UI Badge */}
-                                        <div className="absolute top-6 lg:top-10 left-6 lg:left-10 border border-[#00E5FF]/30 bg-black/80 px-4 py-2 backdrop-blur-md">
-                                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00E5FF]">System Target</p>
-                                        </div>
-                                    </div>
+                                    <ImageReveal src={item.img} alt={item.alt} />
                                 </motion.div>
 
                                 {/* Text Column */}
                                 <motion.div 
                                     initial={{ opacity: 0, y: 50 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: "-20%" }}
+                                    viewport={{ once: true, margin: "-10%" }}
                                     transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                                    className={`${isEven ? 'lg:col-span-4 lg:col-start-9' : 'lg:col-span-4 lg:col-start-1 lg:row-start-1'}`}
+                                    className={`${isEven ? 'lg:col-span-5 lg:col-start-8 xl:col-start-8' : 'lg:col-span-5 lg:col-start-1 lg:row-start-1'}`}
                                 >
-                                    <div className="flex items-center gap-4 mb-10">
-                                        <div className="h-px w-10 bg-[#FF003C]" />
-                                        <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#FF003C]">
+                                    <div className="flex items-center gap-5 mb-14">
+                                        {/* Removed intense red line */}
+                                        <div className="h-px w-10 bg-white/40" />
+                                        <p className="text-[12px] font-black uppercase tracking-[0.5em] text-white">
                                             {item.kicker}
                                         </p>
                                     </div>
 
-                                    <h3 className="text-[42px] lg:text-[64px] xl:text-[80px] font-black leading-[0.95] tracking-[-0.04em] mb-10 text-white">
-                                        {item.statement}
-                                    </h3>
+                                    <HighlightedStatement 
+                                        text={item.statement} 
+                                        word={item.highlightWord} 
+                                        color={item.highlightColor} 
+                                    />
                                     
-                                    <p className="text-[18px] lg:text-[20px] leading-[1.65] text-[#A0A0A0] mb-16">
+                                    <p className="text-[18px] lg:text-[22px] leading-[1.65] text-[#A0A0A0] mb-20">
                                         {item.detail}
                                     </p>
 
-                                    <div className="grid grid-cols-2 gap-8 border-t border-white/10 pt-8">
+                                    <div className="grid grid-cols-2 gap-12 border-t border-white/10 pt-10">
                                         {item.metrics.map(metric => (
                                             <div key={metric.label}>
-                                                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40 mb-2">{metric.label}</p>
-                                                <p className="text-[14px] font-bold text-white">{metric.value}</p>
+                                                <p className="text-[10px] font-black uppercase tracking-[0.25em] text-white/40 mb-3">{metric.label}</p>
+                                                <p className="text-[16px] font-bold text-white tracking-tight">{metric.value}</p>
                                             </div>
                                         ))}
                                     </div>
