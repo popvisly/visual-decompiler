@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Search, X, Check, ChevronDown, ChevronUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, X, Check, ChevronDown, ChevronUp, Database, Filter, ArrowRight, Trash2 } from 'lucide-react';
 import { supabaseClient } from '@/lib/supabase-client';
 
 interface VaultAsset {
@@ -15,6 +16,8 @@ interface VaultAsset {
     extraction?: any;
     extractions?: any;
 }
+
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function VaultClient({ initialAssets }: { initialAssets: VaultAsset[] }) {
     const [assets, setAssets] = useState<VaultAsset[]>(initialAssets);
@@ -143,16 +146,9 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
         setIsDeleting(true);
         try {
             const idsToDelete = Array.from(selectedIds);
-            
-            // 1. Delete Extractions first (Cascading usually handles this, but let's be safe if manually mapped)
             await supabaseClient.from('extractions').delete().in('asset_id', idsToDelete);
-            
-            // 2. Delete Assets
             const { error } = await supabaseClient.from('assets').delete().in('id', idsToDelete);
-            
             if (error) throw error;
-
-            // 3. Update Local State for Real-Time Sync
             setAssets(prev => prev.filter(a => !selectedIds.has(a.id)));
             setSelectedIds(new Set());
             setShowConfirm(false);
@@ -165,329 +161,261 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
     };
 
     return (
-        <div className="relative min-h-screen bg-[#FBFBF6] p-8 text-[#1A1A1A] md:p-12 lg:p-16">
-            <div className="pointer-events-none absolute inset-0 opacity-[0.02] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]" />
-            <div className="relative z-10 w-full">
-                
-                {/* Header Action Bar - Slides in when assets are selected */}
-                <div 
-                    className={`fixed top-0 left-0 right-0 z-50 bg-[#1A1A1A] border-b border-[#D4A574]/20 transition-all duration-500 overflow-hidden ${
-                        selectedIds.size > 0 ? 'h-24 md:h-20' : 'h-0'
-                    }`}
-                >
-                    <div className="h-full max-w-[1600px] mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                        <div className="flex items-center gap-6">
-                            <span className="text-[12px] font-bold tracking-[0.3em] uppercase text-[#D4A574]">
-                                {selectedIds.size} Assets Targeted for Removal
-                            </span>
-                            <button 
-                                onClick={clearSelection}
-                                className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4A574]/40 hover:text-[#D4A574] transition-colors"
-                            >
-                                [ CANCEL ]
-                            </button>
-                        </div>
-
-                        {!showConfirm ? (
-                            <button 
-                                onClick={() => setShowConfirm(true)}
-                                className="px-10 py-3 border border-[#D4A574]/40 rounded-full text-[11px] font-bold tracking-[0.4em] uppercase text-[#D4A574] hover:bg-[#D4A574] hover:text-[#1A1A1A] transition-all"
-                            >
-                                [ DELETE ]
-                            </button>
-                        ) : (
-                            <div className="flex items-center gap-6 animate-in slide-in-from-right-4 duration-300">
-                                <span className="text-[12px] font-bold tracking-[0.4em] uppercase text-[#D4A574]">
-                                    CONFIRM PERMANENT REMOVAL?
-                                </span>
-                                <div className="flex gap-4">
-                                    <button 
-                                        disabled={isDeleting}
-                                        onClick={handleDelete}
-                                        className="px-8 py-2 border border-[#D4A574] rounded-full text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574] hover:bg-[#D4A574] hover:text-[#1A1A1A] transition-all disabled:opacity-50"
-                                    >
-                                        [ YES ]
-                                    </button>
-                                    <button 
-                                        onClick={() => setShowConfirm(false)}
-                                        className="px-8 py-2 border border-[#D4A574]/40 rounded-full text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574] hover:bg-[#D4A574] hover:text-[#1A1A1A] transition-all"
-                                    >
-                                        [ NO ]
-                                    </button>
+        <div className="relative min-h-screen bg-[#050505] text-white selection:bg-[#00E5FF] selection:text-black">
+            
+            {/* Selection HUD - High Fidelity */}
+            <AnimatePresence>
+                {selectedIds.size > 0 && (
+                    <motion.div 
+                        initial={{ y: -100 }}
+                        animate={{ y: 0 }}
+                        exit={{ y: -100 }}
+                        transition={{ duration: 0.5, ease: EASE }}
+                        className="fixed top-0 left-0 right-0 z-[100] bg-black/80 backdrop-blur-3xl border-b border-[#00E5FF]/20"
+                    >
+                        <div className="max-w-[1500px] mx-auto h-24 md:h-20 px-8 flex items-center justify-between">
+                            <div className="flex items-center gap-8">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse" />
+                                    <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">
+                                        {selectedIds.size} Assets Engaged
+                                    </span>
                                 </div>
+                                <button 
+                                    onClick={clearSelection}
+                                    className="text-[9px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors"
+                                >
+                                    [ ABORT SELECTION ]
+                                </button>
                             </div>
-                        )}
-                    </div>
-                </div>
 
-                {/* Main Header */}
-                <header className="mb-12 border-b border-[#D4A574]/18 pb-8 pt-2">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Intelligence Vault</p>
-                    <h1 className="mt-4 text-4xl font-light uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
-                        Vault Memory
-                    </h1>
-                    <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                        <div className="max-w-3xl space-y-3">
-                            <p className="text-sm leading-relaxed text-[#6B6B6B]">
-                                Search, sort, and retrieve processed assets from the Intelligence Vault without losing the strategic memory attached to each extraction.
-                            </p>
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A7B64]">
-                                {filteredAssets.length} forensic extractions {query || sectorFilter !== 'ALL SECTORS' || mechanicFilter !== 'ALL MECHANICS' || tagFilter !== 'ALL TAGS' ? 'matching' : 'secured'}
-                            </p>
+                            <div className="flex items-center gap-4">
+                                {!showConfirm ? (
+                                    <button 
+                                        onClick={() => setShowConfirm(true)}
+                                        className="px-8 py-3 bg-[#00E5FF] text-black text-[10px] font-black uppercase tracking-[0.4em] hover:bg-white transition-all transform hover:scale-105"
+                                    >
+                                        [ DECONSTRUCT ]
+                                    </button>
+                                ) : (
+                                    <div className="flex items-center gap-6">
+                                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">PERMANENT REMOVAL?</span>
+                                        <div className="flex gap-2">
+                                            <button 
+                                                disabled={isDeleting}
+                                                onClick={handleDelete}
+                                                className="px-6 py-2 border border-[#00E5FF] text-[#00E5FF] text-[9px] font-black uppercase tracking-[0.3em] hover:bg-[#00E5FF] hover:text-black transition-all"
+                                            >
+                                                {isDeleting ? 'DESTRUCTING...' : '[ YES ]'}
+                                            </button>
+                                            <button 
+                                                onClick={() => setShowConfirm(false)}
+                                                className="px-6 py-2 bg-white/10 text-white text-[9px] font-black uppercase tracking-[0.3em] hover:bg-white/20 transition-all"
+                                            >
+                                                [ NO ]
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <div className="max-w-[1600px] mx-auto px-8 py-20 lg:py-32">
+                
+                {/* Header Section */}
+                <header className="mb-24">
+                    <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
+                        <div className="max-w-4xl">
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                className="flex items-center gap-4 mb-10"
+                            >
+                                <Database className="w-5 h-5 text-[#00E5FF]" />
+                                <span className="text-[12px] font-black uppercase tracking-[0.5em] text-[#00E5FF]">Sovereign Memory Core</span>
+                            </motion.div>
+                            
+                            <motion.h1 
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.8, ease: EASE }}
+                                className="text-[12vw] lg:text-[8vw] font-black leading-[0.82] tracking-[-0.05em] uppercase text-white mb-12"
+                            >
+                                Vault <br />
+                                <span className="text-white/20">Memory.</span>
+                            </motion.h1>
+
+                            <motion.p 
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.3 }}
+                                className="text-xl lg:text-3xl text-white/50 leading-relaxed font-medium max-w-2xl"
+                            >
+                                Processed intelligence archive. {filteredAssets.length} forensic extractions secured in current partition.
+                            </motion.p>
                         </div>
 
-                        <div className="w-full max-w-4xl space-y-3">
-                            <div className="relative">
-                                <Search className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8B4513]/60" />
+                        {/* Search HUD */}
+                        <motion.div 
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="w-full max-w-xl space-y-8"
+                        >
+                            <div className="relative group">
+                                <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-[#00E5FF] transition-all group-focus-within:scale-125" />
                                 <input
                                     type="text"
                                     value={query}
-                                    onChange={(event) => setQuery(event.target.value)}
-                                    placeholder="SEARCH — brand, sector, mechanic..."
-                                    className="w-full border-b border-[#1A1A1A]/20 bg-transparent py-3 pl-7 pr-8 text-[11px] font-mono uppercase tracking-[0.22em] text-[#1A1A1A] outline-none placeholder:text-[#1A1A1A]/30"
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    placeholder="ENGAGE SEARCH — BRAND, SECTOR, MECHANIC..."
+                                    className="w-full bg-transparent border-b-2 border-white/10 py-5 pl-10 pr-10 text-[12px] font-black uppercase tracking-[0.3em] text-white focus:border-[#00E5FF] outline-none transition-colors placeholder:text-white/10"
                                 />
                                 {query && (
-                                    <button
-                                        type="button"
-                                        onClick={() => setQuery('')}
-                                        className="absolute right-0 top-1/2 -translate-y-1/2 text-[#1A1A1A]/40 transition-colors hover:text-[#1A1A1A]"
-                                    >
-                                        <X className="h-4 w-4" />
+                                    <button onClick={() => setQuery('')} className="absolute right-0 top-1/2 -translate-y-1/2 text-white/30 hover:text-[#00E5FF]">
+                                        <X className="w-5 h-5" />
                                     </button>
                                 )}
                             </div>
 
-                            <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                 <VaultSelect label="Sector" value={sectorFilter} onChange={setSectorFilter} options={sectorOptions} />
                                 <VaultSelect label="Mechanic" value={mechanicFilter} onChange={setMechanicFilter} options={mechanicOptions} />
-                                <VaultSelect label="Tag" value={tagFilter} onChange={setTagFilter} options={tagOptions} />
-                                <VaultSelect
-                                    label="Sort"
-                                    value={sortOrder}
-                                    onChange={setSortOrder}
-                                    options={['NEWEST', 'OLDEST', 'CONFIDENCE HIGH', 'CONFIDENCE LOW', 'BRAND A-Z']}
-                                />
-                                {(query || sectorFilter !== 'ALL SECTORS' || mechanicFilter !== 'ALL MECHANICS' || tagFilter !== 'ALL TAGS' || sortOrder !== 'NEWEST') && (
-                                    <button
-                                        type="button"
-                                        onClick={clearFilters}
-                                        className="self-start rounded-full border border-[#D4A574]/40 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B4513] transition-all hover:border-[#D4A574] hover:bg-white"
-                                    >
-                                        Clear Filters
-                                    </button>
-                                )}
+                                <VaultSelect label="Priority" value={sortOrder} onChange={setSortOrder} options={['NEWEST', 'OLDEST', 'CONFIDENCE HIGH', 'CONFIDENCE LOW']} />
+                                <button 
+                                    onClick={clearFilters}
+                                    className="h-full border border-white/10 flex items-center justify-center text-[9px] font-black uppercase tracking-[0.3em] text-white/40 hover:bg-white/5 hover:text-[#00E5FF] transition-all"
+                                >
+                                    [ RESET ]
+                                </button>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </header>
 
-                {/* Grid */}
-                {filteredAssets.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 select-none">
-                        {filteredAssets.map((asset) => (
-                            <VaultCard 
-                                key={asset.id} 
-                                asset={asset} 
-                                isSelected={selectedIds.has(asset.id)}
-                                onToggle={() => toggleSelect(asset.id)}
-                            />
-                        ))}
-                    </div>
-                ) : assets.length > 0 ? (
-                    <div className="h-64 flex flex-col items-center justify-center border border-[#E5E5E1] border-dashed rounded-3xl bg-white shadow-sm px-8 text-center">
-                        <span className="text-[#1A1A1A] font-sans text-xs md:text-sm tracking-[0.3em] uppercase mb-4 font-bold text-center">
-                            No Extractions Matching Your Filters.
-                        </span>
-                        <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-[#4A4A4A]/50 mb-6 max-w-xl">
-                            Try searching by brand, sector, persuasion mechanic, tag, or clear the active filters.
-                        </p>
-                        <button 
-                            type="button"
-                            onClick={clearFilters}
-                            className="text-[#D4A574] text-[10px] font-mono tracking-widest uppercase hover:underline"
-                        >
-                            [ CLEAR FILTERS ]
-                        </button>
-                    </div>
-                ) : (
-                    <div className="h-64 flex flex-col items-center justify-center border border-[#E5E5E1] border-dashed rounded-3xl bg-white shadow-sm">
-                        <span className="text-[#1A1A1A] font-sans text-xs md:text-sm tracking-[0.3em] uppercase mb-4 font-bold text-center">
-                            THE VAULT IS EMPTY.
-                        </span>
-                        <Link 
-                            href="/ingest"
-                            className="text-[#D4A574] text-[10px] font-mono tracking-widest uppercase hover:underline"
-                        >
-                            [ INITIATE FORENSIC EXTRACTION ]
-                        </Link>
-                    </div>
-                )}
+                {/* Main Grid Area */}
+                <div className="mt-32">
+                    {filteredAssets.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-24">
+                            {filteredAssets.map((asset, i) => (
+                                <VaultCard 
+                                    key={asset.id} 
+                                    asset={asset} 
+                                    isSelected={selectedIds.has(asset.id)}
+                                    onToggle={() => toggleSelect(asset.id)}
+                                    index={i}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="py-64 flex flex-col items-center justify-center text-center border-t border-white/10">
+                            <motion.div
+                                initial={{ scale: 0.9, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                            >
+                                <p className="text-[12px] font-black uppercase tracking-[0.5em] text-[#00E5FF] mb-6">Database Occlusion</p>
+                                <h3 className="text-5xl lg:text-7xl font-black uppercase tracking-tightest mb-12">No data found in <br />this partition.</h3>
+                                {assets.length > 0 ? (
+                                    <button onClick={clearFilters} className="px-12 py-5 bg-white text-black text-[11px] font-black uppercase tracking-[0.4em] hover:bg-[#00E5FF] transition-all">
+                                        [ CLEAR ACTIVE FILTERS ]
+                                    </button>
+                                ) : (
+                                    <Link href="/ingest" className="px-12 py-5 bg-[#00E5FF] text-black text-[11px] font-black uppercase tracking-[0.4em] hover:bg-white transition-all">
+                                        [ INITIATE FIRST EXTRACTION ]
+                                    </Link>
+                                )}
+                            </motion.div>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
 }
 
-function VaultSelect({
-    label,
-    value,
-    onChange,
-    options,
-}: {
-    label: string;
-    value: string;
-    onChange: (value: string) => void;
-    options: string[];
-}) {
+function VaultSelect({ label, value, onChange, options }: { label: string; value: string; onChange: (v: string) => void; options: string[] }) {
     return (
-        <label className="relative min-w-[180px]">
-            <span className="mb-2 block text-[9px] font-bold uppercase tracking-[0.2em] text-[#4A4A4A]/50">{label}</span>
-            <select
-                value={value}
-                onChange={(event) => onChange(event.target.value)}
-                className="w-full appearance-none rounded-full border border-[#1A1A1A]/20 bg-white px-4 py-2.5 pr-10 text-[10px] font-bold uppercase tracking-[0.18em] text-[#1A1A1A] outline-none transition-all hover:border-[#D4A574]/50 focus:border-[#D4A574]"
-            >
-                {options.map((option) => (
-                    <option key={option} value={option}>
-                        {option}
-                    </option>
-                ))}
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-4 top-[2.15rem] h-4 w-4 text-[#8B4513]/60" />
-        </label>
+        <div className="space-y-3">
+            <span className="text-[8px] font-black uppercase tracking-[0.4em] text-white/30 block px-1">{label}</span>
+            <div className="relative">
+                <select
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 px-4 py-3 text-[10px] font-black uppercase tracking-[0.2em] text-white appearance-none focus:border-[#00E5FF] outline-none cursor-pointer"
+                >
+                    {options.map((opt) => <option key={opt} value={opt} className="bg-black text-white">{opt}</option>)}
+                </select>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-[#00E5FF] pointer-events-none" />
+            </div>
+        </div>
     );
 }
 
-function VaultCard({ asset, isSelected, onToggle }: { asset: VaultAsset, isSelected: boolean, onToggle: () => void }) {
-    const [showMechanicDetail, setShowMechanicDetail] = useState(false);
-    const brandName = asset.brand?.name || 'Unknown Entity';
-    const sector = asset.brand?.market_sector || 'Unclassified';
-    
-    // Standardize extraction normalization (handle array vs object and plural fallback)
+function VaultCard({ asset, isSelected, onToggle, index }: { asset: VaultAsset, isSelected: boolean, onToggle: () => void, index: number }) {
     const rawExtraction = asset.extraction || asset.extractions;
     const extraction = Array.isArray(rawExtraction) ? rawExtraction[0] : rawExtraction;
-    
     const isAnalysed = !!extraction?.full_dossier;
-    const mechanic = isAnalysed ? extraction?.primary_mechanic : 'Awaiting Forensic Deep-Dive';
-    const normalizedMechanic = mechanic || 'Awaiting Forensic Deep-Dive';
-    const isLongMechanic = normalizedMechanic.length > 52;
-    const tags = (asset.tags || []).slice(0, 3);
-
+    
     return (
-        <div className="group relative">
-            {/* Selection Checkbox - High end style */}
+        <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: (index % 4) * 0.1 }}
+            className="group relative"
+        >
+            {/* Selection HUD */}
             <div 
-                className={`absolute top-6 left-6 z-20 w-6 h-6 rounded-full border-2 cursor-pointer flex items-center justify-center transition-all duration-300 ${
-                    isSelected 
-                    ? 'bg-[#D4A574] border-[#D4A574] scale-110 shadow-lg' 
-                    : 'bg-black/20 backdrop-blur-md border-[#D4A574]/40 opacity-0 group-hover:opacity-100'
+                onClick={(e) => { e.preventDefault(); onToggle(); }}
+                className={`absolute top-6 left-6 z-30 w-8 h-8 rounded-full border-2 cursor-pointer flex items-center justify-center transition-all duration-500 overflow-hidden ${
+                    isSelected ? 'bg-[#00E5FF] border-[#00E5FF] scale-110 shadow-[0_0_20px_rgba(0,229,255,0.4)]' : 'bg-black/40 border-white/20 opacity-0 group-hover:opacity-100'
                 }`}
-                onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onToggle();
-                }}
             >
-                {isSelected && <Check className="w-3.5 h-3.5 text-[#1A1A1A] stroke-[4]" />}
+                {isSelected && <Check className="w-4 h-4 text-black stroke-[4]" />}
             </div>
 
-            <Link href={`/asset/${asset.id}`} className="block focus:outline-none">
-                <div className={`bg-[#1A1A1A] border transition-all duration-500 flex flex-col h-full rounded-3xl overflow-hidden ${
-                    isSelected 
-                    ? 'border-[#D4A574] ring-2 ring-[#D4A574]/20 scale-[0.98]' 
-                    : 'border-[#D4A574]/30 hover:border-[#D4A574] hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)]'
-                }`}>
-
-                    {/* Brutalist Image Top */}
-                    <div className="aspect-[4/5] w-full overflow-hidden bg-[#1A1A1A] border-b border-[#D4A574]/20 relative">
-                        <img
-                            src={asset.file_url}
-                            alt={brandName}
-                            className={`w-full h-full object-cover transition-all duration-700 ease-out ${isSelected ? 'scale-105 opacity-60' : 'group-hover:scale-110'}`}
-                        />
-
-                        {asset.type !== 'STATIC' && (
-                            <div className="absolute top-4 right-4 bg-[#1A1A1A]/90 backdrop-blur-sm border border-[#D4A574]/40 px-3 py-1 rounded-none">
-                                <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#D4A574]">
-                                    {asset.type}
-                                </span>
-                            </div>
-                        )}
-
+            <Link href={`/asset/${asset.id}`} className="block">
+                <div className="relative aspect-[4/5] bg-white/5 overflow-hidden transition-all duration-700 bg-[#0a0a0a]">
+                    <img
+                        src={asset.file_url}
+                        alt={asset.brand?.name || 'Vault Asset'}
+                        className={`w-full h-full object-cover transition-all duration-1000 ease-out grayscale hover:grayscale-0 ${isSelected ? 'scale-110 opacity-40' : 'group-hover:scale-110'}`}
+                    />
+                    
+                    {/* Metadata Overlays */}
+                    <div className="absolute inset-x-0 top-0 p-6 flex justify-between items-start pointer-events-none">
+                        <div className="bg-black/80 backdrop-blur-md px-3 py-1 border border-white/10">
+                            <span className="text-[9px] font-black uppercase tracking-[0.3em] text-[#00E5FF]">{asset.type}</span>
+                        </div>
                         {isAnalysed && (
-                            <div className="absolute bottom-4 right-4 bg-[#D4A574] px-3 py-1 rounded-none">
-                                <span className="text-[8px] font-bold tracking-[0.1em] uppercase text-[#1A1A1A]">
-                                    Forensic Secured
-                                </span>
-                            </div>
-                        )}
-                        
-                        {isSelected && (
-                            <div className="absolute inset-0 bg-[#D4A574]/10 pointer-events-none" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] shadow-[0_0_8px_#00E5FF]" />
                         )}
                     </div>
 
-                    {/* Stark Data Block underneath */}
-                    <div className="p-8 flex-1 flex flex-col justify-between">
-                        <div>
-                            <h3 className={`text-[26px] font-light tracking-tight uppercase transition-colors ${isSelected ? 'text-[#D4A574]' : 'text-[#FFFFFF] group-hover:text-[#D4A574]'}`}>
-                                {brandName}
-                            </h3>
-                            <p className="mt-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4A574] border-l border-[#D4A574]/30 pl-3">
-                                {sector}
-                            </p>
-                            {tags.length > 0 && (
-                                <div className="mt-6 flex flex-wrap gap-2">
-                                    {tags.map((tag) => (
-                                        <span
-                                            key={tag}
-                                            className="rounded-full border border-[#D4A574]/18 bg-[#D4A574]/10 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-[#F5F3EE]/80"
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
+                    <div className="absolute inset-0 border border-white/10 group-hover:border-[#00E5FF]/40 transition-colors pointer-events-none" />
+                </div>
 
-                        <div className="mt-8 border-t border-[#D4A574]/20 pt-6">
-                            <p className="text-[9px] font-bold tracking-[0.15em] uppercase text-[#D4A574]/40 mb-2">
-                                Primary Mechanic
-                            </p>
-                            <p
-                                title={normalizedMechanic}
-                                className={`text-sm leading-snug ${
-                                    isAnalysed ? (isSelected ? 'text-[#FFFFFF]/80' : 'text-[#FFFFFF]') : 'text-[#FFFFFF]/40 italic'
-                                } ${showMechanicDetail ? '' : 'line-clamp-1'}`}
-                            >
-                                {normalizedMechanic}
-                            </p>
-                            {isAnalysed && isLongMechanic && (
-                                <button
-                                    type="button"
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        event.stopPropagation();
-                                        setShowMechanicDetail((current) => !current);
-                                    }}
-                                    className="mt-3 inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.18em] text-[#D4A574]/75 transition-colors hover:text-[#D4A574]"
-                                >
-                                    {showMechanicDetail ? (
-                                        <>
-                                            Hide full mechanic
-                                            <ChevronUp className="h-3.5 w-3.5" />
-                                        </>
-                                    ) : (
-                                        <>
-                                            View full mechanic
-                                            <ChevronDown className="h-3.5 w-3.5" />
-                                        </>
-                                    )}
-                                </button>
-                            )}
+                <div className="mt-8 space-y-4">
+                    <div className="flex items-start justify-between">
+                        <div>
+                            <h3 className="text-3xl font-black uppercase tracking-tightest leading-none mb-2 text-white group-hover:text-[#00E5FF] transition-colors">
+                                {asset.brand?.name || 'Unknown Entity'}
+                            </h3>
+                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/30">{asset.brand?.market_sector || 'General Sector'}</p>
                         </div>
+                        <ArrowRight className="w-5 h-5 text-white/10 group-hover:text-[#00E5FF] group-hover:translate-x-2 transition-all" />
+                    </div>
+
+                    <div className="pt-6 border-t border-white/5">
+                        <p className="text-[8px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-3">Core Mechanic</p>
+                        <p className="text-[14px] text-white/40 leading-relaxed font-medium line-clamp-2 uppercase">
+                            {extraction?.primary_mechanic || 'Awaiting forensic deep-dive...'}
+                        </p>
                     </div>
                 </div>
             </Link>
-        </div>
+        </motion.div>
     );
 }
