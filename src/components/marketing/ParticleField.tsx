@@ -2,178 +2,146 @@
 
 import { useEffect, useRef } from 'react';
 
+interface Node {
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    r: number;
+}
+
 export default function ParticleField() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
-
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
         let animationFrameId: number;
-        let particles: Particle[] = [];
-        const mouse = { x: -1000, y: -1000 };
-        let time = 0;
+        let t = 0;
+        const nodes: Node[] = [];
+        const gridSize = 80;
+        const connectionDist = 200;
+        const drift = 0.15;
+
+        const GOLD = '193, 166, 116';
+        const DARK = '20, 20, 20';
+        const MUTED = '160, 148, 128';
 
         const resize = () => {
+            const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
-            canvas.width = rect.width;
-            canvas.height = rect.height;
-            initParticles();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+            initNodes(rect.width, rect.height);
         };
 
-        class Particle {
-            x: number;
-            y: number;
-            prevX: number;
-            prevY: number;
-            vx: number;
-            vy: number;
-            color: string;
-            alpha: number;
-            speedFactor: number;
-
-            constructor(x: number, y: number) {
-                this.x = x;
-                this.y = y;
-                this.prevX = x;
-                this.prevY = y;
-                this.vx = 0;
-                this.vy = 0;
-                
-                // Warm gold & brand palette
-                const colors = ['#C1A674', '#141414', '#D4A574', '#A09480', '#6B6B6B'];
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                
-                this.speedFactor = Math.random() * 1.2 + 0.6; // slightly faster for energy
-                this.alpha = Math.random() * 0.25 + 0.08;
+        const initNodes = (w: number, h: number) => {
+            nodes.length = 0;
+            for (let x = gridSize; x < w; x += gridSize) {
+                for (let y = gridSize; y < h; y += gridSize) {
+                    if (Math.random() > 0.45) {
+                        nodes.push({
+                            x: x + (Math.random() - 0.5) * gridSize * 0.6,
+                            y: y + (Math.random() - 0.5) * gridSize * 0.6,
+                            vx: (Math.random() - 0.5) * drift,
+                            vy: (Math.random() - 0.5) * drift,
+                            r: Math.random() > 0.7 ? 2.5 : 1.5,
+                        });
+                    }
+                }
             }
+        };
 
-            draw() {
-                if (!ctx) return;
-                
-                ctx.strokeStyle = this.color;
-                ctx.globalAlpha = this.alpha;
-                ctx.globalCompositeOperation = 'source-over';
-                ctx.lineWidth = 2.5; // Bigger atoms
+        const drawGrid = (w: number, h: number) => {
+            ctx.strokeStyle = `rgba(${DARK}, 0.025)`;
+            ctx.lineWidth = 0.5;
+            for (let x = gridSize; x < w; x += gridSize) {
                 ctx.beginPath();
-                ctx.moveTo(this.prevX, this.prevY);
-                ctx.lineTo(this.x, this.y);
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, h);
                 ctx.stroke();
             }
-
-            update() {
-                this.prevX = this.x;
-                this.prevY = this.y;
-
-                // Flow field math - lower scale for wider, smoother curves
-                const scale = 0.0015;
-                const angle = 
-                    (Math.sin(this.x * scale + time) * 2 + 
-                     Math.cos(this.y * scale + time) * 2) * Math.PI;
-                
-                // Direct overriding of velocity creates strict flow lines instead of momentum trails
-                this.vx = Math.cos(angle) * this.speedFactor * 2.5;
-                this.vy = Math.sin(angle) * this.speedFactor * 2.5;
-
-                // Mouse interaction - slightly deflects flow field near mouse
-                const dx = mouse.x - this.x;
-                const dy = mouse.y - this.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                const interactionRadius = 250;
-                if (distance < interactionRadius) {
-                    const force = (interactionRadius - distance) / interactionRadius;
-                    // Deflect orthogonally around the cursor
-                    const pushX = -(dy / distance) * force * 1.5;
-                    const pushY = (dx / distance) * force * 1.5;
-                    
-                    this.vx += pushX;
-                    this.vy += pushY;
-                }
-
-                this.x += this.vx;
-                this.y += this.vy;
-
-                let wrapped = false;
-                // Wrap edges
-                if (this.x < 0) { this.x = canvas!.width; wrapped = true; }
-                if (this.x > canvas!.width) { this.x = 0; wrapped = true; }
-                if (this.y < 0) { this.y = canvas!.height; wrapped = true; }
-                if (this.y > canvas!.height) { this.y = 0; wrapped = true; }
-
-                // If wrapped, update prev to avoid drawing a strict line across the entire screen
-                if (wrapped) {
-                    this.prevX = this.x;
-                    this.prevY = this.y;
-                }
-
-                this.draw();
-            }
-        }
-
-        const initParticles = () => {
-            particles = [];
-            // Line flow fields require many particles
-            const numberOfParticles = Math.floor((canvas.width * canvas.height) / 3000); 
-            for (let i = 0; i < numberOfParticles; i++) {
-                const x = Math.random() * canvas.width;
-                const y = Math.random() * canvas.height;
-                particles.push(new Particle(x, y));
+            for (let y = gridSize; y < h; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(w, y);
+                ctx.stroke();
             }
         };
 
-        const animate = () => {
-            if (!ctx || !canvas) return;
-            
-            // Light fade on light canvas
-            ctx.globalAlpha = 1.0;
-            ctx.globalCompositeOperation = 'source-over'; // reset for background clearing
-            ctx.fillStyle = 'rgba(246, 241, 231, 0.12)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            time += 0.0005; // very slow evolution
-            
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-            }
-            
-            animationFrameId = requestAnimationFrame(animate);
-        };
-
-        const handleMouseMove = (e: MouseEvent) => {
+        const draw = () => {
             const rect = canvas.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left;
-            mouse.y = e.clientY - rect.top;
-        };
-        
-        const handleMouseLeave = () => {
-            mouse.x = -1000;
-            mouse.y = -1000;
-        };
+            ctx.clearRect(0, 0, rect.width, rect.height);
+            t += 0.002;
 
-        window.addEventListener('resize', resize);
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseout', handleMouseLeave);
+            drawGrid(rect.width, rect.height);
+
+            // Update
+            for (const n of nodes) {
+                n.x += n.vx + Math.sin(t + n.y * 0.01) * 0.03;
+                n.y += n.vy + Math.cos(t + n.x * 0.01) * 0.03;
+            }
+
+            // Connections
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+                    if (d < connectionDist) {
+                        const alpha = 0.08 * (1 - d / connectionDist);
+                        ctx.strokeStyle = `rgba(${GOLD}, ${alpha})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Nodes
+            for (const n of nodes) {
+                const isBig = n.r > 2;
+                const color = isBig ? GOLD : MUTED;
+                const alpha = isBig ? 0.6 : 0.35;
+
+                if (isBig) {
+                    const glow = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 5);
+                    glow.addColorStop(0, `rgba(${GOLD}, 0.08)`);
+                    glow.addColorStop(1, 'transparent');
+                    ctx.fillStyle = glow;
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, n.r * 5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                ctx.fillStyle = `rgba(${color}, ${alpha})`;
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            animationFrameId = requestAnimationFrame(draw);
+        };
 
         resize();
-        animate();
+        window.addEventListener('resize', resize);
+        draw();
 
         return () => {
             window.removeEventListener('resize', resize);
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseout', handleMouseLeave);
             cancelAnimationFrame(animationFrameId);
         };
     }, []);
 
     return (
-        <canvas 
-            ref={canvasRef} 
-            className="absolute inset-0 block h-full w-full" 
-            aria-hidden="true" 
+        <canvas
+            ref={canvasRef}
+            className="absolute inset-0 block h-full w-full"
+            aria-hidden="true"
         />
     );
 }
