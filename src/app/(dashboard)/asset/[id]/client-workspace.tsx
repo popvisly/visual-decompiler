@@ -2097,6 +2097,14 @@ export default function AssetWorkspace({
                         --vault-content-pad-x: clamp(32px, 3.2vw, 48px);
                     }
                 }
+                .sample-light {
+                    filter: invert(1) hue-rotate(180deg);
+                }
+                .sample-light img,
+                .sample-light video,
+                .sample-light canvas {
+                    filter: invert(1) hue-rotate(180deg);
+                }
             `}</style>
 
             {/* Print-only sovereign briefing layout (includes Signals + Psychology after Narrative Framework) */}
@@ -2355,37 +2363,37 @@ export default function AssetWorkspace({
                 </div>
             </div>
 
-            <div className="screen-layout w-full min-h-screen bg-[#050505] selection:bg-[#00E5FF] selection:text-black">
-                <div className="vault-analysis-shell min-h-screen w-full bg-[#050505] text-white">
-                    <div className="min-h-screen w-full bg-[#050505] border-x border-white/5 shadow-[0_0_80px_rgba(0,0,0,0.4)] text-white">
+            <div className={`screen-layout w-full min-h-screen ${sampleMode ? 'bg-[#F6F1E7] selection:bg-[#C1A674] selection:text-[#141414]' : 'bg-[#050505] selection:bg-[#00E5FF] selection:text-black'}`}>
+                <div className={`vault-analysis-shell min-h-screen w-full ${sampleMode ? 'bg-[#F6F1E7] text-[#141414]' : 'bg-[#050505] text-white'}`}>
+                    <div className={`min-h-screen w-full ${sampleMode ? 'bg-[#F6F1E7] border-x border-[#D4A574]/15 shadow-[0_0_80px_rgba(0,0,0,0.04)]' : 'bg-[#050505] border-x border-white/5 shadow-[0_0_80px_rgba(0,0,0,0.4)]'} ${sampleMode ? 'text-[#141414]' : 'text-white'}`}>
                     {sampleMode && (
-                        <div className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-white/10 bg-[#050505]/96 px-5 py-4 backdrop-blur-md md:px-8">
-                            <a href="/" className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">
-                                [ VISUAL DECOMPILER ]
+                        <div className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#D4A574]/15 bg-[#F6F1E7]/96 px-5 py-4 backdrop-blur-md md:px-8">
+                            <a href="/" className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513]">
+                                Visual Decompiler
                             </a>
-                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">
-                                SYSTEM PARTITION: SAMPLE_DOSSIER
+                            <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#1A1A1A]/48">
+                                Sample Dossier
                             </span>
                             <a
                                 href="/ingest"
-                                className="inline-flex items-center bg-[#00E5FF] px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.3em] text-black transition-all hover:bg-white hover:scale-105 active:scale-95"
+                                className="inline-flex items-center rounded-full border border-[#D4A574]/30 bg-[#1A1A1A] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#F5F3EE] transition-colors hover:bg-[#2A2A2A]"
                             >
-                                DECOMPILE FREE
+                                Start Decompiling Free
                             </a>
                         </div>
                     )}
                     <div className="vault-analysis-frame">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    <aside className={`vault-analysis-asset-rail w-full border-r border-white/10 relative bg-[#050505] lg:sticky ${sampleMode ? 'lg:top-[66px]' : 'lg:top-0'} z-10`}>
+                    <aside className={`vault-analysis-asset-rail w-full border-r ${sampleMode ? 'border-[#D4A574]/20' : 'border-white/10'} relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#050505]'} lg:sticky ${sampleMode ? 'lg:top-[66px]' : 'lg:top-0'} z-10`}>
                         <div className="flex flex-col items-center justify-center px-[clamp(16px,2vw,32px)] pt-10 pb-8 lg:pt-20">
 
                             <div 
-                                className={`w-full max-w-[520px] aspect-[4/5] relative flex items-center justify-center overflow-hidden border border-white/5 bg-white/5 group shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75' : ''}`}
+                                className={`w-full max-w-[520px] aspect-[4/5] relative flex items-center justify-center overflow-hidden ${sampleMode ? 'border-[#D4A574]/20 bg-[#1A1A1A]' : 'border border-white/5 bg-white/5'} group shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75' : ''}`}
                                 style={getAssetStyle()}
                             >
                                 {/* Grid HUD Texture */}
-                                <div className="absolute inset-0 pointer-events-none opacity-[0.03] z-[2] [background-image:linear-gradient(#00E5FF_1px,transparent_1px),linear-gradient(90deg,#00E5FF_1px,transparent_1px)] [background-size:24px_24px]" />
+                                <div className={`absolute inset-0 pointer-events-none z-[2] ${sampleMode ? '' : 'opacity-[0.03] [background-image:linear-gradient(#00E5FF_1px,transparent_1px),linear-gradient(90deg,#00E5FF_1px,transparent_1px)] [background-size:24px_24px]'}`} />
 
                                 {/* If multiple images, render a horizontal CSS scroll snap setup */}
                                 <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide z-[1]">
@@ -2399,35 +2407,35 @@ export default function AssetWorkspace({
                                     ))}
                                 </div>
                                 {fileUrls.length > 1 && (
-                                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-3xl border border-white/10 px-4 py-2 flex gap-3 z-[10]">
+                                    <div className={`absolute bottom-6 left-1/2 -translate-x-1/2 backdrop-blur-3xl px-4 py-2 flex gap-3 z-[10] ${sampleMode ? 'bg-black/50 border border-white/10' : 'bg-black/60 backdrop-blur-3xl border border-white/10'}`}>
                                         {fileUrls.map((_, i) => (
-                                            <div key={i} className="w-1.5 h-1.5 bg-[#00E5FF]/20" />
+                                            <div key={i} className={`w-1.5 h-1.5 ${sampleMode ? 'bg-[#D4A574]/50' : 'bg-[#00E5FF]/20'}`} />
                                         ))}
                                     </div>
                                 )}
                                 {activeTab === 'SIGNALS' && showRadiant && <RadiantArchitectureOverlay data={(extraction?.full_dossier as any)?.radiant_architecture} />}
                                 {asset.type !== 'STATIC' && (
-                                    <div className="absolute top-6 left-6 bg-black/80 border border-[#00E5FF]/40 px-3 py-1 backdrop-blur-md z-[10]">
-                                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">{asset.type}</span>
+                                    <div className={`absolute top-6 left-6 ${sampleMode ? 'bg-black/60 border-white/10' : 'bg-black/80 border border-[#00E5FF]/40'} backdrop-blur-md z-[10]`}>
+                                        <span className={`text-[10px] font-black uppercase tracking-[0.4em] ${sampleMode ? 'text-[#D4A574]' : 'text-[#00E5FF]'}`}>{asset.type}</span>
                                     </div>
                                 )}
                             </div>
 
-                            <div className="w-full max-w-[520px] mt-12 border-b border-white/10 pb-8">
+                            <div className={`w-full max-w-[520px] mt-12 ${sampleMode ? '' : 'border-b border-white/10'} pb-8`}>
                                 <div className="mb-6">
-                                    <h1 className="text-[5vw] lg:text-[4vw] font-black tracking-tightest leading-none text-white uppercase mb-2">{asset.brand?.name}</h1>
-                                    <span className="text-[12px] font-black uppercase tracking-[0.5em] text-[#00E5FF]">{asset.brand?.market_sector}</span>
+                                    <h1 className={`text-[5vw] lg:text-[4vw] font-black tracking-tightest leading-none uppercase mb-2 ${sampleMode ? 'text-[#D4A574]' : 'text-white'}`}>{asset.brand?.name}</h1>
+                                    <span className={`text-[12px] font-black uppercase tracking-[0.5em] ${sampleMode ? 'text-[#D4A574]' : 'text-[#00E5FF]'}`}>{asset.brand?.market_sector}</span>
                                 </div>
                                 {sampleMode ? (
-                                    <div className="border border-white/10 bg-white/5 px-6 py-6 text-white">
-                                        <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">System Restriction: Active</p>
-                                        <p className="mt-4 text-2xl font-bold leading-tight tracking-tight uppercase">This is a shared <br />analytical brief.</p>
-                                        <p className="mt-4 text-[12px] leading-relaxed text-white/50 uppercase tracking-[0.1em]">Create your own forensic intelligence reports in real-time.</p>
+                                    <div className="rounded-[1.5rem] border border-[#D4A574]/18 bg-[#1A1A1A] px-5 py-5 text-[#F5F3EE]">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Sample access</p>
+                                        <p className="mt-3 text-[13px] leading-relaxed text-[#FFFFFF]/78">This is a live sample dossier.</p>
+                                        <p className="mt-2 text-[13px] leading-relaxed text-[#FFFFFF]/62">Create your own in under 60 seconds.</p>
                                         <a
                                             href="/ingest"
-                                            className="mt-8 inline-flex items-center bg-[#00E5FF] px-8 py-3 text-[11px] font-black uppercase tracking-[0.3em] text-black transition-all hover:bg-white"
+                                            className="mt-5 inline-flex items-center rounded-full bg-[#D4A574] px-4 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#141414] transition-colors hover:bg-[#c8955b]"
                                         >
-                                            INITIATE EXTRACTION
+                                            Start Decompiling Free
                                         </a>
                                     </div>
                                 ) : (
@@ -2618,26 +2626,28 @@ export default function AssetWorkspace({
                 )}
 
                 {/* RIGHT COLUMN: Scrollable Forensic Console (55%) */}
-                <div className="vault-analysis-content-rail w-full min-h-screen bg-[#050505] relative">
+                <div className={`vault-analysis-content-rail w-full min-h-screen relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#050505]'}`}>
                     {/* HUD Texture Overlay */}
-                    <div className="pointer-events-none absolute inset-0 opacity-[0.02] [background-image:linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] [background-size:64px_64px]" />
+                    <div className={`pointer-events-none absolute inset-0 ${sampleMode ? 'opacity-[0.03] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)]' : 'opacity-[0.02] [background-image:linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)]'} [background-size:64px_64px]`} />
                     
-                    <div className="vault-analysis-content-inner relative z-10 min-h-screen w-full bg-transparent">
+                    <div className={`vault-analysis-content-inner relative z-10 min-h-screen w-full bg-transparent ${sampleMode ? 'sample-light' : ''}`}>
 
                     {/* Minimalist Segmented Controls */}
-                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 flex gap-10 border-b border-white/5 bg-[#050505]/95 px-[clamp(16px,2vw,32px)] pt-10 pb-0 backdrop-blur-3xl md:pt-14`}>
+                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 flex gap-10 ${sampleMode ? 'border-b border-[#D4A574]/15' : 'border-b border-white/5'} ${sampleMode ? 'bg-[#F6F1E7]/95' : 'bg-[#050505]/95'} px-[clamp(16px,2vw,32px)] pt-10 pb-0 backdrop-blur-3xl md:pt-14`}>
                         {dossierTabs.map(tab => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
-                                className={`pb-5 text-[11px] font-black tracking-[0.4em] uppercase transition-all relative ${activeTab === tab ? 'text-[#00E5FF]' : 'text-white/20 hover:text-white/40'
+                                className={`pb-5 text-[11px] font-black tracking-[0.4em] uppercase transition-all relative ${activeTab === tab
+                                    ? (sampleMode ? 'text-[#D4A574]' : 'text-[#00E5FF]')
+                                    : (sampleMode ? 'text-[#1A1A1A]/30 hover:text-[#1A1A1A]/50' : 'text-white/20 hover:text-white/40')
                                     }`}
                             >
                                 {DOSSIER_TAB_LABELS[tab]}
                                 {activeTab === tab && (
                                     <motion.div 
                                         layoutId="tab-active"
-                                        className="absolute bottom-0 left-0 w-full h-[3px] bg-[#00E5FF] shadow-[0_0_15px_rgba(0,229,255,0.5)]" 
+                                        className={`absolute bottom-0 left-0 w-full h-[3px] ${sampleMode ? 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.4)]' : 'bg-[#00E5FF] shadow-[0_0_15px_rgba(0,229,255,0.5)]'}`} 
                                     />
                                 )}
                             </button>
