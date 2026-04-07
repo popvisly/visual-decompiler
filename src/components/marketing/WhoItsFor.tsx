@@ -65,43 +65,43 @@ export default function WhoItsFor() {
                     </div>
                 </motion.div>
 
-                {/* Persona cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+                {/* Persona cards - dark cards on light canvas */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-6">
                     {PERSONAS.map((persona, idx) => (
                         <motion.div
                             key={persona.role}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
-                            transition={{ duration: 1, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                            transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                         >
-                            <div className="group rounded-2xl border border-[#141414]/8 bg-white p-8 lg:p-10 h-full transition-all duration-500 hover:border-[#141414]/20 hover:shadow-[0_8px_40px_rgba(20,20,20,0.06)]">
+                            <div className="rounded-[32px] bg-[#1A1A1A] text-white p-10 lg:p-12 h-full border border-[#D4A574]/10 group hover:border-[#D4A574]/25 transition-colors duration-500">
                                 {/* Icon + role */}
                                 <div className="flex items-center gap-4 mb-8">
-                                    <div className="flex items-center justify-center w-12 h-12 rounded-xl border border-[#141414]/6 bg-[#F6F1E7] text-[#141414]">
+                                    <div className="flex items-center justify-center w-12 h-12 rounded-xl border border-white/[0.08] bg-white/[0.04] text-[#C1A674]">
                                         <persona.icon size={20} strokeWidth={1.5} />
                                     </div>
-                                    <h3 className="text-[20px] font-black uppercase tracking-[-0.01em] text-[#141414]">
+                                    <h3 className="text-[20px] font-black uppercase tracking-[-0.01em] text-white">
                                         {persona.role}
                                     </h3>
                                 </div>
 
                                 {/* Pain point */}
                                 <div className="mb-6">
-                                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#9a9a94] mb-3">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#C1A674]/60 mb-3">
                                         The Friction
                                     </p>
-                                    <p className="text-[15px] leading-[1.6] text-[#141414]">
+                                    <p className="text-[15px] leading-[1.6] text-white/70">
                                         {persona.pain}
                                     </p>
                                 </div>
 
                                 {/* How VD helps */}
                                 <div>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#9a9a94] mb-3">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/25 mb-3">
                                         The Read
                                     </p>
-                                    <p className="text-[15px] leading-[1.6] text-[#6B6B6B]">
+                                    <p className="text-[15px] leading-[1.6] text-white/45">
                                         {persona.how}
                                     </p>
                                 </div>

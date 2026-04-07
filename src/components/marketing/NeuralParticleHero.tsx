@@ -204,7 +204,7 @@ export default function NeuralParticleHero() {
 
     return (
         <div className="w-full max-w-[1200px] mx-auto mt-8 mb-3 md:mt-10 md:mb-4">
-            <div className="rounded-[24px] md:rounded-[28px] overflow-hidden bg-[#1A1A1A] border border-[#D4A574]/20 flex flex-col lg:flex-row" style={{ minHeight: '420px' }}>
+            <div className="rounded-[32px] overflow-hidden bg-[#1A1A1A] border border-[#D4A574]/20 flex flex-col lg:flex-row" style={{ minHeight: '420px' }}>
                 <div className="lg:w-[300px] shrink-0 flex flex-col justify-center px-10 py-12 border-b lg:border-b-0 lg:border-r border-white/5">
                     <motion.div
                         initial={{ opacity: 0, y: -8 }}

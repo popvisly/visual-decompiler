@@ -1,6 +1,7 @@
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import CinematicHero from '@/components/marketing/CinematicHero';
 import HowItWorks from '@/components/marketing/HowItWorks';
+import NeuralMapSection from '@/components/marketing/NeuralMapSection';
 import InteractiveReadStage from '@/components/marketing/InteractiveReadStage';
 import DossierPreview from '@/components/marketing/DossierPreview';
 import WhoItsFor from '@/components/marketing/WhoItsFor';
@@ -13,15 +14,17 @@ export default function HomePage() {
             <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Open Sample Read', href: '/share/sample-dossier' }} />
             {/* Dark — Hero */}
             <CinematicHero />
-            {/* Light — How it works */}
+            {/* Light + dark cards — How it works */}
             <HowItWorks />
+            {/* Light + dark card — Neural Map */}
+            <NeuralMapSection />
             {/* Dark — Interactive showcase */}
             <InteractiveReadStage />
-            {/* Dark — What comes out (dossier) */}
+            {/* Light + dark cards — Dossier preview */}
             <DossierPreview />
-            {/* Light — Who it's for */}
+            {/* Light + dark cards — Who it's for */}
             <WhoItsFor />
-            {/* Dark — Why VD is different */}
+            {/* Light + dark cards — Why VD is different */}
             <WhyDifferent />
             {/* Dark — Footer + FAQ */}
             <FooterStartNow />
