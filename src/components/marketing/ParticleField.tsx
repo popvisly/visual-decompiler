@@ -110,10 +110,10 @@ export default function ParticleField() {
                     break;
 
                 case 'rect':
-                    // Use shorter dimension as width for horizontal bars
-                    const w2 = type === 'rect' && size > 200 ? size : size;
-                    const h2 = size > 200 ? size * 0.4 : size;
-                    ctx.fillRect(-w2 / 2, -h2 / 2, w2, h2);
+                    // Use wider aspect ratio for larger rects (horizontal feel)
+                    const rw = size > 200 ? size * 1.5 : size;
+                    const rh = size > 200 ? size * 0.35 : size;
+                    ctx.fillRect(-rw / 2, -rh / 2, rw, rh);
                     break;
 
                 case 'triangle':
