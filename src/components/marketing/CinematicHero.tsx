@@ -9,11 +9,9 @@ export default function CinematicHero() {
             className="relative flex min-h-[100vh] flex-col justify-center overflow-hidden bg-[#F6F1E7] px-6 py-24 sm:px-8 lg:px-10"
             data-presence-tone="light"
         >
-            {/* Background effects */}
+            {/* Background: large soft gradient orbs, no shadow lines */}
             <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-                <div className="absolute inset-x-0 top-0 h-px bg-[#141414]/[0.04]" />
                 <ParticleField />
-                <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#F6F1E7] to-transparent" />
             </div>
 
             <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col items-center">

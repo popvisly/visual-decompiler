@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 
-interface Node {
+interface Orb {
     x: number;
     y: number;
+    radius: number;
     vx: number;
     vy: number;
-    r: number;
+    alpha: number;
+    color: string;
 }
 
 export default function ParticleField() {
@@ -20,15 +22,12 @@ export default function ParticleField() {
         if (!ctx) return;
 
         let animationFrameId: number;
-        let t = 0;
-        const nodes: Node[] = [];
-        const gridSize = 80;
-        const connectionDist = 200;
-        const drift = 0.15;
+        const orbs: Orb[] = [];
+        const count = 6;
 
-        const GOLD = '193, 166, 116';
-        const DARK = '20, 20, 20';
-        const MUTED = '160, 148, 128';
+        const GOLD = '#C1A674';
+        const DARK = '#141414';
+        const MUTED = '#A09480';
 
         const resize = () => {
             const dpr = window.devicePixelRatio || 1;
@@ -36,91 +35,43 @@ export default function ParticleField() {
             canvas.width = rect.width * dpr;
             canvas.height = rect.height * dpr;
             ctx.scale(dpr, dpr);
-            initNodes(rect.width, rect.height);
+            initOrbs(rect.width, rect.height);
         };
 
-        const initNodes = (w: number, h: number) => {
-            nodes.length = 0;
-            for (let x = gridSize; x < w; x += gridSize) {
-                for (let y = gridSize; y < h; y += gridSize) {
-                    if (Math.random() > 0.45) {
-                        nodes.push({
-                            x: x + (Math.random() - 0.5) * gridSize * 0.6,
-                            y: y + (Math.random() - 0.5) * gridSize * 0.6,
-                            vx: (Math.random() - 0.5) * drift,
-                            vy: (Math.random() - 0.5) * drift,
-                            r: Math.random() > 0.7 ? 2.5 : 1.5,
-                        });
-                    }
-                }
-            }
-        };
-
-        const drawGrid = (w: number, h: number) => {
-            ctx.strokeStyle = `rgba(${DARK}, 0.025)`;
-            ctx.lineWidth = 0.5;
-            for (let x = gridSize; x < w; x += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, h);
-                ctx.stroke();
-            }
-            for (let y = gridSize; y < h; y += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(w, y);
-                ctx.stroke();
-            }
+        const initOrbs = (w: number, h: number) => {
+            orbs.length = 0;
+            const shapes: Orb[] = [
+                { x: w * 0.2, y: h * 0.3, radius: 180, vx: 0.15, vy: 0.08, alpha: 0.06, color: GOLD },
+                { x: w * 0.7, y: h * 0.6, radius: 220, vx: -0.1, vy: 0.12, alpha: 0.04, color: GOLD },
+                { x: w * 0.5, y: h * 0.8, radius: 160, vx: 0.08, vy: -0.1, alpha: 0.03, color: MUTED },
+                { x: w * 0.85, y: h * 0.2, radius: 120, vx: -0.12, vy: 0.05, alpha: 0.05, color: GOLD },
+                { x: w * 0.15, y: h * 0.75, radius: 140, vx: 0.1, vy: -0.06, alpha: 0.03, color: DARK },
+                { x: w * 0.6, y: h * 0.4, radius: 100, vx: -0.08, vy: 0.1, alpha: 0.06, color: GOLD },
+            ];
+            orbs.push(...shapes);
         };
 
         const draw = () => {
             const rect = canvas.getBoundingClientRect();
             ctx.clearRect(0, 0, rect.width, rect.height);
-            t += 0.002;
 
-            drawGrid(rect.width, rect.height);
+            for (const orb of orbs) {
+                orb.x += orb.vx;
+                orb.y += orb.vy;
 
-            // Update
-            for (const n of nodes) {
-                n.x += n.vx + Math.sin(t + n.y * 0.01) * 0.03;
-                n.y += n.vy + Math.cos(t + n.x * 0.01) * 0.03;
-            }
+                // Bounce off edges with padding
+                if (orb.x < -orb.radius) orb.vx = Math.abs(orb.vx);
+                if (orb.x > rect.width + orb.radius) orb.vx = -Math.abs(orb.vx);
+                if (orb.y < -orb.radius) orb.vy = Math.abs(orb.vy);
+                if (orb.y > rect.height + orb.radius) orb.vy = -Math.abs(orb.vy);
 
-            // Connections
-            for (let i = 0; i < nodes.length; i++) {
-                for (let j = i + 1; j < nodes.length; j++) {
-                    const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
-                    if (d < connectionDist) {
-                        const alpha = 0.08 * (1 - d / connectionDist);
-                        ctx.strokeStyle = `rgba(${GOLD}, ${alpha})`;
-                        ctx.lineWidth = 0.8;
-                        ctx.beginPath();
-                        ctx.moveTo(nodes[i].x, nodes[i].y);
-                        ctx.lineTo(nodes[j].x, nodes[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
+                const gradient = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius);
+                gradient.addColorStop(0, orb.color + Math.round(orb.alpha * 255).toString(16).padStart(2, '0'));
+                gradient.addColorStop(1, orb.color + '00');
 
-            // Nodes
-            for (const n of nodes) {
-                const isBig = n.r > 2;
-                const color = isBig ? GOLD : MUTED;
-                const alpha = isBig ? 0.6 : 0.35;
-
-                if (isBig) {
-                    const glow = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 5);
-                    glow.addColorStop(0, `rgba(${GOLD}, 0.08)`);
-                    glow.addColorStop(1, 'transparent');
-                    ctx.fillStyle = glow;
-                    ctx.beginPath();
-                    ctx.arc(n.x, n.y, n.r * 5, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                ctx.fillStyle = `rgba(${color}, ${alpha})`;
+                ctx.fillStyle = gradient;
                 ctx.beginPath();
-                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                ctx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2);
                 ctx.fill();
             }
 
