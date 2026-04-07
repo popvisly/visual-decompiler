@@ -8,42 +8,42 @@ import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 const SHOWCASE_ITEMS = [
     {
-        id: 'posture',
-        label: 'Held Posture',
-        kicker: 'Authority Read',
-        statement: 'Read how the frame holds authority before a single word explains it.',
-        highlightWord: 'authority',
-        highlightColor: '#00E5FF', // Cyan
-        detail: 'Status-coded restraint creates desire without tipping into explanation. The strongest luxury work arrives already decided. The posture is what makes the room trust the image.',
+        id: 'technology',
+        label: 'Feature Hierarchy',
+        kicker: 'Signal Architecture',
+        statement: 'See the hierarchy of features before a single spec explains it.',
+        highlightWord: 'hierarchy',
+        highlightColor: '#D4A574',
+        detail: 'Consumer tech ads must balance innovation with accessibility. The strongest work leads with one dominant mechanic — visual, intuitive — and lets the product do the talking.',
         metrics: [
-            { label: 'Signal', value: 'Authority' },
-            { label: 'Risk', value: 'Over-explanation' }
+            { label: 'Signal', value: 'Feature Lead' },
+            { label: 'Risk', value: 'Spec overload' }
         ],
-        img: '/images/examples/Chanel_No5.webp',
-        alt: 'Chanel No.5 campaign analyzing posture'
+        img: '/images/examples/Sony.jpg',
+        alt: 'Sony campaign analyzing feature hierarchy'
     },
     {
-        id: 'arrival',
-        label: 'Product Arrival',
-        kicker: 'Moment of entry',
-        statement: 'Trace the exact moment the product enters the read and earns its place.',
-        highlightWord: 'product',
-        highlightColor: '#FF00E5', // Pink
-        detail: 'This is where strategy becomes visible. Too late and the work floats. Too early and it collapses into selling. The read evaluates narrative timing and inevitability.',
+        id: 'luxury',
+        label: 'Scarcity Architecture',
+        kicker: 'Exclusionary Positioning',
+        statement: 'Trace how scarcity is built into the frame without stating a single limitation.',
+        highlightWord: 'scarcity',
+        highlightColor: '#D4A574',
+        detail: 'Luxury timepieces sell through absence — what is withheld matters as much as what is shown. The dial, the light, the weight of the frame. Every element encodes exclusion.',
         metrics: [
-            { label: 'Signal', value: 'Arrival Timing' },
-            { label: 'Risk', value: 'Selling too early' }
+            { label: 'Signal', value: 'Scarcity' },
+            { label: 'Risk', value: 'Overt luxury signals' }
         ],
-        img: '/images/examples/valentino-voce-viva.png',
-        alt: 'Valentino Voce Viva campaign analyzing product arrival'
+        img: '/images/examples/Watch.png',
+        alt: 'Luxury watch campaign analyzing scarcity architecture'
     },
     {
-        id: 'restraint',
+        id: 'fashion',
         label: 'Texture Restraint',
-        kicker: 'Signal compression',
+        kicker: 'Signal Compression',
         statement: 'See where the image withholds, compresses, and stays expensive.',
         highlightWord: 'expensive',
-        highlightColor: '#7B00FF', // Purple
+        highlightColor: '#D4A574',
         detail: 'Restraint keeps the frame alive. Once every signal is obvious, the image loses its aftertaste. We map the exact compression of palette and texture.',
         metrics: [
             { label: 'Signal', value: 'Restraint' },

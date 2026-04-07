@@ -29,9 +29,9 @@ const PILLARS = [
 ];
 
 const METRICS = [
-    { label: 'Confidence', value: 99, color: '#00C853' },
-    { label: 'Cognitive Friction', value: 8, color: '#00E5FF' },
-    { label: 'Persuasion Density', value: 91, color: '#C1A674' },
+    { label: 'Confidence', value: 99 },
+    { label: 'Cognitive Friction', value: 8 },
+    { label: 'Persuasion Density', value: 91 },
 ];
 
 const PALETTE = [
@@ -47,7 +47,7 @@ const STRATEGIC_MOVE = 'Heritage reactivation via contemporary embodiment';
 const RISK = 'Direct confrontational gaze collapses aspirational asymmetry';
 const BRIEF_ALIGNMENT = 'On-brief';
 
-function MetricRing({ label, value, color }: { label: string; value: number; color: string }) {
+function MetricRing({ label, value }: { label: string; value: number }) {
     const radius = 40;
     const circumference = 2 * Math.PI * radius;
     const offset = circumference - (value / 100) * circumference;
@@ -65,7 +65,7 @@ function MetricRing({ label, value, color }: { label: string; value: number; col
                     <circle
                         cx="50" cy="50" r={radius}
                         fill="none"
-                        stroke={color}
+                        stroke="#C1A674"
                         strokeWidth="4"
                         strokeDasharray={circumference}
                         strokeDashoffset={offset}
@@ -74,7 +74,7 @@ function MetricRing({ label, value, color }: { label: string; value: number; col
                     />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <span className={`text-[18px] font-black text-white tabular-nums`}>{value}{label === 'Confidence' ? '' : '%'}</span>
+                    <span className="text-[18px] font-black text-white tabular-nums">{value}{label === 'Confidence' ? '' : '%'}</span>
                 </div>
             </div>
             <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">{label}</span>
@@ -177,7 +177,7 @@ export default function DossierPreview() {
                             </p>
                             <div className="flex gap-4">
                                 {METRICS.map(m => (
-                                    <MetricRing key={m.label} label={m.label} value={m.value} color={m.color} />
+                                    <MetricRing key={m.label} label={m.label} value={m.value} />
                                 ))}
                             </div>
                             <div className="w-full mt-4 pt-4 border-t border-white/[0.06]">
@@ -220,11 +220,11 @@ export default function DossierPreview() {
                                 <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/20 mb-2">Strategic Move</p>
                                 <p className="text-[13px] leading-[1.5] text-white/50">{STRATEGIC_MOVE}</p>
                             </div>
-                            {/* Key Risk */}
-                            <div className="rounded-[1.4rem] border border-[#FF5252]/30 bg-[#171512] px-4 py-4">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#FF5252]/50 mb-2">Key Risk</p>
-                                <p className="text-[13px] leading-[1.5] text-[#FF5252]/60">{RISK}</p>
-                            </div>
+            {/* Key Risk */}
+            <div className="rounded-[1.4rem] border border-[#D4A574]/20 bg-[#171512] px-4 py-4">
+                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/50 mb-2">Key Risk</p>
+                <p className="text-[13px] leading-[1.5] text-white/60">{RISK}</p>
+            </div>
                         </div>
 
                         {/* Confidence + Alignment bar */}
@@ -237,8 +237,8 @@ export default function DossierPreview() {
                             </div>
                             <div className="flex items-center gap-3">
                                 <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/20">Brief Alignment</p>
-                                <span className="inline-flex items-center gap-2 rounded-full border border-[#00C853]/30 bg-[#00C853]/10 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-[#00C853]">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-[#00C853]" />
+                                <span className="inline-flex items-center gap-2 rounded-full border border-[#D4A574]/30 bg-[#D4A574]/10 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#D4A574]" />
                                     {BRIEF_ALIGNMENT}
                                 </span>
                             </div>
