@@ -26,7 +26,7 @@ export default function PersonaLandingPage({ page }: { page: PersonaPageData }) 
                             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
                                 <Link
                                     href={page.primaryCta.href}
-                                    className="inline-flex items-center justify-center rounded-full bg-[#141414] px-7 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black"
+                                    className="inline-flex items-center justify-center rounded-full bg-[#141414] px-7 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-white"
                                 >
                                     {page.primaryCta.label}
                                 </Link>
@@ -149,7 +149,7 @@ export default function PersonaLandingPage({ page }: { page: PersonaPageData }) 
                         <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
                             <div className="max-w-3xl">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#C1A67B]">{page.eyebrow}</p>
-                                <h2 className="mt-4 text-4xl font-semibold uppercase leading-[0.95] tracking-[-0.05em] text-[#141414] md:text-6xl">
+                                <h2 className="mt-4 text-[#F6F1E7]xl font-semibold uppercase leading-[0.95] tracking-[-0.05em] text-[#141414] md:text-[#9a9a94]xl">
                                     {page.finalCta.headline}
                                 </h2>
                                 <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#5E5A53]">{page.finalCta.subline}</p>
@@ -157,7 +157,7 @@ export default function PersonaLandingPage({ page }: { page: PersonaPageData }) 
                             <div className="w-full max-w-sm">
                                 <Link
                                     href={page.finalCta.href}
-                                    className="inline-flex w-full items-center justify-center rounded-full bg-[#141414] px-8 py-5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-black"
+                                    className="inline-flex w-full items-center justify-center rounded-full bg-[#141414] px-8 py-5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] transition hover:bg-white"
                                 >
                                     {page.finalCta.label}
                                 </Link>

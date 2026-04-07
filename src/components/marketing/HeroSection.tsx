@@ -25,7 +25,7 @@ export default function HeroSection() {
                 </div>
 
                 {/* Headline */}
-                <h1 className="font-sans text-5xl md:text-7xl lg:text-8xl font-medium text-txt-primary leading-[1.05] tracking-tight mb-6">
+                <h1 className="font-sans text-5xl md:text-7xl lg:text-[#9a9a94]xl font-medium text-txt-primary leading-[1.05] tracking-tight mb-6">
                     See what ads<br />
                     <span className="text-txt-secondary">don&apos;t want you<br />to see.</span>
                 </h1>

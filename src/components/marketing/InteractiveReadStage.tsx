@@ -177,7 +177,7 @@ export default function InteractiveReadStage() {
                             <p className="text-[18px] leading-[1.6] text-[#A0A0A0] mb-8">
                                 Filter the frame through specialized analytical modes: from posture authority down to texture restraint. Zero overlapping. Pure focused sight.
                             </p>
-                            <a href={SAMPLE_DOSSIER_HREF} className="inline-flex items-center gap-3 border-b border-[#00E5FF] pb-1 text-[11px] font-black uppercase tracking-[0.2em] text-[#00E5FF] transition hover:text-white hover:border-white">
+                            <a href={SAMPLE_DOSSIER_HREF} className="inline-flex items-center gap-3 border-b border-[#00E5FF] pb-1 text-[11px] font-black uppercase tracking-[0.2em] text-[#00E5FF] transition hover:text-black hover:border-white">
                                 Open Sample Read
                                 <ArrowUpRight size={16} />
                             </a>

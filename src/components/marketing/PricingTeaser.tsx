@@ -20,7 +20,7 @@ export default function PricingTeaser() {
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-txt-muted mb-3">
                         Free vs Pro
                     </p>
-                    <h2 className="font-sans text-4xl md:text-5xl font-medium text-txt-primary tracking-tight leading-[1.1] mb-4">
+                    <h2 className="font-sans text-[#F6F1E7]xl md:text-5xl font-medium text-txt-primary tracking-tight leading-[1.1] mb-4">
                         See the preview.<br />
                         <span className="accent-dark">Unlock the full picture.</span>
                     </h2>

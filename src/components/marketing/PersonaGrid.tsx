@@ -40,7 +40,7 @@ export default function PersonaGrid() {
                         <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#C1A67B]">
                             Who Deploys It
                         </span>
-                        <h2 className="text-4xl md:text-7xl font-semibold text-[#FBF7EF] tracking-tightest uppercase leading-[0.9]">
+                        <h2 className="text-[#F6F1E7]xl md:text-7xl font-semibold text-[#FBF7EF] tracking-tightest uppercase leading-[0.9]">
                             Built for the people
                             <br />
                             <span className="text-[#C1A67B]">who turn reference into advantage.</span>

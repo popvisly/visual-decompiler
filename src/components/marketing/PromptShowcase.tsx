@@ -64,7 +64,7 @@ export default function PromptShowcase() {
                                 <Wand2 className="w-5 h-5 text-[#BB9E7B]" />
                                 <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#BB9E7B]">Prompt Synthesis</h2>
                             </div>
-                            <h3 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-[#1A1A18] tracking-tightest uppercase leading-[1]">
+                            <h3 className="text-[#F6F1E7]xl md:text-5xl lg:text-[#9a9a94]xl font-semibold text-[#1A1A18] tracking-tightest uppercase leading-[1]">
                                 From Analysis<br />
                                 &nbsp;to <span className="text-[#BB9E7B]">Image.</span>
                             </h3>

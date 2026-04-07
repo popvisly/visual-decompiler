@@ -89,7 +89,7 @@ export default function DecompositionSection() {
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-txt-muted mb-3">
                         How It Works
                     </p>
-                    <h2 className="font-sans text-4xl md:text-6xl font-medium text-txt-primary tracking-tight leading-[1.1]">
+                    <h2 className="font-sans text-[#F6F1E7]xl md:text-[#9a9a94]xl font-medium text-txt-primary tracking-tight leading-[1.1]">
                         The ad comes apart.<br />
                         <span className="accent-dark">The truth comes out.</span>
                     </h2>

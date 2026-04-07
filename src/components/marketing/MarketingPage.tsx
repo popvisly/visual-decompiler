@@ -42,9 +42,9 @@ export default function MarketingPage() {
                         <div>
                             <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[rgba(255,255,255,0.3)] mb-4">Product</p>
                             <ul className="space-y-2.5">
-                                <li><a href="#how-it-works" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors">How It Works</a></li>
-                                <li><a href="#features" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors">Features</a></li>
-                                <li><a href="#pricing" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors">Pricing</a></li>
+                                <li><a href="#how-it-works" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-black transition-colors">How It Works</a></li>
+                                <li><a href="#features" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-black transition-colors">Features</a></li>
+                                <li><a href="#pricing" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-black transition-colors">Pricing</a></li>
                             </ul>
                         </div>
 
@@ -52,9 +52,9 @@ export default function MarketingPage() {
                         <div>
                             <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[rgba(255,255,255,0.3)] mb-4">Company</p>
                             <ul className="space-y-2.5">
-                                <li><a href="#" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors">About</a></li>
-                                <li><a href="#" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors">Privacy</a></li>
-                                <li><a href="#" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors">Terms</a></li>
+                                <li><a href="#" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-black transition-colors">About</a></li>
+                                <li><a href="#" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-black transition-colors">Privacy</a></li>
+                                <li><a href="#" className="text-[13px] text-[rgba(255,255,255,0.5)] hover:text-black transition-colors">Terms</a></li>
                             </ul>
                         </div>
 

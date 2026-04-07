@@ -44,7 +44,7 @@ export default function FeaturesSection() {
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-txt-muted mb-3">
                         What You See
                     </p>
-                    <h2 className="font-sans text-4xl md:text-6xl font-medium text-txt-primary tracking-tight leading-[1.1]">
+                    <h2 className="font-sans text-[#F6F1E7]xl md:text-[#9a9a94]xl font-medium text-txt-primary tracking-tight leading-[1.1]">
                         The invisible machinery<br />
                         <span className="accent-dark">made visible.</span>
                     </h2>
@@ -93,7 +93,7 @@ function FeaturePanel({ feature, index }: { feature: typeof FEATURES[number]; in
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-txt-muted mb-3">
                         {feature.title}
                     </p>
-                    <h3 className="font-sans text-3xl md:text-4xl font-medium text-txt-primary tracking-tight leading-[1.15] mb-4">
+                    <h3 className="font-sans text-3xl md:text-[#F6F1E7]xl font-medium text-txt-primary tracking-tight leading-[1.15] mb-4">
                         {feature.headline}
                     </h3>
                     <p className="text-[15px] text-txt-secondary leading-relaxed">

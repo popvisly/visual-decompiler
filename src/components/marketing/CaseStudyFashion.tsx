@@ -20,7 +20,7 @@ export default function CaseStudyFashion({ id, label, title, body, stageImage, c
                         <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#C1A67B]">
                             {label}
                         </span>
-                        <h2 className="text-4xl md:text-7xl font-semibold text-[#141414] tracking-tightest uppercase leading-[0.9]">
+                        <h2 className="text-[#F6F1E7]xl md:text-7xl font-semibold text-[#141414] tracking-tightest uppercase leading-[0.9]">
                             {(() => {
                                 // Split title into two lines based on the period
                                 const parts = title.split(/\.\s+/);

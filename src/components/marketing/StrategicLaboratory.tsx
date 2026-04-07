@@ -52,7 +52,7 @@ export default function StrategicLaboratory() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                            className="text-5xl md:text-8xl font-semibold leading-[0.9] tracking-tightest uppercase mb-10"
+                            className="text-5xl md:text-[#9a9a94]xl font-semibold leading-[0.9] tracking-tightest uppercase mb-10"
                         >
                             The Strategic<br />
                             <span className="text-[#C1A67B]">Laboratory</span>

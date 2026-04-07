@@ -73,7 +73,7 @@ export default function Hero({
 
                             <a
                                 href="/ingest"
-                                className="mt-8 inline-flex items-center justify-center rounded-full bg-[#141414] px-7 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] shadow-[0_16px_34px_rgba(20,20,20,0.18)] transition hover:bg-black md:px-8"
+                                className="mt-8 inline-flex items-center justify-center rounded-full bg-[#141414] px-7 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#FBF7EF] shadow-[0_16px_34px_rgba(20,20,20,0.18)] transition hover:bg-white md:px-8"
                             >
                                 Run a forensic readout
                             </a>

@@ -60,7 +60,7 @@ export default function IntelligenceEcosystem() {
                                         <span className="text-[11px] font-bold text-[#C1A67B] uppercase tracking-[0.2em]">
                                             {pillar.subtext}
                                         </span>
-                                        <h3 className="text-3xl md:text-4xl font-semibold text-[#141414] tracking-tightest uppercase">
+                                        <h3 className="text-3xl md:text-[#F6F1E7]xl font-semibold text-[#141414] tracking-tightest uppercase">
                                             {pillar.title}
                                         </h3>
                                     </div>

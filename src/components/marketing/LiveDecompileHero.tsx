@@ -283,7 +283,7 @@ export default function LiveDecompileHero() {
                                                         {card.swatches && (
                                                             <div className="flex gap-1 mb-1">
                                                                 {card.swatches.map((c, i) => (
-                                                                    <div key={i} className="w-4 h-3 rounded-sm border border-black/10"
+                                                                    <div key={i} className="w-4 h-3 rounded-sm border border-white/10"
                                                                         style={{ backgroundColor: c }} />
                                                                 ))}
                                                             </div>
