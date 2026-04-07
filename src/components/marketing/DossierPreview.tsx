@@ -2,278 +2,127 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowUpRight, ShieldCheck, Target, Zap } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
-
-const PILLARS = [
-    {
-        icon: ShieldCheck,
-        label: 'Verdict',
-        value: 'KEEP',
-        tags: ['Ship', 'Refine', 'Kill'],
-        activeIndex: 0,
-        detail: 'A clear call on whether this creative is working — safe to discuss in a client room.',
-    },
-    {
-        icon: Target,
-        label: 'Fix Priorities',
-        value: 'P1 · Gaze Routing',
-        detail: 'Ordered actions ranked by impact. Sharpen eyeflow toward product without breaking monumental scale.',
-    },
-    {
-        icon: Zap,
-        label: 'Evidence',
-        value: 'Fact & Inference Split',
-        detail: 'Every claim separated into observed facts and reasoned inferences. Full transparency on confidence.',
-    },
-];
-
-const METRICS = [
-    { label: 'Confidence', value: 99 },
-    { label: 'Cognitive Friction', value: 8 },
-    { label: 'Persuasion Density', value: 91 },
-];
-
-const PALETTE = [
-    { color: '#D4A574', pct: 30 },
-    { color: '#2C2C2C', pct: 25 },
-    { color: '#F5F0E8', pct: 20 },
-    { color: '#8B7355', pct: 15 },
-    { color: '#E8D4B8', pct: 10 },
-];
-
-const PRIMARY_MECHANIC = 'Celebrity Aspirational Transfer';
-const STRATEGIC_MOVE = 'Heritage reactivation via contemporary embodiment';
-const RISK = 'Direct confrontational gaze collapses aspirational asymmetry';
-const BRIEF_ALIGNMENT = 'On-brief';
-
-function MetricRing({ label, value }: { label: string; value: number }) {
-    const radius = 40;
-    const circumference = 2 * Math.PI * radius;
-    const offset = circumference - (value / 100) * circumference;
-
-    return (
-        <div className="flex flex-col items-center gap-3">
-            <div className="relative w-24 h-24">
-                <svg className="w-24 h-24 -rotate-90" viewBox="0 0 100 100">
-                    <circle
-                        cx="50" cy="50" r={radius}
-                        fill="none"
-                        stroke="rgba(255,255,255,0.06)"
-                        strokeWidth="4"
-                    />
-                    <circle
-                        cx="50" cy="50" r={radius}
-                        fill="none"
-                        stroke="#C1A674"
-                        strokeWidth="4"
-                        strokeDasharray={circumference}
-                        strokeDashoffset={offset}
-                        strokeLinecap="round"
-                        className="transition-all duration-1000 ease-out"
-                    />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-[18px] font-black text-white tabular-nums">{value}{label === 'Confidence' ? '' : '%'}</span>
-                </div>
-            </div>
-            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">{label}</span>
-        </div>
-    );
-}
 
 export default function DossierPreview() {
     return (
-        <section className="relative bg-[#F6F1E7] text-[#141414] py-24 lg:py-40 overflow-hidden" data-presence-tone="light">
-            <div className="pointer-events-none absolute inset-0 opacity-[0.3] [background-image:linear-gradient(rgba(20,20,20,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.02)_1px,transparent_1px)] [background-size:48px_48px]" />
-
-            <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-12">
+        <section className="relative bg-[#F6F1E7] text-[#141414] py-32 lg:py-48 overflow-hidden" data-presence-tone="light">
+            <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
                 {/* Section header */}
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-100px' }}
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    className="mb-16 lg:mb-20 border-t border-[#141414]/10 pt-10"
                 >
-                    <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
-                        <h2 className="text-[11vw] lg:text-[6vw] font-black leading-[0.82] tracking-[-0.04em] uppercase text-[#141414] max-w-[14ch]">
-                            What comes <span className="text-[#C1A674]">out is decisive.</span>
-                        </h2>
-                        <div className="max-w-[440px]">
-                            <p className="text-[18px] leading-[1.6] text-[#6B6B6B] mb-8">
-                                Not vibes. Not AI fluff. A structured intelligence dossier with verifiable claims, fix priorities, and a clear verdict.
-                            </p>
-                            <Link
-                                href={SAMPLE_DOSSIER_HREF}
-                                className="group inline-flex items-center gap-3 border-b border-[#141414] pb-1 text-[11px] font-black uppercase tracking-[0.2em] text-[#141414] transition hover:text-[#C1A674] hover:border-[#C1A674]"
-                            >
-                                Open Sample Dossier
-                                <ArrowUpRight size={16} />
-                            </Link>
-                        </div>
-                    </div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-6">
+                        What you get back
+                    </p>
+                    <h2 className="text-[10vw] lg:text-[72px] font-black leading-[0.88] tracking-[-0.04em] uppercase text-[#141414] max-w-[16ch] mb-10">
+                        Not vibes.<br />
+                        <span className="text-[#C1A674]">Structured judgment.</span>
+                    </h2>
+                    <p className="text-[18px] leading-[1.7] text-[#6B6B6B] max-w-[520px]">
+                        A dossier with a verdict, prioritized fixes, confidence scores, and evidence-separated claims. Built to hold up in a client room.
+                    </p>
                 </motion.div>
 
-                {/* Top row: Three pillars + Metrics */}
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.5fr] gap-8 lg:gap-6 mb-8">
-                    {/* Three pillars */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {PILLARS.map((pillar, idx) => (
-                            <motion.div
-                                key={pillar.label}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-50px' }}
-                                transition={{ duration: 0.8, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                            >
-                                <div className="rounded-[1.4rem] bg-[#1F1F1F] text-white p-7 lg:p-8 h-full border border-[rgba(212,165,116,0.2)] flex flex-col">
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <pillar.icon size={16} strokeWidth={1.5} style={{ color: '#D4A574' }} />
-                                        <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#D4A574]/70">
-                                            {pillar.label}
-                                        </p>
-                                    </div>
-
-                                    <p className="text-[17px] font-black tracking-[-0.01em] text-white mb-3">
-                                        {pillar.value}
-                                    </p>
-
-                                    {pillar.tags && (
-                                        <div className="flex gap-2 mb-4">
-                                            {pillar.tags.map((tag, ti) => (
-                                                <span
-                                                    key={tag}
-                                                    className={`text-[9px] font-bold uppercase tracking-[0.18em] px-3 py-1 rounded-full ${
-                                                        ti === pillar.activeIndex
-                                                            ? 'bg-[#D4A574]/20 text-[#D4A574] border border-[#6B5337]'
-                                                            : 'bg-[#171512] text-white/25 border border-[#4E3D2A]'
-                                                    }`}
-                                                >
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    )}
-
-                                    <p className="text-[13px] leading-[1.65] text-white/40 flex-1">
-                                        {pillar.detail}
-                                    </p>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-
-                    {/* Metrics panel */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: '-50px' }}
-                        transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                        <div className="rounded-[1.4rem] bg-[#1F1F1F] text-white p-7 lg:p-8 h-full border border-[rgba(212,165,116,0.2)] flex flex-col items-center justify-center gap-2">
-                            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#D4A574]/60 mb-2">
-                                Module Scores
-                            </p>
-                            <div className="flex gap-4">
-                                {METRICS.map(m => (
-                                    <MetricRing key={m.label} label={m.label} value={m.value} />
-                                ))}
-                            </div>
-                            <div className="w-full mt-4 pt-4 border-t border-white/[0.06]">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/20 text-center">
-                                    Confidence · Friction · Density
-                                </p>
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
-
-                {/* Second row: Dossier preview card */}
+                {/* Sample dossier card */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="rounded-[1.4rem] bg-[#1F1F1F] text-white border border-[rgba(212,165,116,0.2)] overflow-hidden mb-8"
+                    transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="mt-16 rounded-[1.4rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 lg:p-12"
                 >
                     {/* Top bar */}
-                    <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
+                    <div className="flex items-center justify-between pb-6 border-b border-[#E7DED1] mb-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-2 h-2 rounded-full bg-[#D4A574] animate-pulse" />
-                            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#D4A574]/60">
-                                Sample Dossier · CHANEL No.5
-                            </p>
+                            <div className="w-2 h-2 rounded-full bg-[#C1A674]" />
+                            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#C1A674]">Sample Dossier</span>
+                        </div>
+                        <span className="text-[10px] font-bold text-[#6B6B6B]">CHANEL No.5</span>
+                    </div>
+
+                    {/* Metrics row */}
+                    <div className="grid grid-cols-3 gap-6 mb-8">
+                        {[
+                            { label: 'Confidence', value: '99/100' },
+                            { label: 'Cognitive Friction', value: '8%' },
+                            { label: 'Persuasion Density', value: '91%' },
+                        ].map(m => (
+                            <div key={m.label}>
+                                <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#9a9a94] mb-1">{m.label}</p>
+                                <p className="text-[28px] lg:text-[36px] font-black text-[#141414] tabular-nums">{m.value}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Palette bar */}
+                    <div className="mb-8">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#9a9a94] mb-3">Palette Logic</p>
+                        <div className="flex w-full h-3 rounded-full overflow-hidden">
+                            {[
+                                { color: '#D4A574', w: '30%' },
+                                { color: '#2C2C2C', w: '25%' },
+                                { color: '#F5F0E8', w: '20%' },
+                                { color: '#8B7355', w: '15%' },
+                                { color: '#E8D4B8', w: '10%' },
+                            ].map((seg, i) => (
+                                <div key={i} style={{ width: seg.w, backgroundColor: seg.color }} />
+                            ))}
                         </div>
                     </div>
 
-                    {/* Content grid */}
-                    <div className="p-6 lg:p-8">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            {/* Primary Mechanic */}
-                            <div className="rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/20 mb-2">Primary Mechanic</p>
-                                <p className="text-[13px] font-semibold text-white/70">{PRIMARY_MECHANIC}</p>
+                    {/* Decision */}
+                    <div className="grid grid-cols-3 gap-3 mb-8">
+                        {['KEEP', 'REFINE', 'KILL'].map(s => (
+                            <div
+                                key={s}
+                                className={`rounded-[1.4rem] border px-4 py-3 ${
+                                    s === 'KEEP'
+                                        ? 'border-[#C1A674]/40 bg-[#C1A674]/5'
+                                        : 'border-[#E7DED1] bg-[#F6F1E7]'
+                                }`}
+                            >
+                                <p className={`text-[9px] font-bold uppercase tracking-[0.2em] ${s === 'KEEP' ? 'text-[#C1A674]' : 'text-[#9a9a94]'}`}>{s}</p>
+                                <p className={`mt-1 text-[11px] ${s === 'KEEP' ? 'text-[#141414]/60' : 'text-[#9a9a94]/50'}`}>
+                                    {s === 'KEEP' ? 'Recommended.' : s === 'REFINE' ? 'Tighten mechanism.' : 'Rework route.'}
+                                </p>
                             </div>
-                            {/* Strategic Move */}
-                            <div className="rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/20 mb-2">Strategic Move</p>
-                                <p className="text-[13px] leading-[1.5] text-white/50">{STRATEGIC_MOVE}</p>
-                            </div>
-            {/* Key Risk */}
-            <div className="rounded-[1.4rem] border border-[#D4A574]/20 bg-[#171512] px-4 py-4">
-                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/50 mb-2">Key Risk</p>
-                <p className="text-[13px] leading-[1.5] text-white/60">{RISK}</p>
-            </div>
-                        </div>
+                        ))}
+                    </div>
 
-                        {/* Confidence + Alignment bar */}
-                        <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-[1.4rem] bg-[#171512]">
-                            <div className="flex items-center gap-4">
-                                <div>
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/20 mb-1">Confidence Score</p>
-                                    <p className="text-[36px] font-black leading-none text-white tabular-nums">99 <span className="text-[16px] text-white/30">/100</span></p>
-                                </div>
+                    {/* Quick reads */}
+                    <div className="space-y-4">
+                        {[
+                            { label: 'Primary Mechanic', value: 'Celebrity Aspirational Transfer' },
+                            { label: 'Strategic Move', value: 'Heritage reactivation via contemporary embodiment' },
+                        ].map(line => (
+                            <div key={line.label} className="flex flex-col sm:flex-row sm:items-start gap-2 border-t border-[#E7DED1] pt-4">
+                                <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#9a9a94] w-[160px] shrink-0">{line.label}</span>
+                                <span className="text-[14px] text-[#141414]/70">{line.value}</span>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/20">Brief Alignment</p>
-                                <span className="inline-flex items-center gap-2 rounded-full border border-[#D4A574]/30 bg-[#D4A574]/10 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-[#D4A574]" />
-                                    {BRIEF_ALIGNMENT}
-                                </span>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </motion.div>
 
-                {/* Palette Logic bar */}
+                {/* Bottom link */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className="rounded-[1.4rem] bg-[#1F1F1F] text-white border border-[rgba(212,165,116,0.2)] p-6 lg:p-8"
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                    className="mt-10 flex items-center gap-3"
                 >
-                    <div className="flex items-center justify-between mb-3">
-                        <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/20">
-                            Palette Logic
-                        </p>
-                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">
-                            Chromatic Composition
-                        </p>
-                    </div>
-                    {/* Color bar */}
-                    <div className="flex w-full h-4 rounded-full overflow-hidden mb-3">
-                        {PALETTE.map((seg, i) => (
-                            <div
-                                key={i}
-                                style={{ width: `${seg.pct}%`, backgroundColor: seg.color }}
-                            />
-                        ))}
-                    </div>
-                    <p className="text-[13px] text-white/40 leading-[1.5]">
-                        Warm golds and deep neutrals encode heritage authority and legacy positioning. The restrained palette signals confidence through absence — no competing chromatic system.
-                    </p>
+                    <Link
+                        href={SAMPLE_DOSSIER_HREF}
+                        className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#141414] transition hover:text-[#C1A674]"
+                    >
+                        Open full sample dossier
+                        <ArrowUpRight size={16} />
+                    </Link>
                 </motion.div>
             </div>
         </section>

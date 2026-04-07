@@ -1,12 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Plus, Minus } from 'lucide-react';
 import Logo from '@/components/Logo';
+import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
-// ─── FAQ data ────────────────────────────────────────────────────────────────
 const FAQS = [
     {
         q: 'What kind of ads can I analyse?',
@@ -28,9 +27,8 @@ const FAQS = [
         q: 'Can I use this with clients or in pitches?',
         a: 'Yes. The reads are designed to travel into client rooms, decks, strategy sessions, and creative reviews without feeling like software output.',
     },
-] as const;
+];
 
-// ─── FAQ accordion row ───────────────────────────────────────────────────────
 function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
     const [open, setOpen] = useState(false);
     return (
@@ -39,15 +37,15 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.5, delay: index * 0.07 }}
-            className="border-t border-white/10"
+            className="border-t border-[#E7DED1]"
         >
             <button
                 onClick={() => setOpen((v) => !v)}
                 className="flex w-full items-start justify-between gap-6 py-6 text-left"
                 aria-expanded={open}
             >
-                <span className="text-[15px] font-semibold leading-snug text-white/80 lg:text-[16px]">{q}</span>
-                <span className="mt-0.5 shrink-0 text-[#00E5FF]">
+                <span className="text-[15px] font-semibold leading-snug text-[#141414]/80 lg:text-[16px]">{q}</span>
+                <span className="mt-0.5 shrink-0 text-[#C1A674]">
                     {open ? <Minus size={16} /> : <Plus size={16} />}
                 </span>
             </button>
@@ -61,7 +59,7 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
                         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                     >
-                        <p className="pb-6 text-[14px] leading-relaxed text-white/45">{a}</p>
+                        <p className="pb-6 text-[14px] leading-relaxed text-[#6B6B6B]">{a}</p>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -69,122 +67,71 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
     );
 }
 
-// ─── Main component ───────────────────────────────────────────────────────────
 export default function FooterStartNow() {
     return (
-        <footer className="relative overflow-hidden bg-[#050505] border-t border-white/5">
-            <div className="pointer-events-none absolute inset-0 opacity-[0.22]" aria-hidden="true">
-                <div className="absolute left-[8%] top-24 h-[320px] w-[320px] bg-[radial-gradient(circle,rgba(0,229,255,0.15)_0%,rgba(0,229,255,0)_72%)]" />
-            </div>
-
+        <footer className="relative bg-[#F6F1E7] text-[#141414] border-t border-[#E7DED1]">
             {/* ── OUTRO CTA BLOCK ── */}
-            <div className="relative mx-auto max-w-[1400px] px-6 pt-32 pb-24 sm:px-8 lg:px-10 lg:pt-64 lg:pb-32">
-
-                {/* Top label */}
+            <div className="mx-auto max-w-[1200px] px-6 pt-32 pb-24 sm:px-8 lg:px-10 lg:pt-48 lg:pb-32">
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="mb-10 border-t border-white/20 pt-6 flex items-center gap-4"
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-100px' }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <p className="text-[11px] font-black uppercase tracking-[0.45em] text-[#00E5FF]">
-                        Bring in the work · Leave with a sharper read
+                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-8">
+                        Get started
+                    </p>
+                    <h2 className="font-black leading-[0.88] tracking-[-0.05em] text-[#141414] uppercase mb-10"
+                        style={{ fontSize: 'clamp(48px, 9vw, 100px)' }}
+                    >
+                        Bring in the frame.<br />
+                        <span className="text-[#C1A674]">Get the creative read.</span>
+                    </h2>
+                    <p className="text-[18px] leading-[1.7] text-[#6B6B6B] max-w-[480px]">
+                        Built for art directors, designers, strategists, founders, and teams who need language for what the work is doing before the room moves on.
                     </p>
                 </motion.div>
 
-                {/* Massive CTA headline */}
-                <motion.h2
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                    className="font-black leading-[0.88] tracking-[-0.05em] text-white uppercase"
-                    style={{ fontSize: 'clamp(52px, 10vw, 120px)' }}
-                >
-                    Bring in the frame.<br />
-                    <span className="text-[#00E5FF]">Get the creative read.</span>
-                </motion.h2>
-                
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: 0.15 }}
-                    className="mt-12 max-w-2xl text-[18px] lg:text-[20px] leading-[1.7] text-white/50"
-                >
-                    Built for art directors, designers, strategists, founders, and teams who need language for what the work is doing before the room moves on.
-                </motion.p>
-
-                {/* CTA row */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: 0.2 }}
-                    className="mt-16 flex flex-col items-start gap-8 sm:flex-row sm:items-center"
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                    className="mt-16 flex flex-col sm:flex-row items-start sm:items-center gap-6"
                 >
                     <a
-                        href="/share/sample-dossier"
-                        className="inline-flex items-center gap-4 bg-[#00E5FF] px-10 py-5 text-[12px] font-black uppercase tracking-[0.25em] text-black transition hover:bg-white"
+                        href={SAMPLE_DOSSIER_HREF}
+                        className="inline-flex items-center gap-3 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition hover:bg-[#C1A674] hover:text-[#141414]"
                     >
                         Open Sample Read
-                        <ArrowUpRight size={18} />
+                        <ArrowUpRight size={16} />
                     </a>
                     <a
                         href="/ingest"
-                        className="inline-flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.3em] text-white/40 transition hover:text-[#00E5FF]"
+                        className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#6B6B6B] transition hover:text-[#141414]"
                     >
-                        Bring In A Frame
-                        <ArrowUpRight size={16} />
+                        <span className="w-6 h-px bg-[#141414]/20" />
+                        Start Decompiling Free
                     </a>
                 </motion.div>
             </div>
 
-
             {/* ── FAQ STRIP ── */}
-            <div className="relative mx-auto max-w-[1400px] px-6 py-24 sm:px-8 lg:px-10 lg:py-40">
-                <div className="grid grid-cols-1 gap-0 lg:grid-cols-[0.4fr_0.6fr] lg:gap-20">
-
-                    {/* Left: label */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.7 }}
-                        className="mb-8 lg:mb-0 lg:pt-6"
-                    >
-
-                        <p className="-mt-1 text-[11px] font-black uppercase tracking-[0.5em] text-[#00E5FF]">
-                            Common questions
-                        </p>
-                    </motion.div>
-
-                    {/* Right: accordion rows */}
-                    <div>
-                        {FAQS.map((item, i) => (
-                            <FaqRow key={item.q} q={item.q} a={item.a} index={i} />
-                        ))}
-                        {/* Final border */}
-                        <div className="border-t border-white/10" />
-                    </div>
+            <div className="mx-auto max-w-[1200px] px-6 py-16 sm:px-8 lg:px-10 lg:py-24">
+                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-10">Common questions</p>
+                <div>
+                    {FAQS.map((item, i) => (
+                        <FaqRow key={item.q} q={item.q} a={item.a} index={i} />
+                    ))}
+                    <div className="border-t border-[#E7DED1]" />
                 </div>
             </div>
 
-            {/* ── DIVIDER ── */}
-            <div className="mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-10">
-                <div className="h-px bg-white/10" />
-            </div>
-
             {/* ── FOOTER BAR ── */}
-            <div className="mx-auto max-w-[1400px] px-6 py-12 sm:px-8 lg:px-10 lg:py-16">
-                <div className="flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-center">
-
-                    {/* Brand */}
-                    <Logo sublabel="VISUAL JUDGMENT FOR WORKING CREATIVES" forceDark className="scale-[0.85] origin-left" />
-
-                    {/* Nav links */}
-                    <div className="flex flex-wrap items-center gap-x-8 gap-y-2">
+            <div className="mx-auto max-w-[1200px] px-6 py-8 sm:px-8 lg:px-10 border-t border-[#E7DED1]">
+                <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
+                    <Logo sublabel="VISUAL JUDGMENT FOR WORKING CREATIVES" forceDark={false} className="scale-[0.85] origin-left" />
+                    <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
                         {[
                             { label: 'About', href: '/about' },
                             { label: 'Pricing', href: '/pricing' },
@@ -196,22 +143,19 @@ export default function FooterStartNow() {
                             <a
                                 key={link.label}
                                 href={link.href}
-                                className="border-b border-white/5 pb-1 text-[10px] font-black uppercase tracking-[0.25em] text-white/30 transition hover:border-white/20 hover:text-white/80"
+                                className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#141414]/30 transition hover:text-[#141414]"
                             >
                                 {link.label}
                             </a>
                         ))}
                     </div>
-
-                    {/* Legal */}
-                    <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.25em] text-white/15">
-                        <a href="/legal/terms" className="hover:text-white/40 transition">Terms</a>
-                        <a href="/legal/privacy" className="hover:text-white/40 transition">Privacy</a>
+                    <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#141414]/15">
+                        <a href="/legal/terms" className="hover:text-[#141414]/40 transition">Terms</a>
+                        <a href="/legal/privacy" className="hover:text-[#141414]/40 transition">Privacy</a>
                         <span>© 2026</span>
                     </div>
                 </div>
             </div>
-
         </footer>
     );
 }
