@@ -27,11 +27,11 @@ export default async function IntelligenceVaultPage() {
 
 function VaultSkeleton() {
     return (
-        <div className="min-h-screen bg-[#141414] p-8 md:p-12 lg:p-16">
-            <div className="mb-12 h-12 w-64 animate-pulse rounded-lg bg-[#1F1F1F] border border-[rgba(212,165,116,0.12)]" />
+        <div className="min-h-screen bg-[#F6F1E7] p-8 md:p-12 lg:p-16">
+            <div className="mb-12 h-12 w-64 animate-pulse rounded-lg bg-[#E7DED1]" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {[...Array(8)].map((_, i) => (
-                    <div key={i} className="h-[450px] animate-pulse rounded-3xl border border-[rgba(212,165,116,0.16)] bg-[#1F1F1F]" />
+                    <div key={i} className="h-[450px] animate-pulse rounded-[1.4rem] border border-[#E7DED1] bg-[#FBF7EF]" />
                 ))}
             </div>
         </div>
