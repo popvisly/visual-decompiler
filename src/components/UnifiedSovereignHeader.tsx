@@ -82,11 +82,11 @@ export default function UnifiedSovereignHeader({
                         transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]
                         ${isScrolled
                             ? forceDark
-                                ? 'py-4 lg:py-5 px-6 lg:px-10 bg-[#050505]/80 backdrop-blur-2xl rounded-2xl'
-                                : 'py-4 lg:py-5 px-6 lg:px-10 bg-[#F6F1E7]/80 backdrop-blur-2xl rounded-2xl'
+                                ? 'py-4 lg:py-5 px-6 lg:px-10 bg-[#050505]/60 backdrop-blur-xl rounded-full border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
+                                : 'py-4 lg:py-5 px-6 lg:px-10 bg-white/60 backdrop-blur-xl rounded-full border border-black/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)]'
                             : forceDark
-                                ? 'py-5 lg:py-7 px-0'
-                                : 'py-5 lg:py-7 px-0'
+                                ? 'py-5 lg:py-7 px-0 backdrop-blur-xl rounded-full border border-white/10 bg-[#050505]/30'
+                                : 'py-5 lg:py-7 px-0 backdrop-blur-xl rounded-full border border-black/10 bg-white/30'
                         }
                     `}
                 >
