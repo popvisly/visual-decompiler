@@ -35,7 +35,7 @@ export default function ParticleField() {
         const createParticle = (x: number, y: number): Particle => ({
             x, y, originX: x, originY: y,
             size: 1.5 + Math.random() * 2.5,
-            color: ['#C1A674', '#D4A574', '#A09480', '#141414', '#2A2A2A'][Math.floor(Math.random() * 5)],
+            color: ['#C1A674', '#D4A574', '#A09480', '#E8D5B8', '#D4C8B8'][Math.floor(Math.random() * 5)],
             phase: Math.random() * Math.PI * 2,
             frequency: 0.002 + Math.random() * 0.004,
             amplitude: 5 + Math.random() * 10,

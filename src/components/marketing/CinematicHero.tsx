@@ -37,7 +37,7 @@ export default function CinematicHero() {
             className="relative flex min-h-[100vh] flex-col justify-center overflow-hidden bg-[#0B0B0B] px-6 py-24 sm:px-8 lg:px-10"
             data-presence-tone="dark"
         >
-            <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+            <div className="absolute inset-0 z-0" aria-hidden="true">
                 <ParticleField />
             </div>
 
