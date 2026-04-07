@@ -4,9 +4,9 @@ import { MeshService } from './mesh_service';
 import OpenAI from 'openai';
 import { getAnthropic, CLAUDE_MODEL } from './anthropic';
 
-const openai = new OpenAI({
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
-});
+}) : null as unknown as OpenAI;
 
 export type AgencyMetrics = {
     totalBoards: number;

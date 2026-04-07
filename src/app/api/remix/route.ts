@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from '@/lib/auth-server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
-});
+}) : null as unknown as OpenAI;
 
 export async function POST(req: Request) {
     const { userId } = await getServerSession();

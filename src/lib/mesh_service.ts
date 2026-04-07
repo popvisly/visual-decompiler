@@ -1,9 +1,9 @@
 import { supabaseAdmin } from './supabase';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
-});
+}) : null as unknown as OpenAI;
 
 export type BoardAnomalies = {
     boardId: string;
