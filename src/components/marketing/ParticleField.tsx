@@ -43,12 +43,12 @@ export default function ParticleField() {
                 this.vx = 0;
                 this.vy = 0;
                 
-                // High-voltage, super vibrant tech palette
-                const colors = ['#FF003C', '#00E5FF', '#BD00FF', '#FFEA00', '#00FF66'];
+                // Warm gold & brand palette
+                const colors = ['#C1A674', '#141414', '#D4A574', '#A09480', '#6B6B6B'];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
                 
                 this.speedFactor = Math.random() * 1.2 + 0.6; // slightly faster for energy
-                this.alpha = Math.random() * 0.4 + 0.1;
+                this.alpha = Math.random() * 0.25 + 0.08;
             }
 
             draw() {
@@ -56,8 +56,8 @@ export default function ParticleField() {
                 
                 ctx.strokeStyle = this.color;
                 ctx.globalAlpha = this.alpha;
-                ctx.globalCompositeOperation = 'lighter'; // Additive blending for neon glow
-                ctx.lineWidth = 1.5; // Slightly thicker
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.lineWidth = 2.5; // Bigger atoms
                 ctx.beginPath();
                 ctx.moveTo(this.prevX, this.prevY);
                 ctx.lineTo(this.x, this.y);
@@ -128,10 +128,10 @@ export default function ParticleField() {
         const animate = () => {
             if (!ctx || !canvas) return;
             
-            // Very slow fade with deeper dark background
+            // Light fade on light canvas
             ctx.globalAlpha = 1.0;
             ctx.globalCompositeOperation = 'source-over'; // reset for background clearing
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.08)'; 
+            ctx.fillStyle = 'rgba(246, 241, 231, 0.12)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             time += 0.0005; // very slow evolution
