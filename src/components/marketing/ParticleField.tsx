@@ -10,6 +10,9 @@ interface Orb {
     vy: number;
     alpha: number;
     color: string;
+    angle: number;
+    angularSpeed: number;
+    orbitRadius: number;
 }
 
 export default function ParticleField() {
@@ -22,58 +25,131 @@ export default function ParticleField() {
         if (!ctx) return;
 
         let animationFrameId: number;
+        let w = 0;
+        let h = 0;
         const orbs: Orb[] = [];
-        const count = 6;
 
         const GOLD = '#C1A674';
+        const GOLD_LIGHT = '#D4A574';
+        const GOLD_DARK = '#A09480';
         const DARK = '#141414';
-        const MUTED = '#A09480';
 
         const resize = () => {
             const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
-            ctx.scale(dpr, dpr);
-            initOrbs(rect.width, rect.height);
+            w = rect.width;
+            h = rect.height;
+            canvas.width = w * dpr;
+            canvas.height = h * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            if (orbs.length === 0) initOrbs(w, h);
         };
 
-        const initOrbs = (w: number, h: number) => {
+        const initOrbs = (width: number, height: number) => {
             orbs.length = 0;
-            const shapes: Orb[] = [
-                { x: w * 0.2, y: h * 0.3, radius: 180, vx: 0.15, vy: 0.08, alpha: 0.06, color: GOLD },
-                { x: w * 0.7, y: h * 0.6, radius: 220, vx: -0.1, vy: 0.12, alpha: 0.04, color: GOLD },
-                { x: w * 0.5, y: h * 0.8, radius: 160, vx: 0.08, vy: -0.1, alpha: 0.03, color: MUTED },
-                { x: w * 0.85, y: h * 0.2, radius: 120, vx: -0.12, vy: 0.05, alpha: 0.05, color: GOLD },
-                { x: w * 0.15, y: h * 0.75, radius: 140, vx: 0.1, vy: -0.06, alpha: 0.03, color: DARK },
-                { x: w * 0.6, y: h * 0.4, radius: 100, vx: -0.08, vy: 0.1, alpha: 0.06, color: GOLD },
+
+            // Large bold orbs - geometric, deliberate
+            const shapes: Omit<Orb, 'angle' | 'angularSpeed' | 'orbitRadius'>[] = [
+                // 1 - Large gold circle, upper right
+                { x: width * 0.72, y: height * 0.3, radius: 280, vx: 0.3, vy: 0.18, alpha: 0.12, color: GOLD },
+                // 2 - Dark geometric element, lower left  
+                { x: width * 0.2, y: height * 0.7, radius: 240, vx: -0.2, vy: -0.12, alpha: 0.08, color: DARK },
+                // 3 - Medium gold, center-right
+                { x: width * 0.85, y: height * 0.7, radius: 180, vx: 0.15, vy: -0.22, alpha: 0.1, color: GOLD_LIGHT },
+                // 4 - Gold accent, center-left
+                { x: width * 0.3, y: height * 0.25, radius: 160, vx: 0.2, vy: 0.15, alpha: 0.1, color: GOLD },
+                // 5 - Large muted orb, bottom
+                { x: width * 0.5, y: height * 0.85, radius: 220, vx: -0.1, vy: 0.1, alpha: 0.06, color: GOLD_DARK },
+                // 6 - Medium dark, top-left
+                { x: width * 0.12, y: height * 0.15, radius: 150, vx: 0.18, vy: -0.08, alpha: 0.07, color: DARK },
+                // 7 - Gold ring, center
+                { x: width * 0.55, y: height * 0.5, radius: 200, vx: 0.08, vy: 0.2, alpha: 0.08, color: GOLD },
             ];
-            orbs.push(...shapes);
+
+            for (const s of shapes) {
+                orbs.push({
+                    ...s,
+                    angle: Math.random() * Math.PI * 2,
+                    angularSpeed: (0.0002 + Math.random() * 0.0003) * (Math.random() > 0.5 ? 1 : -1),
+                    orbitRadius: 0,
+                });
+            }
+        };
+
+        const drawShape = (orb: Orb) => {
+            ctx.save();
+            const gradient = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius);
+            
+            // Center is most opaque, edge is fully transparent
+            const r = parseInt(orb.color.slice(1, 3), 16);
+            const g = parseInt(orb.color.slice(3, 5), 16);
+            const b = parseInt(orb.color.slice(5, 7), 16);
+            const a = Math.round(orb.alpha * 255);
+            
+            gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${a / 255})`);
+            gradient.addColorStop(0.6, `rgba(${r}, ${g}, ${b}, ${a * 0.4 / 255})`);
+            gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Outer ring for geometric feel
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${a * 0.15 / 255})`;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            ctx.restore();
+        };
+
+        const drawConnections = () => {
+            // Draw subtle connection lines between nearby orbs
+            for (let i = 0; i < orbs.length; i++) {
+                for (let j = i + 1; j < orbs.length; j++) {
+                    const dx = orbs[i].x - orbs[j].x;
+                    const dy = orbs[i].y - orbs[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    // Draw line if orbs are within 500px
+                    if (dist < 500) {
+                        const alpha = Math.max(0, 0.04 * (1 - dist / 500));
+                        ctx.strokeStyle = `rgba(193, 166, 116, ${alpha})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(orbs[i].x, orbs[i].y);
+                        ctx.lineTo(orbs[j].x, orbs[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
         };
 
         const draw = () => {
-            const rect = canvas.getBoundingClientRect();
-            ctx.clearRect(0, 0, rect.width, rect.height);
+            ctx.clearRect(0, 0, w, h);
 
             for (const orb of orbs) {
+                // Linear drift
                 orb.x += orb.vx;
                 orb.y += orb.vy;
 
+                // Gentle circular perturbation (adds organic feel to the geometric)
+                orb.angle += orb.angularSpeed;
+                orb.x += Math.cos(orb.angle) * 0.3;
+                orb.y += Math.sin(orb.angle) * 0.3;
+
                 // Bounce off edges with padding
-                if (orb.x < -orb.radius) orb.vx = Math.abs(orb.vx);
-                if (orb.x > rect.width + orb.radius) orb.vx = -Math.abs(orb.vx);
-                if (orb.y < -orb.radius) orb.vy = Math.abs(orb.vy);
-                if (orb.y > rect.height + orb.radius) orb.vy = -Math.abs(orb.vy);
+                const pad = orb.radius;
+                if (orb.x < -pad) orb.vx = Math.abs(orb.vx);
+                if (orb.x > w + pad) orb.vx = -Math.abs(orb.vx);
+                if (orb.y < -pad) orb.vy = Math.abs(orb.vy);
+                if (orb.y > h + pad) orb.vy = -Math.abs(orb.vy);
 
-                const gradient = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius);
-                gradient.addColorStop(0, orb.color + Math.round(orb.alpha * 255).toString(16).padStart(2, '0'));
-                gradient.addColorStop(1, orb.color + '00');
-
-                ctx.fillStyle = gradient;
-                ctx.beginPath();
-                ctx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2);
-                ctx.fill();
+                drawShape(orb);
             }
+
+            // Draw subtle mesh lines
+            drawConnections();
 
             animationFrameId = requestAnimationFrame(draw);
         };

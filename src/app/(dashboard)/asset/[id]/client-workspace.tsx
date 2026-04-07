@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import posthog from 'posthog-js';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import AdAnalyticsTab from '@/components/AdAnalyticsTab';
 import RadarChart from '@/components/RadarChart';
 import StrategicPostureMap from '@/components/StrategicPostureMap';
-import { FileDown, Code, Info, Sparkles, Copy } from 'lucide-react';
+import { FileDown, Code, Info, Sparkles, Copy, Lock, AlertCircle, Check, X } from 'lucide-react';
 import RadiantArchitectureOverlay from '@/components/RadiantArchitectureOverlay';
 import AddToBoard from '@/components/AddToBoard';
 import AssetTagEditor from '@/components/AssetTagEditor';
@@ -85,6 +86,7 @@ interface WorkspaceAsset {
             archetype_mapping?: {
                 target_posture: string;
                 strategic_moves: string[];
+                trigger_distribution?: Record<string, number | string>;
             };
             test_plan?: {
                 hypothesis: string;
@@ -108,6 +110,7 @@ interface WorkspaceAsset {
             archetype_mapping?: {
                 target_posture: string;
                 strategic_moves: string[];
+                trigger_distribution?: Record<string, number | string>;
             };
             test_plan?: {
                 hypothesis: string;
@@ -1405,6 +1408,7 @@ export default function AssetWorkspace({
     const [decisionLogEntries, setDecisionLogEntries] = useState<DecisionLogEntry[]>([]);
     const [decisionNote, setDecisionNote] = useState('');
     const [showDecisionSummary, setShowDecisionSummary] = useState(false);
+    const [decisionVerdict, setDecisionVerdict] = useState<'Ship' | 'Revise' | 'Kill' | null>(null);
 
     const [sequenceData, setSequenceData] = useState<SequenceData | null>(null);
     const [blueprintData, setBlueprintData] = useState<BlueprintData | null>(
@@ -2042,8 +2046,8 @@ export default function AssetWorkspace({
                 .vault-analysis-shell {
                     --vault-max-width: 1680px;
                     --vault-content-pad-x: clamp(16px, 2vw, 32px);
-                    --analysis-right-max: 880px;
-                    --analysis-text-measure: 62ch;
+                    --analysis-right-max: 980px;
+                    --analysis-text-measure: 72ch;
                     max-width: var(--vault-max-width);
                     margin-inline: auto;
                     padding-inline: var(--vault-content-pad-x);
@@ -2075,7 +2079,7 @@ export default function AssetWorkspace({
                 @media (min-width: 1024px) {
                     .vault-analysis-frame {
                         display: grid;
-                        grid-template-columns: minmax(420px, 560px) minmax(680px, 1fr);
+                        grid-template-columns: minmax(460px, 620px) minmax(680px, 1fr);
                         align-items: start;
                     }
 
@@ -2090,7 +2094,7 @@ export default function AssetWorkspace({
 
                 @media (min-width: 1920px) {
                     .vault-analysis-shell {
-                        --vault-content-pad-x: clamp(24px, 2.4vw, 40px);
+                        --vault-content-pad-x: clamp(32px, 3.2vw, 48px);
                     }
                 }
             `}</style>
@@ -2262,7 +2266,7 @@ export default function AssetWorkspace({
                             <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Trigger Distribution</p>
                                 <div className="mt-4 space-y-2 text-sm">
-                                    {Object.entries(dossier?.archetype_mapping?.trigger_distribution || {}).map(([label, value]) => (
+                                    {Object.entries((dossier?.archetype_mapping as any)?.trigger_distribution || {}).map(([label, value]: [string, any]) => (
                                         <p key={label}>{label}: {stringifyValue(value)}</p>
                                     ))}
                                 </div>
@@ -2351,145 +2355,123 @@ export default function AssetWorkspace({
                 </div>
             </div>
 
-            <div className="screen-layout w-full min-h-screen bg-[#FBFBF6]">
-                <div className="vault-analysis-shell min-h-screen w-full bg-[#FBFBF6] text-[#1A1A1A]">
-                    <div className="min-h-screen w-full bg-[#FBFBF6] border-x border-[#D4A574]/10 shadow-[0_0_80px_rgba(0,0,0,0.03)] text-[#1A1A1A]">
+            <div className="screen-layout w-full min-h-screen bg-[#050505] selection:bg-[#00E5FF] selection:text-black">
+                <div className="vault-analysis-shell min-h-screen w-full bg-[#050505] text-white">
+                    <div className="min-h-screen w-full bg-[#050505] border-x border-white/5 shadow-[0_0_80px_rgba(0,0,0,0.4)] text-white">
                     {sampleMode && (
-                        <div className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#E6DDCF] bg-[#FBFBF6]/96 px-5 py-4 backdrop-blur-md md:px-8">
-                            <a href="/" className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513]">
-                                Visual Decompiler
+                        <div className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-white/10 bg-[#050505]/96 px-5 py-4 backdrop-blur-md md:px-8">
+                            <a href="/" className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">
+                                [ VISUAL DECOMPILER ]
                             </a>
-                            <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#1A1A1A]/48">
-                                Sample Dossier
+                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">
+                                SYSTEM PARTITION: SAMPLE_DOSSIER
                             </span>
                             <a
                                 href="/ingest"
-                                className="inline-flex items-center rounded-full border border-[#D4A574]/30 bg-[#FFFCF7] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#151310] transition-colors hover:bg-[#2A2A2A]"
+                                className="inline-flex items-center bg-[#00E5FF] px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.3em] text-black transition-all hover:bg-white hover:scale-105 active:scale-95"
                             >
-                                Start Decompiling Free
+                                DECOMPILE FREE
                             </a>
                         </div>
                     )}
                     <div className="vault-analysis-frame">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    <aside className={`vault-analysis-asset-rail w-full border-r border-[#D4A574]/20 relative bg-[#FBFBF6] lg:sticky ${sampleMode ? 'lg:top-[66px]' : 'lg:top-0'} z-10`}>
-                        <div className="flex flex-col items-center justify-center px-[clamp(16px,2vw,32px)] pt-10 pb-8 lg:pt-14">
+                    <aside className={`vault-analysis-asset-rail w-full border-r border-white/10 relative bg-[#050505] lg:sticky ${sampleMode ? 'lg:top-[66px]' : 'lg:top-0'} z-10`}>
+                        <div className="flex flex-col items-center justify-center px-[clamp(16px,2vw,32px)] pt-10 pb-8 lg:pt-20">
 
                             <div 
-                                className={`w-full max-w-[480px] aspect-[4/5] relative flex items-center justify-center overflow-hidden border border-[#D4A574]/30 bg-[#FFFCF7] group rounded-2xl shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75 saturate-50' : ''}`}
+                                className={`w-full max-w-[520px] aspect-[4/5] relative flex items-center justify-center overflow-hidden border border-white/5 bg-white/5 group shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75' : ''}`}
                                 style={getAssetStyle()}
                             >
+                                {/* Grid HUD Texture */}
+                                <div className="absolute inset-0 pointer-events-none opacity-[0.03] z-[2] [background-image:linear-gradient(#00E5FF_1px,transparent_1px),linear-gradient(90deg,#00E5FF_1px,transparent_1px)] [background-size:24px_24px]" />
+
                                 {/* If multiple images, render a horizontal CSS scroll snap setup */}
-                                <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+                                <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide z-[1]">
                                     {fileUrls.map((url, idx) => (
                                         <img
                                             key={idx}
                                             src={url}
                                             alt={`Asset frame ${idx}`}
-                                            className="w-full h-full object-cover object-center shrink-0 snap-center transition-all duration-700"
+                                            className="w-full h-full object-cover object-center shrink-0 snap-center transition-all duration-700 grayscale hover:grayscale-0"
                                         />
                                     ))}
                                 </div>
                                 {fileUrls.length > 1 && (
-                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2bg-white/90 border border-[#E5E5E1] px-3 py-1 flex gap-2 rounded-full">
+                                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-3xl border border-white/10 px-4 py-2 flex gap-3 z-[10]">
                                         {fileUrls.map((_, i) => (
-                                            <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#8B4513]/30" />
+                                            <div key={i} className="w-1.5 h-1.5 bg-[#00E5FF]/20" />
                                         ))}
                                     </div>
                                 )}
                                 {activeTab === 'SIGNALS' && showRadiant && <RadiantArchitectureOverlay data={(extraction?.full_dossier as any)?.radiant_architecture} />}
                                 {asset.type !== 'STATIC' && (
-                                    <div className="absolute top-4 left-4 bg-[#FFFCF7]/90 border border-[#D4A574]/40 px-3 py-1 backdrop-blur-sm rounded-none">
-                                        <span className="text-[9px] uppercase tracking-widest text-[#D4A574]">{asset.type}</span>
+                                    <div className="absolute top-6 left-6 bg-black/80 border border-[#00E5FF]/40 px-3 py-1 backdrop-blur-md z-[10]">
+                                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">{asset.type}</span>
                                     </div>
                                 )}
                             </div>
 
-                            <div className="w-full mt-6 border-b border-[#E6DDCF] pb-4">
-                                <div className="mb-4">
-                                    <h1 className="text-2xl font-light tracking-tightest text-[#9B8662] uppercase">{asset.brand?.name}</h1>
-                                    <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#D4A574]">{asset.brand?.market_sector}</span>
+                            <div className="w-full max-w-[520px] mt-12 border-b border-white/10 pb-8">
+                                <div className="mb-6">
+                                    <h1 className="text-[5vw] lg:text-[4vw] font-black tracking-tightest leading-none text-white uppercase mb-2">{asset.brand?.name}</h1>
+                                    <span className="text-[12px] font-black uppercase tracking-[0.5em] text-[#00E5FF]">{asset.brand?.market_sector}</span>
                                 </div>
                                 {sampleMode ? (
-                                    <div className="rounded-[1.5rem] border border-[#D4A574]/18 bg-[#FFFCF7] px-5 py-5 text-[#151310]">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Sample access</p>
-                                        <p className="mt-3 text-[13px] leading-relaxed text-[#6A6257]">This is a live sample dossier.</p>
-                                        <p className="mt-2 text-[13px] leading-relaxed text-[#6A6257]">Create your own in under 60 seconds.</p>
+                                    <div className="border border-white/10 bg-white/5 px-6 py-6 text-white">
+                                        <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">System Restriction: Active</p>
+                                        <p className="mt-4 text-2xl font-bold leading-tight tracking-tight uppercase">This is a shared <br />analytical brief.</p>
+                                        <p className="mt-4 text-[12px] leading-relaxed text-white/50 uppercase tracking-[0.1em]">Create your own forensic intelligence reports in real-time.</p>
                                         <a
                                             href="/ingest"
-                                            className="mt-5 inline-flex items-center rounded-full bg-[#D4A574] px-4 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#141414] transition-colors hover:bg-[#c8955b]"
+                                            className="mt-8 inline-flex items-center bg-[#00E5FF] px-8 py-3 text-[11px] font-black uppercase tracking-[0.3em] text-black transition-all hover:bg-white"
                                         >
-                                            Start Decompiling Free
+                                            INITIATE EXTRACTION
                                         </a>
                                     </div>
                                 ) : (
                                     <>
-                                        <div className="mb-3 flex items-center justify-between gap-3">
-                                            <div>
-                                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Next best action</p>
-                                                <p className="mt-2 text-[12px] leading-relaxed text-[#6A6257]">
-                                                    Compare this against a second route, then move the strongest direction into a board or export.
-                                                </p>
-                                            </div>
+                                        <div className="mb-8">
+                                            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-3">System Guidance</p>
+                                            <p className="text-[15px] leading-relaxed text-white/50 uppercase font-medium">
+                                                Engage differential diagnosis against a second route to surface high-priority strategic pivots.
+                                            </p>
                                         </div>
-                                        <div className="mb-4 grid items-start gap-[clamp(12px,1vw,18px)] md:grid-cols-2 xl:grid-cols-3">
-                                            <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FFFCF7] px-4 py-4 min-h-[204px]">
-                                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Compare against another asset</p>
-                                                <p className="mt-2 text-[12px] leading-relaxed text-[#6A6257]">
-                                                    Put this result beside another route and surface the strategic delta fast.
+                                        <div className="mb-8 grid grid-cols-1 gap-3">
+                                            <div className="border border-white/10 bg-white/5 p-6 group hover:border-[#00E5FF]/40 transition-all">
+                                                <div className="flex items-center gap-4 mb-4">
+                                                    <div className="w-8 h-8 flex items-center justify-center bg-[#00E5FF]/10 text-[#00E5FF]">
+                                                        <Code className="w-4 h-4" />
+                                                    </div>
+                                                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00E5FF]">Differential Diagnostic</p>
+                                                </div>
+                                                <p className="text-[13px] leading-relaxed text-white/40 mb-6 uppercase">
+                                                    Put this brief beside another route and surface the strategic delta.
                                                 </p>
                                                 <a
                                                     href="/compare"
-                                                    onClick={() =>
-                                                        posthog.capture('trial_next_action_compare_click', {
-                                                            surface: 'asset_result',
-                                                            step: 'try_2',
-                                                            href: '/compare',
-                                                        })
-                                                    }
-                                                    className="mt-4 inline-flex items-center rounded-full border border-[#D4A574]/35 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10"
+                                                    className="inline-flex items-center border border-[#00E5FF] px-5 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#00E5FF] transition-all hover:bg-[#00E5FF] hover:text-black"
                                                 >
-                                                    Run Differential Diagnosis
+                                                    RUN ANALYSIS
                                                 </a>
                                             </div>
-                                            <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FFFCF7] px-4 py-4 min-h-[204px]">
-                                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Save to Vault / Board</p>
-                                                <p className="mt-2 text-[12px] leading-relaxed text-[#6A6257]">
-                                                    This dossier is already stored in Vault. Create a board to keep it active in the next review or client thread.
-                                                </p>
-                                                <div className="mt-4">
-                                                    <AddToBoard
-                                                        assetId={asset.id}
-                                                        triggerLabel="Create Board"
-                                                        analytics={{
-                                                            clickEventName: 'trial_next_action_create_board_click',
-                                                            completionEventName: 'trial_try_3_completed',
-                                                            surface: 'asset_result',
-                                                            step: 'try_3',
-                                                            href: '/boards',
-                                                        }}
-                                                    />
+                                            
+                                            <div className="border border-white/10 bg-white/5 p-6 group hover:border-[#00E5FF]/40 transition-all">
+                                                <div className="flex items-center gap-4 mb-4">
+                                                    <div className="w-8 h-8 flex items-center justify-center bg-white/10 text-white">
+                                                        <FileDown className="w-4 h-4" />
+                                                    </div>
+                                                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Intelligence Export</p>
                                                 </div>
-                                            </div>
-                                            <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FFFCF7] px-4 py-4 min-h-[204px]">
-                                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Export summary</p>
-                                                <p className="mt-2 text-[12px] leading-relaxed text-[#6A6257]">
-                                                    Turn the readout into a shareable summary before you lose the room.
+                                                <p className="text-[13px] leading-relaxed text-white/40 mb-6 uppercase">
+                                                    Generate the briefing summary for immediate review distribution.
                                                 </p>
                                                 <button
-                                                    onClick={() => {
-                                                        posthog.capture('trial_next_action_export_summary_click', {
-                                                            surface: 'asset_result',
-                                                            step: 'try_3_alt',
-                                                            action: 'export_summary',
-                                                        });
-                                                        setShowExportModal(true);
-                                                    }}
-                                                    className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#D4A574]/35 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#D4A574]/10"
+                                                    onClick={() => setShowExportModal(true)}
+                                                    className="inline-flex items-center border border-white/30 px-5 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/80 transition-all hover:border-white hover:text-white"
                                                 >
-                                                    <FileDown className="w-3 h-3" />
-                                                    Export Summary
+                                                    [ EXPORT DOSSIER ]
                                                 </button>
                                             </div>
                                         </div>
@@ -2636,22 +2618,27 @@ export default function AssetWorkspace({
                 )}
 
                 {/* RIGHT COLUMN: Scrollable Forensic Console (55%) */}
-                <div className="vault-analysis-content-rail w-full min-h-screen bg-[#FBFBF6] relative">
-                    <div className="pointer-events-none absolute inset-0 opacity-[0.4] [background-image:linear-gradient(rgba(212,165,116,0.05)_48px,transparent_48px),linear-gradient(90deg,rgba(212,165,116,0.05)_48px,transparent_48px)] [background-size:48px_48px]" />
+                <div className="vault-analysis-content-rail w-full min-h-screen bg-[#050505] relative">
+                    {/* HUD Texture Overlay */}
+                    <div className="pointer-events-none absolute inset-0 opacity-[0.02] [background-image:linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)] [background-size:64px_64px]" />
+                    
                     <div className="vault-analysis-content-inner relative z-10 min-h-screen w-full bg-transparent">
 
                     {/* Minimalist Segmented Controls */}
-                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 flex gap-6 border-b border-[#E6DDCF] bg-[#FBFBF6]/95 px-[clamp(16px,2vw,32px)] pt-8 pb-0 backdrop-blur-md md:pt-10`}>
+                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 flex gap-10 border-b border-white/5 bg-[#050505]/95 px-[clamp(16px,2vw,32px)] pt-10 pb-0 backdrop-blur-3xl md:pt-14`}>
                         {dossierTabs.map(tab => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
-                                className={`pb-4 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors relative ${activeTab === tab ? 'text-[#8B4513]' : 'text-[#1A1A1A]/50 hover:text-[#8B4513]/80'
+                                className={`pb-5 text-[11px] font-black tracking-[0.4em] uppercase transition-all relative ${activeTab === tab ? 'text-[#00E5FF]' : 'text-white/20 hover:text-white/40'
                                     }`}
                             >
                                 {DOSSIER_TAB_LABELS[tab]}
                                 {activeTab === tab && (
-                                    <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#8B4513]" />
+                                    <motion.div 
+                                        layoutId="tab-active"
+                                        className="absolute bottom-0 left-0 w-full h-[3px] bg-[#00E5FF] shadow-[0_0_15px_rgba(0,229,255,0.5)]" 
+                                    />
                                 )}
                             </button>
                         ))}
@@ -2669,37 +2656,36 @@ export default function AssetWorkspace({
                                             intro="VD does not generate ads or act as an AI design app. VD judges, diagnoses, and directs creative quality."
                                         />
 
-                                        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]">
-                                            <div className="rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 text-[#FBFBF6] shadow-[0_24px_60px_rgba(11,10,8,0.22)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Integrated Recommendation</p>
-                                                <p className="mt-5 max-w-[56ch] text-[16px] leading-8 text-[#F3F1ED]">{integratedRecommendation.thesis}</p>
-                                                <p className="mt-4 max-w-[58ch] text-[14px] leading-7 text-[#B9B19F]">{integratedRecommendation.whyNow}</p>
-                                                <p className="mt-5 rounded-[1.5rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5 text-[13px] leading-6 text-[#D6D0C6]">
-                                                    {integratedRecommendation.riskRewardTension}
-                                                </p>
-                                                <div className="mt-6 rounded-[1.75rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5">
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">Operator Summary</p>
-                                                    <div className="mt-4 space-y-3">
-                                                        <div className="rounded-[1.25rem] border border-[#3A3027] bg-[#1E1A16] px-4 py-4">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Decision</p>
-                                                            <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">{integratedRecommendation.decision}</p>
+                                        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+                                            <div className="border border-white/10 bg-white/5 p-10 text-white shadow-[0_40px_80px_rgba(0,0,0,0.4)]">
+                                                <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-10 [word-spacing:0.2em]">Integrated Strategic Recommendation</p>
+                                                <p className="max-w-[56ch] text-[22px] lg:text-[28px] leading-[1.2] font-black uppercase tracking-tightest mb-8">{integratedRecommendation.thesis}</p>
+                                                <p className="max-w-[58ch] text-[15px] leading-relaxed text-white/50 mb-10 font-medium">{integratedRecommendation.whyNow}</p>
+                                                <div className="border border-[#00E5FF]/20 bg-[#00E5FF]/5 p-6 mb-10">
+                                                    <p className="text-[13px] leading-relaxed text-[#00E5FF] font-medium italic">
+                                                        {integratedRecommendation.riskRewardTension}
+                                                    </p>
+                                                </div>
+                                                <div className="border border-white/10 bg-white/5 p-8">
+                                                    <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#00E5FF] mb-8">Operator Summary</p>
+                                                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
+                                                        <div className="border border-white/5 bg-black/40 p-5 group hover:border-[#00E5FF]/30 transition-all">
+                                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 mb-2">Primary Decision</p>
+                                                            <p className="text-[14px] leading-snug text-white font-bold uppercase">{integratedRecommendation.decision}</p>
                                                         </div>
-                                                        <div className="rounded-[1.25rem] border border-[#3A3027] bg-[#1E1A16] px-4 py-4">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Primary risk</p>
-                                                            <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">{integratedRecommendation.watchouts}</p>
-                                                        </div>
-                                                        <div className="rounded-[1.25rem] border border-[#3A3027] bg-[#1E1A16] px-4 py-4">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Timing</p>
-                                                            <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">{integratedRecommendation.whyNow}</p>
+                                                        <div className="border border-white/5 bg-black/40 p-5 group hover:border-[#00E5FF]/30 transition-all">
+                                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 mb-2">Tactical Watchout</p>
+                                                            <p className="text-[14px] leading-snug text-white font-bold uppercase">{integratedRecommendation.watchouts}</p>
                                                         </div>
                                                     </div>
-                                                    <div className="mt-5 border-t border-[#4E3D2A] pt-5">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Highest-impact actions</p>
-                                                        <div className="mt-4 space-y-3">
+                                                    <div className="mt-8 pt-8 border-t border-white/10">
+                                                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#00E5FF] mb-6">High-Impact Protocol</p>
+                                                        <div className="space-y-4">
                                                             {integratedRecommendation.executionNext3.map((step, index) => (
-                                                                <p key={index} className="text-[13px] leading-6 text-[#D6D0C6]">
-                                                                    <span className="font-bold text-[#D4A574]">{index + 1}.</span> {step}
-                                                                </p>
+                                                                <div key={index} className="flex gap-4 items-start">
+                                                                    <span className="text-[11px] font-black text-[#00E5FF] mt-1">{index + 1}.</span>
+                                                                    <p className="text-[13px] leading-relaxed text-white uppercase font-bold">{step}</p>
+                                                                </div>
                                                             ))}
                                                         </div>
                                                     </div>
@@ -2707,68 +2693,74 @@ export default function AssetWorkspace({
                                             </div>
 
                                             <div className="space-y-6">
-                                                <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Trust Cues</p>
-                                                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                                                <div className="border border-white/10 bg-white/5 p-8 text-white shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+                                                    <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-8">Trust Protocol</p>
+                                                    <div className="grid gap-3 sm:grid-cols-2">
                                                         {[
                                                             ['Confidence', integratedRecommendation.confidence],
                                                             ['Evidence Strength', integratedRecommendation.evidenceStrength],
                                                             ['Assumption Load', integratedRecommendation.assumptionLoad],
                                                         ].map(([label, value]) => (
-                                                            <div key={label} className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
-                                                                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">{label}</p>
-                                                                <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">{value}</p>
+                                                            <div key={label} className="border border-white/5 bg-black/40 p-5 group hover:border-[#00E5FF]/30 transition-all">
+                                                                <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 mb-2">{label}</p>
+                                                                <p className="text-[13px] leading-snug text-white font-bold uppercase">{value}</p>
                                                             </div>
                                                         ))}
-                                                        <div className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4 sm:col-span-2">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Known Unknowns</p>
-                                                            <p className="mt-2 text-[14px] leading-6 text-[#F3F1ED]">
+                                                        <div className="border border-white/5 bg-black/40 p-5 group hover:border-[#00E5FF]/30 transition-all sm:col-span-2">
+                                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 mb-2">Known Unknowns</p>
+                                                            <p className="text-[13px] leading-relaxed text-white/60 uppercase font-medium">
                                                                 {integratedRecommendation.knownUnknowns.join(' ')}
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div className="mt-4 border-t border-[#4E3D2A] pt-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Based on</p>
-                                                        <p className="mt-2 text-[13px] leading-6 text-[#B9B19F]">
-                                                            Blueprint trace, friction, persuasion density, gaze routing, and comparative memory.
+                                                    <div className="mt-8 pt-8 border-t border-white/10">
+                                                        <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#00E5FF]/40 mb-2">Source Validation</p>
+                                                        <p className="text-[11px] leading-relaxed text-white/40 uppercase tracking-widest">
+                                                            Blueprint trace • Focal routing • Semiotic overlap
                                                         </p>
                                                     </div>
                                                 </div>
 
-                                                <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Module Scores</p>
-                                                    <div className="mt-4 space-y-3">
+                                                <div className="border border-white/10 bg-white/5 p-8 text-white shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+                                                    <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-8">System Diagnostic</p>
+                                                    <div className="space-y-3">
                                                         {integratedRecommendation.moduleScores.map((score) => (
-                                                            <div key={score.label} className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
+                                                            <div key={score.label} className="border border-white/5 bg-black/40 p-5">
                                                                 <div className="flex items-center justify-between gap-4">
-                                                                    <p className="text-[13px] font-semibold text-[#F3F1ED]">{score.label}</p>
-                                                                    <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">{score.score}/5</span>
+                                                                    <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white">{score.label}</p>
+                                                                    <div className="flex gap-1">
+                                                                        {[1,2,3,4,5].map(i => (
+                                                                            <div key={i} className={`w-3 h-1 ${i <= score.score ? 'bg-[#00E5FF]' : 'bg-white/10'}`} />
+                                                                        ))}
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
 
-                                                <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Fact vs Inference</p>
-                                                    <div className="mt-4 grid gap-4">
-                                                        <div className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Facts</p>
-                                                            <div className="mt-3 space-y-2">
+                                                <div className="border border-white/10 bg-white/5 p-8 text-white shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+                                                    <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-8">Signal Integrity</p>
+                                                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
+                                                        <div className="border border-white/5 bg-black/40 p-5">
+                                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#00E5FF] mb-4 underline underline-offset-4 decoration-[#00E5FF]/40">Hard Evidence Points</p>
+                                                            <div className="space-y-4">
                                                                 {integratedRecommendation.facts.map((fact, index) => (
-                                                                    <p key={index} className="text-[13px] leading-6 text-[#D6D0C6]">
-                                                                        <span className="font-bold text-[#D4A574]">{index + 1}.</span> {fact}
-                                                                    </p>
+                                                                    <div key={index} className="flex gap-3">
+                                                                        <span className="text-[10px] font-black text-[#00E5FF] opacity-40">{String(index+1).padStart(2, '0')}</span>
+                                                                        <p className="text-[12px] leading-relaxed text-white/70 uppercase font-bold">{fact}</p>
+                                                                    </div>
                                                                 ))}
                                                             </div>
                                                         </div>
-                                                        <div className="rounded-[1.25rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#D4A574]">Inferences</p>
-                                                            <div className="mt-3 space-y-2">
+                                                        <div className="border border-white/5 bg-black/40 p-5">
+                                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/40 mb-4 underline underline-offset-4">Derived Readout</p>
+                                                            <div className="space-y-4">
                                                                 {integratedRecommendation.inferences.map((inference, index) => (
-                                                                    <p key={index} className="text-[13px] leading-6 text-[#D6D0C6]">
-                                                                        <span className="font-bold text-[#D4A574]">{index + 1}.</span> {inference}
-                                                                    </p>
+                                                                    <div key={index} className="flex gap-3">
+                                                                        <span className="text-[10px] font-black text-white/20">{String(index+1).padStart(2, '0')}</span>
+                                                                        <p className="text-[12px] leading-relaxed text-white/50 uppercase font-medium">{inference}</p>
+                                                                    </div>
                                                                 ))}
                                                             </div>
                                                         </div>
@@ -2778,35 +2770,39 @@ export default function AssetWorkspace({
                                         </div>
 
                                         <div className="space-y-6">
-                                            <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Verdict</p>
-                                                <h3 className="mt-4 text-[2.2rem] font-semibold leading-none tracking-tight text-[#F3F1ED] md:text-[2.8rem]">
+                                            <div className="border border-white/10 bg-white/5 p-10 text-white shadow-[0_40px_80px_rgba(0,0,0,0.4)]">
+                                                <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-10">System Verdict</p>
+                                                <h3 className="text-[10vw] lg:text-[6vw] font-black leading-none tracking-tightest text-white uppercase mb-8">
                                                     {qualityVerdict}
                                                 </h3>
-                                                <p className="mt-4 max-w-[62ch] text-[14px] leading-7 text-[#B9B19F]">
-                                                    Final call on whether this creative is working strongly enough to preserve, refine, or replace at native review width.
+                                                <p className="max-w-[62ch] text-[15px] leading-relaxed text-white/40 uppercase font-medium mb-12">
+                                                    Analytical determination of creative validity and strategic alignment at review width.
                                                 </p>
-                                                <div className="mt-6 rounded-[1.5rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5">
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Confidence Score</p>
-                                                    <div className="mt-3 flex items-end gap-1">
-                                                        <span className="text-4xl font-semibold tracking-tight text-[#F3F1ED]">
-                                                            {confidenceScore ?? '—'}
-                                                        </span>
-                                                        <span className="pb-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">/100</span>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    <div className="border border-white/10 bg-black/40 p-8">
+                                                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#00E5FF] mb-4">Integrity Index</p>
+                                                        <div className="flex items-baseline gap-2">
+                                                            <span className="text-6xl font-black tracking-tighter text-white">
+                                                                {confidenceScore ?? '—'}
+                                                            </span>
+                                                            <span className="text-[14px] font-black uppercase tracking-[0.2em] text-[#00E5FF]">/100</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="border border-white/10 bg-black/40 p-8 flex items-center">
+                                                        <p className="text-[12px] leading-relaxed text-white/50 uppercase font-bold italic">
+                                                            Diagnostics focus on directional precision over creative preference.
+                                                        </p>
                                                     </div>
                                                 </div>
-                                                <p className="mt-5 max-w-[58ch] text-[14px] leading-7 text-[#D6D0C6]">
-                                                    We don&apos;t generate ads. We judge, diagnose, and direct quality.
-                                                </p>
                                             </div>
 
-                                            <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Top 3 Failure Reasons</p>
-                                                <div className="mt-5 space-y-4">
+                                            <div className="border border-white/10 bg-white/5 p-10 text-white">
+                                                <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-10">Critical Leakage Points</p>
+                                                <div className="space-y-6">
                                                     {failureReasons.map((reason, index) => (
-                                                        <div key={`${reason.title}-${index}`} className="rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{reason.title}</p>
-                                                            <p className="mt-3 text-[14px] leading-6 text-[#D6D0C6]">{reason.detail}</p>
+                                                        <div key={`${reason.title}-${index}`} className="border-l-2 border-[#00E5FF] pl-8 py-2">
+                                                            <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#00E5FF] mb-3">{reason.title}</p>
+                                                            <p className="text-[14px] leading-relaxed text-white/60 uppercase font-medium">{reason.detail}</p>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -2855,46 +2851,46 @@ export default function AssetWorkspace({
                                         {extraction.primary_mechanic && extraction.full_dossier && (
                                              <>
                                                  {/* Unified Primary Intelligence Metric - REFINED SCALE */}
-                                                 <div className="mb-6 flex w-full flex-col gap-6 rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 text-[#FBFBF6] lg:flex-row lg:items-center">
+                                                 <div className="mb-12 flex w-full flex-col gap-10 border border-white/10 bg-white/5 p-10 text-white lg:flex-row lg:items-center shadow-[0_40px_80px_rgba(0,0,0,0.4)]">
                                                      {/* Left: Primary Mechanic */}
                                                      <div className="flex-1">
-                                                         <div className="mb-6 flex items-center justify-between border-b border-[#D4A574]/18 pb-4">
-                                                             <div className="flex items-center gap-3">
-                                                                 <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#D4A574]/10">
-                                                                     <div className="h-2 w-2 rounded-full bg-[#D4A574]" />
+                                                         <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6">
+                                                             <div className="flex items-center gap-4">
+                                                                 <div className="flex h-6 w-6 items-center justify-center bg-[#00E5FF]/10">
+                                                                     <div className="h-2 w-2 bg-[#00E5FF]" />
                                                                  </div>
-                                                                 <span className="block text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Primary Mechanic</span>
+                                                                 <span className="block text-[12px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">Primary Forensic Mechanic</span>
                                                              </div>
                                                              <InfoButton section="PRIMARY_MECHANIC" />
                                                          </div>
                                                          <div className="max-w-[70ch]">
-                                                            <h2 className="border-l-[3px] border-[#D4A574] py-1 pl-6 text-xl font-bold leading-relaxed tracking-tight text-[#F3F1ED] selection:bg-[#D4A574]/20 md:text-2xl">
+                                                            <h2 className="border-l-[3px] border-[#00E5FF] py-2 pl-8 text-[32px] lg:text-[42px] font-black leading-none tracking-tightest text-white uppercase selection:bg-[#00E5FF]/20">
                                                                 {extraction.primary_mechanic}
                                                             </h2>
                                                          </div>
                                                      </div>
 
                                                      {/* Vertical Divider (Desktop Only) */}
-                                                     <div className="mx-8 hidden h-32 w-[1px] bg-[#D4A574]/18 lg:block" />
+                                                     <div className="mx-12 hidden h-48 w-[1px] bg-white/10 lg:block" />
 
                                                      {/* Right: System Confidence */}
-                                                      <div className="w-full lg:w-72 flex flex-col h-full">
-                                                          <div className="mb-6 flex items-center justify-between border-b border-[#D4A574]/18 pb-4">
-                                                              <div className="flex items-center gap-3">
-                                                                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#D4A574]/10">
-                                                                      <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
+                                                      <div className="w-full lg:w-80 flex flex-col h-full">
+                                                          <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6">
+                                                              <div className="flex items-center gap-4">
+                                                                  <div className="flex h-6 w-6 items-center justify-center bg-[#00E5FF]/10 text-[#00E5FF]">
+                                                                      <Sparkles className="h-4 w-4" />
                                                                   </div>
-                                                                  <span className="block text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Confidence Score</span>
+                                                                  <span className="block text-[11px] font-black uppercase tracking-[0.3em] text-white">System Confidence</span>
                                                               </div>
                                                               <InfoButton section="SYSTEM_CONFIDENCE" />
                                                           </div>
-                                                          <div className="flex flex-col gap-4">
-                                                              <div className="flex items-baseline gap-1 text-5xl font-sans font-bold tracking-tighter text-[#F3F1ED]">
+                                                          <div className="flex flex-col gap-6">
+                                                              <div className="flex items-baseline gap-2 text-7xl font-black tracking-tighter text-white">
                                                                   {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}
-                                                                  <span className="text-[18px] text-[#D4A574] font-medium uppercase tracking-widest">/100</span>
+                                                                  <span className="text-[20px] text-[#00E5FF] font-black uppercase tracking-widest">/100</span>
                                                               </div>
-                                                              <p className="text-[11px] italic leading-relaxed text-[#B9B19F]">
-                                                                  AI-weighted validation based on semiotic signal strength and cross-correlational data integrity.
+                                                              <p className="text-[12px] leading-relaxed text-white/40 uppercase font-medium">
+                                                                  Weighted validation based on semiotic signal strength.
                                                               </p>
                                                           </div>
                                                       </div>
@@ -2911,61 +2907,61 @@ export default function AssetWorkspace({
 
 
                                             {/* Visual Style */}
-                                            <div className="col-span-1 flex min-h-[120px] flex-col rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-[clamp(16px,1.2vw,24px)] text-[#FBFBF6] xl:col-span-2">
-                                                <div className="mb-4 flex items-center justify-between border-b border-[#D4A574]/18 pb-2">
-                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Synthesized Visual Style</span>
+                                            <div className="col-span-1 flex min-h-[120px] flex-col border border-white/10 bg-white/5 p-8 text-white xl:col-span-2">
+                                                <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4">
+                                                    <span className="block text-[12px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">Synthesized Visual Logic</span>
                                                     <InfoButton section="VISUAL_STYLE" />
                                                 </div>
                                                 <div className="flex flex-col h-full">
-                                                    <p className="mt-2 mb-6 max-w-[62ch] text-[15px] font-medium leading-relaxed tracking-tight text-[#F3F1ED]">
+                                                    <p className="mt-2 mb-10 max-w-[62ch] text-[20px] lg:text-[24px] font-black uppercase leading-[1.1] tracking-tightest text-white">
                                                         {extraction.visual_style}
                                                     </p>
 
                                                     {/* Aesthetic Signature Matrix */}
-                                                    <div className="mt-auto space-y-4 border-t border-[#D4A574]/10 pt-6">
-                                                        <div className="flex items-center gap-4">
-                                                            <span className="w-14 text-[10px] font-bold uppercase tracking-[0.2em] text-[#B9B19F]">Luma</span>
-                                                            <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#2A2723]">
-                                                                <div className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full w-[72%] animate-pulse" />
+                                                    <div className="mt-auto space-y-6 border-t border-white/10 pt-8">
+                                                        <div className="flex items-center gap-6">
+                                                            <span className="w-16 text-[11px] font-black uppercase tracking-[0.3em] text-white/30">Luma</span>
+                                                            <div className="h-1 flex-1 overflow-hidden bg-white/5">
+                                                                <div className="h-full bg-[#00E5FF] w-[72%] shadow-[0_0_10px_#00E5FF]" />
                                                             </div>
-                                                            <span className="text-[10px] font-mono text-[#D4A574]">0.82V</span>
+                                                            <span className="text-[11px] font-black text-[#00E5FF] tracking-widest">0.82V</span>
                                                         </div>
-                                                        <div className="flex items-center gap-4">
-                                                            <span className="w-14 text-[10px] font-bold uppercase tracking-[0.2em] text-[#B9B19F]">Chromat</span>
-                                                            <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#2A2723]">
-                                                                <div className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full w-[45%] animate-pulse [animation-delay:200ms]" />
+                                                        <div className="flex items-center gap-6">
+                                                            <span className="w-16 text-[11px] font-black uppercase tracking-[0.3em] text-white/30">Chrom</span>
+                                                            <div className="h-1 flex-1 overflow-hidden bg-white/5">
+                                                                <div className="h-full bg-[#00E5FF] w-[45%] shadow-[0_0_10px_#00E5FF]" />
                                                             </div>
-                                                            <span className="text-[10px] font-mono text-[#D4A574]">0.44Δ</span>
+                                                            <span className="text-[11px] font-black text-[#00E5FF] tracking-widest">0.44Δ</span>
                                                         </div>
-                                                        <div className="flex items-center gap-4">
-                                                            <span className="w-14 text-[10px] font-bold uppercase tracking-[0.2em] text-[#B9B19F]">Vector</span>
-                                                            <div className="h-2 flex-1 overflow-hidden rounded-full bg-[#2A2723]">
-                                                                <div className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full w-[89%] animate-pulse [animation-delay:400ms]" />
+                                                        <div className="flex items-center gap-6">
+                                                            <span className="w-16 text-[11px] font-black uppercase tracking-[0.3em] text-white/30">Vect</span>
+                                                            <div className="h-1 flex-1 overflow-hidden bg-white/5">
+                                                                <div className="h-full bg-[#00E5FF] w-[89%] shadow-[0_0_10px_#00E5FF]" />
                                                             </div>
-                                                            <span className="text-[10px] font-mono text-[#D4A574]">0.91Λ</span>
+                                                            <span className="text-[11px] font-black text-[#00E5FF] tracking-widest">0.91Λ</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             {/* Color Palette */}
-                                            <div className="col-span-1 flex min-h-[120px] flex-col rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-[clamp(16px,1.2vw,24px)] text-[#FBFBF6]">
-                                                <div className="mb-4 flex items-center justify-between border-b border-[#D4A574]/18 pb-2">
-                                                    <span className="block text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">Chromatic Base</span>
+                                            <div className="col-span-1 flex min-h-[120px] flex-col border border-white/10 bg-white/5 p-8 text-white">
+                                                <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4">
+                                                    <span className="block text-[12px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">Chromatic Register</span>
                                                     <InfoButton section="CHROMATIC_BASE" />
                                                 </div>
                                                 <div className="mt-auto">
                                                     {extraction.color_palette && extraction.color_palette.length > 0 ? (
-                                                        <div className="flex flex-wrap gap-2">
+                                                        <div className="flex flex-wrap gap-3">
                                                             {extraction.color_palette.map((hex: string, i: number) => (
-                                                                <div key={i} className="group relative flex items-center gap-2 rounded-full border border-[#D4A574]/24 bg-[#171512] p-1.5 pr-3 transition-transform hover:scale-[1.02]">
-                                                                    <div className="w-4 h-4 flex-shrink-0 border border-[#D4A574]/20 rounded-full" style={{ backgroundColor: hex }} />
-                                                                    <span className="text-[8px] font-mono tracking-widest text-[#B9B19F] transition-colors group-hover:text-[#D4A574]">{hex}</span>
+                                                                <div key={i} className="group relative flex items-center gap-3 border border-white/10 bg-black/40 p-2 pr-4 transition-all hover:border-[#00E5FF]/40">
+                                                                    <div className="w-5 h-5 flex-shrink-0 border border-white/10" style={{ backgroundColor: hex }} />
+                                                                    <span className="text-[10px] font-black tracking-widest text-white/50 group-hover:text-[#00E5FF]">{hex}</span>
                                                                 </div>
                                                             ))}
                                                         </div>
                                                     ) : (
-                                                        <div className="text-[10px] font-mono text-[#D4A574]/50 uppercase tracking-widest">No Palette Detected.</div>
+                                                        <div className="text-[10px] font-black text-white/20 uppercase tracking-widest">[ NULL_PALETTE ]</div>
                                                     )}
                                                 </div>
                                             </div>
@@ -3007,24 +3003,24 @@ export default function AssetWorkspace({
                                         />
                                         
                                         {/* UNIFIED TECHNICAL AUTOPSY CONTAINER */}
-                                        <div className="rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 space-y-10 text-[#FBFBF6]">
+                                        <div className="border border-white/10 bg-white/5 p-10 space-y-12 text-white shadow-[0_40px_80px_rgba(0,0,0,0.4)]">
                                             {/* Top: Radiant Architecture Toggle */}
-                                            <div className="flex flex-col gap-6 md:flex-row md:items-center justify-between pb-8 border-b border-[#4E3D2A]">
-                                                <div className="flex items-center gap-6">
-                                                    <div className="h-12 w-12 rounded-2xl bg-[#171512] flex items-center justify-center border border-[#4E3D2A]">
-                                                        <Sparkles className="h-6 w-6 text-[#D4A574]" />
+                                            <div className="flex flex-col gap-10 md:flex-row md:items-center justify-between pb-10 border-b border-white/10">
+                                                <div className="flex items-center gap-8">
+                                                    <div className="h-14 w-14 bg-black flex items-center justify-center border border-white/10 text-[#00E5FF]">
+                                                        <Sparkles className="h-6 w-6" />
                                                     </div>
-                                                    <div className="flex flex-col gap-1">
-                                                        <h3 className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#D4A574]">Macro-Diagnostic Map</h3>
-                                                        <p className="text-[13px] text-[#B9B19F] font-light tracking-wide">Visualize optical trajectories and focal anchors in the creative signal stack.</p>
+                                                    <div className="flex flex-col gap-2">
+                                                        <h3 className="text-[12px] font-black uppercase tracking-[0.5em] text-[#00E5FF]">Macro-Diagnostic Grid</h3>
+                                                        <p className="text-[14px] text-white/40 uppercase font-medium tracking-wide">Visualize focal routing and attention-routing cues.</p>
                                                     </div>
                                                 </div>
                                                 <button 
                                                     onClick={() => setShowRadiant(!showRadiant)}
-                                                    className={`px-8 py-3 rounded-full border text-[10px] font-bold uppercase tracking-[0.25em] transition-all duration-500 flex items-center gap-3 ${showRadiant ? "bg-[#D4A574] text-[#141414] border-[#D4A574] shadow-md shadow-[#D4A574]/20" : "bg-[#171512] text-[#D4A574] border-[#4E3D2A] hover:border-[#D4A574]/60 hover:bg-[#201b15]"}`}
+                                                    className={`px-10 py-4 border text-[11px] font-black uppercase tracking-[0.3em] transition-all duration-500 flex items-center gap-4 ${showRadiant ? "bg-[#00E5FF] text-black border-[#00E5FF] shadow-[0_0_20px_rgba(0,229,255,0.4)]" : "bg-black text-[#00E5FF] border-white/10 hover:border-[#00E5FF]/60"}`}
                                                 >
-                                                    <div className={`h-1.5 w-1.5 rounded-full ${showRadiant ? "bg-[#141414] animate-pulse" : "bg-[#D4A574]"}`} />
-                                                    {showRadiant ? "Active: Radiant Architecture" : "Initialize Radiant Architecture"}
+                                                    <div className={`h-2 w-2 ${showRadiant ? "bg-black animate-pulse" : "bg-[#00E5FF]"}`} />
+                                                    {showRadiant ? "[ HUD_ACTIVE ]" : "INITIALIZE OPTICAL HUD"}
                                                 </button>
                                             </div>
 
@@ -3037,40 +3033,39 @@ export default function AssetWorkspace({
                                                 />
                                             </div>
                                         </div>
-
-                                        {/* ── Gaze Topology ── */}
+                                                                {/* ── Gaze Topology ── */}
                                         {(extraction.full_dossier as any)?.gaze_topology && (
-                                            <section className="signals-section mt-12 space-y-12 border-b border-[#4E3D2A] pb-12">
-                                                <div className="flex items-center gap-6">
-                                                    <div className="flex flex-col gap-2">
-                                                        <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#D4A574]">Gaze Topology</h2>
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#B9B19F]">Mode of Address & Viewer Positioning</p>
+                                            <section className="signals-section mt-16 space-y-12">
+                                                <div className="flex items-center gap-10">
+                                                    <div className="flex flex-col gap-3">
+                                                        <h2 className="text-[12px] font-black uppercase tracking-[0.6em] text-[#00E5FF]">Gaze Topology</h2>
+                                                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-white/30">Mode of Address & Viewer Positioning</p>
                                                     </div>
-                                                    <div className="h-px flex-1 bg-[#4E3D2A]" />
+                                                    <div className="h-px flex-1 bg-white/10" />
                                                 </div>
 
-                                                <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] lg:grid-cols-3">
+                                                <div className="grid grid-cols-1 items-start gap-3 lg:grid-cols-3">
                                                     {[
                                                         { label: 'Mode of Address', value: (extraction.full_dossier as any).gaze_topology.mode_of_address },
                                                         { label: 'Viewer Position', value: (extraction.full_dossier as any).gaze_topology.viewer_position },
                                                         { label: 'Power Holder', value: (extraction.full_dossier as any).gaze_topology.power_holder },
                                                     ].map((item, i) => (
-                                                        <div key={i} className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
-                                                            <h3 className="mb-4 w-full border-b border-[#4E3D2A] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
+                                                        <div key={i} className="flex min-h-[200px] flex-col justify-between border border-white/10 bg-white/5 px-8 py-8 text-white">
+                                                            <h3 className="mb-6 w-full border-b border-white/10 pb-6 text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">
                                                                 {item.label}
                                                             </h3>
-                                                            <div className="flex-1 flex items-center justify-center">
-                                                                <span className="text-[24px] font-bold uppercase tracking-tight text-[#F3F1ED]">{item.value}</span>
+                                                            <div className="flex-1 flex items-center">
+                                                                <span className="text-[28px] font-black uppercase tracking-tightest leading-tight text-white">{item.value}</span>
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                <div className="rounded-[2rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8">
-                                                    <h3 className="mb-4 border-b border-[#4E3D2A] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
-                                                        Forensic Diagnostics
+                                                <div className="border border-white/10 bg-white/5 p-10">
+                                                    <h3 className="mb-8 border-b border-white/10 pb-6 text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">
+                                                        Forensic Gaze Diagnostic
                                                     </h3>
-                                                    <p className="text-[13px] font-light leading-relaxed text-[#B9B19F]">
+                                                    <p className="max-w-[72ch] text-[15px] font-medium leading-relaxed text-white/60 uppercase">
                                                         {(extraction.full_dossier as any).gaze_topology.reading}
                                                     </p>
                                                 </div>
@@ -3080,21 +3075,21 @@ export default function AssetWorkspace({
                                         {/* ── Counter-Reading Matrix ── */}
                                         {(extraction.full_dossier as any)?.counter_reading_matrix && (
                                             <section className="counter-reading-section mt-16 space-y-12">
-                                                <div className="flex items-center gap-6">
-                                                    <div className="flex flex-col gap-2">
-                                                        <h2 className="text-2xl font-light uppercase tracking-[0.35em] text-[#D4A574]">Counter-Reading Matrix</h2>
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#B9B19F]">Polysemic Deconstruction via Critical Theory</p>
+                                                <div className="flex items-center gap-10">
+                                                    <div className="flex flex-col gap-3">
+                                                        <h2 className="text-[12px] font-black uppercase tracking-[0.6em] text-[#00E5FF]">Counter-Reading Matrix</h2>
+                                                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-white/30">Polysemic Deconstruction via Critical Theory</p>
                                                     </div>
-                                                    <div className="h-px flex-1 bg-[#4E3D2A]" />
+                                                    <div className="h-px flex-1 bg-white/10" />
                                                 </div>
-                                                <div className="grid grid-cols-1 items-start gap-[clamp(12px,1vw,18px)] xl:grid-cols-2">
+                                                <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
                                                     {((extraction.full_dossier as any).counter_reading_matrix as { lens: string; reading: string }[]).map((item, i) => (
-                                                        <div key={i} className="flex min-h-[220px] flex-col rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
-                                                            <h3 className="mb-4 w-full border-b border-[#4E3D2A] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
+                                                        <div key={i} className="flex min-h-[220px] flex-col border border-white/10 bg-white/5 px-8 py-8 text-white">
+                                                            <h3 className="mb-6 w-full border-b border-white/10 pb-6 text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">
                                                                 {item.lens}
                                                             </h3>
                                                             <div className="flex-1 max-h-[400px] overflow-y-auto pt-2">
-                                                                <p className="text-[13px] font-light leading-relaxed text-[#B9B19F]">{item.reading}</p>
+                                                                <p className="text-[14px] leading-relaxed text-white/60 uppercase font-medium">{item.reading}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -3105,7 +3100,7 @@ export default function AssetWorkspace({
                                 ) : (
                                      <div className="rounded-[2.5rem] border border-dashed border-[#4E3D2A] bg-[#1F1F1F]/70 p-20 flex flex-col items-center justify-center text-center">
                                          <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#4E3D2A] bg-[#171512]">
-                                             <Info className="h-5 w-5 text-[#D4A574]/50" />
+                                         <Info className="h-5 w-5 text-[#D4A574]/50" />
                                          </div>
                                          <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574] mb-2">Deep Intelligence Required</h3>
                                          <p className="max-w-xs text-[13px] font-light tracking-wide text-[#B9B19F]">Signal interception requires deep architectural extraction of this asset's semiotic layers.</p>
@@ -3123,52 +3118,52 @@ export default function AssetWorkspace({
                                         intro="The non-negotiables, avoidances, and safe adaptation boundaries that keep refinement inside the working forensic logic."
                                     />
 
-                                    <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Product Boundary</p>
-                                        <p className="mt-4 max-w-[60ch] text-[15px] leading-7 text-[#D6D0C6]">
-                                            VD does not generate ads or act as an AI design app. VD judges, diagnoses, and directs creative quality.
+                                    <div className="border border-white/10 bg-white/5 p-12 text-white shadow-[0_40px_80px_rgba(0,0,0,0.5)]">
+                                        <p className="text-[11px] font-black uppercase tracking-[0.4em] text-cyan-400 mb-8 border-b border-white/10 pb-4 font-mono">System Boundary // Protocol</p>
+                                        <p className="max-w-[62ch] text-[24px] font-black uppercase leading-tight text-white/70 tracking-tightest">
+                                            VD judges, diagnoses, and directs creative quality. Not for asset generation.
                                         </p>
                                     </div>
 
-                                    <div className="grid gap-6 xl:grid-cols-2">
+                                    <div className="grid gap-4 xl:grid-cols-2">
                                         {[
                                             {
-                                                title: 'Must Keep',
+                                                title: 'Retention Protocol',
                                                 items: mustKeepConstraints,
-                                                accent: 'text-[#D4A574]',
-                                                tone: 'border-[#4E3D2A] bg-[#171512]',
+                                                accent: 'text-cyan-400',
+                                                tone: 'border-white/10 bg-black/40',
                                             },
                                             {
-                                                title: 'Must Avoid',
+                                                title: 'Negation Protocol',
                                                 items: mustAvoidConstraints,
-                                                accent: 'text-[#C8230A]',
-                                                tone: 'border-[#5B2418] bg-[#1C1311]',
+                                                accent: 'text-white',
+                                                tone: 'border-white/10 bg-white/5',
                                             },
                                             {
-                                                title: 'Safe Adaptation Zone',
+                                                title: 'Adaptive Delta',
                                                 items: safeAdaptationZone,
-                                                accent: 'text-[#D4A574]',
-                                                tone: 'border-[#3F342A] bg-[#161311]',
+                                                accent: 'text-cyan-400',
+                                                tone: 'border-white/10 bg-black/60',
                                             },
                                         ].map((group, index) => (
                                             <div
                                                 key={group.title}
-                                                className={`rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)] ${index === 2 ? 'xl:col-span-2' : ''}`}
+                                                className={`border border-white/10 bg-white/5 p-10 text-white ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
-                                                <p className={`text-[10px] font-bold uppercase tracking-[0.28em] ${group.accent}`}>{group.title}</p>
-                                                <div className="mt-5 space-y-3">
+                                                <p className={`text-[11px] font-black uppercase tracking-[0.5em] mb-12 border-b border-white/10 pb-6 font-mono ${group.accent}`}>{group.title}</p>
+                                                <div className="space-y-4">
                                                     {group.items.length > 0 ? (
-                                                        group.items.map((item, index) => (
-                                                            <div key={`${group.title}-${index}`} className={`rounded-[1.4rem] border px-4 py-4 ${group.tone}`}>
-                                                                <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                                                                    <p className="max-w-[58ch] text-[14px] leading-6 text-[#F3F1ED]">{item.text}</p>
+                                                        group.items.map((item, id) => (
+                                                            <div key={`${group.title}-${id}`} className={`border p-8 ${group.tone}`}>
+                                                                <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+                                                                    <p className="max-w-[58ch] text-[15px] leading-relaxed text-white uppercase font-black tracking-tight">{item.text}</p>
                                                                     <span
-                                                                        className={`shrink-0 self-start rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
+                                                                        className={`shrink-0 self-start border px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] ${
                                                                             item.severity === 'critical'
-                                                                                ? 'bg-[#C8230A]/16 text-[#F06B55]'
+                                                                                ? 'border-cyan-400 text-black bg-cyan-400'
                                                                                 : item.severity === 'high'
-                                                                                    ? 'bg-[#D4A574]/14 text-[#D4A574]'
-                                                                                    : 'bg-[#FBFBF6]/8 text-[#B9B19F]'
+                                                                                    ? 'border-cyan-400/40 text-cyan-400'
+                                                                                    : 'border-white/20 text-white/40'
                                                                         }`}
                                                                     >
                                                                         {item.severity}
@@ -3177,8 +3172,8 @@ export default function AssetWorkspace({
                                                             </div>
                                                         ))
                                                     ) : (
-                                                        <div className="rounded-[1.4rem] border border-dashed border-[#4E3D2A] bg-[#171512] px-4 py-4 text-[13px] leading-6 text-[#B9B19F]">
-                                                            Blueprint Trace will populate this boundary once reconstruction data is available.
+                                                        <div className="border border-dashed border-white/10 bg-black/40 p-12 text-[11px] font-black uppercase tracking-widest text-white/10 text-center font-mono">
+                                                            Pending trace reconstruction.
                                                         </div>
                                                     )}
                                                 </div>
@@ -3189,246 +3184,79 @@ export default function AssetWorkspace({
                             </div>
                         )}
 
-                        {/* MARKET PULSE (Locked / Last) */}
                         {activeTab === 'MARKET PULSE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <WorkspaceTabHeader
-                                    kicker="Competitive Context"
-                                    title="Strategic Fit"
-                                    intro="How the route fits current category pressure, novelty conditions, and timing opportunity."
-                                />
-                                <div className="relative">
-                                {!isSovereign ? (
-                                    <>
-                                        <div className="absolute inset-0 z-10 backdrop-blur-md bg-[#FBFBF6]/60 flex items-center justify-center rounded-3xl">
-                                            <div className="bg-[#FFFCF7] border border-[#E6DDCF] p-8 shadow-[0_4px_16px_rgba(0,0,0,0.02)] rounded-3xl text-center flex flex-col items-center">
-                                                <div className="w-12 h-12 rounded-full bg-[#D4A574]/10 flex items-center justify-center border border-[#D4A574]/30 mb-4">
-                                                    <svg className="w-5 h-5 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                                <div className="space-y-10">
+                                    <WorkspaceTabHeader
+                                        kicker="Competitive Context"
+                                        title="Market Pulse"
+                                        intro="How the route fits current category pressure, novelty conditions, and timing opportunity."
+                                    />
+                                    <div className="space-y-10">
+                                        {!isSovereign ? (
+                                            <div className="relative border border-white/10 bg-white/5 overflow-hidden group">
+                                                <div className="absolute inset-0 z-10 backdrop-blur-md bg-black/60 flex items-center justify-center">
+                                                    <div className="p-12 border border-white/10 bg-black max-w-xl text-center flex flex-col items-center">
+                                                        <div className="w-12 h-12 flex items-center justify-center border border-cyan-400/30 bg-cyan-400/10 mb-6 font-mono">
+                                                            <Lock className="w-5 h-5 text-cyan-400" />
+                                                        </div>
+                                                        <span className="text-cyan-400 font-extrabold tracking-[0.4em] uppercase text-[10px] mb-4 font-mono">Sovereign Feature</span>
+                                                        <h2 className="text-white text-3xl font-black mb-6 tracking-tightest uppercase">Market Pulse Locked</h2>
+                                                        <p className="text-white/40 text-[13px] mb-10 font-medium leading-relaxed uppercase tracking-wider">Cross-asset statistical aggregation and category saturation density mapping is restricted to sovereign intelligence tiers.</p>
+                                                        <button className="bg-cyan-400 text-black px-12 py-4 text-[10px] font-black uppercase tracking-[0.3em] transition hover:bg-white active:scale-95 font-mono">
+                                                            UPGRADE TO SOVEREIGN
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <span className="text-[#D4A574] font-bold tracking-[0.3em] uppercase text-[10px] mb-2">Sovereign Feature</span>
-                                                <h3 className="text-[#151310] text-xl font-light mb-4 tracking-tight">Market Pulse Locked</h3>
-                                                <p className="text-[#6A6257] text-xs mb-8 max-w-xs leading-relaxed">Cross-asset statistical aggregation and category saturation density mapping is restricted to paid agency tiers.</p>
-                                                <button className="bg-[#D4A574] text-[#1A1A1A] px-8 py-3 rounded-full text-[10px] uppercase font-bold tracking-widest hover:bg-[#FFFCF7] hover:text-[#151310] transition-colors">
-                                                    Premium Unlock
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div className="opacity-40 pointer-events-none select-none filter blur-[2px]">
-                                            <AdAnalyticsTab brand={asset.brand?.name} />
-                                        </div>
-                                    </>
-                                ) : isLoadingMarketPulse && !marketPulseData ? (
-                                    <div className="rounded-3xl border border-[#E6DDCF] bg-[#FFFCF7] shadow-[0_4px_16px_rgba(0,0,0,0.02)] px-8 py-16 text-center">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Synthesising Market Pulse</p>
-                                        <p className="mt-4 text-sm leading-relaxed text-[#151310]/65">
-                                            Aggregating category saturation, novelty pressure, and timing risk from the Intelligence Vault.
-                                        </p>
-                                        <p className="mt-6 text-[11px] uppercase tracking-[0.18em] text-[#151310]/40">
-                                            Building the current market benchmark for {asset.brand?.market_sector || 'your active market'}.
-                                        </p>
-                                    </div>
-                                ) : marketPulseError ? (
-                                    <div className="space-y-6">
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
-                                                Confidence {integratedRecommendation.confidence}
-                                            </span>
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                Evidence {integratedRecommendation.evidenceStrength}
-                                            </span>
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                Assumption {integratedRecommendation.assumptionLoad}
-                                            </span>
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                Based on comparative memory and dossier pressure
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center justify-between gap-4 rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                            <div>
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Directional estimate</p>
-                                                <p className="mt-3 text-[15px] leading-7 text-[#1A1A1A]/76">
-                                                    Market Pulse could not resolve a live category benchmark, so this read is being derived from dossier pattern memory and comparative signals.
-                                                </p>
-                                            </div>
-                                            <button
-                                                onClick={() => void handleRefreshMarketPulse()}
-                                                className="shrink-0 rounded-full border border-[#D4A574]/20 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#D4A574]/10"
-                                            >
-                                                Recompute Pulse
-                                            </button>
-                                        </div>
-                                        <div className="grid gap-5 lg:grid-cols-3">
-                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Category Saturation Index</p>
-                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.saturation}</p>
-                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Directional estimate from current dossier pressure.</p>
-                                            </div>
-                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Novelty Score</p>
-                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.novelty}</p>
-                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Directional estimate from current signal differentiation.</p>
-                                            </div>
-                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Fatigue Risk + Timing Signal</p>
-                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.fatigue}</p>
-                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">{marketPulseFallback.timingSignal}</p>
-                                            </div>
-                                        </div>
-                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                                                <div>
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">What this means now</p>
-                                                    <p className="mt-3 max-w-[72ch] text-[15px] leading-7 text-[#1A1A1A]/76">{marketPulseFallback.interpretation}</p>
+                                                <div className="p-12 opacity-20 select-none grayscale">
+                                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                                        {[
+                                                            ['Saturation', '0.0%'],
+                                                            ['Novelty', '0.0%'],
+                                                            ['Fatigue', '0.0%'],
+                                                        ].map(([label, val]) => (
+                                                            <div key={label} className="border border-white/10 bg-black/40 p-10">
+                                                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-6 font-mono">{label}</p>
+                                                                <p className="text-4xl font-black text-white">{val}</p>
+                                                            </div>
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                                <span className="inline-flex w-fit rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
-                                                    {marketPulseFallback.confidenceLabel}
-                                                </span>
                                             </div>
-                                        </div>
-                                    </div>
-                                ) : marketPulseData ? (
-                                    <div className="space-y-6">
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
-                                                Confidence {integratedRecommendation.confidence}
-                                            </span>
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                Evidence {integratedRecommendation.evidenceStrength}
-                                            </span>
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                Assumption {integratedRecommendation.assumptionLoad}
-                                            </span>
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                Based on benchmark depth, comparative memory, and category pressure
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center justify-between gap-4 rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                            <div>
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">
-                                                    {marketPulseBelowThreshold ? 'Directional estimate' : 'Live benchmark'}
-                                                </p>
-                                                <p className="mt-3 text-[15px] leading-7 text-[#1A1A1A]/76">
-                                                    Market Pulse is reading against {marketPulseData.assetCount} vault assets in {marketPulseData.scope}.
-                                                </p>
-                                            </div>
-                                            <button
-                                                onClick={() => void handleRefreshMarketPulse()}
-                                                disabled={isLoadingMarketPulse}
-                                                className="shrink-0 rounded-full border border-[#D4A574]/20 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#D4A574]/10 disabled:opacity-50"
-                                            >
-                                                {isLoadingMarketPulse ? 'Syncing...' : 'Refresh Pulse'}
-                                            </button>
-                                        </div>
+                                        ) : (
+                                            <>
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                                    {[
+                                                        ['Market Saturation', marketPulseFallback.saturation],
+                                                        ['Route Novelty', marketPulseFallback.novelty],
+                                                        ['Category Fatigue', marketPulseFallback.fatigue],
+                                                    ].map(([label, val]) => (
+                                                        <div key={label} className="border border-white/10 bg-white/5 p-10 shadow-xl group hover:border-cyan-400/40 transition-all">
+                                                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-mono">{label}</p>
+                                                            <p className="text-4xl font-black text-white">{val}%</p>
+                                                            <div className="mt-8 h-0.5 w-full bg-white/5 overflow-hidden">
+                                                                <div className="h-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.5)]" style={{ width: `${val}%` }} />
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
 
-                                        <div className="grid gap-5 lg:grid-cols-3">
-                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Category Saturation Index</p>
-                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">
-                                                    {Math.min(95, Math.round((marketPulseData.category_persuasion_benchmark.avg_density * 0.7) + (marketPulseData.assetCount * 0.8)))}
-                                                </p>
-                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Live category density and mechanic repetition.</p>
-                                            </div>
-                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Novelty Score</p>
-                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">
-                                                    {Math.max(22, Math.min(92, 100 - Math.round((marketPulseData.category_persuasion_benchmark.avg_density * 0.45) + (marketPulseData.assetCount * 0.35))))}
-                                                </p>
-                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Fresh strategic room relative to current category behavior.</p>
-                                            </div>
-                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Fatigue Risk + Timing Signal</p>
-                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">
-                                                    {Math.min(90, Math.round((marketPulseData.assetCount * 0.9) + (marketPulseData.category_persuasion_benchmark.avg_density * 0.4)))}
-                                                </p>
-                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">
-                                                    {marketPulseBelowThreshold
-                                                        ? 'Directional estimate until sample depth increases.'
-                                                        : 'Live timing read from repetition and category pressure.'}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                                                <div>
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">What this means now</p>
-                                                    <p className="mt-3 max-w-[72ch] text-[15px] leading-7 text-[#1A1A1A]/76">
-                                                        {marketPulseBelowThreshold
-                                                            ? `This route has signal, but category context is still directional at ${marketPulseData.assetCount}/20 sampled assets. Use the read to guide action, not overclaim precision.`
-                                                            : `Current category pressure suggests ${marketPulseData.category_persuasion_benchmark.your_rank.toLowerCase()} standing. Protect the working mechanic, then differentiate execution rather than rebuilding from zero.`}
-                                                    </p>
+                                                <div className="border border-white/10 bg-white/5 p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-12 shadow-[0_30px_60px_rgba(0,0,0,0.4)]">
+                                                    <div>
+                                                        <p className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-8 font-mono">Forensic Contextualization // Read</p>
+                                                        <p className="max-w-[72ch] text-[16px] font-black leading-relaxed text-white/70 uppercase tracking-tight">{marketPulseFallback.interpretation}</p>
+                                                    </div>
+                                                    <span className="shrink-0 border border-cyan-400 px-10 py-5 text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.2)] bg-cyan-400/5 font-mono">
+                                                        {marketPulseFallback.confidenceLabel}
+                                                    </span>
                                                 </div>
-                                                <span className="inline-flex w-fit rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
-                                                    {marketPulseBelowThreshold ? 'Directional estimate' : 'Live benchmark'}
-                                                </span>
-                                            </div>
-                                        </div>
+                                            </>
+                                        )}
                                     </div>
-                                ) : (
-                                    <div className="space-y-6">
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
-                                                Confidence {integratedRecommendation.confidence}
-                                            </span>
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                Evidence {integratedRecommendation.evidenceStrength}
-                                            </span>
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                Assumption {integratedRecommendation.assumptionLoad}
-                                            </span>
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                Based on comparative memory and dossier pressure
-                                            </span>
-                                        </div>
-                                        <div className="flex items-center justify-between gap-4 rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                            <div>
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Directional estimate</p>
-                                                <p className="mt-3 text-[15px] leading-7 text-[#1A1A1A]/76">
-                                                    No live benchmark is loaded yet, so Market Pulse is reading from dossier pattern memory and comparative signal pressure.
-                                                </p>
-                                            </div>
-                                            <button
-                                                onClick={() => void handleRefreshMarketPulse()}
-                                                className="shrink-0 rounded-full border border-[#D4A574]/20 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#D4A574]/10"
-                                            >
-                                                Run Market Pulse
-                                            </button>
-                                        </div>
-                                        <div className="grid gap-5 lg:grid-cols-3">
-                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Category Saturation Index</p>
-                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.saturation}</p>
-                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Directional estimate from current dossier pressure.</p>
-                                            </div>
-                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Novelty Score</p>
-                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.novelty}</p>
-                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">Directional estimate from current signal differentiation.</p>
-                                            </div>
-                                            <div className="rounded-[1.75rem] border border-[#E6DDCF] bg-white p-6 shadow-[0_10px_26px_rgba(26,18,13,0.04)]">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Fatigue Risk + Timing Signal</p>
-                                                <p className="mt-4 text-4xl font-medium tracking-tight text-[#151310]">{marketPulseFallback.fatigue}</p>
-                                                <p className="mt-3 text-[12px] leading-6 text-[#151310]/58">{marketPulseFallback.timingSignal}</p>
-                                            </div>
-                                        </div>
-                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                                                <div>
-                                                    <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">What this means now</p>
-                                                    <p className="mt-3 max-w-[72ch] text-[15px] leading-7 text-[#1A1A1A]/76">{marketPulseFallback.interpretation}</p>
-                                                </div>
-                                                <span className="inline-flex w-fit rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
-                                                    {marketPulseFallback.confidenceLabel}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
                                 </div>
                             </div>
                         )}
 
-                        {/* TAB 3: PSYCHOLOGY */}
                         {activeTab === 'PSYCHOLOGY' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="space-y-10">
@@ -3437,650 +3265,61 @@ export default function AssetWorkspace({
                                         title="Semiotic Channel Interceptions"
                                         intro="How the asset encodes meaning, identity cues, and emotional triggers to shape perception and decision momentum."
                                     />
-                                    <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                                    {/* Trigger Distribution Radar */}
-                                    <div className="flex min-h-[220px] flex-col items-center justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
-                                        <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
-                                            Trigger Distribution Map
-                                        </h3>
-                                        <div className="w-full max-w-[320px] flex-1 flex items-center justify-center -mt-6">
-                                            <RadarChart
-                                                data={Object.entries((extraction?.full_dossier as any)?.archetype_mapping?.trigger_distribution || {}).map(([label, value]) => ({ label, value: value as number }))}
-                                                forceLight={false}
-                                            />
-                                        </div>
-                                        <p className="mt-4 w-full border-t border-[#D4A574]/10 px-4 pt-4 text-center text-[12px] leading-relaxed text-[#B9B19F]">
-                                            This distribution quantifies the creative's psychological surface area—identifying which aspiration levers are being engaged to command consumer compliance.
-                                        </p>
-                                    </div>
-
-                                     {/* Strategic Posture Map */}
-                                     <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
-                                         <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
-                                             Strategic Posture
-                                         </h3>
-                                         {extraction?.full_dossier?.archetype_mapping ? (
-                                             <div className="flex-1 flex flex-col justify-between">
-                                                 <div>
-                                                     <p className="mb-8 pr-4 text-[13px] leading-relaxed text-[#D6D0C6]">
-                                                         {extraction.full_dossier.archetype_mapping?.target_posture}
-                                                     </p>
-                                                     <div className="flex items-center justify-center -mt-2">
-                                                         <StrategicPostureMap
-                                                             posture={extraction.full_dossier.archetype_mapping?.target_posture || ''}
-                                                             moves={(extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []}
-                                                             forceLight={false}
-                                                         />
-                                                     </div>
-                                                 </div>
-                                                 <p className="mt-6 w-full border-t border-[#D4A574]/10 px-4 pt-6 text-center text-[12px] leading-relaxed text-[#B9B19F]">
-                                                     Current positioning defines the asset's high-level field posture—governing how it addresses consumer cognitive dissonance within the vault.
-                                                 </p>
-                                             </div>
-                                         ) : (
-                                             <div className="flex-1 flex items-center justify-center">
-                                                 <div className="text-[10px] uppercase font-bold tracking-widest text-[#D4A574]/30">No Posture Data</div>
-                                             </div>
-                                         )}
-                                     </div>
-
-                                    {/* Persuasion Density */}
-                                    {(extraction?.full_dossier as any)?.persuasion_metrics && (
-                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[#3E3225] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
-                                            <h3 className="mb-4 w-full border-b border-[#4E3D2A] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
-                                                Persuasion Density
-                                            </h3>
-                                            <div className="flex-1 flex flex-col justify-center">
-                                                <div className="flex justify-between items-end mb-4">
-                                                    <span className="text-[11px] font-mono uppercase tracking-widest text-[#B9B19F]">Conversion Density</span>
-                                                    <span className="text-[32px] font-bold text-[#D4A574] leading-none">{((extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density as number)}%</span>
-                                                </div>
-                                                <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#2A2723] shadow-inner">
-                                                     <div
-                                                         className="h-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] rounded-full transition-all duration-1000"
-                                                         style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.persuasion_density}%` }}
-                                                     />
-                                                 </div>
-                                            </div>
-                                            <p className="mt-4 border-t border-[#D4A574]/10 pt-4 text-[12px] leading-relaxed text-[#B9B19F]">
-                                                Measures the creative's informational compression—how efficiently it transfers brand signal into consumer memory structures.
+                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                        <div className="border border-white/10 bg-white/5 p-12 text-white shadow-[0_40px_80px_rgba(0,0,0,0.5)]">
+                                            <h3 className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-12 border-b border-white/10 pb-8 font-mono">Archetype Diagnostic // Status</h3>
+                                            <p className="text-[42px] font-black uppercase tracking-tightest leading-tight text-white mb-12">
+                                                {extraction?.full_dossier?.archetype_mapping?.target_posture || 'POSTURE_RECONSTRUCTING'}
                                             </p>
-                                        </div>
-                                    )}
-
-                                    {/* Cognitive Friction */}
-                                    {(extraction?.full_dossier as any)?.persuasion_metrics && (
-                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[#3E3225] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
-                                            <h3 className="mb-4 w-full border-b border-[#4E3D2A] pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
-                                                Cognitive Friction
-                                            </h3>
-                                            <div className="flex-1 flex flex-col justify-center">
-                                                <div className="flex justify-between items-end mb-4">
-                                                    <span className="text-[11px] font-mono uppercase tracking-widest text-[#B9B19F]">Resistance Index</span>
-                                                    <span className="text-[32px] font-bold text-[#8B4513] leading-none">{((extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction as number)}%</span>
-                                                </div>
-                                                <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#2A2723] shadow-inner">
-                                                     <div
-                                                         className="h-full bg-[#8B4513]/60 rounded-full transition-all duration-1000"
-                                                         style={{ width: `${(extraction?.full_dossier as any)?.persuasion_metrics?.cognitive_friction}%` }}
-                                                     />
-                                                 </div>
-                                            </div>
-                                            <p className="mt-4 border-t border-[#D4A574]/10 pt-4 text-[12px] leading-relaxed text-[#B9B19F]">
-                                                Quantifies neural resistance to message adoption. Low scores indicate frictionless persuasion pathways.
-                                            </p>
-                                        </div>
-                                    )}
-
-                                    {/* Predictive Longevity */}
-                                    {(extraction?.full_dossier as any)?.persuasion_metrics && (
-                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
-                                            <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
-                                                Predictive Longevity
-                                            </h3>
-                                            <div className="flex-1 flex flex-col justify-center">
-                                                <div className="flex items-center gap-2 mb-4">
-                                                    <svg className="w-4 h-4 text-[#D4A574]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                                    <span className="text-[11px] font-mono uppercase tracking-widest text-[#B9B19F]">Fatigue Analysis</span>
-                                                </div>
-                                                <p className="text-[12px] leading-relaxed text-[#B9B19F]">
-                                                    {((extraction?.full_dossier as any)?.persuasion_metrics?.predictive_longevity as string)}
+                                            <div className="border-t border-white/10 pt-12">
+                                                <p className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-400/60 mb-6 font-mono">Dismantling Matrix</p>
+                                                <p className="text-[14px] leading-relaxed text-white/50 uppercase font-black tracking-widest">
+                                                    {extraction?.full_dossier?.objection_dismantling || 'System is currently reconstructing the objection dismantling matrix.'}
                                                 </p>
                                             </div>
                                         </div>
-                                    )}
 
-                                    {/* Behavioral Deconstruction */}
-                                    {extraction?.full_dossier?.archetype_mapping && (
-                                        <div className="flex min-h-[220px] flex-col justify-between rounded-[1.85rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-6 py-5 text-[#FBFBF6] xl:min-h-[240px]">
-                                            <h3 className="mb-4 w-full border-b border-[#D4A574]/18 pb-4 text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">
-                                                Behavioral Deconstruction
-                                            </h3>
-                                            <div className="flex-1 flex flex-col justify-center space-y-4">
-                                                {((extraction.full_dossier.archetype_mapping as any)?.strategic_moves || []).slice(0, 3).map((move: string, i: number) => (
-                                                    <div key={i} className="flex gap-3 items-start">
-                                                        <div className="w-1.5 h-1.5 bg-[#D4A574] rounded-full mt-2 flex-shrink-0" />
-                                                        <p className="text-[12px] leading-relaxed text-[#D6D0C6]">{move}</p>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* TAB 4: BLUEPRINT */}
-                        {activeTab === 'BLUEPRINT' && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <WorkspaceTabHeader
-                                    kicker="Audit & Reproducibility"
-                                    title="Blueprint Trace"
-                                    intro="A reproducible reconstruction path showing what was diagnosed, what can change safely, and how the route can be audited without turning VD into generation tooling."
-                                />
-                                {!blueprintData ? (
-                                <div className="flex flex-col items-center justify-center rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-10 text-center text-[#FBFBF6]">
-                                        <h3 className="text-[#D4A574] text-lg font-medium mb-2">Blueprint Trace Uninitialized</h3>
-                                        <p className="mb-4 max-w-sm text-sm text-[#B9B19F]">Build the reproducibility layer for this diagnosis so the working route can be audited and pressure-tested.</p>
-                                        <p className="text-[#D4A574]/60 text-[10px] font-bold uppercase tracking-[0.28em] mb-8">This trace is saved to the asset for audit transparency, not ad generation.</p>
-                                        {blueprintError && (
-                                            <div className="mb-6 max-w-md rounded-2xl border border-[#5B2418] bg-[#271612] px-5 py-4">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574] mb-2">Blueprint Trace Failed</p>
-                                                <p className="text-sm leading-relaxed text-[#D6D0C6]">{blueprintError}</p>
-                                            </div>
-                                        )}
-                                        {isGeneratingBlueprint && (
-                                             <div className="mb-8 w-full max-w-md rounded-[1.75rem] border border-[#4E3D2A] bg-[#171512] px-6 py-6">
-                                                 <div className="flex items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">
-                                                     <span>{BLUEPRINT_STEPS[blueprintStep]}</span>
-                                                     <span className="font-mono text-[13px]">{blueprintProgress}%</span>
-                                                 </div>
-                                                 <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-[#2A2723]">
-                                                     <div
-                                                         className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-700"
-                                                         style={{ width: `${blueprintProgress}%` }}
-                                                     />
-                                                 </div>
-                                                 <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#B9B19F]">
-                                                     Converting the live forensic dossier into an auditable reconstruction path.
-                                                 </p>
-                                             </div>
-                                         )}
-                                        <button
-                                            onClick={handleGenerateBlueprint}
-                                            disabled={isGeneratingBlueprint || !extraction}
-                                            className="bg-[#D4A574] text-[#1A1A1A] px-8 py-3.5 text-[10px] font-bold tracking-widest uppercase hover:bg-[#FFFCF7] hover:text-[#151310] rounded-full transition-all disabled:opacity-50"
-                                        >
-                                            {isGeneratingBlueprint ? 'Building Blueprint Trace...' : 'Generate Blueprint Trace'}
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div className="space-y-12">
-                                        <div className="flex flex-col gap-6 rounded-[2rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] md:flex-row md:items-center md:justify-between">
-                                            <div className="flex items-center gap-4">
-                                                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#4E3D2A] bg-[#171512]">
-                                                    <Sparkles className="h-5 w-5 text-[#D4A574]" />
-                                                </div>
-                                                <div>
-                                                    <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Blueprint Trace Active</p>
-                                                    <p className="mt-1 text-[13px] text-[#B9B19F]">This audit trail is indexed in the Intelligence Vault for reproducibility and review.</p>
-                                                </div>
-                                            </div>
-                                            <button
-                                                onClick={handleGenerateBlueprint}
-                                                disabled={isGeneratingBlueprint}
-                                                className="flex items-center gap-2 rounded-full border border-[#4E3D2A] bg-[#171512] px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-[#D4A574] transition-all hover:border-[#D4A574]/60 hover:bg-[#201b15] hover:text-[#F3F1ED] disabled:opacity-50"
-                                            >
-                                                {isGeneratingBlueprint ? 'Refreshing...' : 'Refresh Trace'}
-                                            </button>
-                                        </div>
-
-                                        <div className="rounded-[2rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5 text-[#FBFBF6]">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Product Boundary</p>
-                                            <p className="mt-3 max-w-[68ch] text-[14px] leading-7 text-[#D6D0C6]">
-                                                Blueprint Trace preserves reconstruction paths for audit transparency and reproducibility. It does not turn VD into generation or design tooling.
-                                            </p>
-                                        </div>
-
-                                        {isGeneratingBlueprint && (
-                                            <div className="rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] px-5 py-5">
-                                                <div className="flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">
-                                                    <span>{BLUEPRINT_STEPS[blueprintStep]}</span>
-                                                    <span>{blueprintProgress}%</span>
-                                                </div>
-                                                <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#2A2722]">
-                                                    <div
-                                                        className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-700"
-                                                        style={{ width: `${blueprintProgress}%` }}
-                                                    />
-                                                </div>
-                                                <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#B9B19F]">
-                                                    Regenerating the blueprint trace against the current forensic dossier.
-                                                </p>
-                                            </div>
-                                        )}
-
-                                        {/* Iteration Test Plan (Remixing) */}
-                                        {extraction?.full_dossier?.test_plan && (
-                                            <div className="space-y-6">
-                                                <div className="flex items-center gap-4">
-                                                    <span className="h-px flex-1 bg-[#4E3D2A]"></span>
-                                                    <span className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Iteration & Test Plan</span>
-                                                    <span className="h-px flex-1 bg-[#4E3D2A]"></span>
-                                                </div>
-                                                
-                                                <div className="rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 text-[#FBFBF6]">
-                                                    <div className="mb-10 max-w-3xl">
-                                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/70">Hypothesis</span>
-                                                        <p className="mt-3 text-lg font-medium leading-relaxed text-[#F3F1ED]">{extraction.full_dossier.test_plan.hypothesis}</p>
-                                                    </div>
-
-                                                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                                                        {extraction.full_dossier.test_plan.test_cells.map((cell: any, i: number) => (
-                                                            <div key={i} className="group relative rounded-2xl border border-[#4E3D2A] bg-[#171512] p-6 transition-all hover:border-[#D4A574]/40">
-                                                                <div className="flex items-start justify-between mb-4">
-                                                                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{cell.lever}</span>
-                                                                    <span className="text-[9px] font-mono text-[#B9B19F]">TEST_CELL_0{i + 1}</span>
-                                                                </div>
-                                                                <p className="mb-6 text-[15px] leading-relaxed text-[#F3F1ED]">{cell.change}</p>
-                                                                <div className="border-t border-[#4E3D2A] pt-4">
-                                                                    <p className="text-[11px] font-bold uppercase tracking-[0.15em] leading-relaxed text-[#B9B19F]">
-                                                                        {cell.rationale}
-                                                                    </p>
-                                                                </div>
+                                        <div className="border border-white/10 bg-white/5 p-12 text-white">
+                                            <h3 className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-12 border-b border-white/10 pb-8 font-mono">Emotional Trigger Scale</h3>
+                                            <div className="space-y-12">
+                                                {Object.entries((extraction?.full_dossier?.archetype_mapping as any)?.trigger_distribution || {}).length > 0 ? (
+                                                    Object.entries((extraction?.full_dossier?.archetype_mapping as any)?.trigger_distribution || {}).map(([key, val]) => (
+                                                        <div key={key} className="group">
+                                                            <div className="flex justify-between text-[11px] font-black uppercase tracking-[0.4em] mb-6 font-mono">
+                                                                <span className="text-white/40 group-hover:text-white transition-colors">{key}</span>
+                                                                <span className="text-cyan-400">{String(val)}.0%</span>
                                                             </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* Plausible Readings & Objection Dismantled */}
-                                        {extraction?.full_dossier && (
-                                            <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.8fr)]">
-                                                <div className="flex flex-col rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 text-[#FBFBF6]">
-                                                    <h3 className="mb-6 text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">
-                                                        Plausible Readings
-                                                    </h3>
-                                                    <div className="space-y-8">
-                                                        {extraction.full_dossier.possible_readings?.slice(0, 2).map((reading, i) => (
-                                                            <div key={i} className="relative pl-6">
-                                                                <div className="absolute left-0 top-1.5 h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
-                                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#B9B19F]">
-                                                                    {i === 0 ? 'Primary Interpretation' : 'Secondary Interpretation'}
-                                                                </span>
-                                                                <p className="mt-2 text-base font-semibold leading-relaxed text-[#F3F1ED]">
-                                                                    {reading.reading}
-                                                                </p>
+                                                            <div className="h-[2px] w-full bg-white/5">
+                                                                <motion.div 
+                                                                    initial={{ width: 0 }}
+                                                                    animate={{ width: `${Number(val)}%` }}
+                                                                    transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
+                                                                    className="h-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.5)]" 
+                                                                />
                                                             </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-
-                                                <div className="flex flex-col rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 text-[#FBFBF6]">
-                                                    <h3 className="mb-8 text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">
-                                                        Objection Dismantled
-                                                    </h3>
-                                                    <div className="relative">
-                                                        <div className="absolute -left-4 top-0 bottom-0 w-[1px] bg-[#C8230A]/35" />
-                                                        <p className="text-[15px] leading-relaxed text-[#D6D0C6]">
-                                                            {extraction.full_dossier.objection_dismantling}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* DNA Prompt Code Block */}
-                                        <div className="space-y-4">
-                                            <div className="flex items-center gap-4">
-                                                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Reconstruction Trace</span>
-                                                <span className="h-px flex-1 bg-[#4E3D2A]"></span>
-                                            </div>
-                                            <div className="relative group overflow-hidden rounded-[2rem] border border-[#4E3D2A] bg-[#171512] shadow-inner">
-                                                <div className="absolute top-4 right-6 flex items-center gap-3">
-                                                    <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#B9B19F]">Audit Trace Layer</span>
-                                                    <button
-                                                        className="flex items-center gap-2 rounded-full border border-[#4E3D2A] bg-[#1F1F1F] px-3 py-1 text-[9px] font-bold uppercase tracking-widest text-[#D4A574] transition-all hover:border-[#D4A574]/60 hover:bg-[#201b15] hover:text-[#F3F1ED]"
-                                                        onClick={() => navigator.clipboard.writeText(blueprintData.verified_dna_prompt)}
-                                                    >
-                                                        <Copy className="h-2.5 w-2.5" />
-                                                        Copy Trace
-                                                    </button>
-                                                </div>
-                                                <pre className="whitespace-pre-wrap p-8 pt-12 text-[13px] font-mono leading-relaxed text-[#D6D0C6] selection:bg-[#D4A574]/40">
-                                                    {blueprintData.verified_dna_prompt}
-                                                </pre>
-                                            </div>
-                                        </div>
-
-                                         {/* Execution Constraints Checklist */}
-                                         <div className="space-y-6">
-                                             <div className="rounded-[2rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 text-[#FBFBF6] md:p-10">
-                                                 <span className="mb-6 block text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Execution Logic</span>
-                                                 <div className="max-w-4xl">
-                                                     <span className="mb-4 block text-[10px] font-bold uppercase tracking-[0.25em] text-[#F4A700]">Primary Trigger</span>
-                                                     <p className="text-2xl font-medium leading-snug tracking-tight text-[#F3F1ED]">{blueprintData.execution_constraints.primary_trigger}</p>
-                                                 </div>
-                                             </div>
-
-                                             <div className="rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 text-[#FBFBF6] md:p-10">
-                                                 <span className="mb-10 block text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Technical Specs</span>
-                                                 <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-                                                     <div className="flex flex-col gap-3 relative">
-                                                         <div className="absolute -left-6 top-0 bottom-0 hidden w-px bg-[#F4A700]/35 md:block" />
-                                                         <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#F4A700]">Lighting Architecture</span>
-                                                         <p className="text-[15px] font-medium leading-relaxed text-[#D6D0C6]">
-                                                             {blueprintData.technical_specs.lighting_architecture}
-                                                         </p>
-                                                     </div>
-                                                     <div className="flex flex-col gap-3 relative">
-                                                         <div className="absolute -left-6 top-0 bottom-0 hidden w-px bg-[#C8230A]/35 md:block" />
-                                                         <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#C8230A]">Gaze Vector</span>
-                                                         <p className="text-[15px] font-medium leading-relaxed text-[#D6D0C6]">
-                                                             {blueprintData.technical_specs.gaze_vector}
-                                                         </p>
-                                                     </div>
-                                                 </div>
-                                             </div>
-
-                                             <div className="rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#171512] p-8 text-[#FBFBF6] md:p-10 shadow-inner">
-                                                 <div className="flex flex-col gap-6 md:flex-row md:items-center">
-                                                     <div className="min-w-[140px]">
-                                                         <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Material Cues</span>
-                                                         <p className="mt-1 text-[9px] uppercase tracking-widest text-[#B9B19F]">Texture & Form</p>
-                                                     </div>
-                                                     <div className="flex flex-wrap gap-2.5">
-                                                         {blueprintData.technical_specs.material_cues.map((cue: string, i: number) => (
-                                                             <span key={i} className="rounded-full border border-[#4E3D2A] bg-[#1F1F1F] px-4 py-1.5 text-[11px] font-medium text-[#D6D0C6] transition-colors hover:border-[#D4A574]/60 hover:bg-[#201b15]">
-                                                                 {cue}
-                                                             </span>
-                                                         ))}
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-
-                                        {/* Brutalist [+] / [-] constraints */}
-                                        {/* Brutalist [+] / [-] constraints */}
-                                        <div className="rounded-[2.5rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 text-[#FBFBF6]">
-                                            <div className="flex items-center gap-4 mb-10">
-                                                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Strict Execution Constraints</span>
-                                                <span className="h-px flex-1 bg-[#4E3D2A]"></span>
-                                            </div>
-                                            <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
-                                                <div className="space-y-6">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="flex h-4 w-4 items-center justify-center rounded-full bg-[#F4A700]/10">
-                                                            <div className="h-1.5 w-1.5 rounded-full bg-[#F4A700]" />
-                                                        </div>
-                                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#F4A700]">[+] Positive Benchmarks</span>
-                                                    </div>
-                                                    <div className="space-y-3">
-                                                        {blueprintData.execution_constraints.must_include.map((item: string, i: number) => (
-                                                            <div key={`inc-${i}`} className="flex items-start gap-4 rounded-xl border border-[#4E3D2A] bg-[#171512] p-4 transition-colors hover:border-[#F4A700]/45">
-                                                                <span className="mt-0.5 text-[#F4A700]">✓</span>
-                                                                <span className="text-[13px] leading-relaxed text-[#D6D0C6]">{item}</span>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                                <div className="space-y-6">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="flex h-4 w-4 items-center justify-center rounded-full bg-[#C8230A]/10">
-                                                            <div className="h-1.5 w-1.5 rounded-full bg-[#C8230A]" />
-                                                        </div>
-                                                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#C8230A]">[-] Critical Exclusions</span>
-                                                    </div>
-                                                    <div className="space-y-3">
-                                                        {blueprintData.execution_constraints.must_not_include.map((item: string, i: number) => (
-                                                            <div key={`exc-${i}`} className="flex items-start gap-4 rounded-xl border border-[#4E3D2A] bg-[#171512] p-4 opacity-85 transition-opacity hover:opacity-100">
-                                                                <span className="mt-0.5 font-bold text-[#C8230A]">×</span>
-                                                                <span className="text-[13px] leading-relaxed text-[#B9B19F] line-through decoration-[#B9B19F]/30">{item}</span>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* REMIXES AND VARIANTS */}
-                                        {blueprintData.ad_copy_remixes && blueprintData.ad_copy_remixes.length > 0 && (
-                                            <div className="space-y-6">
-                                                <div className="flex items-center gap-4">
-                                                    <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Forensic Copy Remixes</span>
-                                                    <span className="h-px flex-1 bg-[#4E3D2A]"></span>
-                                                </div>
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                    {blueprintData.ad_copy_remixes.map((remix: any, i: number) => (
-                                                        <div key={i} className="flex flex-col rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] transition-all hover:border-[#D4A574]/40">
-                                                            <div className="mb-4">
-                                                                <span className="inline-block text-[10px] font-bold uppercase tracking-[0.2em] text-[#F4A700]">
-                                                                    {remix.angle}
-                                                                </span>
-                                                            </div>
-                                                            <p className="text-[15px] font-medium leading-relaxed text-[#F3F1ED] selection:bg-[#D4A574]/20 italic">
-                                                                "{remix.copy}"
-                                                            </p>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {blueprintData.visual_variant_prompts && blueprintData.visual_variant_prompts.length > 0 && (
-                                            <div className="space-y-6">
-                                                <div className="flex items-center gap-4">
-                                                    <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Adaptation Trace Variants</span>
-                                                    <span className="h-px flex-1 bg-[#4E3D2A]"></span>
-                                                </div>
-                                                <div className="space-y-6">
-                                                    {blueprintData.visual_variant_prompts.map((variant: any, i: number) => (
-                                                        <div key={i} className="rounded-[2rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-8 text-[#FBFBF6]">
-                                                            <div className="flex items-center justify-between mb-6">
-                                                                <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">{variant.concept}</span>
-                                                                <span className="text-[9px] font-mono text-[#B9B19F]">V_{i+1}_CONCEPT</span>
-                                                            </div>
-                                                            <div className="rounded-2xl border border-[#4E3D2A] bg-[#171512] p-6 shadow-inner">
-                                                                <pre className="whitespace-pre-wrap text-[12px] font-mono leading-relaxed text-[#D6D0C6] selection:bg-[#D4A574]/30">
-                                                                    {variant.prompt}
-                                                                </pre>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        {activeTab === 'STRESS LAB' && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="space-y-8">
-                                    <WorkspaceTabHeader
-                                        kicker="Causal Intelligence"
-                                        title="Causal Confidence"
-                                        intro="Controlled what-if deltas for the variables most likely to change performance without breaking the diagnosed mechanism."
-                                    />
-                                    <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Product Boundary</p>
-                                        <p className="mt-3 max-w-[66ch] text-[15px] leading-7 text-[#1A1A1A]/76">
-                                            Stress Lab is causal testing guidance, not a prompt feed. VD judges, diagnoses, and directs quality before any adaptation move is made.
-                                        </p>
-                                        <div className="mt-4 flex flex-wrap gap-3">
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
-                                                Confidence {integratedRecommendation.confidence}
-                                            </span>
-                                            <span className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBFBF6] px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
-                                                Based on blueprint trace, friction, and gaze
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="overflow-hidden rounded-[2rem] border border-[#E6DDCF] bg-white/80 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                        <div className="grid grid-cols-[minmax(150px,1fr)_minmax(220px,1.2fr)_minmax(220px,1.2fr)_120px_120px_120px] gap-px bg-[#E6DDCF] overflow-x-auto">
-                                            {['Variable', 'Current state', 'Proposed shift', 'Predicted lift', 'Risk', 'Recommendation'].map((label) => (
-                                                <div key={label} className="bg-[#FBFBF6] px-4 py-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B7B62]">
-                                                    {label}
-                                                </div>
-                                            ))}
-                                            {stressLabRows.flatMap((row) => ([
-                                                <div key={`${row.variable}-variable`} className="bg-white px-4 py-4 text-[13px] font-semibold text-[#16120D]">{row.variable}</div>,
-                                                <div key={`${row.variable}-current`} className="bg-white px-4 py-4 text-[13px] leading-6 text-[#1A1A1A]/72">{row.currentState}</div>,
-                                                <div key={`${row.variable}-shift`} className="bg-white px-4 py-4 text-[13px] leading-6 text-[#1A1A1A]/72">{row.proposedShift}</div>,
-                                                <div key={`${row.variable}-lift`} className="bg-white px-4 py-4">
-                                                    <span className={`inline-flex rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
-                                                        row.predictedLift === 'High' ? 'bg-[#D4A882]/15 text-[#8B4513]' : row.predictedLift === 'Medium' ? 'bg-[#F4A700]/10 text-[#8B4513]' : 'bg-[#16120D]/6 text-[#6F6659]'
-                                                    }`}>{row.predictedLift}</span>
-                                                </div>,
-                                                <div key={`${row.variable}-risk`} className="bg-white px-4 py-4">
-                                                    <span className={`inline-flex rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
-                                                        row.risk === 'High' ? 'bg-[#C8230A]/10 text-[#C8230A]' : row.risk === 'Medium' ? 'bg-[#D4A882]/15 text-[#8B4513]' : 'bg-[#16120D]/6 text-[#6F6659]'
-                                                    }`}>{row.risk}</span>
-                                                </div>,
-                                                <div key={`${row.variable}-recommendation`} className="bg-white px-4 py-4">
-                                                    <span className={`inline-flex rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
-                                                        row.recommendation === 'Test' ? 'bg-[#D4A882]/15 text-[#8B4513]' : row.recommendation === 'Avoid' ? 'bg-[#C8230A]/10 text-[#C8230A]' : 'bg-[#16120D]/6 text-[#6F6659]'
-                                                    }`}>{row.recommendation}</span>
-                                                </div>,
-                                            ]))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {activeTab === 'DECISION LOG' && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="space-y-8">
-                                    <WorkspaceTabHeader
-                                        kicker="Audit Trail"
-                                        title="Context Continuity"
-                                        intro="A compact operating log for what was approved, revised, or rejected so diagnosis turns into accountable creative direction."
-                                    />
-                                    <div className="grid gap-6 xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Log Current Decision</p>
-                                            <p className="mt-3 text-[14px] leading-6 text-[#1A1A1A]/72">
-                                                Capture the current verdict, confidence, top rationale, and the active P1 fix so the decision trail survives reloads and review-room drift.
-                                            </p>
-                                            <div className="mt-5 flex flex-wrap gap-3">
-                                                <button
-                                                    onClick={() => setShowDecisionSummary((current) => !current)}
-                                                    className="rounded-full border border-[#D4A574]/20 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#D4A574]/10"
-                                                >
-                                                    {showDecisionSummary ? 'Hide Decision Summary' : 'Generate Decision Summary'}
-                                                </button>
-                                                <button
-                                                    onClick={() => navigator.clipboard.writeText(decisionSummaryText)}
-                                                    className="rounded-full border border-[#D4A574]/20 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513] transition-colors hover:bg-[#D4A574]/10"
-                                                >
-                                                    Copy Summary
-                                                </button>
-                                            </div>
-                                            {showDecisionSummary && (
-                                                <div className="mt-5 space-y-4">
-                                                    <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">Compact card view</p>
-                                                        <div className="mt-3 space-y-3">
-                                                            <p className="text-[14px] leading-6 text-[#16120D]">{integratedRecommendation.recommendedDirection}</p>
-                                                            <p className="text-[12px] leading-6 text-[#1A1A1A]/68">
-                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Asset</span> · {assetLabel}
-                                                            </p>
-                                                            <p className="text-[12px] leading-6 text-[#1A1A1A]/68">
-                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Timestamp</span> · {decisionSummaryTimestamp}
-                                                            </p>
-                                                            <p className="text-[13px] leading-6 text-[#1A1A1A]/68">
-                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Decision</span> · {integratedRecommendation.decision}
-                                                            </p>
-                                                            <p className="text-[13px] leading-6 text-[#1A1A1A]/68">
-                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Rationale</span> · {integratedRecommendation.rationale}
-                                                            </p>
-                                                            <p className="text-[13px] leading-6 text-[#1A1A1A]/68">
-                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Next test</span> · {integratedRecommendation.executionNext3[0]}
-                                                            </p>
-                                                            <p className="text-[13px] leading-6 text-[#1A1A1A]/68">
-                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">Market pulse</span> · {marketPulseInterpretation}
-                                                            </p>
-                                                            <div className="flex flex-wrap gap-2 pt-1">
-                                                                <span className="inline-flex rounded-full bg-white px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
-                                                                    Confidence {integratedRecommendation.confidence}
-                                                                </span>
-                                                                <span className="inline-flex rounded-full bg-white px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                                    Evidence {integratedRecommendation.evidenceStrength}
-                                                                </span>
-                                                                <span className="inline-flex rounded-full bg-white px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                                    Assumption {integratedRecommendation.assumptionLoad}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#171512] px-4 py-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">Copyable handoff block</p>
-                                                        <pre className="mt-3 whitespace-pre-wrap text-[12px] leading-6 text-[#D6D0C6]">{decisionSummaryText}</pre>
-                                                    </div>
-                                                </div>
-                                            )}
-                                            <div className="mt-5 rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
-                                                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">Optional team note</p>
-                                                <textarea
-                                                    value={decisionNote}
-                                                    onChange={(e) => setDecisionNote(e.target.value)}
-                                                    rows={4}
-                                                    className="mt-3 w-full resize-none border-0 bg-transparent p-0 text-[14px] leading-6 text-[#16120D] outline-none placeholder:text-[#1A1A1A]/35"
-                                                    placeholder="Add context for why this call was made."
-                                                />
-                                            </div>
-                                            <button
-                                                onClick={handleLogDecision}
-                                                className="mt-5 rounded-full bg-[#D4A574] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition-colors hover:bg-[#c8955b]"
-                                            >
-                                                Save decision entry
-                                            </button>
-                                        </div>
-
-                                        <div className="rounded-[2rem] border border-[#E6DDCF] bg-white/80 p-6 shadow-[0_16px_40px_rgba(26,18,13,0.06)]">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B7B62]">Decision History</p>
-                                            <div className="mt-5 space-y-4">
-                                                {decisionLogEntries.length > 0 ? (
-                                                    decisionLogEntries.map((entry) => (
-                                                        <div key={entry.id} className="rounded-[1.25rem] border border-[#E6DDCF] bg-[#FBFBF6] px-4 py-4">
-                                                            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                                                                <div className="flex items-center gap-3">
-                                                                    <span className={`inline-flex rounded-full px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${
-                                                                        entry.verdict === 'Ship' ? 'bg-[#D4A882]/15 text-[#8B4513]' : entry.verdict === 'Revise' ? 'bg-[#F4A700]/10 text-[#8B4513]' : 'bg-[#C8230A]/10 text-[#C8230A]'
-                                                                    }`}>
-                                                                        {entry.verdict}
-                                                                    </span>
-                                                                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B7B62]">
-                                                                        {new Date(entry.timestamp).toLocaleString('en-AU', {
-                                                                            day: '2-digit',
-                                                                            month: 'short',
-                                                                            hour: 'numeric',
-                                                                            minute: '2-digit',
-                                                                        })}
-                                                                    </span>
-                                                                </div>
-                                                                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B4513]">
-                                                                    Confidence {entry.confidence ?? '—'}/100
-                                                                </span>
-                                                            </div>
-                                                            <p className="mt-3 text-[14px] leading-6 text-[#16120D]">{entry.rationale}</p>
-                                                            <p className="mt-3 text-[12px] leading-6 text-[#1A1A1A]/68">
-                                                                <span className="font-bold uppercase tracking-[0.16em] text-[#8B7B62]">P1 fix</span> · {entry.p1Fix}
-                                                            </p>
-                                                            {entry.teamNote && (
-                                                                <p className="mt-3 border-t border-[#E6DDCF] pt-3 text-[12px] leading-6 text-[#1A1A1A]/68">{entry.teamNote}</p>
-                                                            )}
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <div className="rounded-[1.25rem] border border-dashed border-[#E6DDCF] bg-[#FBFBF6] px-4 py-6 text-[14px] leading-6 text-[#1A1A1A]/62">
-                                                        No decisions logged yet. Save the current verdict from this dossier to create the first audit entry.
+                                                    <div className="py-20 text-center border border-dashed border-white/5 bg-black/40 text-[10px] uppercase tracking-[0.4em] text-white/20 font-mono">
+                                                        Trigger distribution offline.
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        <div className="md:col-span-2 border border-white/10 bg-white/5 p-12 text-white shadow-[0_80px_160px_rgba(0,0,0,0.6)]">
+                                            <h3 className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-12 border-b border-white/10 pb-8 font-mono">Strategic Tactical Calibration</h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                {(extraction?.full_dossier?.archetype_mapping?.strategic_moves || []).length > 0 ? (
+                                                    (extraction?.full_dossier?.archetype_mapping?.strategic_moves || []).map((move, i) => (
+                                                        <div key={i} className="flex gap-12 p-10 border border-white/10 bg-black group hover:border-cyan-400/40 transition-all shadow-xl">
+                                                            <div className="text-[48px] font-black text-white/5 group-hover:text-cyan-400/10 transition-colors font-mono leading-none">0{i+1}</div>
+                                                            <p className="text-[16px] font-black leading-relaxed text-white/80 uppercase tracking-tightest">{String(move)}</p>
+                                                        </div>
+                                                    ))
+                                                ) : (
+                                                    <div className="col-span-2 py-20 text-center border border-dashed border-white/5 bg-black/40 text-[10px] uppercase tracking-[0.4em] text-white/20 font-mono">
+                                                        Moves indexing in progress.
                                                     </div>
                                                 )}
                                             </div>
@@ -4090,6 +3329,331 @@ export default function AssetWorkspace({
                             </div>
                         )}
 
+                        {activeTab === 'BLUEPRINT' && (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="space-y-10">
+                                    <WorkspaceTabHeader
+                                        kicker="Audit & Reproducibility"
+                                        title="Blueprint Trace"
+                                        intro="A reproducible reconstruction path showing what was diagnosed, what can change safely, and how the route can be audited."
+                                    />
+                                    {!blueprintData ? (
+                                        <div className="flex flex-col items-center justify-center border border-white/10 bg-white/5 p-20 text-center text-white">
+                                            <div className="w-16 h-16 flex items-center justify-center border border-cyan-400/30 bg-cyan-400/10 mb-8">
+                                                <Sparkles className="w-6 h-6 text-cyan-400" />
+                                            </div>
+                                            <h3 className="text-white text-2xl font-black mb-4 uppercase tracking-tightest">Blueprint Trace Offline</h3>
+                                            <p className="mb-10 max-w-sm text-[13px] text-white/40 font-black uppercase tracking-widest leading-relaxed">System requires route calibration to generate the audit-ready blueprint architecture.</p>
+                                            
+                                            {isGeneratingBlueprint && (
+                                                <div className="mb-12 w-full max-w-md border border-white/10 p-10 bg-black shadow-2xl">
+                                                    <div className="flex items-center justify-between gap-4 text-[11px] font-black uppercase tracking-[0.4em] text-cyan-400 mb-8 font-mono">
+                                                        <span>{BLUEPRINT_STEPS[blueprintStep]}</span>
+                                                        <span>{blueprintProgress}%</span>
+                                                    </div>
+                                                    <div className="h-[2px] w-full bg-white/5">
+                                                        <div
+                                                            className="h-full bg-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all duration-700"
+                                                            style={{ width: `${blueprintProgress}%` }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+                                            
+                                            <button
+                                                onClick={handleGenerateBlueprint}
+                                                disabled={isGeneratingBlueprint || !extraction}
+                                                className="bg-cyan-400 text-black px-12 py-5 text-[11px] font-black tracking-[0.4em] uppercase hover:bg-white transition-all disabled:opacity-50 active:scale-95 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+                                            >
+                                                {isGeneratingBlueprint ? 'GENERATING ARCHITECTURE...' : 'INITIATE BLUEPRINT'}
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-12">
+                                            <div className="flex flex-col gap-8 border border-white/10 bg-white/5 p-12 text-white md:flex-row md:items-center md:justify-between shadow-2xl">
+                                                <div className="flex items-center gap-6">
+                                                    <div className="flex h-14 w-14 items-center justify-center border border-cyan-400/30 bg-cyan-400/10">
+                                                        <Sparkles className="h-6 w-6 text-cyan-400" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 font-mono">Blueprint Trace Active // Vault_Index</p>
+                                                        <p className="mt-2 text-[14px] text-white/50 font-black uppercase tracking-tightest">Indexed for reproducibility and multi-agent audit.</p>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    onClick={handleGenerateBlueprint}
+                                                    disabled={isGeneratingBlueprint}
+                                                    className="flex items-center gap-4 border border-cyan-400 px-8 py-4 text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 transition-all hover:bg-cyan-400 hover:text-black disabled:opacity-50 font-mono"
+                                                >
+                                                    {isGeneratingBlueprint ? 'REFRESHING...' : 'REFRESH TRACE'}
+                                                </button>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 gap-12">
+                                                <div className="border border-white/10 bg-white/5 p-12 text-white shadow-xl">
+                                                    <p className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-10 border-b border-white/10 pb-6 font-mono">Handoff Logic // Reconstruction</p>
+                                                    <div className="border border-white/10 bg-black/60 p-10 shadow-inner">
+                                                        <pre className="whitespace-pre-wrap text-[14px] font-mono leading-relaxed text-white/30 selection:bg-cyan-400/30">
+                                                            {blueprintData.verified_dna_prompt}
+                                                        </pre>
+                                                    </div>
+                                                </div>
+
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    <div className="border border-white/10 bg-white/5 p-10">
+                                                        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-8 border-b border-white/10 pb-4 font-mono">Primary Trigger</p>
+                                                        <p className="text-[20px] font-black uppercase leading-tight text-white tracking-tightest">{blueprintData.execution_constraints?.primary_trigger}</p>
+                                                    </div>
+                                                    <div className="border border-white/10 bg-white/5 p-10 font-mono">
+                                                        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-white/40 mb-8 border-b border-white/10 pb-4">Aesthetic Architecture</p>
+                                                        <p className="text-[12px] font-black uppercase leading-relaxed text-white/60 tracking-widest">{blueprintData.technical_specs?.lighting_architecture}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="border border-white/10 bg-white/5 p-12">
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                                        <div className="space-y-8">
+                                                            <div className="flex items-center gap-4">
+                                                                <div className="w-8 h-8 flex items-center justify-center border border-cyan-400 bg-cyan-400 text-black">
+                                                                    <Check className="w-4 h-4" />
+                                                                </div>
+                                                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono">Retention Protocol</span>
+                                                            </div>
+                                                            <div className="space-y-3">
+                                                                {(blueprintData.execution_constraints?.must_include || []).map((item: string, i: number) => (
+                                                                    <div key={`inc-${i}`} className="border border-white/10 bg-black/40 p-4 hover:border-cyan-400/40 transition-all">
+                                                                        <p className="text-[12px] font-black uppercase text-white/50 tracking-tight">{item}</p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="space-y-8">
+                                                            <div className="flex items-center gap-4">
+                                                                <div className="w-8 h-8 flex items-center justify-center border border-white/20 bg-white/5 text-white/20">
+                                                                    <X className="w-4 h-4" />
+                                                                </div>
+                                                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/20 font-mono">Negation Protocol</span>
+                                                            </div>
+                                                            <div className="space-y-3">
+                                                                {(blueprintData.execution_constraints?.must_not_include || []).map((item: string, i: number) => (
+                                                                    <div key={`exc-${i}`} className="border border-white/5 bg-black/60 p-4 opacity-40">
+                                                                        <p className="text-[12px] font-medium uppercase text-white/10 tracking-tight line-through">{item}</p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* REMIXES AND VARIANTS */}
+                                                {blueprintData.ad_copy_remixes && blueprintData.ad_copy_remixes.length > 0 && (
+                                                    <div className="space-y-10">
+                                                        <div className="flex items-center gap-6">
+                                                            <p className="text-[11px] font-black uppercase tracking-[0.6em] text-cyan-400 font-mono">Forensic Copy Remixes</p>
+                                                            <div className="h-px flex-1 bg-white/10"></div>
+                                                        </div>
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                            {blueprintData.ad_copy_remixes.map((remix: any, i: number) => (
+                                                                <div key={i} className="border border-white/10 bg-white/5 p-10 transition-all hover:border-cyan-400/40 shadow-xl group">
+                                                                    <p className="mb-8 border-b border-white/5 pb-4 text-[9px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono">{remix.angle}</p>
+                                                                    <p className="text-[18px] font-black uppercase leading-tight text-white/80 group-hover:text-white transition-colors tracking-tightest font-mono">
+                                                                        "{remix.copy}"
+                                                                    </p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {blueprintData.visual_variant_prompts && blueprintData.visual_variant_prompts.length > 0 && (
+                                                    <div className="space-y-10">
+                                                        <div className="flex items-center gap-6">
+                                                            <p className="text-[11px] font-black uppercase tracking-[0.6em] text-white/20 font-mono">Adaptation Trace Variants</p>
+                                                            <div className="h-px flex-1 bg-white/10"></div>
+                                                        </div>
+                                                        <div className="grid grid-cols-1 gap-10">
+                                                            {blueprintData.visual_variant_prompts.map((variant: any, i: number) => (
+                                                                <div key={i} className="border border-white/10 bg-white/5 p-12 transition-all hover:bg-white/[0.07] shadow-3xl">
+                                                                    <div className="flex items-center justify-between mb-8 border-b border-white/10 pb-6">
+                                                                        <span className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 font-mono">{variant.concept}</span>
+                                                                        <span className="text-[10px] font-black text-white/10 font-mono tracking-widest uppercase">Variant_Trace_0{i+1}</span>
+                                                                    </div>
+                                                                    <div className="border border-white/5 bg-black/60 p-10 shadow-inner">
+                                                                        <pre className="whitespace-pre-wrap text-[13px] font-mono leading-relaxed text-white/30 selection:bg-cyan-400/30">
+                                                                            {variant.prompt}
+                                                                        </pre>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'STRESS LAB' && (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="space-y-10">
+                                    <WorkspaceTabHeader
+                                        kicker="Causal Intelligence"
+                                        title="Stress Lab"
+                                        intro="Experimental stress testing across key creative variables to measure response variance and structural durability."
+                                    />
+                                    <div className="border border-white/10 bg-white/5 overflow-hidden shadow-3xl">
+                                        <div className="grid grid-cols-4 border-b border-white/10 bg-black/40 text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono">
+                                            <div className="px-10 py-6 border-r border-white/10">Variable</div>
+                                            <div className="px-10 py-6 border-r border-white/10 text-center">Baseline</div>
+                                            <div className="px-10 py-6 border-r border-white/10 text-center">Predicted_Lift</div>
+                                            <div className="px-10 py-6 text-center">Recommendation</div>
+                                        </div>
+                                        <div className="divide-y divide-white/5">
+                                            {(stressLabRows || []).map((row, i) => (
+                                                <div key={i} className="grid grid-cols-4 items-center group hover:bg-white/[0.02] transition-colors">
+                                                    <div className="px-10 py-10 border-r border-white/10">
+                                                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-white/50 group-hover:text-cyan-400 transition-colors font-mono">{row.variable}</p>
+                                                    </div>
+                                                    <div className="px-10 py-10 border-r border-white/10 text-center">
+                                                        <p className="text-[14px] font-black text-white/40 uppercase leading-tight">{row.currentState}</p>
+                                                    </div>
+                                                    <div className="px-10 py-10 border-r border-white/10 text-center font-mono">
+                                                        <span className={`text-[11px] font-black ${row.predictedLift === 'High' ? 'text-cyan-400' : 'text-white/40'}`}>
+                                                            {row.predictedLift}
+                                                        </span>
+                                                    </div>
+                                                    <div className="px-10 py-10 text-center">
+                                                        <span className={`inline-block border px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] font-mono ${
+                                                            row.recommendation === 'Test' 
+                                                                ? 'border-cyan-400 text-cyan-400 bg-cyan-400/5' 
+                                                                : row.recommendation === 'Avoid' 
+                                                                    ? 'border-red-500/50 text-red-500 bg-red-500/5' 
+                                                                    : 'border-white/10 text-white/30'
+                                                        }`}>
+                                                            {row.recommendation}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'DECISION LOG' && (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="space-y-10">
+                                    <WorkspaceTabHeader
+                                        kicker="Audit Trail"
+                                        title="Decision Log"
+                                        intro="A compact operating log for what was approved, revised, or rejected so diagnosis turns into accountable creative direction."
+                                    />
+                                    <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
+                                        <div className="space-y-4">
+                                            <div className="border border-white/10 bg-white/5 p-12 shadow-2xl">
+                                                <p className="text-[11px] font-black uppercase tracking-[0.4em] text-cyan-400 mb-10 border-b border-white/10 pb-6 font-mono">Capture Decision // Active_Entry</p>
+                                                <div className="space-y-8">
+                                                    <div className="grid grid-cols-3 gap-4">
+                                                        {(['Ship', 'Revise', 'Kill'] as const).map((v) => (
+                                                            <button
+                                                                key={v}
+                                                                onClick={() => setDecisionVerdict(v)}
+                                                                className={`border p-8 text-[11px] font-black uppercase tracking-[0.5em] transition-all font-mono ${
+                                                                    decisionVerdict === v
+                                                                        ? 'border-cyan-400 bg-cyan-400 text-black shadow-[0_0_30px_rgba(34,211,238,0.3)]'
+                                                                        : 'border-white/10 bg-white/5 text-white/40 hover:border-white/20 hover:text-white/60'
+                                                                }`}
+                                                            >
+                                                                {v}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                    <div className="space-y-4">
+                                                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 font-mono">Rationale // Readout</p>
+                                                        <textarea
+                                                            value={decisionNote}
+                                                            onChange={(e) => setDecisionNote(e.target.value)}
+                                                            rows={6}
+                                                            className="w-full border border-white/10 bg-transparent p-8 text-[14px] font-mono leading-relaxed text-white outline-none placeholder:text-white/10 focus:border-cyan-400/50 transition-colors uppercase"
+                                                            placeholder="Enter forensic rationale for this decision..."
+                                                        />
+                                                    </div>
+                                                    <button
+                                                        onClick={handleLogDecision}
+                                                        className="w-full bg-white text-black py-6 text-[11px] font-black uppercase tracking-[0.5em] transition-all hover:bg-cyan-400 active:scale-[0.98] font-mono"
+                                                    >
+                                                        COMMIT TO AUDIT LOG
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div className="border border-white/10 bg-white/5 p-12">
+                                                <div className="flex items-center justify-between gap-6 mb-10">
+                                                    <p className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 font-mono">Decision Shorthand // Summary</p>
+                                                    <button 
+                                                        onClick={() => navigator.clipboard.writeText(decisionSummaryText)}
+                                                        className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 hover:text-cyan-400 transition-colors font-mono"
+                                                    >
+                                                        COPY_TEXT
+                                                    </button>
+                                                </div>
+                                                <div className="border border-white/5 bg-black/60 p-10">
+                                                    <div className="grid grid-cols-2 gap-10">
+                                                        <div>
+                                                            <p className="text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-3 font-mono">Timestamp</p>
+                                                            <p className="text-[12px] font-black text-white/60 uppercase">{decisionSummaryTimestamp}</p>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-3 font-mono">Verdict</p>
+                                                            <p className="text-[12px] font-black text-cyan-400 uppercase">{decisionVerdict || 'PENDING'}</p>
+                                                        </div>
+                                                        <div className="col-span-2">
+                                                            <p className="text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-3 font-mono">Operating Status</p>
+                                                            <p className="text-[14px] font-black text-white uppercase tracking-tightest leading-tight">{integratedRecommendation.recommendedDirection}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="border border-white/10 bg-white/5 p-12">
+                                            <p className="text-[11px] font-black uppercase tracking-[0.6em] text-white/20 mb-12 border-b border-white/10 pb-6 font-mono">Decision History</p>
+                                            <div className="space-y-4 max-h-[800px] overflow-y-auto pr-4 custom-scrollbar">
+                                                {decisionLogEntries.length > 0 ? (
+                                                    decisionLogEntries.map((entry) => (
+                                                        <div key={entry.id} className="border border-white/10 bg-black/40 p-10 hover:border-white/20 transition-all">
+                                                            <div className="flex items-center justify-between mb-8">
+                                                                <span className={`inline-block border px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.3em] font-mono ${
+                                                                    entry.verdict === 'Ship' ? 'border-cyan-400 text-cyan-400 bg-cyan-400/5' : entry.verdict === 'Revise' ? 'border-yellow-400 text-yellow-400 bg-yellow-400/5' : 'border-red-400 text-red-400 bg-red-400/5'
+                                                                }`}>
+                                                                    {entry.verdict}
+                                                                </span>
+                                                                <span className="text-[10px] font-black text-white/20 font-mono">
+                                                                    {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} // 
+                                                                    {new Date(entry.timestamp).toLocaleDateString([], { day: '2-digit', month: 'short' })}
+                                                                </span>
+                                                            </div>
+                                                            <p className="text-[14px] font-black uppercase text-white/70 tracking-tight leading-relaxed font-mono">{entry.rationale}</p>
+                                                            <div className="mt-8 border-t border-white/5 pt-6">
+                                                                <p className="text-[11px] font-black uppercase tracking-widest text-cyan-400/60 font-mono">P1 FIX: {entry.p1Fix}</p>
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                ) : (
+                                                    <div className="border border-dashed border-white/10 bg-black/20 p-20 text-center">
+                                                        <p className="text-[11px] font-black uppercase tracking-[0.5em] text-white/10 font-mono">Log Empty</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -4101,163 +3665,148 @@ export default function AssetWorkspace({
             {showCloneDrawer && (
                 <div className="fixed inset-0 z-[80] no-print">
                     <div
-                        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                        className="absolute inset-0 bg-black/80 backdrop-blur-md"
                         onClick={() => setShowCloneDrawer(false)}
                     />
-                    <div className="absolute inset-y-0 right-0 w-full max-w-3xl overflow-y-auto border-l border-[#D4A574]/20 bg-[#FBFBF6] text-[#1A1A1A] shadow-2xl">
-                        <div className="border-b border-[#E6DDCF] bg-[#FBFBF6] px-6 py-5 md:px-8">
-                            <div className="flex items-start justify-between gap-6">
+                    <div className="absolute inset-y-0 right-0 w-full max-w-3xl overflow-y-auto border-l border-white/10 bg-[#050505] text-white shadow-[0_0_100px_rgba(0,0,0,1)]">
+                        <div className="sticky top-0 z-10 border-b border-white/10 bg-[#050505]/95 px-8 py-10 backdrop-blur-xl md:px-12">
+                            <div className="flex items-start justify-between gap-12">
                                 <div>
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Clone Engine</p>
-                                    <h2 className="mt-3 max-w-4xl text-[2rem] font-light uppercase tracking-tight leading-[1.08] text-[#1A1A1A] md:text-[2.35rem]">
-                                        {cloneIntroLead}
+                                    <p className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-400 font-mono">Clone Engine // Vault_Transfer</p>
+                                    <h2 className="mt-6 text-[32px] font-black uppercase tracking-tightest leading-[1.1] text-white md:text-[42px]">
+                                        {cloneIntroLead || 'DNA EXTRACTION'}
                                     </h2>
-                                    <p className="mt-4 max-w-3xl text-[15px] leading-7 text-[#1A1A1A]/72">
+                                    <p className="mt-6 max-w-2xl text-[14px] leading-relaxed text-white/50 font-medium uppercase tracking-tight">
                                         {cloneIntroRemainder ? `${cloneIntroRemainder} ` : ''}
-                                        {cloneIntroBody}
+                                        {cloneIntroBody || 'Generate five original campaign concepts that preserve the persuasion architecture.'}
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setShowCloneDrawer(false)}
-                                    className="rounded-full border border-[#D4A574]/25 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#8B4513] transition-colors hover:bg-[#D4A574]/10"
+                                    className="shrink-0 border border-white/20 bg-white/5 px-6 py-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/50 transition-all hover:border-white hover:text-white font-mono"
                                 >
-                                    Close
+                                    CLOSE
                                 </button>
                             </div>
                         </div>
 
-                        <div className="px-6 py-8 md:px-8">
-                            <div className="rounded-[2rem] border border-[#D4A574]/18 bg-white/55 p-6">
-                                <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                        <div className="px-8 py-12 md:px-12">
+                            <div className="border border-white/10 bg-white/5 p-10 shadow-2xl">
+                                <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
                                     <div>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/70">Source asset</p>
-                                        <p className="mt-2 text-xl font-light uppercase tracking-tight text-[#1A1A1A]">{asset.brand?.name || 'Unknown Brand'}</p>
-                                        <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-[#8B4513]/70">{asset.brand?.market_sector || 'Uncategorised'}</p>
+                                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono mb-4">Source Asset // Forensic Read</p>
+                                        <p className="text-3xl font-black uppercase tracking-tightest text-white leading-none">{asset?.brand?.name || 'Unknown'}</p>
+                                        <p className="mt-4 text-[11px] font-black uppercase tracking-[0.4em] text-white/30 font-mono">{asset?.brand?.market_sector || 'General'}</p>
                                     </div>
                                     <button
                                         onClick={() => void handleGenerateClone()}
                                         disabled={isGeneratingClone}
-                                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition-all hover:bg-[#c8955b] disabled:cursor-wait disabled:opacity-60"
+                                        className="h-16 shrink-0 bg-cyan-400 px-10 text-[11px] font-black uppercase tracking-[0.4em] text-black shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all hover:bg-white hover:scale-105 active:scale-95 disabled:opacity-50"
                                     >
-                                        <Sparkles className="h-3.5 w-3.5" />
-                                        {isGeneratingClone ? 'Synthesising Concepts...' : cloneData ? 'Regenerate Concepts' : 'Generate Concepts'}
+                                        {isGeneratingClone ? 'EXTRACTING DNA...' : cloneData ? 'REGENERATE TRACES' : 'INITIATE CLONE'}
                                     </button>
                                 </div>
                                 {cloneError && (
-                                    <p className="mt-4 rounded-2xl border border-[#8B4513]/25 bg-[#8B4513]/8 px-4 py-3 text-sm text-[#6E2E20]">
+                                    <p className="mt-8 border border-red-500/30 bg-red-500/5 px-6 py-4 text-[12px] font-black uppercase tracking-widest text-red-400">
                                         {cloneError}
                                     </p>
                                 )}
                                 {isGeneratingClone && (
-                                    <div className="mt-6 rounded-[1.75rem] border border-[#E6DDCF] bg-[#FBFBF6] px-5 py-5">
-                                        <div className="flex items-center justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">
+                                    <div className="mt-12 border border-white/10 bg-black/40 p-8">
+                                        <div className="flex items-center justify-between gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 mb-6 font-mono">
                                             <span>{CLONE_STEPS[cloneStep]}</span>
                                             <span>{cloneProgress}%</span>
                                         </div>
-                                        <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#E5DDD0]">
+                                        <div className="h-0.5 w-full bg-white/5">
                                             <div
-                                                className="h-full rounded-full bg-gradient-to-r from-[#8B4513] to-[#D4A574] transition-all duration-700"
+                                                className="h-full bg-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all duration-700"
                                                 style={{ width: `${cloneProgress}%` }}
                                             />
                                         </div>
-                                        <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#8B4513]/66">
-                                            Translating the core persuasion architecture into original concept directions.
-                                        </p>
                                     </div>
                                 )}
                             </div>
 
-                            {isGeneratingClone && !cloneData ? (
-                                <div className="mt-8 rounded-[2rem] border border-dashed border-[#D4A574]/20 bg-white/45 px-6 py-12 text-center">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Extracting transferable persuasion DNA</p>
-                                    <p className="mt-4 text-sm leading-relaxed text-[#1A1A1A]/72">
-                                        Clone Engine is unpacking the core mechanism, stripping out the incumbent aesthetic, and drafting five fresh deployment directions.
-                                    </p>
-                                </div>
-                            ) : cloneData ? (
-                                <div className="mt-8 space-y-6">
+                            {cloneData ? (
+                                <div className="mt-12 space-y-8">
                                     <div className="grid gap-4 md:grid-cols-2">
-                                        <div className="rounded-[2rem] border border-[#D4A574]/18 bg-white/55 p-5">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Extracted Mechanism</p>
-                                            <p className="mt-3 text-[15px] leading-8 text-[#1A1A1A]/78">{cloneData.extracted_mechanism}</p>
+                                        <div className="border border-white/10 bg-white/5 p-8">
+                                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono mb-4 border-b border-white/5 pb-3">Extracted Mechanism</p>
+                                            <p className="text-[14px] leading-relaxed text-white/70 uppercase font-bold font-mono">{cloneData?.extracted_mechanism}</p>
                                         </div>
-                                        <div className="rounded-[2rem] border border-[#D4A574]/18 bg-white/55 p-5">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/80">Deployment Principle</p>
-                                            <p className="mt-3 text-[15px] leading-8 text-[#1A1A1A]/78">{cloneData.deployment_principle}</p>
+                                        <div className="border border-white/10 bg-white/5 p-8">
+                                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono mb-4 border-b border-white/5 pb-3">Deployment Principle</p>
+                                            <p className="text-[14px] leading-relaxed text-white/70 uppercase font-bold font-mono">{cloneData?.deployment_principle}</p>
                                         </div>
                                     </div>
 
-                                    <div className="grid gap-5">
-                                        {cloneData.concepts.map((concept, index) => (
-                                            <article key={`${concept.title}-${index}`} className="rounded-[2rem] border border-[#D4A574]/18 bg-white/55 p-6 shadow-[0_25px_60px_rgba(0,0,0,0.08)]">
-                                                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                                    <div className="space-y-8">
+                                        {(cloneData?.concepts || []).map((concept, index) => (
+                                            <article key={`${concept.title}-${index}`} className="border border-white/10 bg-white/5 p-10 shadow-2xl transition-all hover:bg-white/[0.07]">
+                                                <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between mb-8">
                                                     <div>
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#D4A574]/82">
-                                                            Concept {(concept.concept_id || index + 1).toString().padStart(2, '0')}
+                                                        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-400 font-mono mb-4">
+                                                            Route Phase // {(concept.concept_id || index + 1).toString().padStart(2, '0')}
                                                         </p>
-                                                        <h3 className="mt-3 text-[2rem] font-light uppercase tracking-tight text-[#1A1A1A]">{concept.title}</h3>
+                                                        <h3 className="text-[32px] font-black uppercase tracking-tightest text-white leading-none">{concept.title}</h3>
                                                     </div>
-                                                    <div className="flex flex-wrap items-center gap-2">
-                                                        <span className="rounded-full border border-[#D4A574]/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">
+                                                    <div className="flex flex-wrap items-center gap-3">
+                                                        <span className="border border-cyan-400/30 bg-cyan-400/10 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.3em] text-cyan-400 font-mono">
                                                             {concept.hook_type}
                                                         </span>
-                                                        <span className="rounded-full border border-[#D4A574]/18 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B4513]/75">
+                                                        <span className="border border-white/10 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.3em] text-white/40 font-mono">
                                                             {concept.production_complexity}
                                                         </span>
                                                     </div>
                                                 </div>
 
-                                                <p className="mt-5 text-[15px] leading-8 text-[#1A1A1A]/74">{concept.logline}</p>
+                                                <p className="text-[16px] leading-[1.3] text-white/70 font-black uppercase tracking-tight mb-10 border-b border-white/5 pb-8">{concept.logline}</p>
 
-                                                <div className="mt-6 grid gap-4 md:grid-cols-2">
-                                                    <div className="rounded-[1.5rem] border border-[#D4A574]/16 bg-[#FBFBF6] p-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/78">Scene</p>
-                                                        <p className="mt-3 text-[14px] leading-7 text-[#1A1A1A]/72">{concept.scene}</p>
-                                                    </div>
-                                                    <div className="rounded-[1.5rem] border border-[#D4A574]/16 bg-[#FBFBF6] p-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/78">Psychological Mechanism</p>
-                                                        <p className="mt-3 text-[14px] leading-7 text-[#1A1A1A]/72">{concept.psychological_mechanism}</p>
-                                                    </div>
-                                                    <div className="rounded-[1.5rem] border border-[#D4A574]/16 bg-[#FBFBF6] p-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/78">Copy Direction</p>
-                                                        <p className="mt-3 text-[14px] leading-7 text-[#1A1A1A]/72">{concept.copy_direction}</p>
-                                                    </div>
-                                                    <div className="rounded-[1.5rem] border border-[#D4A574]/16 bg-[#FBFBF6] p-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]/78">Casting + Visual Language</p>
-                                                        <p className="mt-3 text-[14px] leading-7 text-[#1A1A1A]/72">{concept.casting_direction}</p>
-                                                        <p className="mt-3 border-t border-[#E6DDCF] pt-3 text-[14px] leading-7 text-[#1A1A1A]/68">{concept.visual_language}</p>
-                                                    </div>
+                                                <div className="grid gap-4 md:grid-cols-2">
+                                                    {[
+                                                        { label: 'Scene Reconstruction', value: concept.scene },
+                                                        { label: 'Psychology // Active', value: concept.psychological_mechanism },
+                                                        { label: 'Copy Spine', value: concept.copy_direction },
+                                                        { label: 'Technical // Visual', value: concept.casting_direction },
+                                                    ].map((item) => (
+                                                        <div key={item.label} className="border border-white/5 bg-black/40 p-6">
+                                                            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-cyan-400 mb-4 font-mono">{item.label}</p>
+                                                            <p className="text-[13px] leading-relaxed text-white/50 uppercase font-medium font-mono">{item.value}</p>
+                                                        </div>
+                                                    ))}
                                                 </div>
 
-                                                <div className="mt-6 rounded-[1.5rem] border border-[#D4A574]/16 bg-[#FBFBF6] p-4">
-                                                    <div className="flex items-center justify-between gap-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/82">DNA Prompt</p>
+                                                <div className="mt-8 border border-white/10 bg-black/60 p-8">
+                                                    <div className="flex items-center justify-between gap-4 mb-6 border-b border-white/10 pb-4">
+                                                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono">Handoff DNA Prompt</p>
                                                         <button
                                                             onClick={() => void handleCopyPrompt(concept.dna_prompt, index)}
-                                                            className="inline-flex items-center gap-2 rounded-full border border-[#D4A574]/20 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574] transition-colors hover:bg-[#D4A574]/10"
+                                                            className="flex items-center gap-2 border border-cyan-400/40 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.3em] text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all font-mono"
                                                         >
                                                             <Copy className="h-3 w-3" />
-                                                            {copiedPromptIndex === index ? 'Copied' : 'Copy'}
+                                                            {copiedPromptIndex === index ? 'COPIED' : 'COPY'}
                                                         </button>
                                                     </div>
-                                                    <pre className="mt-3 whitespace-pre-wrap text-[13px] leading-7 text-[#1A1A1A]/78">{concept.dna_prompt}</pre>
+                                                    <pre className="whitespace-pre-wrap text-[13px] leading-relaxed text-white/30 font-mono selection:bg-cyan-400/30">
+                                                        {concept.dna_prompt}
+                                                    </pre>
                                                 </div>
                                             </article>
                                         ))}
                                     </div>
                                 </div>
                             ) : (
-                                <div className="mt-8 rounded-[2rem] border border-dashed border-[#D4A574]/20 bg-white/45 px-6 py-12 text-center">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Clone Engine ready</p>
-                                    <p className="mt-4 text-sm leading-relaxed text-[#1A1A1A]/72">
+                                <div className="mt-12 border border-dashed border-white/10 bg-white/[0.02] p-24 text-center">
+                                    <p className="text-[11px] font-black uppercase tracking-[0.6em] text-white/20 font-mono">Engine Standby</p>
+                                    <p className="mt-6 max-w-md mx-auto text-[14px] leading-relaxed text-white/40 font-medium uppercase tracking-tight">
                                         Generate five original campaign routes that preserve the persuasion logic while breaking completely from the incumbent execution.
                                     </p>
                                 </div>
                             )}
                         </div>
+                    </div>
                 </div>
-            </div>
             )}
-    </>
-);
+        </>
+    );
 }

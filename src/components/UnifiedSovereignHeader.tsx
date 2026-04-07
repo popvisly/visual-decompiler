@@ -80,17 +80,16 @@ export default function UnifiedSovereignHeader({
                         pointer-events-auto
                         flex items-center justify-between
                         transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]
-                        ${isScrolled ? 'py-4 lg:py-5 px-6 lg:px-10' : 'py-5 lg:py-7 px-0'}
-                        ${forceDark
-                            ? `${isScrolled ? 'bg-[#050505]/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]' : 'bg-transparent'}`
-                            : `${isScrolled ? 'bg-[#F6F1E7]/80 backdrop-blur-2xl border border-black/5 shadow-[0_20px_50px_rgba(0,0,0,0.1)]' : 'bg-transparent'}`
+                        ${isScrolled
+                            ? forceDark
+                                ? 'py-4 lg:py-5 px-6 lg:px-10 bg-[#050505]/80 backdrop-blur-2xl rounded-2xl'
+                                : 'py-4 lg:py-5 px-6 lg:px-10 bg-[#F6F1E7]/80 backdrop-blur-2xl rounded-2xl'
+                            : forceDark
+                                ? 'py-5 lg:py-7 px-0'
+                                : 'py-5 lg:py-7 px-0'
                         }
                     `}
                 >
-                    {/* Atmospheric Top Gradient Gradient (only when NOT scrolled, inside the header container for better legibility) */}
-                    {!isScrolled && (
-                        <div className={`absolute inset-x-0 -top-6 -bottom-12 -z-10 pointer-events-none opacity-60 transition-opacity duration-1000 ${forceDark ? 'bg-gradient-to-b from-[#050505] via-[#050505]/40 to-transparent' : 'bg-gradient-to-b from-[#F6F1E7] via-[#F6F1E7]/40 to-transparent'}`} />
-                    )}
 
                     {/* ── Left: Logo ── */}
                     <div className="flex flex-1 items-center">
