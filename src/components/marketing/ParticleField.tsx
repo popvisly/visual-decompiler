@@ -9,26 +9,17 @@ interface Particle {
     originY: number;
     size: number;
     color: string;
-    speed: number;
-    angle: number;
-    life: number;
+    phase: number;
+    frequency: number;
+    amplitude: number;
 }
 
 export default function ParticleField() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const mouseRef = useRef({ x: -9999, y: -9999 });
-    const smoothMouseRef = useRef({ x: -9999, y: -9999 });
-    const isMouseOnCanvas = useRef(false);
     const particlesRef = useRef<Particle[]>([]);
     const animRef = useRef<number>(0);
-
-    const GOLD = '#C1A674';
-    const GOLD_LIGHT = '#D4A574';
-    const GOLD_MUTED = '#A09480';
-    const DARK = '#141414';
-    const OFF_BLACK = '#2A2A2A';
-
-    const BRAND_COLORS = [GOLD, GOLD_LIGHT, GOLD_MUTED, DARK, OFF_BLACK];
+    const timeRef = useRef(0);
+    const mousePos = useRef({ x: -9999, y: -9999 });
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -36,150 +27,129 @@ export default function ParticleField() {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        let w = 0;
-        let h = 0;
-
-        const GRID_SPACING = 50;
-        const MOUSE_RADIUS = 180;
-        const MOUSE_FORCE = 0.8;
-        const RETURN_SPEED = 0.02;
-        const FLOW_ANGLE = Math.PI * 0.15; // Subtle diagonal flow
+        let width = 0;
+        let height = 0;
+        const GRID = 40;
+        const MOUSE_RADIUS = 150;
 
         const createParticle = (x: number, y: number): Particle => ({
-            x,
-            y,
-            originX: x,
-            originY: y,
-            size: Math.random() * 2.5 + 1,
-            color: BRAND_COLORS[Math.floor(Math.random() * BRAND_COLORS.length)],
-            speed: Math.random() * 0.5 + 0.3,
-            angle: Math.random() * Math.PI * 2,
-            life: 1,
+            x, y, originX: x, originY: y,
+            size: 1.5 + Math.random() * 2.5,
+            color: ['#C1A674', '#D4A574', '#A09480', '#141414', '#2A2A2A'][Math.floor(Math.random() * 5)],
+            phase: Math.random() * Math.PI * 2,
+            frequency: 0.002 + Math.random() * 0.004,
+            amplitude: 5 + Math.random() * 10,
         });
 
-        const initParticles = (width: number, height: number) => {
+        const init = (w: number, h: number) => {
             particlesRef.current = [];
-            for (let x = 0; x < width; x += GRID_SPACING) {
-                for (let y = 0; y < height; y += GRID_SPACING) {
-                    // Add slight random offset for organic feel
-                    const offsetX = (Math.random() - 0.5) * 10;
-                    const offsetY = (Math.random() - 0.5) * 10;
+            for (let x = GRID; x < w; x += GRID) {
+                for (let y = GRID; y < h; y += GRID) {
                     particlesRef.current.push(
-                        createParticle(x + offsetX, y + offsetY)
+                        createParticle(
+                            x + (Math.random() - 0.5) * 8,
+                            y + (Math.random() - 0.5) * 8
+                        )
                     );
                 }
             }
         };
 
         const resize = () => {
-            const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
-            w = rect.width;
-            h = rect.height;
-            canvas.width = w * dpr;
-            canvas.height = h * dpr;
+            const dpr = window.devicePixelRatio || 1;
+            width = rect.width;
+            height = rect.height;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            initParticles(w, h);
+            init(width, height);
         };
 
         const onMouseMove = (e: MouseEvent) => {
             const rect = canvas.getBoundingClientRect();
-            mouseRef.current = {
-                x: e.clientX - rect.left,
-                y: e.clientY - rect.top,
-            };
-            isMouseOnCanvas.current = true;
+            mousePos.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
         };
 
         const onMouseLeave = () => {
-            isMouseOnCanvas.current = false;
-            mouseRef.current = { x: -9999, y: -9999 };
+            mousePos.current = { x: -9999, y: -9999 };
         };
 
         const draw = () => {
-            // Smooth mouse lerp
-            smoothMouseRef.current.x +=
-                (mouseRef.current.x - smoothMouseRef.current.x) * 0.12;
-            smoothMouseRef.current.y +=
-                (mouseRef.current.y - smoothMouseRef.current.y) * 0.12;
+            timeRef.current += 1;
+            const t = timeRef.current;
+            ctx.clearRect(0, 0, width, height);
 
-            ctx.clearRect(0, 0, w, h);
-
-            // Draw subtle grid lines (very faint)
-            ctx.save();
-            ctx.globalAlpha = 0.03;
-            ctx.strokeStyle = '#141414';
+            // Draw faint structural grid
+            ctx.strokeStyle = 'rgba(20, 20, 20, 0.04)';
             ctx.lineWidth = 0.5;
-            for (let x = 0; x < w; x += GRID_SPACING * 2) {
+            for (let x = GRID; x < width; x += GRID * 2) {
                 ctx.beginPath();
                 ctx.moveTo(x, 0);
-                ctx.lineTo(x, h);
+                ctx.lineTo(x, height);
                 ctx.stroke();
             }
-            for (let y = 0; y < h; y += GRID_SPACING * 2) {
+            for (let y = GRID; y < height; y += GRID * 2) {
                 ctx.beginPath();
                 ctx.moveTo(0, y);
-                ctx.lineTo(w, y);
+                ctx.lineTo(width, y);
                 ctx.stroke();
             }
-            ctx.restore();
 
             // Update and draw particles
             for (const p of particlesRef.current) {
-                // Flow field movement (gentle diagonal drift)
-                const flowX = Math.cos(FLOW_ANGLE) * p.speed * 0.3;
-                const flowY = Math.sin(FLOW_ANGLE) * p.speed * 0.3;
+                // Ambient sine wave drift
+                const waveX = Math.sin(t * p.frequency + p.phase) * p.amplitude;
+                const waveY = Math.cos(t * p.frequency * 0.8 + p.phase * 1.2) * p.amplitude * 0.7;
 
-                // Mouse interaction
-                let dx = 0;
-                let dy = 0;
-                let distToMouse = 9999;
+                const targetX = p.originX + waveX;
+                const targetY = p.originY + waveY;
 
-                if (isMouseOnCanvas.current) {
-                    dx = p.x - smoothMouseRef.current.x;
-                    dy = p.y - smoothMouseRef.current.y;
-                    distToMouse = Math.sqrt(dx * dx + dy * dy);
+                // Mouse repulsion
+                const dx = p.x - mousePos.current.x;
+                const dy = p.y - mousePos.current.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    // Repulsion effect
-                    if (distToMouse < MOUSE_RADIUS) {
-                        const force =
-                            (1 - distToMouse / MOUSE_RADIUS) * MOUSE_FORCE;
-                        const angle = Math.atan2(dy, dx);
-                        p.x += Math.cos(angle) * force * 8;
-                        p.y += Math.sin(angle) * force * 8;
-                    }
+                if (dist < MOUSE_RADIUS) {
+                    const force = (1 - dist / MOUSE_RADIUS) * 2.5;
+                    const angle = Math.atan2(dy, dx);
+                    p.x += Math.cos(angle) * force * 4;
+                    p.y += Math.sin(angle) * force * 4;
                 }
 
-                // Return to origin (elastic)
-                const returnDx = p.originX - p.x;
-                const returnDy = p.originY - p.y;
-                p.x += returnDx * RETURN_SPEED + flowX;
-                p.y += returnDy * RETURN_SPEED + flowY;
+                // Return to target
+                const returnX = targetX - p.x;
+                const returnY = targetY - p.y;
+                p.x += returnX * 0.03;
+                p.y += returnY * 0.03;
 
                 // Draw particle
-                ctx.globalAlpha = 0.6;
                 ctx.fillStyle = p.color;
+                ctx.globalAlpha = 0.6;
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fill();
             }
 
-            // Draw connection lines between nearby particles
-            ctx.save();
-            for (let i = 0; i < particlesRef.current.length; i += 3) {
-                // Skip most particles for performance
+            // Draw connections near mouse
+            ctx.lineWidth = 0.6;
+            for (let i = 0; i < particlesRef.current.length; i += 2) {
                 const p = particlesRef.current[i];
-                for (let j = i + 1; j < particlesRef.current.length; j += 5) {
-                    const q = particlesRef.current[j];
-                    const dx = p.x - q.x;
-                    const dy = p.y - q.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
+                const distToMouse = Math.sqrt(
+                    (p.x - mousePos.current.x) ** 2 + (p.y - mousePos.current.y) ** 2
+                );
 
-                    if (dist < 70) {
-                        const alpha = 0.08 * (1 - dist / 70);
-                        ctx.globalAlpha = alpha;
-                        ctx.strokeStyle = GOLD;
-                        ctx.lineWidth = 0.5;
+                if (distToMouse > 200) continue;
+
+                for (let j = i + 1; j < Math.min(i + 8, particlesRef.current.length); j++) {
+                    const q = particlesRef.current[j];
+                    const ddx = p.x - q.x;
+                    const ddy = p.y - q.y;
+                    const d = Math.sqrt(ddx * ddx + ddy * ddy);
+
+                    if (d < 50) {
+                        ctx.globalAlpha = 0.12 * (1 - d / 50);
+                        ctx.strokeStyle = '#C1A674';
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(q.x, q.y);
@@ -187,8 +157,8 @@ export default function ParticleField() {
                     }
                 }
             }
-            ctx.restore();
 
+            ctx.globalAlpha = 1;
             animRef.current = requestAnimationFrame(draw);
         };
 
@@ -196,7 +166,6 @@ export default function ParticleField() {
         window.addEventListener('resize', resize);
         canvas.addEventListener('mousemove', onMouseMove);
         canvas.addEventListener('mouseleave', onMouseLeave);
-
         draw();
 
         return () => {
