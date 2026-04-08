@@ -1119,7 +1119,7 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
         <div className="space-y-8">
             {/* Semiotic Subtext Header Card */}
             {(title || overture) && (
-                <div className="rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6]">
+                <div className="rounded-3xl border border-[rgba(212,165,116,0.2)] bg-white p-6 text-[#1a1a1a]">
                     <div className="mb-4 flex items-center justify-between border-b border-[#4E3D2A] pb-4">
                         <h3 className="text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">{title}</h3>
                         <span className="text-[10px] font-mono uppercase tracking-widest text-[#B9B19F]">Forensic Map v2.0</span>
@@ -1149,8 +1149,8 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                     : 'min-h-[220px] xl:min-h-[240px]'
                             } ${
                                 type === 'ACT' && activeAct === block.label
-                                    ? 'border-[#6B5337] bg-[#1F1F1F]'
-                                    : 'border-[#4E3D2A] bg-[#1F1F1F]'
+                                    ? 'border-[#6B5337] bg-white'
+                                    : 'border-[#4E3D2A] bg-white'
                             }`}
                         >
                             {type === 'ACT' ? (
@@ -1348,7 +1348,7 @@ function SovereignProcessingView({ assetId, agency }: { assetId: string, agency?
                         style={{ width: `${progress}%` }}
                     />
                 </div>
-                <div className="flex justify-between text-[8px] font-mono text-[#1A1A1A]/30 pt-1 uppercase tracking-widest">
+                <div className="flex justify-between text-[8px] font-mono text-[#1a1a1a]/30 pt-1 uppercase tracking-widest">
                     <span>Init</span>
                     <span>{progress}%</span>
                     <span>Complete</span>
@@ -1359,7 +1359,7 @@ function SovereignProcessingView({ assetId, agency }: { assetId: string, agency?
             <div className="mt-12 flex flex-col items-center gap-6">
                 <a
                     href="/vault"
-                    className="px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest text-[#1A1A1A]/50 border border-[#E5E5E1] hover:bg-white hover:text-[#D4A574] transition-all"
+                    className="px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]/50 border border-[#E5E5E1] hover:bg-white hover:text-[#D4A574] transition-all"
                 >
                     Return to Library
                 </a>
@@ -2097,14 +2097,6 @@ export default function AssetWorkspace({
                         --vault-content-pad-x: clamp(32px, 3.2vw, 48px);
                     }
                 }
-                .sample-light {
-                    filter: invert(1) hue-rotate(180deg);
-                }
-                .sample-light img,
-                .sample-light video,
-                .sample-light canvas {
-                    filter: invert(1) hue-rotate(180deg);
-                }
             `}</style>
 
             {/* Print-only sovereign briefing layout (includes Signals + Psychology after Narrative Framework) */}
@@ -2363,9 +2355,9 @@ export default function AssetWorkspace({
                 </div>
             </div>
 
-            <div className={`screen-layout w-full min-h-screen ${sampleMode ? 'bg-[#F6F1E7] selection:bg-[#C1A674] selection:text-[#141414]' : 'bg-[#050505] selection:bg-[#00E5FF] selection:text-black'}`}>
-                <div className={`vault-analysis-shell min-h-screen w-full ${sampleMode ? 'bg-[#F6F1E7] text-[#141414]' : 'bg-[#050505] text-white'}`}>
-                    <div className={`min-h-screen w-full ${sampleMode ? 'bg-[#F6F1E7] border-x border-[#D4A574]/15 shadow-[0_0_80px_rgba(0,0,0,0.04)]' : 'bg-[#050505] border-x border-white/5 shadow-[0_0_80px_rgba(0,0,0,0.4)]'} ${sampleMode ? 'text-[#141414]' : 'text-white'}`}>
+            <div className={`screen-layout w-full min-h-screen ${sampleMode ? 'bg-[#F6F1E7] selection:bg-[#C1A674] selection:text-[#141414]' : 'bg-[#faf7f2] selection:bg-[#D4A574] selection:text-white'}`}>
+                <div className={`vault-analysis-shell min-h-screen w-full ${sampleMode ? 'bg-[#F6F1E7] text-[#141414]' : 'bg-[#faf7f2] text-[#1a1a1a]'}`}>
+                    <div className={`min-h-screen w-full ${sampleMode ? 'bg-[#F6F1E7] shadow-sm' : 'bg-[#faf7f2] shadow-sm'} ${sampleMode ? 'text-[#141414]' : 'text-[#1a1a1a]'}`}>
                     {sampleMode && (
                         <div className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#D4A574]/15 bg-[#F6F1E7]/96 px-5 py-4 backdrop-blur-md md:px-8">
                             <a href="/" className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513]">
@@ -2376,7 +2368,7 @@ export default function AssetWorkspace({
                             </span>
                             <a
                                 href="/ingest"
-                                className="inline-flex items-center rounded-full border border-[#D4A574]/30 bg-[#1A1A1A] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#F5F3EE] transition-colors hover:bg-[#2A2A2A]"
+                                className="inline-flex items-center rounded-full bg-[#1a1a1a] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#faf7f2] transition-colors hover:bg-[#2a2a2a]"
                             >
                                 Start Decompiling Free
                             </a>
@@ -2385,15 +2377,15 @@ export default function AssetWorkspace({
                     <div className="vault-analysis-frame">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    <aside className={`vault-analysis-asset-rail w-full border-r ${sampleMode ? 'border-[#D4A574]/20' : 'border-white/10'} relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#050505]'} lg:sticky ${sampleMode ? 'lg:top-[66px]' : 'lg:top-0'} z-10`}>
+                    <aside className={`vault-analysis-asset-rail w-full border-r ${sampleMode ? 'border-[#D4A574]/20' : 'border-[#d4c9b8]'} relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'} lg:sticky ${sampleMode ? 'lg:top-[66px]' : 'lg:top-0'} z-10`}>
                         <div className="flex flex-col items-center justify-center px-[clamp(16px,2vw,32px)] pt-10 pb-8 lg:pt-20">
 
                             <div 
-                                className={`w-full max-w-[520px] aspect-[4/5] relative flex items-center justify-center overflow-hidden ${sampleMode ? 'border-[#D4A574]/20 bg-[#1A1A1A]' : 'border border-white/5 bg-white/5'} group shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75' : ''}`}
+                                className={`w-full max-w-[520px] aspect-[4/5] relative flex items-center justify-center overflow-hidden border border-[#e8ddd0] bg-white group shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75' : ''}`}
                                 style={getAssetStyle()}
                             >
                                 {/* Grid HUD Texture */}
-                                <div className={`absolute inset-0 pointer-events-none z-[2] ${sampleMode ? '' : 'opacity-[0.03] [background-image:linear-gradient(#00E5FF_1px,transparent_1px),linear-gradient(90deg,#00E5FF_1px,transparent_1px)] [background-size:24px_24px]'}`} />
+                                <div className={`absolute inset-0 pointer-events-none z-[2] ${sampleMode ? '' : ''}`} />
 
                                 {/* If multiple images, render a horizontal CSS scroll snap setup */}
                                 <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide z-[1]">
@@ -2407,30 +2399,30 @@ export default function AssetWorkspace({
                                     ))}
                                 </div>
                                 {fileUrls.length > 1 && (
-                                    <div className={`absolute bottom-6 left-1/2 -translate-x-1/2 backdrop-blur-3xl px-4 py-2 flex gap-3 z-[10] ${sampleMode ? 'bg-black/50 border border-white/10' : 'bg-black/60 backdrop-blur-3xl border border-white/10'}`}>
+                                    <div className={`absolute bottom-6 left-1/2 -translate-x-1/2 backdrop-blur-3xl px-4 py-2 flex gap-3 z-[10] ${sampleMode ? 'bg-white border border-[#d4c9b8]' : 'bg-white/90 backdrop-blur-sm border border-[#d4c9b8]'}`}>
                                         {fileUrls.map((_, i) => (
-                                            <div key={i} className={`w-1.5 h-1.5 ${sampleMode ? 'bg-[#D4A574]/50' : 'bg-[#00E5FF]/20'}`} />
+                                            <div key={i} className={`w-1.5 h-1.5 ${sampleMode ? 'bg-[#D4A574]/50' : 'bg-[#D4A574]/20'}`} />
                                         ))}
                                     </div>
                                 )}
                                 {activeTab === 'SIGNALS' && showRadiant && <RadiantArchitectureOverlay data={(extraction?.full_dossier as any)?.radiant_architecture} />}
                                 {asset.type !== 'STATIC' && (
-                                    <div className={`absolute top-6 left-6 ${sampleMode ? 'bg-black/60 border-white/10' : 'bg-black/80 border border-[#00E5FF]/40'} backdrop-blur-md z-[10]`}>
-                                        <span className={`text-[10px] font-black uppercase tracking-[0.4em] ${sampleMode ? 'text-[#D4A574]' : 'text-[#00E5FF]'}`}>{asset.type}</span>
+                                    <div className={`absolute top-6 left-6 ${sampleMode ? 'bg-white/90 border-[#d4c9b8]' : 'bg-white border border-[#D4A574]/40'} backdrop-blur-md z-[10]`}>
+                                        <span className={`text-[10px] font-semibold uppercase tracking-[0.4em] ${sampleMode ? 'text-[#D4A574]' : 'text-[#D4A574]'}`}>{asset.type}</span>
                                     </div>
                                 )}
                             </div>
 
-                            <div className={`w-full max-w-[520px] mt-12 ${sampleMode ? '' : 'border-b border-white/10'} pb-8`}>
+                            <div className={`w-full max-w-[520px] mt-12 ${sampleMode ? '' : 'border-b border-[#d4c9b8]'} pb-8`}>
                                 <div className="mb-6">
-                                    <h1 className={`text-[5vw] lg:text-[4vw] font-black tracking-tightest leading-none uppercase mb-2 ${sampleMode ? 'text-[#D4A574]' : 'text-white'}`}>{asset.brand?.name}</h1>
-                                    <span className={`text-[12px] font-black uppercase tracking-[0.5em] ${sampleMode ? 'text-[#D4A574]' : 'text-[#00E5FF]'}`}>{asset.brand?.market_sector}</span>
+                                    <h1 className={`text-[5vw] lg:text-[4vw] font-semibold tracking-tightest leading-none uppercase mb-2 ${sampleMode ? 'text-[#D4A574]' : 'text-[#1a1a1a]'}`}>{asset.brand?.name}</h1>
+                                    <span className={`text-[12px] font-semibold uppercase tracking-[0.5em] ${sampleMode ? 'text-[#D4A574]' : 'text-[#D4A574]'}`}>{asset.brand?.market_sector}</span>
                                 </div>
                                 {sampleMode ? (
-                                    <div className="rounded-[1.5rem] border border-[#D4A574]/18 bg-[#1A1A1A] px-5 py-5 text-[#F5F3EE]">
+                                    <div className="rounded-[1.5rem] border border-[#D4A574]/18 bg-[#1a1a1a] px-5 py-5 text-[#faf7f2]">
                                         <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Sample access</p>
-                                        <p className="mt-3 text-[13px] leading-relaxed text-[#FFFFFF]/78">This is a live sample dossier.</p>
-                                        <p className="mt-2 text-[13px] leading-relaxed text-[#FFFFFF]/62">Create your own in under 60 seconds.</p>
+                                        <p className="mt-3 text-[13px] leading-relaxed text-[#faf7f2]/78">This is a live sample dossier.</p>
+                                        <p className="mt-2 text-[13px] leading-relaxed text-[#faf7f2]/62">Create your own in under 60 seconds.</p>
                                         <a
                                             href="/ingest"
                                             className="mt-5 inline-flex items-center rounded-full bg-[#D4A574] px-4 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#141414] transition-colors hover:bg-[#c8955b]"
@@ -2441,43 +2433,43 @@ export default function AssetWorkspace({
                                 ) : (
                                     <>
                                         <div className="mb-8">
-                                            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-3">System Guidance</p>
-                                            <p className="text-[15px] leading-relaxed text-white/50 uppercase font-medium">
+                                            <p className="text-[9px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-3">System Guidance</p>
+                                            <p className="text-[15px] leading-relaxed text-[#666] uppercase font-medium">
                                                 Engage differential diagnosis against a second route to surface high-priority strategic pivots.
                                             </p>
                                         </div>
                                         <div className="mb-8 grid grid-cols-1 gap-3">
-                                            <div className="border border-white/10 bg-white/5 p-6 group hover:border-[#00E5FF]/40 transition-all">
+                                            <div className="border border-[#d4c9b8] bg-white p-6 group hover:border-[#D4A574]/40 transition-all">
                                                 <div className="flex items-center gap-4 mb-4">
-                                                    <div className="w-8 h-8 flex items-center justify-center bg-[#00E5FF]/10 text-[#00E5FF]">
+                                                    <div className="w-8 h-8 flex items-center justify-center bg-[#D4A574]/10 text-[#D4A574]">
                                                         <Code className="w-4 h-4" />
                                                     </div>
-                                                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#00E5FF]">Differential Diagnostic</p>
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">Differential Diagnostic</p>
                                                 </div>
-                                                <p className="text-[13px] leading-relaxed text-white/40 mb-6 uppercase">
+                                                <p className="text-[13px] leading-relaxed text-[#999] mb-6 uppercase">
                                                     Put this brief beside another route and surface the strategic delta.
                                                 </p>
                                                 <a
                                                     href="/compare"
-                                                    className="inline-flex items-center border border-[#00E5FF] px-5 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-[#00E5FF] transition-all hover:bg-[#00E5FF] hover:text-black"
+                                                    className="inline-flex items-center border border-[#D4A574] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D4A574] transition-all hover:bg-[#D4A574] hover:text-black"
                                                 >
                                                     RUN ANALYSIS
                                                 </a>
                                             </div>
                                             
-                                            <div className="border border-white/10 bg-white/5 p-6 group hover:border-[#00E5FF]/40 transition-all">
+                                            <div className="border border-[#d4c9b8] bg-white p-6 group hover:border-[#D4A574]/40 transition-all">
                                                 <div className="flex items-center gap-4 mb-4">
-                                                    <div className="w-8 h-8 flex items-center justify-center bg-white/10 text-white">
+                                                    <div className="w-8 h-8 flex items-center justify-center bg-[#f5f0e8] text-[#1a1a1a]">
                                                         <FileDown className="w-4 h-4" />
                                                     </div>
-                                                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Intelligence Export</p>
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#1a1a1a]">Intelligence Export</p>
                                                 </div>
-                                                <p className="text-[13px] leading-relaxed text-white/40 mb-6 uppercase">
+                                                <p className="text-[13px] leading-relaxed text-[#999] mb-6 uppercase">
                                                     Generate the briefing summary for immediate review distribution.
                                                 </p>
                                                 <button
                                                     onClick={() => setShowExportModal(true)}
-                                                    className="inline-flex items-center border border-white/30 px-5 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/80 transition-all hover:border-white hover:text-white"
+                                                    className="inline-flex items-center border border-[#b0a594] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1a1a1a]/80 transition-all hover:border-white hover:text-[#1a1a1a]"
                                                 >
                                                     [ EXPORT DOSSIER ]
                                                 </button>
@@ -2509,7 +2501,7 @@ export default function AssetWorkspace({
                                                         <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-[#D4A574]/60">
                                                             Use for: client-facing reports · internal strategy decks · agency dashboards
                                                         </p>
-                                                        <pre className="mt-4 overflow-x-auto rounded-2xl border border-[#D4A574]/10 bg-black/30 p-3 text-[10px] leading-relaxed text-[#151310]/75">
+                                                        <pre className="mt-4 overflow-x-auto rounded-2xl border border-[#D4A574]/10 bg-white/30 p-3 text-[10px] leading-relaxed text-[#151310]/75">
 {`<iframe src="visualdecompiler.com/embed/${asset.id}" width="100%" height="600px" />`}
                                                         </pre>
                                                     </div>
@@ -2553,8 +2545,8 @@ export default function AssetWorkspace({
                     </aside>
 
                     {showExportModal && (
-                        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/40 px-6 backdrop-blur-md no-print">
-                            <div className="w-full max-w-xl rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 text-[#151310] shadow-[0_32px_80px_rgba(0,0,0,0.12)]">
+                        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-white px-6 backdrop-blur-md no-print">
+                            <div className="w-full max-w-xl rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 text-[#151310] shadow-xl">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Export Strategic Dossier</p>
                                 <h3 className="mt-4 text-2xl font-light uppercase tracking-tight">Print-safe agency dossier</h3>
                                 <p className="mt-4 text-sm leading-relaxed text-[#151310]/65">
@@ -2609,13 +2601,13 @@ export default function AssetWorkspace({
                                 <div className="mt-8 flex flex-col gap-3 md:flex-row md:justify-end">
                                     <button
                                         onClick={() => setShowExportModal(false)}
-                                        className="rounded-full border border-[#D4A574]/30 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#9B8662] transition-all hover:bg-[#D4A574] hover:text-white"
+                                        className="rounded-full border border-[#D4A574]/30 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#9B8662] transition-all hover:bg-[#D4A574] hover:text-[#1a1a1a]"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         onClick={handleInitiateExport}
-                                        className="rounded-full bg-[#D4A574] px-8 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-white shadow-sm transition-all hover:bg-[#8B4513]"
+                                        className="rounded-full bg-[#D4A574] px-8 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#1a1a1a] shadow-sm transition-all hover:bg-[#8B4513]"
                                     >
                                         Initiate Export
                                     </button>
@@ -2626,28 +2618,28 @@ export default function AssetWorkspace({
                 )}
 
                 {/* RIGHT COLUMN: Scrollable Forensic Console (55%) */}
-                <div className={`vault-analysis-content-rail w-full min-h-screen relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#050505]'}`}>
-                    {/* HUD Texture Overlay */}
-                    <div className={`pointer-events-none absolute inset-0 ${sampleMode ? 'opacity-[0.03] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)]' : 'opacity-[0.02] [background-image:linear-gradient(white_1px,transparent_1px),linear-gradient(90deg,white_1px,transparent_1px)]'} [background-size:64px_64px]`} />
+                <div className={`vault-analysis-content-rail w-full min-h-screen relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'}`}>
+                    {/* HUD Texture Overlay - removed for clean light aesthetic */}
+                    <div className="pointer-events-none absolute inset-0" />
                     
-                    <div className={`vault-analysis-content-inner relative z-10 min-h-screen w-full bg-transparent ${sampleMode ? 'sample-light' : ''}`}>
+                    <div className="vault-analysis-content-inner relative z-10 min-h-screen w-full bg-transparent">
 
                     {/* Minimalist Segmented Controls */}
-                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 flex gap-10 ${sampleMode ? 'border-b border-[#D4A574]/15' : 'border-b border-white/5'} ${sampleMode ? 'bg-[#F6F1E7]/95' : 'bg-[#050505]/95'} px-[clamp(16px,2vw,32px)] pt-10 pb-0 backdrop-blur-3xl md:pt-14`}>
+                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 flex gap-10 ${sampleMode ? 'border-b border-[#D4A574]/15' : 'border-b border-[#e8ddd0]'} ${sampleMode ? 'bg-[#F6F1E7]/95' : 'bg-[#faf7f2]/95'} px-[clamp(16px,2vw,32px)] pt-10 pb-0 backdrop-blur-3xl md:pt-14`}>
                         {dossierTabs.map(tab => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
-                                className={`pb-5 text-[11px] font-black tracking-[0.4em] uppercase transition-all relative ${activeTab === tab
-                                    ? (sampleMode ? 'text-[#D4A574]' : 'text-[#00E5FF]')
-                                    : (sampleMode ? 'text-[#1A1A1A]/30 hover:text-[#1A1A1A]/50' : 'text-white/20 hover:text-white/40')
+                                className={`pb-5 text-[11px] font-semibold tracking-[0.4em] uppercase transition-all relative ${activeTab === tab
+                                    ? (sampleMode ? 'text-[#D4A574]' : 'text-[#D4A574]')
+                                    : (sampleMode ? 'text-[#1a1a1a]/30 hover:text-[#1a1a1a]/50' : 'text-[#aaa] hover:text-[#999]')
                                     }`}
                             >
                                 {DOSSIER_TAB_LABELS[tab]}
                                 {activeTab === tab && (
                                     <motion.div 
                                         layoutId="tab-active"
-                                        className={`absolute bottom-0 left-0 w-full h-[3px] ${sampleMode ? 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.4)]' : 'bg-[#00E5FF] shadow-[0_0_15px_rgba(0,229,255,0.5)]'}`} 
+                                        className={`absolute bottom-0 left-0 w-full h-[3px] ${sampleMode ? 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.4)]' : 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.3)]'}`} 
                                     />
                                 )}
                             </button>
@@ -2667,34 +2659,34 @@ export default function AssetWorkspace({
                                         />
 
                                         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-                                            <div className="border border-white/10 bg-white/5 p-10 text-white shadow-[0_40px_80px_rgba(0,0,0,0.4)]">
-                                                <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-10 [word-spacing:0.2em]">Integrated Strategic Recommendation</p>
-                                                <p className="max-w-[56ch] text-[22px] lg:text-[28px] leading-[1.2] font-black uppercase tracking-tightest mb-8">{integratedRecommendation.thesis}</p>
-                                                <p className="max-w-[58ch] text-[15px] leading-relaxed text-white/50 mb-10 font-medium">{integratedRecommendation.whyNow}</p>
-                                                <div className="border border-[#00E5FF]/20 bg-[#00E5FF]/5 p-6 mb-10">
-                                                    <p className="text-[13px] leading-relaxed text-[#00E5FF] font-medium italic">
+                                            <div className="border border-[#d4c9b8] bg-white p-10 text-[#1a1a1a] shadow-xl">
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10 [word-spacing:0.2em]">Integrated Strategic Recommendation</p>
+                                                <p className="max-w-[56ch] text-[22px] lg:text-[28px] leading-[1.2] font-semibold uppercase tracking-tightest mb-8">{integratedRecommendation.thesis}</p>
+                                                <p className="max-w-[58ch] text-[15px] leading-relaxed text-[#666] mb-10 font-medium">{integratedRecommendation.whyNow}</p>
+                                                <div className="border border-[#D4A574]/20 bg-[#D4A574]/5 p-6 mb-10">
+                                                    <p className="text-[13px] leading-relaxed text-[#D4A574] font-medium italic">
                                                         {integratedRecommendation.riskRewardTension}
                                                     </p>
                                                 </div>
-                                                <div className="border border-white/10 bg-white/5 p-8">
-                                                    <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#00E5FF] mb-8">Operator Summary</p>
+                                                <div className="border border-[#d4c9b8] bg-white p-8">
+                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-8">Operator Summary</p>
                                                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-                                                        <div className="border border-white/5 bg-black/40 p-5 group hover:border-[#00E5FF]/30 transition-all">
-                                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 mb-2">Primary Decision</p>
-                                                            <p className="text-[14px] leading-snug text-white font-bold uppercase">{integratedRecommendation.decision}</p>
+                                                        <div className="border border-[#e8ddd0] bg-white p-5 group hover:border-[#D4A574]/30 transition-all">
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#aaa] mb-2">Primary Decision</p>
+                                                            <p className="text-[14px] leading-snug text-[#1a1a1a] font-bold uppercase">{integratedRecommendation.decision}</p>
                                                         </div>
-                                                        <div className="border border-white/5 bg-black/40 p-5 group hover:border-[#00E5FF]/30 transition-all">
-                                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 mb-2">Tactical Watchout</p>
-                                                            <p className="text-[14px] leading-snug text-white font-bold uppercase">{integratedRecommendation.watchouts}</p>
+                                                        <div className="border border-[#e8ddd0] bg-white p-5 group hover:border-[#D4A574]/30 transition-all">
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#aaa] mb-2">Tactical Watchout</p>
+                                                            <p className="text-[14px] leading-snug text-[#1a1a1a] font-bold uppercase">{integratedRecommendation.watchouts}</p>
                                                         </div>
                                                     </div>
-                                                    <div className="mt-8 pt-8 border-t border-white/10">
-                                                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#00E5FF] mb-6">High-Impact Protocol</p>
+                                                    <div className="mt-8 pt-8 border-t border-[#d4c9b8]">
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-6">High-Impact Protocol</p>
                                                         <div className="space-y-4">
                                                             {integratedRecommendation.executionNext3.map((step, index) => (
                                                                 <div key={index} className="flex gap-4 items-start">
-                                                                    <span className="text-[11px] font-black text-[#00E5FF] mt-1">{index + 1}.</span>
-                                                                    <p className="text-[13px] leading-relaxed text-white uppercase font-bold">{step}</p>
+                                                                    <span className="text-[11px] font-semibold text-[#D4A574] mt-1">{index + 1}.</span>
+                                                                    <p className="text-[13px] leading-relaxed text-[#1a1a1a] uppercase font-bold">{step}</p>
                                                                 </div>
                                                             ))}
                                                         </div>
@@ -2703,44 +2695,44 @@ export default function AssetWorkspace({
                                             </div>
 
                                             <div className="space-y-6">
-                                                <div className="border border-white/10 bg-white/5 p-8 text-white shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
-                                                    <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-8">Trust Protocol</p>
+                                                <div className="border border-[#d4c9b8] bg-white p-8 text-[#1a1a1a] shadow-md">
+                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Trust Protocol</p>
                                                     <div className="grid gap-3 sm:grid-cols-2">
                                                         {[
                                                             ['Confidence', integratedRecommendation.confidence],
                                                             ['Evidence Strength', integratedRecommendation.evidenceStrength],
                                                             ['Assumption Load', integratedRecommendation.assumptionLoad],
                                                         ].map(([label, value]) => (
-                                                            <div key={label} className="border border-white/5 bg-black/40 p-5 group hover:border-[#00E5FF]/30 transition-all">
-                                                                <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 mb-2">{label}</p>
-                                                                <p className="text-[13px] leading-snug text-white font-bold uppercase">{value}</p>
+                                                            <div key={label} className="border border-[#e8ddd0] bg-white p-5 group hover:border-[#D4A574]/30 transition-all">
+                                                                <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#aaa] mb-2">{label}</p>
+                                                                <p className="text-[13px] leading-snug text-[#1a1a1a] font-bold uppercase">{value}</p>
                                                             </div>
                                                         ))}
-                                                        <div className="border border-white/5 bg-black/40 p-5 group hover:border-[#00E5FF]/30 transition-all sm:col-span-2">
-                                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30 mb-2">Known Unknowns</p>
-                                                            <p className="text-[13px] leading-relaxed text-white/60 uppercase font-medium">
+                                                        <div className="border border-[#e8ddd0] bg-white p-5 group hover:border-[#D4A574]/30 transition-all sm:col-span-2">
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#aaa] mb-2">Known Unknowns</p>
+                                                            <p className="text-[13px] leading-relaxed text-[#1a1a1a]/60 uppercase font-medium">
                                                                 {integratedRecommendation.knownUnknowns.join(' ')}
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div className="mt-8 pt-8 border-t border-white/10">
-                                                        <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#00E5FF]/40 mb-2">Source Validation</p>
-                                                        <p className="text-[11px] leading-relaxed text-white/40 uppercase tracking-widest">
+                                                    <div className="mt-8 pt-8 border-t border-[#d4c9b8]">
+                                                        <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]/40 mb-2">Source Validation</p>
+                                                        <p className="text-[11px] leading-relaxed text-[#999] uppercase tracking-widest">
                                                             Blueprint trace • Focal routing • Semiotic overlap
                                                         </p>
                                                     </div>
                                                 </div>
 
-                                                <div className="border border-white/10 bg-white/5 p-8 text-white shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
-                                                    <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-8">System Diagnostic</p>
+                                                <div className="border border-[#d4c9b8] bg-white p-8 text-[#1a1a1a] shadow-md">
+                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">System Diagnostic</p>
                                                     <div className="space-y-3">
                                                         {integratedRecommendation.moduleScores.map((score) => (
-                                                            <div key={score.label} className="border border-white/5 bg-black/40 p-5">
+                                                            <div key={score.label} className="border border-[#e8ddd0] bg-white p-5">
                                                                 <div className="flex items-center justify-between gap-4">
-                                                                    <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white">{score.label}</p>
+                                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1a1a1a]">{score.label}</p>
                                                                     <div className="flex gap-1">
                                                                         {[1,2,3,4,5].map(i => (
-                                                                            <div key={i} className={`w-3 h-1 ${i <= score.score ? 'bg-[#00E5FF]' : 'bg-white/10'}`} />
+                                                                            <div key={i} className={`w-3 h-1 ${i <= score.score ? 'bg-[#D4A574]' : 'bg-[#f5f0e8]'}`} />
                                                                         ))}
                                                                     </div>
                                                                 </div>
@@ -2749,27 +2741,27 @@ export default function AssetWorkspace({
                                                     </div>
                                                 </div>
 
-                                                <div className="border border-white/10 bg-white/5 p-8 text-white shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
-                                                    <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-8">Signal Integrity</p>
+                                                <div className="border border-[#d4c9b8] bg-white p-8 text-[#1a1a1a] shadow-md">
+                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Signal Integrity</p>
                                                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-                                                        <div className="border border-white/5 bg-black/40 p-5">
-                                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#00E5FF] mb-4 underline underline-offset-4 decoration-[#00E5FF]/40">Hard Evidence Points</p>
+                                                        <div className="border border-[#e8ddd0] bg-white p-5">
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-4 underline underline-offset-4 decoration-[#D4A574]/40">Hard Evidence Points</p>
                                                             <div className="space-y-4">
                                                                 {integratedRecommendation.facts.map((fact, index) => (
                                                                     <div key={index} className="flex gap-3">
-                                                                        <span className="text-[10px] font-black text-[#00E5FF] opacity-40">{String(index+1).padStart(2, '0')}</span>
-                                                                        <p className="text-[12px] leading-relaxed text-white/70 uppercase font-bold">{fact}</p>
+                                                                        <span className="text-[10px] font-semibold text-[#D4A574] opacity-40">{String(index+1).padStart(2, '0')}</span>
+                                                                        <p className="text-[12px] leading-relaxed text-[#444] uppercase font-bold">{fact}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
                                                         </div>
-                                                        <div className="border border-white/5 bg-black/40 p-5">
-                                                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/40 mb-4 underline underline-offset-4">Derived Readout</p>
+                                                        <div className="border border-[#e8ddd0] bg-white p-5">
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#999] mb-4 underline underline-offset-4">Derived Readout</p>
                                                             <div className="space-y-4">
                                                                 {integratedRecommendation.inferences.map((inference, index) => (
                                                                     <div key={index} className="flex gap-3">
-                                                                        <span className="text-[10px] font-black text-white/20">{String(index+1).padStart(2, '0')}</span>
-                                                                        <p className="text-[12px] leading-relaxed text-white/50 uppercase font-medium">{inference}</p>
+                                                                        <span className="text-[10px] font-semibold text-[#aaa]">{String(index+1).padStart(2, '0')}</span>
+                                                                        <p className="text-[12px] leading-relaxed text-[#666] uppercase font-medium">{inference}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -2780,46 +2772,46 @@ export default function AssetWorkspace({
                                         </div>
 
                                         <div className="space-y-6">
-                                            <div className="border border-white/10 bg-white/5 p-10 text-white shadow-[0_40px_80px_rgba(0,0,0,0.4)]">
-                                                <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-10">System Verdict</p>
-                                                <h3 className="text-[10vw] lg:text-[6vw] font-black leading-none tracking-tightest text-white uppercase mb-8">
+                                            <div className="border border-[#d4c9b8] bg-white p-10 text-[#1a1a1a] shadow-xl">
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10">System Verdict</p>
+                                                <h3 className="text-[10vw] lg:text-[6vw] font-semibold leading-none tracking-tightest text-[#1a1a1a] uppercase mb-8">
                                                     {qualityVerdict}
                                                 </h3>
-                                                <p className="max-w-[62ch] text-[15px] leading-relaxed text-white/40 uppercase font-medium mb-12">
+                                                <p className="max-w-[62ch] text-[15px] leading-relaxed text-[#999] uppercase font-medium mb-12">
                                                     Analytical determination of creative validity and strategic alignment at review width.
                                                 </p>
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                    <div className="border border-white/10 bg-black/40 p-8">
-                                                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#00E5FF] mb-4">Integrity Index</p>
+                                                    <div className="border border-[#d4c9b8] bg-white p-8">
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-4">Integrity Index</p>
                                                         <div className="flex items-baseline gap-2">
-                                                            <span className="text-6xl font-black tracking-tighter text-white">
+                                                            <span className="text-6xl font-semibold tracking-tighter text-[#1a1a1a]">
                                                                 {confidenceScore ?? '—'}
                                                             </span>
-                                                            <span className="text-[14px] font-black uppercase tracking-[0.2em] text-[#00E5FF]">/100</span>
+                                                            <span className="text-[14px] font-semibold uppercase tracking-[0.2em] text-[#D4A574]">/100</span>
                                                         </div>
                                                     </div>
-                                                    <div className="border border-white/10 bg-black/40 p-8 flex items-center">
-                                                        <p className="text-[12px] leading-relaxed text-white/50 uppercase font-bold italic">
+                                                    <div className="border border-[#d4c9b8] bg-white p-8 flex items-center">
+                                                        <p className="text-[12px] leading-relaxed text-[#666] uppercase font-bold italic">
                                                             Diagnostics focus on directional precision over creative preference.
                                                         </p>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div className="border border-white/10 bg-white/5 p-10 text-white">
-                                                <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF] mb-10">Critical Leakage Points</p>
+                                            <div className="border border-[#d4c9b8] bg-white p-10 text-[#1a1a1a]">
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10">Critical Leakage Points</p>
                                                 <div className="space-y-6">
                                                     {failureReasons.map((reason, index) => (
-                                                        <div key={`${reason.title}-${index}`} className="border-l-2 border-[#00E5FF] pl-8 py-2">
-                                                            <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#00E5FF] mb-3">{reason.title}</p>
-                                                            <p className="text-[14px] leading-relaxed text-white/60 uppercase font-medium">{reason.detail}</p>
+                                                        <div key={`${reason.title}-${index}`} className="border-l-2 border-[#D4A574] pl-8 py-2">
+                                                            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-3">{reason.title}</p>
+                                                            <p className="text-[14px] leading-relaxed text-[#1a1a1a]/60 uppercase font-medium">{reason.detail}</p>
                                                         </div>
                                                     ))}
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-6 text-[#FBFBF6] shadow-[0_20px_50px_rgba(11,10,8,0.2)]">
+                                        <div className="rounded-[2.25rem] border border-[rgba(212,165,116,0.2)] bg-white p-6 text-[#1a1a1a] shadow-lg">
                                             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Fix Priority Order</p>
                                             <div className="mt-5 grid gap-4 lg:grid-cols-2">
                                                 {fixPriorities.map((item, index) => (
@@ -2861,45 +2853,45 @@ export default function AssetWorkspace({
                                         {extraction.primary_mechanic && extraction.full_dossier && (
                                              <>
                                                  {/* Unified Primary Intelligence Metric - REFINED SCALE */}
-                                                 <div className="mb-12 flex w-full flex-col gap-10 border border-white/10 bg-white/5 p-10 text-white lg:flex-row lg:items-center shadow-[0_40px_80px_rgba(0,0,0,0.4)]">
+                                                 <div className="mb-12 flex w-full flex-col gap-10 border border-[#d4c9b8] bg-white p-10 text-[#1a1a1a] lg:flex-row lg:items-center shadow-xl">
                                                      {/* Left: Primary Mechanic */}
                                                      <div className="flex-1">
-                                                         <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6">
+                                                         <div className="mb-8 flex items-center justify-between border-b border-[#d4c9b8] pb-6">
                                                              <div className="flex items-center gap-4">
-                                                                 <div className="flex h-6 w-6 items-center justify-center bg-[#00E5FF]/10">
-                                                                     <div className="h-2 w-2 bg-[#00E5FF]" />
+                                                                 <div className="flex h-6 w-6 items-center justify-center bg-[#D4A574]/10">
+                                                                     <div className="h-2 w-2 bg-[#D4A574]" />
                                                                  </div>
-                                                                 <span className="block text-[12px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">Primary Forensic Mechanic</span>
+                                                                 <span className="block text-[12px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Primary Forensic Mechanic</span>
                                                              </div>
                                                              <InfoButton section="PRIMARY_MECHANIC" />
                                                          </div>
                                                          <div className="max-w-[70ch]">
-                                                            <h2 className="border-l-[3px] border-[#00E5FF] py-2 pl-8 text-[32px] lg:text-[42px] font-black leading-none tracking-tightest text-white uppercase selection:bg-[#00E5FF]/20">
+                                                            <h2 className="border-l-[3px] border-[#D4A574] py-2 pl-8 text-[32px] lg:text-[42px] font-semibold leading-none tracking-tightest text-[#1a1a1a] uppercase selection:bg-[#D4A574]/20">
                                                                 {extraction.primary_mechanic}
                                                             </h2>
                                                          </div>
                                                      </div>
 
                                                      {/* Vertical Divider (Desktop Only) */}
-                                                     <div className="mx-12 hidden h-48 w-[1px] bg-white/10 lg:block" />
+                                                     <div className="mx-12 hidden h-48 w-[1px] bg-[#f5f0e8] lg:block" />
 
                                                      {/* Right: System Confidence */}
                                                       <div className="w-full lg:w-80 flex flex-col h-full">
-                                                          <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6">
+                                                          <div className="mb-8 flex items-center justify-between border-b border-[#d4c9b8] pb-6">
                                                               <div className="flex items-center gap-4">
-                                                                  <div className="flex h-6 w-6 items-center justify-center bg-[#00E5FF]/10 text-[#00E5FF]">
+                                                                  <div className="flex h-6 w-6 items-center justify-center bg-[#D4A574]/10 text-[#D4A574]">
                                                                       <Sparkles className="h-4 w-4" />
                                                                   </div>
-                                                                  <span className="block text-[11px] font-black uppercase tracking-[0.3em] text-white">System Confidence</span>
+                                                                  <span className="block text-[11px] font-semibold uppercase tracking-[0.3em] text-[#1a1a1a]">System Confidence</span>
                                                               </div>
                                                               <InfoButton section="SYSTEM_CONFIDENCE" />
                                                           </div>
                                                           <div className="flex flex-col gap-6">
-                                                              <div className="flex items-baseline gap-2 text-7xl font-black tracking-tighter text-white">
+                                                              <div className="flex items-baseline gap-2 text-7xl font-semibold tracking-tighter text-[#1a1a1a]">
                                                                   {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}
-                                                                  <span className="text-[20px] text-[#00E5FF] font-black uppercase tracking-widest">/100</span>
+                                                                  <span className="text-[20px] text-[#D4A574] font-semibold uppercase tracking-widest">/100</span>
                                                               </div>
-                                                              <p className="text-[12px] leading-relaxed text-white/40 uppercase font-medium">
+                                                              <p className="text-[12px] leading-relaxed text-[#999] uppercase font-medium">
                                                                   Weighted validation based on semiotic signal strength.
                                                               </p>
                                                           </div>
@@ -2917,61 +2909,61 @@ export default function AssetWorkspace({
 
 
                                             {/* Visual Style */}
-                                            <div className="col-span-1 flex min-h-[120px] flex-col border border-white/10 bg-white/5 p-8 text-white xl:col-span-2">
-                                                <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4">
-                                                    <span className="block text-[12px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">Synthesized Visual Logic</span>
+                                            <div className="col-span-1 flex min-h-[120px] flex-col border border-[#d4c9b8] bg-white p-8 text-[#1a1a1a] xl:col-span-2">
+                                                <div className="mb-8 flex items-center justify-between border-b border-[#d4c9b8] pb-4">
+                                                    <span className="block text-[12px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Synthesized Visual Logic</span>
                                                     <InfoButton section="VISUAL_STYLE" />
                                                 </div>
                                                 <div className="flex flex-col h-full">
-                                                    <p className="mt-2 mb-10 max-w-[62ch] text-[20px] lg:text-[24px] font-black uppercase leading-[1.1] tracking-tightest text-white">
+                                                    <p className="mt-2 mb-10 max-w-[62ch] text-[20px] lg:text-[24px] font-semibold uppercase leading-[1.1] tracking-tightest text-[#1a1a1a]">
                                                         {extraction.visual_style}
                                                     </p>
 
                                                     {/* Aesthetic Signature Matrix */}
-                                                    <div className="mt-auto space-y-6 border-t border-white/10 pt-8">
+                                                    <div className="mt-auto space-y-6 border-t border-[#d4c9b8] pt-8">
                                                         <div className="flex items-center gap-6">
-                                                            <span className="w-16 text-[11px] font-black uppercase tracking-[0.3em] text-white/30">Luma</span>
-                                                            <div className="h-1 flex-1 overflow-hidden bg-white/5">
-                                                                <div className="h-full bg-[#00E5FF] w-[72%] shadow-[0_0_10px_#00E5FF]" />
+                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#aaa]">Luma</span>
+                                                            <div className="h-1 flex-1 overflow-hidden bg-white">
+                                                                <div className="h-full bg-[#D4A574] w-[72%] shadow-[0_0_10px_#D4A574]" />
                                                             </div>
-                                                            <span className="text-[11px] font-black text-[#00E5FF] tracking-widest">0.82V</span>
+                                                            <span className="text-[11px] font-semibold text-[#D4A574] tracking-widest">0.82V</span>
                                                         </div>
                                                         <div className="flex items-center gap-6">
-                                                            <span className="w-16 text-[11px] font-black uppercase tracking-[0.3em] text-white/30">Chrom</span>
-                                                            <div className="h-1 flex-1 overflow-hidden bg-white/5">
-                                                                <div className="h-full bg-[#00E5FF] w-[45%] shadow-[0_0_10px_#00E5FF]" />
+                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#aaa]">Chrom</span>
+                                                            <div className="h-1 flex-1 overflow-hidden bg-white">
+                                                                <div className="h-full bg-[#D4A574] w-[45%] shadow-[0_0_10px_#D4A574]" />
                                                             </div>
-                                                            <span className="text-[11px] font-black text-[#00E5FF] tracking-widest">0.44Δ</span>
+                                                            <span className="text-[11px] font-semibold text-[#D4A574] tracking-widest">0.44Δ</span>
                                                         </div>
                                                         <div className="flex items-center gap-6">
-                                                            <span className="w-16 text-[11px] font-black uppercase tracking-[0.3em] text-white/30">Vect</span>
-                                                            <div className="h-1 flex-1 overflow-hidden bg-white/5">
-                                                                <div className="h-full bg-[#00E5FF] w-[89%] shadow-[0_0_10px_#00E5FF]" />
+                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#aaa]">Vect</span>
+                                                            <div className="h-1 flex-1 overflow-hidden bg-white">
+                                                                <div className="h-full bg-[#D4A574] w-[89%] shadow-[0_0_10px_#D4A574]" />
                                                             </div>
-                                                            <span className="text-[11px] font-black text-[#00E5FF] tracking-widest">0.91Λ</span>
+                                                            <span className="text-[11px] font-semibold text-[#D4A574] tracking-widest">0.91Λ</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             {/* Color Palette */}
-                                            <div className="col-span-1 flex min-h-[120px] flex-col border border-white/10 bg-white/5 p-8 text-white">
-                                                <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4">
-                                                    <span className="block text-[12px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">Chromatic Register</span>
+                                            <div className="col-span-1 flex min-h-[120px] flex-col border border-[#d4c9b8] bg-white p-8 text-[#1a1a1a]">
+                                                <div className="mb-8 flex items-center justify-between border-b border-[#d4c9b8] pb-4">
+                                                    <span className="block text-[12px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Chromatic Register</span>
                                                     <InfoButton section="CHROMATIC_BASE" />
                                                 </div>
                                                 <div className="mt-auto">
                                                     {extraction.color_palette && extraction.color_palette.length > 0 ? (
                                                         <div className="flex flex-wrap gap-3">
                                                             {extraction.color_palette.map((hex: string, i: number) => (
-                                                                <div key={i} className="group relative flex items-center gap-3 border border-white/10 bg-black/40 p-2 pr-4 transition-all hover:border-[#00E5FF]/40">
-                                                                    <div className="w-5 h-5 flex-shrink-0 border border-white/10" style={{ backgroundColor: hex }} />
-                                                                    <span className="text-[10px] font-black tracking-widest text-white/50 group-hover:text-[#00E5FF]">{hex}</span>
+                                                                <div key={i} className="group relative flex items-center gap-3 border border-[#d4c9b8] bg-white p-2 pr-4 transition-all hover:border-[#D4A574]/40">
+                                                                    <div className="w-5 h-5 flex-shrink-0 border border-[#d4c9b8]" style={{ backgroundColor: hex }} />
+                                                                    <span className="text-[10px] font-semibold tracking-widest text-[#666] group-hover:text-[#D4A574]">{hex}</span>
                                                                 </div>
                                                             ))}
                                                         </div>
                                                     ) : (
-                                                        <div className="text-[10px] font-black text-white/20 uppercase tracking-widest">[ NULL_PALETTE ]</div>
+                                                        <div className="text-[10px] font-semibold text-[#aaa] uppercase tracking-widest">[ NULL_PALETTE ]</div>
                                                     )}
                                                 </div>
                                             </div>
@@ -3013,23 +3005,23 @@ export default function AssetWorkspace({
                                         />
                                         
                                         {/* UNIFIED TECHNICAL AUTOPSY CONTAINER */}
-                                        <div className="border border-white/10 bg-white/5 p-10 space-y-12 text-white shadow-[0_40px_80px_rgba(0,0,0,0.4)]">
+                                        <div className="border border-[#d4c9b8] bg-white p-10 space-y-12 text-[#1a1a1a] shadow-xl">
                                             {/* Top: Radiant Architecture Toggle */}
-                                            <div className="flex flex-col gap-10 md:flex-row md:items-center justify-between pb-10 border-b border-white/10">
+                                            <div className="flex flex-col gap-10 md:flex-row md:items-center justify-between pb-10 border-b border-[#d4c9b8]">
                                                 <div className="flex items-center gap-8">
-                                                    <div className="h-14 w-14 bg-black flex items-center justify-center border border-white/10 text-[#00E5FF]">
+                                                    <div className="h-14 w-14 bg-white flex items-center justify-center border border-[#d4c9b8] text-[#D4A574]">
                                                         <Sparkles className="h-6 w-6" />
                                                     </div>
                                                     <div className="flex flex-col gap-2">
-                                                        <h3 className="text-[12px] font-black uppercase tracking-[0.5em] text-[#00E5FF]">Macro-Diagnostic Grid</h3>
-                                                        <p className="text-[14px] text-white/40 uppercase font-medium tracking-wide">Visualize focal routing and attention-routing cues.</p>
+                                                        <h3 className="text-[12px] font-semibold uppercase tracking-[0.5em] text-[#D4A574]">Macro-Diagnostic Grid</h3>
+                                                        <p className="text-[14px] text-[#999] uppercase font-medium tracking-wide">Visualize focal routing and attention-routing cues.</p>
                                                     </div>
                                                 </div>
                                                 <button 
                                                     onClick={() => setShowRadiant(!showRadiant)}
-                                                    className={`px-10 py-4 border text-[11px] font-black uppercase tracking-[0.3em] transition-all duration-500 flex items-center gap-4 ${showRadiant ? "bg-[#00E5FF] text-black border-[#00E5FF] shadow-[0_0_20px_rgba(0,229,255,0.4)]" : "bg-black text-[#00E5FF] border-white/10 hover:border-[#00E5FF]/60"}`}
+                                                    className={`px-10 py-4 border text-[11px] font-semibold uppercase tracking-[0.3em] transition-all duration-500 flex items-center gap-4 ${showRadiant ? "bg-[#D4A574] text-black border-[#D4A574] shadow-[0_0_20px_rgba(212,165,116,0.25)]" : "bg-white text-[#D4A574] border-[#d4c9b8] hover:border-[#D4A574]/60"}`}
                                                 >
-                                                    <div className={`h-2 w-2 ${showRadiant ? "bg-black animate-pulse" : "bg-[#00E5FF]"}`} />
+                                                    <div className={`h-2 w-2 ${showRadiant ? "bg-white animate-pulse" : "bg-[#D4A574]"}`} />
                                                     {showRadiant ? "[ HUD_ACTIVE ]" : "INITIALIZE OPTICAL HUD"}
                                                 </button>
                                             </div>
@@ -3048,10 +3040,10 @@ export default function AssetWorkspace({
                                             <section className="signals-section mt-16 space-y-12">
                                                 <div className="flex items-center gap-10">
                                                     <div className="flex flex-col gap-3">
-                                                        <h2 className="text-[12px] font-black uppercase tracking-[0.6em] text-[#00E5FF]">Gaze Topology</h2>
-                                                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-white/30">Mode of Address & Viewer Positioning</p>
+                                                        <h2 className="text-[12px] font-semibold uppercase tracking-[0.6em] text-[#D4A574]">Gaze Topology</h2>
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#aaa]">Mode of Address & Viewer Positioning</p>
                                                     </div>
-                                                    <div className="h-px flex-1 bg-white/10" />
+                                                    <div className="h-px flex-1 bg-[#f5f0e8]" />
                                                 </div>
 
                                                 <div className="grid grid-cols-1 items-start gap-3 lg:grid-cols-3">
@@ -3060,22 +3052,22 @@ export default function AssetWorkspace({
                                                         { label: 'Viewer Position', value: (extraction.full_dossier as any).gaze_topology.viewer_position },
                                                         { label: 'Power Holder', value: (extraction.full_dossier as any).gaze_topology.power_holder },
                                                     ].map((item, i) => (
-                                                        <div key={i} className="flex min-h-[200px] flex-col justify-between border border-white/10 bg-white/5 px-8 py-8 text-white">
-                                                            <h3 className="mb-6 w-full border-b border-white/10 pb-6 text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">
+                                                        <div key={i} className="flex min-h-[200px] flex-col justify-between border border-[#d4c9b8] bg-white px-8 py-8 text-[#1a1a1a]">
+                                                            <h3 className="mb-6 w-full border-b border-[#d4c9b8] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                                 {item.label}
                                                             </h3>
                                                             <div className="flex-1 flex items-center">
-                                                                <span className="text-[28px] font-black uppercase tracking-tightest leading-tight text-white">{item.value}</span>
+                                                                <span className="text-[28px] font-semibold uppercase tracking-tightest leading-tight text-[#1a1a1a]">{item.value}</span>
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                <div className="border border-white/10 bg-white/5 p-10">
-                                                    <h3 className="mb-8 border-b border-white/10 pb-6 text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">
+                                                <div className="border border-[#d4c9b8] bg-white p-10">
+                                                    <h3 className="mb-8 border-b border-[#d4c9b8] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                         Forensic Gaze Diagnostic
                                                     </h3>
-                                                    <p className="max-w-[72ch] text-[15px] font-medium leading-relaxed text-white/60 uppercase">
+                                                    <p className="max-w-[72ch] text-[15px] font-medium leading-relaxed text-[#1a1a1a]/60 uppercase">
                                                         {(extraction.full_dossier as any).gaze_topology.reading}
                                                     </p>
                                                 </div>
@@ -3087,19 +3079,19 @@ export default function AssetWorkspace({
                                             <section className="counter-reading-section mt-16 space-y-12">
                                                 <div className="flex items-center gap-10">
                                                     <div className="flex flex-col gap-3">
-                                                        <h2 className="text-[12px] font-black uppercase tracking-[0.6em] text-[#00E5FF]">Counter-Reading Matrix</h2>
-                                                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-white/30">Polysemic Deconstruction via Critical Theory</p>
+                                                        <h2 className="text-[12px] font-semibold uppercase tracking-[0.6em] text-[#D4A574]">Counter-Reading Matrix</h2>
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#aaa]">Polysemic Deconstruction via Critical Theory</p>
                                                     </div>
-                                                    <div className="h-px flex-1 bg-white/10" />
+                                                    <div className="h-px flex-1 bg-[#f5f0e8]" />
                                                 </div>
                                                 <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
                                                     {((extraction.full_dossier as any).counter_reading_matrix as { lens: string; reading: string }[]).map((item, i) => (
-                                                        <div key={i} className="flex min-h-[220px] flex-col border border-white/10 bg-white/5 px-8 py-8 text-white">
-                                                            <h3 className="mb-6 w-full border-b border-white/10 pb-6 text-[11px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">
+                                                        <div key={i} className="flex min-h-[220px] flex-col border border-[#d4c9b8] bg-white px-8 py-8 text-[#1a1a1a]">
+                                                            <h3 className="mb-6 w-full border-b border-[#d4c9b8] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                                 {item.lens}
                                                             </h3>
                                                             <div className="flex-1 max-h-[400px] overflow-y-auto pt-2">
-                                                                <p className="text-[14px] leading-relaxed text-white/60 uppercase font-medium">{item.reading}</p>
+                                                                <p className="text-[14px] leading-relaxed text-[#1a1a1a]/60 uppercase font-medium">{item.reading}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -3108,7 +3100,7 @@ export default function AssetWorkspace({
                                         )}
                                     </div>
                                 ) : (
-                                     <div className="rounded-[2.5rem] border border-dashed border-[#4E3D2A] bg-[#1F1F1F]/70 p-20 flex flex-col items-center justify-center text-center">
+                                     <div className="rounded-[2.5rem] border border-dashed border-[#4E3D2A] bg-white/70 p-20 flex flex-col items-center justify-center text-center">
                                          <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#4E3D2A] bg-[#171512]">
                                          <Info className="h-5 w-5 text-[#D4A574]/50" />
                                          </div>
@@ -3128,9 +3120,9 @@ export default function AssetWorkspace({
                                         intro="The non-negotiables, avoidances, and safe adaptation boundaries that keep refinement inside the working forensic logic."
                                     />
 
-                                    <div className="border border-white/10 bg-white/5 p-12 text-white shadow-[0_40px_80px_rgba(0,0,0,0.5)]">
-                                        <p className="text-[11px] font-black uppercase tracking-[0.4em] text-cyan-400 mb-8 border-b border-white/10 pb-4 font-mono">System Boundary // Protocol</p>
-                                        <p className="max-w-[62ch] text-[24px] font-black uppercase leading-tight text-white/70 tracking-tightest">
+                                    <div className="border border-[#d4c9b8] bg-white p-12 text-[#1a1a1a] shadow-xl">
+                                        <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 border-b border-[#d4c9b8] pb-4 font-mono">System Boundary // Protocol</p>
+                                        <p className="max-w-[62ch] text-[24px] font-semibold uppercase leading-tight text-[#444] tracking-tightest">
                                             VD judges, diagnoses, and directs creative quality. Not for asset generation.
                                         </p>
                                     </div>
@@ -3140,40 +3132,40 @@ export default function AssetWorkspace({
                                             {
                                                 title: 'Retention Protocol',
                                                 items: mustKeepConstraints,
-                                                accent: 'text-cyan-400',
-                                                tone: 'border-white/10 bg-black/40',
+                                                accent: 'text-[#D4A574]',
+                                                tone: 'border-[#d4c9b8] bg-white',
                                             },
                                             {
                                                 title: 'Negation Protocol',
                                                 items: mustAvoidConstraints,
-                                                accent: 'text-white',
-                                                tone: 'border-white/10 bg-white/5',
+                                                accent: 'text-[#1a1a1a]',
+                                                tone: 'border-[#d4c9b8] bg-white',
                                             },
                                             {
                                                 title: 'Adaptive Delta',
                                                 items: safeAdaptationZone,
-                                                accent: 'text-cyan-400',
-                                                tone: 'border-white/10 bg-black/60',
+                                                accent: 'text-[#D4A574]',
+                                                tone: 'border-[#d4c9b8] bg-white/90',
                                             },
                                         ].map((group, index) => (
                                             <div
                                                 key={group.title}
-                                                className={`border border-white/10 bg-white/5 p-10 text-white ${index === 2 ? 'xl:col-span-2' : ''}`}
+                                                className={`border border-[#d4c9b8] bg-white p-10 text-[#1a1a1a] ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
-                                                <p className={`text-[11px] font-black uppercase tracking-[0.5em] mb-12 border-b border-white/10 pb-6 font-mono ${group.accent}`}>{group.title}</p>
+                                                <p className={`text-[11px] font-semibold uppercase tracking-[0.5em] mb-12 border-b border-[#d4c9b8] pb-6 font-mono ${group.accent}`}>{group.title}</p>
                                                 <div className="space-y-4">
                                                     {group.items.length > 0 ? (
                                                         group.items.map((item, id) => (
                                                             <div key={`${group.title}-${id}`} className={`border p-8 ${group.tone}`}>
                                                                 <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                                                                    <p className="max-w-[58ch] text-[15px] leading-relaxed text-white uppercase font-black tracking-tight">{item.text}</p>
+                                                                    <p className="max-w-[58ch] text-[15px] leading-relaxed text-[#1a1a1a] uppercase font-semibold tracking-tight">{item.text}</p>
                                                                     <span
-                                                                        className={`shrink-0 self-start border px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] ${
+                                                                        className={`shrink-0 self-start border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] ${
                                                                             item.severity === 'critical'
-                                                                                ? 'border-cyan-400 text-black bg-cyan-400'
+                                                                                ? 'border-[#D4A574] text-black bg-[#D4A574]'
                                                                                 : item.severity === 'high'
-                                                                                    ? 'border-cyan-400/40 text-cyan-400'
-                                                                                    : 'border-white/20 text-white/40'
+                                                                                    ? 'border-[#D4A574]/40 text-[#D4A574]'
+                                                                                    : 'border-[#c0b5a4] text-[#999]'
                                                                         }`}
                                                                     >
                                                                         {item.severity}
@@ -3182,7 +3174,7 @@ export default function AssetWorkspace({
                                                             </div>
                                                         ))
                                                     ) : (
-                                                        <div className="border border-dashed border-white/10 bg-black/40 p-12 text-[11px] font-black uppercase tracking-widest text-white/10 text-center font-mono">
+                                                        <div className="border border-dashed border-[#d4c9b8] bg-white p-12 text-[11px] font-semibold uppercase tracking-widest text-[#ccc] text-center font-mono">
                                                             Pending trace reconstruction.
                                                         </div>
                                                     )}
@@ -3204,16 +3196,16 @@ export default function AssetWorkspace({
                                     />
                                     <div className="space-y-10">
                                         {!isSovereign ? (
-                                            <div className="relative border border-white/10 bg-white/5 overflow-hidden group">
-                                                <div className="absolute inset-0 z-10 backdrop-blur-md bg-black/60 flex items-center justify-center">
-                                                    <div className="p-12 border border-white/10 bg-black max-w-xl text-center flex flex-col items-center">
-                                                        <div className="w-12 h-12 flex items-center justify-center border border-cyan-400/30 bg-cyan-400/10 mb-6 font-mono">
-                                                            <Lock className="w-5 h-5 text-cyan-400" />
+                                            <div className="relative border border-[#d4c9b8] bg-white overflow-hidden group">
+                                                <div className="absolute inset-0 z-10 backdrop-blur-md bg-white/90 flex items-center justify-center">
+                                                    <div className="p-12 border border-[#d4c9b8] bg-white max-w-xl text-center flex flex-col items-center">
+                                                        <div className="w-12 h-12 flex items-center justify-center border border-[#D4A574]/30 bg-[#D4A574]/10 mb-6 font-mono">
+                                                            <Lock className="w-5 h-5 text-[#D4A574]" />
                                                         </div>
-                                                        <span className="text-cyan-400 font-extrabold tracking-[0.4em] uppercase text-[10px] mb-4 font-mono">Sovereign Feature</span>
-                                                        <h2 className="text-white text-3xl font-black mb-6 tracking-tightest uppercase">Market Pulse Locked</h2>
-                                                        <p className="text-white/40 text-[13px] mb-10 font-medium leading-relaxed uppercase tracking-wider">Cross-asset statistical aggregation and category saturation density mapping is restricted to sovereign intelligence tiers.</p>
-                                                        <button className="bg-cyan-400 text-black px-12 py-4 text-[10px] font-black uppercase tracking-[0.3em] transition hover:bg-white active:scale-95 font-mono">
+                                                        <span className="text-[#D4A574] font-extrabold tracking-[0.4em] uppercase text-[10px] mb-4 font-mono">Sovereign Feature</span>
+                                                        <h2 className="text-[#1a1a1a] text-3xl font-semibold mb-6 tracking-tightest uppercase">Market Pulse Locked</h2>
+                                                        <p className="text-[#999] text-[13px] mb-10 font-medium leading-relaxed uppercase tracking-wider">Cross-asset statistical aggregation and category saturation density mapping is restricted to sovereign intelligence tiers.</p>
+                                                        <button className="bg-[#D4A574] text-black px-12 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] transition hover:bg-white active:scale-95 font-mono">
                                                             UPGRADE TO SOVEREIGN
                                                         </button>
                                                     </div>
@@ -3225,9 +3217,9 @@ export default function AssetWorkspace({
                                                             ['Novelty', '0.0%'],
                                                             ['Fatigue', '0.0%'],
                                                         ].map(([label, val]) => (
-                                                            <div key={label} className="border border-white/10 bg-black/40 p-10">
-                                                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-6 font-mono">{label}</p>
-                                                                <p className="text-4xl font-black text-white">{val}</p>
+                                                            <div key={label} className="border border-[#d4c9b8] bg-white p-10">
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#999] mb-6 font-mono">{label}</p>
+                                                                <p className="text-4xl font-semibold text-[#1a1a1a]">{val}</p>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -3241,22 +3233,22 @@ export default function AssetWorkspace({
                                                         ['Route Novelty', marketPulseFallback.novelty],
                                                         ['Category Fatigue', marketPulseFallback.fatigue],
                                                     ].map(([label, val]) => (
-                                                        <div key={label} className="border border-white/10 bg-white/5 p-10 shadow-xl group hover:border-cyan-400/40 transition-all">
-                                                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400/60 mb-6 font-mono">{label}</p>
-                                                            <p className="text-4xl font-black text-white">{val}%</p>
-                                                            <div className="mt-8 h-0.5 w-full bg-white/5 overflow-hidden">
-                                                                <div className="h-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.5)]" style={{ width: `${val}%` }} />
+                                                        <div key={label} className="border border-[#d4c9b8] bg-white p-10 shadow-xl group hover:border-[#D4A574]/40 transition-all">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/60 mb-6 font-mono">{label}</p>
+                                                            <p className="text-4xl font-semibold text-[#1a1a1a]">{val}%</p>
+                                                            <div className="mt-8 h-0.5 w-full bg-white overflow-hidden">
+                                                                <div className="h-full bg-[#D4A574] shadow-[0_0_10px_rgba(212,165,116,0.25)]" style={{ width: `${val}%` }} />
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                <div className="border border-white/10 bg-white/5 p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-12 shadow-[0_30px_60px_rgba(0,0,0,0.4)]">
+                                                <div className="border border-[#d4c9b8] bg-white p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-12 shadow-lg">
                                                     <div>
-                                                        <p className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-8 font-mono">Forensic Contextualization // Read</p>
-                                                        <p className="max-w-[72ch] text-[16px] font-black leading-relaxed text-white/70 uppercase tracking-tight">{marketPulseFallback.interpretation}</p>
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-8 font-mono">Forensic Contextualization // Read</p>
+                                                        <p className="max-w-[72ch] text-[16px] font-semibold leading-relaxed text-[#444] uppercase tracking-tight">{marketPulseFallback.interpretation}</p>
                                                     </div>
-                                                    <span className="shrink-0 border border-cyan-400 px-10 py-5 text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.2)] bg-cyan-400/5 font-mono">
+                                                    <span className="shrink-0 border border-[#D4A574] px-10 py-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.15)] bg-[#D4A574]/5 font-mono">
                                                         {marketPulseFallback.confidenceLabel}
                                                     </span>
                                                 </div>
@@ -3276,59 +3268,59 @@ export default function AssetWorkspace({
                                         intro="How the asset encodes meaning, identity cues, and emotional triggers to shape perception and decision momentum."
                                     />
                                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                        <div className="border border-white/10 bg-white/5 p-12 text-white shadow-[0_40px_80px_rgba(0,0,0,0.5)]">
-                                            <h3 className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-12 border-b border-white/10 pb-8 font-mono">Archetype Diagnostic // Status</h3>
-                                            <p className="text-[42px] font-black uppercase tracking-tightest leading-tight text-white mb-12">
+                                        <div className="border border-[#d4c9b8] bg-white p-12 text-[#1a1a1a] shadow-xl">
+                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#d4c9b8] pb-8 font-mono">Archetype Diagnostic // Status</h3>
+                                            <p className="text-[42px] font-semibold uppercase tracking-tightest leading-tight text-[#1a1a1a] mb-12">
                                                 {extraction?.full_dossier?.archetype_mapping?.target_posture || 'POSTURE_RECONSTRUCTING'}
                                             </p>
-                                            <div className="border-t border-white/10 pt-12">
-                                                <p className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-400/60 mb-6 font-mono">Dismantling Matrix</p>
-                                                <p className="text-[14px] leading-relaxed text-white/50 uppercase font-black tracking-widest">
+                                            <div className="border-t border-[#d4c9b8] pt-12">
+                                                <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574]/60 mb-6 font-mono">Dismantling Matrix</p>
+                                                <p className="text-[14px] leading-relaxed text-[#666] uppercase font-semibold tracking-widest">
                                                     {extraction?.full_dossier?.objection_dismantling || 'System is currently reconstructing the objection dismantling matrix.'}
                                                 </p>
                                             </div>
                                         </div>
 
-                                        <div className="border border-white/10 bg-white/5 p-12 text-white">
-                                            <h3 className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-12 border-b border-white/10 pb-8 font-mono">Emotional Trigger Scale</h3>
+                                        <div className="border border-[#d4c9b8] bg-white p-12 text-[#1a1a1a]">
+                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#d4c9b8] pb-8 font-mono">Emotional Trigger Scale</h3>
                                             <div className="space-y-12">
                                                 {Object.entries((extraction?.full_dossier?.archetype_mapping as any)?.trigger_distribution || {}).length > 0 ? (
                                                     Object.entries((extraction?.full_dossier?.archetype_mapping as any)?.trigger_distribution || {}).map(([key, val]) => (
                                                         <div key={key} className="group">
-                                                            <div className="flex justify-between text-[11px] font-black uppercase tracking-[0.4em] mb-6 font-mono">
-                                                                <span className="text-white/40 group-hover:text-white transition-colors">{key}</span>
-                                                                <span className="text-cyan-400">{String(val)}.0%</span>
+                                                            <div className="flex justify-between text-[11px] font-semibold uppercase tracking-[0.4em] mb-6 font-mono">
+                                                                <span className="text-[#999] group-hover:text-[#1a1a1a] transition-colors">{key}</span>
+                                                                <span className="text-[#D4A574]">{String(val)}.0%</span>
                                                             </div>
-                                                            <div className="h-[2px] w-full bg-white/5">
+                                                            <div className="h-[2px] w-full bg-white">
                                                                 <motion.div 
                                                                     initial={{ width: 0 }}
                                                                     animate={{ width: `${Number(val)}%` }}
                                                                     transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
-                                                                    className="h-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.5)]" 
+                                                                    className="h-full bg-[#D4A574] shadow-[0_0_10px_rgba(212,165,116,0.25)]" 
                                                                 />
                                                             </div>
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <div className="py-20 text-center border border-dashed border-white/5 bg-black/40 text-[10px] uppercase tracking-[0.4em] text-white/20 font-mono">
+                                                    <div className="py-20 text-center border border-dashed border-[#e8ddd0] bg-white text-[10px] uppercase tracking-[0.4em] text-[#aaa] font-mono">
                                                         Trigger distribution offline.
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
 
-                                        <div className="md:col-span-2 border border-white/10 bg-white/5 p-12 text-white shadow-[0_80px_160px_rgba(0,0,0,0.6)]">
-                                            <h3 className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-12 border-b border-white/10 pb-8 font-mono">Strategic Tactical Calibration</h3>
+                                        <div className="md:col-span-2 border border-[#d4c9b8] bg-white p-12 text-[#1a1a1a] shadow-2xl">
+                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#d4c9b8] pb-8 font-mono">Strategic Tactical Calibration</h3>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                 {(extraction?.full_dossier?.archetype_mapping?.strategic_moves || []).length > 0 ? (
                                                     (extraction?.full_dossier?.archetype_mapping?.strategic_moves || []).map((move, i) => (
-                                                        <div key={i} className="flex gap-12 p-10 border border-white/10 bg-black group hover:border-cyan-400/40 transition-all shadow-xl">
-                                                            <div className="text-[48px] font-black text-white/5 group-hover:text-cyan-400/10 transition-colors font-mono leading-none">0{i+1}</div>
-                                                            <p className="text-[16px] font-black leading-relaxed text-white/80 uppercase tracking-tightest">{String(move)}</p>
+                                                        <div key={i} className="flex gap-12 p-10 border border-[#d4c9b8] bg-white group hover:border-[#D4A574]/40 transition-all shadow-xl">
+                                                            <div className="text-[48px] font-semibold text-[#d4d4d4] group-hover:text-[#D4A574]/10 transition-colors font-mono leading-none">0{i+1}</div>
+                                                            <p className="text-[16px] font-semibold leading-relaxed text-[#1a1a1a]/80 uppercase tracking-tightest">{String(move)}</p>
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <div className="col-span-2 py-20 text-center border border-dashed border-white/5 bg-black/40 text-[10px] uppercase tracking-[0.4em] text-white/20 font-mono">
+                                                    <div className="col-span-2 py-20 text-center border border-dashed border-[#e8ddd0] bg-white text-[10px] uppercase tracking-[0.4em] text-[#aaa] font-mono">
                                                         Moves indexing in progress.
                                                     </div>
                                                 )}
@@ -3348,22 +3340,22 @@ export default function AssetWorkspace({
                                         intro="A reproducible reconstruction path showing what was diagnosed, what can change safely, and how the route can be audited."
                                     />
                                     {!blueprintData ? (
-                                        <div className="flex flex-col items-center justify-center border border-white/10 bg-white/5 p-20 text-center text-white">
-                                            <div className="w-16 h-16 flex items-center justify-center border border-cyan-400/30 bg-cyan-400/10 mb-8">
-                                                <Sparkles className="w-6 h-6 text-cyan-400" />
+                                        <div className="flex flex-col items-center justify-center border border-[#d4c9b8] bg-white p-20 text-center text-[#1a1a1a]">
+                                            <div className="w-16 h-16 flex items-center justify-center border border-[#D4A574]/30 bg-[#D4A574]/10 mb-8">
+                                                <Sparkles className="w-6 h-6 text-[#D4A574]" />
                                             </div>
-                                            <h3 className="text-white text-2xl font-black mb-4 uppercase tracking-tightest">Blueprint Trace Offline</h3>
-                                            <p className="mb-10 max-w-sm text-[13px] text-white/40 font-black uppercase tracking-widest leading-relaxed">System requires route calibration to generate the audit-ready blueprint architecture.</p>
+                                            <h3 className="text-[#1a1a1a] text-2xl font-semibold mb-4 uppercase tracking-tightest">Blueprint Trace Offline</h3>
+                                            <p className="mb-10 max-w-sm text-[13px] text-[#999] font-semibold uppercase tracking-widest leading-relaxed">System requires route calibration to generate the audit-ready blueprint architecture.</p>
                                             
                                             {isGeneratingBlueprint && (
-                                                <div className="mb-12 w-full max-w-md border border-white/10 p-10 bg-black shadow-2xl">
-                                                    <div className="flex items-center justify-between gap-4 text-[11px] font-black uppercase tracking-[0.4em] text-cyan-400 mb-8 font-mono">
+                                                <div className="mb-12 w-full max-w-md border border-[#d4c9b8] p-10 bg-white shadow-2xl">
+                                                    <div className="flex items-center justify-between gap-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 font-mono">
                                                         <span>{BLUEPRINT_STEPS[blueprintStep]}</span>
                                                         <span>{blueprintProgress}%</span>
                                                     </div>
-                                                    <div className="h-[2px] w-full bg-white/5">
+                                                    <div className="h-[2px] w-full bg-white">
                                                         <div
-                                                            className="h-full bg-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all duration-700"
+                                                            className="h-full bg-[#D4A574] shadow-[0_0_10px_rgba(212,165,116,0.25)] transition-all duration-700"
                                                             style={{ width: `${blueprintProgress}%` }}
                                                         />
                                                     </div>
@@ -3373,66 +3365,66 @@ export default function AssetWorkspace({
                                             <button
                                                 onClick={handleGenerateBlueprint}
                                                 disabled={isGeneratingBlueprint || !extraction}
-                                                className="bg-cyan-400 text-black px-12 py-5 text-[11px] font-black tracking-[0.4em] uppercase hover:bg-white transition-all disabled:opacity-50 active:scale-95 shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+                                                className="bg-[#D4A574] text-black px-12 py-5 text-[11px] font-semibold tracking-[0.4em] uppercase hover:bg-white transition-all disabled:opacity-50 active:scale-95 shadow-[0_0_15px_rgba(212,165,116,0.2)]"
                                             >
                                                 {isGeneratingBlueprint ? 'GENERATING ARCHITECTURE...' : 'INITIATE BLUEPRINT'}
                                             </button>
                                         </div>
                                     ) : (
                                         <div className="space-y-12">
-                                            <div className="flex flex-col gap-8 border border-white/10 bg-white/5 p-12 text-white md:flex-row md:items-center md:justify-between shadow-2xl">
+                                            <div className="flex flex-col gap-8 border border-[#d4c9b8] bg-white p-12 text-[#1a1a1a] md:flex-row md:items-center md:justify-between shadow-2xl">
                                                 <div className="flex items-center gap-6">
-                                                    <div className="flex h-14 w-14 items-center justify-center border border-cyan-400/30 bg-cyan-400/10">
-                                                        <Sparkles className="h-6 w-6 text-cyan-400" />
+                                                    <div className="flex h-14 w-14 items-center justify-center border border-[#D4A574]/30 bg-[#D4A574]/10">
+                                                        <Sparkles className="h-6 w-6 text-[#D4A574]" />
                                                     </div>
                                                     <div>
-                                                        <p className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 font-mono">Blueprint Trace Active // Vault_Index</p>
-                                                        <p className="mt-2 text-[14px] text-white/50 font-black uppercase tracking-tightest">Indexed for reproducibility and multi-agent audit.</p>
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Blueprint Trace Active // Vault_Index</p>
+                                                        <p className="mt-2 text-[14px] text-[#666] font-semibold uppercase tracking-tightest">Indexed for reproducibility and multi-agent audit.</p>
                                                     </div>
                                                 </div>
                                                 <button
                                                     onClick={handleGenerateBlueprint}
                                                     disabled={isGeneratingBlueprint}
-                                                    className="flex items-center gap-4 border border-cyan-400 px-8 py-4 text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 transition-all hover:bg-cyan-400 hover:text-black disabled:opacity-50 font-mono"
+                                                    className="flex items-center gap-4 border border-[#D4A574] px-8 py-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] transition-all hover:bg-[#D4A574] hover:text-black disabled:opacity-50 font-mono"
                                                 >
                                                     {isGeneratingBlueprint ? 'REFRESHING...' : 'REFRESH TRACE'}
                                                 </button>
                                             </div>
 
                                             <div className="grid grid-cols-1 gap-12">
-                                                <div className="border border-white/10 bg-white/5 p-12 text-white shadow-xl">
-                                                    <p className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-10 border-b border-white/10 pb-6 font-mono">Handoff Logic // Reconstruction</p>
-                                                    <div className="border border-white/10 bg-black/60 p-10 shadow-inner">
-                                                        <pre className="whitespace-pre-wrap text-[14px] font-mono leading-relaxed text-white/30 selection:bg-cyan-400/30">
+                                                <div className="border border-[#d4c9b8] bg-white p-12 text-[#1a1a1a] shadow-xl">
+                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-10 border-b border-[#d4c9b8] pb-6 font-mono">Handoff Logic // Reconstruction</p>
+                                                    <div className="border border-[#d4c9b8] bg-white/90 p-10 shadow-inner">
+                                                        <pre className="whitespace-pre-wrap text-[14px] font-mono leading-relaxed text-[#aaa] selection:bg-[#D4A574]/30">
                                                             {blueprintData.verified_dna_prompt}
                                                         </pre>
                                                     </div>
                                                 </div>
 
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                    <div className="border border-white/10 bg-white/5 p-10">
-                                                        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-400 mb-8 border-b border-white/10 pb-4 font-mono">Primary Trigger</p>
-                                                        <p className="text-[20px] font-black uppercase leading-tight text-white tracking-tightest">{blueprintData.execution_constraints?.primary_trigger}</p>
+                                                    <div className="border border-[#d4c9b8] bg-white p-10">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-8 border-b border-[#d4c9b8] pb-4 font-mono">Primary Trigger</p>
+                                                        <p className="text-[20px] font-semibold uppercase leading-tight text-[#1a1a1a] tracking-tightest">{blueprintData.execution_constraints?.primary_trigger}</p>
                                                     </div>
-                                                    <div className="border border-white/10 bg-white/5 p-10 font-mono">
-                                                        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-white/40 mb-8 border-b border-white/10 pb-4">Aesthetic Architecture</p>
-                                                        <p className="text-[12px] font-black uppercase leading-relaxed text-white/60 tracking-widest">{blueprintData.technical_specs?.lighting_architecture}</p>
+                                                    <div className="border border-[#d4c9b8] bg-white p-10 font-mono">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#999] mb-8 border-b border-[#d4c9b8] pb-4">Aesthetic Architecture</p>
+                                                        <p className="text-[12px] font-semibold uppercase leading-relaxed text-[#1a1a1a]/60 tracking-widest">{blueprintData.technical_specs?.lighting_architecture}</p>
                                                     </div>
                                                 </div>
 
-                                                <div className="border border-white/10 bg-white/5 p-12">
+                                                <div className="border border-[#d4c9b8] bg-white p-12">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                         <div className="space-y-8">
                                                             <div className="flex items-center gap-4">
-                                                                <div className="w-8 h-8 flex items-center justify-center border border-cyan-400 bg-cyan-400 text-black">
+                                                                <div className="w-8 h-8 flex items-center justify-center border border-[#D4A574] bg-[#D4A574] text-black">
                                                                     <Check className="w-4 h-4" />
                                                                 </div>
-                                                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono">Retention Protocol</span>
+                                                                <span className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">Retention Protocol</span>
                                                             </div>
                                                             <div className="space-y-3">
                                                                 {(blueprintData.execution_constraints?.must_include || []).map((item: string, i: number) => (
-                                                                    <div key={`inc-${i}`} className="border border-white/10 bg-black/40 p-4 hover:border-cyan-400/40 transition-all">
-                                                                        <p className="text-[12px] font-black uppercase text-white/50 tracking-tight">{item}</p>
+                                                                    <div key={`inc-${i}`} className="border border-[#d4c9b8] bg-white p-4 hover:border-[#D4A574]/40 transition-all">
+                                                                        <p className="text-[12px] font-semibold uppercase text-[#666] tracking-tight">{item}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -3440,15 +3432,15 @@ export default function AssetWorkspace({
 
                                                         <div className="space-y-8">
                                                             <div className="flex items-center gap-4">
-                                                                <div className="w-8 h-8 flex items-center justify-center border border-white/20 bg-white/5 text-white/20">
+                                                                <div className="w-8 h-8 flex items-center justify-center border border-[#c0b5a4] bg-white text-[#aaa]">
                                                                     <X className="w-4 h-4" />
                                                                 </div>
-                                                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white/20 font-mono">Negation Protocol</span>
+                                                                <span className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#aaa] font-mono">Negation Protocol</span>
                                                             </div>
                                                             <div className="space-y-3">
                                                                 {(blueprintData.execution_constraints?.must_not_include || []).map((item: string, i: number) => (
-                                                                    <div key={`exc-${i}`} className="border border-white/5 bg-black/60 p-4 opacity-40">
-                                                                        <p className="text-[12px] font-medium uppercase text-white/10 tracking-tight line-through">{item}</p>
+                                                                    <div key={`exc-${i}`} className="border border-[#e8ddd0] bg-white/90 p-4 opacity-40">
+                                                                        <p className="text-[12px] font-medium uppercase text-[#ccc] tracking-tight line-through">{item}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -3460,14 +3452,14 @@ export default function AssetWorkspace({
                                                 {blueprintData.ad_copy_remixes && blueprintData.ad_copy_remixes.length > 0 && (
                                                     <div className="space-y-10">
                                                         <div className="flex items-center gap-6">
-                                                            <p className="text-[11px] font-black uppercase tracking-[0.6em] text-cyan-400 font-mono">Forensic Copy Remixes</p>
-                                                            <div className="h-px flex-1 bg-white/10"></div>
+                                                            <p className="text-[11px] font-semibold uppercase tracking-[0.6em] text-[#D4A574] font-mono">Forensic Copy Remixes</p>
+                                                            <div className="h-px flex-1 bg-[#f5f0e8]"></div>
                                                         </div>
                                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                             {blueprintData.ad_copy_remixes.map((remix: any, i: number) => (
-                                                                <div key={i} className="border border-white/10 bg-white/5 p-10 transition-all hover:border-cyan-400/40 shadow-xl group">
-                                                                    <p className="mb-8 border-b border-white/5 pb-4 text-[9px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono">{remix.angle}</p>
-                                                                    <p className="text-[18px] font-black uppercase leading-tight text-white/80 group-hover:text-white transition-colors tracking-tightest font-mono">
+                                                                <div key={i} className="border border-[#d4c9b8] bg-white p-10 transition-all hover:border-[#D4A574]/40 shadow-xl group">
+                                                                    <p className="mb-8 border-b border-[#e8ddd0] pb-4 text-[9px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">{remix.angle}</p>
+                                                                    <p className="text-[18px] font-semibold uppercase leading-tight text-[#1a1a1a]/80 group-hover:text-[#1a1a1a] transition-colors tracking-tightest font-mono">
                                                                         "{remix.copy}"
                                                                     </p>
                                                                 </div>
@@ -3479,18 +3471,18 @@ export default function AssetWorkspace({
                                                 {blueprintData.visual_variant_prompts && blueprintData.visual_variant_prompts.length > 0 && (
                                                     <div className="space-y-10">
                                                         <div className="flex items-center gap-6">
-                                                            <p className="text-[11px] font-black uppercase tracking-[0.6em] text-white/20 font-mono">Adaptation Trace Variants</p>
-                                                            <div className="h-px flex-1 bg-white/10"></div>
+                                                            <p className="text-[11px] font-semibold uppercase tracking-[0.6em] text-[#aaa] font-mono">Adaptation Trace Variants</p>
+                                                            <div className="h-px flex-1 bg-[#f5f0e8]"></div>
                                                         </div>
                                                         <div className="grid grid-cols-1 gap-10">
                                                             {blueprintData.visual_variant_prompts.map((variant: any, i: number) => (
-                                                                <div key={i} className="border border-white/10 bg-white/5 p-12 transition-all hover:bg-white/[0.07] shadow-3xl">
-                                                                    <div className="flex items-center justify-between mb-8 border-b border-white/10 pb-6">
-                                                                        <span className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 font-mono">{variant.concept}</span>
-                                                                        <span className="text-[10px] font-black text-white/10 font-mono tracking-widest uppercase">Variant_Trace_0{i+1}</span>
+                                                                <div key={i} className="border border-[#d4c9b8] bg-white p-12 transition-all hover:bg-white/[0.07] shadow-3xl">
+                                                                    <div className="flex items-center justify-between mb-8 border-b border-[#d4c9b8] pb-6">
+                                                                        <span className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">{variant.concept}</span>
+                                                                        <span className="text-[10px] font-semibold text-[#ccc] font-mono tracking-widest uppercase">Variant_Trace_0{i+1}</span>
                                                                     </div>
-                                                                    <div className="border border-white/5 bg-black/60 p-10 shadow-inner">
-                                                                        <pre className="whitespace-pre-wrap text-[13px] font-mono leading-relaxed text-white/30 selection:bg-cyan-400/30">
+                                                                    <div className="border border-[#e8ddd0] bg-white/90 p-10 shadow-inner">
+                                                                        <pre className="whitespace-pre-wrap text-[13px] font-mono leading-relaxed text-[#aaa] selection:bg-[#D4A574]/30">
                                                                             {variant.prompt}
                                                                         </pre>
                                                                     </div>
@@ -3514,34 +3506,34 @@ export default function AssetWorkspace({
                                         title="Stress Lab"
                                         intro="Experimental stress testing across key creative variables to measure response variance and structural durability."
                                     />
-                                    <div className="border border-white/10 bg-white/5 overflow-hidden shadow-3xl">
-                                        <div className="grid grid-cols-4 border-b border-white/10 bg-black/40 text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono">
-                                            <div className="px-10 py-6 border-r border-white/10">Variable</div>
-                                            <div className="px-10 py-6 border-r border-white/10 text-center">Baseline</div>
-                                            <div className="px-10 py-6 border-r border-white/10 text-center">Predicted_Lift</div>
+                                    <div className="border border-[#d4c9b8] bg-white overflow-hidden shadow-3xl">
+                                        <div className="grid grid-cols-4 border-b border-[#d4c9b8] bg-white text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">
+                                            <div className="px-10 py-6 border-r border-[#d4c9b8]">Variable</div>
+                                            <div className="px-10 py-6 border-r border-[#d4c9b8] text-center">Baseline</div>
+                                            <div className="px-10 py-6 border-r border-[#d4c9b8] text-center">Predicted_Lift</div>
                                             <div className="px-10 py-6 text-center">Recommendation</div>
                                         </div>
                                         <div className="divide-y divide-white/5">
                                             {(stressLabRows || []).map((row, i) => (
                                                 <div key={i} className="grid grid-cols-4 items-center group hover:bg-white/[0.02] transition-colors">
-                                                    <div className="px-10 py-10 border-r border-white/10">
-                                                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-white/50 group-hover:text-cyan-400 transition-colors font-mono">{row.variable}</p>
+                                                    <div className="px-10 py-10 border-r border-[#d4c9b8]">
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#666] group-hover:text-[#D4A574] transition-colors font-mono">{row.variable}</p>
                                                     </div>
-                                                    <div className="px-10 py-10 border-r border-white/10 text-center">
-                                                        <p className="text-[14px] font-black text-white/40 uppercase leading-tight">{row.currentState}</p>
+                                                    <div className="px-10 py-10 border-r border-[#d4c9b8] text-center">
+                                                        <p className="text-[14px] font-semibold text-[#999] uppercase leading-tight">{row.currentState}</p>
                                                     </div>
-                                                    <div className="px-10 py-10 border-r border-white/10 text-center font-mono">
-                                                        <span className={`text-[11px] font-black ${row.predictedLift === 'High' ? 'text-cyan-400' : 'text-white/40'}`}>
+                                                    <div className="px-10 py-10 border-r border-[#d4c9b8] text-center font-mono">
+                                                        <span className={`text-[11px] font-semibold ${row.predictedLift === 'High' ? 'text-[#D4A574]' : 'text-[#999]'}`}>
                                                             {row.predictedLift}
                                                         </span>
                                                     </div>
                                                     <div className="px-10 py-10 text-center">
-                                                        <span className={`inline-block border px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] font-mono ${
+                                                        <span className={`inline-block border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] font-mono ${
                                                             row.recommendation === 'Test' 
-                                                                ? 'border-cyan-400 text-cyan-400 bg-cyan-400/5' 
+                                                                ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5' 
                                                                 : row.recommendation === 'Avoid' 
                                                                     ? 'border-red-500/50 text-red-500 bg-red-500/5' 
-                                                                    : 'border-white/10 text-white/30'
+                                                                    : 'border-[#d4c9b8] text-[#aaa]'
                                                         }`}>
                                                             {row.recommendation}
                                                         </span>
@@ -3564,18 +3556,18 @@ export default function AssetWorkspace({
                                     />
                                     <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
                                         <div className="space-y-4">
-                                            <div className="border border-white/10 bg-white/5 p-12 shadow-2xl">
-                                                <p className="text-[11px] font-black uppercase tracking-[0.4em] text-cyan-400 mb-10 border-b border-white/10 pb-6 font-mono">Capture Decision // Active_Entry</p>
+                                            <div className="border border-[#d4c9b8] bg-white p-12 shadow-2xl">
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10 border-b border-[#d4c9b8] pb-6 font-mono">Capture Decision // Active_Entry</p>
                                                 <div className="space-y-8">
                                                     <div className="grid grid-cols-3 gap-4">
                                                         {(['Ship', 'Revise', 'Kill'] as const).map((v) => (
                                                             <button
                                                                 key={v}
                                                                 onClick={() => setDecisionVerdict(v)}
-                                                                className={`border p-8 text-[11px] font-black uppercase tracking-[0.5em] transition-all font-mono ${
+                                                                className={`border p-8 text-[11px] font-semibold uppercase tracking-[0.5em] transition-all font-mono ${
                                                                     decisionVerdict === v
-                                                                        ? 'border-cyan-400 bg-cyan-400 text-black shadow-[0_0_30px_rgba(34,211,238,0.3)]'
-                                                                        : 'border-white/10 bg-white/5 text-white/40 hover:border-white/20 hover:text-white/60'
+                                                                        ? 'border-[#D4A574] bg-[#D4A574] text-black shadow-[0_0_20px_rgba(212,165,116,0.2)]'
+                                                                        : 'border-[#d4c9b8] bg-white text-[#999] hover:border-[#c0b5a4] hover:text-[#1a1a1a]/60'
                                                                 }`}
                                                             >
                                                                 {v}
@@ -3583,79 +3575,79 @@ export default function AssetWorkspace({
                                                         ))}
                                                     </div>
                                                     <div className="space-y-4">
-                                                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 font-mono">Rationale // Readout</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#aaa] font-mono">Rationale // Readout</p>
                                                         <textarea
                                                             value={decisionNote}
                                                             onChange={(e) => setDecisionNote(e.target.value)}
                                                             rows={6}
-                                                            className="w-full border border-white/10 bg-transparent p-8 text-[14px] font-mono leading-relaxed text-white outline-none placeholder:text-white/10 focus:border-cyan-400/50 transition-colors uppercase"
+                                                            className="w-full border border-[#d4c9b8] bg-transparent p-8 text-[14px] font-mono leading-relaxed text-[#1a1a1a] outline-none placeholder:text-[#ccc] focus:border-[#D4A574]/50 transition-colors uppercase"
                                                             placeholder="Enter forensic rationale for this decision..."
                                                         />
                                                     </div>
                                                     <button
                                                         onClick={handleLogDecision}
-                                                        className="w-full bg-white text-black py-6 text-[11px] font-black uppercase tracking-[0.5em] transition-all hover:bg-cyan-400 active:scale-[0.98] font-mono"
+                                                        className="w-full bg-white text-black py-6 text-[11px] font-semibold uppercase tracking-[0.5em] transition-all hover:bg-[#D4A574] active:scale-[0.98] font-mono"
                                                     >
                                                         COMMIT TO AUDIT LOG
                                                     </button>
                                                 </div>
                                             </div>
 
-                                            <div className="border border-white/10 bg-white/5 p-12">
+                                            <div className="border border-[#d4c9b8] bg-white p-12">
                                                 <div className="flex items-center justify-between gap-6 mb-10">
-                                                    <p className="text-[11px] font-black uppercase tracking-[0.5em] text-cyan-400 font-mono">Decision Shorthand // Summary</p>
+                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Decision Shorthand // Summary</p>
                                                     <button 
                                                         onClick={() => navigator.clipboard.writeText(decisionSummaryText)}
-                                                        className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30 hover:text-cyan-400 transition-colors font-mono"
+                                                        className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#aaa] hover:text-[#D4A574] transition-colors font-mono"
                                                     >
                                                         COPY_TEXT
                                                     </button>
                                                 </div>
-                                                <div className="border border-white/5 bg-black/60 p-10">
+                                                <div className="border border-[#e8ddd0] bg-white/90 p-10">
                                                     <div className="grid grid-cols-2 gap-10">
                                                         <div>
-                                                            <p className="text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-3 font-mono">Timestamp</p>
-                                                            <p className="text-[12px] font-black text-white/60 uppercase">{decisionSummaryTimestamp}</p>
+                                                            <p className="text-[9px] font-semibold text-[#ccc] uppercase tracking-[0.4em] mb-3 font-mono">Timestamp</p>
+                                                            <p className="text-[12px] font-semibold text-[#1a1a1a]/60 uppercase">{decisionSummaryTimestamp}</p>
                                                         </div>
                                                         <div>
-                                                            <p className="text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-3 font-mono">Verdict</p>
-                                                            <p className="text-[12px] font-black text-cyan-400 uppercase">{decisionVerdict || 'PENDING'}</p>
+                                                            <p className="text-[9px] font-semibold text-[#ccc] uppercase tracking-[0.4em] mb-3 font-mono">Verdict</p>
+                                                            <p className="text-[12px] font-semibold text-[#D4A574] uppercase">{decisionVerdict || 'PENDING'}</p>
                                                         </div>
                                                         <div className="col-span-2">
-                                                            <p className="text-[9px] font-black text-white/10 uppercase tracking-[0.4em] mb-3 font-mono">Operating Status</p>
-                                                            <p className="text-[14px] font-black text-white uppercase tracking-tightest leading-tight">{integratedRecommendation.recommendedDirection}</p>
+                                                            <p className="text-[9px] font-semibold text-[#ccc] uppercase tracking-[0.4em] mb-3 font-mono">Operating Status</p>
+                                                            <p className="text-[14px] font-semibold text-[#1a1a1a] uppercase tracking-tightest leading-tight">{integratedRecommendation.recommendedDirection}</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="border border-white/10 bg-white/5 p-12">
-                                            <p className="text-[11px] font-black uppercase tracking-[0.6em] text-white/20 mb-12 border-b border-white/10 pb-6 font-mono">Decision History</p>
+                                        <div className="border border-[#d4c9b8] bg-white p-12">
+                                            <p className="text-[11px] font-semibold uppercase tracking-[0.6em] text-[#aaa] mb-12 border-b border-[#d4c9b8] pb-6 font-mono">Decision History</p>
                                             <div className="space-y-4 max-h-[800px] overflow-y-auto pr-4 custom-scrollbar">
                                                 {decisionLogEntries.length > 0 ? (
                                                     decisionLogEntries.map((entry) => (
-                                                        <div key={entry.id} className="border border-white/10 bg-black/40 p-10 hover:border-white/20 transition-all">
+                                                        <div key={entry.id} className="border border-[#d4c9b8] bg-white p-10 hover:border-[#c0b5a4] transition-all">
                                                             <div className="flex items-center justify-between mb-8">
-                                                                <span className={`inline-block border px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.3em] font-mono ${
-                                                                    entry.verdict === 'Ship' ? 'border-cyan-400 text-cyan-400 bg-cyan-400/5' : entry.verdict === 'Revise' ? 'border-yellow-400 text-yellow-400 bg-yellow-400/5' : 'border-red-400 text-red-400 bg-red-400/5'
+                                                                <span className={`inline-block border px-4 py-1.5 text-[9px] font-semibold uppercase tracking-[0.3em] font-mono ${
+                                                                    entry.verdict === 'Ship' ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5' : entry.verdict === 'Revise' ? 'border-yellow-400 text-yellow-400 bg-yellow-400/5' : 'border-red-400 text-red-400 bg-red-400/5'
                                                                 }`}>
                                                                     {entry.verdict}
                                                                 </span>
-                                                                <span className="text-[10px] font-black text-white/20 font-mono">
+                                                                <span className="text-[10px] font-semibold text-[#aaa] font-mono">
                                                                     {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} // 
                                                                     {new Date(entry.timestamp).toLocaleDateString([], { day: '2-digit', month: 'short' })}
                                                                 </span>
                                                             </div>
-                                                            <p className="text-[14px] font-black uppercase text-white/70 tracking-tight leading-relaxed font-mono">{entry.rationale}</p>
-                                                            <div className="mt-8 border-t border-white/5 pt-6">
-                                                                <p className="text-[11px] font-black uppercase tracking-widest text-cyan-400/60 font-mono">P1 FIX: {entry.p1Fix}</p>
+                                                            <p className="text-[14px] font-semibold uppercase text-[#444] tracking-tight leading-relaxed font-mono">{entry.rationale}</p>
+                                                            <div className="mt-8 border-t border-[#e8ddd0] pt-6">
+                                                                <p className="text-[11px] font-semibold uppercase tracking-widest text-[#D4A574]/60 font-mono">P1 FIX: {entry.p1Fix}</p>
                                                             </div>
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <div className="border border-dashed border-white/10 bg-black/20 p-20 text-center">
-                                                        <p className="text-[11px] font-black uppercase tracking-[0.5em] text-white/10 font-mono">Log Empty</p>
+                                                    <div className="border border-dashed border-[#d4c9b8] bg-[#faf5ef] p-20 text-center">
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#ccc] font-mono">Log Empty</p>
                                                     </div>
                                                 )}
                                             </div>
@@ -3675,25 +3667,25 @@ export default function AssetWorkspace({
             {showCloneDrawer && (
                 <div className="fixed inset-0 z-[80] no-print">
                     <div
-                        className="absolute inset-0 bg-black/80 backdrop-blur-md"
+                        className="absolute inset-0 bg-white backdrop-blur-md"
                         onClick={() => setShowCloneDrawer(false)}
                     />
-                    <div className="absolute inset-y-0 right-0 w-full max-w-3xl overflow-y-auto border-l border-white/10 bg-[#050505] text-white shadow-[0_0_100px_rgba(0,0,0,1)]">
-                        <div className="sticky top-0 z-10 border-b border-white/10 bg-[#050505]/95 px-8 py-10 backdrop-blur-xl md:px-12">
+                    <div className="absolute inset-y-0 right-0 w-full max-w-3xl overflow-y-auto border-l border-[#d4c9b8] bg-[#faf7f2] text-[#1a1a1a] shadow-2xl">
+                        <div className="sticky top-0 z-10 border-b border-[#d4c9b8] bg-[#faf7f2]/95 px-8 py-10 backdrop-blur-xl md:px-12">
                             <div className="flex items-start justify-between gap-12">
                                 <div>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-400 font-mono">Clone Engine // Vault_Transfer</p>
-                                    <h2 className="mt-6 text-[32px] font-black uppercase tracking-tightest leading-[1.1] text-white md:text-[42px]">
+                                    <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Clone Engine // Vault_Transfer</p>
+                                    <h2 className="mt-6 text-[32px] font-semibold uppercase tracking-tightest leading-[1.1] text-[#1a1a1a] md:text-[42px]">
                                         {cloneIntroLead || 'DNA EXTRACTION'}
                                     </h2>
-                                    <p className="mt-6 max-w-2xl text-[14px] leading-relaxed text-white/50 font-medium uppercase tracking-tight">
+                                    <p className="mt-6 max-w-2xl text-[14px] leading-relaxed text-[#666] font-medium uppercase tracking-tight">
                                         {cloneIntroRemainder ? `${cloneIntroRemainder} ` : ''}
                                         {cloneIntroBody || 'Generate five original campaign concepts that preserve the persuasion architecture.'}
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setShowCloneDrawer(false)}
-                                    className="shrink-0 border border-white/20 bg-white/5 px-6 py-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/50 transition-all hover:border-white hover:text-white font-mono"
+                                    className="shrink-0 border border-[#c0b5a4] bg-white px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#666] transition-all hover:border-white hover:text-[#1a1a1a] font-mono"
                                 >
                                     CLOSE
                                 </button>
@@ -3701,35 +3693,35 @@ export default function AssetWorkspace({
                         </div>
 
                         <div className="px-8 py-12 md:px-12">
-                            <div className="border border-white/10 bg-white/5 p-10 shadow-2xl">
+                            <div className="border border-[#d4c9b8] bg-white p-10 shadow-2xl">
                                 <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
                                     <div>
-                                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono mb-4">Source Asset // Forensic Read</p>
-                                        <p className="text-3xl font-black uppercase tracking-tightest text-white leading-none">{asset?.brand?.name || 'Unknown'}</p>
-                                        <p className="mt-4 text-[11px] font-black uppercase tracking-[0.4em] text-white/30 font-mono">{asset?.brand?.market_sector || 'General'}</p>
+                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono mb-4">Source Asset // Forensic Read</p>
+                                        <p className="text-3xl font-semibold uppercase tracking-tightest text-[#1a1a1a] leading-none">{asset?.brand?.name || 'Unknown'}</p>
+                                        <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#aaa] font-mono">{asset?.brand?.market_sector || 'General'}</p>
                                     </div>
                                     <button
                                         onClick={() => void handleGenerateClone()}
                                         disabled={isGeneratingClone}
-                                        className="h-16 shrink-0 bg-cyan-400 px-10 text-[11px] font-black uppercase tracking-[0.4em] text-black shadow-[0_0_20px_rgba(34,211,238,0.3)] transition-all hover:bg-white hover:scale-105 active:scale-95 disabled:opacity-50"
+                                        className="h-16 shrink-0 bg-[#D4A574] px-10 text-[11px] font-semibold uppercase tracking-[0.4em] text-black shadow-[0_0_15px_rgba(212,165,116,0.2)] transition-all hover:bg-white hover:scale-105 active:scale-95 disabled:opacity-50"
                                     >
                                         {isGeneratingClone ? 'EXTRACTING DNA...' : cloneData ? 'REGENERATE TRACES' : 'INITIATE CLONE'}
                                     </button>
                                 </div>
                                 {cloneError && (
-                                    <p className="mt-8 border border-red-500/30 bg-red-500/5 px-6 py-4 text-[12px] font-black uppercase tracking-widest text-red-400">
+                                    <p className="mt-8 border border-red-500/30 bg-red-500/5 px-6 py-4 text-[12px] font-semibold uppercase tracking-widest text-red-400">
                                         {cloneError}
                                     </p>
                                 )}
                                 {isGeneratingClone && (
-                                    <div className="mt-12 border border-white/10 bg-black/40 p-8">
-                                        <div className="flex items-center justify-between gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 mb-6 font-mono">
+                                    <div className="mt-12 border border-[#d4c9b8] bg-white p-8">
+                                        <div className="flex items-center justify-between gap-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-6 font-mono">
                                             <span>{CLONE_STEPS[cloneStep]}</span>
                                             <span>{cloneProgress}%</span>
                                         </div>
-                                        <div className="h-0.5 w-full bg-white/5">
+                                        <div className="h-0.5 w-full bg-white">
                                             <div
-                                                className="h-full bg-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all duration-700"
+                                                className="h-full bg-[#D4A574] shadow-[0_0_10px_rgba(212,165,116,0.25)] transition-all duration-700"
                                                 style={{ width: `${cloneProgress}%` }}
                                             />
                                         </div>
@@ -3740,37 +3732,37 @@ export default function AssetWorkspace({
                             {cloneData ? (
                                 <div className="mt-12 space-y-8">
                                     <div className="grid gap-4 md:grid-cols-2">
-                                        <div className="border border-white/10 bg-white/5 p-8">
-                                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono mb-4 border-b border-white/5 pb-3">Extracted Mechanism</p>
-                                            <p className="text-[14px] leading-relaxed text-white/70 uppercase font-bold font-mono">{cloneData?.extracted_mechanism}</p>
+                                        <div className="border border-[#d4c9b8] bg-white p-8">
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono mb-4 border-b border-[#e8ddd0] pb-3">Extracted Mechanism</p>
+                                            <p className="text-[14px] leading-relaxed text-[#444] uppercase font-bold font-mono">{cloneData?.extracted_mechanism}</p>
                                         </div>
-                                        <div className="border border-white/10 bg-white/5 p-8">
-                                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono mb-4 border-b border-white/5 pb-3">Deployment Principle</p>
-                                            <p className="text-[14px] leading-relaxed text-white/70 uppercase font-bold font-mono">{cloneData?.deployment_principle}</p>
+                                        <div className="border border-[#d4c9b8] bg-white p-8">
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono mb-4 border-b border-[#e8ddd0] pb-3">Deployment Principle</p>
+                                            <p className="text-[14px] leading-relaxed text-[#444] uppercase font-bold font-mono">{cloneData?.deployment_principle}</p>
                                         </div>
                                     </div>
 
                                     <div className="space-y-8">
                                         {(cloneData?.concepts || []).map((concept, index) => (
-                                            <article key={`${concept.title}-${index}`} className="border border-white/10 bg-white/5 p-10 shadow-2xl transition-all hover:bg-white/[0.07]">
+                                            <article key={`${concept.title}-${index}`} className="border border-[#d4c9b8] bg-white p-10 shadow-2xl transition-all hover:bg-white/[0.07]">
                                                 <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between mb-8">
                                                     <div>
-                                                        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-400 font-mono mb-4">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono mb-4">
                                                             Route Phase // {(concept.concept_id || index + 1).toString().padStart(2, '0')}
                                                         </p>
-                                                        <h3 className="text-[32px] font-black uppercase tracking-tightest text-white leading-none">{concept.title}</h3>
+                                                        <h3 className="text-[32px] font-semibold uppercase tracking-tightest text-[#1a1a1a] leading-none">{concept.title}</h3>
                                                     </div>
                                                     <div className="flex flex-wrap items-center gap-3">
-                                                        <span className="border border-cyan-400/30 bg-cyan-400/10 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.3em] text-cyan-400 font-mono">
+                                                        <span className="border border-[#D4A574]/30 bg-[#D4A574]/10 px-4 py-1.5 text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] font-mono">
                                                             {concept.hook_type}
                                                         </span>
-                                                        <span className="border border-white/10 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.3em] text-white/40 font-mono">
+                                                        <span className="border border-[#d4c9b8] px-4 py-1.5 text-[9px] font-semibold uppercase tracking-[0.3em] text-[#999] font-mono">
                                                             {concept.production_complexity}
                                                         </span>
                                                     </div>
                                                 </div>
 
-                                                <p className="text-[16px] leading-[1.3] text-white/70 font-black uppercase tracking-tight mb-10 border-b border-white/5 pb-8">{concept.logline}</p>
+                                                <p className="text-[16px] leading-[1.3] text-[#444] font-semibold uppercase tracking-tight mb-10 border-b border-[#e8ddd0] pb-8">{concept.logline}</p>
 
                                                 <div className="grid gap-4 md:grid-cols-2">
                                                     {[
@@ -3779,25 +3771,25 @@ export default function AssetWorkspace({
                                                         { label: 'Copy Spine', value: concept.copy_direction },
                                                         { label: 'Technical // Visual', value: concept.casting_direction },
                                                     ].map((item) => (
-                                                        <div key={item.label} className="border border-white/5 bg-black/40 p-6">
-                                                            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-cyan-400 mb-4 font-mono">{item.label}</p>
-                                                            <p className="text-[13px] leading-relaxed text-white/50 uppercase font-medium font-mono">{item.value}</p>
+                                                        <div key={item.label} className="border border-[#e8ddd0] bg-white p-6">
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-4 font-mono">{item.label}</p>
+                                                            <p className="text-[13px] leading-relaxed text-[#666] uppercase font-medium font-mono">{item.value}</p>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                <div className="mt-8 border border-white/10 bg-black/60 p-8">
-                                                    <div className="flex items-center justify-between gap-4 mb-6 border-b border-white/10 pb-4">
-                                                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400 font-mono">Handoff DNA Prompt</p>
+                                                <div className="mt-8 border border-[#d4c9b8] bg-white/90 p-8">
+                                                    <div className="flex items-center justify-between gap-4 mb-6 border-b border-[#d4c9b8] pb-4">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">Handoff DNA Prompt</p>
                                                         <button
                                                             onClick={() => void handleCopyPrompt(concept.dna_prompt, index)}
-                                                            className="flex items-center gap-2 border border-cyan-400/40 px-4 py-1.5 text-[9px] font-black uppercase tracking-[0.3em] text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all font-mono"
+                                                            className="flex items-center gap-2 border border-[#D4A574]/40 px-4 py-1.5 text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] hover:bg-[#D4A574] hover:text-black transition-all font-mono"
                                                         >
                                                             <Copy className="h-3 w-3" />
                                                             {copiedPromptIndex === index ? 'COPIED' : 'COPY'}
                                                         </button>
                                                     </div>
-                                                    <pre className="whitespace-pre-wrap text-[13px] leading-relaxed text-white/30 font-mono selection:bg-cyan-400/30">
+                                                    <pre className="whitespace-pre-wrap text-[13px] leading-relaxed text-[#aaa] font-mono selection:bg-[#D4A574]/30">
                                                         {concept.dna_prompt}
                                                     </pre>
                                                 </div>
@@ -3806,9 +3798,9 @@ export default function AssetWorkspace({
                                     </div>
                                 </div>
                             ) : (
-                                <div className="mt-12 border border-dashed border-white/10 bg-white/[0.02] p-24 text-center">
-                                    <p className="text-[11px] font-black uppercase tracking-[0.6em] text-white/20 font-mono">Engine Standby</p>
-                                    <p className="mt-6 max-w-md mx-auto text-[14px] leading-relaxed text-white/40 font-medium uppercase tracking-tight">
+                                <div className="mt-12 border border-dashed border-[#d4c9b8] bg-white/[0.02] p-24 text-center">
+                                    <p className="text-[11px] font-semibold uppercase tracking-[0.6em] text-[#aaa] font-mono">Engine Standby</p>
+                                    <p className="mt-6 max-w-md mx-auto text-[14px] leading-relaxed text-[#999] font-medium uppercase tracking-tight">
                                         Generate five original campaign routes that preserve the persuasion logic while breaking completely from the incumbent execution.
                                     </p>
                                 </div>
