@@ -2381,7 +2381,7 @@ export default function AssetWorkspace({
                         <div className="flex flex-col items-center justify-center px-[clamp(16px,2vw,32px)] pt-10 pb-8 lg:pt-20">
 
                             <div 
-                                className={`w-full max-w-[520px] aspect-[4/5] relative flex items-center justify-center overflow-hidden rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] group shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75' : ''}`}
+                                className={`w-full max-w-[390px] aspect-[4/5] relative flex items-center justify-center overflow-hidden rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] group shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75' : ''}`}
                                 style={getAssetStyle()}
                             >
                                 {/* Grid HUD Texture */}
@@ -2413,7 +2413,7 @@ export default function AssetWorkspace({
                                 )}
                             </div>
 
-                            <div className={`w-full max-w-[520px] mt-12 ${sampleMode ? '' : 'border-b border-[#d4c9b8]'} pb-8`}>
+                            <div className={`w-full max-w-[390px] mt-12 ${sampleMode ? '' : 'border-b border-[#E7DED1]'} pb-8`}>
                                 <div className="mb-6">
                                     <h1 className={`text-[5vw] lg:text-[4vw] font-semibold tracking-tightest leading-none uppercase mb-2 ${sampleMode ? 'text-[#D4A574]' : 'text-[#1a1a1a]'}`}>{asset.brand?.name}</h1>
                                     <span className={`text-[12px] font-semibold uppercase tracking-[0.5em] ${sampleMode ? 'text-[#D4A574]' : 'text-[#D4A574]'}`}>{asset.brand?.market_sector}</span>
@@ -2856,7 +2856,7 @@ export default function AssetWorkspace({
                                                  <div className="mb-12 flex w-full flex-col gap-10 rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 text-[#1a1a1a] lg:flex-row lg:items-center shadow-xl">
                                                      {/* Left: Primary Mechanic */}
                                                      <div className="flex-1">
-                                                         <div className="mb-8 flex items-center justify-between border-b border-[#d4c9b8] pb-6">
+                                                         <div className="mb-8 flex items-center justify-between border-b border-[#E7DED1] pb-6">
                                                              <div className="flex items-center gap-4">
                                                                  <div className="flex h-6 w-6 items-center justify-center bg-[#D4A574]/10">
                                                                      <div className="h-2 w-2 bg-[#D4A574]" />
@@ -2877,7 +2877,7 @@ export default function AssetWorkspace({
 
                                                      {/* Right: System Confidence */}
                                                       <div className="w-full lg:w-80 flex flex-col h-full">
-                                                          <div className="mb-8 flex items-center justify-between border-b border-[#d4c9b8] pb-6">
+                                                          <div className="mb-8 flex items-center justify-between border-b border-[#E7DED1] pb-6">
                                                               <div className="flex items-center gap-4">
                                                                   <div className="flex h-6 w-6 items-center justify-center bg-[#D4A574]/10 text-[#D4A574]">
                                                                       <Sparkles className="h-4 w-4" />
@@ -2910,7 +2910,7 @@ export default function AssetWorkspace({
 
                                             {/* Visual Style */}
                                             <div className="col-span-1 flex min-h-[120px] flex-col rounded-[2.5rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 text-[#1a1a1a] xl:col-span-2">
-                                                <div className="mb-8 flex items-center justify-between border-b border-[#d4c9b8] pb-4">
+                                                <div className="mb-8 flex items-center justify-between border-b border-[#E7DED1] pb-4">
                                                     <span className="block text-[12px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Synthesized Visual Logic</span>
                                                     <InfoButton section="VISUAL_STYLE" />
                                                 </div>
@@ -2948,7 +2948,7 @@ export default function AssetWorkspace({
 
                                             {/* Color Palette */}
                                             <div className="col-span-1 flex min-h-[120px] flex-col rounded-[2.5rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 text-[#1a1a1a]">
-                                                <div className="mb-8 flex items-center justify-between border-b border-[#d4c9b8] pb-4">
+                                                <div className="mb-8 flex items-center justify-between border-b border-[#E7DED1] pb-4">
                                                     <span className="block text-[12px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Chromatic Register</span>
                                                     <InfoButton section="CHROMATIC_BASE" />
                                                 </div>
@@ -3007,7 +3007,7 @@ export default function AssetWorkspace({
                                         {/* UNIFIED TECHNICAL AUTOPSY CONTAINER */}
                                         <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 space-y-12 text-[#1a1a1a] shadow-xl">
                                             {/* Top: Radiant Architecture Toggle */}
-                                            <div className="flex flex-col gap-10 md:flex-row md:items-center justify-between pb-10 border-b border-[#d4c9b8]">
+                                            <div className="flex flex-col gap-10 md:flex-row md:items-center justify-between pb-10 border-b border-[#E7DED1]">
                                                 <div className="flex items-center gap-8">
                                                     <div className="h-14 w-14 bg-white flex items-center justify-center border border-[#d4c9b8] text-[#D4A574]">
                                                         <Sparkles className="h-6 w-6" />
@@ -3053,7 +3053,7 @@ export default function AssetWorkspace({
                                                         { label: 'Power Holder', value: (extraction.full_dossier as any).gaze_topology.power_holder },
                                                     ].map((item, i) => (
                                                         <div key={i} className="flex min-h-[200px] flex-col justify-between rounded-[2.5rem] border border-[#E7DED1] bg-[#FBF7EF] px-8 py-8 text-[#1a1a1a]">
-                                                            <h3 className="mb-6 w-full border-b border-[#d4c9b8] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                                            <h3 className="mb-6 w-full border-b border-[#E7DED1] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                                 {item.label}
                                                             </h3>
                                                             <div className="flex-1 flex items-center">
@@ -3064,7 +3064,7 @@ export default function AssetWorkspace({
                                                 </div>
 
                                                 <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10">
-                                                    <h3 className="mb-8 border-b border-[#d4c9b8] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                                    <h3 className="mb-8 border-b border-[#E7DED1] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                         Forensic Gaze Diagnostic
                                                     </h3>
                                                     <p className="max-w-[72ch] text-[15px] font-medium leading-relaxed text-[#1a1a1a]/60 uppercase">
@@ -3087,7 +3087,7 @@ export default function AssetWorkspace({
                                                 <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
                                                     {((extraction.full_dossier as any).counter_reading_matrix as { lens: string; reading: string }[]).map((item, i) => (
                                                         <div key={i} className="flex min-h-[220px] flex-col rounded-[2.5rem] border border-[#E7DED1] bg-[#FBF7EF] px-8 py-8 text-[#1a1a1a]">
-                                                            <h3 className="mb-6 w-full border-b border-[#d4c9b8] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                                            <h3 className="mb-6 w-full border-b border-[#E7DED1] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                                 {item.lens}
                                                             </h3>
                                                             <div className="flex-1 max-h-[400px] overflow-y-auto pt-2">
@@ -3121,7 +3121,7 @@ export default function AssetWorkspace({
                                     />
 
                                     <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a] shadow-xl">
-                                        <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 border-b border-[#d4c9b8] pb-4 font-mono">System Boundary // Protocol</p>
+                                        <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 border-b border-[#E7DED1] pb-4 font-mono">System Boundary // Protocol</p>
                                         <p className="max-w-[62ch] text-[24px] font-semibold uppercase leading-tight text-[#444] tracking-tightest">
                                             VD judges, diagnoses, and directs creative quality. Not for asset generation.
                                         </p>
@@ -3152,7 +3152,7 @@ export default function AssetWorkspace({
                                                 key={group.title}
                                                 className={`rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 text-[#1a1a1a] ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
-                                                <p className={`text-[11px] font-semibold uppercase tracking-[0.5em] mb-12 border-b border-[#d4c9b8] pb-6 font-mono ${group.accent}`}>{group.title}</p>
+                                                <p className={`text-[11px] font-semibold uppercase tracking-[0.5em] mb-12 border-b border-[#E7DED1] pb-6 font-mono ${group.accent}`}>{group.title}</p>
                                                 <div className="space-y-4">
                                                     {group.items.length > 0 ? (
                                                         group.items.map((item, id) => (
@@ -3269,7 +3269,7 @@ export default function AssetWorkspace({
                                     />
                                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                                         <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a] shadow-xl">
-                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#d4c9b8] pb-8 font-mono">Archetype Diagnostic // Status</h3>
+                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#E7DED1] pb-8 font-mono">Archetype Diagnostic // Status</h3>
                                             <p className="text-[42px] font-semibold uppercase tracking-tightest leading-tight text-[#1a1a1a] mb-12">
                                                 {extraction?.full_dossier?.archetype_mapping?.target_posture || 'POSTURE_RECONSTRUCTING'}
                                             </p>
@@ -3282,7 +3282,7 @@ export default function AssetWorkspace({
                                         </div>
 
                                         <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a]">
-                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#d4c9b8] pb-8 font-mono">Emotional Trigger Scale</h3>
+                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#E7DED1] pb-8 font-mono">Emotional Trigger Scale</h3>
                                             <div className="space-y-12">
                                                 {Object.entries((extraction?.full_dossier?.archetype_mapping as any)?.trigger_distribution || {}).length > 0 ? (
                                                     Object.entries((extraction?.full_dossier?.archetype_mapping as any)?.trigger_distribution || {}).map(([key, val]) => (
@@ -3310,7 +3310,7 @@ export default function AssetWorkspace({
                                         </div>
 
                                         <div className="md:col-span-2 rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a] shadow-2xl">
-                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#d4c9b8] pb-8 font-mono">Strategic Tactical Calibration</h3>
+                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#E7DED1] pb-8 font-mono">Strategic Tactical Calibration</h3>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                 {(extraction?.full_dossier?.archetype_mapping?.strategic_moves || []).length > 0 ? (
                                                     (extraction?.full_dossier?.archetype_mapping?.strategic_moves || []).map((move, i) => (
@@ -3393,7 +3393,7 @@ export default function AssetWorkspace({
 
                                             <div className="grid grid-cols-1 gap-12">
                                                 <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a] shadow-xl">
-                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-10 border-b border-[#d4c9b8] pb-6 font-mono">Handoff Logic // Reconstruction</p>
+                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-10 border-b border-[#E7DED1] pb-6 font-mono">Handoff Logic // Reconstruction</p>
                                                     <div className="rounded-[2.75rem] border border-[#E7DED1] bg-white/60 p-10 shadow-inner">
                                                         <pre className="whitespace-pre-wrap text-[14px] font-mono leading-relaxed text-[#aaa] selection:bg-[#D4A574]/30">
                                                             {blueprintData.verified_dna_prompt}
@@ -3403,11 +3403,11 @@ export default function AssetWorkspace({
 
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                     <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-8 border-b border-[#d4c9b8] pb-4 font-mono">Primary Trigger</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-8 border-b border-[#E7DED1] pb-4 font-mono">Primary Trigger</p>
                                                         <p className="text-[20px] font-semibold uppercase leading-tight text-[#1a1a1a] tracking-tightest">{blueprintData.execution_constraints?.primary_trigger}</p>
                                                     </div>
                                                     <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 font-mono">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#999] mb-8 border-b border-[#d4c9b8] pb-4">Aesthetic Architecture</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#999] mb-8 border-b border-[#E7DED1] pb-4">Aesthetic Architecture</p>
                                                         <p className="text-[12px] font-semibold uppercase leading-relaxed text-[#1a1a1a]/60 tracking-widest">{blueprintData.technical_specs?.lighting_architecture}</p>
                                                     </div>
                                                 </div>
@@ -3477,7 +3477,7 @@ export default function AssetWorkspace({
                                                         <div className="grid grid-cols-1 gap-10">
                                                             {blueprintData.visual_variant_prompts.map((variant: any, i: number) => (
                                                                 <div key={i} className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 transition-all hover:bg-white/[0.07] shadow-3xl">
-                                                                    <div className="flex items-center justify-between mb-8 border-b border-[#d4c9b8] pb-6">
+                                                                    <div className="flex items-center justify-between mb-8 border-b border-[#E7DED1] pb-6">
                                                                         <span className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">{variant.concept}</span>
                                                                         <span className="text-[10px] font-semibold text-[#ccc] font-mono tracking-widest uppercase">Variant_Trace_0{i+1}</span>
                                                                     </div>
@@ -3507,7 +3507,7 @@ export default function AssetWorkspace({
                                         intro="Experimental stress testing across key creative variables to measure response variance and structural durability."
                                     />
                                     <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] overflow-hidden shadow-3xl">
-                                        <div className="grid grid-cols-4 border-b border-[#d4c9b8] bg-white text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">
+                                        <div className="grid grid-cols-4 border-b border-[#E7DED1] bg-white text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">
                                             <div className="px-10 py-6 border-r border-[#d4c9b8]">Variable</div>
                                             <div className="px-10 py-6 border-r border-[#d4c9b8] text-center">Baseline</div>
                                             <div className="px-10 py-6 border-r border-[#d4c9b8] text-center">Predicted_Lift</div>
@@ -3557,7 +3557,7 @@ export default function AssetWorkspace({
                                     <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
                                         <div className="space-y-4">
                                             <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 shadow-2xl">
-                                                <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10 border-b border-[#d4c9b8] pb-6 font-mono">Capture Decision // Active_Entry</p>
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10 border-b border-[#E7DED1] pb-6 font-mono">Capture Decision // Active_Entry</p>
                                                 <div className="space-y-8">
                                                     <div className="grid grid-cols-3 gap-4">
                                                         {(['Ship', 'Revise', 'Kill'] as const).map((v) => (
@@ -3623,7 +3623,7 @@ export default function AssetWorkspace({
                                         </div>
 
                                         <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12">
-                                            <p className="text-[11px] font-semibold uppercase tracking-[0.6em] text-[#aaa] mb-12 border-b border-[#d4c9b8] pb-6 font-mono">Decision History</p>
+                                            <p className="text-[11px] font-semibold uppercase tracking-[0.6em] text-[#aaa] mb-12 border-b border-[#E7DED1] pb-6 font-mono">Decision History</p>
                                             <div className="space-y-4 max-h-[800px] overflow-y-auto pr-4 custom-scrollbar">
                                                 {decisionLogEntries.length > 0 ? (
                                                     decisionLogEntries.map((entry) => (
@@ -3671,7 +3671,7 @@ export default function AssetWorkspace({
                         onClick={() => setShowCloneDrawer(false)}
                     />
                     <div className="absolute inset-y-0 right-0 w-full max-w-3xl overflow-y-auto border-l border-[#d4c9b8] bg-[#faf7f2] text-[#1a1a1a] shadow-2xl">
-                        <div className="sticky top-0 z-10 border-b border-[#d4c9b8] bg-[#faf7f2]/95 px-8 py-10 backdrop-blur-xl md:px-12">
+                        <div className="sticky top-0 z-10 border-b border-[#E7DED1] bg-[#faf7f2]/95 px-8 py-10 backdrop-blur-xl md:px-12">
                             <div className="flex items-start justify-between gap-12">
                                 <div>
                                     <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Clone Engine // Vault_Transfer</p>
@@ -3779,7 +3779,7 @@ export default function AssetWorkspace({
                                                 </div>
 
                                                 <div className="mt-8 rounded-[2.5rem] border border-[#E7DED1] bg-white/60 p-8">
-                                                    <div className="flex items-center justify-between gap-4 mb-6 border-b border-[#d4c9b8] pb-4">
+                                                    <div className="flex items-center justify-between gap-4 mb-6 border-b border-[#E7DED1] pb-4">
                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">Handoff DNA Prompt</p>
                                                         <button
                                                             onClick={() => void handleCopyPrompt(concept.dna_prompt, index)}
