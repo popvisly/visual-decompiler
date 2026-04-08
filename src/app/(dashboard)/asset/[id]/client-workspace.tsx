@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
 import posthog from 'posthog-js';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
@@ -14,6 +14,54 @@ import AddToBoard from '@/components/AddToBoard';
 import AssetTagEditor from '@/components/AssetTagEditor';
 import DossierDecisionSummary from '@/components/DossierDecisionSummary';
 import WorkspaceTabHeader from '@/components/WorkspaceTabHeader';
+
+
+type CountUpPercentProps = {
+    value: number | null | undefined;
+    className?: string;
+    decimals?: 0 | 1 | 2;
+    delayMs?: number;
+};
+
+function CountUpPercent({ value, className, decimals = 0, delayMs = 200 }: CountUpPercentProps) {
+    const ref = useRef<HTMLSpanElement>(null);
+    const inView = useInView(ref, { once: true, amount: 0.6 });
+    const startedRef = useRef(false);
+
+    const motionValue = useMotionValue(0);
+    const spring = useSpring(motionValue, { stiffness: 70, damping: 18, mass: 0.7 });
+    const [display, setDisplay] = useState(0);
+
+    useEffect(() => {
+        return spring.on('change', (latest) => {
+            const next = decimals === 0 ? Math.round(latest) : decimals == 1 ? Math.round(latest * 10) / 10 : Math.round(latest * 100) / 100;
+            setDisplay(next);
+        });
+    }, [spring, decimals]);
+
+    useEffect(() => {
+        if (!inView) return;
+        if (startedRef.current) return;
+        if (typeof value !== 'number' || !Number.isFinite(value)) return;
+
+        startedRef.current = true;
+        const target = Math.max(0, Math.min(100, value));
+
+        // Small delay so the card settles before the number runs.
+        const t = setTimeout(() => {
+            motionValue.set(0);
+            motionValue.set(target);
+        }, delayMs);
+
+        return () => clearTimeout(t);
+    }, [inView, value, delayMs, motionValue]);
+
+    return (
+        <span ref={ref} className={className}>
+            {typeof value === 'number' && Number.isFinite(value) ? display : '—'}
+        </span>
+    );
+}
 
 interface CloneConcept {
     concept_id?: number;
@@ -3569,14 +3617,23 @@ export default function AssetWorkspace({
                                                     </p>
                                                 </div>
                                                 <div className="text-[56px] font-semibold tracking-tighter text-[#D4A574]">
-                                                    {typeof persuasionDensity === 'number' ? Math.round(persuasionDensity) : '—'}%
+                                                    {typeof persuasionDensity === 'number' ? (
+                                                        <>
+                                                            <CountUpPercent value={Math.round(persuasionDensity)} />%
+                                                        </>
+                                                    ) : (
+                                                        '—'
+                                                    )}
                                                 </div>
                                             </div>
 
                                             <div className="mt-10 h-2 w-full rounded-full bg-white/10 overflow-hidden">
-                                                <div
+                                                <motion.div
                                                     className="h-full bg-[#D4A574] shadow-[0_0_16px_rgba(212,165,116,0.25)]"
-                                                    style={{ width: `${typeof persuasionDensity === 'number' ? Math.max(0, Math.min(100, Math.round(persuasionDensity))) : 0}%` }}
+                                                    initial={{ width: 0 }}
+                                                    whileInView={{ width: `${typeof persuasionDensity === 'number' ? Math.max(0, Math.min(100, Math.round(persuasionDensity))) : 0}%` }}
+                                                    viewport={{ once: true, amount: 0.6 }}
+                                                    transition={{ duration: 1.3, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
                                                 />
                                             </div>
                                         </div>
