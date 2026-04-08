@@ -2914,7 +2914,7 @@ export default function AssetWorkspace({
                                         {extraction.primary_mechanic && extraction.full_dossier && (
                                              <>
                                                  {/* Unified Primary Intelligence Metric - REFINED SCALE */}
-                                                 <div className="mb-12 grid w-full grid-cols-1 gap-10 rounded-[2.75rem] border border-[rgba(255,255,255,0.08)] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-xl xl:grid-cols-[minmax(0,1fr)_18rem] xl:items-start">
+                                                 <div className="mb-12 grid w-full grid-cols-1 gap-10 rounded-[2.75rem] border border-[rgba(255,255,255,0.08)] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-xl xl:grid-cols-[minmax(0,1fr)_16rem] xl:items-start">
                                                      {/* Left: Primary Mechanic */}
                                                      <div className="flex-1">
                                                          <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6">
@@ -2927,7 +2927,7 @@ export default function AssetWorkspace({
                                                              <InfoButton section="PRIMARY_MECHANIC" />
                                                          </div>
                                                          <div>
-                                                            <h2 className="border-l-[3px] border-[#D4A574] py-2 pl-8 text-[32px] lg:text-[36px] xl:text-[42px] font-semibold leading-none tracking-tightest text-[#F3F1ED] uppercase selection:bg-[#D4A574]/20">
+                                                            <h2 className="border-l-[3px] border-[#D4A574] py-2 pl-8 text-[24px] sm:text-[28px] lg:text-[32px] xl:text-[34px] 2xl:text-[38px] font-semibold leading-[0.95] tracking-tightest text-balance text-[#F3F1ED] uppercase selection:bg-[#D4A574]/20">
                                                                 {extraction.primary_mechanic}
                                                             </h2>
                                                          </div>
@@ -2936,27 +2936,31 @@ export default function AssetWorkspace({
                                                      {/* Vertical Divider (Desktop Only) */}
                                                      <div className="hidden" />
 
-                                                     {/* Right: System Confidence */}
-                                                      <div className="w-full xl:w-72 flex flex-col h-full">
-                                                          <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6">
-                                                              <div className="flex items-center gap-4">
-                                                                  <div className="flex h-6 w-6 items-center justify-center bg-[#D4A574]/10 text-[#D4A574]">
-                                                                      <Sparkles className="h-4 w-4" />
-                                                                  </div>
-                                                                  <span className="block text-[11px] font-semibold uppercase tracking-[0.3em] text-[#F3F1ED]">System Confidence</span>
-                                                              </div>
-                                                              <InfoButton section="SYSTEM_CONFIDENCE" />
-                                                          </div>
-                                                          <div className="flex flex-col gap-6">
-                                                              <div className="flex items-baseline gap-2 text-7xl font-semibold tracking-tighter text-[#F3F1ED]">
-                                                                  {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}
-                                                                  <span className="text-[20px] text-[#D4A574] font-semibold uppercase tracking-widest">/100</span>
-                                                              </div>
-                                                              <p className="text-[12px] leading-relaxed text-[#F3F1ED]/55 uppercase font-medium">
-                                                                  Weighted validation based on semiotic signal strength.
-                                                              </p>
-                                                          </div>
-                                                      </div>
+                                                     {/* Right: System Confidence (separate card) */}
+                                                     <div className="w-full">
+                                                         <div className="h-fit rounded-[2.5rem] border border-white/10 bg-[#151310] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.25)]">
+                                                             <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6">
+                                                                 <div className="flex items-center gap-4">
+                                                                     <div className="flex h-6 w-6 items-center justify-center bg-[#D4A574]/10 text-[#D4A574]">
+                                                                         <Sparkles className="h-4 w-4" />
+                                                                     </div>
+                                                                     <span className="block text-[11px] font-semibold uppercase tracking-[0.3em] text-[#F3F1ED]">System Confidence</span>
+                                                                 </div>
+                                                                 <InfoButton section="SYSTEM_CONFIDENCE" />
+                                                             </div>
+                                                             <div className="flex flex-col gap-8">
+                                                                 <div className="flex items-baseline gap-3">
+                                                                     <span className="text-6xl font-semibold tracking-tighter text-[#F3F1ED]">
+                                                                         {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}
+                                                                     </span>
+                                                                     <span className="text-[18px] text-[#D4A574] font-semibold uppercase tracking-widest">/100</span>
+                                                                 </div>
+                                                                 <p className="max-w-[34ch] text-[12px] leading-relaxed text-[#F3F1ED]/55 uppercase font-medium">
+                                                                     Weighted validation based on semiotic signal strength.
+                                                                 </p>
+                                                             </div>
+                                                         </div>
+                                                     </div>
                                                  </div>
 
                                             </>
