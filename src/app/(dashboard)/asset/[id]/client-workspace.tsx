@@ -3332,63 +3332,225 @@ export default function AssetWorkspace({
                                         title="Semiotic Channel Interceptions"
                                         intro="How the asset encodes meaning, identity cues, and emotional triggers to shape perception and decision momentum."
                                     />
-                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                        <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a] shadow-xl">
-                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#E7DED1] pb-8 font-mono">Archetype Diagnostic // Status</h3>
-                                            <p className="text-[42px] font-semibold uppercase tracking-tightest leading-tight text-[#1a1a1a] mb-12">
-                                                {extraction?.full_dossier?.archetype_mapping?.target_posture || 'POSTURE_RECONSTRUCTING'}
+                                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                                        {/* Trigger Distribution Map */}
+                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-8">
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Trigger Distribution Map</p>
+                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Surface_Area</span>
+                                            </div>
+
+                                            <div className="flex items-center justify-center">
+                                                {(() => {
+                                                    const axes = [
+                                                        { key: 'STATUS', label: 'STATUS' },
+                                                        { key: 'SOCIAL PROOF', label: 'SOCIAL\nPROOF' },
+                                                        { key: 'AUTHORITY', label: 'AUTHORITY' },
+                                                        { key: 'SCARCITY', label: 'SCARCITY' },
+                                                        { key: 'UTILITY', label: 'UTILITY' },
+                                                    ];
+
+                                                    const dist = ((dossier as any)?.archetype_mapping?.trigger_distribution || {}) as Record<string, any>;
+                                                    const byKey = new Map<string, number>();
+                                                    Object.entries(dist).forEach(([k, v]) => {
+                                                        const n = typeof v === 'number' ? v : Number(v);
+                                                        if (!Number.isFinite(n)) return;
+                                                        byKey.set(String(k).trim().toUpperCase(), n);
+                                                    });
+
+                                                    const getVal = (k: string) => {
+                                                        const v = byKey.get(k);
+                                                        const n = typeof v === 'number' ? v : 0;
+                                                        return Math.max(0, Math.min(100, n));
+                                                    };
+
+                                                    const size = 280;
+                                                    const cx = size / 2;
+                                                    const cy = size / 2;
+                                                    const r = 92;
+                                                    const ringCount = 4;
+                                                    const angle0 = -Math.PI / 2;
+
+                                                    const polar = (i: number, radius: number) => {
+                                                        const theta = angle0 + (i * (Math.PI * 2)) / axes.length;
+                                                        return [cx + Math.cos(theta) * radius, cy + Math.sin(theta) * radius] as const;
+                                                    };
+
+                                                    const points = axes
+                                                        .map((a, i) => {
+                                                            const v = getVal(a.key);
+                                                            const radius = (v / 100) * r;
+                                                            const [x, y] = polar(i, radius);
+                                                            return `${x.toFixed(2)},${y.toFixed(2)}`;
+                                                        })
+                                                        .join(' ');
+
+                                                    const rings = Array.from({ length: ringCount }, (_, ri) => {
+                                                        const rr = ((ri + 1) / ringCount) * r;
+                                                        const ringPoints = axes
+                                                            .map((_, i) => {
+                                                                const [x, y] = polar(i, rr);
+                                                                return `${x.toFixed(2)},${y.toFixed(2)}`;
+                                                            })
+                                                            .join(' ');
+                                                        return <polygon key={ri} points={ringPoints} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />;
+                                                    });
+
+                                                    const spokes = axes.map((_, i) => {
+                                                        const [x, y] = polar(i, r);
+                                                        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="rgba(255,255,255,0.08)" strokeWidth="1" />;
+                                                    });
+
+                                                    const labels = axes.map((a, i) => {
+                                                        const [x, y] = polar(i, r + 38);
+                                                        const lines = a.label.split('\n');
+                                                        return (
+                                                            <g key={a.key} transform={`translate(${x},${y})`}>
+                                                                {lines.map((t, li) => (
+                                                                    <text
+                                                                        key={li}
+                                                                        x={0}
+                                                                        y={li * 14}
+                                                                        textAnchor="middle"
+                                                                        fontSize={10}
+                                                                        fontWeight={600}
+                                                                        letterSpacing={3}
+                                                                        fill="rgba(212,165,116,0.75)"
+                                                                    >
+                                                                        {t}
+                                                                    </text>
+                                                                ))}
+                                                            </g>
+                                                        );
+                                                    });
+
+                                                    return (
+                                                        <svg width="280" height="280" viewBox={`0 0 ${size} ${size}`}>
+                                                            <defs>
+                                                                <radialGradient id="vdRadarGlow" cx="50%" cy="50%" r="60%">
+                                                                    <stop offset="0%" stopColor="rgba(212,165,116,0.25)" />
+                                                                    <stop offset="100%" stopColor="rgba(212,165,116,0)" />
+                                                                </radialGradient>
+                                                            </defs>
+                                                            <circle cx={cx} cy={cy} r={r + 18} fill="url(#vdRadarGlow)" />
+                                                            {rings}
+                                                            {spokes}
+                                                            <polygon points={points} fill="rgba(212,165,116,0.12)" stroke="#D4A574" strokeWidth="1.5" />
+                                                            {axes.map((a, i) => {
+                                                                const v = getVal(a.key);
+                                                                const [x, y] = polar(i, (v / 100) * r);
+                                                                return <circle key={a.key} cx={x} cy={y} r={3.2} fill="#F3F1ED" stroke="#D4A574" strokeWidth={1} />;
+                                                            })}
+                                                            {labels}
+                                                        </svg>
+                                                    );
+                                                })()}
+                                            </div>
+
+                                            <p className="mt-10 text-[13px] leading-relaxed text-[#D6D0C6]/65">
+                                                This distribution quantifies the creative's psychological surface area, identifying which aspiration levers are being engaged to command consumer compliance.
                                             </p>
-                                            <div className="border-t border-[#E7DED1] pt-12">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574]/60 mb-6 font-mono">Dismantling Matrix</p>
-                                                <p className="text-[14px] leading-relaxed text-[#666] uppercase font-semibold tracking-widest">
-                                                    {extraction?.full_dossier?.objection_dismantling || 'System is currently reconstructing the objection dismantling matrix.'}
-                                                </p>
+                                        </div>
+
+                                        {/* Strategic Posture */}
+                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-8">
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Strategic Posture</p>
+                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Field_Map</span>
+                                            </div>
+
+                                            <p className="text-[14px] leading-relaxed text-[#D6D0C6]/75">
+                                                {firstSentence((dossier as any)?.archetype_mapping?.target_posture) || 'Icon Maintenance — the brand is not challenging for position or disrupting the category; it is asserting the permanence of an already-won cultural throne'}
+                                            </p>
+
+                                            <div className="mt-10 flex items-center justify-center">
+                                                {(() => {
+                                                    const size = 280;
+                                                    const cx = size / 2;
+                                                    const cy = size / 2;
+                                                    const r1 = 92;
+                                                    const r2 = 60;
+                                                    const r3 = 28;
+
+                                                    // Optional coordinates: { dominance: -1..1, emotional: -1..1 }
+                                                    const coords = ((dossier as any)?.archetype_mapping?.posture_coordinates || null) as any;
+                                                    const dx = typeof coords?.dominance === 'number' ? Math.max(-1, Math.min(1, coords.dominance)) : 0.15;
+                                                    const dy = typeof coords?.emotional === 'number' ? Math.max(-1, Math.min(1, coords.emotional)) : 0.18;
+                                                    const px = cx + dx * 62;
+                                                    const py = cy - dy * 62;
+
+                                                    return (
+                                                        <svg width="280" height="280" viewBox={`0 0 ${size} ${size}`}>
+                                                            <circle cx={cx} cy={cy} r={r1} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+                                                            <circle cx={cx} cy={cy} r={r2} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                                                            <circle cx={cx} cy={cy} r={r3} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                                                            <line x1={cx - r1} y1={cy} x2={cx + r1} y2={cy} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                                                            <line x1={cx} y1={cy - r1} x2={cx} y2={cy + r1} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+
+                                                            <circle cx={px} cy={py} r={5} fill="#D4A574" />
+                                                            <circle cx={px} cy={py} r={14} fill="rgba(212,165,116,0.12)" />
+
+                                                            <text x={cx} y={cy - r1 - 18} textAnchor="middle" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">EMOTIONAL</text>
+                                                            <text x={cx} y={cy + r1 + 28} textAnchor="middle" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">RATIONAL</text>
+                                                            <text x={cx - r1 - 34} y={cy + 4} textAnchor="start" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">SUBMISSION</text>
+                                                            <text x={cx + r1 + 34} y={cy + 4} textAnchor="end" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">DOMINANCE</text>
+                                                        </svg>
+                                                    );
+                                                })()}
                                             </div>
                                         </div>
 
-                                        <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a]">
-                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#E7DED1] pb-8 font-mono">Emotional Trigger Scale</h3>
-                                            <div className="space-y-12">
-                                                {Object.entries((extraction?.full_dossier?.archetype_mapping as any)?.trigger_distribution || {}).length > 0 ? (
-                                                    Object.entries((extraction?.full_dossier?.archetype_mapping as any)?.trigger_distribution || {}).map(([key, val]) => (
-                                                        <div key={key} className="group">
-                                                            <div className="flex justify-between text-[11px] font-semibold uppercase tracking-[0.4em] mb-6 font-mono">
-                                                                <span className="text-[#999] group-hover:text-[#1a1a1a] transition-colors">{key}</span>
-                                                                <span className="text-[#D4A574]">{String(val)}.0%</span>
-                                                            </div>
-                                                            <div className="h-[2px] w-full bg-white">
-                                                                <motion.div 
-                                                                    initial={{ width: 0 }}
-                                                                    animate={{ width: `${Number(val)}%` }}
-                                                                    transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
-                                                                    className="h-full bg-[#D4A574] shadow-[0_0_10px_rgba(212,165,116,0.25)]" 
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    ))
-                                                ) : (
-                                                    <div className="py-20 text-center border border-dashed border-[#e8ddd0] bg-white text-[10px] uppercase tracking-[0.4em] text-[#aaa] font-mono">
-                                                        Trigger distribution offline.
-                                                    </div>
-                                                )}
+                                        {/* Persuasion Density */}
+                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-8">
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Persuasion Density</p>
+                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Compression</span>
+                                            </div>
+
+                                            <div className="flex items-end justify-between gap-10">
+                                                <div>
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55 font-mono">Conversion Density</p>
+                                                    <p className="mt-5 text-[12px] leading-relaxed text-[#D6D0C6]/55 max-w-[46ch]">
+                                                        Measures the creative's informational compression, how efficiently it transfers brand signal into consumer memory structures.
+                                                    </p>
+                                                </div>
+                                                <div className="text-[56px] font-semibold tracking-tighter text-[#D4A574]">
+                                                    {typeof persuasionDensity === 'number' ? Math.round(persuasionDensity) : '—'}%
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-10 h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                                                <div
+                                                    className="h-full bg-[#D4A574] shadow-[0_0_16px_rgba(212,165,116,0.25)]"
+                                                    style={{ width: `${typeof persuasionDensity === 'number' ? Math.max(0, Math.min(100, Math.round(persuasionDensity))) : 0}%` }}
+                                                />
                                             </div>
                                         </div>
 
-                                        <div className="md:col-span-2 rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a] shadow-2xl">
-                                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-12 border-b border-[#E7DED1] pb-8 font-mono">Strategic Tactical Calibration</h3>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                                {(extraction?.full_dossier?.archetype_mapping?.strategic_moves || []).length > 0 ? (
-                                                    (extraction?.full_dossier?.archetype_mapping?.strategic_moves || []).map((move, i) => (
-                                                        <div key={i} className="flex gap-12 p-10 rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] group hover:border-[#D4A574]/40 transition-all shadow-xl">
-                                                            <div className="text-[48px] font-semibold text-[#d4d4d4] group-hover:text-[#D4A574]/10 transition-colors font-mono leading-none">0{i+1}</div>
-                                                            <p className="text-[16px] font-semibold leading-relaxed text-[#1a1a1a]/80 uppercase tracking-tightest">{String(move)}</p>
-                                                        </div>
-                                                    ))
-                                                ) : (
-                                                    <div className="col-span-2 py-20 text-center border border-dashed border-[#e8ddd0] bg-white text-[10px] uppercase tracking-[0.4em] text-[#aaa] font-mono">
-                                                        Moves indexing in progress.
-                                                    </div>
-                                                )}
+                                        {/* Cognitive Friction */}
+                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-8">
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Cognitive Friction</p>
+                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Resistance</span>
+                                            </div>
+
+                                            <div className="flex items-end justify-between gap-10">
+                                                <div>
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55 font-mono">Resistance Index</p>
+                                                    <p className="mt-5 text-[12px] leading-relaxed text-[#D6D0C6]/55 max-w-[46ch]">
+                                                        Quantifies neural resistance to message adoption. Low scores indicate frictionless persuasion pathways.
+                                                    </p>
+                                                </div>
+                                                <div className="text-[56px] font-semibold tracking-tighter text-[#D4A574]">
+                                                    {typeof frictionScore === 'number' ? Math.round(frictionScore) : '—'}%
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-10 h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                                                <div
+                                                    className="h-full bg-[#D4A574] shadow-[0_0_16px_rgba(212,165,116,0.25)]"
+                                                    style={{ width: `${typeof frictionScore === 'number' ? Math.max(0, Math.min(100, Math.round(frictionScore))) : 0}%` }}
+                                                />
                                             </div>
                                         </div>
                                     </div>
