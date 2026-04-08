@@ -3628,12 +3628,9 @@ export default function AssetWorkspace({
                                             </div>
 
                                             <div className="mt-10 h-2 w-full rounded-full bg-white/10 overflow-hidden">
-                                                <motion.div
+                                                <div
                                                     className="h-full bg-[#D4A574] shadow-[0_0_16px_rgba(212,165,116,0.25)]"
-                                                    initial={{ width: 0 }}
-                                                    whileInView={{ width: `${typeof persuasionDensity === 'number' ? Math.max(0, Math.min(100, Math.round(persuasionDensity))) : 0}%` }}
-                                                    viewport={{ once: true, amount: 0.6 }}
-                                                    transition={{ duration: 1.3, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                                                    style={{ width: `${typeof persuasionDensity === 'number' ? Math.max(0, Math.min(100, Math.round(persuasionDensity))) : 0}%` }}
                                                 />
                                             </div>
                                         </div>
