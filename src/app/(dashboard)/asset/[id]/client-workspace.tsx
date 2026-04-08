@@ -3424,25 +3424,79 @@ export default function AssetWorkspace({
                                                         );
                                                     });
 
+                                                    const dotTargets = axes.map((a, i) => {
+                                                        const v = getVal(a.key);
+                                                        const [x, y] = polar(i, (v / 100) * r);
+                                                        return { key: a.key, x, y, delay: 0.35 + i * 0.08 };
+                                                    });
+
                                                     return (
-                                                        <svg width="280" height="280" viewBox={`0 0 ${size} ${size}`}>
+                                                        <motion.svg width="280" height="280" viewBox={`0 0 ${size} ${size}`}>
                                                             <defs>
                                                                 <radialGradient id="vdRadarGlow" cx="50%" cy="50%" r="60%">
                                                                     <stop offset="0%" stopColor="rgba(212,165,116,0.25)" />
                                                                     <stop offset="100%" stopColor="rgba(212,165,116,0)" />
                                                                 </radialGradient>
                                                             </defs>
-                                                            <circle cx={cx} cy={cy} r={r + 18} fill="url(#vdRadarGlow)" />
-                                                            {rings}
-                                                            {spokes}
-                                                            <polygon points={points} fill="rgba(212,165,116,0.12)" stroke="#D4A574" strokeWidth="1.5" />
-                                                            {axes.map((a, i) => {
-                                                                const v = getVal(a.key);
-                                                                const [x, y] = polar(i, (v / 100) * r);
-                                                                return <circle key={a.key} cx={x} cy={y} r={3.2} fill="#F3F1ED" stroke="#D4A574" strokeWidth={1} />;
-                                                            })}
-                                                            {labels}
-                                                        </svg>
+
+                                                            <motion.circle
+                                                                cx={cx}
+                                                                cy={cy}
+                                                                r={r + 18}
+                                                                fill="url(#vdRadarGlow)"
+                                                                initial={{ opacity: 0 }}
+                                                                whileInView={{ opacity: 1 }}
+                                                                viewport={{ once: true, amount: 0.6 }}
+                                                                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                                                            />
+
+                                                            <motion.g
+                                                                initial={{ opacity: 0 }}
+                                                                whileInView={{ opacity: 1 }}
+                                                                viewport={{ once: true, amount: 0.6 }}
+                                                                transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                                                            >
+                                                                {rings}
+                                                                {spokes}
+                                                            </motion.g>
+
+                                                            <motion.polygon
+                                                                points={points}
+                                                                fill="rgba(212,165,116,0.12)"
+                                                                stroke="#D4A574"
+                                                                strokeWidth="1.5"
+                                                                pathLength={1}
+                                                                initial={{ pathLength: 0, opacity: 0 }}
+                                                                whileInView={{ pathLength: 1, opacity: 1 }}
+                                                                viewport={{ once: true, amount: 0.6 }}
+                                                                transition={{ duration: 1.25, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                                                            />
+
+                                                            {dotTargets.map((d) => (
+                                                                <motion.circle
+                                                                    key={d.key}
+                                                                    cx={cx}
+                                                                    cy={cy}
+                                                                    r={3.2}
+                                                                    fill="#F3F1ED"
+                                                                    stroke="#D4A574"
+                                                                    strokeWidth={1}
+                                                                    initial={{ cx, cy, opacity: 0 }}
+                                                                    whileInView={{ cx: d.x, cy: d.y, opacity: 1 }}
+                                                                    viewport={{ once: true, amount: 0.6 }}
+                                                                    transition={{ duration: 1.2, delay: d.delay, ease: [0.16, 1, 0.3, 1] }}
+                                                                />
+                                                            ))}
+
+                                                            <motion.g
+                                                                initial={{ opacity: 0 }}
+                                                                whileInView={{ opacity: 1 }}
+                                                                viewport={{ once: true, amount: 0.6 }}
+                                                                transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                                                            >
+                                                                {labels}
+                                                            </motion.g>
+                                                        </motion.svg>
                                                     );
                                                 })()}
                                             </div>
