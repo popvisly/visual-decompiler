@@ -2769,10 +2769,10 @@ export default function AssetWorkspace({
 
                                         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
                                             <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.46em] text-[#9B8662] mb-10 [word-spacing:0.24em]">Integrated Strategic Recommendation</p>
-                                                <p className="max-w-[56ch] text-[22px] lg:text-[28px] leading-[1.2] font-semibold tracking-tightest text-[#141414] mb-8">{integratedRecommendation.thesis}</p>
-                                                <p className="max-w-[58ch] text-[15px] leading-relaxed text-[#666] mb-10 font-medium">{integratedRecommendation.whyNow}</p>
-                                                <div className="rounded-[2.25rem] border border-[#D4A574]/20 bg-white/55 p-6 mb-10">
+                                                <p className="text-[10px] font-semibold uppercase tracking-[0.46em] text-[#D4A574]/70 mb-10 [word-spacing:0.24em]">Integrated Strategic Recommendation</p>
+                                                <p className="max-w-[56ch] text-[22px] lg:text-[28px] leading-[1.2] font-semibold tracking-tightest text-[#F3F1ED] mb-8">{integratedRecommendation.thesis}</p>
+                                                <p className="max-w-[58ch] text-[15px] leading-relaxed text-[#D6D0C6]/65 mb-10 font-medium">{integratedRecommendation.whyNow}</p>
+                                                <div className="rounded-[2.25rem] border border-white/10 bg-[#151310] p-6 mb-10">
                                                     <p className="text-[13px] leading-relaxed text-[#D4A574] font-medium italic">
                                                         {integratedRecommendation.riskRewardTension}
                                                     </p>
@@ -2780,22 +2780,22 @@ export default function AssetWorkspace({
                                                 <div className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
                                                     <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-8">Operator Summary</p>
                                                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-                                                        <div className="rounded-[1.75rem] border border-[#E7DED1] bg-white/55 p-5 group hover:border-[#D4A574]/30 transition-all">
-                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#6B6B6B] mb-2">Primary Decision</p>
-                                                            <p className="text-[14px] leading-snug text-[#141414] font-semibold">{integratedRecommendation.decision}</p>
+                                                        <div className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5 group hover:border-[#D4A574]/35 transition-all">
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Primary Decision</p>
+                                                            <p className="text-[14px] leading-snug text-[#F3F1ED] font-semibold">{integratedRecommendation.decision}</p>
                                                         </div>
-                                                        <div className="rounded-[1.75rem] border border-[#E7DED1] bg-white/55 p-5 group hover:border-[#D4A574]/30 transition-all">
-                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#6B6B6B] mb-2">Tactical Watchout</p>
-                                                            <p className="text-[14px] leading-snug text-[#141414] font-semibold">{integratedRecommendation.watchouts}</p>
+                                                        <div className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5 group hover:border-[#D4A574]/35 transition-all">
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Tactical Watchout</p>
+                                                            <p className="text-[14px] leading-snug text-[#F3F1ED] font-semibold">{integratedRecommendation.watchouts}</p>
                                                         </div>
                                                     </div>
-                                                    <div className="mt-8 pt-8 border-t border-[#E7DED1]">
+                                                    <div className="mt-8 pt-8 border-t border-white/10">
                                                         <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-6">High-Impact Protocol</p>
                                                         <div className="space-y-4">
                                                             {integratedRecommendation.executionNext3.map((step, index) => (
                                                                 <div key={index} className="flex gap-4 items-start">
                                                                     <span className="text-[11px] font-semibold text-[#D4A574] mt-1">{index + 1}.</span>
-                                                                    <p className="text-[13px] leading-relaxed text-[#141414]/80 font-medium">{step}</p>
+                                                                    <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70 font-medium">{step}</p>
                                                                 </div>
                                                             ))}
                                                         </div>
@@ -2804,7 +2804,7 @@ export default function AssetWorkspace({
                                             </div>
 
                                             <div className="space-y-6">
-                                                <div className="rounded-[2.5rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 text-[#141414] shadow-[0_20px_60px_rgba(20,20,20,0.04)]">
+                                                <div className="rounded-[2.5rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                     <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Trust Protocol</p>
                                                     <div className="grid gap-3 sm:grid-cols-2">
                                                         {[
@@ -2812,36 +2812,36 @@ export default function AssetWorkspace({
                                                             ['Evidence Strength', integratedRecommendation.evidenceStrength],
                                                             ['Assumption Load', integratedRecommendation.assumptionLoad],
                                                         ].map(([label, value]) => (
-                                                            <div key={label} className="rounded-[1.75rem] border border-[#E7DED1] bg-white/55 p-5 group hover:border-[#D4A574]/30 transition-all">
-                                                                <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#6B6B6B] mb-2">{label}</p>
-                                                                <p className="text-[13px] leading-snug text-[#141414] font-semibold">{value}</p>
+                                                            <div key={label} className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5 group hover:border-[#D4A574]/35 transition-all">
+                                                                <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">{label}</p>
+                                                                <p className="text-[13px] leading-snug text-[#F3F1ED] font-semibold">{value}</p>
                                                             </div>
                                                         ))}
-                                                        <div className="border border-[#e8ddd0] bg-white p-5 group hover:border-[#D4A574]/30 transition-all sm:col-span-2">
-                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#6B6B6B] mb-2">Known Unknowns</p>
-                                                            <p className="text-[13px] leading-relaxed text-[#141414]/70 font-medium">
+                                                        <div className="rounded-[1.75rem] border border-white/10 bg-[#151310] p-5 group hover:border-[#D4A574]/35 transition-all sm:col-span-2">
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Known Unknowns</p>
+                                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70 font-medium">
                                                                 {integratedRecommendation.knownUnknowns.join(' ')}
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div className="mt-8 pt-8 border-t border-[#E7DED1]">
+                                                    <div className="mt-8 pt-8 border-t border-white/10">
                                                         <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]/40 mb-2">Source Validation</p>
-                                                        <p className="text-[11px] leading-relaxed text-[#6B6B6B] tracking-[0.18em]">
+                                                        <p className="text-[11px] leading-relaxed text-[#D6D0C6]/55 tracking-[0.18em]">
                                                             Blueprint trace • Focal routing • Semiotic overlap
                                                         </p>
                                                     </div>
                                                 </div>
 
-                                                <div className="rounded-[2.5rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 text-[#141414] shadow-[0_20px_60px_rgba(20,20,20,0.04)]">
+                                                <div className="rounded-[2.5rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                     <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">System Diagnostic</p>
                                                     <div className="space-y-3">
                                                         {integratedRecommendation.moduleScores.map((score) => (
-                                                            <div key={score.label} className="rounded-[1.75rem] border border-[#E7DED1] bg-white/55 p-5">
+                                                            <div key={score.label} className="rounded-[1.75rem] border border-white/10 bg-[#151310] p-5">
                                                                 <div className="flex items-center justify-between gap-4">
-                                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1a1a1a]">{score.label}</p>
+                                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/70">{score.label}</p>
                                                                     <div className="flex gap-1">
                                                                         {[1,2,3,4,5].map(i => (
-                                                                            <div key={i} className={`w-3 h-1 ${i <= score.score ? 'bg-[#D4A574]' : 'bg-[#f5f0e8]'}`} />
+                                                                            <div key={i} className={`w-3 h-1 ${i <= score.score ? 'bg-[#D4A574]' : 'bg-white/10'}`} />
                                                                         ))}
                                                                     </div>
                                                                 </div>
@@ -2850,27 +2850,27 @@ export default function AssetWorkspace({
                                                     </div>
                                                 </div>
 
-                                                <div className="rounded-[2.5rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 text-[#141414] shadow-[0_20px_60px_rgba(20,20,20,0.04)]">
+                                                <div className="rounded-[2.5rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                     <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Signal Integrity</p>
                                                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-                                                        <div className="rounded-[1.75rem] border border-[#E7DED1] bg-white/55 p-5">
+                                                        <div className="rounded-[1.75rem] border border-white/10 bg-[#151310] p-5">
                                                             <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-4 underline underline-offset-4 decoration-[#D4A574]/40">Hard Evidence Points</p>
                                                             <div className="space-y-4">
                                                                 {integratedRecommendation.facts.map((fact, index) => (
                                                                     <div key={index} className="flex gap-3">
                                                                         <span className="text-[10px] font-semibold text-[#D4A574] opacity-40">{String(index+1).padStart(2, '0')}</span>
-                                                                        <p className="text-[12px] leading-relaxed text-[#141414]/75 font-medium">{fact}</p>
+                                                                        <p className="text-[12px] leading-relaxed text-[#D6D0C6]/70 font-medium">{fact}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
                                                         </div>
-                                                        <div className="rounded-[1.75rem] border border-[#E7DED1] bg-white/55 p-5">
-                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#999] mb-4 underline underline-offset-4">Derived Readout</p>
+                                                        <div className="rounded-[1.75rem] border border-white/10 bg-[#151310] p-5">
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-4 underline underline-offset-4">Derived Readout</p>
                                                             <div className="space-y-4">
                                                                 {integratedRecommendation.inferences.map((inference, index) => (
                                                                     <div key={index} className="flex gap-3">
-                                                                        <span className="text-[10px] font-semibold text-[#aaa]">{String(index+1).padStart(2, '0')}</span>
-                                                                        <p className="text-[12px] leading-relaxed text-[#141414]/65 font-medium">{inference}</p>
+                                                                        <span className="text-[10px] font-semibold text-[#D6D0C6]/45">{String(index+1).padStart(2, '0')}</span>
+                                                                        <p className="text-[12px] leading-relaxed text-[#D6D0C6]/65 font-medium">{inference}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -3969,7 +3969,7 @@ export default function AssetWorkspace({
                                                                 }`}>
                                                                     {entry.verdict}
                                                                 </span>
-                                                                <span className="text-[10px] font-semibold text-[#aaa] font-mono">
+                                                                <span className="text-[10px] font-semibold text-[#D6D0C6]/45 font-mono">
                                                                     {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} // 
                                                                     {new Date(entry.timestamp).toLocaleDateString([], { day: '2-digit', month: 'short' })}
                                                                 </span>
