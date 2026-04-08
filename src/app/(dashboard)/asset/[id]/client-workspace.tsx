@@ -2045,8 +2045,8 @@ export default function AssetWorkspace({
 
                 .vault-analysis-shell {
                     --vault-max-width: 1680px;
-                    --vault-content-pad-x: clamp(16px, 2vw, 32px);
-                    --analysis-right-max: 980px;
+                    --vault-content-pad-x: clamp(12px, 1.6vw, 24px);
+                    --analysis-right-max: 1120px;
                     --analysis-text-measure: 72ch;
                     max-width: var(--vault-max-width);
                     margin-inline: auto;
@@ -2079,7 +2079,7 @@ export default function AssetWorkspace({
                 @media (min-width: 1024px) {
                     .vault-analysis-frame {
                         display: grid;
-                        grid-template-columns: minmax(460px, 620px) minmax(680px, 1fr);
+                        grid-template-columns: minmax(360px, 520px) minmax(640px, 1fr);
                         align-items: start;
                     }
 
@@ -2094,7 +2094,7 @@ export default function AssetWorkspace({
 
                 @media (min-width: 1920px) {
                     .vault-analysis-shell {
-                        --vault-content-pad-x: clamp(32px, 3.2vw, 48px);
+                        --vault-content-pad-x: clamp(24px, 2.6vw, 40px);
                     }
                 }
             `}</style>
@@ -2378,7 +2378,7 @@ export default function AssetWorkspace({
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
                     <aside className={`vault-analysis-asset-rail w-full border-r ${sampleMode ? 'border-[#D4A574]/20' : 'border-[#E7DED1]'} relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'} lg:sticky ${sampleMode ? 'lg:top-[66px]' : 'lg:top-0'} z-10`}>
-                        <div className="flex flex-col items-center justify-center px-[clamp(16px,2vw,32px)] pt-10 pb-8 lg:pt-20">
+                        <div className="flex flex-col items-center justify-center px-[clamp(12px,1.6vw,24px)] pt-10 pb-8 lg:pt-20">
 
                             <div 
                                 className={`w-full max-w-[390px] aspect-[4/5] relative flex items-center justify-center overflow-hidden rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] group shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75' : ''}`}
@@ -2625,7 +2625,7 @@ export default function AssetWorkspace({
                     <div className="vault-analysis-content-inner relative z-10 min-h-screen w-full bg-transparent">
 
                     {/* Minimalist Segmented Controls */}
-                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 flex gap-10 ${sampleMode ? 'border-b border-[#D4A574]/15' : 'border-b border-[#e8ddd0]'} ${sampleMode ? 'bg-[#F6F1E7]/95' : 'bg-[#faf7f2]/95'} px-[clamp(16px,2vw,32px)] pt-10 pb-0 backdrop-blur-3xl md:pt-14`}>
+                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 flex gap-10 ${sampleMode ? 'border-b border-[#D4A574]/15' : 'border-b border-[#e8ddd0]'} ${sampleMode ? 'bg-[#F6F1E7]/95' : 'bg-[#faf7f2]/95'} px-[clamp(12px,1.6vw,24px)] pt-10 pb-0 backdrop-blur-3xl md:pt-14`}>
                         {dossierTabs.map(tab => (
                             <button
                                 key={tab}
@@ -2647,7 +2647,7 @@ export default function AssetWorkspace({
                     </div>
 
                     {/* Tab Content Area */}
-                    <div className="px-[clamp(16px,2vw,32px)] py-[clamp(16px,1.6vw,28px)]">
+                    <div className="px-[clamp(12px,1.6vw,24px)] py-[clamp(16px,1.6vw,28px)]">
                         {activeTab === 'QUALITY GATE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
