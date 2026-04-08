@@ -1429,8 +1429,11 @@ export default function AssetWorkspace({
     const { lead: cloneIntroLead, remainder: cloneIntroRemainder } = splitLeadSentence(cloneIntroSource);
     const marketPulseBelowThreshold = (marketPulseData?.assetCount ?? 0) > 0 && (marketPulseData?.assetCount ?? 0) < 20;
     const dossierTabs = sampleMode ? SAMPLE_DOSSIER_TABS : FULL_DOSSIER_TABS;
-	const primaryNavTabs = dossierTabs.filter((tab) => tab === 'QUALITY GATE' || tab === 'INTELLIGENCE' || tab === 'SIGNALS' || tab === 'PSYCHOLOGY');
-	const secondaryNavTabs = dossierTabs.filter((tab) => primaryNavTabs.indexOf(tab) === -1);
+		type PrimaryNavTab = Extract<DossierTab, 'QUALITY GATE' | 'INTELLIGENCE' | 'SIGNALS' | 'PSYCHOLOGY'>;
+		const isPrimaryNavTab = (tab: DossierTab): tab is PrimaryNavTab =>
+			tab === 'QUALITY GATE' || tab === 'INTELLIGENCE' || tab === 'SIGNALS' || tab === 'PSYCHOLOGY';
+		const primaryNavTabs = dossierTabs.filter(isPrimaryNavTab);
+		const secondaryNavTabs = dossierTabs.filter((tab) => !isPrimaryNavTab(tab));
     const confidenceScore = normalizeConfidenceScore(extraction?.confidence_score);
     const frictionScore =
         typeof dossier?.persuasion_metrics?.cognitive_friction === 'number'
