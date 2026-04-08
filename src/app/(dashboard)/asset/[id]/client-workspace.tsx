@@ -1119,16 +1119,16 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
         <div className="space-y-8">
             {/* Semiotic Subtext Header Card */}
             {(title || overture) && (
-                <div className="rounded-3xl border border-[rgba(212,165,116,0.2)] bg-white p-6 text-[#1a1a1a]">
-                    <div className="mb-4 flex items-center justify-between border-b border-[#4E3D2A] pb-4">
-                        <h3 className="text-[12px] font-bold uppercase tracking-widest text-[#D4A574]">{title}</h3>
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-[#B9B19F]">Forensic Map v2.0</span>
+                <div className="rounded-[2.75rem] border border-[rgba(255,255,255,0.08)] bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_20px_50px_rgba(0,0,0,0.25)]">
+                    <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-5">
+                        <h3 className="text-[12px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">{title}</h3>
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/55">Forensic Map v2.0</span>
                     </div>
 
                     {/* Overture */}
                     {overture && (
                         <div className="max-h-[400px] overflow-y-auto">
-                            <p className="text-[12px] leading-relaxed text-[#B9B19F]">
+                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                 {overture}
                             </p>
                         </div>
@@ -1145,12 +1145,12 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                             id={type === 'ACT' ? block.label : undefined}
                             className={`rounded-3xl border p-6 flex flex-col ${
                                 type === 'ACT'
-                                    ? 'forensic-act-block min-h-[320px] xl:min-h-[360px] scroll-mt-24'
-                                    : 'min-h-[220px] xl:min-h-[240px]'
+                                    ? 'forensic-act-block min-h-[240px] xl:min-h-[280px] scroll-mt-24'
+                                    : 'min-h-[180px] xl:min-h-[210px]'
                             } ${
                                 type === 'ACT' && activeAct === block.label
-                                    ? 'border-[#6B5337] bg-white'
-                                    : 'border-[#4E3D2A] bg-white'
+                                    ? 'border-[#D4A574]/35 bg-[#1A1A1A]'
+                                    : 'border-[rgba(255,255,255,0.08)] bg-[#1A1A1A]'
                             }`}
                         >
                             {type === 'ACT' ? (
@@ -1159,12 +1159,12 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                         <div className={`w-2 h-2 rounded-full transition-all ${activeAct === block.label ? 'bg-[#D4A882] shadow-[0_0_14px_rgba(212,168,130,0.45)]' : 'bg-[#D4A882]/75'}`} />
                                         <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#D4A882]">{block.label}</span>
                                     </div>
-                                    <h3 className="border-b border-[#4E3D2A] pb-4 text-[2rem] font-bold uppercase tracking-tight text-[#F3F1ED] md:text-[2.5rem]">
+                                    <h3 className="border-b border-white/10 pb-4 text-[2rem] font-semibold uppercase tracking-tightest text-[#F3F1ED] md:text-[2.5rem]">
                                         {block.title}
                                     </h3>
                                     <AnalyticWaveMap index={i} isActive={activeAct === block.label} />
                                     <div className="flex-1 pt-1">
-                                        <div className="max-w-[62ch] space-y-4">
+                                        <div className="max-w-[78ch] space-y-4">
                                             {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
                                                 <p key={pi} className="text-[15px] font-light leading-8 text-[#D6D0C6]">
                                                     {paragraph.trim()}
@@ -1179,11 +1179,11 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                         <div className="w-2 h-2 rounded-full bg-[#D4A574]/60" />
                                         <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.35em]">{block.label}</span>
                                     </div>
-                                    <h3 className="border-b border-[#4E3D2A] pb-5 text-[1.75rem] font-bold uppercase tracking-tight text-[#F3F1ED] md:text-[2rem]">
+                                    <h3 className="border-b border-white/10 pb-5 text-[1.75rem] font-semibold uppercase tracking-tightest text-[#F3F1ED] md:text-[2rem]">
                                         {block.title}
                                     </h3>
                                     <div className="flex-1 pt-6">
-                                        <div className="max-w-[62ch] space-y-4">
+                                        <div className="max-w-[78ch] space-y-4">
                                             {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
                                                 <p key={pi} className="text-[15px] font-light leading-9 text-[#D6D0C6]">
                                                     {paragraph.trim()}
@@ -2914,10 +2914,10 @@ export default function AssetWorkspace({
                                         {extraction.primary_mechanic && extraction.full_dossier && (
                                              <>
                                                  {/* Unified Primary Intelligence Metric - REFINED SCALE */}
-                                                 <div className="mb-12 flex w-full flex-col gap-10 rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 text-[#1a1a1a] xl:flex-row xl:items-center shadow-xl">
+                                                 <div className="mb-12 grid w-full grid-cols-1 gap-10 rounded-[2.75rem] border border-[rgba(255,255,255,0.08)] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-xl xl:grid-cols-[minmax(0,1fr)_18rem] xl:items-start">
                                                      {/* Left: Primary Mechanic */}
                                                      <div className="flex-1">
-                                                         <div className="mb-8 flex items-center justify-between border-b border-[#E7DED1] pb-6">
+                                                         <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6">
                                                              <div className="flex items-center gap-4">
                                                                  <div className="flex h-6 w-6 items-center justify-center bg-[#D4A574]/10">
                                                                      <div className="h-2 w-2 bg-[#D4A574]" />
@@ -2926,33 +2926,33 @@ export default function AssetWorkspace({
                                                              </div>
                                                              <InfoButton section="PRIMARY_MECHANIC" />
                                                          </div>
-                                                         <div className="max-w-[70ch]">
-                                                            <h2 className="border-l-[3px] border-[#D4A574] py-2 pl-8 text-[32px] lg:text-[36px] xl:text-[42px] font-semibold leading-none tracking-tightest text-[#1a1a1a] uppercase selection:bg-[#D4A574]/20">
+                                                         <div>
+                                                            <h2 className="border-l-[3px] border-[#D4A574] py-2 pl-8 text-[32px] lg:text-[36px] xl:text-[42px] font-semibold leading-none tracking-tightest text-[#F3F1ED] uppercase selection:bg-[#D4A574]/20">
                                                                 {extraction.primary_mechanic}
                                                             </h2>
                                                          </div>
                                                      </div>
 
                                                      {/* Vertical Divider (Desktop Only) */}
-                                                     <div className="mx-12 hidden h-48 w-[1px] bg-[#f5f0e8] xl:block" />
+                                                     <div className="hidden" />
 
                                                      {/* Right: System Confidence */}
-                                                      <div className="w-full xl:w-80 flex flex-col h-full">
-                                                          <div className="mb-8 flex items-center justify-between border-b border-[#E7DED1] pb-6">
+                                                      <div className="w-full xl:w-72 flex flex-col h-full">
+                                                          <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-6">
                                                               <div className="flex items-center gap-4">
                                                                   <div className="flex h-6 w-6 items-center justify-center bg-[#D4A574]/10 text-[#D4A574]">
                                                                       <Sparkles className="h-4 w-4" />
                                                                   </div>
-                                                                  <span className="block text-[11px] font-semibold uppercase tracking-[0.3em] text-[#1a1a1a]">System Confidence</span>
+                                                                  <span className="block text-[11px] font-semibold uppercase tracking-[0.3em] text-[#F3F1ED]">System Confidence</span>
                                                               </div>
                                                               <InfoButton section="SYSTEM_CONFIDENCE" />
                                                           </div>
                                                           <div className="flex flex-col gap-6">
-                                                              <div className="flex items-baseline gap-2 text-7xl font-semibold tracking-tighter text-[#1a1a1a]">
+                                                              <div className="flex items-baseline gap-2 text-7xl font-semibold tracking-tighter text-[#F3F1ED]">
                                                                   {extraction.confidence_score <= 1 ? Math.round(extraction.confidence_score * 100) : extraction.confidence_score}
                                                                   <span className="text-[20px] text-[#D4A574] font-semibold uppercase tracking-widest">/100</span>
                                                               </div>
-                                                              <p className="text-[12px] leading-relaxed text-[#999] uppercase font-medium">
+                                                              <p className="text-[12px] leading-relaxed text-[#F3F1ED]/55 uppercase font-medium">
                                                                   Weighted validation based on semiotic signal strength.
                                                               </p>
                                                           </div>
@@ -2970,35 +2970,35 @@ export default function AssetWorkspace({
 
 
                                             {/* Visual Style */}
-                                            <div className="col-span-1 flex min-h-[120px] flex-col rounded-[2.5rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 text-[#1a1a1a] xl:col-span-2">
-                                                <div className="mb-8 flex items-center justify-between border-b border-[#E7DED1] pb-4">
+                                            <div className="col-span-1 flex min-h-[120px] flex-col rounded-[2.5rem] border border-[rgba(255,255,255,0.08)] bg-[#1A1A1A] p-8 text-[#F3F1ED] xl:col-span-2 shadow-[0_20px_50px_rgba(0,0,0,0.25)]">
+                                                <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4">
                                                     <span className="block text-[12px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Synthesized Visual Logic</span>
                                                     <InfoButton section="VISUAL_STYLE" />
                                                 </div>
                                                 <div className="flex flex-col h-full">
-                                                    <p className="mt-2 mb-10 max-w-[62ch] text-[20px] lg:text-[24px] font-semibold uppercase leading-[1.1] tracking-tightest text-[#1a1a1a]">
+                                                    <p className="mt-2 mb-10 max-w-[62ch] text-[20px] lg:text-[24px] font-semibold uppercase leading-[1.1] tracking-tightest text-[#F3F1ED]">
                                                         {extraction.visual_style}
                                                     </p>
 
                                                     {/* Aesthetic Signature Matrix */}
-                                                    <div className="mt-auto space-y-6 border-t border-[#E7DED1] pt-8">
+                                                    <div className="mt-auto space-y-6 border-t border-white/10 pt-8">
                                                         <div className="flex items-center gap-6">
-                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#aaa]">Luma</span>
-                                                            <div className="h-1 flex-1 overflow-hidden bg-white">
+                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Luma</span>
+                                                            <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
                                                                 <div className="h-full bg-[#D4A574] w-[72%] shadow-[0_0_10px_#D4A574]" />
                                                             </div>
                                                             <span className="text-[11px] font-semibold text-[#D4A574] tracking-widest">0.82V</span>
                                                         </div>
                                                         <div className="flex items-center gap-6">
-                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#aaa]">Chrom</span>
-                                                            <div className="h-1 flex-1 overflow-hidden bg-white">
+                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Chrom</span>
+                                                            <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
                                                                 <div className="h-full bg-[#D4A574] w-[45%] shadow-[0_0_10px_#D4A574]" />
                                                             </div>
                                                             <span className="text-[11px] font-semibold text-[#D4A574] tracking-widest">0.44Δ</span>
                                                         </div>
                                                         <div className="flex items-center gap-6">
-                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#aaa]">Vect</span>
-                                                            <div className="h-1 flex-1 overflow-hidden bg-white">
+                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Vect</span>
+                                                            <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
                                                                 <div className="h-full bg-[#D4A574] w-[89%] shadow-[0_0_10px_#D4A574]" />
                                                             </div>
                                                             <span className="text-[11px] font-semibold text-[#D4A574] tracking-widest">0.91Λ</span>
@@ -3008,8 +3008,8 @@ export default function AssetWorkspace({
                                             </div>
 
                                             {/* Color Palette */}
-                                            <div className="col-span-1 flex min-h-[120px] flex-col rounded-[2.5rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 text-[#1a1a1a]">
-                                                <div className="mb-8 flex items-center justify-between border-b border-[#E7DED1] pb-4">
+                                            <div className="col-span-1 flex min-h-[120px] flex-col rounded-[2.5rem] border border-[rgba(255,255,255,0.08)] bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_20px_50px_rgba(0,0,0,0.25)]">
+                                                <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4">
                                                     <span className="block text-[12px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Chromatic Register</span>
                                                     <InfoButton section="CHROMATIC_BASE" />
                                                 </div>
@@ -3017,14 +3017,14 @@ export default function AssetWorkspace({
                                                     {extraction.color_palette && extraction.color_palette.length > 0 ? (
                                                         <div className="flex flex-wrap gap-3">
                                                             {extraction.color_palette.map((hex: string, i: number) => (
-                                                                <div key={i} className="group relative flex items-center gap-3 rounded-full border border-[#E7DED1] bg-white/60 p-2 pr-4 transition-all hover:border-[#D4A574]/40">
+                                                                <div key={i} className="group relative flex items-center gap-3 rounded-full border border-white/10 bg-[#151310] p-2 pr-4 transition-all hover:border-[#D4A574]/45 hover:bg-[#1B1814]">
                                                                     <div className="w-5 h-5 flex-shrink-0 border border-[#d4c9b8]" style={{ backgroundColor: hex }} />
-                                                                    <span className="text-[10px] font-semibold tracking-widest text-[#666] group-hover:text-[#D4A574]">{hex}</span>
+                                                                    <span className="text-[10px] font-semibold tracking-widest text-[#D6D0C6]/65 group-hover:text-[#D4A574]">{hex}</span>
                                                                 </div>
                                                             ))}
                                                         </div>
                                                     ) : (
-                                                        <div className="text-[10px] font-semibold text-[#aaa] uppercase tracking-widest">[ NULL_PALETTE ]</div>
+                                                        <div className="text-[10px] font-semibold text-[#D6D0C6]/55 uppercase tracking-widest">[ NULL_PALETTE ]</div>
                                                     )}
                                                 </div>
                                             </div>
