@@ -1429,6 +1429,8 @@ export default function AssetWorkspace({
     const { lead: cloneIntroLead, remainder: cloneIntroRemainder } = splitLeadSentence(cloneIntroSource);
     const marketPulseBelowThreshold = (marketPulseData?.assetCount ?? 0) > 0 && (marketPulseData?.assetCount ?? 0) < 20;
     const dossierTabs = sampleMode ? SAMPLE_DOSSIER_TABS : FULL_DOSSIER_TABS;
+	const primaryNavTabs = dossierTabs.filter((tab) => tab === 'QUALITY GATE' || tab === 'INTELLIGENCE' || tab === 'SIGNALS' || tab === 'PSYCHOLOGY');
+	const secondaryNavTabs = dossierTabs.filter((tab) => primaryNavTabs.indexOf(tab) === -1);
     const confidenceScore = normalizeConfidenceScore(extraction?.confidence_score);
     const frictionScore =
         typeof dossier?.persuasion_metrics?.cognitive_friction === 'number'
@@ -2076,6 +2078,12 @@ export default function AssetWorkspace({
                     display: none;
                 }
 
+                @media (min-width: 768px) {
+                    .vault-analysis-tabbar {
+                        overflow: visible;
+                    }
+                }
+
                 @media (min-width: 1024px) {
                     .vault-analysis-frame {
                         display: grid;
@@ -2625,25 +2633,78 @@ export default function AssetWorkspace({
                     <div className="vault-analysis-content-inner relative z-10 min-h-screen w-full bg-transparent">
 
                     {/* Minimalist Segmented Controls */}
-                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 flex gap-10 ${sampleMode ? 'border-b border-[#D4A574]/15' : 'border-b border-[#e8ddd0]'} ${sampleMode ? 'bg-[#F6F1E7]/95' : 'bg-[#faf7f2]/95'} px-[clamp(12px,1.6vw,24px)] pt-10 pb-0 backdrop-blur-3xl md:pt-14`}>
-                        {dossierTabs.map(tab => (
-                            <button
-                                key={tab}
-                                onClick={() => setActiveTab(tab)}
-                                className={`pb-5 text-[11px] font-semibold tracking-[0.4em] uppercase transition-all relative ${activeTab === tab
-                                    ? (sampleMode ? 'text-[#D4A574]' : 'text-[#D4A574]')
-                                    : (sampleMode ? 'text-[#1a1a1a]/30 hover:text-[#1a1a1a]/50' : 'text-[#aaa] hover:text-[#999]')
-                                    }`}
-                            >
-                                {DOSSIER_TAB_LABELS[tab]}
-                                {activeTab === tab && (
-                                    <motion.div 
-                                        layoutId="tab-active"
-                                        className={`absolute bottom-0 left-0 w-full h-[3px] ${sampleMode ? 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.4)]' : 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.3)]'}`} 
-                                    />
-                                )}
-                            </button>
-                        ))}
+                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 ${sampleMode ? 'border-b border-[#D4A574]/15' : 'border-b border-[#e8ddd0]'} ${sampleMode ? 'bg-[#F6F1E7]/95' : 'bg-[#faf7f2]/95'} px-[clamp(12px,1.6vw,24px)] pt-10 pb-0 backdrop-blur-3xl md:pt-12`}>
+                        {/* Mobile: single-row scroll with an edge cue */}
+                        <div className="relative md:hidden">
+                            <div className="flex gap-10 overflow-x-auto pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                                {dossierTabs.map((tab) => (
+                                    <button
+                                        key={tab}
+                                        onClick={() => setActiveTab(tab)}
+                                        className={`pb-5 text-[11px] font-semibold tracking-[0.4em] uppercase transition-all relative ${activeTab === tab
+                                            ? 'text-[#D4A574]'
+                                            : (sampleMode ? 'text-[#1a1a1a]/30 hover:text-[#1a1a1a]/50' : 'text-[#aaa] hover:text-[#999]')}`}
+                                    >
+                                        {DOSSIER_TAB_LABELS[tab]}
+                                        {activeTab === tab && (
+                                            <div
+                                                className={`absolute bottom-0 left-0 w-full h-[3px] ${sampleMode
+                                                    ? 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.4)]'
+                                                    : 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.3)]'}`}
+                                            />
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-[#faf7f2]/95 to-transparent" />
+                        </div>
+
+                        {/* Desktop: two-tier navigation (no hidden options) */}
+                        <div className="hidden md:flex md:flex-col md:gap-6 md:pb-6">
+                            <div className="flex flex-wrap gap-x-10 gap-y-5">
+                                {primaryNavTabs.map((tab) => (
+                                    <button
+                                        key={tab}
+                                        onClick={() => setActiveTab(tab)}
+                                        className={`pb-4 text-[11px] font-semibold tracking-[0.4em] uppercase transition-all relative ${activeTab === tab
+                                            ? 'text-[#D4A574]'
+                                            : (sampleMode ? 'text-[#1a1a1a]/30 hover:text-[#1a1a1a]/50' : 'text-[#aaa] hover:text-[#999]')}`}
+                                    >
+                                        {DOSSIER_TAB_LABELS[tab]}
+                                        {activeTab === tab && (
+                                            <div
+                                                className={`absolute bottom-0 left-0 w-full h-[3px] ${sampleMode
+                                                    ? 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.4)]'
+                                                    : 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.3)]'}`}
+                                            />
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {secondaryNavTabs.length > 0 && (
+                                <div className="flex flex-wrap gap-x-10 gap-y-5">
+                                    {secondaryNavTabs.map((tab) => (
+                                        <button
+                                            key={tab}
+                                            onClick={() => setActiveTab(tab)}
+                                            className={`pb-4 text-[11px] font-semibold tracking-[0.4em] uppercase transition-all relative ${activeTab === tab
+                                                ? 'text-[#D4A574]'
+                                                : (sampleMode ? 'text-[#1a1a1a]/30 hover:text-[#1a1a1a]/50' : 'text-[#aaa] hover:text-[#999]')}`}
+                                        >
+                                            {DOSSIER_TAB_LABELS[tab]}
+                                            {activeTab === tab && (
+                                                <div
+                                                    className={`absolute bottom-0 left-0 w-full h-[3px] ${sampleMode
+                                                        ? 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.4)]'
+                                                        : 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.3)]'}`}
+                                                />
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Tab Content Area */}
