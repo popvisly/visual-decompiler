@@ -2853,7 +2853,7 @@ export default function AssetWorkspace({
                                         {extraction.primary_mechanic && extraction.full_dossier && (
                                              <>
                                                  {/* Unified Primary Intelligence Metric - REFINED SCALE */}
-                                                 <div className="mb-12 flex w-full flex-col gap-10 rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 text-[#1a1a1a] lg:flex-row lg:items-center shadow-xl">
+                                                 <div className="mb-12 flex w-full flex-col gap-10 rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 text-[#1a1a1a] xl:flex-row xl:items-center shadow-xl">
                                                      {/* Left: Primary Mechanic */}
                                                      <div className="flex-1">
                                                          <div className="mb-8 flex items-center justify-between border-b border-[#E7DED1] pb-6">
@@ -2866,17 +2866,17 @@ export default function AssetWorkspace({
                                                              <InfoButton section="PRIMARY_MECHANIC" />
                                                          </div>
                                                          <div className="max-w-[70ch]">
-                                                            <h2 className="border-l-[3px] border-[#D4A574] py-2 pl-8 text-[32px] lg:text-[42px] font-semibold leading-none tracking-tightest text-[#1a1a1a] uppercase selection:bg-[#D4A574]/20">
+                                                            <h2 className="border-l-[3px] border-[#D4A574] py-2 pl-8 text-[32px] lg:text-[36px] xl:text-[42px] font-semibold leading-none tracking-tightest text-[#1a1a1a] uppercase selection:bg-[#D4A574]/20">
                                                                 {extraction.primary_mechanic}
                                                             </h2>
                                                          </div>
                                                      </div>
 
                                                      {/* Vertical Divider (Desktop Only) */}
-                                                     <div className="mx-12 hidden h-48 w-[1px] bg-[#f5f0e8] lg:block" />
+                                                     <div className="mx-12 hidden h-48 w-[1px] bg-[#f5f0e8] xl:block" />
 
                                                      {/* Right: System Confidence */}
-                                                      <div className="w-full lg:w-80 flex flex-col h-full">
+                                                      <div className="w-full xl:w-80 flex flex-col h-full">
                                                           <div className="mb-8 flex items-center justify-between border-b border-[#E7DED1] pb-6">
                                                               <div className="flex items-center gap-4">
                                                                   <div className="flex h-6 w-6 items-center justify-center bg-[#D4A574]/10 text-[#D4A574]">
