@@ -2643,19 +2643,18 @@ export default function AssetWorkspace({
                                 {dossierTabs.map((tab) => (
                                     <button
                                         key={tab}
+                                        type="button"
                                         onClick={() => setActiveTab(tab)}
-                                        className={`pb-5 text-[11px] font-semibold tracking-[0.4em] uppercase transition-all relative ${activeTab === tab
-                                            ? 'text-[#D4A574]'
-                                            : (sampleMode ? 'text-[#1a1a1a]/30 hover:text-[#1a1a1a]/50' : 'text-[#aaa] hover:text-[#999]')}`}
+                                        aria-current={activeTab === tab ? 'page' : undefined}
+                                        className={`-mx-2 -my-2 rounded-full border px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.4em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                            activeTab === tab
+                                                ? 'border-[#D4A574]/25 bg-white/70 text-[#141414] shadow-sm'
+                                                : (sampleMode
+                                                    ? 'border-transparent text-[#141414]/35 hover:text-[#141414]/75 hover:border-[#E7DED1] hover:bg-white/55'
+                                                    : 'border-transparent text-[#141414]/35 hover:text-[#141414]/70 hover:border-[#E7DED1] hover:bg-white/55')
+                                        }`}
                                     >
                                         {DOSSIER_TAB_LABELS[tab]}
-                                        {activeTab === tab && (
-                                            <div
-                                                className={`absolute bottom-0 left-0 w-full h-[3px] ${sampleMode
-                                                    ? 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.4)]'
-                                                    : 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.3)]'}`}
-                                            />
-                                        )}
                                     </button>
                                 ))}
                             </div>
@@ -2668,19 +2667,18 @@ export default function AssetWorkspace({
                                 {primaryNavTabs.map((tab) => (
                                     <button
                                         key={tab}
+                                        type="button"
                                         onClick={() => setActiveTab(tab)}
-                                        className={`pb-4 text-[11px] font-semibold tracking-[0.4em] uppercase transition-all relative ${activeTab === tab
-                                            ? 'text-[#D4A574]'
-                                            : (sampleMode ? 'text-[#1a1a1a]/30 hover:text-[#1a1a1a]/50' : 'text-[#aaa] hover:text-[#999]')}`}
+                                        aria-current={activeTab === tab ? 'page' : undefined}
+                                        className={`-mx-2 -my-2 rounded-full border px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.4em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                            activeTab === tab
+                                                ? 'border-[#D4A574]/25 bg-white/70 text-[#141414] shadow-sm'
+                                                : (sampleMode
+                                                    ? 'border-transparent text-[#141414]/35 hover:text-[#141414]/75 hover:border-[#E7DED1] hover:bg-white/55'
+                                                    : 'border-transparent text-[#141414]/35 hover:text-[#141414]/70 hover:border-[#E7DED1] hover:bg-white/55')
+                                        }`}
                                     >
                                         {DOSSIER_TAB_LABELS[tab]}
-                                        {activeTab === tab && (
-                                            <div
-                                                className={`absolute bottom-0 left-0 w-full h-[3px] ${sampleMode
-                                                    ? 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.4)]'
-                                                    : 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.3)]'}`}
-                                            />
-                                        )}
                                     </button>
                                 ))}
                             </div>
@@ -2690,19 +2688,18 @@ export default function AssetWorkspace({
                                     {secondaryNavTabs.map((tab) => (
                                         <button
                                             key={tab}
+                                            type="button"
                                             onClick={() => setActiveTab(tab)}
-                                            className={`pb-4 text-[11px] font-semibold tracking-[0.4em] uppercase transition-all relative ${activeTab === tab
-                                                ? 'text-[#D4A574]'
-                                                : (sampleMode ? 'text-[#1a1a1a]/30 hover:text-[#1a1a1a]/50' : 'text-[#aaa] hover:text-[#999]')}`}
+                                            aria-current={activeTab === tab ? 'page' : undefined}
+                                            className={`-mx-2 -my-2 rounded-full border px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.4em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                                activeTab === tab
+                                                    ? 'border-[#D4A574]/25 bg-white/70 text-[#141414] shadow-sm'
+                                                    : (sampleMode
+                                                        ? 'border-transparent text-[#141414]/35 hover:text-[#141414]/75 hover:border-[#E7DED1] hover:bg-white/55'
+                                                        : 'border-transparent text-[#141414]/35 hover:text-[#141414]/70 hover:border-[#E7DED1] hover:bg-white/55')
+                                            }`}
                                         >
                                             {DOSSIER_TAB_LABELS[tab]}
-                                            {activeTab === tab && (
-                                                <div
-                                                    className={`absolute bottom-0 left-0 w-full h-[3px] ${sampleMode
-                                                        ? 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.4)]'
-                                                        : 'bg-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.3)]'}`}
-                                                />
-                                            )}
                                         </button>
                                     ))}
                                 </div>
