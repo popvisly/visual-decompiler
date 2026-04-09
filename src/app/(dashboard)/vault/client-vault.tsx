@@ -244,8 +244,8 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                                 transition={{ duration: 0.8, ease: EASE }}
                                 className="text-[12vw] lg:text-[8vw] font-semibold leading-[0.82] tracking-[-0.05em] uppercase text-[#141414] mb-12"
                             >
-                                Vault <br />
-                                <span className="text-[#141414]/15">Memory.</span>
+                                Intelligence <br />
+                                <span className="text-[#141414]/15">Vault.</span>
                             </motion.h1>
 
                             <motion.p 
@@ -254,7 +254,15 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                                 transition={{ delay: 0.3 }}
                                 className="text-xl lg:text-3xl text-[#6B6B6B] leading-relaxed font-medium max-w-2xl"
                             >
-                                Processed intelligence archive. {filteredAssets.length} forensic extractions secured.
+                                Your ad analysis vault.
+                            </motion.p>
+                            <motion.p
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.4 }}
+                                className="mt-3 text-[11px] uppercase tracking-[0.26em] text-[#6B6B6B]/80"
+                            >
+                                {filteredAssets.length} forensic extractions secured.
                             </motion.p>
                         </div>
 
