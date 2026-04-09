@@ -3060,21 +3060,21 @@ export default function AssetWorkspace({
                                                         <div className="flex items-center gap-6">
                                                             <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Luma</span>
                                                             <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
-                                                                <div className="h-full bg-[#D4A574] w-[72%] shadow-[0_0_10px_#D4A574]" />
+                                                                <div className="h-full w-[72%] bg-gradient-to-r from-[#D4A882] via-[#D4A574] to-[#B8864D] shadow-[0_0_10px_rgba(212,165,116,0.45)]" />
                                                             </div>
                                                             <span className="text-[11px] font-semibold text-[#D4A574] tracking-widest">0.82V</span>
                                                         </div>
                                                         <div className="flex items-center gap-6">
                                                             <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Chromat</span>
                                                             <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
-                                                                <div className="h-full bg-[#D4A574] w-[45%] shadow-[0_0_10px_#D4A574]" />
+                                                                <div className="h-full w-[45%] bg-gradient-to-r from-[#D4A882] via-[#D4A574] to-[#B8864D] shadow-[0_0_10px_rgba(212,165,116,0.45)]" />
                                                             </div>
                                                             <span className="text-[11px] font-semibold text-[#D4A574] tracking-widest">0.44Δ</span>
                                                         </div>
                                                         <div className="flex items-center gap-6">
                                                             <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Vector</span>
                                                             <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
-                                                                <div className="h-full bg-[#D4A574] w-[89%] shadow-[0_0_10px_#D4A574]" />
+                                                                <div className="h-full w-[89%] bg-gradient-to-r from-[#D4A882] via-[#D4A574] to-[#B8864D] shadow-[0_0_10px_rgba(212,165,116,0.45)]" />
                                                             </div>
                                                             <span className="text-[11px] font-semibold text-[#D4A574] tracking-widest">0.91Λ</span>
                                                         </div>
