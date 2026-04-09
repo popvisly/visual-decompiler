@@ -235,7 +235,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                     animate={{ opacity: 1, x: 0 }}
                     className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]"
                 >
-                    Intelligence Vault
+                    Forensic Archive
                 </motion.p>
                 
                 <motion.h1 
