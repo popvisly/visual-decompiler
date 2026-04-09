@@ -276,10 +276,10 @@ export default function DifferentialDiagnosticsPage() {
     // Check if current assets already match cached results
     const hasCachedResults = result && assetA && assetB; // Simplification: any result counts as "cached" if assets are present
     const buttonLabel = status === 'analysing' 
-        ? 'Processing Delta...' 
+        ? 'Comparing...' 
         : hasCachedResults 
-            ? '[ RE-RUN DIFFERENTIAL ]' 
-            : 'Initiate Differential Diagnostic';
+            ? 'Run Comparison Again' 
+            : 'Run Comparison';
 
     const handleExportDifferentialDossier = () => {
         if (!result || !assetA || !assetB) return;
@@ -395,12 +395,12 @@ export default function DifferentialDiagnosticsPage() {
                 <div className="flex flex-col gap-8 mb-8">
                     <div className="flex flex-col gap-6 border-b border-[#D4A574]/18 pb-8 md:flex-row md:items-end md:justify-between">
                         <div>
-                            <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Differential Diagnostic</p>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Compare</p>
                             <h1 className="mt-4 text-4xl font-light uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
                                 Compare Routes
                             </h1>
                             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
-                                Choose two assets from the Intelligence Vault and surface the strategic delta, persuasion lift, fatigue gap, and the stronger route for review.
+                                Pick two assets to see which route is stronger and why.
                             </p>
                         </div>
 
@@ -411,7 +411,7 @@ export default function DifferentialDiagnosticsPage() {
                             >
                                 <div className="w-1.5 h-1.5 bg-[#D4A574]/40 group-hover:bg-[#D4A574] rounded-full transition-colors" />
                                 <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A]/40 group-hover:text-[#D4A574] transition-colors">
-                                    [ RESET LABORATORY ]
+                                    Reset
                                 </span>
                             </button>
                         </div>
@@ -445,7 +445,7 @@ export default function DifferentialDiagnosticsPage() {
                 {/* Lab Panels Section */}
                 <div className="flex flex-col lg:flex-row gap-8 mb-12 relative">
                     <AssetSelectorPanel
-                        label="CONTROL (ASSET A)"
+                        label="ASSET A (BASELINE)"
                         selected={assetA}
                         onOpenDrawer={() => setDrawerState({ open: true, target: 'A' })}
                     />
@@ -464,22 +464,22 @@ export default function DifferentialDiagnosticsPage() {
                                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity rounded-full" />
                             </button>
                             <p className="max-w-[260px] rounded-full bg-[#141414] px-5 py-3 text-center text-[10px] font-bold uppercase tracking-[0.18em] text-white/70 shadow-lg">
-                                {isReady ? 'Both assets selected. Run the differential now.' : 'Select control and proposed assets to enable the diagnostic.'}
+                                {isReady ? 'Both assets selected. Run comparison.' : 'Select Asset A and Asset B to start.'}
                             </p>
                         </div>
                     </div>
 
                     <AssetSelectorPanel
-                        label="PROPOSED (ASSET B)"
+                        label="ASSET B (CHALLENGER)"
                         selected={assetB}
-                        helperText="Tip: Asset B should be meaningfully different from Asset A (concept, framing, or category benchmark) so the delta is decision-useful."
+                        helperText="Choose a clearly different Asset B so the comparison is useful."
                         onOpenDrawer={() => setDrawerState({ open: true, target: 'B' })}
                     />
 
                     {/* New Forensic Archive Drawer */}
                         <IntelligenceArchiveDrawer 
                         isOpen={drawerState.open}
-                        label={drawerState.target === 'A' ? 'CONTROL (ASSET A)' : 'PROPOSED (ASSET B)'}
+                        label={drawerState.target === 'A' ? 'ASSET A (BASELINE)' : 'ASSET B (CHALLENGER)'}
                         onClose={() => setDrawerState({ open: false, target: null })}
                         onSelect={(asset) => {
                             if (drawerState.target === 'A') setAssetA(asset as PulseAsset);
@@ -504,10 +504,10 @@ export default function DifferentialDiagnosticsPage() {
                     </div>
 
                     <div className="rounded-[2.2rem] border border-[#D4A574]/20 bg-[#141414] px-7 py-7 text-[#FBF7EF] shadow-xl">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#D4A574]">Progress State</p>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Selection Status</p>
                         <p className="mt-4 text-3xl font-bold uppercase tracking-tight">{compareProgressLabel}</p>
                         <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-white/40 font-medium">
-                            {isReady ? 'Differential diagnostic unlocked' : 'Incomplete parameters'}
+                            {isReady ? 'Ready to compare' : 'Select two assets'}
                         </p>
                     </div>
                 </div>
@@ -524,29 +524,29 @@ export default function DifferentialDiagnosticsPage() {
                             </div>
                             <div className="text-center space-y-2">
                                 <span className="block text-[12px] font-bold tracking-[0.5em] uppercase text-[#1A1A1A]/40">
-                                    COMPARISON MATRIX
+                                    READY TO COMPARE
                                 </span>
                                 <span className="block text-[12px] font-bold tracking-[0.5em] uppercase text-[#D4A574]">
-                                    AWAITING DIFFERENTIAL PARSING...
+                                    SELECT TWO ASSETS
                                 </span>
                                 <p className="pt-3 text-[11px] font-mono uppercase tracking-[0.15em] text-[#1A1A1A]/35">
-                                    Select your control asset first, then your proposed route.
+                                    Pick Asset A first, then Asset B.
                                 </p>
                             </div>
 
                             <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2">
                                 <div className="rounded-[1.8rem] border border-[#E7DED1] bg-white px-5 py-5 text-left shadow-sm">
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step A</p>
-                                    <p className="mt-3 text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A]">Select Control Asset</p>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step 1</p>
+                                    <p className="mt-3 text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A]">Choose Asset A</p>
                                     <p className="mt-3 text-[12px] leading-relaxed text-[#6B6B6B]">
-                                        Start with the route that defines the baseline you want to measure against.
+                                        Use the current route as your baseline.
                                     </p>
                                 </div>
                                 <div className="rounded-[1.8rem] border border-[#E7DED1] bg-white px-5 py-5 text-left shadow-sm">
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step B</p>
-                                    <p className="mt-3 text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A]">Select Proposed Asset</p>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step 2</p>
+                                    <p className="mt-3 text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A]">Choose Asset B</p>
                                     <p className="mt-3 text-[12px] leading-relaxed text-[#6B6B6B]">
-                                        Choose the challenger concept to see strategic delta, persuasion lift, and fatigue risk.
+                                        Pick the challenger route to see clear differences.
                                     </p>
                                 </div>
                             </div>
@@ -581,7 +581,7 @@ export default function DifferentialDiagnosticsPage() {
                                 !
                             </div>
                             <div className="text-center space-y-3 max-w-xl px-6">
-                                <p className="text-[12px] font-bold tracking-[0.4em] uppercase text-[#D4A574]">Differential Diagnostic Failed</p>
+                                <p className="text-[12px] font-bold tracking-[0.4em] uppercase text-[#D4A574]">Compare Failed</p>
                                 <p className="text-[12px] text-[#1A1A1A]/60 leading-relaxed font-medium">
                                     {errorMessage || 'The comparison engine could not complete the analysis. Try re-running the diagnostic in a moment.'}
                                 </p>
@@ -591,7 +591,7 @@ export default function DifferentialDiagnosticsPage() {
                                 disabled={!assetA || !assetB}
                                 className="px-8 py-4 rounded-full bg-[#1A1A1A] text-[#FBF7EF] text-[10px] font-bold uppercase tracking-[0.25em] transition-all hover:bg-[#8B4513] disabled:opacity-40"
                             >
-                                [ RE-RUN DIFFERENTIAL ]
+                                Run Comparison Again
                             </button>
                         </div>
                     )}
@@ -600,7 +600,7 @@ export default function DifferentialDiagnosticsPage() {
                         <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-1000">
                             <div className="mb-8 flex flex-col gap-4 rounded-[2rem] border border-[#D4A574]/15 bg-white/70 p-6 md:flex-row md:items-end md:justify-between">
                                 <div>
-                                    <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574]">Differential Dossier</p>
+                                    <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574]">Export Report</p>
                                     <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#1A1A1A]/60">
                                         Export a five-page client-facing report from this live differential analysis. Prepared-for name is optional and appears on the cover.
                                     </p>
@@ -643,12 +643,12 @@ export default function DifferentialDiagnosticsPage() {
                                         className="inline-flex items-center justify-center gap-2 rounded-full bg-[#4A4A4A] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.25em] text-white transition-all hover:bg-[#1A1A1A]"
                                     >
                                         <FileDown className="h-3.5 w-3.5" />
-                                        Export Differential Dossier
+                                        Export Report
                                     </button>
                                 </div>
                             </div>
                              <div className="mb-16 border-l-[4px] border-[#D4A574] pl-10">
-                                <h2 className="text-[11px] font-bold tracking-[0.5em] uppercase text-[#1A1A1A]/40 mb-5">Macro Synthesis</h2>
+                                <h2 className="text-[11px] font-bold tracking-[0.5em] uppercase text-[#1A1A1A]/40 mb-5">What Changed</h2>
                                 <h1 className="text-3xl md:text-6xl font-bold tracking-tight text-[#1A1A1A] leading-[1] mb-8 uppercase">
                                     {result.macro_synthesis.primary_shift}
                                 </h1>
@@ -660,7 +660,7 @@ export default function DifferentialDiagnosticsPage() {
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                                 <div className="bg-[#1A1A1A] p-8 rounded-[2rem] border border-[#D4A574]/20 shadow-xl">
                                     <h3 className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#D4A574] mb-8 border-b border-[#D4A574]/10 pb-4">
-                                        Strategic Topography Map
+                                        Trigger Map
                                     </h3>
                                     <div className="w-full aspect-square relative">
                                         <ResponsiveContainer width="100%" height="100%">
@@ -690,7 +690,7 @@ export default function DifferentialDiagnosticsPage() {
 
                                 <div className="space-y-6">
                                     <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A]/40 mb-8 border-b border-[#D4A574]/10 pb-4">
-                                        Variable Deltas & Conversion Impact
+                                        Key Deltas and Impact
                                     </h3>
 
                                     {result.semiotic_shifts.map((shift, idx) => (
@@ -722,11 +722,11 @@ export default function DifferentialDiagnosticsPage() {
                                 </div>
                             </div>
 
-                            {/* COMPARISON MATRIX & BEHAVIORAL BARS */}
+                            {/* READY TO COMPARE & BEHAVIORAL BARS */}
                             <div className="mt-24 space-y-16">
                                 <div className="border-t border-[#D4A574]/10 pt-16">
                                     <h3 className="text-[10px] font-bold tracking-[0.5em] uppercase text-[#1A1A1A]/40 mb-12 text-center">
-                                        {agency?.is_whitelabel_active ? (agency.name || 'DECOMPILER') : 'VISUAL DECOMPILER'} COMPARISON MATRIX
+                                        {agency?.is_whitelabel_active ? (agency.name || 'DECOMPILER') : 'VISUAL DECOMPILER'} READY TO COMPARE
                                     </h3>
                                     
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -1080,7 +1080,7 @@ function AssetSelectorPanel({
                             onClick={onOpenDrawer}
                             className="group relative w-full bg-white/5 border border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-white/10 py-5 transition-all text-[10px] font-bold tracking-[0.35em] uppercase text-[#D4A574] rounded-full overflow-hidden"
                         >
-                            <span className="relative z-10">{selected ? '[ CHANGE ASSET ]' : '[ SELECT FROM ARCHIVE ]'}</span>
+                            <span className="relative z-10">{selected ? 'Change Asset' : 'Select from Vault'}</span>
                             <div className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                         </button>
                         {helperText && (
