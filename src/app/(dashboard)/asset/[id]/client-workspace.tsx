@@ -1627,8 +1627,31 @@ export default function AssetWorkspace({
     ].join('\n');
     const decisionLogStorageKey = `vd_decision_log_${asset.id}`;
     
-    // Parse visual style string if it's stringified JSON
-    let parsedStyle = extraction?.visual_style;
+    // Some pipelines can emit `visual_style` as stringified JSON (or embed the value in an object).
+    // Keep this resilient: if the shape changes, the UI should degrade gracefully.
+    let parsedStyle: string | undefined = extraction?.visual_style;
+    if (typeof parsedStyle === 'string') {
+        const trimmed = parsedStyle.trim();
+        const maybeJson =
+            (trimmed.startsWith('{') && trimmed.endsWith('}')) ||
+            (trimmed.startsWith('[') && trimmed.endsWith(']'));
+        if (maybeJson) {
+            try {
+                const decoded = JSON.parse(trimmed) as any;
+                if (typeof decoded === 'string') parsedStyle = decoded;
+                else if (decoded && typeof decoded === 'object') {
+                    parsedStyle =
+                        decoded.style ||
+                        decoded.visual_style ||
+                        decoded.summary ||
+                        decoded.visualLogic ||
+                        parsedStyle;
+                }
+            } catch {
+                // Keep the raw string.
+            }
+        }
+    }
 
     useEffect(() => {
         setBlueprintData(parseBlueprint(extraction?.blueprint));
@@ -2243,7 +2266,7 @@ export default function AssetWorkspace({
                             </div>
                             <div className="dossier-block border p-6" style={{ borderColor: accentHex }}>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accentHex }}>Chromatic Base</p>
-                                <div className="mt-4 flex flex-wrap gap-3">
+                                <div className="mt-4 flex flex-col gap-3">
                                     {(extraction?.color_palette || []).map((hex: string, index: number) => (
                                         <div key={`${hex}-${index}`} className="flex items-center gap-2 border px-3 py-2" style={{ borderColor: accentHex }}>
                                             <span className="h-4 w-4 border border-[#E7DED1]" style={{ backgroundColor: hex }} />
@@ -3024,12 +3047,12 @@ export default function AssetWorkspace({
                                             {/* Visual Style */}
                                             <div className="col-span-1 flex min-h-[120px] flex-col rounded-[2.5rem] border border-[rgba(255,255,255,0.08)] bg-[#1A1A1A] p-8 text-[#F3F1ED] xl:col-span-2 shadow-[0_20px_50px_rgba(0,0,0,0.25)]">
                                                 <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4">
-                                                    <span className="block text-[12px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Synthesized Visual Logic</span>
+                                                    <span className="block text-[12px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Synthesized Visual Style</span>
                                                     <InfoButton section="VISUAL_STYLE" />
                                                 </div>
                                                 <div className="flex flex-col h-full">
-                                                    <p className="mt-2 mb-10 max-w-[62ch] text-[20px] lg:text-[24px] font-semibold uppercase leading-[1.1] tracking-tightest text-[#F3F1ED]">
-                                                        {extraction.visual_style}
+                                                    <p className="mt-2 mb-10 max-w-[68ch] whitespace-pre-line text-[15px] sm:text-[16px] lg:text-[17px] font-medium uppercase leading-[1.7] tracking-[-0.01em] text-[#F3F1ED]/85">
+                                                        {(parsedStyle || extraction.visual_style || '—').replace(/;\s*/g, ';\n')}
                                                     </p>
 
                                                     {/* Aesthetic Signature Matrix */}
@@ -3042,14 +3065,14 @@ export default function AssetWorkspace({
                                                             <span className="text-[11px] font-semibold text-[#D4A574] tracking-widest">0.82V</span>
                                                         </div>
                                                         <div className="flex items-center gap-6">
-                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Chrom</span>
+                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Chromat</span>
                                                             <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
                                                                 <div className="h-full bg-[#D4A574] w-[45%] shadow-[0_0_10px_#D4A574]" />
                                                             </div>
                                                             <span className="text-[11px] font-semibold text-[#D4A574] tracking-widest">0.44Δ</span>
                                                         </div>
                                                         <div className="flex items-center gap-6">
-                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Vect</span>
+                                                            <span className="w-16 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Vector</span>
                                                             <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/10">
                                                                 <div className="h-full bg-[#D4A574] w-[89%] shadow-[0_0_10px_#D4A574]" />
                                                             </div>
@@ -3062,15 +3085,15 @@ export default function AssetWorkspace({
                                             {/* Color Palette */}
                                             <div className="col-span-1 flex min-h-[120px] flex-col rounded-[2.5rem] border border-[rgba(255,255,255,0.08)] bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_20px_50px_rgba(0,0,0,0.25)]">
                                                 <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4">
-                                                    <span className="block text-[12px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Chromatic Register</span>
+                                                    <span className="block text-[12px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Chromatic Base</span>
                                                     <InfoButton section="CHROMATIC_BASE" />
                                                 </div>
                                                 <div className="mt-auto">
                                                     {extraction.color_palette && extraction.color_palette.length > 0 ? (
-                                                        <div className="flex flex-wrap gap-3">
+                                                        <div className="flex flex-col gap-3">
                                                             {extraction.color_palette.map((hex: string, i: number) => (
                                                                 <div key={i} className="group relative flex items-center gap-3 rounded-full border border-white/10 bg-[#151310] p-2 pr-4 transition-all hover:border-[#D4A574]/45 hover:bg-[#1B1814]">
-                                                                    <div className="w-5 h-5 flex-shrink-0 border border-[#d4c9b8]" style={{ backgroundColor: hex }} />
+                                                                    <div className="h-5 w-5 flex-shrink-0 rounded-full border border-[#d4c9b8] shadow-[0_0_0_1px_rgba(0,0,0,0.25)]" style={{ backgroundColor: hex }} />
                                                                     <span className="text-[10px] font-semibold tracking-widest text-[#D6D0C6]/65 group-hover:text-[#D4A574]">{hex}</span>
                                                                 </div>
                                                             ))}
