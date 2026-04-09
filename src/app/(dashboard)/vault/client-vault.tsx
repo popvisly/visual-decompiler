@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, Check, ChevronDown, ChevronUp, Database, Filter, ArrowRight, Trash2 } from 'lucide-react';
+import { Search, X, Check, ChevronDown, ChevronUp, ArrowRight, Trash2 } from 'lucide-react';
 import { supabaseClient } from '@/lib/supabase-client';
 
 interface VaultAsset {
@@ -161,7 +161,8 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
     };
 
     return (
-        <div className="relative min-h-screen bg-[#F6F1E7] text-[#141414] selection:bg-[#C1A674] selection:text-white">
+        <div className="relative min-h-screen bg-[#FBFBF6] text-[#141414] selection:bg-[#C1A674] selection:text-white">
+            <div className="pointer-events-none absolute inset-0 opacity-[0.02] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]" />
             
             {/* Selection HUD */}
             <AnimatePresence>
@@ -223,88 +224,87 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                 )}
             </AnimatePresence>
 
-            <div className="max-w-[1600px] mx-auto px-8 py-20 lg:py-32">
+<div className="relative z-10 mx-auto max-w-7xl px-8 py-10 md:px-12 md:py-14">
+    
+    {/* Header */}
+    <header className="mb-12 border-b border-[#D4A574]/18 pb-8">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-4xl">
+                <motion.p
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]"
+                >
+                    Intelligence Vault
+                </motion.p>
                 
-                {/* Header */}
-                <header className="mb-24">
-                    <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
-                        <div className="max-w-4xl">
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                className="flex items-center gap-4 mb-10"
-                            >
-                                <Database className="w-5 h-5 text-[#C1A674]" />
-                                <span className="text-[12px] font-semibold uppercase tracking-[0.5em] text-[#C1A674]">Intelligence Vault</span>
-                            </motion.div>
-                            
-                            <motion.h1 
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, ease: EASE }}
-                                className="text-[12vw] lg:text-[8vw] font-semibold leading-[0.82] tracking-[-0.05em] uppercase text-[#141414] mb-12"
-                            >
-                                Intelligence <br />
-                                <span className="text-[#141414]/15">Vault.</span>
-                            </motion.h1>
+                <motion.h1 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: EASE }}
+                    className="mt-4 text-4xl font-light uppercase tracking-tight text-[#1A1A1A] md:text-6xl"
+                >
+                    Intelligence Vault
+                </motion.h1>
 
-                            <motion.p 
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.3 }}
-                                className="text-xl lg:text-3xl text-[#6B6B6B] leading-relaxed font-medium max-w-2xl"
-                            >
-                                Your ad analysis vault.
-                            </motion.p>
-                            <motion.p
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.4 }}
-                                className="mt-3 text-[11px] uppercase tracking-[0.26em] text-[#6B6B6B]/80"
-                            >
-                                {filteredAssets.length} forensic extractions secured.
-                            </motion.p>
-                        </div>
+                <motion.p 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]"
+                >
+                    Your ad analysis vault.
+                </motion.p>
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="mt-3 text-[10px] uppercase tracking-[0.18em] text-[#6B6B6B]"
+                >
+                    {filteredAssets.length} forensic extractions secured.
+                </motion.p>
+            </div>
 
-                        {/* Search */}
-                        <motion.div 
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="w-full max-w-xl space-y-8"
-                        >
-                            <div className="relative group">
-                                <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C1A674] transition-all group-focus-within:scale-125" />
-                                <input
-                                    type="text"
-                                    value={query}
-                                    onChange={(e) => setQuery(e.target.value)}
-                                    placeholder="SEARCH — BRAND, SECTOR, MECHANIC..."
-                                    className="w-full bg-transparent border-b-2 border-[#141414]/10 py-5 pl-10 pr-10 text-[12px] font-semibold uppercase tracking-[0.3em] text-[#141414] focus:border-[#C1A674] outline-none transition-colors placeholder:text-[#141414]/20"
-                                />
-                                {query && (
-                                    <button onClick={() => setQuery('')} className="absolute right-0 top-1/2 -translate-y-1/2 text-[#141414]/30 hover:text-[#C1A674]">
-                                        <X className="w-5 h-5" />
-                                    </button>
-                                )}
-                            </div>
+            {/* Search */}
+            <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="w-full max-w-xl space-y-8"
+            >
+                <div className="relative group">
+                    <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C1A674] transition-all group-focus-within:scale-125" />
+                    <input
+                        type="text"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        placeholder="SEARCH - BRAND, SECTOR, MECHANIC..."
+                        className="w-full bg-transparent border-b-2 border-[#141414]/10 py-5 pl-10 pr-10 text-[12px] font-semibold uppercase tracking-[0.3em] text-[#141414] focus:border-[#C1A674] outline-none transition-colors placeholder:text-[#141414]/20"
+                    />
+                    {query && (
+                        <button onClick={() => setQuery('')} className="absolute right-0 top-1/2 -translate-y-1/2 text-[#141414]/30 hover:text-[#C1A674]">
+                            <X className="w-5 h-5" />
+                        </button>
+                    )}
+                </div>
 
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                                <VaultSelect label="Sector" value={sectorFilter} onChange={setSectorFilter} options={sectorOptions} />
-                                <VaultSelect label="Mechanic" value={mechanicFilter} onChange={setMechanicFilter} options={mechanicOptions} />
-                                <VaultSelect label="Sort" value={sortOrder} onChange={setSortOrder} options={['NEWEST', 'OLDEST', 'CONFIDENCE HIGH', 'CONFIDENCE LOW']} />
-                                <button 
-                                    onClick={clearFilters}
-                                    className="h-full border border-[#141414]/10 flex items-center justify-center text-[9px] font-semibold uppercase tracking-[0.3em] text-[#141414]/40 hover:bg-[#141414]/5 hover:text-[#C1A674] transition-all"
-                                >
-                                    [ RESET ]
-                                </button>
-                            </div>
-                        </motion.div>
-                    </div>
-                </header>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <VaultSelect label="Sector" value={sectorFilter} onChange={setSectorFilter} options={sectorOptions} />
+                    <VaultSelect label="Mechanic" value={mechanicFilter} onChange={setMechanicFilter} options={mechanicOptions} />
+                    <VaultSelect label="Sort" value={sortOrder} onChange={setSortOrder} options={['NEWEST', 'OLDEST', 'CONFIDENCE HIGH', 'CONFIDENCE LOW']} />
+                    <button 
+                        onClick={clearFilters}
+                        className="h-full border border-[#141414]/10 flex items-center justify-center text-[9px] font-semibold uppercase tracking-[0.3em] text-[#141414]/40 hover:bg-[#141414]/5 hover:text-[#C1A674] transition-all"
+                    >
+                        [ RESET ]
+                    </button>
+                </div>
+            </motion.div>
+        </div>
+    </header>
+
 
                 {/* Grid */}
-                <div className="mt-32">
+                <div className="mt-8">
                     {filteredAssets.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-24">
                             {filteredAssets.map((asset, i) => (
