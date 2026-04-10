@@ -456,7 +456,7 @@ export default function DifferentialDiagnosticsPage() {
                             <button
                                 onClick={handleAnalyse}
                                 disabled={!isReady}
-                                className={`group relative px-8 py-5 text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all disabled:opacity-50 disabled:grayscale ${isReady ? 'bg-[#8A8A8A] hover:bg-[#D4A574] tan-pulse hover:scale-105 active:scale-95' : 'bg-[#8A8A8A]'}`}
+                                className={`group relative px-8 py-5 bg-[#8A8A8A] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all hover:bg-[#D4A574] disabled:opacity-50 disabled:grayscale disabled:hover:bg-[#8A8A8A] ${isReady ? 'tan-pulse hover:scale-105 active:scale-95' : ''}`}
                             >
                                 <span className="relative z-10">
                                     {buttonLabel}
