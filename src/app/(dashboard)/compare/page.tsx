@@ -456,16 +456,12 @@ export default function DifferentialDiagnosticsPage() {
                             <button
                                 onClick={handleAnalyse}
                                 disabled={!isReady}
-                                className={`group relative px-8 py-5 bg-[#D4A574] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all disabled:opacity-50 disabled:grayscale ${isReady ? 'tan-pulse hover:scale-105 active:scale-95' : ''}`}
+                                className={`group relative px-8 py-5 text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all disabled:opacity-50 disabled:grayscale ${isReady ? 'bg-[#8A8A8A] hover:bg-[#D4A574] tan-pulse hover:scale-105 active:scale-95' : 'bg-[#8A8A8A]'}`}
                             >
                                 <span className="relative z-10">
                                     {buttonLabel}
                                 </span>
-                                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-5 transition-opacity rounded-full" />
                             </button>
-                            <p className="max-w-[260px] rounded-full bg-[#141414] px-5 py-3 text-center text-[10px] font-bold uppercase tracking-[0.18em] text-white/70 shadow-lg">
-                                {isReady ? 'Both assets selected. Run comparison.' : 'Select Asset A and Asset B to start.'}
-                            </p>
                         </div>
                     </div>
 
