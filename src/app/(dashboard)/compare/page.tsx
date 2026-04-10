@@ -1050,7 +1050,7 @@ function AssetSelectorPanel({
                     <img
                         src={selected.file_url}
                         alt="Selected Asset"
-                        className="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-70 transition-all duration-1000"
+                        className="w-full h-full object-cover opacity-75 transition-all duration-1000"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/20 to-[#1A1A1A]/60" />
                 </div>
