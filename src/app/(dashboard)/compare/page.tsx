@@ -321,6 +321,9 @@ export default function DifferentialDiagnosticsPage() {
     const frictionDelta = result
         ? result.behavioral_bars.cognitive_friction.b - result.behavioral_bars.cognitive_friction.a
         : 0;
+    const comparisonVerdict = result
+        ? `Asset ${result.matrix_cubes.winning_variant.winner === 'a' ? 'A' : 'B'} is stronger right now because ${firstSentence(result.matrix_cubes.winning_variant.rationale).replace(/\.$/, '')}.`
+        : '';
     const pitchNarrative = result && assetA && assetB
         ? {
             problem: `The category is compressing around familiar creative patterns, making it harder for ${assetB.brand.name} to claim a sharper strategic position without clear evidence.`,
@@ -500,10 +503,10 @@ export default function DifferentialDiagnosticsPage() {
                     </div>
 
                     <div className="rounded-[2.2rem] border border-[#D4A574]/20 bg-[#141414] px-7 py-7 text-[#FBF7EF] shadow-xl">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Selection Status</p>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Ready</p>
                         <p className="mt-4 text-3xl font-bold uppercase tracking-tight">{compareProgressLabel}</p>
                         <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-white/40 font-medium">
-                            {isReady ? 'Ready to compare' : 'Select two assets'}
+                            {isReady ? 'Ready to compare' : 'Waiting for 2 assets'}
                         </p>
                     </div>
                 </div>
@@ -594,6 +597,10 @@ export default function DifferentialDiagnosticsPage() {
 
                     {status === 'success' && result && (
                         <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-1000">
+    <div className="mb-8 rounded-[1.6rem] border border-[#D4A574]/20 bg-[#FCFAF5] px-6 py-5">
+        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513]">Verdict</p>
+        <p className="mt-2 text-[15px] leading-relaxed text-[#1A1A1A]/80">{comparisonVerdict}</p>
+    </div>
                             <div className="mb-8 flex flex-col gap-4 rounded-[2rem] border border-[#D4A574]/15 bg-white/70 p-6 md:flex-row md:items-end md:justify-between">
                                 <div>
                                     <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574]">Export Report</p>
@@ -656,7 +663,7 @@ export default function DifferentialDiagnosticsPage() {
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                                 <div className="bg-[#1A1A1A] p-8 rounded-[2rem] border border-[#D4A574]/20 shadow-xl">
                                     <h3 className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#D4A574] mb-8 border-b border-[#D4A574]/10 pb-4">
-                                        Trigger Map
+                                        Winner
                                     </h3>
                                     <div className="w-full aspect-square relative">
                                         <ResponsiveContainer width="100%" height="100%">
@@ -686,7 +693,7 @@ export default function DifferentialDiagnosticsPage() {
 
                                 <div className="space-y-6">
                                     <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A]/40 mb-8 border-b border-[#D4A574]/10 pb-4">
-                                        Key Deltas and Impact
+                                        Key Differences
                                     </h3>
 
                                     {result.semiotic_shifts.map((shift, idx) => (
@@ -721,9 +728,6 @@ export default function DifferentialDiagnosticsPage() {
                             {/* READY TO COMPARE & BEHAVIORAL BARS */}
                             <div className="mt-24 space-y-16">
                                 <div className="border-t border-[#D4A574]/10 pt-16">
-                                    <h3 className="text-[10px] font-bold tracking-[0.5em] uppercase text-[#1A1A1A]/40 mb-12 text-center">
-                                        {agency?.is_whitelabel_active ? (agency.name || 'DECOMPILER') : 'VISUAL DECOMPILER'} READY TO COMPARE
-                                    </h3>
                                     
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                         {/* Winning Variant Cube */}
@@ -1043,29 +1047,29 @@ function AssetSelectorPanel({
     onOpenDrawer: () => void
 }) {
     return (
-        <div className="flex-1 bg-[#1A1A1A] border border-[#D4A574]/30 rounded-[3rem] overflow-hidden min-h-[480px] relative transition-all duration-500 hover:border-[#D4A574]/60 group shadow-2xl">
+        <div className="flex-1 bg-white/80 border border-[#E7DED1] rounded-[2.2rem] overflow-hidden min-h-[480px] relative transition-all duration-500 hover:border-[#D4A574]/45 group shadow-sm">
             {/* Background Media View */}
             {selected && (
                 <div className="absolute inset-0">
                     <img
                         src={selected.file_url}
                         alt="Selected Asset"
-                        className="w-full h-full object-cover opacity-75 transition-all duration-1000"
+                        className="w-full h-full object-cover opacity-85 transition-all duration-1000"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/20 to-[#1A1A1A]/60" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#FBFBF6]/85 via-[#FBFBF6]/25 to-transparent" />
                 </div>
             )}
 
             {/* Panel UI Layer */}
             <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between">
                 <div>
-                    <h3 className="text-[10px] font-bold tracking-[0.45em] uppercase text-[#D4A574]">
+                    <h3 className="text-[10px] font-bold tracking-[0.34em] uppercase text-[#D4A574]">
                         {label}
                     </h3>
                     {selected && (
                         <div className="mt-6 animate-in fade-in slide-in-from-left-4 duration-500">
-                            <span className="block text-3xl font-bold tracking-tight text-white uppercase">{selected.brand.name}</span>
-                            <span className="mt-2 block text-[10px] text-[#D4A574]/60 font-mono tracking-[0.2em] uppercase">ID: {selected.id.split('-')[0]}</span>
+                            <span className="block text-3xl font-semibold tracking-tight text-[#1A1A1A] uppercase">{selected.brand.name}</span>
+                            <span className="mt-2 block text-[10px] text-[#8A7B64] font-mono tracking-[0.16em] uppercase">ID: {selected.id.split('-')[0]}</span>
                         </div>
                     )}
                 </div>
@@ -1074,7 +1078,7 @@ function AssetSelectorPanel({
                     <div className="relative w-full max-w-[280px]">
                         <button
                             onClick={onOpenDrawer}
-                            className="group relative w-full bg-white/5 border border-[#D4A574]/40 hover:border-[#D4A574] hover:bg-white/10 py-5 transition-all text-[10px] font-bold tracking-[0.35em] uppercase text-[#D4A574] rounded-full overflow-hidden"
+                            className="group relative w-full bg-[#FBF7EF] border border-[#D8CCB5] hover:border-[#D4A574] hover:bg-[#F6F1E7] py-5 transition-all text-[10px] font-bold tracking-[0.3em] uppercase text-[#8B4513] rounded-full overflow-hidden"
                         >
                             <span className="relative z-10">{selected ? 'Change Asset' : 'Select from Vault'}</span>
                             <div className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -1087,12 +1091,6 @@ function AssetSelectorPanel({
                     </div>
                 </div>
             </div>
-
-            {/* Corner Accents */}
-            <div className="absolute top-10 left-10 w-6 h-6 border-t border-l border-[#D4A574]/40 group-hover:w-8 group-hover:h-8 transition-all" />
-            <div className="absolute top-10 right-10 w-6 h-6 border-t border-r border-[#D4A574]/40 group-hover:w-8 group-hover:h-8 transition-all" />
-            <div className="absolute bottom-10 left-10 w-6 h-6 border-b border-l border-[#D4A574]/40 group-hover:w-8 group-hover:h-8 transition-all" />
-            <div className="absolute bottom-10 right-10 w-6 h-6 border-b border-r border-[#D4A574]/40 group-hover:w-8 group-hover:h-8 transition-all" />
         </div>
     );
 }
