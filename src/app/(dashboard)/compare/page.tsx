@@ -1054,7 +1054,7 @@ function AssetSelectorPanel({
                     <img
                         src={selected.file_url}
                         alt="Selected Asset"
-                        className="w-full h-full object-cover opacity-85 transition-all duration-1000"
+                        className="w-full h-full object-cover transition-all duration-1000"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#FBFBF6]/85 via-[#FBFBF6]/25 to-transparent" />
                 </div>
