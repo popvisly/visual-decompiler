@@ -459,7 +459,7 @@ export default function DifferentialDiagnosticsPage() {
                             <button
                                 onClick={handleAnalyse}
                                 disabled={status === 'analysing'}
-                                className={`group relative px-8 py-5 bg-[#8A8A8A] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all hover:bg-[#D4A574] disabled:opacity-50 ${isReady ? 'tan-pulse hover:scale-105 active:scale-95 cursor-pointer' : 'opacity-70 cursor-not-allowed'}`}
+                                className={`group relative px-8 py-5 bg-[#1A1A1A] text-[#FBF7EF] text-[11px] font-bold tracking-[0.34em] uppercase rounded-[14px] border border-[#F2E8D8]/80 shadow-[0_12px_24px_rgba(20,20,20,0.28)] transition-all hover:bg-[#C86422] hover:border-[#F1D1AE] hover:shadow-[0_16px_30px_rgba(20,20,20,0.34)] disabled:opacity-50 ${isReady ? 'hover:scale-[1.02] active:scale-[0.98] cursor-pointer' : 'opacity-70 cursor-not-allowed'}`}
                             >
                                 <span className="relative z-10">
                                     {buttonLabel}
@@ -1061,14 +1061,14 @@ function AssetSelectorPanel({
 
             {/* Panel UI Layer */}
             <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between">
-                <div>
-                    <h3 className="text-[10px] font-bold tracking-[0.34em] uppercase text-[#D4A574]">
+                <div className="inline-flex max-w-[340px] flex-col gap-4 rounded-[1.2rem] border border-white/55 bg-[#FBF7EF]/62 px-5 py-4 shadow-[0_10px_30px_rgba(20,20,20,0.16)] backdrop-blur-md">
+                    <h3 className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#8B5A2B]/90">
                         {label}
                     </h3>
                     {selected && (
-                        <div className="mt-6 animate-in fade-in slide-in-from-left-4 duration-500">
+                        <div className="animate-in fade-in slide-in-from-left-4 duration-500">
                             <span className="block text-3xl font-semibold tracking-tight text-[#1A1A1A] uppercase">{selected.brand.name}</span>
-                            <span className="mt-2 block text-[10px] text-[#8A7B64] font-mono tracking-[0.16em] uppercase">ID: {selected.id.split('-')[0]}</span>
+                            <span className="mt-2 block text-[10px] text-[#6F6251] font-mono tracking-[0.16em] uppercase">ID: {selected.id.split('-')[0]}</span>
                         </div>
                     )}
                 </div>
