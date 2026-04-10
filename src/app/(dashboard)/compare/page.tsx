@@ -455,8 +455,8 @@ export default function DifferentialDiagnosticsPage() {
                         <div className="flex flex-col items-center gap-3">
                             <button
                                 onClick={handleAnalyse}
-                                disabled={!isReady}
-                                className={`group relative px-8 py-5 bg-[#8A8A8A] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all hover:bg-[#D4A574] disabled:opacity-50 disabled:grayscale disabled:hover:bg-[#8A8A8A] ${isReady ? 'tan-pulse hover:scale-105 active:scale-95' : ''}`}
+                                disabled={status === 'analysing'}
+                                className={`group relative px-8 py-5 bg-[#8A8A8A] text-[#1A1A1A] text-[11px] font-bold tracking-[0.4em] uppercase rounded-full transition-all hover:bg-[#D4A574] disabled:opacity-50 ${isReady ? 'tan-pulse hover:scale-105 active:scale-95 cursor-pointer' : 'opacity-70 cursor-not-allowed'}`}
                             >
                                 <span className="relative z-10">
                                     {buttonLabel}
