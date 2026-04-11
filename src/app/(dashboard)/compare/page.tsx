@@ -1061,14 +1061,14 @@ function AssetSelectorPanel({
 
             {/* Panel UI Layer */}
             <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between">
-                <div className="inline-flex max-w-[340px] flex-col gap-4 rounded-[1.2rem] border border-white/55 bg-[#FBF7EF]/62 px-5 py-4 shadow-[0_10px_30px_rgba(20,20,20,0.16)] backdrop-blur-md">
-                    <h3 className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#8B5A2B]/90">
+                <div className="inline-flex max-w-[300px] flex-col gap-3 rounded-[1.2rem] border border-white/55 bg-[#FBF7EF]/62 px-4 py-3 shadow-[0_10px_30px_rgba(20,20,20,0.16)] backdrop-blur-md">
+                    <h3 className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]">
                         {label}
                     </h3>
                     {selected && (
                         <div className="animate-in fade-in slide-in-from-left-4 duration-500">
                             <span className="block text-3xl font-semibold tracking-tight text-[#1A1A1A] uppercase">{selected.brand.name}</span>
-                            <span className="mt-2 block text-[10px] text-[#6F6251] font-mono tracking-[0.16em] uppercase">ID: {selected.id.split('-')[0]}</span>
+                            <span className="mt-2 block text-[10px] text-[#1A1A1A] font-mono tracking-[0.16em] uppercase">ID: {selected.id.split('-')[0]}</span>
                         </div>
                     )}
                 </div>
