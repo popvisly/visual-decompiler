@@ -1054,7 +1054,7 @@ function AssetSelectorPanel({
                     <img
                         src={selected.file_url}
                         alt="Selected Asset"
-                        className="w-full h-full object-cover transition-all duration-1000"
+                        className="w-full h-full object-cover transform-gpu transition-transform duration-700 ease-out group-hover:scale-[1.035] group-hover:-translate-y-1"
                     />
                 </div>
             )}
