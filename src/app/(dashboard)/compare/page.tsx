@@ -1056,16 +1056,12 @@ function AssetSelectorPanel({
                         alt="Selected Asset"
                         className="w-full h-full object-cover transform-gpu transition-transform duration-700 ease-out group-hover:scale-[1.035] group-hover:-translate-y-1"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/50 via-[#111111]/16 to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#111111]/16 via-transparent to-[#111111]/12" />
                 </div>
             )}
 
-            <div className="pointer-events-none absolute inset-1 rounded-[2rem] border border-white/24" />
-
             {/* Panel UI Layer */}
-            <div className="relative z-10 h-full p-10 flex flex-col justify-between">
-                <div className="inline-flex w-fit max-w-[286px] flex-col gap-2 rounded-[1rem] border border-white/65 bg-[#FBF7EF]/78 px-4 py-3 shadow-[0_10px_28px_rgba(20,20,20,0.18)] backdrop-blur-[6px]">
+            <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between">
+                <div className="inline-flex max-w-[300px] flex-col gap-3 rounded-[1.2rem] border border-white/55 bg-[#FBF7EF]/62 px-4 py-3 shadow-[0_10px_30px_rgba(20,20,20,0.16)] backdrop-blur-md">
                     <h3 className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]">
                         {label}
                     </h3>
@@ -1077,17 +1073,21 @@ function AssetSelectorPanel({
                     )}
                 </div>
 
-                <div className="mx-auto w-full max-w-[360px] rounded-[1rem] border border-white/45 bg-[#FBF7EF]/80 p-3 shadow-[0_8px_20px_rgba(20,20,20,0.16)] backdrop-blur-[4px]">
-                    <button
-                        onClick={onOpenDrawer}
-                        className="group relative w-full bg-[#FBF7EF] border border-[#D8CCB5] hover:border-[#D4A574] hover:bg-[#F6F1E7] py-5 transition-all text-[10px] font-bold tracking-[0.3em] uppercase text-[#8B4513] rounded-full overflow-hidden"
-                    >
-                        <span className="relative z-10">{selected ? 'Change Asset' : 'Select from Vault'}</span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </button>
-                    <p className="mt-2 min-h-[16px] text-center text-[11px] leading-relaxed text-[#1A1A1A]/65 font-medium tracking-tight px-2">
-                        {helperText || ' '}
-                    </p>
+                <div className="flex justify-center">
+                    <div className="relative w-full max-w-[280px]">
+                        <button
+                            onClick={onOpenDrawer}
+                            className="group relative w-full bg-[#FBF7EF] border border-[#D8CCB5] hover:border-[#D4A574] hover:bg-[#F6F1E7] py-5 transition-all text-[10px] font-bold tracking-[0.3em] uppercase text-[#8B4513] rounded-full overflow-hidden"
+                        >
+                            <span className="relative z-10">{selected ? 'Change Asset' : 'Select from Vault'}</span>
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </button>
+                        {helperText && (
+                            <p className="mt-4 text-center text-[12px] leading-relaxed text-[#D4A574]/70 font-medium tracking-tight px-4">
+                                {helperText}
+                            </p>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
