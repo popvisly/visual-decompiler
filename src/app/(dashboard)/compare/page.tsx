@@ -1060,34 +1060,31 @@ function AssetSelectorPanel({
             )}
 
             {/* Panel UI Layer */}
-            <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between">
-                <div className="inline-flex max-w-[300px] flex-col gap-3 rounded-[1.2rem] border border-white/55 bg-[#FBF7EF]/62 px-4 py-3 shadow-[0_10px_30px_rgba(20,20,20,0.16)] backdrop-blur-md">
-                    <h3 className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]">
-                        {label}
-                    </h3>
-                    {selected && (
-                        <div className="animate-in fade-in slide-in-from-left-4 duration-500">
-                            <span className="block text-3xl font-semibold tracking-tight text-[#1A1A1A] uppercase">{selected.brand.name}</span>
-                            <span className="mt-2 block text-[10px] text-[#1A1A1A] font-mono tracking-[0.16em] uppercase">ID: {selected.id.split('-')[0]}</span>
-                        </div>
-                    )}
-                </div>
+            <div className="relative z-10 w-full h-full p-12 flex flex-col justify-end">
+                <div className="mx-auto w-full max-w-[320px]">
+                    <button
+                        onClick={onOpenDrawer}
+                        className="group relative w-full bg-[#FBF7EF] border border-[#D8CCB5] hover:border-[#D4A574] hover:bg-[#F6F1E7] py-5 transition-all text-[10px] font-bold tracking-[0.3em] uppercase text-[#8B4513] rounded-full overflow-hidden"
+                    >
+                        <span className="relative z-10">{selected ? 'Change Asset' : 'Select from Vault'}</span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </button>
 
-                <div className="flex justify-center">
-                    <div className="relative w-full max-w-[280px]">
-                        <button
-                            onClick={onOpenDrawer}
-                            className="group relative w-full bg-[#FBF7EF] border border-[#D8CCB5] hover:border-[#D4A574] hover:bg-[#F6F1E7] py-5 transition-all text-[10px] font-bold tracking-[0.3em] uppercase text-[#8B4513] rounded-full overflow-hidden"
-                        >
-                            <span className="relative z-10">{selected ? 'Change Asset' : 'Select from Vault'}</span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#D4A574]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </button>
-                        {helperText && (
-                            <p className="mt-4 text-center text-[12px] leading-relaxed text-[#D4A574]/70 font-medium tracking-tight px-4">
-                                {helperText}
-                            </p>
+                    <div className="mt-3 rounded-[1rem] border border-white/70 bg-[#FBF7EF]/88 px-4 py-3 shadow-[0_8px_18px_rgba(20,20,20,0.12)]">
+                        <h3 className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]">
+                            {label}
+                        </h3>
+                        {selected && (
+                            <div className="mt-2 animate-in fade-in slide-in-from-left-4 duration-500">
+                                <span className="block text-[42px] leading-[0.92] font-semibold tracking-tight text-[#1A1A1A] uppercase">{selected.brand.name}</span>
+                                <span className="mt-2 block text-[10px] text-[#1A1A1A] font-mono tracking-[0.16em] uppercase">ID: {selected.id.split('-')[0]}</span>
+                            </div>
                         )}
                     </div>
+
+                    <p className="mt-3 min-h-[18px] text-center text-[12px] leading-relaxed text-[#1A1A1A]/65 font-medium tracking-tight px-2">
+                        {helperText || ' '}
+                    </p>
                 </div>
             </div>
         </div>
