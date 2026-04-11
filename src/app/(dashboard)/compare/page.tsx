@@ -403,7 +403,7 @@ export default function DifferentialDiagnosticsPage() {
                                 Compare Routes
                             </h1>
                             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
-                                Pick two assets to see which route is stronger and why.
+                                Pick two assets to see which route is stronger and why. Choose a clearly different Asset B so the comparison is useful.
                             </p>
                         </div>
 
@@ -471,7 +471,6 @@ export default function DifferentialDiagnosticsPage() {
                     <AssetSelectorPanel
                         label="ASSET B (CHALLENGER)"
                         selected={assetB}
-                        helperText="Choose a clearly different Asset B so the comparison is useful."
                         onOpenDrawer={() => setDrawerState({ open: true, target: 'B' })}
                     />
 
