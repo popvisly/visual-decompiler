@@ -142,7 +142,7 @@ export default function AnalysisSurfaces() {
 {/* Two-column surfaces grid */}
 <div className="relative mb-32 lg:mb-48">
     <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
             {SURFACES.map((surface) => (
                 <div
                     key={surface.id}
