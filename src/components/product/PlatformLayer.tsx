@@ -29,7 +29,7 @@ const PLATFORM_FEATURES = [
 
 export default function PlatformLayer() {
     return (
-        <section className="relative bg-[#F6F1E7] text-[#141414] pt-6 lg:pt-8 pb-24 lg:pb-32 overflow-hidden" data-presence-tone="light">
+        <section className="relative bg-[#F6F1E7] text-[#141414] pt-12 lg:pt-16 pb-24 lg:pb-32 overflow-hidden" data-presence-tone="light">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
                 {/* Section header */}
                 <motion.div
