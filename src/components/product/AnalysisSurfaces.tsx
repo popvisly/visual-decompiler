@@ -137,60 +137,73 @@ export default function AnalysisSurfaces() {
                 </motion.div>
             </div>
 
-{/* Two-column surfaces grid */}
-<div className="relative pb-20 lg:pb-28">
-    <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
-            {SURFACES.map((surface) => (
-                <div
-                    key={surface.id}
-                    className="min-w-0"
+            {/* Two-column surfaces grid */}
+            <div className="relative pb-20 lg:pb-28">
+                <motion.div
+                    className="mx-auto max-w-[1200px] px-6 lg:px-12"
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <div className="rounded-[1.25rem] border border-[#E7DED1] bg-[#FBF7EF] p-6 h-full flex flex-col">
-                        {/* Header */}
-                        <div className="flex items-center gap-3 mb-5">
-                            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#141414] text-[#C1A674]">
-                                <surface.icon size={17} strokeWidth={1.5} />
-                            </div>
-                            <div>
-                                <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#C1A674]">
-                                    {surface.label}
-                                </p>
-                                <h3 className="text-[18px] lg:text-[20px] font-black leading-[1.15] tracking-[-0.02em] text-[#141414] mt-1">
-                                    {surface.title}
-                                </h3>
-                            </div>
-                        </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
+                        {SURFACES.map((surface, index) => (
+                            <motion.div
+                                key={surface.id}
+                                className="min-w-0 group/surface"
+                                initial={{ opacity: 0, y: 18 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-40px' }}
+                                transition={{ duration: 0.45, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                                whileHover={{ y: -3 }}
+                            >
+                                <div className="relative rounded-[1.25rem] border border-[#E7DED1] bg-[#FBF7EF] p-6 h-full flex flex-col shadow-[0_1px_0_rgba(20,20,20,0.02)] transition-shadow duration-300 group-hover/surface:shadow-[0_14px_28px_rgba(20,20,20,0.10)]">
+                                    {/* Header */}
+                                    <div className="flex items-center gap-3 mb-5">
+                                        <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-[#141414] text-[#C1A674]">
+                                            <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-[#C1A674]/0 transition-all duration-300 group-hover/surface:ring-[#C1A674]/35" />
+                                            <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover/surface:opacity-100 group-hover/surface:animate-ping bg-[#C1A674]/10" />
+                                            <surface.icon size={17} strokeWidth={1.5} />
+                                        </div>
+                                        <div className="min-w-0">
+                                            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#C1A674]">
+                                                {surface.label}
+                                            </p>
+                                            <h3 className="text-[18px] lg:text-[20px] font-black leading-[1.15] tracking-[-0.02em] text-[#141414] mt-1">
+                                                {surface.title}
+                                            </h3>
+                                            <div className="mt-2 h-[2px] w-0 bg-[#C1A674]/80 transition-all duration-300 group-hover/surface:w-10" />
+                                        </div>
+                                    </div>
 
-                        {/* Detail */}
-                        <p className="text-[14px] leading-[1.65] text-[#6B6B6B] mb-6">
-                            {surface.detail}
-                        </p>
+                                    {/* Detail */}
+                                    <p className="text-[14px] leading-[1.65] text-[#6B6B6B] mb-6">
+                                        {surface.detail}
+                                    </p>
 
-                        {/* Preview */}
-                        <div className="mt-auto grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                            {surface.preview.map((item) => (
-                                <div
-                                    key={item.label}
-                                    className="rounded-xl border border-[#E7DED1] bg-white px-3.5 py-2.5"
-                                >
-                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#9a9a94] mb-1">
-                                        {item.label}
-                                    </p>
-                                    <p className="text-[12px] font-semibold text-[#141414]">
-                                        {item.value}
-                                    </p>
+                                    {/* Preview */}
+                                    <div className="mt-auto grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                                        {surface.preview.map((item) => (
+                                            <div
+                                                key={item.label}
+                                                className="relative overflow-hidden rounded-xl border border-[#E7DED1] bg-white px-3.5 py-2.5"
+                                            >
+                                                <div className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-[#C1A674]/16 to-transparent translate-x-[-180%] transition-transform duration-900 ease-out group-hover/surface:translate-x-[520%]" />
+                                                <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#9a9a94] mb-1">
+                                                    {item.label}
+                                                </p>
+                                                <p className="text-[12px] font-semibold text-[#141414]">
+                                                    {item.value}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                            ))}
-                        </div>
+                            </motion.div>
+                        ))}
                     </div>
-                </div>
-            ))}
-        </div>
-    </div>
-</div>
-
-
+                </motion.div>
+            </div>
         </section>
     );
 }
