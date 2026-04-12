@@ -160,10 +160,10 @@ export default function AnalysisSurfaces() {
                                 <div className="relative rounded-[1.25rem] border border-[#E7DED1] bg-[#FBF7EF] p-6 h-full flex flex-col shadow-[0_1px_0_rgba(20,20,20,0.02)] transition-shadow duration-300 group-hover/surface:shadow-[0_14px_28px_rgba(20,20,20,0.10)]">
                                     {/* Header */}
                                     <div className="flex items-center gap-3 mb-5">
-                                        <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-[#1A1A1A]/88 text-[#C1A674]/75">
+                                        <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-[#1A1A1A]/88 text-[#C1A674]/75">
                                             <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-[#C1A674]/0 transition-all duration-300 group-hover/surface:ring-[#C1A674]/20" />
                                             <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover/surface:opacity-100 group-hover/surface:animate-ping bg-[#C1A674]/6" />
-                                            <surface.icon size={14} strokeWidth={1.4} />
+                                            <surface.icon size={17} strokeWidth={1.4} />
                                         </div>
                                         <div className="min-w-0">
                                             <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#C1A674]">
