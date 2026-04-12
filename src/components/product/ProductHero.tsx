@@ -8,7 +8,7 @@ import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 export default function ProductHero() {
     return (
         <section className="relative bg-[#F6F1E7] text-[#141414] overflow-hidden" data-presence-tone="light">
-            <div className="mx-auto max-w-[1200px] px-6 lg:px-12 pt-32 lg:pt-48 pb-20 lg:pb-24">
+            <div className="mx-auto max-w-[1200px] px-6 lg:px-12 pt-28 lg:pt-36 pb-16 lg:pb-20">
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -24,6 +24,18 @@ export default function ProductHero() {
                     <p className="text-[18px] lg:text-[20px] leading-[1.7] text-[#6B6B6B] max-w-[580px] mb-12">
                         Visual Decompiler reads the hidden architecture of any creative — the persuasion mechanics, the semiotic subtext, the psychological drivers. What you can't see is what moves the market.
                     </p>
+
+                    <div className="max-w-[620px] mb-12">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-5">
+                            9 analysis surfaces
+                        </p>
+                        <h2 className="text-[8.2vw] lg:text-[64px] font-black leading-[0.9] tracking-[-0.03em] uppercase text-[#141414] max-w-[11ch] mb-6">
+                            What's under <span className="text-[#C1A674]">every ad.</span>
+                        </h2>
+                        <p className="text-[16px] lg:text-[18px] leading-[1.7] text-[#6B6B6B]">
+                            Each surface extracts a different dimension of the creative. Together they form a complete forensic read — the kind of analysis you'd expect from a senior team in a three-hour review. Done in minutes.
+                        </p>
+                    </div>
 
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
                         <Link

@@ -117,28 +117,8 @@ const SURFACES = [
 export default function AnalysisSurfaces() {
     return (
         <section className="relative bg-[#F6F1E7] text-[#141414]" data-presence-tone="light">
-            {/* Section header */}
-            <div className="mx-auto max-w-[1200px] px-6 lg:px-12 pt-32 lg:pt-48 pb-20">
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-6">
-                        9 analysis surfaces
-                    </p>
-                    <h2 className="text-[10vw] lg:text-[80px] font-black leading-[0.85] tracking-[-0.04em] uppercase text-[#141414] max-w-[12ch] mb-10">
-                        What's under <span className="text-[#C1A674]">every ad.</span>
-                    </h2>
-                    <p className="text-[18px] leading-[1.7] text-[#6B6B6B] max-w-[560px]">
-                        Each surface extracts a different dimension of the creative. Together they form a complete forensic read — the kind of analysis you'd expect from a senior team in a three-hour review. Done in minutes.
-                    </p>
-                </motion.div>
-            </div>
-
             {/* Two-column surfaces grid */}
-            <div className="relative pb-20 lg:pb-28">
+            <div className="relative pb-16 lg:pb-20">
                 <motion.div
                     className="mx-auto max-w-[1200px] px-6 lg:px-12"
                     initial={{ opacity: 0, y: 18 }}

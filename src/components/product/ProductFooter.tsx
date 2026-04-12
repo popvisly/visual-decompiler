@@ -8,7 +8,7 @@ import Logo from '@/components/Logo';
 export default function ProductFooter() {
     return (
         <footer className="bg-[#F6F1E7] text-[#141414] border-t border-[#E7DED1]">
-            <div className="mx-auto max-w-[1200px] px-6 py-20 sm:px-8 lg:px-10">
+            <div className="mx-auto max-w-[1200px] px-6 py-16 sm:px-8 lg:px-10 lg:py-20">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}

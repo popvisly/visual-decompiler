@@ -29,7 +29,7 @@ const PLATFORM_FEATURES = [
 
 export default function PlatformLayer() {
     return (
-        <section className="relative bg-[#F6F1E7] text-[#141414] pt-12 lg:pt-16 pb-24 lg:pb-32 overflow-hidden" data-presence-tone="light">
+        <section className="relative bg-[#F6F1E7] text-[#141414] pt-16 lg:pt-20 pb-20 lg:pb-24 overflow-hidden" data-presence-tone="light">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
                 {/* Section header */}
                 <motion.div
@@ -37,7 +37,7 @@ export default function PlatformLayer() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-100px' }}
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    className="mb-16 lg:mb-24"
+                    className="mb-12 lg:mb-16"
                 >
                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-6">
                         Platform
@@ -59,7 +59,7 @@ export default function PlatformLayer() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-20px' }}
                             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                            className="border-t border-[#E7DED1] py-12 lg:py-16 last:border-b"
+                            className="border-t border-[#E7DED1] py-10 lg:py-12 last:border-b"
                         >
                             <div className="flex items-start gap-5">
                                 <div className="flex items-center justify-center w-12 h-12 rounded-xl border border-[#E7DED1] bg-white text-[#C1A674] shrink-0">
