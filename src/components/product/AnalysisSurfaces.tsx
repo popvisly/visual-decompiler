@@ -139,62 +139,60 @@ export default function AnalysisSurfaces() {
                 </motion.div>
             </div>
 
-            {/* Horizontal scroll surfaces */}
-            <div className="relative mb-32 lg:mb-48">
-                <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
-                    <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-6 -mx-6 px-6 lg:-mx-12 lg:px-12 scrollbar-hide"
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                    >
-                        {SURFACES.map((surface) => (
-                            <div
-                                key={surface.id}
-                                className="snap-center shrink-0 w-[85vw] md:w-[70vw] lg:w-[55vw] first:pl-0 last:pr-0"
-                            >
-                                <div className="rounded-[1.4rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 lg:p-10 h-full flex flex-col">
-                                    {/* Header */}
-                                    <div className="flex items-center gap-4 mb-6">
-                                        <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-[#141414] text-[#C1A674]">
-                                            <surface.icon size={20} strokeWidth={1.5} />
-                                        </div>
-                                        <div>
-                                            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#C1A674]">
-                                                {surface.label}
-                                            </p>
-                                            <h3 className="text-[20px] lg:text-[24px] font-black leading-[1.1] tracking-[-0.02em] text-[#141414] mt-1">
-                                                {surface.title}
-                                            </h3>
-                                        </div>
-                                    </div>
-
-                                    {/* Detail */}
-                                    <p className="text-[15px] leading-[1.7] text-[#6B6B6B] mb-8">
-                                        {surface.detail}
-                                    </p>
-
-                                    {/* Preview */}
-                                    <div className="mt-auto grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                        {surface.preview.map((item) => (
-                                            <div
-                                                key={item.label}
-                                                className="rounded-2xl border border-[#E7DED1] bg-white px-4 py-3"
-                                            >
-                                                <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#9a9a94] mb-1">
-                                                    {item.label}
-                                                </p>
-                                                <p className="text-[13px] font-semibold text-[#141414]">
-                                                    {item.value}
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+{/* Two-column surfaces grid */}
+<div className="relative mb-32 lg:mb-48">
+    <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
+            {SURFACES.map((surface) => (
+                <div
+                    key={surface.id}
+                    className="min-w-0"
+                >
+                    <div className="rounded-[1.25rem] border border-[#E7DED1] bg-[#FBF7EF] p-6 h-full flex flex-col">
+                        {/* Header */}
+                        <div className="flex items-center gap-3 mb-5">
+                            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#141414] text-[#C1A674]">
+                                <surface.icon size={17} strokeWidth={1.5} />
                             </div>
-                        ))}
+                            <div>
+                                <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#C1A674]">
+                                    {surface.label}
+                                </p>
+                                <h3 className="text-[18px] lg:text-[20px] font-black leading-[1.15] tracking-[-0.02em] text-[#141414] mt-1">
+                                    {surface.title}
+                                </h3>
+                            </div>
+                        </div>
+
+                        {/* Detail */}
+                        <p className="text-[14px] leading-[1.65] text-[#6B6B6B] mb-6">
+                            {surface.detail}
+                        </p>
+
+                        {/* Preview */}
+                        <div className="mt-auto grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                            {surface.preview.map((item) => (
+                                <div
+                                    key={item.label}
+                                    className="rounded-xl border border-[#E7DED1] bg-white px-3.5 py-2.5"
+                                >
+                                    <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#9a9a94] mb-1">
+                                        {item.label}
+                                    </p>
+                                    <p className="text-[12px] font-semibold text-[#141414]">
+                                        {item.value}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
+            ))}
+        </div>
+    </div>
+</div>
 
-            {/* Bottom CTA */}
+{/* Bottom CTA */}
             <div className="mx-auto max-w-[1200px] px-6 lg:px-12 pb-32 lg:pb-48">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
