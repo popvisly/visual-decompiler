@@ -1,9 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { ArrowUpRight, ShieldCheck, Brain, Layers, Eye, MapPin, Code2, FlaskConical, TrendingUp, ClipboardCheck } from 'lucide-react';
-import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
+import { ShieldCheck, Brain, Layers, Eye, MapPin, Code2, FlaskConical, TrendingUp, ClipboardCheck } from 'lucide-react';
 
 const SURFACES = [
     {
@@ -140,7 +138,7 @@ export default function AnalysisSurfaces() {
             </div>
 
 {/* Two-column surfaces grid */}
-<div className="relative mb-32 lg:mb-48">
+<div className="relative mb-16 lg:mb-24">
     <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
             {SURFACES.map((surface) => (
@@ -192,31 +190,7 @@ export default function AnalysisSurfaces() {
     </div>
 </div>
 
-{/* Bottom CTA */}
-            <div className="mx-auto max-w-[1200px] px-6 lg:px-12 pb-32 lg:pb-48">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
-                >
-                    <Link
-                        href={SAMPLE_DOSSIER_HREF}
-                        className="inline-flex items-center gap-3 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition hover:bg-[#C1A674] hover:text-[#141414]"
-                    >
-                        See it in action
-                        <ArrowUpRight size={16} />
-                    </Link>
-                    <Link
-                        href="/ingest"
-                        className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#6B6B6B] transition hover:text-[#141414]"
-                    >
-                        <span className="w-6 h-px bg-[#141414]/20" />
-                        Start Decompiling Free
-                    </Link>
-                </motion.div>
-            </div>
+
         </section>
     );
 }
