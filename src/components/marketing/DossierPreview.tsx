@@ -17,14 +17,13 @@ export default function DossierPreview() {
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-6">
-                        What you get back
+                        Features for agencies
                     </p>
                     <h2 className="text-[10vw] lg:text-[72px] font-black leading-[0.88] tracking-[-0.04em] uppercase text-[#F6F1E7] max-w-[16ch] mb-10">
-                        Not vibes.<br />
-                        <span className="text-[#C1A674]">Structured judgment.</span>
+                        Presentation-ready output.
                     </h2>
                     <p className="text-[18px] leading-[1.7] text-[#9a9a94] max-w-[520px]">
-                        A dossier with a verdict, prioritized fixes, confidence scores, and evidence-separated claims. Built to hold up in a client room.
+                        Creative intelligence, strategic interpretation, dossier export, white label mode, and a private vault. Built for internal reviews, client rooms, and campaign-level decision-making.
                     </p>
                 </motion.div>
 
@@ -40,7 +39,7 @@ export default function DossierPreview() {
                     <div className="flex items-center justify-between pb-6 border-b border-[#222] mb-8">
                         <div className="flex items-center gap-3">
                             <div className="w-2 h-2 rounded-full bg-[#C1A674]" />
-                            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#C1A674]">Sample Dossier</span>
+                            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#C1A674]">Agency Dossier</span>
                         </div>
                         <span className="text-[10px] font-bold text-[#9a9a94]">CHANEL No.5</span>
                     </div>
@@ -120,7 +119,7 @@ export default function DossierPreview() {
                         href={SAMPLE_DOSSIER_HREF}
                         className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#F6F1E7] transition hover:text-[#C1A674]"
                     >
-                        Open full sample dossier
+                        View Sample Dossier
                         <ArrowUpRight size={16} />
                     </Link>
                 </motion.div>

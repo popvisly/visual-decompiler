@@ -9,7 +9,7 @@ import FooterStartNow from '@/components/marketing/FooterStartNow';
 export default function HomePage() {
     return (
         <main>
-            <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Open Sample Read', href: '/share/sample-dossier' }} />
+            <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Decompile an Ad', href: '/ingest' }} />
             <CinematicHero />
             <HowItWorks />
             <NeuralMapSection />

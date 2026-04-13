@@ -79,16 +79,16 @@ export default function FooterStartNow() {
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-8">
-                        Get started
+                        Final CTA
                     </p>
                     <h2 className="font-black leading-[0.88] tracking-[-0.05em] text-[#F6F1E7] uppercase mb-10"
                         style={{ fontSize: 'clamp(48px, 9vw, 100px)' }}
                     >
-                        Bring in the frame.<br />
-                        <span className="text-[#C1A674]">Get the creative read.</span>
+                        Don't just present the work.<br />
+                        <span className="text-[#C1A674]">Explain it.</span>
                     </h2>
                     <p className="text-[18px] leading-[1.7] text-[#9a9a94] max-w-[480px]">
-                        Built for art directors, designers, strategists, founders, and teams who need language for what the work is doing before the room moves on.
+                        Decompile your next ad before anyone else does.
                     </p>
                 </motion.div>
 
@@ -100,18 +100,18 @@ export default function FooterStartNow() {
                     className="mt-16 flex flex-col sm:flex-row items-start sm:items-center gap-6"
                 >
                     <a
-                        href={SAMPLE_DOSSIER_HREF}
+                        href="/ingest"
                         className="inline-flex items-center gap-3 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition hover:bg-[#C1A674] hover:text-[#F6F1E7]"
                     >
-                        Open Sample Read
+                        Decompile an Ad
                         <ArrowUpRight size={16} />
                     </a>
                     <a
-                        href="/ingest"
+                        href={SAMPLE_DOSSIER_HREF}
                         className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#9a9a94] transition hover:text-[#F6F1E7]"
                     >
                         <span className="w-6 h-px bg-[#141414]/20" />
-                        Start Decompiling Free
+                        View Sample Dossier
                     </a>
                 </motion.div>
             </div>
@@ -130,7 +130,7 @@ export default function FooterStartNow() {
             {/* ── FOOTER BAR ── */}
             <div className="mx-auto max-w-[1200px] px-6 py-8 sm:px-8 lg:px-10 border-t border-[#222]">
                 <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
-                    <Logo sublabel="VISUAL JUDGMENT FOR WORKING CREATIVES" forceDark={false} className="scale-[0.85] origin-left" />
+                    <Logo sublabel="CREATIVE INTELLIGENCE, MADE READABLE." forceDark={false} className="scale-[0.85] origin-left" />
                     <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
                         {[
                             { label: 'About', href: '/about' },

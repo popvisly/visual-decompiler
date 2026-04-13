@@ -6,24 +6,24 @@ import { ArrowUpRight } from 'lucide-react';
 
 const COMPARISONS = [
     {
-        label: 'Ad Repositories · Meta Library, TikTok Creative Center',
-        they: 'Show you what ads exist.',
-        vd: 'We read why the creative persuades, what to keep, and what to fix next.',
+        label: 'Pre-Pitch Refinement',
+        they: 'Pressure-test your work before it leaves the building.',
+        vd: 'Arrive with sharper, defensible reasoning before the first slide is on screen.',
     },
     {
-        label: 'Ad-Spy & Spend Tools · Pathmatics, SimilarWeb',
-        they: 'Track distribution, budget, and placement.',
-        vd: 'We complement spend data with creative causality and execution-level direction.',
+        label: 'Client Presentation',
+        they: 'Walk in with clear reasoning behind every visual decision.',
+        vd: 'Move the room from opinion to aligned direction, faster.',
     },
     {
-        label: 'AI Ad Generators · Flair, Munch',
-        they: 'Produce more ads, faster.',
+        label: 'Internal Reviews',
+        they: 'Align teams with shared, structured language instead of taste debates.',
         vd: 'We don\'t generate. We diagnose, critique, and direct quality.',
     },
     {
-        label: 'ChatGPT · Ask a general AI to "review this ad"',
-        they: 'Broad observations in casual language.',
-        vd: 'Standardized analysis, vault memory, and client-presentable output.',
+        label: 'Campaign Analysis',
+        they: 'Break down competitor or reference work beyond surface-level inspiration.',
+        vd: 'Identify what changes across campaigns and why it matters strategically.',
     },
 ];
 
@@ -38,11 +38,10 @@ export default function WhyDifferent() {
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-6">
-                        Why VD
+                        Use cases
                     </p>
                     <h2 className="text-[10vw] lg:text-[72px] font-black leading-[0.88] tracking-[-0.04em] uppercase text-[#F6F1E7] max-w-[14ch] mb-10">
-                        Every tool shows <br />you <span className="text-[#C1A674]">what.</span><br />
-                        We read <span className="text-[#C1A674]">why.</span>
+                        Built for the moments<br />that <span className="text-[#C1A674]">matter.</span>
                     </h2>
                 </motion.div>
 
@@ -81,7 +80,7 @@ export default function WhyDifferent() {
                         href="/ingest"
                         className="inline-flex items-center gap-3 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition hover:bg-[#C1A674] hover:text-[#F6F1E7]"
                     >
-                        Start Decompiling Free
+                        Decompile an Ad
                         <ArrowUpRight size={16} />
                     </Link>
                 </motion.div>

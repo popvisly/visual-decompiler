@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowUpRight, ArrowDown } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 export default function HowItWorks() {
@@ -17,23 +17,27 @@ export default function HowItWorks() {
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-6">
-                        How it works
+                        Core Value
                     </p>
                     <h2 className="text-[10vw] lg:text-[72px] font-black leading-[0.88] tracking-[-0.04em] uppercase text-[#F6F1E7] max-w-[14ch] mb-10">
-                        Drop an ad.<br />
-                        <span className="text-[#C1A674]">Get the read.</span>
+                        Make the work make sense.
                     </h2>
                     <p className="text-[18px] leading-[1.7] text-[#9a9a94] max-w-[520px]">
-                        Upload a creative. Within minutes, receive a structured dossier with a clear verdict, fix priorities, and evidence you can defend in a client room.
+                        You already know when something works. Visual Decompiler shows you why. Upload your ad and receive a structured breakdown of composition, hierarchy, tone, and strategic intent translated into language a client understands. No guesswork. No filler. Just clarity you can stand behind.
                     </p>
                 </motion.div>
 
-                {/* Three simple steps */}
-                <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-12">
+                {/* How it works */}
+                <div className="mt-20 mb-10">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-4">How it works</p>
+                    <p className="text-[34px] font-black uppercase tracking-[-0.03em] text-[#F6F1E7]">From concept to conviction.</p>
+                </div>
+
+                <div className="mt-0 grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-12">
                     {[
-                        { n: '1', title: 'Ingest', detail: 'JPG, PNG, WebP or URL. The asset is secured and fingerprinted.' },
-                        { n: '2', title: 'Decompose', detail: '13 forensic surfaces extracted — mechanics, semiotics, gaze, friction.' },
-                        { n: '3', title: 'Dossier', detail: 'Boardroom-ready verdict. Fix priorities. Confidence scores. One click.' },
+                        { n: '1', title: 'Upload the Work', detail: 'Your concept, your layout, your frame.' },
+                        { n: '2', title: 'Decompile', detail: 'Visual Decompiler analyzes the creative at a structural level — beyond surface description.' },
+                        { n: '3', title: 'Present with Authority', detail: 'Receive a clear, structured read you can use in pitch decks, internal reviews, or client conversations.' },
                     ].map((step, idx) => (
                         <motion.div
                             key={step.n}
@@ -64,7 +68,7 @@ export default function HowItWorks() {
                         href="/ingest"
                         className="inline-flex items-center gap-3 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition hover:bg-[#C1A674] hover:text-[#F6F1E7]"
                     >
-                        Start Decompiling Free
+                        Decompile an Ad
                         <ArrowUpRight size={16} />
                     </Link>
                     <Link
@@ -72,7 +76,7 @@ export default function HowItWorks() {
                         className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#9a9a94] transition hover:text-[#F6F1E7]"
                     >
                         <span className="w-6 h-px bg-[#141414]/20" />
-                        See sample read
+                        View Sample Dossier
                     </Link>
                 </motion.div>
             </div>

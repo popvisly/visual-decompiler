@@ -1,8 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 import NeuralParticleHero from './NeuralParticleHero';
 
 export default function NeuralMapSection() {
@@ -18,14 +16,13 @@ export default function NeuralMapSection() {
                     className="mb-12"
                 >
                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-6">
-                        The intelligence layer
+                        Platform frame
                     </p>
                     <h2 className="text-[10vw] lg:text-[72px] font-black leading-[0.88] tracking-[-0.04em] uppercase text-[#F6F1E7] max-w-[14ch] mb-10">
-                        13 dimensions.<br />
-                        <span className="text-[#C1A674]">Working together.</span>
+                        A complete creative intelligence system.
                     </h2>
                     <p className="text-[18px] leading-[1.7] text-[#9a9a94] max-w-[520px]">
-                        Trigger mechanics connect to semiotic subtext. Gaze routing flows into persuasion density. The read is only as strong as the connections between the surfaces.
+                        Public Gateway, Secure Access, Intelligence Vault, and Workspace Diagnostics. One system for decompiling work, organizing insight, and comparing what shifts across campaigns.
                     </p>
                 </motion.div>
 
