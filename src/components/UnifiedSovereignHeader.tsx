@@ -116,8 +116,8 @@ export default function UnifiedSovereignHeader({
                                                 relative px-2 py-2 text-[10px] font-black uppercase tracking-[0.25em]
                                                 transition-colors duration-500
                                                 ${active
-                                                    ? forceDark ? 'text-white' : 'text-[#F6F1E7]'
-                                                    : forceDark ? 'text-white/40 hover:text-white' : 'text-[#9a9a94] hover:text-[#F6F1E7]'
+                                                    ? forceDark ? 'text-white' : 'text-[#141414]'
+                                                    : forceDark ? 'text-white/40 hover:text-white' : 'text-[#8A8A84] hover:text-[#141414]'
                                                 }
                                             `}
                                         >
