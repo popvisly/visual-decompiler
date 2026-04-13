@@ -21,22 +21,9 @@ export default function ProductHero() {
                         See inside<br />
                         <span className="text-[#C1A674]">every ad.</span>
                     </h1>
-                    <p className="text-[18px] lg:text-[20px] leading-[1.7] text-[#6B6B6B] max-w-[580px] mb-12">
-                        Visual Decompiler reads the hidden architecture of any creative — the persuasion mechanics, the semiotic subtext, the psychological drivers. What you can't see is what moves the market.
+                    <p className="text-[18px] lg:text-[20px] leading-[1.7] text-[#6B6B6B] max-w-[680px] mb-12">
+                        Visual Decompiler reads the hidden architecture of any creative — persuasion mechanics, semiotic subtext, and psychological drivers. Across 9 analysis surfaces, each read forms a complete forensic view in minutes, not a three-hour review.
                     </p>
-
-                    <div className="max-w-[620px] mb-12">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-5">
-                            9 analysis surfaces
-                        </p>
-                        <h2 className="text-[8.2vw] lg:text-[64px] font-black leading-[0.9] tracking-[-0.03em] uppercase text-[#141414] max-w-[11ch] mb-6">
-                            What's under <span className="text-[#C1A674]">every ad.</span>
-                        </h2>
-                        <p className="text-[16px] lg:text-[18px] leading-[1.7] text-[#6B6B6B]">
-                            Each surface extracts a different dimension of the creative. Together they form a complete forensic read — the kind of analysis you'd expect from a senior team in a three-hour review. Done in minutes.
-                        </p>
-                    </div>
-
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
                         <Link
                             href="/ingest"
