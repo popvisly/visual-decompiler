@@ -40,7 +40,7 @@ export default function CinematicHero() {
             className="relative flex min-h-[100vh] flex-col justify-center overflow-hidden bg-[#0B0B0B] px-6 py-24 sm:px-8 lg:px-10"
             data-presence-tone="dark"
         >
-            <div className="absolute inset-x-0 top-0 bottom-[170px] z-0 opacity-40 [mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)] [-webkit-mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)]" aria-hidden="true">
+            <div className="absolute inset-x-0 top-0 bottom-[170px] z-0 opacity-55 [mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)] [-webkit-mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)]" aria-hidden="true">
                     <ParticleField />
                 </div>
 
@@ -77,26 +77,7 @@ export default function CinematicHero() {
                                 View Sample Dossier
                             </Link>
                         </div>
-
-                        <p className="mt-4 text-xs uppercase tracking-widest text-white/50">
-                            Because it feels right is not enough.
-                        </p>
                     </div>
-
-                    <p className="mt-8 text-[11px] font-bold uppercase tracking-[0.3em] text-[#C1A674]">
-                        Walk in with answers.
-                    </p>
-                </div>
-            </div>
-
-            <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 pb-16 sm:px-8 lg:px-10">
-                <div className="w-full border-t border-[#242424] pt-8 text-center">
-                    <p className="text-[13px] font-bold uppercase tracking-[0.22em] text-[#E2E2DD]">
-                        Not a gallery. Not a prompt.
-                    </p>
-                    <p className="mt-2 text-[17px] leading-[1.6] text-[#9C9C95]">
-                        A system for reading why work lands.
-                    </p>
                 </div>
             </div>
         </section>

@@ -164,14 +164,14 @@ export default function ParticleField() {
 
         resize();
         window.addEventListener('resize', resize);
-        canvas.addEventListener('mousemove', onMouseMove);
-        canvas.addEventListener('mouseleave', onMouseLeave);
+        window.addEventListener('mousemove', onMouseMove, { passive: true });
+        window.addEventListener('mouseleave', onMouseLeave);
         draw();
 
         return () => {
             window.removeEventListener('resize', resize);
-            canvas.removeEventListener('mousemove', onMouseMove);
-            canvas.removeEventListener('mouseleave', onMouseLeave);
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseleave', onMouseLeave);
             cancelAnimationFrame(animRef.current);
         };
     }, []);
