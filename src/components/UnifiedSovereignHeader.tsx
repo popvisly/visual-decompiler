@@ -61,7 +61,7 @@ export default function UnifiedSovereignHeader({
         ? [
             { key: 'product', label: 'Product', href: '/product' },
             { key: 'pricing', label: 'Pricing', href: '/pricing' },
-            { key: 'intelligence', label: 'Briefings', href: '/intelligence' },
+            { key: 'intelligence', label: 'Insights', href: '/intelligence' },
             { key: 'vault', label: 'Vault', href: '/vault' },
             { key: 'about', label: 'About', href: '/about' },
             { key: 'help', label: 'Help Center', href: '/docs/user-guide' },
@@ -69,7 +69,7 @@ export default function UnifiedSovereignHeader({
         : [
             { key: 'product', label: 'Product', href: '/product' },
             { key: 'pricing', label: 'Pricing', href: '/pricing' },
-            { key: 'intelligence', label: 'Briefings', href: '/intelligence' },
+            { key: 'intelligence', label: 'Insights', href: '/intelligence' },
             { key: 'method', label: 'Method', href: '/trust-method' },
             { key: 'reading', label: 'Sample Read', href: '/share/sample-dossier' },
             { key: 'about', label: 'About', href: '/about' },
