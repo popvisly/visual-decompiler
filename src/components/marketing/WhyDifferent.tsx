@@ -18,7 +18,7 @@ const COMPARISONS = [
     {
         label: 'Internal Reviews',
         they: 'Align teams with shared, structured language instead of taste debates.',
-        vd: 'We don\'t generate. We diagnose, critique, and direct quality.',
+        vd: 'Keep creative quality high while reducing review-cycle drift.',
     },
     {
         label: 'Campaign Analysis',
