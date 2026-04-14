@@ -13,8 +13,8 @@ export default function HomePage() {
         <main>
             <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Decompile an Ad', href: '/ingest' }} />
             <CinematicHero />
-            <HowItWorks />
             <PremiumDossierShowcase />
+            <HowItWorks />
             <BuiltForTheRoomSection />
             <DossierPreview />
             <NeuralMapSection />
