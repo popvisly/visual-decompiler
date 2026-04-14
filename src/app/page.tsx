@@ -7,13 +7,23 @@ import NeuralMapSection from '@/components/marketing/NeuralMapSection';
 import DossierPreview from '@/components/marketing/DossierPreview';
 import WhyDifferent from '@/components/marketing/WhyDifferent';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
+import ParticleField from '@/components/marketing/ParticleField';
 
 export default function HomePage() {
     return (
         <main>
             <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Decompile an Ad', href: '/ingest' }} />
-            <CinematicHero />
-            <PremiumDossierShowcase />
+            <section className="relative overflow-hidden bg-[#0B0B0B]">
+                <div
+                    className="pointer-events-none absolute inset-x-0 top-0 bottom-[-12vh] z-0 opacity-55 [mask-image:linear-gradient(to_bottom,black_0%,black_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_70%,transparent_100%)]"
+                    aria-hidden="true"
+                >
+                    <ParticleField />
+                </div>
+
+                <CinematicHero />
+                <PremiumDossierShowcase />
+            </section>
             <HowItWorks />
             <BuiltForTheRoomSection />
             <DossierPreview />

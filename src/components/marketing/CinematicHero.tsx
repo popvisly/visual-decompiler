@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import ParticleField from "@/components/marketing/ParticleField";
 import { SAMPLE_DOSSIER_HREF } from "@/lib/sample-dossier";
 
 export default function CinematicHero() {
@@ -36,12 +35,9 @@ export default function CinematicHero() {
 
     return (
         <section
-            className="relative flex min-h-[100vh] flex-col justify-center overflow-hidden bg-[#0B0B0B] px-6 py-24 sm:px-8 lg:px-10"
+            className="relative flex min-h-[100vh] flex-col justify-center px-6 pb-36 pt-24 sm:px-8 lg:px-10 lg:pb-44"
             data-presence-tone="dark"
         >
-            <div className="absolute inset-x-0 top-0 bottom-[170px] z-0 opacity-55 [mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)] [-webkit-mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)]" aria-hidden="true">
-                <ParticleField />
-            </div>
 
             <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col items-center">
                 <div className="flex w-full flex-col items-center text-center">
@@ -80,6 +76,8 @@ export default function CinematicHero() {
                         </div>
                     </div>
                 </div>
+                    <div className="mt-16 h-px w-full max-w-[1240px] bg-gradient-to-r from-transparent via-[#C1A674]/45 to-transparent" aria-hidden="true" />
+
 
             </div>
         </section>
