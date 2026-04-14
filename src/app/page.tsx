@@ -2,6 +2,7 @@ import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import CinematicHero from '@/components/marketing/CinematicHero';
 import HowItWorks from '@/components/marketing/HowItWorks';
 import PremiumDossierShowcase from '@/components/marketing/PremiumDossierShowcase';
+import BuiltForTheRoomSection from '@/components/marketing/BuiltForTheRoomSection';
 import NeuralMapSection from '@/components/marketing/NeuralMapSection';
 import DossierPreview from '@/components/marketing/DossierPreview';
 import WhyDifferent from '@/components/marketing/WhyDifferent';
@@ -14,6 +15,7 @@ export default function HomePage() {
             <CinematicHero />
             <HowItWorks />
             <PremiumDossierShowcase />
+            <BuiltForTheRoomSection />
             <NeuralMapSection />
             <DossierPreview />
             <WhyDifferent />
