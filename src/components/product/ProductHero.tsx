@@ -2,46 +2,61 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 export default function ProductHero() {
     return (
-        <section className="relative bg-[#F6F1E7] text-[#141414] overflow-hidden" data-presence-tone="light">
-            <div className="mx-auto max-w-[1200px] px-6 lg:px-12 pt-28 lg:pt-36 pb-16 lg:pb-20">
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-6">
-                        Product
-                    </p>
-                    <h1 className="text-[12vw] lg:text-[96px] font-black leading-[0.82] tracking-[-0.04em] uppercase text-[#141414] max-w-[12ch] mb-10">
-                        See inside<br />
-                        <span className="text-[#C1A674]">every ad.</span>
-                    </h1>
-                    <p className="text-[18px] lg:text-[20px] leading-[1.7] text-[#6B6B6B] max-w-[680px] mb-12">
-                        Visual Decompiler reads the hidden architecture of any creative — persuasion mechanics, semiotic subtext, and psychological drivers. Across 9 analysis surfaces, each read forms a complete forensic view in minutes, not a three-hour review.
-                    </p>
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                        <Link
-                            href="/ingest"
-                            className="inline-flex items-center gap-3 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition hover:bg-[#C1A674] hover:text-[#141414]"
-                        >
-                            Start Decompiling Free
-                            <ArrowUpRight size={16} />
-                        </Link>
-                        <Link
-                            href={SAMPLE_DOSSIER_HREF}
-                            className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#6B6B6B] transition hover:text-[#141414]"
-                        >
-                            <span className="w-6 h-px bg-[#141414]/20" />
-                            See a sample read
-                        </Link>
+        <>
+            <section className="relative overflow-hidden border-b border-white/10 pt-28 lg:pt-36" data-presence-tone="dark">
+                <div className="mx-auto max-w-[1120px] px-6 pb-20 lg:px-12 lg:pb-24">
+                    <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                        className="max-w-[820px]"
+                    >
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Product</p>
+                        <h1 className="mt-6 text-[15vw] font-semibold uppercase leading-[0.88] tracking-[-0.04em] text-[#F6F1E7] sm:text-[12vw] lg:text-[96px]">
+                            A system for visual due diligence.
+                        </h1>
+                        <p className="mt-8 max-w-[760px] text-[19px] leading-[1.72] text-[#F6F1E7]/72">
+                            Visual Decompiler analyzes advertising at a structural level — turning creative instinct into clear, defensible reasoning.
+                        </p>
+
+                        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+                            <Link
+                                href={SAMPLE_DOSSIER_HREF}
+                                className="inline-flex items-center justify-center border border-white/12 bg-white px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#F6F1E7]"
+                            >
+                                View Sample Dossier
+                            </Link>
+                            <Link
+                                href="/ingest"
+                                className="inline-flex items-center justify-center border border-white/12 bg-white/5 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#F6F1E7] transition hover:border-white/20 hover:bg-white/10"
+                            >
+                                Decompile Your Ad
+                            </Link>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+
+            <section className="border-b border-white/10 py-20 lg:py-24" data-presence-tone="dark">
+                <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
+                    <div className="max-w-[760px]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">The Problem</p>
+                        <h2 className="mt-6 text-[12vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[9vw] lg:text-[64px]">
+                            Creative decisions are still defended with opinion.
+                        </h2>
+                        <p className="mt-8 text-[19px] leading-[1.8] text-[#F6F1E7]/70">
+                            Work is judged on instinct. Feedback loops stall. Clients push back.
+                            <br />
+                            <br />
+                            Not because the work is weak — but because the reasoning isn&apos;t visible.
+                        </p>
                     </div>
-                </motion.div>
-            </div>
-        </section>
+                </div>
+            </section>
+        </>
     );
 }

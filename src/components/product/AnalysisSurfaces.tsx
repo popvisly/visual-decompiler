@@ -1,189 +1,125 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ShieldCheck, Brain, Layers, Eye, MapPin, Code2, FlaskConical, TrendingUp, ClipboardCheck } from 'lucide-react';
+import Link from 'next/link';
+import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
-const SURFACES = [
+const ANALYSIS_LAYERS = [
     {
-        id: 'quality-gate',
-        label: 'Quality Gate',
-        icon: ShieldCheck,
-        title: 'First filter. Does this creative even warrant analysis?',
-        detail: 'Before any deep read, the system checks whether the asset carries enough persuasive signal to justify further exploration. Not every ad deserves the full pipeline.',
-        preview: [
-            { label: 'Decision', value: 'Proceed' },
-            { label: 'Signal Threshold', value: 'Met' },
-            { label: 'Surface Quality', value: 'High' },
-        ],
+        title: 'Primary Scores',
+        body: 'Clarity. Attention. Cohesion. Intent. Distinction. High-level signals that define how the work performs.',
     },
     {
-        id: 'intelligence',
-        label: 'Intelligence',
-        icon: Brain,
-        title: 'Neural thesis and strategic verdict.',
-        detail: 'The core read. What persuasion mechanic is driving this work, what subtext is being encoded, and where does it sit relative to the category landscape.',
-        preview: [
-            { label: 'Primary Mechanic', value: 'Aspirational Transfer' },
-            { label: 'Semiotic Layer', value: 'Heritage Activation' },
-            { label: 'Strategic Move', value: 'Contemporary Relevance' },
-        ],
+        title: 'Attention Path',
+        body: 'A mapped sequence of how the eye moves — and where it drops.',
     },
     {
-        id: 'mechanics',
-        label: 'Mechanics',
-        icon: Layers,
-        title: 'The engine. What visual mechanics is this ad running on?',
-        detail: 'Trigger mechanics, evidence anchoring, compositional hierarchy, color logic, and gaze routing — every structural element decoded and ranked by influence.',
-        preview: [
-            { label: 'Trigger', value: 'Celebrity Aspirational Transfer' },
-            { label: 'Palette', value: 'Heritage Gold & Neutral' },
-            { label: 'Gaze', value: 'Product-Centered' },
-        ],
+        title: 'Structural Signals',
+        body: 'Hierarchy, balance, contrast, density, and focus integrity — expressed as controlled diagnostics.',
     },
     {
-        id: 'psychology',
-        label: 'Psychology',
-        icon: Eye,
-        title: 'What happens in the viewer\'s mind?',
-        detail: 'Emotional drivers, cognitive load, persuasion density, and the psychological mechanics that move a viewer from passive seeing to active desire.',
-        preview: [
-            { label: 'Emotional Driver', value: 'Status Aspiration' },
-            { label: 'Cognitive Load', value: 'Low' },
-            { label: 'Persuasion Density', value: '91%' },
-        ],
-    },
-    {
-        id: 'constraint-map',
-        label: 'Constraint Map',
-        icon: MapPin,
-        title: 'Where are the friction points? Where does the creative break?',
-        detail: 'Every ad carries tension between what it wants to say and what the market will accept. The constraint map identifies where the work is fighting itself.',
-        preview: [
-            { label: 'Risk', value: 'Over-Explanation' },
-            { label: 'Friction', value: 'Direct Gaze' },
-            { label: 'Boundary', value: 'Monumental Scale' },
-        ],
-    },
-    {
-        id: 'blueprint',
-        label: 'Blueprint Trace',
-        icon: Code2,
-        title: 'Reconstruction code. How was this assembly built?',
-        detail: 'DNA-level readout of the creative assembly: which elements carry strategic weight, what was the designer thinking at each layer, and what can be rebuilt.',
-        preview: [
-            { label: 'Assembly', value: 'Product-First Hierarchy' },
-            { label: 'Chromatic', value: 'Warm Authority' },
-            { label: 'Narrative', value: 'Heritage Thread' },
-        ],
-    },
-    {
-        id: 'stress-lab',
-        label: 'Stress Lab',
-        icon: FlaskConical,
-        title: 'Pressure-test the route before it reaches review.',
-        detail: 'Push the creative against audience objections, category pressure, and competitive displacement to see what holds and what collapses.',
-        preview: [
-            { label: 'Category Pressure', value: 'Moderate' },
-            { label: 'Audience Tension', value: 'Resolved' },
-            { label: 'Competitive Delta', value: 'Clear' },
-        ],
-    },
-    {
-        id: 'market-pulse',
-        label: 'Market Pulse',
-        icon: TrendingUp,
-        title: 'How does this creative sit in the category ocean?',
-        detail: 'Chromatic saturation analysis, dominant mechanics in the category, and where this asset lands relative to the competitive persuasion benchmark.',
-        preview: [
-            { label: 'Top Mechanic', value: 'Aspirational Transfer' },
-            { label: 'Chromatic', value: 'Gold Saturation Leader' },
-            { label: 'Benchmark', value: 'Above Category Avg' },
-        ],
-    },
-    {
-        id: 'decision-log',
-        label: 'Decision Log',
-        icon: ClipboardCheck,
-        title: 'Final verdict. Keep, Refine, or Kill — with fix priorities.',
-        detail: 'Boardroom-ready output: verdict, confidence score, fix priorities ranked by impact, and the confidence note that tells you whether to trust the read.',
-        preview: [
-            { label: 'Verdict', value: 'Keep' },
-            { label: 'Confidence', value: '99/100' },
-            { label: 'Fix Priority P1', value: 'Sharpen Eyeflow' },
-        ],
+        title: 'Strategic Read',
+        body: 'A clear articulation of what the work is doing, why it works, and where it breaks.',
     },
 ];
 
 export default function AnalysisSurfaces() {
     return (
-        <section className="relative bg-[#F6F1E7] text-[#141414]" data-presence-tone="light">
-            {/* Two-column surfaces grid */}
-            <div className="relative pb-16 lg:pb-20">
-                <motion.div
-                    className="mx-auto max-w-[1200px] px-6 lg:px-12"
-                    initial={{ opacity: 0, y: 18 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
-                        {SURFACES.map((surface, index) => (
-                            <motion.div
-                                key={surface.id}
-                                className="min-w-0 group/surface"
+        <>
+            <section className="border-b border-white/10 py-20 lg:py-24" data-presence-tone="dark">
+                <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
+                    <div className="max-w-[920px]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">The System</p>
+                        <h2 className="mt-6 text-[12vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[9vw] lg:text-[64px]">
+                            Visual Decompiler makes creative reasoning readable.
+                        </h2>
+                    </div>
+
+                    <div className="mt-14 divide-y divide-white/10 border-y border-white/10">
+                        {ANALYSIS_LAYERS.map((layer, index) => (
+                            <motion.article
+                                key={layer.title}
                                 initial={{ opacity: 0, y: 18 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-40px' }}
-                                transition={{ duration: 0.45, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                                whileHover={{ y: -3 }}
+                                viewport={{ once: true, margin: '-80px' }}
+                                transition={{ duration: 0.6, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                                className="grid gap-6 py-9 md:grid-cols-[280px_1fr] md:items-start"
                             >
-                                <div className="relative rounded-[1.25rem] border border-[#E7DED1] bg-[#FBF7EF] p-6 h-full flex flex-col shadow-[0_1px_0_rgba(20,20,20,0.02)] transition-shadow duration-300 group-hover/surface:shadow-[0_14px_28px_rgba(20,20,20,0.10)]">
-                                    {/* Header */}
-                                    <div className="flex items-center gap-3 mb-5">
-                                        <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-[#1A1A1A]/88 text-[#C1A674]/75">
-                                            <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-[#C1A674]/0 transition-all duration-300 group-hover/surface:ring-[#C1A674]/20" />
-                                            <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover/surface:opacity-100 group-hover/surface:animate-ping bg-[#C1A674]/6" />
-                                            <surface.icon size={17} strokeWidth={1.4} />
-                                        </div>
-                                        <div className="min-w-0">
-                                            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#C1A674]">
-                                                {surface.label}
-                                            </p>
-                                            <h3 className="text-[18px] lg:text-[20px] font-black leading-[1.15] tracking-[-0.02em] text-[#141414] mt-1">
-                                                {surface.title}
-                                            </h3>
-                                            <div className="mt-2 h-[2px] w-0 bg-[#C1A674]/80 transition-all duration-300 group-hover/surface:w-10" />
-                                        </div>
-                                    </div>
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{layer.title}</p>
+                                <p className="max-w-[64ch] text-[17px] leading-[1.82] text-[#F6F1E7]/74">{layer.body}</p>
+                            </motion.article>
+                        ))}
+                    </div>
+                </div>
+            </section>
 
-                                    {/* Detail */}
-                                    <p className="text-[14px] leading-[1.65] text-[#6B6B6B] mb-6">
-                                        {surface.detail}
-                                    </p>
+            <section className="border-b border-white/10 py-20 lg:py-28" data-presence-tone="dark">
+                <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
+                    <div className="grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr]">
+                        <div className="max-w-[520px]">
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Dossier Preview</p>
+                            <h3 className="mt-6 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[56px]">
+                                Output designed for the room.
+                            </h3>
+                            <p className="mt-7 text-[19px] leading-[1.8] text-[#F6F1E7]/72">
+                                Not a chat response.
+                                <br />
+                                A structured document built for presentation, alignment, and decision-making.
+                            </p>
+                            <Link
+                                href={SAMPLE_DOSSIER_HREF}
+                                className="mt-9 inline-flex items-center justify-center border border-white/12 bg-white px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#F6F1E7]"
+                            >
+                                View Sample Dossier
+                            </Link>
+                        </div>
 
-                                    {/* Preview */}
-                                    <div className="mt-auto grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                        {surface.preview.map((item) => (
-                                            <div
-                                                key={item.label}
-                                                className="relative overflow-hidden rounded-xl border border-[#E7DED1] bg-white px-3.5 py-2.5"
-                                            >
-                                                <div className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 -skew-x-12 bg-gradient-to-r from-transparent via-[#C1A674]/16 to-transparent translate-x-[-180%] transition-transform duration-900 ease-out group-hover/surface:translate-x-[520%]" />
-                                                <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-[#9a9a94] mb-1">
-                                                    {item.label}
-                                                </p>
-                                                <p className="text-[12px] font-semibold text-[#141414]">
-                                                    {item.value}
-                                                </p>
+                        <div className="rounded-[2rem] border border-white/12 bg-[#12110F] p-7 shadow-[0_30px_100px_rgba(0,0,0,0.42)] sm:p-9">
+                            <div className="flex items-center justify-between border-b border-white/10 pb-6">
+                                <div>
+                                    <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#C1A674]">Visual Decompiler</p>
+                                    <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#F6F1E7]/55">Creative Intelligence Dossier</p>
+                                </div>
+                                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C1A674]">Sample Export</p>
+                            </div>
+
+                            <div className="space-y-8 pt-8">
+                                <div>
+                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C1A674]">Primary Scores</p>
+                                    <div className="mt-4 grid grid-cols-5 gap-3">
+                                        {[
+                                            ['Clarity', '82'],
+                                            ['Attention', '91'],
+                                            ['Cohesion', '76'],
+                                            ['Intent', '88'],
+                                            ['Distinction', '67'],
+                                        ].map(([label, value]) => (
+                                            <div key={label}>
+                                                <p className="text-[9px] font-semibold uppercase tracking-[0.23em] text-[#F6F1E7]/52">{label}</p>
+                                                <p className="mt-2 text-[24px] font-semibold leading-none tracking-[-0.02em] text-[#F6F1E7]">{value}</p>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
-                            </motion.div>
-                        ))}
+
+                                <div className="border-t border-white/10 pt-6">
+                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C1A674]">Strategic Read</p>
+                                    <div className="mt-4 space-y-4">
+                                        <p className="text-[12px] leading-relaxed text-[#F6F1E7]/74">Strategic Thesis: Positions the product as premium through restraint and visual isolation.</p>
+                                        <p className="text-[12px] leading-relaxed text-[#F6F1E7]/74">Trigger Mechanic: High contrast subject lock drives immediate attention entry.</p>
+                                        <p className="text-[12px] leading-relaxed text-[#F6F1E7]/74">Friction Points: Supporting copy competes with the primary focal route.</p>
+                                    </div>
+                                </div>
+
+                                <div className="border-t border-white/10 pt-6">
+                                    <p className="text-[13px] font-semibold text-[#F6F1E7]">Confidence Index: High</p>
+                                    <p className="mt-2 text-[12px] leading-relaxed text-[#F6F1E7]/66">Based on alignment between clarity, attention control, and strategic intent.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </motion.div>
-            </div>
-        </section>
+                </div>
+            </section>
+        </>
     );
 }

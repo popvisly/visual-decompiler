@@ -1,83 +1,65 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { ArrowUpRight, Database, Activity, Layers, Settings, Users } from 'lucide-react';
 
-const PLATFORM_FEATURES = [
+const WORKFLOW = [
     {
-        icon: Database,
-        label: 'Intelligence Vault',
-        detail: 'Every dossier stored. Every analysis retrievable. Search across campaigns, clients, and creative tactics to surface pattern intelligence.',
+        title: 'Pre-Pitch',
+        body: 'Deconstruct references and competitor work in minutes.',
     },
     {
-        icon: Activity,
-        label: 'Intelligence Pulse',
-        detail: 'Category-level persuasion data. See which mechanics dominate your space, where the blind spots are, and what gaps you can exploit.',
+        title: 'Creative Review',
+        body: 'Align teams using shared visual language.',
     },
     {
-        icon: Layers,
-        label: 'Sovereign Boards',
-        detail: 'Group assets into boards for campaign reviews, client threads, or creative sprints. Keep the intelligence active, not archived.',
-    },
-    {
-        icon: Settings,
-        label: 'Agency Settings & Team',
-        detail: 'White-label controls, brand guidelines, seats and permissions. Present VD intelligence under your own agency authority.',
+        title: 'Client Presentation',
+        body: 'Present decisions with structured reasoning.',
     },
 ];
 
 export default function PlatformLayer() {
     return (
-        <section className="relative bg-[#F6F1E7] text-[#141414] pt-16 lg:pt-20 pb-20 lg:pb-24 overflow-hidden" data-presence-tone="light">
-            <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
-                {/* Section header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    className="mb-12 lg:mb-16"
-                >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-6">
-                        Platform
-                    </p>
-                    <h2 className="text-[10vw] lg:text-[72px] font-black leading-[0.88] tracking-[-0.04em] uppercase text-[#141414] max-w-[12ch] mb-10">
-                        Intelligence <span className="text-[#C1A674]">compounds.</span>
-                    </h2>
-                    <p className="text-[18px] leading-[1.7] text-[#6B6B6B] max-w-[560px]">
-                        Single analyses are powerful. But the real advantage comes when every read becomes part of a growing, searchable intelligence layer your team builds on.
-                    </p>
-                </motion.div>
+        <>
+            <section className="border-b border-white/10 py-20 lg:py-24" data-presence-tone="dark">
+                <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
+                    <div className="max-w-[900px]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Workflow</p>
+                        <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[62px]">
+                            Built into the way agencies already work.
+                        </h2>
+                    </div>
 
-                {/* Features */}
-                <div className="space-y-0">
-                    {PLATFORM_FEATURES.map((feature, idx) => (
-                        <motion.div
-                            key={feature.label}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-20px' }}
-                            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                            className="border-t border-[#E7DED1] py-10 lg:py-12 last:border-b"
-                        >
-                            <div className="flex items-start gap-5">
-                                <div className="flex items-center justify-center w-12 h-12 rounded-xl border border-[#E7DED1] bg-white text-[#C1A674] shrink-0">
-                                    <feature.icon size={20} strokeWidth={1.5} />
-                                </div>
-                                <div>
-                                    <h3 className="text-[20px] font-black leading-[1.1] tracking-[-0.01em] text-[#141414] mb-3">
-                                        {feature.label}
-                                    </h3>
-                                    <p className="text-[15px] leading-[1.7] text-[#6B6B6B] max-w-[520px]">
-                                        {feature.detail}
-                                    </p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
+                    <div className="mt-12 divide-y divide-white/10 border-y border-white/10">
+                        {WORKFLOW.map((item, index) => (
+                            <motion.article
+                                key={item.title}
+                                initial={{ opacity: 0, y: 14 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-60px' }}
+                                transition={{ duration: 0.55, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                                className="grid gap-5 py-8 md:grid-cols-[220px_1fr]"
+                            >
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{item.title}</p>
+                                <p className="text-[17px] leading-[1.8] text-[#F6F1E7]/72">{item.body}</p>
+                            </motion.article>
+                        ))}
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <section className="border-b border-white/10 py-20 lg:py-24" data-presence-tone="dark">
+                <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
+                    <div className="max-w-[760px]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">White Label</p>
+                        <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[62px]">
+                            Your thinking. Your system.
+                        </h2>
+                        <p className="mt-7 text-[19px] leading-[1.8] text-[#F6F1E7]/70">
+                            Deliver Visual Decompiler outputs under your agency or brand — as part of your own process.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </>
     );
 }
