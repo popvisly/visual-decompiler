@@ -16,8 +16,8 @@ const FAQS = [
         a: 'No. It does not generate ads or replace creative judgment. It helps you articulate why a piece holds, where it weakens, and what to change next.',
     },
     {
-        q: 'How is this different from an ad-spy tool?',
-        a: 'Ad-spy tools and scrapers tell you what is out there. Visual Decompiler is for reading what the work is doing once it is in front of you: its hierarchy, tension, identity pull, and distinctiveness.',
+        q: 'How is this different from ad monitoring platforms?',
+        a: 'Visual Decompiler is for reading what the work is doing once it is in front of you: its hierarchy, tension, identity pull, and distinctiveness.',
     },
     {
         q: 'Who is this actually for?',
