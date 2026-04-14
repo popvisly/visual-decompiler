@@ -3200,11 +3200,11 @@ export default function AssetWorkspace({
                                                          <div className="space-y-14 pt-14">
                                                              <section>
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Primary Scores</p>
-                                                                 <div className="mt-7 grid grid-cols-2 gap-x-10 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
+                                                                 <div className="mt-7 grid grid-cols-2 items-end gap-x-10 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
                                                                      {analysisLanguage.primaryScores.map((score) => (
                                                                          <div key={score.label} className="min-w-0">
                                                                              <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D6D0C6]/60">{score.label}</p>
-                                                                             <p className="mt-3 text-[52px] font-semibold leading-none tracking-[-0.03em] tabular-nums text-[#F3F1ED]">{score.value}</p>
+                                                                             <p className="mt-4 text-[52px] font-semibold leading-none tracking-[-0.02em] tabular-nums text-[#F3F1ED]">{score.value}</p>
                                                                          </div>
                                                                      ))}
                                                                  </div>
@@ -3213,15 +3213,15 @@ export default function AssetWorkspace({
                                                              <section className="border-t border-white/10 pt-12">
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Attention Path</p>
                                                                  <div className="mt-7 grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
-                                                                     <div className="space-y-7">
+                                                                     <div className="space-y-10">
                                                                          {[
                                                                              ['Product Silhouette', analysisLanguage.attentionPath.primaryFocus],
                                                                              ['Brand Mark', analysisLanguage.attentionPath.secondaryFocus],
                                                                              ['Supporting Copy', supportingCopyPath],
                                                                          ].map(([title, detail], index) => (
-                                                                             <div key={title as string} className="border-b border-white/10 pb-6 last:border-b-0 last:pb-0">
-                                                                                 <div className="flex items-start gap-4">
-                                                                                     <span className="min-w-[22px] text-[28px] font-semibold leading-none tracking-[-0.03em] text-[#D4A574]">{index + 1}</span>
+                                                                             <div key={title as string} className="pb-1">
+                                                                                 <div className="flex flex-col gap-3">
+                                                                                     <span className="block text-[34px] font-semibold leading-none tracking-[-0.03em] text-[#F3F1ED]">{index + 1}</span>
                                                                                      <div>
                                                                                          <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#F3F1ED]/85">{title as string}</p>
                                                                                          <p className="mt-2 text-[14px] leading-relaxed text-[#D6D0C6]/85">{detail as string}</p>
@@ -3231,7 +3231,7 @@ export default function AssetWorkspace({
                                                                          ))}
                                                                      </div>
                                                                      <aside className="self-start rounded-[1.2rem] border border-white/10 px-5 py-5">
-                                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">Drop-Off Detected</p>
+                                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/65">Drop-Off Detected</p>
                                                                          <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/78">{analysisLanguage.attentionPath.dropOff}</p>
                                                                      </aside>
                                                                  </div>
@@ -3242,8 +3242,8 @@ export default function AssetWorkspace({
                                                                  <div className="mt-7 space-y-4">
                                                                      {analysisLanguage.structuralSignals.map((signal) => (
                                                                          <div key={signal.label} className="flex items-center justify-between border-b border-white/10 pb-4">
-                                                                             <span className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/75">{signal.label}</span>
-                                                                             <span className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#F3F1ED]">{signal.value}</span>
+                                                                             <span className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/58">{signal.label}</span>
+                                                                             <span className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#F3F1ED]/96">{signal.value}</span>
                                                                          </div>
                                                                      ))}
                                                                  </div>
@@ -3255,14 +3255,14 @@ export default function AssetWorkspace({
 
                                                              <section className="border-t border-white/10 pt-12">
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Strategic Read</p>
-                                                                 <div className="mt-7 space-y-7">
+                                                                 <div className="mt-8 space-y-10">
                                                                      {[
                                                                          ['Strategic Thesis', firstSentence(analysisLanguage.strategicRead.thesis)],
                                                                          ['Trigger Mechanic', firstSentence(analysisLanguage.strategicRead.triggerMechanic)],
                                                                          ['Friction Points', firstSentence(analysisLanguage.strategicRead.frictionPoints)],
                                                                          ['Category Positioning', firstSentence(analysisLanguage.strategicRead.categoryPositioning)],
                                                                      ].map(([label, value]) => (
-                                                                         <div key={label as string} className="border-b border-white/10 pb-7 last:border-b-0 last:pb-0">
+                                                                         <div key={label as string} className="pb-1">
                                                                              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/58">{label}</p>
                                                                              <p className="mt-2 max-w-[70ch] text-[14px] leading-relaxed text-[#F3F1ED]/86">{value as string}</p>
                                                                          </div>
@@ -3270,8 +3270,8 @@ export default function AssetWorkspace({
                                                                  </div>
                                                              </section>
 
-                                                             <section className="border-t border-white/10 pt-12">
-                                                                 <p className="text-[16px] font-semibold leading-relaxed text-[#F3F1ED]">Confidence Index: {analysisLanguage.confidenceIndex}</p>
+                                                             <section className="border-t border-white/10 pt-16">
+                                                                 <p className="text-[18px] font-semibold leading-relaxed tracking-[-0.01em] text-[#F3F1ED]">Confidence Index: {analysisLanguage.confidenceIndex}</p>
                                                                  <p className="mt-2 max-w-[70ch] text-[14px] leading-relaxed text-[#D6D0C6]/78">{confidenceRationale}</p>
                                                              </section>
                                                          </div>
