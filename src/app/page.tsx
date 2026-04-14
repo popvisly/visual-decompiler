@@ -1,6 +1,7 @@
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import CinematicHero from '@/components/marketing/CinematicHero';
 import HowItWorks from '@/components/marketing/HowItWorks';
+import PremiumDossierShowcase from '@/components/marketing/PremiumDossierShowcase';
 import NeuralMapSection from '@/components/marketing/NeuralMapSection';
 import DossierPreview from '@/components/marketing/DossierPreview';
 import WhyDifferent from '@/components/marketing/WhyDifferent';
@@ -12,6 +13,7 @@ export default function HomePage() {
             <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Decompile an Ad', href: '/ingest' }} />
             <CinematicHero />
             <HowItWorks />
+            <PremiumDossierShowcase />
             <NeuralMapSection />
             <DossierPreview />
             <WhyDifferent />
