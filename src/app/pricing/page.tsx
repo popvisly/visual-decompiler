@@ -269,41 +269,6 @@ export default function PricingPage() {
                 </div>
             </section>
 
-            {/* FAQ Area */}
-            <section className="px-6 py-48 lg:py-64">
-                <div className="mx-auto max-w-[1400px]">
-                    <h2 className="text-[8vw] lg:text-[4vw] font-black leading-[0.9] tracking-[-0.04em] uppercase text-white mb-24">
-                        Intelligence Protocols <br />
-                        <span className="text-white/20">(F.A.Q)</span>
-                    </h2>
-                    
-                    <div className="grid gap-8 lg:grid-cols-2">
-                        {[
-                            {
-                                q: 'Is Observer really free — or is it a trial?',
-                                a: 'Observer gives you five complete analyses each cycle. No artificial limits on what the AI returns. We want you to see the real forensic depth before committing.',
-                            },
-                            {
-                                q: 'When does Professional make sense over Strategic?',
-                                a: 'Professional unlocks Unlimited Analaysis. The moment analysis is your daily operative workflow, Professional eliminates the friction of credit tracking.',
-                            },
-                            {
-                                q: 'Why is Agency Sovereignty priced at 1K+?',
-                                a: 'Because it is billable infrastructure. The white-label dossier exports alone justify the cost when presented as a premium strategic deliverable to a single client.',
-                            },
-                            {
-                                q: 'Can I white-label the outputs?',
-                                a: 'Yes — every tier from Strategic up includes clean dossier exports. Agency Sovereignty adds your full identity: custom logo, cover design, and branding controls.',
-                            }
-                        ].map((item) => (
-                            <div key={item.q} className="p-10 bg-white/5 border border-white/10 rounded-[2.5rem]">
-                                <h3 className="text-xl font-black uppercase tracking-tight text-white mb-5">{item.q}</h3>
-                                <p className="text-lg text-white/50 leading-relaxed font-medium">{item.a}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
             <FooterStartNow />
         </main>
