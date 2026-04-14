@@ -337,6 +337,39 @@ type IntegratedRecommendationData = {
     moduleScores: ModuleScore[];
 };
 
+type PrimaryScoreLabel = 'Clarity' | 'Attention' | 'Cohesion' | 'Intent' | 'Distinction';
+
+type PrimaryScoreRow = {
+    label: PrimaryScoreLabel;
+    value: number;
+};
+
+type AttentionPathRead = {
+    primaryFocus: string;
+    secondaryFocus: string;
+    dropOff: string;
+};
+
+type StructuralSignalRow = {
+    label: 'Hierarchy' | 'Balance' | 'Contrast' | 'Density' | 'Focus Integrity';
+    value: string;
+};
+
+type StrategicRead = {
+    thesis: string;
+    triggerMechanic: string;
+    frictionPoints: string;
+    categoryPositioning: string;
+};
+
+type AnalysisLanguageSystem = {
+    primaryScores: PrimaryScoreRow[];
+    attentionPath: AttentionPathRead;
+    structuralSignals: StructuralSignalRow[];
+    strategicRead: StrategicRead;
+    confidenceIndex: 'High' | 'Medium' | 'Low';
+};
+
 const parseBlueprint = (value: BlueprintData | string | null | undefined): BlueprintData | null => {
     if (!value) {
         return null;
@@ -404,6 +437,119 @@ const firstSentence = (value: string | undefined | null) => {
 const normalizeConfidenceScore = (value?: number | null) => {
     if (value == null) return null;
     return value <= 1 ? Math.round(value * 100) : Math.round(value);
+};
+
+
+const clampHundred = (value: number) => Math.max(0, Math.min(100, Math.round(value)));
+
+const signalBand = (
+    score: number,
+    labels: [high: string, medium: string, low: string],
+) => {
+    if (score >= 75) return labels[0];
+    if (score >= 50) return labels[1];
+    return labels[2];
+};
+
+const deriveAnalysisLanguageSystem = ({
+    extraction,
+    dossier,
+    confidenceScore,
+    frictionScore,
+    persuasionDensity,
+    marketPulseData,
+}: {
+    extraction: any;
+    dossier: any;
+    confidenceScore: number | null;
+    frictionScore: number | null;
+    persuasionDensity: number | null;
+    marketPulseData: MarketPulseData | null;
+}): AnalysisLanguageSystem => {
+    const confidence = confidenceScore ?? 62;
+    const friction = frictionScore ?? 26;
+    const density = persuasionDensity ?? 68;
+
+    const hasNarrative = Boolean(dossier?.narrative_framework);
+    const hasGaze = Boolean(dossier?.gaze_topology?.reading || dossier?.gaze_topology?.power_holder);
+    const hasStrategicMoves = Boolean((dossier?.archetype_mapping?.strategic_moves?.length ?? 0) > 0);
+    const paletteCount = Array.isArray(extraction?.color_palette) ? extraction.color_palette.length : 0;
+    const hasCounterRead = Boolean((dossier?.counter_reading_matrix?.length ?? 0) > 0);
+
+    const triggerDist = (dossier?.archetype_mapping?.trigger_distribution || {}) as Record<string, unknown>;
+    const triggerValues = Object.values(triggerDist)
+        .map((v) => (typeof v === 'number' ? v : Number(v)))
+        .filter((v) => Number.isFinite(v)) as number[];
+    const activeTriggers = triggerValues.filter((v) => v >= 20).length;
+    const maxTrigger = triggerValues.length > 0 ? Math.max(...triggerValues) : 0;
+
+    const clarity = clampHundred(confidence * 0.45 + (100 - friction) * 0.35 + (hasNarrative ? 84 : 62) * 0.2);
+    const attention = clampHundred(density * 0.45 + confidence * 0.25 + (hasGaze ? 86 : 62) * 0.2 + (maxTrigger > 0 ? 76 : 58) * 0.1);
+    const cohesion = clampHundred(confidence * 0.4 + (100 - friction) * 0.3 + (extraction?.primary_mechanic ? 84 : 58) * 0.2 + ((paletteCount >= 3 && paletteCount <= 6) ? 82 : 66) * 0.1);
+    const intent = clampHundred(confidence * 0.5 + (100 - friction) * 0.2 + (hasStrategicMoves ? 84 : 60) * 0.2 + (dossier?.archetype_mapping?.target_posture ? 82 : 60) * 0.1);
+
+    const rankSignal = marketPulseData?.category_persuasion_benchmark?.your_rank || '';
+    const marketDistinctLift = rankSignal.toLowerCase().includes('outperform') ? 6 : rankSignal ? 2 : 0;
+    const distinction = clampHundred(55 + activeTriggers * 6 - maxTrigger * 0.22 + (hasCounterRead ? 6 : 0) + (paletteCount >= 5 ? 4 : 0) + marketDistinctLift);
+
+    const hierarchyScore = clampHundred(clarity * 0.5 + cohesion * 0.5);
+    const balanceScore = clampHundred(cohesion * 0.65 + (100 - friction) * 0.35);
+    const contrastScore = clampHundred(attention * 0.65 + distinction * 0.35);
+    const densityScore = clampHundred(density);
+    const focusIntegrityScore = clampHundred(clarity * 0.4 + attention * 0.4 + (100 - friction) * 0.2);
+
+    const primaryFocus = firstSentence(dossier?.gaze_topology?.power_holder) || firstSentence(extraction?.evidence_anchors?.[0]) || 'Product silhouette (high contrast entry point).';
+    const secondaryFocus = firstSentence(dossier?.gaze_topology?.viewer_position) || 'Brand mark (delayed recognition).';
+    const dropOff =
+        friction >= 30
+            ? 'Drop-off detected between primary focus and supporting copy layer.'
+            : friction >= 20
+              ? 'Minor drop-off detected between secondary focus and supporting copy layer.'
+              : 'No material drop-off detected across the primary reading path.';
+
+    const strategicThesis = firstSentence(dossier?.archetype_mapping?.target_posture) || 'Signals premium restraint while preserving underlying visual pressure.';
+    const triggerMechanic =
+        extraction?.primary_mechanic
+            ? `${extraction.primary_mechanic} drives entry through controlled visual dominance and focused contrast.`
+            : 'High-contrast subject isolation establishes entry, reinforced by negative-space control.';
+    const frictionPoints =
+        friction >= 28
+            ? 'Supporting copy competes with the primary focal object, reducing message hierarchy clarity.'
+            : 'Message hierarchy is stable, with only minor compression pressure in the supporting layer.';
+    const categoryPositioning =
+        firstSentence(dossier?.archetype_mapping?.strategic_moves?.[0]) ||
+        (rankSignal
+            ? `Current route reads as ${rankSignal.toLowerCase()} against category pressure.`
+            : 'Aligns with category signals, but needs stronger deviation to become unmistakably ownable.');
+
+    return {
+        primaryScores: [
+            { label: 'Clarity', value: clarity },
+            { label: 'Attention', value: attention },
+            { label: 'Cohesion', value: cohesion },
+            { label: 'Intent', value: intent },
+            { label: 'Distinction', value: distinction },
+        ],
+        attentionPath: {
+            primaryFocus,
+            secondaryFocus,
+            dropOff,
+        },
+        structuralSignals: [
+            { label: 'Hierarchy', value: signalBand(hierarchyScore, ['Strong', 'Moderate', 'Fragmented']) },
+            { label: 'Balance', value: signalBand(balanceScore, ['Controlled', 'Variable', 'Competing']) },
+            { label: 'Contrast', value: signalBand(contrastScore, ['Strong', 'Moderate', 'Muted']) },
+            { label: 'Density', value: signalBand(densityScore, ['High', 'Moderate', 'Lean']) },
+            { label: 'Focus Integrity', value: signalBand(focusIntegrityScore, ['Locked', 'Stable', 'Fragmented']) },
+        ],
+        strategicRead: {
+            thesis: strategicThesis,
+            triggerMechanic,
+            frictionPoints,
+            categoryPositioning,
+        },
+        confidenceIndex: confidence >= 85 ? 'High' : confidence >= 65 ? 'Medium' : 'Low',
+    };
 };
 
 const deriveQualityVerdict = (
@@ -1492,6 +1638,14 @@ export default function AssetWorkspace({
             ? dossier.persuasion_metrics.persuasion_density
             : null;
     const qualityVerdict = deriveQualityVerdict(confidenceScore, frictionScore, persuasionDensity);
+    const analysisLanguage = deriveAnalysisLanguageSystem({
+        extraction,
+        dossier,
+        confidenceScore,
+        frictionScore,
+        persuasionDensity,
+        marketPulseData,
+    });
     const failureReasons = qualityFailureReasons({
         confidenceScore,
         frictionScore,
@@ -2984,6 +3138,81 @@ export default function AssetWorkspace({
                                         {(!extraction.primary_mechanic || !extraction.full_dossier) && <SovereignProcessingView assetId={asset.id} agency={agency} />}
                                         {extraction.primary_mechanic && extraction.full_dossier && (
                                              <>
+                                                 <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                                     <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+                                                         <div>
+                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Visual Decompiler Dossier</p>
+                                                             <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/70">Structured forensic output for internal reviews and client-facing decision rooms.</p>
+                                                         </div>
+                                                         <span className="rounded-full border border-white/10 bg-[#151310] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">
+                                                             Confidence Index: {analysisLanguage.confidenceIndex}
+                                                         </span>
+                                                     </div>
+
+                                                     <div className="grid gap-6 xl:grid-cols-2">
+                                                         <div className="rounded-[2rem] border border-white/10 bg-[#151310] p-6">
+                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Scores</p>
+                                                             <div className="mt-5 space-y-3">
+                                                                 {analysisLanguage.primaryScores.map((score) => (
+                                                                     <div key={score.label} className="flex items-center justify-between rounded-xl border border-white/10 bg-[#1A1A1A] px-4 py-3">
+                                                                         <span className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/75">{score.label}</span>
+                                                                         <span className="text-[24px] font-semibold tracking-tight tabular-nums text-[#F3F1ED]">{score.value}</span>
+                                                                     </div>
+                                                                 ))}
+                                                             </div>
+                                                         </div>
+
+                                                         <div className="rounded-[2rem] border border-white/10 bg-[#151310] p-6">
+                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Attention Path</p>
+                                                             <div className="mt-5 space-y-4">
+                                                                 <div>
+                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/55">Primary Focus</p>
+                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/85">{analysisLanguage.attentionPath.primaryFocus}</p>
+                                                                 </div>
+                                                                 <div>
+                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/55">Secondary Focus</p>
+                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/85">{analysisLanguage.attentionPath.secondaryFocus}</p>
+                                                                 </div>
+                                                                 <div className="rounded-xl border border-white/10 bg-[#1A1A1A] px-4 py-3">
+                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/55">Drop-Off</p>
+                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/75">{analysisLanguage.attentionPath.dropOff}</p>
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                     </div>
+
+                                                     <div className="mt-6 grid gap-6 xl:grid-cols-2">
+                                                         <div className="rounded-[2rem] border border-white/10 bg-[#151310] p-6">
+                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Structural Signals</p>
+                                                             <div className="mt-5 space-y-3">
+                                                                 {analysisLanguage.structuralSignals.map((signal) => (
+                                                                     <div key={signal.label} className="flex items-center justify-between border-b border-white/10 pb-3 last:border-b-0 last:pb-0">
+                                                                         <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#D6D0C6]/70">{signal.label}</span>
+                                                                         <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#F3F1ED]">{signal.value}</span>
+                                                                     </div>
+                                                                 ))}
+                                                             </div>
+                                                         </div>
+
+                                                         <div className="rounded-[2rem] border border-white/10 bg-[#151310] p-6">
+                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Strategic Read</p>
+                                                             <div className="mt-5 space-y-4">
+                                                                 {[
+                                                                     ['Strategic Thesis', analysisLanguage.strategicRead.thesis],
+                                                                     ['Trigger Mechanic', analysisLanguage.strategicRead.triggerMechanic],
+                                                                     ['Friction Points', analysisLanguage.strategicRead.frictionPoints],
+                                                                     ['Category Positioning', analysisLanguage.strategicRead.categoryPositioning],
+                                                                 ].map(([label, value]) => (
+                                                                     <div key={label as string}>
+                                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/55">{label}</p>
+                                                                         <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/85">{value as string}</p>
+                                                                     </div>
+                                                                 ))}
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+
                                                  {/* Unified Primary Intelligence Metric - REFINED SCALE */}
                                                  <div className="mb-12 grid w-full grid-cols-1 gap-10 rounded-[2.75rem] border border-[rgba(255,255,255,0.08)] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-xl xl:grid-cols-[minmax(0,1fr)_16rem] xl:items-start">
                                                      {/* Left: Primary Mechanic */}
