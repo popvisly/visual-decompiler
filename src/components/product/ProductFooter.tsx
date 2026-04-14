@@ -13,6 +13,9 @@ export default function ProductFooter() {
                         <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[64px]">
                             Don&apos;t just present the work. Explain it.
                         </h2>
+                        <p className="mt-6 text-[18px] leading-[1.75] text-[#F6F1E7]/72">
+                            Decompile your next ad before anyone else does.
+                        </p>
                         <Link
                             href="/ingest"
                             className="mt-10 inline-flex items-center justify-center border border-white/12 bg-white px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#F6F1E7]"

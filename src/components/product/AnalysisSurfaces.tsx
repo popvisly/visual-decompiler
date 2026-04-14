@@ -62,28 +62,34 @@ export default function AnalysisSurfaces() {
             </section>
 
             <section className="border-b border-white/10 py-20 lg:py-28" data-presence-tone="dark">
-                <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <div className="grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr]">
-                        <div className="max-w-[520px]">
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Dossier Preview</p>
-                            <h3 className="mt-6 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[56px]">
-                                Output designed for the room.
-                            </h3>
-                            <p className="mt-7 text-[19px] leading-[1.8] text-[#F6F1E7]/72">
-                                Not a chat response.
-                                <br />
-                                A structured document built for presentation, alignment, and decision-making.
-                            </p>
-                            <Link
-                                href={SAMPLE_DOSSIER_HREF}
-                                className="mt-9 inline-flex items-center justify-center border border-white/12 bg-white px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#F6F1E7]"
-                            >
-                                View Sample Dossier
-                            </Link>
-                        </div>
-
-                        <CanonicalDossierArtifact mode="preview" />
+                <div className="mx-auto max-w-[1240px] px-6 lg:px-12">
+                    <div className="max-w-[640px]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Dossier Preview</p>
+                        <h3 className="mt-6 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[56px]">
+                            Output designed for the room.
+                        </h3>
+                        <p className="mt-7 text-[19px] leading-[1.8] text-[#F6F1E7]/72">
+                            Not a chat response.
+                            <br />
+                            A structured document built for presentation, alignment, and decision-making.
+                        </p>
+                        <Link
+                            href={SAMPLE_DOSSIER_HREF}
+                            className="mt-9 inline-flex items-center justify-center border border-white/12 bg-white px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#F6F1E7]"
+                        >
+                            View Sample Dossier
+                        </Link>
                     </div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-80px' }}
+                        transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                        className="mt-12"
+                    >
+                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1120px]" />
+                    </motion.div>
                 </div>
             </section>
         </>

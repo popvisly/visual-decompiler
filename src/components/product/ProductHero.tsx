@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArtifact';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 export default function ProductHero() {
@@ -13,7 +14,7 @@ export default function ProductHero() {
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-                        className="max-w-[820px]"
+                        className="max-w-[860px]"
                     >
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Product</p>
                         <h1 className="mt-6 text-[15vw] font-semibold uppercase leading-[0.88] tracking-[-0.04em] text-[#F6F1E7] sm:text-[12vw] lg:text-[96px]">
@@ -37,6 +38,12 @@ export default function ProductHero() {
                                 Decompile Your Ad
                             </Link>
                         </div>
+
+                        <div className="mt-10 max-w-[820px] opacity-70">
+                            <div className="max-h-[126px] overflow-hidden blur-[0.2px]">
+                                <CanonicalDossierArtifact mode="layer-primary" />
+                            </div>
+                        </div>
                     </motion.div>
                 </div>
             </section>
@@ -49,10 +56,16 @@ export default function ProductHero() {
                             Creative decisions are still defended with opinion.
                         </h2>
                         <p className="mt-8 text-[19px] leading-[1.8] text-[#F6F1E7]/70">
-                            Work is judged on instinct. Feedback loops stall. Clients push back.
+                            Work is judged on instinct.
+                            <br />
+                            Feedback slows.
+                            <br />
+                            Clients hesitate.
                             <br />
                             <br />
-                            Not because the work is weak — but because the reasoning isn&apos;t visible.
+                            Not because the work is weak —
+                            <br />
+                            but because the reasoning isn&apos;t visible.
                         </p>
                     </div>
                 </div>

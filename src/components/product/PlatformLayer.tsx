@@ -55,7 +55,7 @@ export default function PlatformLayer() {
                             Your thinking. Your system.
                         </h2>
                         <p className="mt-7 text-[19px] leading-[1.8] text-[#F6F1E7]/70">
-                            Deliver Visual Decompiler outputs under your agency or brand — as part of your own process.
+                            Deliver Visual Decompiler outputs under your agency or brand.
                         </p>
                     </div>
                 </div>
