@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import ParticleField from "@/components/marketing/ParticleField";
 import { SAMPLE_DOSSIER_HREF } from "@/lib/sample-dossier";
 
@@ -37,7 +36,7 @@ export default function CinematicHero() {
 
     return (
         <section
-            className="relative flex min-h-[100vh] flex-col justify-center bg-[#0B0B0B] px-6 pb-36 pt-24 sm:px-8 lg:px-10 lg:pb-44"
+            className="relative flex min-h-[100vh] flex-col justify-center bg-[#0B0B0B] px-6 pb-40 pt-24 sm:px-8 lg:px-10 lg:pb-48"
             data-presence-tone="dark"
         >
             <div
@@ -48,7 +47,7 @@ export default function CinematicHero() {
             </div>
 
             <div
-                className="pointer-events-none absolute inset-x-0 top-[46%] z-0 mx-auto h-[360px] w-full max-w-[980px] -translate-y-1/2 bg-[radial-gradient(circle_at_center,rgba(8,8,8,0.72)_0%,rgba(8,8,8,0.44)_48%,transparent_100%)]"
+                className="pointer-events-none absolute inset-x-0 top-[60%] z-0 mx-auto h-[420px] w-full max-w-[980px] -translate-y-1/2 bg-[radial-gradient(circle_at_center,rgba(4,4,4,0.74)_0%,rgba(4,4,4,0.56)_42%,transparent_78%)]"
                 aria-hidden="true"
             />
 
@@ -65,43 +64,44 @@ export default function CinematicHero() {
                         )}
                     </h1>
 
-                    <div className="relative mx-auto mt-14 max-w-2xl rounded-2xl border border-white/[0.06] bg-[linear-gradient(180deg,rgba(8,8,8,0.34),rgba(8,8,8,0.24))] px-8 py-7 text-center shadow-[0_0_52px_rgba(0,0,0,0.42)] ring-1 ring-white/[0.04] backdrop-blur-xl">
-                        <div
-                            className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_56%)]"
-                            aria-hidden="true"
-                        />
+                    <div className="relative mx-auto mt-16 max-w-[760px]">
+                        <div className="absolute inset-0 -z-10 rounded-[32px] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.45),transparent_75%)]" />
 
-                        <p className="relative text-lg leading-relaxed text-white/80">
-                            <span className="block">The sovereign system for elite agencies.</span>
-                            <span className="mt-4 block">
-                                Read the architecture of persuasion —
-                                <br />
-                                and defend high-stakes creative with clarity.
-                            </span>
-                        </p>
+                        <div className="relative rounded-[28px] border border-white/8 bg-black/35 px-6 py-6 shadow-[0_10px_40px_rgba(0,0,0,0.28)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-0 before:rounded-[28px] before:border before:border-white/5 md:px-10 md:py-8">
+                            <div className="mx-auto max-w-[560px] text-center">
+                                <p className="text-[17px] font-normal leading-[1.5] text-white/88 md:text-[18px]">
+                                    The sovereign system for elite agencies.
+                                </p>
 
-                        <div className="relative mt-8 flex flex-col items-center justify-center">
-                            <Link
-                                href="/ingest"
-                                className="inline-flex items-center gap-3 rounded-lg bg-white px-6 py-3 text-sm tracking-wide text-black shadow-[0_8px_24px_rgba(0,0,0,0.28)] transition hover:bg-white/90"
-                            >
-                                Decompile Your Ad
-                                <ArrowUpRight size={16} />
-                            </Link>
+                                <p className="mt-5 text-[19px] font-normal leading-[1.6] text-white/90 md:text-[20px]">
+                                    Read the architecture of persuasion —
+                                    <br className="hidden md:block" />
+                                    <span className="md:hidden"> </span>
+                                    and defend high-stakes creative with clarity.
+                                </p>
 
-                            <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-white/42">No setup. Instant output.</p>
+                                <div className="mt-8 flex flex-col items-center">
+                                    <Link
+                                        href="/ingest"
+                                        className="inline-flex h-11 items-center justify-center rounded-xl bg-white px-7 text-[15px] font-medium tracking-[0.01em] text-black shadow-[0_6px_20px_rgba(255,255,255,0.08)] transition-all duration-200 hover:bg-white/92"
+                                    >
+                                        Decompile Your Ad
+                                        <span className="ml-2">↗</span>
+                                    </Link>
 
-                            <Link
-                                href={SAMPLE_DOSSIER_HREF}
-                                className="mt-5 px-6 py-1 text-sm tracking-wide text-white/58 transition hover:text-white/85"
-                            >
-                                View Sample Dossier
-                            </Link>
+                                    <Link
+                                        href={SAMPLE_DOSSIER_HREF}
+                                        className="mt-5 text-[15px] text-white/62 transition-colors duration-200 hover:text-white/88"
+                                    >
+                                        View Sample Dossier
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-16 h-px w-full max-w-[1240px] bg-gradient-to-r from-transparent via-[#C1A674]/45 to-transparent" aria-hidden="true" />
+                <div className="mt-20 h-px w-full max-w-[1240px] bg-gradient-to-r from-transparent via-[#C1A674]/45 to-transparent" aria-hidden="true" />
             </div>
         </section>
     );
