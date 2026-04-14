@@ -1,15 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
-import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 export default function HowItWorks() {
     return (
         <section className="relative bg-[#0B0B0B] text-[#F6F1E7] py-32 lg:py-48 overflow-hidden" data-presence-tone="dark">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
-                {/* Section header */}
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -36,7 +32,6 @@ export default function HowItWorks() {
                     </p>
                 </motion.div>
 
-                {/* How it works */}
                 <div className="mt-20 mb-10">
                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-4">How it works</p>
                     <p className="text-[34px] font-black uppercase tracking-[-0.03em] text-[#F6F1E7]">From concept to conviction.</p>
@@ -65,29 +60,6 @@ export default function HowItWorks() {
                         </motion.div>
                     ))}
                 </div>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                    className="mt-20 flex flex-col sm:flex-row items-start sm:items-center gap-6"
-                >
-                    <Link
-                        href="/ingest"
-                        className="inline-flex items-center gap-3 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition hover:bg-[#C1A674] hover:text-[#F6F1E7]"
-                    >
-                        Decompile an Ad
-                        <ArrowUpRight size={16} />
-                    </Link>
-                    <Link
-                        href={SAMPLE_DOSSIER_HREF}
-                        className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#9a9a94] transition hover:text-[#F6F1E7]"
-                    >
-                        <span className="w-6 h-px bg-[#141414]/20" />
-                        View Sample Dossier
-                    </Link>
-                </motion.div>
             </div>
         </section>
     );

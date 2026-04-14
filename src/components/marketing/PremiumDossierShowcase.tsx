@@ -1,9 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArtifact';
-import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 export default function PremiumDossierShowcase() {
     return (
@@ -30,22 +28,6 @@ export default function PremiumDossierShowcase() {
                             <br />
                             A structured document built for presentation, alignment, and decision-making.
                         </p>
-
-                        <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
-                            <Link
-                                href={SAMPLE_DOSSIER_HREF}
-                                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white px-6 py-3 text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:bg-white/90"
-                            >
-                                View Sample Dossier
-                            </Link>
-
-                            <Link
-                                href="/ingest"
-                                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] px-6 py-3 text-sm font-medium uppercase tracking-[0.18em] text-white/85 transition hover:bg-white/[0.07] hover:text-white"
-                            >
-                                Decompile an Ad
-                            </Link>
-                        </div>
                     </motion.div>
 
                     <motion.div

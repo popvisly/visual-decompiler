@@ -1,8 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 
 const COMPARISONS = [
     {
@@ -45,7 +43,6 @@ export default function WhyDifferent() {
                     </h2>
                 </motion.div>
 
-                {/* Comparison rows */}
                 <div className="mt-16 space-y-0">
                     {COMPARISONS.map((comp, idx) => (
                         <motion.div
@@ -67,23 +64,6 @@ export default function WhyDifferent() {
                     ))}
                     <div className="border-t border-[#222]" />
                 </div>
-
-                {/* Bottom CTA */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="mt-16 flex items-center gap-6"
-                >
-                    <Link
-                        href="/ingest"
-                        className="inline-flex items-center gap-3 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition hover:bg-[#C1A674] hover:text-[#F6F1E7]"
-                    >
-                        Decompile an Ad
-                        <ArrowUpRight size={16} />
-                    </Link>
-                </motion.div>
             </div>
         </section>
     );
