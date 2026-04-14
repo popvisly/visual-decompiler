@@ -130,7 +130,7 @@ export default function FooterStartNow() {
             {/* ── FOOTER BAR ── */}
             <div className="mx-auto max-w-[1200px] px-6 py-8 sm:px-8 lg:px-10 border-t border-[#222]">
                 <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
-                    <Logo sublabel="CREATIVE INTELLIGENCE, MADE READABLE." forceDark={false} className="scale-[0.85] origin-left" />
+                    <Logo sublabel="CREATIVE INTELLIGENCE, MADE READABLE." forceDark={true} hoverColor="yellow" className="scale-[0.85] origin-left" />
                     <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
                         {[
                             { label: 'About', href: '/about' },
