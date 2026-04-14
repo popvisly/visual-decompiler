@@ -14,7 +14,7 @@ const PRESSURE_CARDS = [
         label: 'Pitch Preparation',
         title: 'Pitch preparation is manual and inconsistent.',
         lead: 'Reference gathering. Breakdowns. Guesswork.',
-        body: 'Visual Decompiler turns any ad into a structured read — ready for decks, internal discussion, and sharper creative rationale.',
+        body: 'Visual Decompiler turns any ad into a structured read — ready for decks, internal discussion, and clearer creative reasoning.',
     },
     {
         label: 'Client Confidence',

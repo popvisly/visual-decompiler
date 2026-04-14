@@ -25,7 +25,7 @@ export default function HowItWorks() {
                         Visual Decompiler shows you why.
                         <br />
                         <br />
-                        Upload your ad and receive a structured breakdown of composition, hierarchy, tone, and strategic intent — translated into language a client understands.
+                        Upload your ad and receive a structured breakdown of composition, hierarchy, tone, and strategy — translated into language a client understands.
                         <br />
                         <br />
                         No guesswork. No filler. Just clarity you can stand behind.
