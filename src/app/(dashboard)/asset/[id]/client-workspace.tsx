@@ -1646,6 +1646,22 @@ export default function AssetWorkspace({
         persuasionDensity,
         marketPulseData,
     });
+    const scoreByLabel = Object.fromEntries(analysisLanguage.primaryScores.map((score) => [score.label, score.value])) as Record<'Clarity' | 'Attention' | 'Cohesion' | 'Intent' | 'Distinction', number>;
+    const signalByLabel = Object.fromEntries(analysisLanguage.structuralSignals.map((signal) => [signal.label, signal.value])) as Record<'Hierarchy' | 'Balance' | 'Contrast' | 'Density' | 'Focus Integrity', string>;
+    const structuralSummary = signalByLabel['Focus Integrity'] === 'Fragmented'
+        ? 'Overall Structure: Stable with localized breakdown in focus integrity.'
+        : signalByLabel['Hierarchy'] === 'Strong' && signalByLabel['Balance'] === 'Controlled'
+            ? 'Overall Structure: Stable across hierarchy and balance.'
+            : 'Overall Structure: Serviceable but still carrying structural variance.';
+    const confidenceRationale =
+        scoreByLabel.Clarity >= 75 && scoreByLabel.Attention >= 75 && scoreByLabel.Intent >= 75
+            ? 'Based on strong alignment between clarity, attention control, and intent.'
+            : scoreByLabel.Clarity >= 65 && scoreByLabel.Attention >= 65
+                ? 'Based on credible structural alignment with moderate signal variance.'
+                : 'Based on directional alignment that still requires tighter structural control.';
+    const supportingCopyPath = (frictionScore ?? 26) >= 28
+        ? 'Supporting copy (low engagement).'
+        : 'Supporting copy (moderate engagement).';
     const failureReasons = qualityFailureReasons({
         confidenceScore,
         frictionScore,
@@ -3139,77 +3155,73 @@ export default function AssetWorkspace({
                                         {extraction.primary_mechanic && extraction.full_dossier && (
                                              <>
                                                  <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                     <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
-                                                         <div>
-                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Visual Decompiler Dossier</p>
-                                                             <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/70">Structured forensic output for internal reviews and client-facing decision rooms.</p>
-                                                         </div>
-                                                         <span className="rounded-full border border-white/10 bg-[#151310] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">
-                                                             Confidence Index: {analysisLanguage.confidenceIndex}
-                                                         </span>
+                                                     <div className="mb-8 border-b border-white/10 pb-6">
+                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Visual Decompiler Dossier</p>
+                                                         <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/70">Structured forensic output for internal reviews and client-facing decision rooms.</p>
                                                      </div>
 
-                                                     <div className="grid gap-6 xl:grid-cols-2">
-                                                         <div className="rounded-[2rem] border border-white/10 bg-[#151310] p-6">
-                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Scores</p>
-                                                             <div className="mt-5 space-y-3">
+                                                     <div className="space-y-10">
+                                                         <section>
+                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Primary Scores</p>
+                                                             <div className="mt-5 divide-y divide-white/10 rounded-[2rem] border border-white/10 bg-[#151310]">
                                                                  {analysisLanguage.primaryScores.map((score) => (
-                                                                     <div key={score.label} className="flex items-center justify-between rounded-xl border border-white/10 bg-[#1A1A1A] px-4 py-3">
-                                                                         <span className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/75">{score.label}</span>
-                                                                         <span className="text-[24px] font-semibold tracking-tight tabular-nums text-[#F3F1ED]">{score.value}</span>
+                                                                     <div key={score.label} className="flex items-end justify-between px-6 py-5">
+                                                                         <span className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D6D0C6]/70">{score.label}</span>
+                                                                         <span className="text-[42px] sm:text-[48px] font-semibold leading-none tracking-tight tabular-nums text-[#F3F1ED]">{score.value}</span>
                                                                      </div>
                                                                  ))}
                                                              </div>
-                                                         </div>
+                                                         </section>
 
-                                                         <div className="rounded-[2rem] border border-white/10 bg-[#151310] p-6">
-                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Attention Path</p>
-                                                             <div className="mt-5 space-y-4">
-                                                                 <div>
-                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/55">Primary Focus</p>
-                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/85">{analysisLanguage.attentionPath.primaryFocus}</p>
-                                                                 </div>
-                                                                 <div>
-                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/55">Secondary Focus</p>
-                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/85">{analysisLanguage.attentionPath.secondaryFocus}</p>
-                                                                 </div>
-                                                                 <div className="rounded-xl border border-white/10 bg-[#1A1A1A] px-4 py-3">
-                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/55">Drop-Off</p>
-                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/75">{analysisLanguage.attentionPath.dropOff}</p>
-                                                                 </div>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-
-                                                     <div className="mt-6 grid gap-6 xl:grid-cols-2">
-                                                         <div className="rounded-[2rem] border border-white/10 bg-[#151310] p-6">
-                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Structural Signals</p>
-                                                             <div className="mt-5 space-y-3">
-                                                                 {analysisLanguage.structuralSignals.map((signal) => (
-                                                                     <div key={signal.label} className="flex items-center justify-between border-b border-white/10 pb-3 last:border-b-0 last:pb-0">
-                                                                         <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#D6D0C6]/70">{signal.label}</span>
-                                                                         <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#F3F1ED]">{signal.value}</span>
+                                                         <section className="border-t border-white/10 pt-8">
+                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Attention Path</p>
+                                                             <div className="mt-5 rounded-[2rem] border border-white/10 bg-[#151310] p-6">
+                                                                 {[analysisLanguage.attentionPath.primaryFocus, analysisLanguage.attentionPath.secondaryFocus, supportingCopyPath].map((step, index) => (
+                                                                     <div key={index} className="flex gap-4 border-b border-white/10 py-4 last:border-b-0 last:pb-0 first:pt-0">
+                                                                         <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">{String(index + 1).padStart(2, '0')}</span>
+                                                                         <p className="text-[14px] leading-relaxed text-[#F3F1ED]/85">{step}</p>
                                                                      </div>
                                                                  ))}
+                                                                 <p className="mt-5 text-[13px] leading-relaxed text-[#D6D0C6]/75">{analysisLanguage.attentionPath.dropOff}</p>
                                                              </div>
-                                                         </div>
+                                                         </section>
 
-                                                         <div className="rounded-[2rem] border border-white/10 bg-[#151310] p-6">
-                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Strategic Read</p>
-                                                             <div className="mt-5 space-y-4">
+                                                         <section className="border-t border-white/10 pt-8">
+                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Structural Signals</p>
+                                                             <div className="mt-5 rounded-[2rem] border border-white/10 bg-[#151310] p-6">
+                                                                 <div className="space-y-3">
+                                                                     {analysisLanguage.structuralSignals.map((signal) => (
+                                                                         <div key={signal.label} className="flex items-center justify-between border-b border-white/10 pb-3 last:border-b-0 last:pb-0">
+                                                                             <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/70">{signal.label}</span>
+                                                                             <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#F3F1ED]">{signal.value}</span>
+                                                                         </div>
+                                                                     ))}
+                                                                 </div>
+                                                                 <p className="mt-5 text-[13px] leading-relaxed text-[#D6D0C6]/75">{structuralSummary}</p>
+                                                             </div>
+                                                         </section>
+
+                                                         <section className="border-t border-white/10 pt-8">
+                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Strategic Read</p>
+                                                             <div className="mt-5 rounded-[2rem] border border-white/10 bg-[#151310] p-6">
                                                                  {[
                                                                      ['Strategic Thesis', analysisLanguage.strategicRead.thesis],
                                                                      ['Trigger Mechanic', analysisLanguage.strategicRead.triggerMechanic],
                                                                      ['Friction Points', analysisLanguage.strategicRead.frictionPoints],
                                                                      ['Category Positioning', analysisLanguage.strategicRead.categoryPositioning],
-                                                                 ].map(([label, value]) => (
-                                                                     <div key={label as string}>
+                                                                 ].map(([label, value], index) => (
+                                                                     <div key={label as string} className={`py-4 ${index < 3 ? 'border-b border-white/10' : ''}`}>
                                                                          <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/55">{label}</p>
-                                                                         <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/85">{value as string}</p>
+                                                                         <p className="mt-2 text-[14px] leading-relaxed text-[#F3F1ED]/85">{value as string}</p>
                                                                      </div>
                                                                  ))}
                                                              </div>
-                                                         </div>
+                                                         </section>
+
+                                                         <section className="border-t border-white/10 pt-8">
+                                                             <p className="text-[14px] font-semibold leading-relaxed text-[#F3F1ED]">Confidence Index: {analysisLanguage.confidenceIndex}</p>
+                                                             <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/75">{confidenceRationale}</p>
+                                                         </section>
                                                      </div>
                                                  </div>
 
