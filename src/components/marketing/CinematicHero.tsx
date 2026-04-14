@@ -68,11 +68,11 @@ export default function CinematicHero() {
                             <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent)]" />
 
                             <div className="relative mx-auto max-w-[560px] text-center">
-                                <p className="text-[18px] leading-[1.45] text-white/88 md:text-[19px]">
+                                <p className="text-[18px] leading-[1.45] text-[#F3EEE3] md:text-[19px]">
                                     The sovereign system for elite agencies.
                                 </p>
 
-                                <p className="mt-6 text-[22px] leading-[1.5] tracking-[-0.015em] text-white/92 md:text-[25px]">
+                                <p className="mt-6 text-[22px] leading-[1.5] tracking-[-0.015em] text-[#F3EEE3] md:text-[25px]">
                                     Read the architecture of persuasion —
                                     <br className="hidden md:block" />
                                     <span className="md:hidden"> </span>
@@ -90,7 +90,7 @@ export default function CinematicHero() {
 
                                     <Link
                                         href="/share/sample-dossier"
-                                        className="mt-5 text-[15px] text-white/64 transition-colors duration-200 hover:text-white/88"
+                                        className="mt-5 text-[15px] text-[#F3EEE3] transition-colors duration-200 hover:text-white"
                                     >
                                         View Sample Dossier
                                     </Link>
