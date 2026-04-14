@@ -67,13 +67,13 @@ export default function CinematicHero() {
                     <div className="relative mx-auto mt-16 max-w-[760px]">
                         <div className="absolute inset-0 -z-10 rounded-[32px] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.62),transparent_75%)]" />
 
-                        <div className="relative rounded-[28px] border border-white/10 bg-black/48 px-6 py-6 shadow-[0_10px_40px_rgba(0,0,0,0.28)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-0 before:rounded-[28px] before:border before:border-white/7 md:px-10 md:py-8">
-                            <div className="mx-auto max-w-[560px] text-center">
-                                <p className="text-[17px] font-normal leading-[1.5] text-white/96 drop-shadow-[0_1px_1px_rgba(0,0,0,0.45)] md:text-[18px]">
+                        <div className="relative rounded-[28px] border border-white/10 bg-black/48 px-6 py-6 shadow-[0_10px_40px_rgba(0,0,0,0.28)] backdrop-blur-xl before:pointer-events-none before:absolute before:inset-0 before:rounded-[28px] before:border before:border-white/7 before:z-0 md:px-10 md:py-8">
+                            <div className="relative z-10 mx-auto max-w-[560px] text-center">
+                                <p className="text-[17px] font-normal leading-[1.5] text-[#F5F1E8] md:text-[18px]">
                                     The sovereign system for elite agencies.
                                 </p>
 
-                                <p className="mt-5 text-[19px] font-normal leading-[1.6] text-white/93 drop-shadow-[0_1px_1px_rgba(0,0,0,0.45)] md:text-[20px]">
+                                <p className="mt-5 text-[19px] font-normal leading-[1.6] text-[#F5F1E8] md:text-[20px]">
                                     Read the architecture of persuasion —
                                     <br className="hidden md:block" />
                                     <span className="md:hidden"> </span>
@@ -91,7 +91,7 @@ export default function CinematicHero() {
 
                                     <Link
                                         href={SAMPLE_DOSSIER_HREF}
-                                        className="mt-5 text-[15px] text-white/62 transition-colors duration-200 hover:text-white/88"
+                                        className="mt-5 text-[15px] text-white/78 transition-colors duration-200 hover:text-white"
                                     >
                                         View Sample Dossier
                                     </Link>
