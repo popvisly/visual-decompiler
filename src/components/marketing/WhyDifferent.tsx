@@ -2,67 +2,52 @@
 
 import { motion } from 'framer-motion';
 
-const COMPARISONS = [
+const FIT_BLOCKS = [
     {
-        label: 'Pre-Pitch Refinement',
-        they: 'Pressure-test your work before it leaves the building.',
-        vd: 'Arrive with defensible reasoning before the first slide.',
+        title: 'Pre-Pitch',
+        body: 'Deconstruct references and competitor work in minutes.',
     },
     {
-        label: 'Client Presentation',
-        they: 'Walk in with clear reasoning behind every visual decision.',
-        vd: 'Move the room from opinion to alignment.',
+        title: 'Creative Review',
+        body: 'Align teams using shared visual language.',
     },
     {
-        label: 'Internal Reviews',
-        they: 'Align teams with shared, structured language instead of taste debates.',
-        vd: 'Keep creative quality high while reducing review-cycle drift.',
-    },
-    {
-        label: 'Campaign Analysis',
-        they: 'Break down competitor or reference work beyond surface-level inspiration.',
-        vd: 'Identify what changes across campaigns and why it matters strategically.',
+        title: 'Client Presentation',
+        body: 'Present decisions with structured reasoning.',
     },
 ];
 
 export default function WhyDifferent() {
     return (
-        <section className="relative bg-[#0B0B0B] text-[#F6F1E7] py-32 lg:py-48 overflow-hidden" data-presence-tone="dark">
+        <section className="relative overflow-hidden bg-[#0B0B0B] py-24 text-[#F6F1E7] lg:py-32" data-presence-tone="dark">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                    className="mb-10"
                 >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-6">
-                        Use cases
-                    </p>
-                    <h2 className="text-[10vw] lg:text-[72px] font-black leading-[0.88] tracking-[-0.04em] uppercase text-[#F6F1E7] max-w-[14ch] mb-10">
-                        Built for the moments<br />that <span className="text-[#C1A674]">matter.</span>
+                    <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674]">Use cases</p>
+                    <h2 className="text-[10vw] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] lg:text-[64px]">
+                        Where it fits
                     </h2>
                 </motion.div>
 
-                <div className="mt-16 space-y-0">
-                    {COMPARISONS.map((comp, idx) => (
-                        <motion.div
-                            key={comp.label}
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+                    {FIT_BLOCKS.map((block, idx) => (
+                        <motion.article
+                            key={block.title}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
-                            transition={{ duration: 0.8, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                            className="py-8 border-t border-[#222] grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-4 lg:gap-16"
+                            transition={{ duration: 0.7, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                            className="rounded-[20px] border border-white/10 bg-white/[0.02] p-6"
                         >
-                            <div>
-                                <p className="text-[12px] font-bold uppercase tracking-[0.15em] text-[#9a9a94] mb-3">{comp.label}</p>
-                                <p className="text-[16px] leading-[1.6] text-[#9a9a94]">{comp.they}</p>
-                            </div>
-                            <div className="flex items-start">
-                                <p className="text-[16px] leading-[1.6] text-[#F6F1E7]">{comp.vd}</p>
-                            </div>
-                        </motion.div>
+                            <h3 className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#C1A674]">{block.title}</h3>
+                            <p className="mt-4 text-[16px] leading-[1.6] text-[#F6F1E7]/82">{block.body}</p>
+                        </motion.article>
                     ))}
-                    <div className="border-t border-[#222]" />
                 </div>
             </div>
         </section>
