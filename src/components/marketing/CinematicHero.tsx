@@ -37,11 +37,11 @@ export default function CinematicHero() {
 
     return (
         <section
-            className="relative flex min-h-[100vh] flex-col justify-center px-6 pb-36 pt-24 sm:px-8 lg:px-10 lg:pb-44"
+            className="relative flex min-h-[100vh] flex-col justify-center bg-[#0B0B0B] px-6 pb-36 pt-24 sm:px-8 lg:px-10 lg:pb-44"
             data-presence-tone="dark"
         >
             <div
-                className="pointer-events-none absolute inset-x-0 top-0 bottom-[-14vh] z-0 opacity-46 [mask-image:linear-gradient(to_bottom,black_0%,black_72%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_72%,transparent_100%)]"
+                className="pointer-events-none absolute inset-x-0 top-0 bottom-[-6vh] z-0 opacity-44 [mask-image:linear-gradient(to_bottom,black_0%,black_58%,transparent_92%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_58%,transparent_92%)]"
                 aria-hidden="true"
             >
                 <ParticleField />
