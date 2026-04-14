@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import ParticleField from "@/components/marketing/ParticleField";
+import CanonicalDossierArtifact from "@/components/marketing/CanonicalDossierArtifact";
 import { SAMPLE_DOSSIER_HREF } from "@/lib/sample-dossier";
 
 export default function CinematicHero() {
@@ -40,8 +41,8 @@ export default function CinematicHero() {
             data-presence-tone="dark"
         >
             <div className="absolute inset-x-0 top-0 bottom-[170px] z-0 opacity-55 [mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)] [-webkit-mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)]" aria-hidden="true">
-                    <ParticleField />
-                </div>
+                <ParticleField />
+            </div>
 
             <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col items-center">
                 <div className="flex w-full flex-col items-center text-center">
@@ -52,12 +53,12 @@ export default function CinematicHero() {
                             {hasLine2 ? line2 : "\u00A0"}
                         </span>
                         {showCursor && typedIdx < TOTAL_CHARS && (
-                            <span className="inline-block w-[6px] h-[0.85em] bg-[#FFD600] ml-[4px] -mb-2 animate-pulse" />
+                            <span className="ml-[4px] -mb-2 inline-block h-[0.85em] w-[6px] animate-pulse bg-[#FFD600]" />
                         )}
                     </h1>
 
-                    <div className="relative mx-auto mt-10 max-w-2xl rounded-2xl border border-white/10 bg-black/30 backdrop-blur-md ring-1 ring-white/5 px-8 py-6 text-center shadow-[0_0_40px_rgba(0,0,0,0.4)]">
-                        <p className="text-lg text-white/80 leading-relaxed">
+                    <div className="relative mx-auto mt-10 max-w-2xl rounded-2xl border border-white/10 bg-black/30 px-8 py-6 text-center shadow-[0_0_40px_rgba(0,0,0,0.4)] ring-1 ring-white/5 backdrop-blur-md">
+                        <p className="text-lg leading-relaxed text-white/80">
                             The sovereign system for elite agencies.
                             <br />
                             Read the architecture of persuasion — and defend high-stakes creative with clarity.
@@ -79,6 +80,10 @@ export default function CinematicHero() {
                             </Link>
                         </div>
                     </div>
+                </div>
+
+                <div className="mt-12 w-full max-w-[860px] opacity-80">
+                    <CanonicalDossierArtifact mode="hero-slice" />
                 </div>
             </div>
         </section>

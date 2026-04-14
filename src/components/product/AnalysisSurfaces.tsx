@@ -2,24 +2,29 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArtifact';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 const ANALYSIS_LAYERS = [
     {
         title: 'Primary Scores',
         body: 'Clarity. Attention. Cohesion. Intent. Distinction. High-level signals that define how the work performs.',
+        proof: 'layer-primary' as const,
     },
     {
         title: 'Attention Path',
         body: 'A mapped sequence of how the eye moves — and where it drops.',
+        proof: 'layer-attention' as const,
     },
     {
         title: 'Structural Signals',
         body: 'Hierarchy, balance, contrast, density, and focus integrity — expressed as controlled diagnostics.',
+        proof: 'layer-structural' as const,
     },
     {
         title: 'Strategic Read',
         body: 'A clear articulation of what the work is doing, why it works, and where it breaks.',
+        proof: 'layer-strategic' as const,
     },
 ];
 
@@ -35,7 +40,7 @@ export default function AnalysisSurfaces() {
                         </h2>
                     </div>
 
-                    <div className="mt-14 divide-y divide-white/10 border-y border-white/10">
+                    <div className="mt-14 space-y-10">
                         {ANALYSIS_LAYERS.map((layer, index) => (
                             <motion.article
                                 key={layer.title}
@@ -43,10 +48,13 @@ export default function AnalysisSurfaces() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: '-80px' }}
                                 transition={{ duration: 0.6, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                                className="grid gap-6 py-9 md:grid-cols-[280px_1fr] md:items-start"
+                                className="grid items-start gap-7 border-t border-white/10 pt-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10"
                             >
-                                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{layer.title}</p>
-                                <p className="max-w-[64ch] text-[17px] leading-[1.82] text-[#F6F1E7]/74">{layer.body}</p>
+                                <div>
+                                    <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{layer.title}</p>
+                                    <p className="mt-4 max-w-[52ch] text-[17px] leading-[1.82] text-[#F6F1E7]/74">{layer.body}</p>
+                                </div>
+                                <CanonicalDossierArtifact mode={layer.proof} />
                             </motion.article>
                         ))}
                     </div>
@@ -74,49 +82,7 @@ export default function AnalysisSurfaces() {
                             </Link>
                         </div>
 
-                        <div className="rounded-[2rem] border border-white/12 bg-[#12110F] p-7 shadow-[0_30px_100px_rgba(0,0,0,0.42)] sm:p-9">
-                            <div className="flex items-center justify-between border-b border-white/10 pb-6">
-                                <div>
-                                    <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#C1A674]">Visual Decompiler</p>
-                                    <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#F6F1E7]/55">Creative Intelligence Dossier</p>
-                                </div>
-                                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C1A674]">Sample Export</p>
-                            </div>
-
-                            <div className="space-y-8 pt-8">
-                                <div>
-                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C1A674]">Primary Scores</p>
-                                    <div className="mt-4 grid grid-cols-5 gap-3">
-                                        {[
-                                            ['Clarity', '82'],
-                                            ['Attention', '91'],
-                                            ['Cohesion', '76'],
-                                            ['Intent', '88'],
-                                            ['Distinction', '67'],
-                                        ].map(([label, value]) => (
-                                            <div key={label}>
-                                                <p className="text-[9px] font-semibold uppercase tracking-[0.23em] text-[#F6F1E7]/52">{label}</p>
-                                                <p className="mt-2 text-[24px] font-semibold leading-none tracking-[-0.02em] text-[#F6F1E7]">{value}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="border-t border-white/10 pt-6">
-                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C1A674]">Strategic Read</p>
-                                    <div className="mt-4 space-y-4">
-                                        <p className="text-[12px] leading-relaxed text-[#F6F1E7]/74">Strategic Thesis: Positions the product as premium through restraint and visual isolation.</p>
-                                        <p className="text-[12px] leading-relaxed text-[#F6F1E7]/74">Trigger Mechanic: High contrast subject lock drives immediate attention entry.</p>
-                                        <p className="text-[12px] leading-relaxed text-[#F6F1E7]/74">Friction Points: Supporting copy competes with the primary focal route.</p>
-                                    </div>
-                                </div>
-
-                                <div className="border-t border-white/10 pt-6">
-                                    <p className="text-[13px] font-semibold text-[#F6F1E7]">Confidence Index: High</p>
-                                    <p className="mt-2 text-[12px] leading-relaxed text-[#F6F1E7]/66">Based on alignment between clarity, attention control, and strategic intent.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <CanonicalDossierArtifact mode="preview" />
                     </div>
                 </div>
             </section>

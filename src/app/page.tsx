@@ -16,8 +16,8 @@ export default function HomePage() {
             <HowItWorks />
             <PremiumDossierShowcase />
             <BuiltForTheRoomSection />
-            <NeuralMapSection />
             <DossierPreview />
+            <NeuralMapSection />
             <WhyDifferent />
             <FooterStartNow />
         </main>
