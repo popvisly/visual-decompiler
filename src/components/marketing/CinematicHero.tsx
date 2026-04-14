@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import ParticleField from "@/components/marketing/ParticleField";
-import CanonicalDossierArtifact from "@/components/marketing/CanonicalDossierArtifact";
 import { SAMPLE_DOSSIER_HREF } from "@/lib/sample-dossier";
 
 export default function CinematicHero() {
@@ -82,9 +81,6 @@ export default function CinematicHero() {
                     </div>
                 </div>
 
-                <div className="mt-12 w-full max-w-[860px] opacity-80">
-                    <CanonicalDossierArtifact mode="hero-slice" />
-                </div>
             </div>
         </section>
     );
