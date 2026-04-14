@@ -7,19 +7,19 @@ const PRESSURE_CARDS = [
     {
         label: 'Review Clarity',
         title: 'Creative reviews stall when everything is subjective.',
-        lead: 'Feedback becomes opinion. Rounds drag. Decisions blur.',
+        lead: 'Feedback becomes opinion. Decisions slow.',
         body: 'Visual Decompiler replaces instinct with structure — so teams can align faster, with clearer reasoning behind the work.',
     },
     {
         label: 'Pitch Preparation',
-        title: 'Pitch preparation is manual, slow, and inconsistent.',
+        title: 'Pitch preparation is manual and inconsistent.',
         lead: 'Reference gathering. Breakdowns. Guesswork.',
         body: 'Visual Decompiler turns any ad into a structured read — ready for decks, internal discussion, and sharper creative rationale.',
     },
     {
         label: 'Client Confidence',
         title: "Clients don\'t trust what they can\'t see.",
-        lead: 'Strong ideas get reduced to “I\'m not sure.”',
+        lead: 'Strong ideas collapse into hesitation.',
         body: 'Visual Decompiler makes creative reasoning visible — so decisions feel grounded, defensible, and easier to approve.',
     },
 ];

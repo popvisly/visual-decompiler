@@ -4,10 +4,10 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const ANALYSIS_SECTIONS = [
-    { label: 'Report', desc: 'Trigger mechanics & narrative framework' },
-    { label: 'Intelligence', desc: 'Neural thesis & strategic verdict' },
-    { label: 'Forensics', desc: 'Evidence anchors & friction zones' },
-    { label: 'Pulse', desc: 'Platform affinity & emotional drivers' },
+    { label: 'Report', desc: 'Trigger mechanics & narrative structure' },
+    { label: 'Intelligence', desc: 'Strategic thesis & verdict' },
+    { label: 'Forensics', desc: 'Evidence anchors & friction points' },
+    { label: 'Pulse', desc: 'Platform affinity & emotional signals' },
     { label: 'Prompt', desc: 'Reconstruction blueprint' },
     { label: 'Audience', desc: 'Psychographic persona mapping' },
 ];

@@ -8,12 +8,12 @@ const COMPARISONS = [
     {
         label: 'Pre-Pitch Refinement',
         they: 'Pressure-test your work before it leaves the building.',
-        vd: 'Arrive with sharper, defensible reasoning before the first slide is on screen.',
+        vd: 'Arrive with defensible reasoning before the first slide.',
     },
     {
         label: 'Client Presentation',
         they: 'Walk in with clear reasoning behind every visual decision.',
-        vd: 'Move the room from opinion to aligned direction, faster.',
+        vd: 'Move the room from opinion to alignment.',
     },
     {
         label: 'Internal Reviews',

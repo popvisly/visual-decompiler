@@ -23,7 +23,16 @@ export default function HowItWorks() {
                         Make the work make sense.
                     </h2>
                     <p className="text-[18px] leading-[1.7] text-[#9a9a94] max-w-[520px]">
-                        You already know when something works. Visual Decompiler shows you why. Upload your ad and receive a structured breakdown of composition, hierarchy, tone, and strategic intent translated into language a client understands. No guesswork. No filler. Just clarity you can stand behind.
+                        You already know when something works.
+                        <br />
+                        <br />
+                        Visual Decompiler shows you why.
+                        <br />
+                        <br />
+                        Upload your ad and receive a structured breakdown of composition, hierarchy, tone, and strategic intent — translated into language a client understands.
+                        <br />
+                        <br />
+                        No guesswork. No filler. Just clarity you can stand behind.
                     </p>
                 </motion.div>
 
@@ -36,8 +45,8 @@ export default function HowItWorks() {
                 <div className="mt-0 grid grid-cols-1 md:grid-cols-3 gap-16 lg:gap-12">
                     {[
                         { n: '1', title: 'Upload the Work', detail: 'Your concept, your layout, your frame.' },
-                        { n: '2', title: 'Decompile', detail: 'Visual Decompiler analyzes the creative at a structural level — beyond surface description.' },
-                        { n: '3', title: 'Present with Authority', detail: 'Receive a clear, structured read you can use in pitch decks, internal reviews, or client conversations.' },
+                        { n: '2', title: 'Decompile', detail: 'Analyze the creative at a structural level — beyond surface description.' },
+                        { n: '3', title: 'Present with Authority', detail: 'Receive a structured read — ready for decks, internal reviews, and client conversations.' },
                     ].map((step, idx) => (
                         <motion.div
                             key={step.n}

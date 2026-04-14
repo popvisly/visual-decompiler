@@ -25,11 +25,11 @@ export default function PremiumDossierShowcase() {
                         </h2>
 
                         <p className="mt-6 max-w-xl text-base leading-8 text-[#F6F1E7]/70 sm:text-lg">
-                            Visual Decompiler turns visual analysis into a refined, presentation-ready dossier — helping creatives and agencies explain not just what the work is, but why it lands.
+                            Visual Decompiler turns analysis into a refined, presentation-ready dossier — built to explain not just what the work is, but why it lands.
                         </p>
 
-                        <p className="mt-4 max-w-xl text-base leading-8 text-[#F6F1E7]/55">
-                            Built for internal reviews, client presentations, and white-label agency delivery.
+                        <p className="mt-4 max-w-xl text-[12px] uppercase tracking-[0.2em] text-[#F6F1E7]/50">
+                            Not a chat response. A client-facing artifact.
                         </p>
 
                         <div className="mt-8 grid gap-3 sm:grid-cols-2">

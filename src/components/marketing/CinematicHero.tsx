@@ -9,7 +9,8 @@ import { SAMPLE_DOSSIER_HREF } from "@/lib/sample-dossier";
 export default function CinematicHero() {
     const [typedIdx, setTypedIdx] = useState(0);
     const [showCursor, setShowCursor] = useState(true);
-    const TOTAL_CHARS = 36; // "SEE THE INVISIBLE.\nEXPLAIN THE WORK."
+    const fullText = "ADVERTISING INTELLIGENCE.\nDECONSTRUCTED.";
+    const TOTAL_CHARS = fullText.length;
 
     useEffect(() => {
         const startTimeout = setTimeout(() => {
@@ -29,8 +30,6 @@ export default function CinematicHero() {
 
         return () => clearTimeout(startTimeout);
     }, []);
-
-    const fullText = "SEE THE INVISIBLE.\nEXPLAIN THE WORK.";
     const visibleText = fullText.substring(0, typedIdx);
     const [line1, line2] = visibleText.split("\n");
     const hasLine2 = visibleText.includes("\n");
@@ -59,7 +58,9 @@ export default function CinematicHero() {
 
                     <div className="relative mx-auto mt-10 max-w-2xl rounded-2xl border border-white/10 bg-black/30 backdrop-blur-md ring-1 ring-white/5 px-8 py-6 text-center shadow-[0_0_40px_rgba(0,0,0,0.4)]">
                         <p className="text-lg text-white/80 leading-relaxed">
-                            Turn instinct into clear, defensible creative reasoning — before you walk into the room.
+                            The sovereign system for elite agencies.
+                            <br />
+                            Read the architecture of persuasion — and defend high-stakes creative with clarity.
                         </p>
 
                         <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
