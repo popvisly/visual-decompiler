@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import ParticleField from "@/components/marketing/ParticleField";
 import { SAMPLE_DOSSIER_HREF } from "@/lib/sample-dossier";
 
 export default function CinematicHero() {
@@ -39,6 +40,13 @@ export default function CinematicHero() {
             className="relative flex min-h-[100vh] flex-col justify-center px-6 pb-36 pt-24 sm:px-8 lg:px-10 lg:pb-44"
             data-presence-tone="dark"
         >
+            <div
+                className="pointer-events-none absolute inset-x-0 top-0 bottom-[-14vh] z-0 opacity-46 [mask-image:linear-gradient(to_bottom,black_0%,black_72%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_72%,transparent_100%)]"
+                aria-hidden="true"
+            >
+                <ParticleField />
+            </div>
+
             <div
                 className="pointer-events-none absolute inset-x-0 top-[46%] z-0 mx-auto h-[360px] w-full max-w-[980px] -translate-y-1/2 bg-[radial-gradient(circle_at_center,rgba(8,8,8,0.72)_0%,rgba(8,8,8,0.44)_48%,transparent_100%)]"
                 aria-hidden="true"
