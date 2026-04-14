@@ -47,6 +47,11 @@ export default function CinematicHero() {
             </div>
 
             <div
+                className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(circle_at_center,transparent_52%,rgba(11,11,11,0.62)_100%)]"
+                aria-hidden="true"
+            />
+
+            <div
                 className="pointer-events-none absolute inset-x-0 top-[60%] z-0 mx-auto h-[420px] w-full max-w-[980px] -translate-y-1/2 bg-[radial-gradient(circle_at_center,rgba(4,4,4,0.74)_0%,rgba(4,4,4,0.56)_42%,transparent_78%)]"
                 aria-hidden="true"
             />
