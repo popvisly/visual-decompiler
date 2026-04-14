@@ -7,7 +7,7 @@ import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 export default function PremiumDossierShowcase() {
     return (
-        <section className="relative overflow-hidden pt-20 pb-32 text-[#F6F1E7] lg:pt-28 lg:pb-40" data-presence-tone="dark">
+        <section className="relative overflow-hidden bg-[#0B0B0B] pt-20 pb-32 text-[#F6F1E7] lg:pt-28 lg:pb-40" data-presence-tone="dark">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0B0B0B]/75 via-[#0B0B0B]/30 to-transparent" aria-hidden="true" />
 
             <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 lg:px-12">
