@@ -6,11 +6,11 @@ import Logo from '@/components/Logo';
 export default function ProductFooter() {
     return (
         <footer className="bg-[#0B0B0B] text-[#F6F1E7]" data-presence-tone="dark">
-            <section className="border-b border-white/10 py-20 lg:py-24">
+            <section className="border-b border-white/10 py-24 lg:py-32">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[760px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Final</p>
-                        <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[64px]">
+                        <h2 className="mt-6 text-[11vw] font-bold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[64px]">
                             Don&apos;t just present the work. Explain it.
                         </h2>
                         <p className="mt-6 text-[18px] leading-[1.75] text-[#F6F1E7]/72">
@@ -18,7 +18,7 @@ export default function ProductFooter() {
                         </p>
                         <Link
                             href="/ingest"
-                            className="mt-10 inline-flex items-center justify-center border border-white/12 bg-white px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#F6F1E7]"
+                            className="mt-12 inline-flex items-center justify-center border border-white/12 bg-white px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#F6F1E7]"
                         >
                             Decompile Your Ad
                         </Link>

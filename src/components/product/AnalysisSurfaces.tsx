@@ -31,7 +31,7 @@ const ANALYSIS_LAYERS = [
 export default function AnalysisSurfaces() {
     return (
         <>
-            <section className="border-b border-white/10 py-20 lg:py-24" data-presence-tone="dark">
+            <section className="border-b border-white/10 py-24 lg:py-32" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[920px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">The System</p>
@@ -52,7 +52,7 @@ export default function AnalysisSurfaces() {
                             >
                                 <div>
                                     <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{layer.title}</p>
-                                    <p className="mt-4 max-w-[52ch] text-[17px] leading-[1.82] text-[#F6F1E7]/74">{layer.body}</p>
+                                    <p className="mt-4 max-w-[48ch] text-[17px] leading-[1.9] text-[#F6F1E7]/74">{layer.body}</p>
                                 </div>
                                 <CanonicalDossierArtifact mode={layer.proof} />
                             </motion.article>
@@ -61,9 +61,9 @@ export default function AnalysisSurfaces() {
                 </div>
             </section>
 
-            <section className="border-b border-white/10 py-20 lg:py-28" data-presence-tone="dark">
+            <section className="border-b border-white/10 py-24 lg:py-36" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1240px] px-6 lg:px-12">
-                    <div className="max-w-[640px]">
+                    <div className="max-w-[560px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Dossier Preview</p>
                         <h3 className="mt-6 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[56px]">
                             Output designed for the room.
@@ -86,9 +86,9 @@ export default function AnalysisSurfaces() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-80px' }}
                         transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                        className="mt-12"
+                        className="mt-16"
                     >
-                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1120px]" />
+                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1180px] lg:scale-[1.05] lg:origin-top" />
                     </motion.div>
                 </div>
             </section>

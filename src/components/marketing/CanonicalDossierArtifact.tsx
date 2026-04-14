@@ -20,7 +20,7 @@ function shellClass(mode: NonNullable<CanonicalDossierArtifactProps['mode']>) {
         return 'rounded-[1.9rem] border border-white/12 bg-[#12110F] p-6 shadow-[0_28px_80px_rgba(0,0,0,0.4)] sm:p-8';
     }
     if (mode.startsWith('layer-')) {
-        return 'rounded-[1.25rem] border border-white/10 bg-[#12110F] p-5';
+        return 'rounded-[1.25rem] border border-white/10 bg-[#12110F] p-5 min-h-[168px]';
     }
     return 'rounded-[2rem] border border-white/12 bg-[#12110F] p-7 shadow-[0_30px_100px_rgba(0,0,0,0.42)] sm:p-9';
 }

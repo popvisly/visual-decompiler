@@ -20,7 +20,7 @@ export default function ProductHero() {
                         <h1 className="mt-6 text-[15vw] font-semibold uppercase leading-[0.88] tracking-[-0.04em] text-[#F6F1E7] sm:text-[12vw] lg:text-[96px]">
                             A system for visual due diligence.
                         </h1>
-                        <p className="mt-8 max-w-[760px] text-[19px] leading-[1.72] text-[#F6F1E7]/72">
+                        <p className="mt-8 max-w-[680px] text-[19px] leading-[1.8] text-[#F6F1E7]/72">
                             Visual Decompiler analyzes advertising at a structural level — turning creative instinct into clear, defensible reasoning.
                         </p>
 
@@ -39,7 +39,7 @@ export default function ProductHero() {
                             </Link>
                         </div>
 
-                        <div className="mt-10 max-w-[820px] opacity-70">
+                        <div className="mt-14 mb-6 max-w-[820px] opacity-60">
                             <div className="max-h-[126px] overflow-hidden blur-[0.2px]">
                                 <CanonicalDossierArtifact mode="layer-primary" />
                             </div>
@@ -48,7 +48,7 @@ export default function ProductHero() {
                 </div>
             </section>
 
-            <section className="border-b border-white/10 py-20 lg:py-24" data-presence-tone="dark">
+            <section className="border-b border-white/10 py-24 lg:py-28" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[760px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">The Problem</p>

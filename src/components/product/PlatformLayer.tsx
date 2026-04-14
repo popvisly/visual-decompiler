@@ -20,7 +20,7 @@ const WORKFLOW = [
 export default function PlatformLayer() {
     return (
         <>
-            <section className="border-b border-white/10 py-20 lg:py-24" data-presence-tone="dark">
+            <section className="border-b border-white/10 py-24 lg:py-32" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[900px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Workflow</p>
@@ -29,7 +29,7 @@ export default function PlatformLayer() {
                         </h2>
                     </div>
 
-                    <div className="mt-12 divide-y divide-white/10 border-y border-white/10">
+                    <div className="mt-14 divide-y divide-white/12 border-y border-white/10">
                         {WORKFLOW.map((item, index) => (
                             <motion.article
                                 key={item.title}
@@ -37,7 +37,7 @@ export default function PlatformLayer() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: '-60px' }}
                                 transition={{ duration: 0.55, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                                className="grid gap-5 py-8 md:grid-cols-[220px_1fr]"
+                                className="grid gap-5 py-10 md:grid-cols-[220px_1fr]"
                             >
                                 <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{item.title}</p>
                                 <p className="text-[17px] leading-[1.8] text-[#F6F1E7]/72">{item.body}</p>
@@ -47,7 +47,7 @@ export default function PlatformLayer() {
                 </div>
             </section>
 
-            <section className="border-b border-white/10 py-20 lg:py-24" data-presence-tone="dark">
+            <section className="border-b border-white/10 py-24 lg:py-32" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[760px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">White Label</p>
