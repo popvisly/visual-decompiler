@@ -3526,7 +3526,7 @@ export default function AssetWorkspace({
                                                                                 ? 'border-[#D4A574] text-black bg-[#D4A574]'
                                                                                 : item.severity === 'high'
                                                                                     ? 'border-[#D4A574]/40 text-[#D4A574]'
-                                                                                    : 'border-white/20 text-[#B7AFA3]'
+                                                                                    : 'border-[#D6D0C6]/30 text-[#D6D0C6]/88 bg-white/[0.03]'
                                                                         }`}
                                                                     >
                                                                         {item.severity}
@@ -3666,7 +3666,7 @@ export default function AssetWorkspace({
                                                     <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                         Strategic Implication
                                                     </p>
-                                                    <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/75">
+                                                    <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/82">
                                                         To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.
                                                     </p>
                                                     <span className="mt-8 inline-flex border border-[#D4A574] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574] bg-[#D4A574]/5">
@@ -4184,13 +4184,13 @@ export default function AssetWorkspace({
                                             {(stressLabRows || []).map((row, i) => (
                                                 <div key={i} className="grid grid-cols-4 items-center group hover:bg-white/[0.02] transition-colors">
                                                     <div className="px-8 py-7 border-r border-white/10">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/70 group-hover:text-[#D4A574] transition-colors">{row.variable}</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/88 group-hover:text-[#D4A574] transition-colors">{row.variable}</p>
                                                     </div>
                                                     <div className="px-8 py-7 border-r border-white/10 text-center">
-                                                        <p className="text-[13px] font-medium text-[#D6D0C6]/78 leading-relaxed">{row.currentState}</p>
+                                                        <p className="text-[13px] font-medium text-[#F3F1ED]/86 leading-relaxed">{row.currentState}</p>
                                                     </div>
                                                     <div className="px-8 py-7 border-r border-white/10 text-center">
-                                                        <span className={`text-[10px] font-semibold uppercase tracking-[0.3em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : 'text-[#B7AFA3]'}`}>
+                                                        <span className={`text-[10px] font-semibold uppercase tracking-[0.3em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : row.predictedLift === 'Medium' ? 'text-[#D6D0C6]/88' : 'text-[#D6D0C6]/72'}`}>
                                                             {row.predictedLift}
                                                         </span>
                                                     </div>
@@ -4200,7 +4200,7 @@ export default function AssetWorkspace({
                                                                 ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5'
                                                                 : row.recommendation === 'Avoid'
                                                                     ? 'border-red-500/50 text-red-400 bg-red-500/5'
-                                                                    : 'border-white/20 text-[#B7AFA3]'
+                                                                    : 'border-[#D6D0C6]/30 text-[#D6D0C6]/88 bg-white/[0.03]'
                                                         }`}>
                                                             {row.recommendation}
                                                         </span>
@@ -4215,7 +4215,7 @@ export default function AssetWorkspace({
                                             <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                 Variable Diagnostics
                                             </p>
-                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/75">
+                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/82">
                                                 <p><span className="text-[#F3F1ED] font-semibold">Composition Emphasis:</span> The brand asserts cultural status through controlled visual posture.</p>
                                                 <p><span className="text-[#F3F1ED] font-semibold">Chromatic Intensity:</span> Current color pressure remains persuasive without over-saturation.</p>
                                                 <p><span className="text-[#F3F1ED] font-semibold">Gaze Direction:</span> Oblique address sustains intimacy without direct confrontation.</p>
@@ -4228,7 +4228,7 @@ export default function AssetWorkspace({
                                             <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                 Gaze Direction Breakdown
                                             </p>
-                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/75">
+                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/82">
                                                 <p><span className="text-[#F3F1ED] font-semibold">Positioning:</span> Upper-center frame priority with directional control.</p>
                                                 <p><span className="text-[#F3F1ED] font-semibold">Direction:</span> Oblique vector maintains aspirational distance.</p>
                                                 <p><span className="text-[#F3F1ED] font-semibold">Tilt:</span> Slight downward bias supports mixed-mode address.</p>
@@ -4239,7 +4239,7 @@ export default function AssetWorkspace({
 
                                     <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10">
                                         <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574]">Stress Test Summary</p>
-                                        <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/75">
+                                        <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/82">
                                             These stress signals define where controlled adjustments can improve lift without destabilizing the route. Next iteration should prioritize gaze and hierarchy tests first, then validate copy and CTA compression only where structural confidence remains intact.
                                         </p>
                                     </div>
