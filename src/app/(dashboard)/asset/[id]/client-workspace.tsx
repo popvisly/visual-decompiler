@@ -4132,14 +4132,14 @@ export default function AssetWorkspace({
                                 <div className="space-y-10">
                                     <WorkspaceTabHeader
                                         kicker="Causal Intelligence"
-                                        title="Stress Lab"
-                                        intro="Experimental stress testing across key creative variables to measure response variance and structural durability."
+                                        title="Stress Lab: Causal Intelligence"
+                                        intro="This section outlines experimental stress testing on key creative variables, measuring response variance and structural durability."
                                     />
                                     <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] overflow-hidden shadow-3xl">
                                         <div className="grid grid-cols-4 border-b border-[#E7DED1] bg-white text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">
                                             <div className="px-10 py-6 border-r border-[#d4c9b8]">Variable</div>
                                             <div className="px-10 py-6 border-r border-[#d4c9b8] text-center">Baseline</div>
-                                            <div className="px-10 py-6 border-r border-[#d4c9b8] text-center">Predicted_Lift</div>
+                                            <div className="px-10 py-6 border-r border-[#d4c9b8] text-center">Predicted Lift</div>
                                             <div className="px-10 py-6 text-center">Recommendation</div>
                                         </div>
                                         <div className="divide-y divide-white/5">
@@ -4158,10 +4158,10 @@ export default function AssetWorkspace({
                                                     </div>
                                                     <div className="px-10 py-10 text-center">
                                                         <span className={`inline-block border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] font-mono ${
-                                                            row.recommendation === 'Test' 
-                                                                ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5' 
-                                                                : row.recommendation === 'Avoid' 
-                                                                    ? 'border-red-500/50 text-red-500 bg-red-500/5' 
+                                                            row.recommendation === 'Test'
+                                                                ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5'
+                                                                : row.recommendation === 'Avoid'
+                                                                    ? 'border-red-500/50 text-red-500 bg-red-500/5'
                                                                     : 'border-[#d4c9b8] text-[#aaa]'
                                                         }`}>
                                                             {row.recommendation}
@@ -4170,6 +4170,40 @@ export default function AssetWorkspace({
                                                 </div>
                                             ))}
                                         </div>
+                                    </div>
+
+                                    <div className="grid gap-4 xl:grid-cols-2">
+                                        <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">
+                                                Variable Diagnostics
+                                            </p>
+                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/75">
+                                                <p><span className="text-[#F3F1ED] font-semibold">Composition Emphasis:</span> The brand asserts cultural status through controlled visual posture.</p>
+                                                <p><span className="text-[#F3F1ED] font-semibold">Chromatic Intensity:</span> Current color pressure remains persuasive without over-saturation.</p>
+                                                <p><span className="text-[#F3F1ED] font-semibold">Gaze Direction:</span> Oblique address sustains intimacy without direct confrontation.</p>
+                                                <p><span className="text-[#F3F1ED] font-semibold">Copy Compression:</span> Heritage messaging carries effectively with room for selective tightening.</p>
+                                                <p><span className="text-[#F3F1ED] font-semibold">CTA Prominence:</span> Product-scale authority is currently doing the conversion work.</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">
+                                                Gaze Direction Breakdown
+                                            </p>
+                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/75">
+                                                <p><span className="text-[#F3F1ED] font-semibold">Positioning:</span> Upper-center frame priority with directional control.</p>
+                                                <p><span className="text-[#F3F1ED] font-semibold">Direction:</span> Oblique vector maintains aspirational distance.</p>
+                                                <p><span className="text-[#F3F1ED] font-semibold">Tilt:</span> Slight downward bias supports mixed-mode address.</p>
+                                                <p><span className="text-[#F3F1ED] font-semibold">Focus Tone:</span> Eye contrast retains focal attraction without dominance drift.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 text-[#1a1a1a]">
+                                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#999]">Stress Test Summary</p>
+                                        <p className="max-w-[78ch] text-[14px] leading-relaxed text-[#555]">
+                                            These stress signals define where controlled adjustments can improve lift without destabilizing the route. Next iteration should prioritize gaze and hierarchy tests first, then validate copy and CTA compression only where structural confidence remains intact.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
