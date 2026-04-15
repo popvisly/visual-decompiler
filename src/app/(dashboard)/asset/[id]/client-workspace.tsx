@@ -3788,28 +3788,25 @@ export default function AssetWorkspace({
                                         </div>
 
                                         {/* Persuasion Density */}
-                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] lg:col-span-2">
                                             <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-8">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Persuasion Density</p>
                                                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Compression</span>
                                             </div>
 
-                                            <div className="flex items-end justify-between gap-10">
-                                                <div>
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55 font-mono">Conversion Density</p>
-                                                    <p className="mt-5 text-[12px] leading-relaxed text-[#D6D0C6]/55 max-w-[46ch]">
-                                                        Measures the creative's informational compression, how efficiently it transfers brand signal into consumer memory structures.
-                                                    </p>
-                                                </div>
-                                                <div className="text-[56px] font-semibold tracking-tighter text-[#D4A574]">
-                                                    {typeof persuasionDensity === 'number' ? (
-                                                        <>
-                                                            <CountUpPercent value={Math.round(persuasionDensity)} />%
-                                                        </>
-                                                    ) : (
-                                                        '—'
-                                                    )}
-                                                </div>
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55 font-mono">Conversion Density</p>
+                                            <p className="mt-6 max-w-[60ch] text-[13px] leading-relaxed text-[#D6D0C6]/65">
+                                                Measures the creative's informational compression, how efficiently it transfers brand signal into consumer memory structures.
+                                            </p>
+
+                                            <div className="mt-10 flex justify-center text-[72px] font-semibold leading-none tracking-tighter text-[#D4A574]">
+                                                {typeof persuasionDensity === 'number' ? (
+                                                    <>
+                                                        <CountUpPercent value={Math.round(persuasionDensity)} />%
+                                                    </>
+                                                ) : (
+                                                    '—'
+                                                )}
                                             </div>
 
                                             <div className="mt-10 h-2 w-full rounded-full bg-white/10 overflow-hidden">
@@ -3821,22 +3818,19 @@ export default function AssetWorkspace({
                                         </div>
 
                                         {/* Cognitive Friction */}
-                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] lg:col-span-2">
                                             <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-8">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Cognitive Friction</p>
                                                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Resistance</span>
                                             </div>
 
-                                            <div className="flex items-end justify-between gap-10">
-                                                <div>
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55 font-mono">Resistance Index</p>
-                                                    <p className="mt-5 text-[12px] leading-relaxed text-[#D6D0C6]/55 max-w-[46ch]">
-                                                        Quantifies neural resistance to message adoption. Low scores indicate frictionless persuasion pathways.
-                                                    </p>
-                                                </div>
-                                                <div className="text-[56px] font-semibold tracking-tighter text-[#D4A574]">
-                                                    {typeof frictionScore === 'number' ? Math.round(frictionScore) : '—'}%
-                                                </div>
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55 font-mono">Resistance Index</p>
+                                            <p className="mt-6 max-w-[60ch] text-[13px] leading-relaxed text-[#D6D0C6]/65">
+                                                Quantifies neural resistance to message adoption. Low scores indicate frictionless persuasion pathways.
+                                            </p>
+
+                                            <div className="mt-10 flex justify-center text-[72px] font-semibold leading-none tracking-tighter text-[#D4A574]">
+                                                {typeof frictionScore === 'number' ? Math.round(frictionScore) : '—'}%
                                             </div>
 
                                             <div className="mt-10 h-2 w-full rounded-full bg-white/10 overflow-hidden">
