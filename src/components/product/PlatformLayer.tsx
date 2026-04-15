@@ -20,7 +20,7 @@ const WORKFLOW = [
 export default function PlatformLayer() {
     return (
         <>
-            <section className="border-b border-white/10 py-24 lg:py-32" data-presence-tone="dark">
+            <section className="py-24 lg:py-32" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[900px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Workflow</p>
@@ -47,7 +47,7 @@ export default function PlatformLayer() {
                 </div>
             </section>
 
-            <section className="border-b border-white/10 py-24 lg:py-32" data-presence-tone="dark">
+            <section className="py-24 lg:py-32" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[760px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">White Label</p>

@@ -29,7 +29,7 @@ const ANALYSIS_LAYERS = [
 export default function AnalysisSurfaces() {
     return (
         <>
-            <section className="border-b border-white/10 py-32 lg:py-44" data-presence-tone="dark">
+            <section className="py-32 lg:py-44" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1240px] px-6 lg:px-12">
                     <div className="max-w-[560px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Sample Dossier</p>
@@ -52,7 +52,7 @@ export default function AnalysisSurfaces() {
                 </div>
             </section>
 
-            <section className="border-b border-white/10 py-24 lg:py-28" data-presence-tone="dark">
+            <section className="py-24 lg:py-28" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[760px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">The Problem</p>
@@ -75,7 +75,7 @@ export default function AnalysisSurfaces() {
                 </div>
             </section>
 
-            <section className="border-b border-white/10 py-24 lg:py-32" data-presence-tone="dark">
+            <section className="py-24 lg:py-32" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[920px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">The System</p>
