@@ -3414,33 +3414,54 @@ export default function AssetWorkspace({
                                 <div className="space-y-10">
                                     <WorkspaceTabHeader
                                         kicker="Operational Guardrails"
-                                        title="Constraint Map"
-                                        intro="The non-negotiables, avoidances, and safe adaptation boundaries that keep refinement inside the working forensic logic."
+                                        title="Operational Guardrails & Constraint Map"
+                                        intro="This section defines the non-negotiables, avoidances, and safe adaptation boundaries required to preserve the working forensic logic."
                                     />
 
                                     <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a] shadow-xl">
-                                        <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 border-b border-[#E7DED1] pb-4 font-mono">System Boundary // Protocol</p>
+                                        <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 border-b border-[#E7DED1] pb-4 font-mono">Guardrail Intent</p>
                                         <p className="max-w-[62ch] text-[24px] font-semibold uppercase leading-tight text-[#444] tracking-tightest">
                                             VD judges, diagnoses, and directs creative quality. Not for asset generation.
                                         </p>
+                                    </div>
+
+                                    <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 text-[#1a1a1a]">
+                                        <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#999] mb-5">Constraint Priority Legend</p>
+                                        <div className="flex flex-wrap gap-3">
+                                            <span className="inline-flex items-center gap-2 border border-[#D4A574] bg-[#D4A574] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-black">
+                                                <span className="h-1.5 w-1.5 bg-black/70" />
+                                                Critical
+                                            </span>
+                                            <span className="inline-flex items-center gap-2 border border-[#D4A574]/45 bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">
+                                                <span className="h-1.5 w-1.5 bg-[#D4A574]" />
+                                                High
+                                            </span>
+                                            <span className="inline-flex items-center gap-2 border border-[#c0b5a4] bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#999]">
+                                                <span className="h-1.5 w-1.5 bg-[#aaa]" />
+                                                Optional
+                                            </span>
+                                        </div>
                                     </div>
 
                                     <div className="grid gap-4 xl:grid-cols-2">
                                         {[
                                             {
                                                 title: 'Retention Protocol',
+                                                guidance: 'Preserve these elements to protect the route\'s strategic spine.',
                                                 items: mustKeepConstraints,
                                                 accent: 'text-[#D4A574]',
                                                 tone: 'border-[#d4c9b8] bg-white',
                                             },
                                             {
                                                 title: 'Negation Protocol',
+                                                guidance: 'Avoid these shifts to prevent degradation of message transfer.',
                                                 items: mustAvoidConstraints,
                                                 accent: 'text-[#1a1a1a]',
                                                 tone: 'border-[#d4c9b8] bg-white',
                                             },
                                             {
                                                 title: 'Adaptive Delta',
+                                                guidance: 'Safe variation zone for controlled testing and iteration.',
                                                 items: safeAdaptationZone,
                                                 accent: 'text-[#D4A574]',
                                                 tone: 'border-[#d4c9b8] bg-white/90',
@@ -3450,13 +3471,17 @@ export default function AssetWorkspace({
                                                 key={group.title}
                                                 className={`rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
-                                                <p className={`text-[11px] font-semibold uppercase tracking-[0.5em] mb-12 border-b border-[#E7DED1] pb-6 font-mono ${group.accent}`}>{group.title}</p>
+                                                <p className={`text-[11px] font-semibold uppercase tracking-[0.5em] mb-6 border-b border-[#E7DED1] pb-6 font-mono ${group.accent}`}>{group.title}</p>
+                                                <p className="mb-10 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">{group.guidance}</p>
                                                 <div className="space-y-4">
                                                     {group.items.length > 0 ? (
                                                         group.items.map((item, id) => (
                                                             <div key={`${group.title}-${id}`} className={`border p-8 ${group.tone}`}>
                                                                 <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                                                                    <p className="max-w-[58ch] text-[15px] leading-relaxed text-[#1a1a1a] uppercase font-semibold tracking-tight">{item.text}</p>
+                                                                    <p className="max-w-[58ch] text-[15px] leading-relaxed text-[#1a1a1a] uppercase font-semibold tracking-tight flex gap-3">
+                                                                        <span className="mt-[9px] h-1.5 w-1.5 shrink-0 bg-[#1a1a1a]" />
+                                                                        <span>{item.text}</span>
+                                                                    </p>
                                                                     <span
                                                                         className={`shrink-0 self-start border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] ${
                                                                             item.severity === 'critical'
