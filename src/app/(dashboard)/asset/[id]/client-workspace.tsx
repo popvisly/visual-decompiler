@@ -3643,13 +3643,13 @@ export default function AssetWorkspace({
                                                     ].map((row) => (
                                                         <div key={row.label} className="grid grid-cols-12 border-b border-white/10 last:border-b-0">
                                                             <div className="col-span-5 border-r border-white/10 px-8 py-6">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/70">{row.label}</p>
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/88">{row.label}</p>
                                                             </div>
                                                             <div className="col-span-2 border-r border-white/10 px-8 py-6 text-center">
                                                                 <p className="text-[24px] font-semibold text-[#F3F1ED]">{row.value}%</p>
                                                             </div>
                                                             <div className="col-span-5 px-8 py-6">
-                                                                <p className="text-[13px] leading-relaxed text-[#D6D0C6]/78">{row.insight}</p>
+                                                                <p className="text-[13px] leading-relaxed text-[#F3F1ED]/86">{row.insight}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -3657,7 +3657,7 @@ export default function AssetWorkspace({
 
                                                 <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] mb-6 border-b border-white/10 pb-5">Directional Estimate</p>
-                                                    <p className="max-w-[74ch] text-[13px] leading-relaxed text-[#D6D0C6]/78">
+                                                    <p className="max-w-[74ch] text-[13px] leading-relaxed text-[#D6D0C6]/84">
                                                         {marketPulseFallback.interpretation || 'Category pressure is elevated, so this route requires sharper differentiation and strict execution discipline before scale expansion.'}
                                                     </p>
                                                 </div>
@@ -3669,7 +3669,7 @@ export default function AssetWorkspace({
                                                     <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/82">
                                                         To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.
                                                     </p>
-                                                    <span className="mt-8 inline-flex border border-[#D4A574] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574] bg-[#D4A574]/5">
+                                                    <span className="mt-8 inline-flex border border-[#D4A574]/70 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#F3F1ED] bg-[#D4A574]/18">
                                                         {marketPulseFallback.confidenceLabel}
                                                     </span>
                                                 </div>
