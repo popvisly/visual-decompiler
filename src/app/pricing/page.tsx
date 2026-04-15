@@ -64,7 +64,7 @@ export default function PricingPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-                        className="text-[clamp(64px,8vw,132px)] font-black leading-[0.88] tracking-[-0.05em] text-white uppercase max-w-[15ch]"
+                        className="text-[clamp(52px,6.4vw,102px)] font-black leading-[0.9] tracking-[-0.045em] text-white uppercase max-w-[14ch]"
                     >
                         Start free. <br />
                         <span className="text-white/20">Scale when it matters.</span>
@@ -74,7 +74,7 @@ export default function PricingPage() {
                         initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-                        className="mt-10 max-w-3xl text-[clamp(20px,2.1vw,30px)] leading-relaxed text-white/55 font-medium"
+                        className="mt-8 max-w-3xl text-[clamp(18px,1.9vw,34px)] leading-[1.45] text-white/58 font-medium"
                     >
                         Every tier includes real intelligence depth. Observer proves the diagnostic system. 
                         Professional and Agency expand analysis coverage, decision confidence, and delivery readiness.
