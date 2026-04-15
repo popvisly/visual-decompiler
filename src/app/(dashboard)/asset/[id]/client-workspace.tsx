@@ -2979,41 +2979,41 @@ export default function AssetWorkspace({
                                                     const remainingText = restParts.join(' ').trim();
                                                     return (
                                                         <div className="max-w-[56ch] mb-8">
-                                                            <p className="text-[22px] lg:text-[28px] leading-[1.2] font-semibold tracking-tightest text-[#F3F1ED]">
+                                                            <p className="text-[24px] lg:text-[24px] leading-[1.2] font-semibold tracking-tightest text-[#F3F1ED]">
                                                                 {firstSentence || thesis}
                                                             </p>
                                                             {remainingText ? (
-                                                                <p className="mt-4 text-[20px] lg:text-[24px] leading-[1.3] font-medium tracking-tight text-[#D6D0C6]/88">
+                                                                <p className="mt-4 text-[16px] lg:text-[24px] leading-[1.3] font-medium tracking-tight text-[#D6D0C6]/88">
                                                                     {remainingText}
                                                                 </p>
                                                             ) : null}
                                                         </div>
                                                     );
                                                 })()}
-                                                <p className="max-w-[58ch] text-[15px] leading-relaxed text-[#D6D0C6]/65 mb-10 font-medium">{integratedRecommendation.whyNow}</p>
+                                                <p className="max-w-[58ch] text-[13px] leading-relaxed text-[#D6D0C6]/65 mb-10 font-medium">{integratedRecommendation.whyNow}</p>
                                                 <div className="rounded-[2.25rem] border border-white/10 bg-[#151310] p-6 mb-10">
                                                     <p className="text-[13px] leading-relaxed text-[#D4A574] font-medium italic">
                                                         {integratedRecommendation.riskRewardTension}
                                                     </p>
                                                 </div>
                                                 <div className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
-                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-8">Decision Summary</p>
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-8">Decision Summary</p>
                                                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
                                                         <div className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5 group hover:border-[#D4A574]/35 transition-all">
-                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Recommended Decision</p>
-                                                            <p className="text-[14px] leading-snug text-[#F3F1ED] font-semibold">{integratedRecommendation.decision}</p>
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Recommended Decision</p>
+                                                            <p className="text-[13px] leading-snug text-[#F3F1ED] font-semibold">{integratedRecommendation.decision}</p>
                                                         </div>
                                                         <div className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5 group hover:border-[#D4A574]/35 transition-all">
-                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Primary Watchout</p>
-                                                            <p className="text-[14px] leading-snug text-[#F3F1ED] font-semibold">{integratedRecommendation.watchouts}</p>
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Primary Watchout</p>
+                                                            <p className="text-[13px] leading-snug text-[#F3F1ED] font-semibold">{integratedRecommendation.watchouts}</p>
                                                         </div>
                                                     </div>
                                                     <div className="mt-8 pt-8 border-t border-white/10">
-                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-6">Action Protocol</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-6">Action Protocol</p>
                                                         <div className="space-y-4">
                                                             {integratedRecommendation.executionNext3.map((step, index) => (
                                                                 <div key={index} className="flex gap-4 items-start">
-                                                                    <span className="text-[11px] font-semibold text-[#D4A574] mt-1">{index + 1}.</span>
+                                                                    <span className="text-[10px] font-semibold text-[#D4A574] mt-1">{index + 1}.</span>
                                                                     <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70 font-medium">{step}</p>
                                                                 </div>
                                                             ))}
@@ -3024,7 +3024,7 @@ export default function AssetWorkspace({
 
                                             <div className="space-y-6">
                                                 <div className="rounded-[2.5rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Confidence Readout</p>
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Confidence Readout</p>
                                                     <div className="grid gap-3 sm:grid-cols-2">
                                                         {[
                                                             ['Confidence', integratedRecommendation.confidence],
@@ -3032,32 +3032,32 @@ export default function AssetWorkspace({
                                                             ['Assumption Load', integratedRecommendation.assumptionLoad],
                                                         ].map(([label, value]) => (
                                                             <div key={label} className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5 group hover:border-[#D4A574]/35 transition-all">
-                                                                <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">{label}</p>
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">{label}</p>
                                                                 <p className="text-[13px] leading-snug text-[#F3F1ED] font-semibold">{value}</p>
                                                             </div>
                                                         ))}
                                                         <div className="rounded-[1.75rem] border border-white/10 bg-[#151310] p-5 group hover:border-[#D4A574]/35 transition-all sm:col-span-2">
-                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Known Unknowns</p>
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Known Unknowns</p>
                                                             <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70 font-medium">
                                                                 {integratedRecommendation.knownUnknowns.join(' ')}
                                                             </p>
                                                         </div>
                                                     </div>
                                                     <div className="mt-8 pt-8 border-t border-white/10">
-                                                        <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]/40 mb-2">Source Validation</p>
-                                                        <p className="text-[11px] leading-relaxed text-[#D6D0C6]/55 tracking-[0.18em]">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]/40 mb-2">Source Validation</p>
+                                                        <p className="text-[10px] leading-relaxed text-[#D6D0C6]/55 tracking-[0.18em]">
                                                             Blueprint trace • Focal routing • Semiotic overlap
                                                         </p>
                                                     </div>
                                                 </div>
 
                                                 <div className="rounded-[2.5rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Decision Diagnostic</p>
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Decision Diagnostic</p>
                                                     <div className="space-y-3">
                                                         {integratedRecommendation.moduleScores.map((score) => (
                                                             <div key={score.label} className="rounded-[1.75rem] border border-white/10 bg-[#151310] p-5">
                                                                 <div className="flex items-center justify-between gap-4">
-                                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/70">{score.label}</p>
+                                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/70">{score.label}</p>
                                                                     <div className="flex gap-1">
                                                                         {[1,2,3,4,5].map(i => (
                                                                             <div key={i} className={`w-3 h-1 ${i <= score.score ? 'bg-[#D4A574]' : 'bg-white/10'}`} />
@@ -3070,26 +3070,26 @@ export default function AssetWorkspace({
                                                 </div>
 
                                                 <div className="rounded-[2.5rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Signal Integrity</p>
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Signal Integrity</p>
                                                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
                                                         <div className="rounded-[1.75rem] border border-white/10 bg-[#151310] p-5">
-                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-4 underline underline-offset-4 decoration-[#D4A574]/40">Hard Evidence Points</p>
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-4 underline underline-offset-4 decoration-[#D4A574]/40">Hard Evidence Points</p>
                                                             <div className="space-y-4">
                                                                 {integratedRecommendation.facts.map((fact, index) => (
                                                                     <div key={index} className="flex gap-3">
                                                                         <span className="text-[10px] font-semibold text-[#D4A574] opacity-40">{String(index+1).padStart(2, '0')}</span>
-                                                                        <p className="text-[12px] leading-relaxed text-[#D6D0C6]/70 font-medium">{fact}</p>
+                                                                        <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70 font-medium">{fact}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
                                                         </div>
                                                         <div className="rounded-[1.75rem] border border-white/10 bg-[#151310] p-5">
-                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-4 underline underline-offset-4">Derived Readout</p>
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-4 underline underline-offset-4">Derived Readout</p>
                                                             <div className="space-y-4">
                                                                 {integratedRecommendation.inferences.map((inference, index) => (
                                                                     <div key={index} className="flex gap-3">
                                                                         <span className="text-[10px] font-semibold text-[#D6D0C6]/45">{String(index+1).padStart(2, '0')}</span>
-                                                                        <p className="text-[12px] leading-relaxed text-[#D6D0C6]/65 font-medium">{inference}</p>
+                                                                        <p className="text-[13px] leading-relaxed text-[#D6D0C6]/65 font-medium">{inference}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -3101,25 +3101,25 @@ export default function AssetWorkspace({
 
                                         <div className="space-y-6">
                                             <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10">System Verdict</p>
+                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10">System Verdict</p>
                                                 <h3 className="text-[clamp(44px,6.2vw,86px)] font-semibold leading-[0.92] tracking-tightest text-balance text-[#F3F1ED] uppercase mb-6">
                                                     {qualityVerdict}
                                                 </h3>
-                                                <p className="max-w-[62ch] text-[15px] leading-relaxed text-[#D6D0C6]/65 font-medium mb-12">
+                                                <p className="max-w-[62ch] text-[13px] leading-relaxed text-[#D6D0C6]/65 font-medium mb-12">
                                                     Decision signal based on strategic alignment and evidence quality.
                                                 </p>
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                     <div className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
-                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-4">Integrity Index</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-4">Integrity Index</p>
                                                         <div className="flex items-baseline gap-2">
                                                             <span className="text-6xl font-semibold tracking-tighter text-[#F3F1ED]">
                                                                 {confidenceScore ?? '—'}
                                                             </span>
-                                                            <span className="text-[14px] font-semibold uppercase tracking-[0.2em] text-[#D4A574]">/100</span>
+                                                            <span className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[#D4A574]">/100</span>
                                                         </div>
                                                     </div>
                                                     <div className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8 flex items-center">
-                                                        <p className="text-[12px] leading-relaxed text-[#D6D0C6]/70 font-semibold italic">
+                                                        <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70 font-semibold italic">
                                                             Diagnostics prioritize directional precision over personal preference.
                                                         </p>
                                                     </div>
@@ -3127,12 +3127,12 @@ export default function AssetWorkspace({
                                             </div>
 
                                             <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10">Critical Risk Points</p>
+                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10">Critical Risk Points</p>
                                                 <div className="space-y-6">
                                                     {failureReasons.map((reason, index) => (
                                                         <div key={`${reason.title}-${index}`} className="border-l-2 border-[#D4A574] pl-8 py-2">
-                                                            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-3">{reason.title}</p>
-                                                            <p className="text-[14px] leading-relaxed text-[#D6D0C6]/65 font-medium">{reason.detail}</p>
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-3">{reason.title}</p>
+                                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/65 font-medium">{reason.detail}</p>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -3145,7 +3145,7 @@ export default function AssetWorkspace({
                                                 {fixPriorities.map((item, index) => (
                                                     <div key={item.priority} className={`rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5 ${index === fixPriorities.length - 1 ? 'lg:col-span-2' : ''}`}>
                                                         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{item.priority}</p>
-                                                        <p className="mt-3 text-[15px] font-semibold tracking-tight text-[#F3F1ED]">{item.title}</p>
+                                                        <p className="mt-3 text-[13px] font-semibold tracking-tight text-[#F3F1ED]">{item.title}</p>
                                                         <p className="mt-2 max-w-[56ch] text-[13px] leading-6 text-[#D6D0C6]">{item.detail}</p>
                                                     </div>
                                                 ))}
