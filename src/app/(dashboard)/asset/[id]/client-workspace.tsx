@@ -3511,45 +3511,52 @@ export default function AssetWorkspace({
                                                     {group.items.length > 0 ? (
                                                         group.items.map((item, id) => (
                                                             <div key={`${group.title}-${id}`} className="border border-white/10 bg-[#151310] p-6">
-                                                                <div className={`grid grid-cols-1 gap-3 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58 sm:grid-cols-[minmax(0,1.45fr)_minmax(120px,0.55fr)] ${group.title === 'Adaptive Delta' ? 'xl:grid-cols-[minmax(0,1.7fr)_minmax(130px,0.5fr)]' : 'xl:grid-cols-[minmax(0,1.55fr)_minmax(120px,0.55fr)_minmax(0,1fr)]'}`}>
-                                                                    <span>Element</span>
-                                                                    <span className="sm:text-center xl:text-left">Priority</span>
-                                                                    <span className={`sm:col-span-2 sm:text-left ${group.title === 'Adaptive Delta' ? 'xl:col-span-2' : 'xl:col-span-1'}`}>Protocol Note</span>
+                                                                <div className="border-b border-white/10 pb-4">
+                                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Element</p>
                                                                 </div>
-                                                                <div className={`mt-5 grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1.45fr)_minmax(120px,0.55fr)] ${group.title === 'Adaptive Delta' ? 'xl:grid-cols-[minmax(0,1.7fr)_minmax(130px,0.5fr)]' : 'xl:grid-cols-[minmax(0,1.55fr)_minmax(120px,0.55fr)_minmax(0,1fr)]'} xl:items-start`}>
+                                                                <div className="mt-4">
                                                                     <p className="text-[13px] font-medium leading-relaxed text-[#F3F1ED]/92">
                                                                         {item.text}
                                                                     </p>
-                                                                    <span
-                                                                        className={`inline-flex w-fit items-center justify-center border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] sm:justify-self-center xl:justify-self-start ${
-                                                                            item.severity === 'critical'
-                                                                                ? 'border-[#D4A574] text-black bg-[#D4A574]'
-                                                                                : item.severity === 'high'
-                                                                                    ? 'border-[#D4A574]/40 text-[#D4A574]'
-                                                                                    : 'border-[#D6D0C6]/30 text-[#D6D0C6]/88 bg-white/[0.03]'
-                                                                        }`}
-                                                                    >
-                                                                        {item.severity}
-                                                                    </span>
-                                                                    <p className={`text-[13px] leading-relaxed text-[#D6D0C6]/78 sm:col-span-2 ${group.title === 'Adaptive Delta' ? 'xl:col-span-2' : 'xl:col-span-1'}`}>
-                                                                        {group.title === 'Retention Protocol'
-                                                                            ? item.severity === 'critical'
-                                                                                ? 'Must be preserved exactly to hold route integrity.'
-                                                                                : item.severity === 'high'
-                                                                                    ? 'Keep in most variants unless tightly justified.'
-                                                                                    : 'Can flex during iteration without collapsing route.'
-                                                                            : group.title === 'Negation Protocol'
+                                                                </div>
+
+                                                                <div className="mt-6 grid gap-4 border-t border-white/10 pt-5 sm:grid-cols-[auto_1fr] sm:items-start">
+                                                                    <div className="space-y-2">
+                                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Priority</p>
+                                                                        <span
+                                                                            className={`inline-flex w-fit items-center justify-center border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] ${
+                                                                                item.severity === 'critical'
+                                                                                    ? 'border-[#D4A574] text-black bg-[#D4A574]'
+                                                                                    : item.severity === 'high'
+                                                                                        ? 'border-[#D4A574]/40 text-[#D4A574]'
+                                                                                        : 'border-[#D6D0C6]/30 text-[#D6D0C6]/88 bg-white/[0.03]'
+                                                                            }`}
+                                                                        >
+                                                                            {item.severity}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="space-y-2">
+                                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Protocol Note</p>
+                                                                        <p className="text-[13px] leading-relaxed text-[#D6D0C6]/78">
+                                                                            {group.title === 'Retention Protocol'
                                                                                 ? item.severity === 'critical'
-                                                                                    ? 'Must be avoided to prevent strategic route collapse.'
+                                                                                    ? 'Must be preserved exactly to hold route integrity.'
                                                                                     : item.severity === 'high'
-                                                                                        ? 'Avoid by default; use only in deliberate stress tests.'
-                                                                                        : 'Remove when simplification strengthens transfer.'
-                                                                                : item.severity === 'critical'
-                                                                                    ? 'Primary safe adaptation lane with strict guardrails.'
-                                                                                    : item.severity === 'high'
-                                                                                        ? 'High-value controlled variation for route optimization.'
-                                                                                        : 'Optional exploratory variation within safe boundaries.'}
-                                                                    </p>
+                                                                                        ? 'Keep in most variants unless tightly justified.'
+                                                                                        : 'Can flex during iteration without collapsing route.'
+                                                                                : group.title === 'Negation Protocol'
+                                                                                    ? item.severity === 'critical'
+                                                                                        ? 'Must be avoided to prevent strategic route collapse.'
+                                                                                        : item.severity === 'high'
+                                                                                            ? 'Avoid by default; use only in deliberate stress tests.'
+                                                                                            : 'Remove when simplification strengthens transfer.'
+                                                                                    : item.severity === 'critical'
+                                                                                        ? 'Primary safe adaptation lane with strict guardrails.'
+                                                                                        : item.severity === 'high'
+                                                                                            ? 'High-value controlled variation for route optimization.'
+                                                                                            : 'Optional exploratory variation within safe boundaries.'}
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         ))
