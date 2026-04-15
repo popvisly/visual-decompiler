@@ -3511,12 +3511,12 @@ export default function AssetWorkspace({
                                                     {group.items.length > 0 ? (
                                                         group.items.map((item, id) => (
                                                             <div key={`${group.title}-${id}`} className="border border-white/10 bg-[#151310] p-6">
-                                                                <div className="grid grid-cols-1 gap-3 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58 sm:grid-cols-[minmax(0,1.45fr)_minmax(120px,0.55fr)] xl:grid-cols-[minmax(0,1.55fr)_minmax(120px,0.55fr)_minmax(0,1fr)]">
+                                                                <div className={`grid grid-cols-1 gap-3 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58 sm:grid-cols-[minmax(0,1.45fr)_minmax(120px,0.55fr)] ${group.title === 'Adaptive Delta' ? 'xl:grid-cols-[minmax(0,1.7fr)_minmax(130px,0.5fr)]' : 'xl:grid-cols-[minmax(0,1.55fr)_minmax(120px,0.55fr)_minmax(0,1fr)]'}`}>
                                                                     <span>Element</span>
                                                                     <span className="sm:text-center xl:text-left">Priority</span>
-                                                                    <span className="sm:col-span-2 sm:text-left xl:col-span-1">Protocol Note</span>
+                                                                    <span className={`sm:col-span-2 sm:text-left ${group.title === 'Adaptive Delta' ? 'xl:col-span-2' : 'xl:col-span-1'}`}>Protocol Note</span>
                                                                 </div>
-                                                                <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1.45fr)_minmax(120px,0.55fr)] xl:grid-cols-[minmax(0,1.55fr)_minmax(120px,0.55fr)_minmax(0,1fr)] xl:items-start">
+                                                                <div className={`mt-5 grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1.45fr)_minmax(120px,0.55fr)] ${group.title === 'Adaptive Delta' ? 'xl:grid-cols-[minmax(0,1.7fr)_minmax(130px,0.5fr)]' : 'xl:grid-cols-[minmax(0,1.55fr)_minmax(120px,0.55fr)_minmax(0,1fr)]'} xl:items-start`}>
                                                                     <p className="text-[13px] font-medium leading-relaxed text-[#F3F1ED]/92">
                                                                         {item.text}
                                                                     </p>
@@ -3531,7 +3531,7 @@ export default function AssetWorkspace({
                                                                     >
                                                                         {item.severity}
                                                                     </span>
-                                                                    <p className="text-[13px] leading-relaxed text-[#D6D0C6]/78 sm:col-span-2 xl:col-span-1">
+                                                                    <p className={`text-[13px] leading-relaxed text-[#D6D0C6]/78 sm:col-span-2 ${group.title === 'Adaptive Delta' ? 'xl:col-span-2' : 'xl:col-span-1'}`}>
                                                                         {group.title === 'Retention Protocol'
                                                                             ? item.severity === 'critical'
                                                                                 ? 'Must be preserved exactly to hold route integrity.'
