@@ -3102,7 +3102,7 @@ export default function AssetWorkspace({
                                         <div className="space-y-6">
                                             <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10">System Verdict</p>
-                                                <h3 className="text-[clamp(44px,6.2vw,86px)] font-semibold leading-[0.92] tracking-tightest text-balance text-[#F3F1ED] uppercase mb-6">
+                                                <h3 className="text-[24px] font-semibold leading-[0.92] tracking-tightest text-balance text-[#F3F1ED] uppercase mb-6">
                                                     {qualityVerdict}
                                                 </h3>
                                                 <p className="max-w-[62ch] text-[13px] leading-relaxed text-[#D6D0C6]/65 font-medium mb-12">
