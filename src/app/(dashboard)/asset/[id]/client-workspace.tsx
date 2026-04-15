@@ -3435,8 +3435,8 @@ export default function AssetWorkspace({
                                     />
 
                                     <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a] shadow-xl">
-                                        <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 border-b border-[#E7DED1] pb-4 font-mono">Guardrail Intent</p>
-                                        <p className="max-w-[62ch] text-[24px] font-semibold uppercase leading-tight text-[#444] tracking-tightest">
+                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 border-b border-[#E7DED1] pb-4 font-mono">Guardrail Intent</p>
+                                        <p className="max-w-[62ch] text-[24px] font-semibold leading-tight text-[#444] tracking-[-0.01em]">
                                             VD judges, diagnoses, and directs creative quality. Not for asset generation.
                                         </p>
                                     </div>
@@ -3487,14 +3487,14 @@ export default function AssetWorkspace({
                                                 key={group.title}
                                                 className={`rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
-                                                <p className={`text-[11px] font-semibold uppercase tracking-[0.5em] mb-6 border-b border-[#E7DED1] pb-6 font-mono ${group.accent}`}>{group.title}</p>
+                                                <p className={`text-[10px] font-semibold uppercase tracking-[0.5em] mb-6 border-b border-[#E7DED1] pb-6 font-mono ${group.accent}`}>{group.title}</p>
                                                 <p className="mb-10 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">{group.guidance}</p>
                                                 <div className="space-y-4">
                                                     {group.items.length > 0 ? (
                                                         group.items.map((item, id) => (
                                                             <div key={`${group.title}-${id}`} className={`border p-8 ${group.tone}`}>
                                                                 <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                                                                    <p className="max-w-[58ch] text-[15px] leading-relaxed text-[#1a1a1a] uppercase font-semibold tracking-tight flex gap-3">
+                                                                    <p className="max-w-[58ch] text-[13px] leading-relaxed text-[#1a1a1a] font-medium tracking-[0.01em] flex gap-3">
                                                                         <span className="mt-[9px] h-1.5 w-1.5 shrink-0 bg-[#1a1a1a]" />
                                                                         <span>{item.text}</span>
                                                                     </p>
@@ -3513,7 +3513,7 @@ export default function AssetWorkspace({
                                                             </div>
                                                         ))
                                                     ) : (
-                                                        <div className="border border-dashed border-[#d4c9b8] bg-white p-12 text-[11px] font-semibold uppercase tracking-widest text-[#ccc] text-center font-mono">
+                                                        <div className="border border-dashed border-[#d4c9b8] bg-white p-12 text-[10px] font-semibold uppercase tracking-widest text-[#ccc] text-center font-mono">
                                                             Pending trace reconstruction.
                                                         </div>
                                                     )}
