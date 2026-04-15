@@ -3813,7 +3813,7 @@ export default function AssetWorkspace({
                                         </div>
 
                                         {/* Persuasion Density */}
-                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] lg:col-span-2">
+                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-8">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Persuasion Density</p>
                                                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Compression</span>
@@ -3843,7 +3843,7 @@ export default function AssetWorkspace({
                                         </div>
 
                                         {/* Cognitive Friction */}
-                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] lg:col-span-2">
+                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-8">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Cognitive Friction</p>
                                                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Resistance</span>
