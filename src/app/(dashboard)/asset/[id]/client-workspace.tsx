@@ -4255,42 +4255,47 @@ export default function AssetWorkspace({
                                 <div className="space-y-10">
                                     <WorkspaceTabHeader
                                         kicker="Audit Trail"
-                                        title="Decision Log"
-                                        intro="A compact operating log for what was approved, revised, or rejected so diagnosis turns into accountable creative direction."
+                                        title="Decision Log: Audit Trail"
+                                        intro="A concise record of all decisions made, providing transparency and accountability in the creative direction process."
                                     />
                                     <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
                                         <div className="space-y-4">
                                             <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 shadow-2xl">
-                                                <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10 border-b border-[#E7DED1] pb-6 font-mono">Capture Decision // Active_Entry</p>
+                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 border-b border-[#E7DED1] pb-5 font-mono">Capture Decision // Active Entry</p>
                                                 <div className="space-y-8">
                                                     <div className="grid grid-cols-3 gap-4">
                                                         {(['Ship', 'Revise', 'Kill'] as const).map((v) => (
                                                             <button
                                                                 key={v}
                                                                 onClick={() => setDecisionVerdict(v)}
-                                                                className={`border p-8 text-[11px] font-semibold uppercase tracking-[0.5em] transition-all font-mono ${
+                                                                className={`border p-6 text-[13px] font-semibold uppercase tracking-[0.26em] transition-all font-mono ${
                                                                     decisionVerdict === v
                                                                         ? 'border-[#D4A574] bg-[#D4A574] text-black shadow-[0_0_20px_rgba(212,165,116,0.2)]'
                                                                         : 'border-[#d4c9b8] bg-white text-[#999] hover:border-[#c0b5a4] hover:text-[#1a1a1a]/60'
                                                                 }`}
                                                             >
-                                                                {v}
+                                                                <span className="inline-flex items-center gap-2">
+                                                                    <span aria-hidden>
+                                                                        {v === 'Ship' ? '✔' : v === 'Revise' ? '✎' : '✕'}
+                                                                    </span>
+                                                                    <span>{v}</span>
+                                                                </span>
                                                             </button>
                                                         ))}
                                                     </div>
                                                     <div className="space-y-4">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#aaa] font-mono">Rationale // Readout</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#aaa] font-mono">Rationale for Decision</p>
                                                         <textarea
                                                             value={decisionNote}
                                                             onChange={(e) => setDecisionNote(e.target.value)}
                                                             rows={6}
-                                                            className="w-full border border-[#d4c9b8] bg-transparent p-8 text-[14px] font-mono leading-relaxed text-[#1a1a1a] outline-none placeholder:text-[#ccc] focus:border-[#D4A574]/50 transition-colors uppercase"
-                                                            placeholder="Enter forensic rationale for this decision..."
+                                                            className="w-full border border-[#d4c9b8] bg-transparent p-6 text-[13px] font-mono leading-relaxed text-[#1a1a1a] outline-none placeholder:text-[#b8b0a3] focus:border-[#D4A574]/50 transition-colors"
+                                                            placeholder="Enter reasoning for this decision..."
                                                         />
                                                     </div>
                                                     <button
                                                         onClick={handleLogDecision}
-                                                        className="w-full bg-white text-black py-6 text-[11px] font-semibold uppercase tracking-[0.5em] transition-all hover:bg-[#D4A574] active:scale-[0.98] font-mono"
+                                                        className="w-full bg-white text-black py-5 text-[10px] font-semibold uppercase tracking-[0.4em] transition-all hover:bg-[#D4A574] active:scale-[0.98] font-mono"
                                                     >
                                                         COMMIT TO AUDIT LOG
                                                     </button>
@@ -4299,41 +4304,43 @@ export default function AssetWorkspace({
 
                                             <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12">
                                                 <div className="flex items-center justify-between gap-6 mb-10">
-                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Decision Shorthand // Summary</p>
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">Decision Shorthand Summary</p>
                                                     <button 
                                                         onClick={() => navigator.clipboard.writeText(decisionSummaryText)}
                                                         className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#aaa] hover:text-[#D4A574] transition-colors font-mono"
                                                     >
-                                                        COPY_TEXT
+                                                        Copy Summary
                                                     </button>
                                                 </div>
-                                                <div className="border border-[#e8ddd0] bg-white/90 p-10">
-                                                    <div className="grid grid-cols-2 gap-10">
-                                                        <div>
-                                                            <p className="text-[9px] font-semibold text-[#ccc] uppercase tracking-[0.4em] mb-3 font-mono">Timestamp</p>
-                                                            <p className="text-[12px] font-semibold text-[#1a1a1a]/60 uppercase">{decisionSummaryTimestamp}</p>
-                                                        </div>
-                                                        <div>
-                                                            <p className="text-[9px] font-semibold text-[#ccc] uppercase tracking-[0.4em] mb-3 font-mono">Verdict</p>
-                                                            <p className="text-[12px] font-semibold text-[#D4A574] uppercase">{decisionVerdict || 'PENDING'}</p>
-                                                        </div>
-                                                        <div className="col-span-2">
-                                                            <p className="text-[9px] font-semibold text-[#ccc] uppercase tracking-[0.4em] mb-3 font-mono">Operating Status</p>
-                                                            <p className="text-[14px] font-semibold text-[#1a1a1a] uppercase tracking-tightest leading-tight">{integratedRecommendation.recommendedDirection}</p>
-                                                        </div>
+                                                <div className="border border-[#e8ddd0] bg-white/90 p-8">
+                                                    <div className="grid grid-cols-12 border-b border-[#e8ddd0] pb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#9f9688]">
+                                                        <p className="col-span-4">Field</p>
+                                                        <p className="col-span-8">Value</p>
+                                                    </div>
+                                                    <div className="grid grid-cols-12 border-b border-[#e8ddd0] py-4 text-[13px]">
+                                                        <p className="col-span-4 font-semibold text-[#8f8779] uppercase tracking-[0.2em]">Timestamp</p>
+                                                        <p className="col-span-8 text-[#4b443a]">{decisionSummaryTimestamp}</p>
+                                                    </div>
+                                                    <div className="grid grid-cols-12 border-b border-[#e8ddd0] py-4 text-[13px]">
+                                                        <p className="col-span-4 font-semibold text-[#8f8779] uppercase tracking-[0.2em]">Verdict</p>
+                                                        <p className="col-span-8 text-[#D4A574] font-semibold uppercase">{decisionVerdict || 'Pending'}</p>
+                                                    </div>
+                                                    <div className="grid grid-cols-12 pt-4">
+                                                        <p className="col-span-4 text-[10px] font-semibold text-[#8f8779] uppercase tracking-[0.2em]">Operating Status</p>
+                                                        <p className="col-span-8 text-[16px] font-semibold text-[#1a1a1a] leading-tight">{integratedRecommendation.recommendedDirection}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12">
-                                            <p className="text-[11px] font-semibold uppercase tracking-[0.6em] text-[#aaa] mb-12 border-b border-[#E7DED1] pb-6 font-mono">Decision History</p>
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#aaa] mb-10 border-b border-[#E7DED1] pb-5 font-mono">Decision History</p>
                                             <div className="space-y-4 max-h-[800px] overflow-y-auto pr-4 custom-scrollbar">
                                                 {decisionLogEntries.length > 0 ? (
                                                     decisionLogEntries.map((entry) => (
                                                         <div key={entry.id} className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 hover:border-[#c0b5a4] transition-all">
                                                             <div className="flex items-center justify-between mb-8">
-                                                                <span className={`inline-block border px-4 py-1.5 text-[9px] font-semibold uppercase tracking-[0.3em] font-mono ${
+                                                                <span className={`inline-block border px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.3em] font-mono ${
                                                                     entry.verdict === 'Ship' ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5' : entry.verdict === 'Revise' ? 'border-yellow-400 text-yellow-400 bg-yellow-400/5' : 'border-red-400 text-red-400 bg-red-400/5'
                                                                 }`}>
                                                                     {entry.verdict}
@@ -4343,18 +4350,25 @@ export default function AssetWorkspace({
                                                                     {new Date(entry.timestamp).toLocaleDateString([], { day: '2-digit', month: 'short' })}
                                                                 </span>
                                                             </div>
-                                                            <p className="text-[14px] font-semibold uppercase text-[#444] tracking-tight leading-relaxed font-mono">{entry.rationale}</p>
+                                                            <p className="text-[13px] font-semibold text-[#444] leading-relaxed font-mono">{entry.rationale}</p>
                                                             <div className="mt-8 border-t border-[#e8ddd0] pt-6">
-                                                                <p className="text-[11px] font-semibold uppercase tracking-widest text-[#D4A574]/60 font-mono">P1 FIX: {entry.p1Fix}</p>
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]/70 font-mono">P1 Fix: {entry.p1Fix}</p>
                                                             </div>
                                                         </div>
                                                     ))
                                                 ) : (
                                                     <div className="border border-dashed border-[#d4c9b8] bg-[#faf5ef] p-20 text-center">
-                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#ccc] font-mono">Log Empty</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#ccc] font-mono">Log Empty</p>
                                                     </div>
                                                 )}
                                             </div>
+                                        </div>
+
+                                        <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 xl:col-span-2">
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#999] mb-4 font-mono">Audit Purpose</p>
+                                            <p className="text-[13px] leading-relaxed text-[#5a5248]">
+                                                This log ensures every decision is documented for future reference and accountability, supporting a transparent creative process.
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
