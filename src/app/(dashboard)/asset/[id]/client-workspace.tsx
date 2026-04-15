@@ -3443,19 +3443,40 @@ export default function AssetWorkspace({
 
                                     <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 text-[#1a1a1a]">
                                         <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#999] mb-5">Constraint Priority Legend</p>
-                                        <div className="flex flex-wrap gap-3">
-                                            <span className="inline-flex items-center gap-2 border border-[#D4A574] bg-[#D4A574] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-black">
-                                                <span className="h-1.5 w-1.5 bg-black/70" />
-                                                Critical
-                                            </span>
-                                            <span className="inline-flex items-center gap-2 border border-[#D4A574]/45 bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">
-                                                <span className="h-1.5 w-1.5 bg-[#D4A574]" />
-                                                High
-                                            </span>
-                                            <span className="inline-flex items-center gap-2 border border-[#c0b5a4] bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#999]">
-                                                <span className="h-1.5 w-1.5 bg-[#aaa]" />
-                                                Optional
-                                            </span>
+                                        <div className="overflow-hidden border border-[#E7DED1] bg-white">
+                                            <div className="grid grid-cols-12 border-b border-[#E7DED1] px-6 py-3 text-[9px] font-semibold uppercase tracking-[0.28em] text-[#999]">
+                                                <span className="col-span-4">Priority Level</span>
+                                                <span className="col-span-8">Description</span>
+                                            </div>
+                                            {[
+                                                ['Critical', 'Must be preserved'],
+                                                ['High', 'Important but not critical'],
+                                                ['Optional', 'Enhancements that can vary'],
+                                            ].map(([level, description]) => (
+                                                <div key={level} className="grid grid-cols-12 border-b border-[#E7DED1] px-6 py-3 text-[11px] last:border-b-0">
+                                                    <span
+                                                        className={`col-span-4 inline-flex items-center gap-2 font-semibold uppercase tracking-[0.24em] ${
+                                                            level === 'Critical'
+                                                                ? 'text-[#1a1a1a]'
+                                                                : level === 'High'
+                                                                    ? 'text-[#D4A574]'
+                                                                    : 'text-[#7f7f7f]'
+                                                        }`}
+                                                    >
+                                                        <span
+                                                            className={`h-1.5 w-1.5 ${
+                                                                level === 'Critical'
+                                                                    ? 'bg-[#1a1a1a]'
+                                                                    : level === 'High'
+                                                                        ? 'bg-[#D4A574]'
+                                                                        : 'bg-[#9a9a9a]'
+                                                            }`}
+                                                        />
+                                                        {level}
+                                                    </span>
+                                                    <span className="col-span-8 text-[#666]">{description}</span>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
 
@@ -3493,13 +3514,17 @@ export default function AssetWorkspace({
                                                     {group.items.length > 0 ? (
                                                         group.items.map((item, id) => (
                                                             <div key={`${group.title}-${id}`} className={`border p-8 ${group.tone}`}>
-                                                                <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-                                                                    <p className="max-w-[58ch] text-[13px] leading-relaxed text-[#1a1a1a] font-medium tracking-[0.01em] flex gap-3">
-                                                                        <span className="mt-[9px] h-1.5 w-1.5 shrink-0 bg-[#1a1a1a]" />
-                                                                        <span>{item.text}</span>
+                                                                <div className="grid grid-cols-1 gap-4 border-b border-[#E7DED1] pb-4 text-[9px] font-semibold uppercase tracking-[0.26em] text-[#8e8e8e] md:grid-cols-12">
+                                                                    <span className="md:col-span-7">Element</span>
+                                                                    <span className="md:col-span-2">Priority</span>
+                                                                    <span className="md:col-span-3">Protocol Note</span>
+                                                                </div>
+                                                                <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-12 md:items-start">
+                                                                    <p className="md:col-span-7 text-[13px] leading-relaxed text-[#1a1a1a] font-medium tracking-[0.01em]">
+                                                                        {item.text}
                                                                     </p>
                                                                     <span
-                                                                        className={`shrink-0 self-start border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] ${
+                                                                        className={`md:col-span-2 inline-flex w-fit items-center border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.26em] ${
                                                                             item.severity === 'critical'
                                                                                 ? 'border-[#D4A574] text-black bg-[#D4A574]'
                                                                                 : item.severity === 'high'
@@ -3509,6 +3534,25 @@ export default function AssetWorkspace({
                                                                     >
                                                                         {item.severity}
                                                                     </span>
+                                                                    <p className="md:col-span-3 text-[12px] leading-relaxed text-[#6e6a64]">
+                                                                        {group.title === 'Retention Protocol'
+                                                                            ? item.severity === 'critical'
+                                                                                ? 'Must be preserved exactly to hold route integrity.'
+                                                                                : item.severity === 'high'
+                                                                                    ? 'Keep in most variants unless tightly justified.'
+                                                                                    : 'Can flex during iteration without collapsing route.'
+                                                                            : group.title === 'Negation Protocol'
+                                                                                ? item.severity === 'critical'
+                                                                                    ? 'Must be avoided to prevent strategic route collapse.'
+                                                                                    : item.severity === 'high'
+                                                                                        ? 'Avoid by default; use only in deliberate stress tests.'
+                                                                                        : 'Remove when simplification strengthens transfer.'
+                                                                                : item.severity === 'critical'
+                                                                                    ? 'Primary safe adaptation lane with strict guardrails.'
+                                                                                    : item.severity === 'high'
+                                                                                        ? 'High-value controlled variation for route optimization.'
+                                                                                        : 'Optional exploratory variation within safe boundaries.'}
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                         ))
