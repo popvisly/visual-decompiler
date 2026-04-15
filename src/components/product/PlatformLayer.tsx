@@ -20,7 +20,7 @@ const WORKFLOW = [
 export default function PlatformLayer() {
     return (
         <>
-            <section className="py-24 lg:py-32" data-presence-tone="dark">
+            <section className="pt-28 pb-[5.5rem] lg:pt-[8.5rem] lg:pb-[6.5rem]" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[900px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Workflow</p>
@@ -40,14 +40,14 @@ export default function PlatformLayer() {
                                 className="grid gap-5 py-10 md:grid-cols-[220px_1fr]"
                             >
                                 <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{item.title}</p>
-                                <p className="text-[17px] leading-[1.8] text-[#F6F1E7]/72">{item.body}</p>
+                                <p className="text-[17px] leading-[1.8] text-[#F6F1E7]/70">{item.body}</p>
                             </motion.article>
                         ))}
                     </div>
                 </div>
             </section>
 
-            <section className="py-24 lg:py-32" data-presence-tone="dark">
+            <section className="pt-24 pb-20 lg:pt-[7.5rem] lg:pb-24" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[760px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">White Label</p>

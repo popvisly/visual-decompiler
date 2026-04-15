@@ -29,11 +29,11 @@ const ANALYSIS_LAYERS = [
 export default function AnalysisSurfaces() {
     return (
         <>
-            <section className="py-36 lg:py-52" data-presence-tone="dark">
+            <section className="pt-40 pb-32 lg:pt-56 lg:pb-44" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <div className="max-w-[560px]">
+                    <div className="max-w-[520px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Sample Dossier</p>
-                        <h2 className="mt-6 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[56px]">
+                        <h2 className="mt-6 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[52px]">
                             Visual Decompiler
                             <br />
                             Creative Intelligence Dossier
@@ -52,7 +52,7 @@ export default function AnalysisSurfaces() {
                 </div>
             </section>
 
-            <section className="py-24 lg:py-28" data-presence-tone="dark">
+            <section className="pt-28 pb-[5.5rem] lg:pt-[8.5rem] lg:pb-[6.5rem]" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[760px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">The Problem</p>
@@ -75,7 +75,7 @@ export default function AnalysisSurfaces() {
                 </div>
             </section>
 
-            <section className="py-24 lg:py-32" data-presence-tone="dark">
+            <section className="pt-[7.5rem] pb-24 lg:pt-36 lg:pb-28" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[920px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">The System</p>
@@ -89,20 +89,20 @@ export default function AnalysisSurfaces() {
                             const isPrimary = index === 0;
                             const isAttention = index === 1;
                             const titleClass = isPrimary
-                                ? 'text-[13px] tracking-[0.3em] text-[#C1A674]'
+                                ? 'text-[14px] tracking-[0.31em] text-[#C1A674]'
                                 : isAttention
                                     ? 'text-[12px] tracking-[0.29em] text-[#C1A674]/95'
-                                    : 'text-[11px] tracking-[0.27em] text-[#C1A674]/78';
+                                    : 'text-[11px] tracking-[0.27em] text-[#C1A674]/70';
                             const bodyClass = isPrimary
-                                ? 'mt-4 max-w-[48ch] text-[19px] leading-[1.75] text-[#F6F1E7]/82'
+                                ? 'mt-4 max-w-[48ch] text-[20px] leading-[1.72] text-[#F6F1E7]/84'
                                 : isAttention
-                                    ? 'mt-4 max-w-[48ch] text-[17px] leading-[1.85] text-[#F6F1E7]/74'
-                                    : 'mt-4 max-w-[48ch] text-[15px] leading-[1.85] text-[#F6F1E7]/62';
+                                    ? 'mt-4 max-w-[48ch] text-[17px] leading-[1.8] text-[#F6F1E7]/70'
+                                    : 'mt-4 max-w-[48ch] text-[15px] leading-[1.8] text-[#F6F1E7]/56';
                             const proofClass = isPrimary
                                 ? 'lg:scale-[1.04] lg:origin-top-left'
                                 : isAttention
                                     ? ''
-                                    : 'opacity-90';
+                                    : 'opacity-85';
 
                             return (
                                 <motion.article

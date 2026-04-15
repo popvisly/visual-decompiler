@@ -6,11 +6,11 @@ import Logo from '@/components/Logo';
 export default function ProductFooter() {
     return (
         <footer className="bg-[#0B0B0B] text-[#F6F1E7]" data-presence-tone="dark">
-            <section className="pt-40 pb-28 lg:pt-52 lg:pb-40">
+            <section className="pt-48 pb-[7.5rem] lg:pt-64 lg:pb-[11rem]">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[760px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Final</p>
-                        <h2 className="mt-6 text-[12vw] font-bold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[9vw] lg:text-[72px]">
+                        <h2 className="mt-6 text-[12vw] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[9vw] lg:text-[72px]">
                             Don&apos;t just present the work.
                             <br />
                             Explain it.
