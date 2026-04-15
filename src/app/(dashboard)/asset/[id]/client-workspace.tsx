@@ -2973,7 +2973,23 @@ export default function AssetWorkspace({
                                         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
                                             <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.46em] text-[#D4A574]/70 mb-10 [word-spacing:0.24em]">Strategic Recommendation</p>
-                                                <p className="max-w-[56ch] text-[22px] lg:text-[28px] leading-[1.2] font-semibold tracking-tightest text-[#F3F1ED] mb-8">{integratedRecommendation.thesis}</p>
+                                                {(() => {
+                                                    const thesis = integratedRecommendation.thesis || '';
+                                                    const [firstSentence, ...restParts] = thesis.split(/(?<=[.!?])\s+/);
+                                                    const remainingText = restParts.join(' ').trim();
+                                                    return (
+                                                        <div className="max-w-[56ch] mb-8">
+                                                            <p className="text-[22px] lg:text-[28px] leading-[1.2] font-semibold tracking-tightest text-[#F3F1ED]">
+                                                                {firstSentence || thesis}
+                                                            </p>
+                                                            {remainingText ? (
+                                                                <p className="mt-4 text-[20px] lg:text-[24px] leading-[1.3] font-medium tracking-tight text-[#D6D0C6]/88">
+                                                                    {remainingText}
+                                                                </p>
+                                                            ) : null}
+                                                        </div>
+                                                    );
+                                                })()}
                                                 <p className="max-w-[58ch] text-[15px] leading-relaxed text-[#D6D0C6]/65 mb-10 font-medium">{integratedRecommendation.whyNow}</p>
                                                 <div className="rounded-[2.25rem] border border-white/10 bg-[#151310] p-6 mb-10">
                                                     <p className="text-[13px] leading-relaxed text-[#D4A574] font-medium italic">
