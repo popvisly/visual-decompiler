@@ -30,7 +30,7 @@ export default function AnalysisSurfaces() {
     return (
         <>
             <section className="py-36 lg:py-52" data-presence-tone="dark">
-                <div className="mx-auto max-w-[1240px] px-6 lg:px-12">
+                <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[560px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Sample Dossier</p>
                         <h2 className="mt-6 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[56px]">
@@ -47,7 +47,7 @@ export default function AnalysisSurfaces() {
                         transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
                         className="mt-24 lg:mt-28"
                     >
-                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1320px] lg:scale-[1.15] lg:origin-top" />
+                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[920px]" />
                     </motion.div>
                 </div>
             </section>
