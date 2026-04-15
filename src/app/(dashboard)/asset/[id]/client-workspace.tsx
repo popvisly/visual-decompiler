@@ -2965,14 +2965,14 @@ export default function AssetWorkspace({
                                 {extraction ? (
                                     <div className="space-y-10">
                                         <WorkspaceTabHeader
-                                            kicker="Diagnosis Workflow"
-                                            title="Decision Quality"
-                                            intro="VD does not generate ads or act as an AI design app. VD judges, diagnoses, and directs creative quality."
+                                            kicker="Quality Gate"
+                                            title="Creative Decision Analysis"
+                                            intro="A structured read of decision quality based on evidence strength, strategic fit, and execution risk."
                                         />
 
                                         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
                                             <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.46em] text-[#D4A574]/70 mb-10 [word-spacing:0.24em]">Integrated Strategic Recommendation</p>
+                                                <p className="text-[10px] font-semibold uppercase tracking-[0.46em] text-[#D4A574]/70 mb-10 [word-spacing:0.24em]">Strategic Recommendation</p>
                                                 <p className="max-w-[56ch] text-[22px] lg:text-[28px] leading-[1.2] font-semibold tracking-tightest text-[#F3F1ED] mb-8">{integratedRecommendation.thesis}</p>
                                                 <p className="max-w-[58ch] text-[15px] leading-relaxed text-[#D6D0C6]/65 mb-10 font-medium">{integratedRecommendation.whyNow}</p>
                                                 <div className="rounded-[2.25rem] border border-white/10 bg-[#151310] p-6 mb-10">
@@ -2981,19 +2981,19 @@ export default function AssetWorkspace({
                                                     </p>
                                                 </div>
                                                 <div className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
-                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-8">Operator Summary</p>
+                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-8">Decision Summary</p>
                                                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
                                                         <div className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5 group hover:border-[#D4A574]/35 transition-all">
-                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Primary Decision</p>
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Recommended Decision</p>
                                                             <p className="text-[14px] leading-snug text-[#F3F1ED] font-semibold">{integratedRecommendation.decision}</p>
                                                         </div>
                                                         <div className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5 group hover:border-[#D4A574]/35 transition-all">
-                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Tactical Watchout</p>
+                                                            <p className="text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-2">Primary Watchout</p>
                                                             <p className="text-[14px] leading-snug text-[#F3F1ED] font-semibold">{integratedRecommendation.watchouts}</p>
                                                         </div>
                                                     </div>
                                                     <div className="mt-8 pt-8 border-t border-white/10">
-                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-6">High-Impact Protocol</p>
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-6">Action Protocol</p>
                                                         <div className="space-y-4">
                                                             {integratedRecommendation.executionNext3.map((step, index) => (
                                                                 <div key={index} className="flex gap-4 items-start">
@@ -3008,7 +3008,7 @@ export default function AssetWorkspace({
 
                                             <div className="space-y-6">
                                                 <div className="rounded-[2.5rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Trust Protocol</p>
+                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Confidence Readout</p>
                                                     <div className="grid gap-3 sm:grid-cols-2">
                                                         {[
                                                             ['Confidence', integratedRecommendation.confidence],
@@ -3036,7 +3036,7 @@ export default function AssetWorkspace({
                                                 </div>
 
                                                 <div className="rounded-[2.5rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">System Diagnostic</p>
+                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8">Decision Diagnostic</p>
                                                     <div className="space-y-3">
                                                         {integratedRecommendation.moduleScores.map((score) => (
                                                             <div key={score.label} className="rounded-[1.75rem] border border-white/10 bg-[#151310] p-5">
@@ -3089,8 +3089,8 @@ export default function AssetWorkspace({
                                                 <h3 className="text-[clamp(44px,6.2vw,86px)] font-semibold leading-[0.92] tracking-tightest text-balance text-[#F3F1ED] uppercase mb-6">
                                                     {qualityVerdict}
                                                 </h3>
-                                                <p className="max-w-[62ch] text-[15px] leading-relaxed text-[#D6D0C6]/65 uppercase font-medium mb-12">
-                                                    Analytical determination of creative validity and strategic alignment at review width.
+                                                <p className="max-w-[62ch] text-[15px] leading-relaxed text-[#D6D0C6]/65 font-medium mb-12">
+                                                    Decision signal based on strategic alignment and evidence quality.
                                                 </p>
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                     <div className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
@@ -3103,20 +3103,20 @@ export default function AssetWorkspace({
                                                         </div>
                                                     </div>
                                                     <div className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8 flex items-center">
-                                                        <p className="text-[12px] leading-relaxed text-[#D6D0C6]/70 uppercase font-bold italic">
-                                                            Diagnostics focus on directional precision over creative preference.
+                                                        <p className="text-[12px] leading-relaxed text-[#D6D0C6]/70 font-semibold italic">
+                                                            Diagnostics prioritize directional precision over personal preference.
                                                         </p>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10">Critical Leakage Points</p>
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10">Critical Risk Points</p>
                                                 <div className="space-y-6">
                                                     {failureReasons.map((reason, index) => (
                                                         <div key={`${reason.title}-${index}`} className="border-l-2 border-[#D4A574] pl-8 py-2">
                                                             <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-3">{reason.title}</p>
-                                                            <p className="text-[14px] leading-relaxed text-[#D6D0C6]/65 uppercase font-medium">{reason.detail}</p>
+                                                            <p className="text-[14px] leading-relaxed text-[#D6D0C6]/65 font-medium">{reason.detail}</p>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -3124,7 +3124,7 @@ export default function AssetWorkspace({
                                         </div>
 
                                         <div className="rounded-[2.25rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Fix Priority Order</p>
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Adaptation Priorities</p>
                                             <div className="mt-5 grid gap-4 lg:grid-cols-2">
                                                 {fixPriorities.map((item, index) => (
                                                     <div key={item.priority} className={`rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5 ${index === fixPriorities.length - 1 ? 'lg:col-span-2' : ''}`}>
@@ -3387,7 +3387,7 @@ export default function AssetWorkspace({
                                                                 {item.lens}
                                                             </h3>
                                                             <div className="flex-1 max-h-[400px] overflow-y-auto pt-2">
-                                                                <p className="text-[14px] leading-relaxed text-[#D6D0C6]/65 uppercase font-medium">{item.reading}</p>
+                                                                <p className="text-[14px] leading-relaxed text-[#D6D0C6]/65 font-medium">{item.reading}</p>
                                                             </div>
                                                         </div>
                                                     ))}
