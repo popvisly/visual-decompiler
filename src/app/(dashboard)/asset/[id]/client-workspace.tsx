@@ -3576,30 +3576,32 @@ export default function AssetWorkspace({
                                     />
                                     <div className="space-y-10">
                                         {!isSovereign ? (
-                                            <div className="relative rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] overflow-hidden group">
-                                                <div className="absolute inset-0 z-10 backdrop-blur-md bg-white/90 flex items-center justify-center">
-                                                    <div className="p-12 rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] max-w-xl text-center flex flex-col items-center">
-                                                        <div className="w-12 h-12 flex items-center justify-center border border-[#D4A574]/30 bg-[#D4A574]/10 mb-6 font-mono">
+                                            <div className="relative rounded-[3rem] border border-white/10 bg-[#1A1A1A] overflow-hidden group shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                                <div className="absolute inset-0 z-10 backdrop-blur-md bg-black/45 flex items-center justify-center">
+                                                    <div className="p-10 rounded-[2.75rem] border border-white/10 bg-[#151310] max-w-xl text-center flex flex-col items-center">
+                                                        <div className="w-12 h-12 flex items-center justify-center border border-[#D4A574]/30 bg-[#D4A574]/10 mb-6">
                                                             <Lock className="w-5 h-5 text-[#D4A574]" />
                                                         </div>
-                                                        <span className="text-[#D4A574] font-extrabold tracking-[0.4em] uppercase text-[10px] mb-4 font-mono">Sovereign Feature</span>
-                                                        <h2 className="text-[#1a1a1a] text-3xl font-semibold mb-6 tracking-tightest uppercase">Market Pulse Locked</h2>
-                                                        <p className="text-[#999] text-[13px] mb-10 font-medium leading-relaxed uppercase tracking-wider">Cross-asset statistical aggregation and category saturation density mapping is restricted to sovereign intelligence tiers.</p>
-                                                        <button className="bg-[#D4A574] text-black px-12 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] transition hover:bg-white active:scale-95 font-mono">
+                                                        <span className="text-[#D4A574] font-semibold tracking-[0.4em] uppercase text-[10px] mb-4">Sovereign Feature</span>
+                                                        <h2 className="text-[#F3F1ED] text-[24px] font-semibold mb-6 tracking-tight">Market Pulse Locked</h2>
+                                                        <p className="text-[#D6D0C6]/72 text-[13px] mb-8 leading-relaxed">
+                                                            Cross-asset statistical aggregation and category saturation density mapping is restricted to sovereign intelligence tiers.
+                                                        </p>
+                                                        <button className="bg-[#D4A574] text-black px-10 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] transition hover:bg-[#E2BE84] active:scale-95">
                                                             UPGRADE TO SOVEREIGN
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <div className="p-12 opacity-20 select-none grayscale">
-                                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                                <div className="p-10 opacity-25 select-none grayscale">
+                                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                                         {[
                                                             ['Saturation', '0.0%'],
                                                             ['Novelty', '0.0%'],
                                                             ['Fatigue', '0.0%'],
                                                         ].map(([label, val]) => (
-                                                            <div key={label} className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#999] mb-6 font-mono">{label}</p>
-                                                                <p className="text-4xl font-semibold text-[#1a1a1a]">{val}</p>
+                                                            <div key={label} className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/65 mb-4">{label}</p>
+                                                                <p className="text-[24px] font-semibold text-[#F3F1ED]">{val}</p>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -3607,11 +3609,11 @@ export default function AssetWorkspace({
                                             </div>
                                         ) : (
                                             <>
-                                                <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] overflow-hidden shadow-3xl">
-                                                    <div className="grid grid-cols-12 border-b border-[#E7DED1] bg-white text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574] font-mono">
-                                                        <div className="col-span-5 px-10 py-6 border-r border-[#d4c9b8]">Metric</div>
-                                                        <div className="col-span-2 px-10 py-6 border-r border-[#d4c9b8] text-center">Value</div>
-                                                        <div className="col-span-5 px-10 py-6">Context Signal</div>
+                                                <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                                    <div className="grid grid-cols-12 border-b border-white/10 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.36em] text-[#D4A574]">
+                                                        <div className="col-span-5 px-8 py-5 border-r border-white/10">Metric</div>
+                                                        <div className="col-span-2 px-8 py-5 border-r border-white/10 text-center">Value</div>
+                                                        <div className="col-span-5 px-8 py-5">Context Signal</div>
                                                     </div>
                                                     {[
                                                         {
@@ -3639,37 +3641,35 @@ export default function AssetWorkspace({
                                                                     : 'Fatigue is controlled. Current route remains viable with selective refinement.',
                                                         },
                                                     ].map((row) => (
-                                                        <div key={row.label} className="grid grid-cols-12 border-b border-[#E7DED1] last:border-b-0">
-                                                            <div className="col-span-5 border-r border-[#d4c9b8] px-10 py-7">
-                                                                <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#666] font-mono">{row.label}</p>
+                                                        <div key={row.label} className="grid grid-cols-12 border-b border-white/10 last:border-b-0">
+                                                            <div className="col-span-5 border-r border-white/10 px-8 py-6">
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/70">{row.label}</p>
                                                             </div>
-                                                            <div className="col-span-2 border-r border-[#d4c9b8] px-10 py-7 text-center">
-                                                                <p className="text-[28px] font-semibold text-[#1a1a1a]">{row.value}%</p>
+                                                            <div className="col-span-2 border-r border-white/10 px-8 py-6 text-center">
+                                                                <p className="text-[24px] font-semibold text-[#F3F1ED]">{row.value}%</p>
                                                             </div>
-                                                            <div className="col-span-5 px-10 py-7">
-                                                                <p className="text-[13px] leading-relaxed text-[#555]">{row.insight}</p>
+                                                            <div className="col-span-5 px-8 py-6">
+                                                                <p className="text-[13px] leading-relaxed text-[#D6D0C6]/78">{row.insight}</p>
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 shadow-lg">
-                                                    <div>
-                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-8 font-mono">Directional Estimate</p>
-                                                        <p className="max-w-[74ch] text-[15px] leading-relaxed text-[#444]">
-                                                            {marketPulseFallback.interpretation || 'Category pressure is elevated, so this route requires sharper differentiation and strict execution discipline before scale expansion.'}
-                                                        </p>
-                                                    </div>
+                                                <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] mb-6 border-b border-white/10 pb-5">Directional Estimate</p>
+                                                    <p className="max-w-[74ch] text-[13px] leading-relaxed text-[#D6D0C6]/78">
+                                                        {marketPulseFallback.interpretation || 'Category pressure is elevated, so this route requires sharper differentiation and strict execution discipline before scale expansion.'}
+                                                    </p>
                                                 </div>
 
                                                 <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">
+                                                    <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                         Strategic Implication
                                                     </p>
                                                     <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/75">
                                                         To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.
                                                     </p>
-                                                    <span className="mt-8 inline-flex border border-[#D4A574] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574] bg-[#D4A574]/5 font-mono">
+                                                    <span className="mt-8 inline-flex border border-[#D4A574] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574] bg-[#D4A574]/5">
                                                         {marketPulseFallback.confidenceLabel}
                                                     </span>
                                                 </div>
@@ -4173,34 +4173,34 @@ export default function AssetWorkspace({
                                         title="Stress Lab: Causal Intelligence"
                                         intro="This section outlines experimental stress testing on key creative variables, measuring response variance and structural durability."
                                     />
-                                    <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] overflow-hidden shadow-3xl">
-                                        <div className="grid grid-cols-4 border-b border-[#E7DED1] bg-white text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">
-                                            <div className="px-10 py-6 border-r border-[#d4c9b8]">Variable</div>
-                                            <div className="px-10 py-6 border-r border-[#d4c9b8] text-center">Baseline</div>
-                                            <div className="px-10 py-6 border-r border-[#d4c9b8] text-center">Predicted Lift</div>
-                                            <div className="px-10 py-6 text-center">Recommendation</div>
+                                    <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                        <div className="grid grid-cols-4 border-b border-white/10 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                            <div className="px-8 py-5 border-r border-white/10">Variable</div>
+                                            <div className="px-8 py-5 border-r border-white/10 text-center">Baseline</div>
+                                            <div className="px-8 py-5 border-r border-white/10 text-center">Predicted Lift</div>
+                                            <div className="px-8 py-5 text-center">Recommendation</div>
                                         </div>
-                                        <div className="divide-y divide-white/5">
+                                        <div className="divide-y divide-white/10">
                                             {(stressLabRows || []).map((row, i) => (
                                                 <div key={i} className="grid grid-cols-4 items-center group hover:bg-white/[0.02] transition-colors">
-                                                    <div className="px-10 py-10 border-r border-[#d4c9b8]">
-                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#666] group-hover:text-[#D4A574] transition-colors font-mono">{row.variable}</p>
+                                                    <div className="px-8 py-7 border-r border-white/10">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/70 group-hover:text-[#D4A574] transition-colors">{row.variable}</p>
                                                     </div>
-                                                    <div className="px-10 py-10 border-r border-[#d4c9b8] text-center">
-                                                        <p className="text-[14px] font-semibold text-[#999] uppercase leading-tight">{row.currentState}</p>
+                                                    <div className="px-8 py-7 border-r border-white/10 text-center">
+                                                        <p className="text-[13px] font-medium text-[#D6D0C6]/78 leading-relaxed">{row.currentState}</p>
                                                     </div>
-                                                    <div className="px-10 py-10 border-r border-[#d4c9b8] text-center font-mono">
-                                                        <span className={`text-[11px] font-semibold ${row.predictedLift === 'High' ? 'text-[#D4A574]' : 'text-[#999]'}`}>
+                                                    <div className="px-8 py-7 border-r border-white/10 text-center">
+                                                        <span className={`text-[10px] font-semibold uppercase tracking-[0.3em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : 'text-[#B7AFA3]'}`}>
                                                             {row.predictedLift}
                                                         </span>
                                                     </div>
-                                                    <div className="px-10 py-10 text-center">
-                                                        <span className={`inline-block border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] font-mono ${
+                                                    <div className="px-8 py-7 text-center">
+                                                        <span className={`inline-block border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] ${
                                                             row.recommendation === 'Test'
                                                                 ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5'
                                                                 : row.recommendation === 'Avoid'
-                                                                    ? 'border-red-500/50 text-red-500 bg-red-500/5'
-                                                                    : 'border-[#d4c9b8] text-[#aaa]'
+                                                                    ? 'border-red-500/50 text-red-400 bg-red-500/5'
+                                                                    : 'border-white/20 text-[#B7AFA3]'
                                                         }`}>
                                                             {row.recommendation}
                                                         </span>
@@ -4212,7 +4212,7 @@ export default function AssetWorkspace({
 
                                     <div className="grid gap-4 xl:grid-cols-2">
                                         <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">
+                                            <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                 Variable Diagnostics
                                             </p>
                                             <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/75">
@@ -4225,7 +4225,7 @@ export default function AssetWorkspace({
                                         </div>
 
                                         <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">
+                                            <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                 Gaze Direction Breakdown
                                             </p>
                                             <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/75">
@@ -4237,9 +4237,9 @@ export default function AssetWorkspace({
                                         </div>
                                     </div>
 
-                                    <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 text-[#1a1a1a]">
-                                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#999]">Stress Test Summary</p>
-                                        <p className="max-w-[78ch] text-[14px] leading-relaxed text-[#555]">
+                                    <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10">
+                                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574]">Stress Test Summary</p>
+                                        <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/75">
                                             These stress signals define where controlled adjustments can improve lift without destabilizing the route. Next iteration should prioritize gaze and hierarchy tests first, then validate copy and CTA compression only where structural confidence remains intact.
                                         </p>
                                     </div>
