@@ -3157,9 +3157,9 @@ export default function AssetWorkspace({
                                 {extraction ? (
                                     <div className="space-y-10">
                                         <WorkspaceTabHeader
-                                            kicker="Strategic Readout"
-                                            title="Forensic Intelligence Overview"
-                                            intro="A consolidated strategic read of this asset: core mechanic, persuasion structure, and the clearest path to action."
+                                            kicker="Strategic Insight"
+                                            title="Strategic Insight Overview"
+                                            intro="A comprehensive analysis of core mechanics, persuasive structures, and actionable paths."
                                         />
                                         {(!extraction.primary_mechanic || !extraction.full_dossier) && <SovereignProcessingView assetId={asset.id} agency={agency} />}
                                         {extraction.primary_mechanic && extraction.full_dossier && (
@@ -3217,7 +3217,7 @@ export default function AssetWorkspace({
                                                                          {[
                                                                              ['Product Silhouette', analysisLanguage.attentionPath.primaryFocus],
                                                                              ['Brand Mark', analysisLanguage.attentionPath.secondaryFocus],
-                                                                             ['Supporting Copy', supportingCopyPath],
+                                                                             ['Supporting Copy Layer', supportingCopyPath],
                                                                          ].map(([title, detail], index) => (
                                                                              <div key={title as string} className="pb-1">
                                                                                  <div className="flex flex-col gap-3">
@@ -3255,6 +3255,7 @@ export default function AssetWorkspace({
 
                                                              <section className="border-t border-white/10 pt-12">
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Strategic Read</p>
+                                                                 <p className="mt-3 max-w-[62ch] text-[13px] leading-relaxed text-[#D6D0C6]/72">A concise strategic summary of what the work is doing, why it lands, and where friction appears.</p>
                                                                  <div className="mt-8 space-y-10">
                                                                      {[
                                                                          ['Strategic Thesis', firstSentence(analysisLanguage.strategicRead.thesis)],
@@ -3272,6 +3273,7 @@ export default function AssetWorkspace({
 
                                                              <section className="border-t border-white/10 pt-16">
                                                                  <p className="text-[18px] font-semibold leading-relaxed tracking-[-0.01em] text-[#F3F1ED]">Confidence Index: {analysisLanguage.confidenceIndex}</p>
+                                                                 <p className="mt-2 max-w-[70ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">A higher index indicates stronger decision confidence for review and presentation.</p>
                                                                  <p className="mt-2 max-w-[70ch] text-[14px] leading-relaxed text-[#D6D0C6]/78">{confidenceRationale}</p>
                                                              </section>
                                                          </div>
