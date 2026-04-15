@@ -3574,8 +3574,8 @@ export default function AssetWorkspace({
                                 <div className="space-y-10">
                                     <WorkspaceTabHeader
                                         kicker="Competitive Context"
-                                        title="Market Pulse"
-                                        intro="How the route fits current category pressure, novelty conditions, and timing opportunity."
+                                        title="Market Pulse: Competitive Context"
+                                        intro="An analysis of how the current route aligns with category pressures, novelty conditions, and timing opportunities."
                                     />
                                     <div className="space-y-10">
                                         {!isSovereign ? (
@@ -3610,28 +3610,69 @@ export default function AssetWorkspace({
                                             </div>
                                         ) : (
                                             <>
-                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                                <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] overflow-hidden shadow-3xl">
+                                                    <div className="grid grid-cols-12 border-b border-[#E7DED1] bg-white text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574] font-mono">
+                                                        <div className="col-span-5 px-10 py-6 border-r border-[#d4c9b8]">Metric</div>
+                                                        <div className="col-span-2 px-10 py-6 border-r border-[#d4c9b8] text-center">Value</div>
+                                                        <div className="col-span-5 px-10 py-6">Context Signal</div>
+                                                    </div>
                                                     {[
-                                                        ['Market Saturation', marketPulseFallback.saturation],
-                                                        ['Route Novelty', marketPulseFallback.novelty],
-                                                        ['Category Fatigue', marketPulseFallback.fatigue],
-                                                    ].map(([label, val]) => (
-                                                        <div key={label} className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 shadow-xl group hover:border-[#D4A574]/40 transition-all">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/60 mb-6 font-mono">{label}</p>
-                                                            <p className="text-4xl font-semibold text-[#1a1a1a]">{val}%</p>
-                                                            <div className="mt-8 h-0.5 w-full bg-white overflow-hidden">
-                                                                <div className="h-full bg-[#D4A574] shadow-[0_0_10px_rgba(212,165,116,0.25)]" style={{ width: `${val}%` }} />
+                                                        {
+                                                            label: 'Market Saturation',
+                                                            value: marketPulseFallback.saturation,
+                                                            insight:
+                                                                marketPulseFallback.saturation >= 70
+                                                                    ? 'Category pressure is elevated. Distinctive differentiation is required.'
+                                                                    : 'Saturation remains manageable. Route can scale with disciplined execution.',
+                                                        },
+                                                        {
+                                                            label: 'Route Novelty',
+                                                            value: marketPulseFallback.novelty,
+                                                            insight:
+                                                                marketPulseFallback.novelty >= 75
+                                                                    ? 'Novelty potential is strong. Positioning can win with precision.'
+                                                                    : 'Novelty is moderate. Sharper differentiation will improve separation.',
+                                                        },
+                                                        {
+                                                            label: 'Category Fatigue',
+                                                            value: marketPulseFallback.fatigue,
+                                                            insight:
+                                                                marketPulseFallback.fatigue >= 55
+                                                                    ? 'Fatigue is rising. Fresh route treatment is needed to sustain attention.'
+                                                                    : 'Fatigue is controlled. Current route remains viable with selective refinement.',
+                                                        },
+                                                    ].map((row) => (
+                                                        <div key={row.label} className="grid grid-cols-12 border-b border-[#E7DED1] last:border-b-0">
+                                                            <div className="col-span-5 border-r border-[#d4c9b8] px-10 py-7">
+                                                                <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#666] font-mono">{row.label}</p>
+                                                            </div>
+                                                            <div className="col-span-2 border-r border-[#d4c9b8] px-10 py-7 text-center">
+                                                                <p className="text-[28px] font-semibold text-[#1a1a1a]">{row.value}%</p>
+                                                            </div>
+                                                            <div className="col-span-5 px-10 py-7">
+                                                                <p className="text-[13px] leading-relaxed text-[#555]">{row.insight}</p>
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-12 shadow-lg">
+                                                <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 shadow-lg">
                                                     <div>
-                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-8 font-mono">Forensic Contextualization // Read</p>
-                                                        <p className="max-w-[72ch] text-[16px] font-semibold leading-relaxed text-[#444] uppercase tracking-tight">{marketPulseFallback.interpretation}</p>
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-8 font-mono">Directional Estimate</p>
+                                                        <p className="max-w-[74ch] text-[15px] leading-relaxed text-[#444]">
+                                                            {marketPulseFallback.interpretation || 'Category pressure is elevated, so this route requires sharper differentiation and strict execution discipline before scale expansion.'}
+                                                        </p>
                                                     </div>
-                                                    <span className="shrink-0 border border-[#D4A574] px-10 py-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] shadow-[0_0_15px_rgba(212,165,116,0.15)] bg-[#D4A574]/5 font-mono">
+                                                </div>
+
+                                                <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                                    <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">
+                                                        Strategic Implication
+                                                    </p>
+                                                    <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/75">
+                                                        To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.
+                                                    </p>
+                                                    <span className="mt-8 inline-flex border border-[#D4A574] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574] bg-[#D4A574]/5 font-mono">
                                                         {marketPulseFallback.confidenceLabel}
                                                     </span>
                                                 </div>
