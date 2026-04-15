@@ -39,7 +39,7 @@ export default function ProductHero() {
                             </Link>
                         </div>
 
-                        <div className="mt-9 max-w-[680px] rounded-xl bg-white/[0.04] px-5 py-4 opacity-80">
+                        <div className="mt-11 w-full max-w-[760px] rounded-[1rem] border border-white/10 bg-[#12110F]/72 px-5 py-4 opacity-90">
                             <div className="grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-5">
                                 {[
                                     ['Clarity', '82'],
@@ -49,8 +49,8 @@ export default function ProductHero() {
                                     ['Distinction', '67'],
                                 ].map(([label, value]) => (
                                     <div key={label} className="text-left">
-                                        <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-[#F6F1E7]/62">{label}</p>
-                                        <p className="mt-1 text-[17px] font-semibold tracking-tight text-[#F6F1E7]/88">{value}</p>
+                                        <p className="text-[9px] font-semibold uppercase tracking-[0.23em] text-[#F6F1E7]/52">{label}</p>
+                                        <p className="mt-2 text-[22px] font-semibold leading-none tracking-[-0.02em] text-[#F6F1E7]">{value}</p>
                                     </div>
                                 ))}
                             </div>

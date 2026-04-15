@@ -29,7 +29,7 @@ const ANALYSIS_LAYERS = [
 export default function AnalysisSurfaces() {
     return (
         <>
-            <section className="py-32 lg:py-44" data-presence-tone="dark">
+            <section className="py-36 lg:py-52" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1240px] px-6 lg:px-12">
                     <div className="max-w-[560px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Sample Dossier</p>
@@ -45,9 +45,9 @@ export default function AnalysisSurfaces() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-80px' }}
                         transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                        className="mt-20 lg:mt-24"
+                        className="mt-24 lg:mt-28"
                     >
-                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1260px] lg:scale-[1.12] lg:origin-top" />
+                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1320px] lg:scale-[1.15] lg:origin-top" />
                     </motion.div>
                 </div>
             </section>
@@ -85,22 +85,42 @@ export default function AnalysisSurfaces() {
                     </div>
 
                     <div className="mt-14 space-y-10">
-                        {ANALYSIS_LAYERS.map((layer, index) => (
-                            <motion.article
-                                key={layer.title}
-                                initial={{ opacity: 0, y: 18 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-80px' }}
-                                transition={{ duration: 0.6, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                                className="grid items-start gap-7 border-t border-white/10 pt-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10"
-                            >
-                                <div>
-                                    <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{layer.title}</p>
-                                    <p className="mt-4 max-w-[48ch] text-[17px] leading-[1.9] text-[#F6F1E7]/74">{layer.body}</p>
-                                </div>
-                                <CanonicalDossierArtifact mode={layer.proof} />
-                            </motion.article>
-                        ))}
+                        {ANALYSIS_LAYERS.map((layer, index) => {
+                            const isPrimary = index === 0;
+                            const isAttention = index === 1;
+                            const titleClass = isPrimary
+                                ? 'text-[13px] tracking-[0.3em] text-[#C1A674]'
+                                : isAttention
+                                    ? 'text-[12px] tracking-[0.29em] text-[#C1A674]/95'
+                                    : 'text-[11px] tracking-[0.27em] text-[#C1A674]/78';
+                            const bodyClass = isPrimary
+                                ? 'mt-4 max-w-[48ch] text-[19px] leading-[1.75] text-[#F6F1E7]/82'
+                                : isAttention
+                                    ? 'mt-4 max-w-[48ch] text-[17px] leading-[1.85] text-[#F6F1E7]/74'
+                                    : 'mt-4 max-w-[48ch] text-[15px] leading-[1.85] text-[#F6F1E7]/62';
+                            const proofClass = isPrimary
+                                ? 'lg:scale-[1.04] lg:origin-top-left'
+                                : isAttention
+                                    ? ''
+                                    : 'opacity-90';
+
+                            return (
+                                <motion.article
+                                    key={layer.title}
+                                    initial={{ opacity: 0, y: 18 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: '-80px' }}
+                                    transition={{ duration: 0.6, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                                    className="grid items-start gap-7 border-t border-white/10 pt-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10"
+                                >
+                                    <div>
+                                        <p className={`font-semibold uppercase ${titleClass}`}>{layer.title}</p>
+                                        <p className={bodyClass}>{layer.body}</p>
+                                    </div>
+                                    <CanonicalDossierArtifact mode={layer.proof} className={proofClass} />
+                                </motion.article>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
