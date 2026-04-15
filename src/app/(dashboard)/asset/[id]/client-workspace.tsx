@@ -3480,7 +3480,7 @@ export default function AssetWorkspace({
                                         </div>
                                     </div>
 
-                                    <div className="grid gap-4 xl:grid-cols-2">
+                                    <div className="grid gap-6 xl:grid-cols-2">
                                         {[
                                             {
                                                 title: 'Retention Protocol',
@@ -4210,7 +4210,7 @@ export default function AssetWorkspace({
                                         </div>
                                     </div>
 
-                                    <div className="grid gap-4 xl:grid-cols-2">
+                                    <div className="grid gap-6 xl:grid-cols-2">
                                         <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                 Variable Diagnostics
@@ -4255,115 +4255,121 @@ export default function AssetWorkspace({
                                         title="Decision Log: Audit Trail"
                                         intro="A concise record of all decisions made, providing transparency and accountability in the creative direction process."
                                     />
-                                    <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
-                                        <div className="space-y-4">
-                                            <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 shadow-2xl">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 border-b border-[#E7DED1] pb-5 font-mono">Capture Decision // Active Entry</p>
+                                    <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+                                        <div className="space-y-6">
+                                            <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                                <p className="mb-8 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                                    Capture Decision
+                                                </p>
                                                 <div className="space-y-8">
                                                     <div className="grid grid-cols-3 gap-4">
                                                         {(['Ship', 'Revise', 'Kill'] as const).map((v) => (
                                                             <button
                                                                 key={v}
                                                                 onClick={() => setDecisionVerdict(v)}
-                                                                className={`border p-6 text-[13px] font-semibold uppercase tracking-[0.26em] transition-all font-mono ${
+                                                                className={`border px-6 py-5 text-[13px] font-semibold uppercase tracking-[0.26em] transition-all ${
                                                                     decisionVerdict === v
-                                                                        ? 'border-[#D4A574] bg-[#D4A574] text-black shadow-[0_0_20px_rgba(212,165,116,0.2)]'
-                                                                        : 'border-[#d4c9b8] bg-white text-[#999] hover:border-[#c0b5a4] hover:text-[#1a1a1a]/60'
+                                                                        ? 'border-[#D4A574] bg-[#D4A574] text-black'
+                                                                        : 'border-white/15 bg-[#151310] text-[#D6D0C6]/78 hover:border-[#D4A574]/35 hover:text-[#F3F1ED]'
                                                                 }`}
                                                             >
                                                                 <span className="inline-flex items-center gap-2">
-                                                                    <span aria-hidden>
-                                                                        {v === 'Ship' ? '✔' : v === 'Revise' ? '✎' : '✕'}
-                                                                    </span>
+                                                                    <span aria-hidden>{v === 'Ship' ? '✔' : v === 'Revise' ? '✎' : '✕'}</span>
                                                                     <span>{v}</span>
                                                                 </span>
                                                             </button>
                                                         ))}
                                                     </div>
                                                     <div className="space-y-4">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#aaa] font-mono">Rationale for Decision</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55">Rationale for Decision</p>
                                                         <textarea
                                                             value={decisionNote}
                                                             onChange={(e) => setDecisionNote(e.target.value)}
                                                             rows={6}
-                                                            className="w-full border border-[#d4c9b8] bg-transparent p-6 text-[13px] font-mono leading-relaxed text-[#1a1a1a] outline-none placeholder:text-[#b8b0a3] focus:border-[#D4A574]/50 transition-colors"
+                                                            className="w-full border border-white/10 bg-[#151310] p-6 text-[13px] leading-relaxed text-[#D6D0C6]/82 outline-none placeholder:text-[#D6D0C6]/45 focus:border-[#D4A574]/40 transition-colors"
                                                             placeholder="Enter reasoning for this decision..."
                                                         />
                                                     </div>
                                                     <button
                                                         onClick={handleLogDecision}
-                                                        className="w-full bg-white text-black py-5 text-[10px] font-semibold uppercase tracking-[0.4em] transition-all hover:bg-[#D4A574] active:scale-[0.98] font-mono"
+                                                        className="w-full border border-[#D4A574]/30 bg-[#151310] py-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] transition-all hover:border-[#D4A574] hover:bg-[#D4A574] hover:text-black active:scale-[0.98]"
                                                     >
-                                                        COMMIT TO AUDIT LOG
+                                                        Commit to Audit Log
                                                     </button>
                                                 </div>
                                             </div>
 
-                                            <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12">
-                                                <div className="flex items-center justify-between gap-6 mb-10">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">Decision Shorthand Summary</p>
-                                                    <button 
+                                            <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                                <div className="mb-8 flex items-center justify-between gap-6 border-b border-white/10 pb-5">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Decision Shorthand Summary</p>
+                                                    <button
                                                         onClick={() => navigator.clipboard.writeText(decisionSummaryText)}
-                                                        className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#aaa] hover:text-[#D4A574] transition-colors font-mono"
+                                                        className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 hover:text-[#D4A574] transition-colors"
                                                     >
                                                         Copy Summary
                                                     </button>
                                                 </div>
-                                                <div className="border border-[#e8ddd0] bg-white/90 p-8">
-                                                    <div className="grid grid-cols-12 border-b border-[#e8ddd0] pb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#9f9688]">
+                                                <div className="border border-white/10 bg-[#151310] p-8">
+                                                    <div className="grid grid-cols-12 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/55">
                                                         <p className="col-span-4">Field</p>
                                                         <p className="col-span-8">Value</p>
                                                     </div>
-                                                    <div className="grid grid-cols-12 border-b border-[#e8ddd0] py-4 text-[13px]">
-                                                        <p className="col-span-4 font-semibold text-[#8f8779] uppercase tracking-[0.2em]">Timestamp</p>
-                                                        <p className="col-span-8 text-[#4b443a]">{decisionSummaryTimestamp}</p>
+                                                    <div className="grid grid-cols-12 border-b border-white/10 py-4 text-[13px]">
+                                                        <p className="col-span-4 font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Timestamp</p>
+                                                        <p className="col-span-8 text-[#D6D0C6]/82">{decisionSummaryTimestamp}</p>
                                                     </div>
-                                                    <div className="grid grid-cols-12 border-b border-[#e8ddd0] py-4 text-[13px]">
-                                                        <p className="col-span-4 font-semibold text-[#8f8779] uppercase tracking-[0.2em]">Verdict</p>
-                                                        <p className="col-span-8 text-[#D4A574] font-semibold uppercase">{decisionVerdict || 'Pending'}</p>
+                                                    <div className="grid grid-cols-12 border-b border-white/10 py-4 text-[13px]">
+                                                        <p className="col-span-4 font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Verdict</p>
+                                                        <p className="col-span-8 font-semibold uppercase text-[#D4A574]">{decisionVerdict || 'Pending'}</p>
                                                     </div>
                                                     <div className="grid grid-cols-12 pt-4">
-                                                        <p className="col-span-4 text-[10px] font-semibold text-[#8f8779] uppercase tracking-[0.2em]">Operating Status</p>
-                                                        <p className="col-span-8 text-[16px] font-semibold text-[#1a1a1a] leading-tight">{integratedRecommendation.recommendedDirection}</p>
+                                                        <p className="col-span-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Operating Status</p>
+                                                        <p className="col-span-8 text-[16px] font-semibold leading-tight text-[#F3F1ED]">{integratedRecommendation.recommendedDirection}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12">
-                                            <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#aaa] mb-10 border-b border-[#E7DED1] pb-5 font-mono">Decision History</p>
-                                            <div className="space-y-4 max-h-[800px] overflow-y-auto pr-4 custom-scrollbar">
+                                        <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <p className="mb-8 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574]">Decision History</p>
+                                            <div className="custom-scrollbar max-h-[800px] space-y-4 overflow-y-auto pr-4">
                                                 {decisionLogEntries.length > 0 ? (
                                                     decisionLogEntries.map((entry) => (
-                                                        <div key={entry.id} className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 hover:border-[#c0b5a4] transition-all">
-                                                            <div className="flex items-center justify-between mb-8">
-                                                                <span className={`inline-block border px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.3em] font-mono ${
-                                                                    entry.verdict === 'Ship' ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5' : entry.verdict === 'Revise' ? 'border-yellow-400 text-yellow-400 bg-yellow-400/5' : 'border-red-400 text-red-400 bg-red-400/5'
-                                                                }`}>
+                                                        <div key={entry.id} className="rounded-[2rem] border border-white/10 bg-[#151310] p-8 transition-all hover:border-[#D4A574]/30">
+                                                            <div className="mb-6 flex items-center justify-between">
+                                                                <span
+                                                                    className={`inline-block border px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.3em] ${
+                                                                        entry.verdict === 'Ship'
+                                                                            ? 'border-[#D4A574]/60 text-[#D4A574] bg-[#D4A574]/10'
+                                                                            : entry.verdict === 'Revise'
+                                                                                ? 'border-white/30 text-[#D6D0C6]/80 bg-white/5'
+                                                                                : 'border-red-500/40 text-red-300 bg-red-500/10'
+                                                                    }`}
+                                                                >
                                                                     {entry.verdict}
                                                                 </span>
-                                                                <span className="text-[10px] font-semibold text-[#D6D0C6]/45 font-mono">
-                                                                    {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} // 
+                                                                <span className="text-[10px] font-semibold text-[#D6D0C6]/45">
+                                                                    {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} //{' '}
                                                                     {new Date(entry.timestamp).toLocaleDateString([], { day: '2-digit', month: 'short' })}
                                                                 </span>
                                                             </div>
-                                                            <p className="text-[13px] font-semibold text-[#444] leading-relaxed font-mono">{entry.rationale}</p>
-                                                            <div className="mt-8 border-t border-[#e8ddd0] pt-6">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]/70 font-mono">P1 Fix: {entry.p1Fix}</p>
+                                                            <p className="text-[13px] font-medium leading-relaxed text-[#D6D0C6]/80">{entry.rationale}</p>
+                                                            <div className="mt-6 border-t border-white/10 pt-5">
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]/70">P1 Fix: {entry.p1Fix}</p>
                                                             </div>
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <div className="border border-dashed border-[#d4c9b8] bg-[#faf5ef] p-20 text-center">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#ccc] font-mono">Log Empty</p>
+                                                    <div className="border border-dashed border-white/20 bg-[#151310] p-20 text-center">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D6D0C6]/45">Log Empty</p>
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
 
-                                        <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 xl:col-span-2">
-                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#999] mb-4 font-mono">Audit Purpose</p>
-                                            <p className="text-[13px] leading-relaxed text-[#5a5248]">
+                                        <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 xl:col-span-2">
+                                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/70">Audit Purpose</p>
+                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/72">
                                                 This log ensures every decision is documented for future reference and accountability, supporting a transparent creative process.
                                             </p>
                                         </div>
