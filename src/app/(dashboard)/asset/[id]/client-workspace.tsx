@@ -3511,17 +3511,17 @@ export default function AssetWorkspace({
                                                     {group.items.length > 0 ? (
                                                         group.items.map((item, id) => (
                                                             <div key={`${group.title}-${id}`} className="border border-white/10 bg-[#151310] p-6">
-                                                                <div className="grid grid-cols-1 gap-4 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/58 md:grid-cols-12">
-                                                                    <span className="md:col-span-7">Element</span>
-                                                                    <span className="md:col-span-2">Priority</span>
-                                                                    <span className="md:col-span-3">Protocol Note</span>
+                                                                <div className="grid grid-cols-1 gap-3 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58 sm:grid-cols-[minmax(0,1.45fr)_minmax(120px,0.55fr)] xl:grid-cols-[minmax(0,1.55fr)_minmax(120px,0.55fr)_minmax(0,1fr)]">
+                                                                    <span>Element</span>
+                                                                    <span className="sm:text-center xl:text-left">Priority</span>
+                                                                    <span className="sm:col-span-2 sm:text-left xl:col-span-1">Protocol Note</span>
                                                                 </div>
-                                                                <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-12 md:items-start">
-                                                                    <p className="md:col-span-7 text-[13px] leading-relaxed text-[#F3F1ED]/92 font-medium">
+                                                                <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1.45fr)_minmax(120px,0.55fr)] xl:grid-cols-[minmax(0,1.55fr)_minmax(120px,0.55fr)_minmax(0,1fr)] xl:items-start">
+                                                                    <p className="text-[13px] font-medium leading-relaxed text-[#F3F1ED]/92">
                                                                         {item.text}
                                                                     </p>
                                                                     <span
-                                                                        className={`md:col-span-2 inline-flex w-fit items-center border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.24em] ${
+                                                                        className={`inline-flex w-fit items-center justify-center border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] sm:justify-self-center xl:justify-self-start ${
                                                                             item.severity === 'critical'
                                                                                 ? 'border-[#D4A574] text-black bg-[#D4A574]'
                                                                                 : item.severity === 'high'
@@ -3531,7 +3531,7 @@ export default function AssetWorkspace({
                                                                     >
                                                                         {item.severity}
                                                                     </span>
-                                                                    <p className="md:col-span-3 text-[13px] leading-relaxed text-[#D6D0C6]/72">
+                                                                    <p className="text-[13px] leading-relaxed text-[#D6D0C6]/78 sm:col-span-2 xl:col-span-1">
                                                                         {group.title === 'Retention Protocol'
                                                                             ? item.severity === 'critical'
                                                                                 ? 'Must be preserved exactly to hold route integrity.'
