@@ -3434,17 +3434,17 @@ export default function AssetWorkspace({
                                         intro="This section defines the non-negotiables, avoidances, and safe adaptation boundaries required to preserve the working forensic logic."
                                     />
 
-                                    <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a] shadow-xl">
-                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 border-b border-[#E7DED1] pb-4 font-mono">Guardrail Intent</p>
-                                        <p className="max-w-[62ch] text-[24px] font-semibold leading-tight text-[#444] tracking-[-0.01em]">
+                                    <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                        <p className="mb-8 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Guardrail Intent</p>
+                                        <p className="max-w-[62ch] text-[24px] font-semibold leading-tight tracking-[-0.01em] text-[#F3F1ED]">
                                             VD judges, diagnoses, and directs creative quality. Not for asset generation.
                                         </p>
                                     </div>
 
-                                    <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-8 text-[#1a1a1a]">
-                                        <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#999] mb-5">Constraint Priority Legend</p>
-                                        <div className="overflow-hidden border border-[#E7DED1] bg-white">
-                                            <div className="grid grid-cols-12 border-b border-[#E7DED1] px-6 py-3 text-[9px] font-semibold uppercase tracking-[0.28em] text-[#999]">
+                                    <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                        <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Constraint Priority Legend</p>
+                                        <div className="overflow-hidden border border-white/10 bg-[#151310]">
+                                            <div className="grid grid-cols-12 border-b border-white/10 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/65">
                                                 <span className="col-span-4">Priority Level</span>
                                                 <span className="col-span-8">Description</span>
                                             </div>
@@ -3453,28 +3453,28 @@ export default function AssetWorkspace({
                                                 ['High', 'Important but not critical'],
                                                 ['Optional', 'Enhancements that can vary'],
                                             ].map(([level, description]) => (
-                                                <div key={level} className="grid grid-cols-12 border-b border-[#E7DED1] px-6 py-3 text-[11px] last:border-b-0">
+                                                <div key={level} className="grid grid-cols-12 border-b border-white/10 px-6 py-4 text-[13px] last:border-b-0">
                                                     <span
-                                                        className={`col-span-4 inline-flex items-center gap-2 font-semibold uppercase tracking-[0.24em] ${
+                                                        className={`col-span-4 inline-flex items-center gap-2 font-semibold uppercase tracking-[0.22em] ${
                                                             level === 'Critical'
-                                                                ? 'text-[#1a1a1a]'
+                                                                ? 'text-[#F3F1ED]'
                                                                 : level === 'High'
                                                                     ? 'text-[#D4A574]'
-                                                                    : 'text-[#7f7f7f]'
+                                                                    : 'text-[#B7AFA3]'
                                                         }`}
                                                     >
                                                         <span
                                                             className={`h-1.5 w-1.5 ${
                                                                 level === 'Critical'
-                                                                    ? 'bg-[#1a1a1a]'
+                                                                    ? 'bg-[#F3F1ED]'
                                                                     : level === 'High'
                                                                         ? 'bg-[#D4A574]'
-                                                                        : 'bg-[#9a9a9a]'
+                                                                        : 'bg-[#B7AFA3]'
                                                             }`}
                                                         />
                                                         {level}
                                                     </span>
-                                                    <span className="col-span-8 text-[#666]">{description}</span>
+                                                    <span className="col-span-8 text-[#D6D0C6]/75">{description}</span>
                                                 </div>
                                             ))}
                                         </div>
@@ -3484,57 +3484,54 @@ export default function AssetWorkspace({
                                         {[
                                             {
                                                 title: 'Retention Protocol',
-                                                guidance: 'Preserve these elements to protect the route\'s strategic spine.',
+                                                guidance: "Preserve these elements to protect the route's strategic spine.",
                                                 items: mustKeepConstraints,
                                                 accent: 'text-[#D4A574]',
-                                                tone: 'border-[#d4c9b8] bg-white',
                                             },
                                             {
                                                 title: 'Negation Protocol',
                                                 guidance: 'Avoid these shifts to prevent degradation of message transfer.',
                                                 items: mustAvoidConstraints,
-                                                accent: 'text-[#1a1a1a]',
-                                                tone: 'border-[#d4c9b8] bg-white',
+                                                accent: 'text-[#F3F1ED]',
                                             },
                                             {
                                                 title: 'Adaptive Delta',
                                                 guidance: 'Safe variation zone for controlled testing and iteration.',
                                                 items: safeAdaptationZone,
                                                 accent: 'text-[#D4A574]',
-                                                tone: 'border-[#d4c9b8] bg-white/90',
                                             },
                                         ].map((group, index) => (
                                             <div
                                                 key={group.title}
                                                 className={`rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
-                                                <p className={`text-[10px] font-semibold uppercase tracking-[0.5em] mb-6 border-b border-[#E7DED1] pb-6 font-mono ${group.accent}`}>{group.title}</p>
-                                                <p className="mb-10 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">{group.guidance}</p>
+                                                <p className={`text-[10px] font-semibold uppercase tracking-[0.5em] mb-6 border-b border-white/10 pb-6 ${group.accent}`}>{group.title}</p>
+                                                <p className="mb-8 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/75">{group.guidance}</p>
                                                 <div className="space-y-4">
                                                     {group.items.length > 0 ? (
                                                         group.items.map((item, id) => (
-                                                            <div key={`${group.title}-${id}`} className={`border p-8 ${group.tone}`}>
-                                                                <div className="grid grid-cols-1 gap-4 border-b border-[#E7DED1] pb-4 text-[9px] font-semibold uppercase tracking-[0.26em] text-[#8e8e8e] md:grid-cols-12">
+                                                            <div key={`${group.title}-${id}`} className="border border-white/10 bg-[#151310] p-6">
+                                                                <div className="grid grid-cols-1 gap-4 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/58 md:grid-cols-12">
                                                                     <span className="md:col-span-7">Element</span>
                                                                     <span className="md:col-span-2">Priority</span>
                                                                     <span className="md:col-span-3">Protocol Note</span>
                                                                 </div>
                                                                 <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-12 md:items-start">
-                                                                    <p className="md:col-span-7 text-[13px] leading-relaxed text-[#1a1a1a] font-medium tracking-[0.01em]">
+                                                                    <p className="md:col-span-7 text-[13px] leading-relaxed text-[#F3F1ED]/92 font-medium">
                                                                         {item.text}
                                                                     </p>
                                                                     <span
-                                                                        className={`md:col-span-2 inline-flex w-fit items-center border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.26em] ${
+                                                                        className={`md:col-span-2 inline-flex w-fit items-center border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.24em] ${
                                                                             item.severity === 'critical'
                                                                                 ? 'border-[#D4A574] text-black bg-[#D4A574]'
                                                                                 : item.severity === 'high'
                                                                                     ? 'border-[#D4A574]/40 text-[#D4A574]'
-                                                                                    : 'border-[#c0b5a4] text-[#999]'
+                                                                                    : 'border-white/20 text-[#B7AFA3]'
                                                                         }`}
                                                                     >
                                                                         {item.severity}
                                                                     </span>
-                                                                    <p className="md:col-span-3 text-[12px] leading-relaxed text-[#6e6a64]">
+                                                                    <p className="md:col-span-3 text-[13px] leading-relaxed text-[#D6D0C6]/72">
                                                                         {group.title === 'Retention Protocol'
                                                                             ? item.severity === 'critical'
                                                                                 ? 'Must be preserved exactly to hold route integrity.'
@@ -3557,7 +3554,7 @@ export default function AssetWorkspace({
                                                             </div>
                                                         ))
                                                     ) : (
-                                                        <div className="border border-dashed border-[#d4c9b8] bg-white p-12 text-[10px] font-semibold uppercase tracking-widest text-[#ccc] text-center font-mono">
+                                                        <div className="border border-dashed border-white/20 bg-[#151310] p-12 text-center text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D6D0C6]/45">
                                                             Pending trace reconstruction.
                                                         </div>
                                                     )}
