@@ -3890,9 +3890,9 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="space-y-10">
                                     <WorkspaceTabHeader
-                                        kicker="Audit & Reproducibility"
-                                        title="Blueprint Trace"
-                                        intro="A reproducible reconstruction path showing what was diagnosed, what can change safely, and how the route can be audited."
+                                        kicker="Blueprint Logic"
+                                        title="Blueprint Logic: Audit & Reproducibility"
+                                        intro="This section outlines the reconstruction path used to audit the route, validate constraints, and assess reproducibility."
                                     />
                                     {!blueprintData ? (
                                         <div className="flex flex-col items-center justify-center rounded-[3.5rem] border border-[#E7DED1] bg-[#FBF7EF] p-20 text-center text-[#1a1a1a]">
@@ -3948,9 +3948,26 @@ export default function AssetWorkspace({
 
                                             <div className="grid grid-cols-1 gap-12">
                                                 <div className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a] shadow-xl">
-                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-10 border-b border-[#E7DED1] pb-6 font-mono">Handoff Logic // Reconstruction</p>
+                                                    <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-6 border-b border-[#E7DED1] pb-6 font-mono">Blueprint Trace Active</p>
+                                                    <p className="mb-8 max-w-[70ch] text-[13px] leading-relaxed text-[#666]">
+                                                        Reconstruction logic below provides an auditable handoff from diagnosis to execution framing.
+                                                    </p>
+                                                    <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mb-8">
+                                                        <div className="rounded-[1.75rem] border border-[#E7DED1] bg-white/70 p-5">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Subject</p>
+                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(blueprintData.execution_constraints?.primary_trigger) || 'Primary subject lock captured from forensic route.'}</p>
+                                                        </div>
+                                                        <div className="rounded-[1.75rem] border border-[#E7DED1] bg-white/70 p-5">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Setting</p>
+                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(blueprintData.technical_specs?.material_cues?.[0]) || 'Controlled studio context with minimal environmental noise.'}</p>
+                                                        </div>
+                                                        <div className="rounded-[1.75rem] border border-[#E7DED1] bg-white/70 p-5">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Lighting</p>
+                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(blueprintData.technical_specs?.lighting_architecture) || 'Soft, directional lighting architecture retained from route.'}</p>
+                                                        </div>
+                                                    </div>
                                                     <div className="rounded-[2.75rem] border border-[#E7DED1] bg-white/60 p-10 shadow-inner">
-                                                        <pre className="whitespace-pre-wrap text-[14px] font-mono leading-relaxed text-[#aaa] selection:bg-[#D4A574]/30">
+                                                        <pre className="whitespace-pre-wrap text-[14px] font-mono leading-relaxed text-[#888] selection:bg-[#D4A574]/30">
                                                             {blueprintData.verified_dna_prompt}
                                                         </pre>
                                                     </div>
@@ -3959,11 +3976,23 @@ export default function AssetWorkspace({
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                     <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10">
                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] mb-8 border-b border-[#E7DED1] pb-4 font-mono">Primary Trigger</p>
-                                                        <p className="text-[20px] font-semibold uppercase leading-tight text-[#1a1a1a] tracking-tightest">{blueprintData.execution_constraints?.primary_trigger}</p>
+                                                        <p className="text-[20px] font-semibold leading-tight text-[#1a1a1a] tracking-[-0.01em]">{blueprintData.execution_constraints?.primary_trigger}</p>
+                                                        <div className="mt-8 space-y-3">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#999]">Mechanism</p>
+                                                            <ul className="space-y-2">
+                                                                <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#D4A574]" />Desire transfer routes from subject value to product object.</li>
+                                                                <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#D4A574]" />Gaze vector and composition reinforce aspirational authority.</li>
+                                                                <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#D4A574]" />Chromatic continuity holds narrative pressure through the frame.</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                    <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 font-mono">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#999] mb-8 border-b border-[#E7DED1] pb-4">Aesthetic Architecture</p>
-                                                        <p className="text-[12px] font-semibold uppercase leading-relaxed text-[#1a1a1a]/60 tracking-widest">{blueprintData.technical_specs?.lighting_architecture}</p>
+                                                    <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#999] mb-8 border-b border-[#E7DED1] pb-4 font-mono">Aesthetic Architecture</p>
+                                                        <ul className="space-y-3">
+                                                            <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#aaa]" />{firstSentence(blueprintData.technical_specs?.lighting_architecture) || 'Lighting architecture captured in route trace.'}</li>
+                                                            <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#aaa]" />{firstSentence(blueprintData.technical_specs?.gaze_vector) || 'Gaze topology remains controlled and directional.'}</li>
+                                                            <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#aaa]" />{firstSentence(blueprintData.technical_specs?.material_cues?.join(', ')) || 'Material cues preserve surface authority and status coding.'}</li>
+                                                        </ul>
                                                     </div>
                                                 </div>
 
@@ -3979,7 +4008,7 @@ export default function AssetWorkspace({
                                                             <div className="space-y-3">
                                                                 {(blueprintData.execution_constraints?.must_include || []).map((item: string, i: number) => (
                                                                     <div key={`inc-${i}`} className="rounded-[1.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-4 hover:border-[#D4A574]/40 transition-all">
-                                                                        <p className="text-[12px] font-semibold uppercase text-[#666] tracking-tight">{item}</p>
+                                                                        <p className="text-[12px] font-semibold text-[#666] leading-relaxed">• {item}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -3995,7 +4024,7 @@ export default function AssetWorkspace({
                                                             <div className="space-y-3">
                                                                 {(blueprintData.execution_constraints?.must_not_include || []).map((item: string, i: number) => (
                                                                     <div key={`exc-${i}`} className="border border-[#e8ddd0] bg-white/90 p-4 opacity-40">
-                                                                        <p className="text-[12px] font-medium uppercase text-[#ccc] tracking-tight line-through">{item}</p>
+                                                                        <p className="text-[12px] font-medium text-[#bbb] leading-relaxed line-through">• {item}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -4013,8 +4042,9 @@ export default function AssetWorkspace({
                                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                             {blueprintData.ad_copy_remixes.map((remix: any, i: number) => (
                                                                 <div key={i} className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 transition-all hover:border-[#D4A574]/40 shadow-xl group">
-                                                                    <p className="mb-8 border-b border-[#e8ddd0] pb-4 text-[9px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">{remix.angle}</p>
-                                                                    <p className="text-[18px] font-semibold uppercase leading-tight text-[#1a1a1a]/80 group-hover:text-[#1a1a1a] transition-colors tracking-tightest font-mono">
+                                                                    <p className="mb-4 border-b border-[#e8ddd0] pb-4 text-[9px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">{remix.angle}</p>
+                                                                    <p className="text-[10px] uppercase tracking-[0.28em] text-[#999] mb-3">Intent Angle</p>
+                                                                    <p className="text-[17px] font-semibold leading-tight text-[#1a1a1a]/85 group-hover:text-[#1a1a1a] transition-colors tracking-[-0.01em]">
                                                                         "{remix.copy}"
                                                                     </p>
                                                                 </div>
@@ -4034,7 +4064,7 @@ export default function AssetWorkspace({
                                                                 <div key={i} className="rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 transition-all hover:bg-white/[0.07] shadow-3xl">
                                                                     <div className="flex items-center justify-between mb-8 border-b border-[#E7DED1] pb-6">
                                                                         <span className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">{variant.concept}</span>
-                                                                        <span className="text-[10px] font-semibold text-[#ccc] font-mono tracking-widest uppercase">Variant_Trace_0{i+1}</span>
+                                                                        <span className="text-[10px] font-semibold text-[#ccc] font-mono tracking-widest uppercase">Variant 0{i+1}</span>
                                                                     </div>
                                                                     <div className="border border-[#e8ddd0] bg-white/90 p-10 shadow-inner">
                                                                         <pre className="whitespace-pre-wrap text-[13px] font-mono leading-relaxed text-[#aaa] selection:bg-[#D4A574]/30">
