@@ -40,7 +40,7 @@ export default function PlatformLayer() {
                                 className="grid gap-5 py-10 md:grid-cols-[220px_1fr]"
                             >
                                 <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{item.title}</p>
-                                <p className="text-[17px] leading-[1.8] text-[#F6F1E7]/70">{item.body}</p>
+                                <p className="text-[17px] font-medium leading-[1.8] text-[#F6F1E7]/80">{item.body}</p>
                             </motion.article>
                         ))}
                     </div>

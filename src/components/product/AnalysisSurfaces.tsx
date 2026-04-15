@@ -29,7 +29,7 @@ const ANALYSIS_LAYERS = [
 export default function AnalysisSurfaces() {
     return (
         <>
-            <section className="pt-40 pb-32 lg:pt-56 lg:pb-44" data-presence-tone="dark">
+            <section className="pt-44 pb-36 lg:pt-60 lg:pb-48" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[520px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Sample Dossier</p>
@@ -45,9 +45,9 @@ export default function AnalysisSurfaces() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-80px' }}
                         transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                        className="mt-24 lg:mt-28"
+                        className="mt-28 lg:mt-32"
                     >
-                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[920px]" />
+                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1000px]" />
                     </motion.div>
                 </div>
             </section>
@@ -89,17 +89,17 @@ export default function AnalysisSurfaces() {
                             const isPrimary = index === 0;
                             const isAttention = index === 1;
                             const titleClass = isPrimary
-                                ? 'text-[14px] tracking-[0.31em] text-[#C1A674]'
+                                ? 'text-[15px] tracking-[0.32em] text-[#C1A674]'
                                 : isAttention
                                     ? 'text-[12px] tracking-[0.29em] text-[#C1A674]/95'
                                     : 'text-[11px] tracking-[0.27em] text-[#C1A674]/70';
                             const bodyClass = isPrimary
-                                ? 'mt-4 max-w-[48ch] text-[20px] leading-[1.72] text-[#F6F1E7]/84'
+                                ? 'mt-4 max-w-[48ch] text-[21px] leading-[1.68] text-[#F6F1E7]/86'
                                 : isAttention
                                     ? 'mt-4 max-w-[48ch] text-[17px] leading-[1.8] text-[#F6F1E7]/70'
                                     : 'mt-4 max-w-[48ch] text-[15px] leading-[1.8] text-[#F6F1E7]/56';
                             const proofClass = isPrimary
-                                ? 'lg:scale-[1.04] lg:origin-top-left'
+                                ? 'lg:scale-[1.06] lg:origin-top-left ring-1 ring-[#C1A674]/18 bg-[#16140F]' 
                                 : isAttention
                                     ? ''
                                     : 'opacity-85';

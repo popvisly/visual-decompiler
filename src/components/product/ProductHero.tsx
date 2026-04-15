@@ -39,7 +39,7 @@ export default function ProductHero() {
                             </Link>
                         </div>
 
-                        <div className="mt-12 w-full max-w-[760px] rounded-[1rem] border border-white/10 bg-[#12110F]/72 px-5 py-4 opacity-85">
+                        <div className="mt-14 w-full max-w-[760px] rounded-[1rem] border border-white/12 bg-[#12110F]/78 px-5 py-5 opacity-90">
                             <div className="grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-5">
                                 {[
                                     ['Clarity', '82'],
