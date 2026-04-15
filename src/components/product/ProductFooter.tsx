@@ -11,7 +11,9 @@ export default function ProductFooter() {
                     <div className="max-w-[760px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Final</p>
                         <h2 className="mt-6 text-[11vw] font-bold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[64px]">
-                            Don&apos;t just present the work. Explain it.
+                            Don&apos;t just present the work.
+                            <br />
+                            Explain it.
                         </h2>
                         <p className="mt-6 text-[18px] leading-[1.75] text-[#F6F1E7]/72">
                             Decompile your next ad before anyone else does.

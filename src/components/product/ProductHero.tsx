@@ -38,6 +38,23 @@ export default function ProductHero() {
                                 Decompile Your Ad
                             </Link>
                         </div>
+
+                        <div className="mt-9 max-w-[680px] rounded-xl bg-white/[0.04] px-5 py-4 opacity-80">
+                            <div className="grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-5">
+                                {[
+                                    ['Clarity', '82'],
+                                    ['Attention', '91'],
+                                    ['Cohesion', '76'],
+                                    ['Intent', '88'],
+                                    ['Distinction', '67'],
+                                ].map(([label, value]) => (
+                                    <div key={label} className="text-left">
+                                        <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-[#F6F1E7]/62">{label}</p>
+                                        <p className="mt-1 text-[17px] font-semibold tracking-tight text-[#F6F1E7]/88">{value}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
             </div>

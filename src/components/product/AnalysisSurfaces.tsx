@@ -6,7 +6,7 @@ import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArt
 const ANALYSIS_LAYERS = [
     {
         title: 'Primary Scores',
-        body: 'Clarity. Attention. Cohesion. Intent. Distinction. High-level signals that define how the work performs.',
+        body: 'Clarity. Attention. Cohesion. Intent. Distinction.',
         proof: 'layer-primary' as const,
     },
     {
@@ -16,7 +16,7 @@ const ANALYSIS_LAYERS = [
     },
     {
         title: 'Structural Signals',
-        body: 'Hierarchy, balance, contrast, density, and focus integrity — expressed as controlled diagnostics.',
+        body: 'Hierarchy, balance, contrast, density, and focus integrity.',
         proof: 'layer-structural' as const,
     },
     {
@@ -29,7 +29,7 @@ const ANALYSIS_LAYERS = [
 export default function AnalysisSurfaces() {
     return (
         <>
-            <section className="border-b border-white/10 py-28 lg:py-36" data-presence-tone="dark">
+            <section className="border-b border-white/10 py-32 lg:py-44" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1240px] px-6 lg:px-12">
                     <div className="max-w-[560px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Sample Dossier</p>
@@ -45,9 +45,9 @@ export default function AnalysisSurfaces() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-80px' }}
                         transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                        className="mt-16"
+                        className="mt-20 lg:mt-24"
                     >
-                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1180px] lg:scale-[1.05] lg:origin-top" />
+                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1260px] lg:scale-[1.12] lg:origin-top" />
                     </motion.div>
                 </div>
             </section>
