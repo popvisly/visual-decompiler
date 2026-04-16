@@ -4251,7 +4251,7 @@ export default function AssetWorkspace({
                                         intro="This section outlines experimental stress testing on key creative variables, measuring response variance and structural durability."
                                     />
                                     <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                        <div className="grid grid-cols-4 border-b border-white/10 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                        <div className="grid grid-cols-4 border-b border-white/12 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]">
                                             <div className="px-8 py-5 border-r border-white/10">Variable</div>
                                             <div className="px-8 py-5 border-r border-white/10 text-center">Baseline</div>
                                             <div className="px-8 py-5 border-r border-white/10 text-center">Predicted Lift</div>
@@ -4259,15 +4259,15 @@ export default function AssetWorkspace({
                                         </div>
                                         <div className="divide-y divide-white/10">
                                             {(stressLabRows || []).map((row, i) => (
-                                                <div key={i} className="grid grid-cols-4 items-center bg-[#151310] group hover:bg-[#1F1B16] transition-colors">
+                                                <div key={i} className="grid grid-cols-4 items-center bg-[#171513] group hover:bg-[#211d18] transition-colors">
                                                     <div className="px-8 py-7 border-r border-white/10">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/82 group-hover:text-[#D4A574] transition-colors">{row.variable}</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#E3DBCE] group-hover:text-[#D4A574] transition-colors">{row.variable}</p>
                                                     </div>
                                                     <div className="px-8 py-7 border-r border-white/10 text-center">
-                                                        <p className="text-[13px] font-medium text-[#F3F1ED]/92 leading-relaxed">{row.currentState}</p>
+                                                        <p className="text-[13px] font-medium text-[#F3F1ED] leading-relaxed">{row.currentState}</p>
                                                     </div>
                                                     <div className="px-8 py-7 border-r border-white/10 text-center">
-                                                        <span className={`text-[10px] font-semibold uppercase tracking-[0.3em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : row.predictedLift === 'Medium' ? 'text-[#D6D0C6]/88' : 'text-[#D6D0C6]/72'}`}>
+                                                        <span className={`text-[10px] font-semibold uppercase tracking-[0.28em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : row.predictedLift === 'Medium' ? 'text-[#E3DBCE]' : 'text-[#CFC6B8]'}`}>
                                                             {row.predictedLift}
                                                         </span>
                                                     </div>
@@ -4276,8 +4276,8 @@ export default function AssetWorkspace({
                                                             row.recommendation === 'Test'
                                                                 ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5'
                                                                 : row.recommendation === 'Avoid'
-                                                                    ? 'border-red-500/50 text-red-400 bg-red-500/5'
-                                                                    : 'border-[#D6D0C6]/30 text-[#D6D0C6]/88 bg-white/[0.03]'
+                                                                    ? 'border-[#b77868]/65 text-[#dfb1a5] bg-[#2a1a17]'
+                                                                    : 'border-[#D6D0C6]/40 text-[#E3DBCE] bg-white/[0.04]'
                                                         }`}>
                                                             {row.recommendation}
                                                         </span>
