@@ -2789,7 +2789,7 @@ export default function AssetWorkspace({
                             </div>
 
                             {!sampleMode && (
-                                <div className="mt-5">
+                                <div className="mt-5 w-full max-w-[390px]">
                                     <AssetTagEditor
                                         assetId={asset.id}
                                         initialTags={asset.tags || []}
