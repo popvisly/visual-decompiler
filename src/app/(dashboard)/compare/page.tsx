@@ -512,44 +512,6 @@ export default function DifferentialDiagnosticsPage() {
 
                 {/* Diagnostic Ledger Section */}
                 <div className="border-t border-[#D4A574]/20 pt-16">
-                    {status === 'idle' && (
-                        <div className="flex flex-col items-center justify-center py-24 space-y-8 animate-in fade-in duration-700">
-                            {/* Comparison Matrix Data Cube Geometry Placeholder */}
-                            <div className="relative w-20 h-20 opacity-20 group">
-                                <div className="absolute inset-0 border border-[#1A1A1A] rotate-45 transform group-hover:rotate-90 transition-transform duration-1000" />
-                                <div className="absolute inset-2 border border-[#D4A574] -rotate-12 transform group-hover:rotate-12 transition-transform duration-1000" />
-                                <div className="absolute inset-6 bg-[#D4A574]" />
-                            </div>
-                            <div className="text-center space-y-2">
-                                <span className="block text-[12px] font-bold tracking-[0.5em] uppercase text-[#1A1A1A]/40">
-                                    READY TO COMPARE
-                                </span>
-                                <span className="block text-[12px] font-bold tracking-[0.5em] uppercase text-[#D4A574]">
-                                    SELECT TWO ASSETS
-                                </span>
-                                <p className="pt-3 text-[11px] font-mono uppercase tracking-[0.15em] text-[#1A1A1A]/35">
-                                    Pick Asset A first, then Asset B.
-                                </p>
-                            </div>
-
-                            <div className="grid w-full max-w-3xl gap-4 md:grid-cols-2">
-                                <div className="rounded-[1.8rem] border border-[#E7DED1] bg-white px-5 py-5 text-left shadow-sm">
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step 1</p>
-                                    <p className="mt-3 text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A]">Choose Asset A</p>
-                                    <p className="mt-3 text-[12px] leading-relaxed text-[#6B6B6B]">
-                                        Use the current route as your baseline.
-                                    </p>
-                                </div>
-                                <div className="rounded-[1.8rem] border border-[#E7DED1] bg-white px-5 py-5 text-left shadow-sm">
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Step 2</p>
-                                    <p className="mt-3 text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A]">Choose Asset B</p>
-                                    <p className="mt-3 text-[12px] leading-relaxed text-[#6B6B6B]">
-                                        Pick the challenger route to see clear differences.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    )}
 
                     {status === 'analysing' && (
                         <div className="flex flex-col items-center justify-center py-32 space-y-12 animate-in fade-in duration-500">
