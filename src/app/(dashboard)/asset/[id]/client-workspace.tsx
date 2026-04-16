@@ -2713,16 +2713,16 @@ export default function AssetWorkspace({
                                     </div>
                                 ) : (
                                     <>
-                                        <div className="mb-8">
+                                        <div className="mb-6">
                                             <p className="text-[9px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-3">System Guidance</p>
                                             <p className="text-[13px] font-normal leading-relaxed text-[#5f5649]">
                                                 Engage differential diagnosis against a second route to surface high-priority strategic pivots.
                                             </p>
                                         </div>
-                                        <div className="mb-8 grid grid-cols-1 gap-3">
+                                        <div className="mb-6 grid grid-cols-1 gap-3">
                                             <div className="rounded-[2.25rem] border border-[#E7DED1] bg-[#FBF7EF] p-6 group hover:border-[#D4A574]/40 transition-all">
                                                 <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">Differential Diagnostic</p>
-                                                <p className="mb-6 text-[13px] leading-relaxed text-[#5f5649]">
+                                                <p className="mb-5 text-[13px] leading-relaxed text-[#5f5649]">
                                                     Put this brief beside another route and surface the strategic delta.
                                                 </p>
                                                 <a
@@ -2748,7 +2748,7 @@ export default function AssetWorkspace({
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="mb-6 rounded-[2rem] border border-[#D4A574]/20 bg-[#171717] px-5 py-5">
+                                        <div className="mb-5 rounded-[2rem] border border-[#D4A574]/20 bg-[#171717] px-5 py-5">
                                             <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">Embed Widget</p>
                                             <p className="mt-3 text-[13px] leading-relaxed text-[#d6cec3]">
                                                 Paste this iFrame into a client portal, strategy deck, Notion page, or internal dashboard to display a self-contained forensic intelligence panel.
@@ -2767,7 +2767,7 @@ export default function AssetWorkspace({
                                                 Copy Embed Widget
                                             </button>
                                         </div>
-                                        <div className="relative flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
+                                        <div className="relative flex flex-col gap-2 xl:flex-row xl:items-start xl:justify-between">
                                             <button
                                                 onClick={handleOpenCloneDrawer}
                                                 className="no-print inline-flex items-center gap-2 rounded-full bg-[#D4A574] px-4 py-2 text-[10px] font-bold tracking-widest uppercase text-[#141414] transition-all hover:bg-[#c8955b]"
