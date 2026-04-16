@@ -14,13 +14,13 @@ export default function ProductHero() {
                     transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
                     className="max-w-[900px]"
                 >
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Product</p>
-                    <h1 className="mt-6 text-[15vw] font-semibold uppercase leading-[0.88] tracking-[-0.04em] text-[#F6F1E7] sm:text-[12vw] lg:text-[96px]">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Product</p>
+                    <h1 className="mt-5 text-[clamp(56px,9vw,98px)] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7]">
                         A system for visual due diligence.
                     </h1>
 
-                    <div className="mt-10 max-w-[760px] rounded-2xl border border-white/10 bg-black/30 px-8 py-7 shadow-[0_0_40px_rgba(0,0,0,0.4)] ring-1 ring-white/5 backdrop-blur-md">
-                        <p className="text-[19px] leading-[1.8] text-[#F6F1E7]/76">
+                    <div className="mt-10 max-w-[760px] rounded-[1.75rem] border border-white/10 bg-[#0D0D0D]/70 px-8 py-8 shadow-[0_0_36px_rgba(0,0,0,0.34)] ring-1 ring-white/5 backdrop-blur-md">
+                        <p className="text-[16px] leading-[1.7] text-[#F6F1E7]/78">
                             Visual Decompiler analyzes advertising at a structural level — turning creative instinct into clear, defensible reasoning.
                         </p>
 
@@ -49,8 +49,8 @@ export default function ProductHero() {
                                     ['Distinction', '67'],
                                 ].map(([label, value]) => (
                                     <div key={label} className="text-left">
-                                        <p className="text-[9px] font-semibold uppercase tracking-[0.23em] text-[#F6F1E7]/52">{label}</p>
-                                        <p className="mt-2 text-[22px] font-semibold leading-none tracking-[-0.02em] text-[#F6F1E7]">{value}</p>
+                                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#F6F1E7]/55">{label}</p>
+                                        <p className="mt-2 text-[24px] font-semibold leading-none tracking-[-0.02em] text-[#F6F1E7]">{value}</p>
                                     </div>
                                 ))}
                             </div>

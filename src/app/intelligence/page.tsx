@@ -14,15 +14,12 @@ export default async function IntelligenceIndex() {
     return (
         <div className="max-w-7xl mx-auto px-6">
             <div className="mb-20">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#BB9E7B]/10 border border-[#BB9E7B]/20 mb-6 font-mono text-[10px] text-[#BB9E7B] uppercase tracking-widest">
-                    <Sparkles className="w-3 h-3" />
-                    Global Strategy Desk
-                </div>
-                <h1 className="text-5xl md:text-7xl font-light text-[#FBF7EF] tracking-tight leading-[1.1] mb-6">
+                <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Intelligence Hub</p>
+                <h1 className="text-[clamp(56px,9vw,96px)] font-semibold uppercase text-[#FBF7EF] tracking-[-0.04em] leading-[0.9] mb-6">
                     Intelligence <br />
-                    <span className="text-white/30 italic font-serif">Briefings</span>
+                    <span className="text-white/38">Briefings.</span>
                 </h1>
-                <p className="max-w-xl text-white/50 text-lg font-light leading-relaxed">
+                <p className="max-w-xl text-white/62 text-[16px] font-medium leading-[1.7]">
                     Technical deep dives into advertising forensics, trigger mechanics, and autonomous creative strategy.
                 </p>
             </div>

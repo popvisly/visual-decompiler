@@ -47,7 +47,7 @@ export default function PricingPage() {
             <UnifiedSovereignHeader forceDark />
 
             {/* Hero Section */}
-            <section className="px-6 pt-32 pb-28 lg:pt-36 lg:pb-36">
+            <section className="px-6 pt-30 pb-24 lg:pt-36 lg:pb-28">
                 <div className="mx-auto max-w-[1400px]">
                     <motion.div
                         initial={{ opacity: 0, y: 12 }}
@@ -55,7 +55,7 @@ export default function PricingPage() {
                         transition={{ duration: 0.65, ease: EASE }}
                         className="mb-12 border-t border-white/10 pt-8"
                     >
-                        <p className="text-[12px] font-black uppercase tracking-[0.5em] text-[#C1A674]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">
                             Sovereign Infrastructure · Pricing OS
                         </p>
                     </motion.div>
@@ -74,7 +74,7 @@ export default function PricingPage() {
                         initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-                        className="mt-8 max-w-3xl text-[clamp(18px,1.9vw,34px)] leading-[1.45] text-white/58 font-medium"
+                        className="mt-8 max-w-3xl text-[16px] leading-[1.7] text-white/62 font-medium"
                     >
                         Every tier includes real intelligence depth. Observer proves the diagnostic system. 
                         Professional and Agency expand analysis coverage, decision confidence, and delivery readiness.

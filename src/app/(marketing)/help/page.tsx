@@ -129,21 +129,21 @@ const FAQS = [
 
 export default function HelpPage() {
     return (
-        <main className="bg-[#F6F1E7] min-h-screen">
-            <UnifiedSovereignHeader />
+        <main className="bg-[#050505] min-h-screen text-[#FBF7EF]">
+            <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Bring In The Work', href: '/ingest' }} />
 
-            <div className="pt-32 pb-20 px-6">
+            <div className="pt-30 pb-20 px-6">
                 <div className="max-w-7xl mx-auto">
                     {/* Header */}
                     <div className="mb-20">
-                        <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#C1A67B] block mb-4">
+                        <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-[#C1A674] block mb-4">
                             Operational Manual
                         </span>
-                        <h1 className="text-5xl md:text-8xl font-semibold text-[#141414] tracking-tight uppercase leading-[0.9]">
+                        <h1 className="text-[clamp(56px,9vw,96px)] font-semibold text-[#F6F1E7] tracking-[-0.04em] uppercase leading-[0.9]">
                             Help<br />
-                            <span className="text-[#C1A67B]">Centre.</span>
+                            <span className="text-[#C1A674]">Centre.</span>
                         </h1>
-                        <p className="mt-8 max-w-2xl text-base leading-relaxed text-[#6B6B6B] font-medium">
+                        <p className="mt-8 max-w-2xl text-[16px] leading-[1.7] text-[#F6F1E7]/62 font-medium">
                             Operational guidance for ingestion, dossier navigation, Intelligence Pulse, white-labelling, and agency delivery workflows.
                         </p>
                     </div>
@@ -151,18 +151,18 @@ export default function HelpPage() {
                     {/* Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
                         {SECTIONS.map((s, i) => (
-                            <div key={i} className="bg-white rounded-[32px] border border-[#E7DED1] p-8 md:p-12 shadow-[0_4px_24px_rgba(20,20,20,0.02)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.04)] transition-all group">
+                            <div key={i} className="bg-[#141414] rounded-[32px] border border-white/10 p-8 md:p-12 shadow-[0_4px_24px_rgba(20,20,20,0.02)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.04)] transition-all group">
                                 <div className="w-12 h-12 rounded-2xl bg-[#C1A67B]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                                    <s.icon className="w-6 h-6 text-[#C1A67B]" />
+                                    <s.icon className="w-6 h-6 text-[#C1A674]" />
                                 </div>
-                                <h3 className="text-2xl font-semibold text-[#141414] uppercase tracking-tight mb-4">{s.title}</h3>
-                                <p className="text-base text-[#6B6B6B] leading-relaxed mb-8 font-medium">
+                                <h3 className="text-2xl font-semibold text-[#F6F1E7] uppercase tracking-tight mb-4">{s.title}</h3>
+                                <p className="text-[13px] text-[#F6F1E7]/62 leading-relaxed mb-8 font-medium">
                                     {s.description}
                                 </p>
                                 <ul className="space-y-4">
                                     {s.bullets.map((b, bi) => (
-                                        <li key={bi} className="flex items-start gap-3 text-sm text-[#141414] font-medium leading-tight">
-                                            <ChevronRight className="w-4 h-4 text-[#C1A67B] shrink-0 mt-0.5" />
+                                        <li key={bi} className="flex items-start gap-3 text-sm text-[#F6F1E7] font-medium leading-tight">
+                                            <ChevronRight className="w-4 h-4 text-[#C1A674] shrink-0 mt-0.5" />
                                             {b}
                                         </li>
                                     ))}
@@ -173,18 +173,18 @@ export default function HelpPage() {
 
                     <section className="mt-24">
                         <div className="mb-10">
-                            <p className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C1A67B] mb-3">Frequently Asked Questions</p>
-                            <h2 className="text-3xl md:text-5xl font-semibold text-[#141414] tracking-tight uppercase leading-[0.92]">
+                            <p className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C1A674] mb-3">Frequently Asked Questions</p>
+                            <h2 className="text-3xl md:text-5xl font-semibold text-[#F6F1E7] tracking-tight uppercase leading-[0.92]">
                                 Common<br />
-                                <span className="text-[#C1A67B]">Operational Questions</span>
+                                <span className="text-[#C1A674]">Operational Questions</span>
                             </h2>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {FAQS.map((faq) => (
-                                <article key={faq.question} className="bg-white rounded-[28px] border border-[#E7DED1] p-8 shadow-[0_4px_24px_rgba(20,20,20,0.02)]">
-                                    <h3 className="text-lg font-semibold text-[#141414] tracking-tight mb-4">{faq.question}</h3>
-                                    <p className="text-sm leading-relaxed text-[#6B6B6B] font-medium">{faq.answer}</p>
+                                <article key={faq.question} className="bg-[#141414] rounded-[28px] border border-white/10 p-8 shadow-[0_4px_24px_rgba(20,20,20,0.02)]">
+                                    <h3 className="text-lg font-semibold text-[#F6F1E7] tracking-tight mb-4">{faq.question}</h3>
+                                    <p className="text-sm leading-relaxed text-[#F6F1E7]/62 font-medium">{faq.answer}</p>
                                 </article>
                             ))}
                         </div>
@@ -192,7 +192,7 @@ export default function HelpPage() {
 
                     <section className="mt-24 rounded-[32px] border border-[#E7DED1] bg-[#141414] p-8 md:p-12 text-[#FBF7EF] shadow-[0_24px_60px_rgba(20,20,20,0.08)]">
                         <div className="max-w-3xl">
-                            <p className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C1A67B] mb-4">Need Further Assistance?</p>
+                            <p className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#C1A674] mb-4">Need Further Assistance?</p>
                             <h2 className="text-3xl md:text-5xl font-semibold tracking-tight uppercase leading-[0.95] mb-5">
                                 Support for technical, billing, and enterprise questions.
                             </h2>
@@ -202,7 +202,7 @@ export default function HelpPage() {
                             <div className="mt-8 flex flex-col md:flex-row md:items-center gap-4">
                                 <a
                                     href="mailto:support@visualdecompiler.com"
-                                    className="inline-flex items-center gap-3 rounded-full bg-[#C1A67B] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#141414] transition-colors hover:bg-[#D4B88A]"
+                                    className="inline-flex items-center gap-3 rounded-full bg-[#C1A674] px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#141414] transition-colors hover:bg-[#D4B88A]"
                                 >
                                     <Mail className="w-4 h-4" />
                                     Email Support
