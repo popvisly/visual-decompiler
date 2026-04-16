@@ -3683,7 +3683,7 @@ export default function AssetWorkspace({
                                                         ].map(([label, val]) => (
                                                             <div key={label} className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
                                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/70 mb-4">{label}</p>
-                                                                <p className="text-[24px] font-semibold text-[#F3F1ED]">{val}</p>
+                                                                <p className="text-[24px] font-semibold text-[#F3F1ED] drop-shadow-[0_1px_0_rgba(0,0,0,0.25)]">{val}</p>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -3692,7 +3692,7 @@ export default function AssetWorkspace({
                                         ) : (
                                             <>
                                                 <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <div className="grid grid-cols-12 border-b border-white/10 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.36em] text-[#D4A574]">
+                                                    <div className="grid grid-cols-12 border-b border-white/12 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]">
                                                         <div className="col-span-5 px-8 py-5 border-r border-white/10">Metric</div>
                                                         <div className="col-span-2 px-8 py-5 border-r border-white/10 text-center">Value</div>
                                                         <div className="col-span-5 px-8 py-5">Context Signal</div>
@@ -3725,13 +3725,13 @@ export default function AssetWorkspace({
                                                     ].map((row) => (
                                                         <div key={row.label} className="grid grid-cols-12 border-b border-white/10 last:border-b-0">
                                                             <div className="col-span-5 border-r border-white/10 px-8 py-6">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/70">{row.label}</p>
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#E3DBCE]">{row.label}</p>
                                                             </div>
                                                             <div className="col-span-2 border-r border-white/10 px-8 py-6 text-center">
                                                                 <p className="text-[24px] font-semibold text-[#F3F1ED]">{row.value}%</p>
                                                             </div>
                                                             <div className="col-span-5 px-8 py-6">
-                                                                <p className="text-[13px] leading-relaxed text-[#F3F1ED]/86">{row.insight}</p>
+                                                                <p className="text-[13px] leading-relaxed text-[#F3F1ED]/96">{row.insight}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -3739,7 +3739,7 @@ export default function AssetWorkspace({
 
                                                 <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] mb-6 border-b border-white/10 pb-5">Directional Estimate</p>
-                                                    <p className="max-w-[74ch] text-[13px] leading-relaxed text-[#D6D0C6]/84">
+                                                    <p className="max-w-[74ch] text-[13px] leading-relaxed text-[#F3F1ED]/92">
                                                         {marketPulseFallback.interpretation || 'Category pressure is elevated, so this route requires sharper differentiation and strict execution discipline before scale expansion.'}
                                                     </p>
                                                 </div>
@@ -3748,10 +3748,10 @@ export default function AssetWorkspace({
                                                     <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                         Strategic Implication
                                                     </p>
-                                                    <p className="max-w-[78ch] rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] px-5 py-4 text-[13px] leading-relaxed text-[#D6D0C6]/82">
+                                                    <p className="max-w-[78ch] rounded-[1.75rem] border border-white/10 bg-[#151310] px-5 py-4 text-[13px] leading-relaxed text-[#F3F1ED]/92">
                                                         To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.
                                                     </p>
-                                                    <span className="mt-8 inline-flex border border-[#D4A574]/70 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#F3F1ED] bg-[#D4A574]/18">
+                                                    <span className="mt-8 inline-flex border border-[#D4A574]/75 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#F3F1ED] bg-[#D4A574]/24">
                                                         {marketPulseFallback.confidenceLabel}
                                                     </span>
                                                 </div>
