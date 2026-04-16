@@ -2715,86 +2715,66 @@ export default function AssetWorkspace({
                                     <>
                                         <div className="mb-8">
                                             <p className="text-[9px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-3">System Guidance</p>
-                                            <p className="text-[15px] leading-relaxed text-[#666] uppercase font-medium">
+                                            <p className="text-[13px] font-normal leading-relaxed text-[#5f5649]">
                                                 Engage differential diagnosis against a second route to surface high-priority strategic pivots.
                                             </p>
                                         </div>
                                         <div className="mb-8 grid grid-cols-1 gap-3">
                                             <div className="rounded-[2.25rem] border border-[#E7DED1] bg-[#FBF7EF] p-6 group hover:border-[#D4A574]/40 transition-all">
-                                                <div className="flex items-center gap-4 mb-4">
-                                                    <div className="w-8 h-8 flex items-center justify-center bg-[#D4A574]/10 text-[#D4A574]">
-                                                        <Code className="w-4 h-4" />
-                                                    </div>
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">Differential Diagnostic</p>
-                                                </div>
-                                                <p className="text-[13px] leading-relaxed text-[#999] mb-6 uppercase">
+                                                <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">Differential Diagnostic</p>
+                                                <p className="mb-6 text-[13px] leading-relaxed text-[#5f5649]">
                                                     Put this brief beside another route and surface the strategic delta.
                                                 </p>
                                                 <a
                                                     href="/compare"
-                                                    className="inline-flex items-center border border-[#D4A574] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D4A574] transition-all hover:bg-[#D4A574] hover:text-black"
+                                                    className="inline-flex items-center gap-2 rounded-full border border-[#D4A574] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D4A574] transition-all hover:bg-[#D4A574] hover:text-black"
                                                 >
-                                                    RUN ANALYSIS
+                                                    <Code className="h-3 w-3" />
+                                                    Run Analysis
                                                 </a>
                                             </div>
-                                            
+
                                             <div className="rounded-[2.25rem] border border-[#E7DED1] bg-[#FBF7EF] p-6 group hover:border-[#D4A574]/40 transition-all">
-                                                <div className="flex items-center gap-4 mb-4">
-                                                    <div className="w-8 h-8 flex items-center justify-center bg-[#f5f0e8] text-[#1a1a1a]">
-                                                        <FileDown className="w-4 h-4" />
-                                                    </div>
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#1a1a1a]">Intelligence Export</p>
-                                                </div>
-                                                <p className="text-[13px] leading-relaxed text-[#999] mb-6 uppercase">
+                                                <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#1a1a1a]">Intelligence Export</p>
+                                                <p className="mb-6 text-[13px] leading-relaxed text-[#5f5649]">
                                                     Generate the briefing summary for immediate review distribution.
                                                 </p>
                                                 <button
                                                     onClick={() => setShowExportModal(true)}
-                                                    className="inline-flex items-center border border-[#b0a594] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1a1a1a]/80 transition-all hover:border-white hover:text-[#1a1a1a]"
+                                                    className="inline-flex items-center gap-2 rounded-full border border-[#b0a594] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1a1a1a]/80 transition-all hover:border-[#D4A574]/70 hover:text-[#1a1a1a]"
                                                 >
-                                                    [ EXPORT DOSSIER ]
+                                                    <FileDown className="h-3 w-3" />
+                                                    Export Dossier
                                                 </button>
                                             </div>
                                         </div>
-                                        <div className="relative flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
-                                            <div className="flex flex-wrap items-center gap-2">
-                                                <button
-                                                    onClick={handleOpenCloneDrawer}
-                                                    className="no-print flex items-center gap-2 px-4 py-2 bg-[#D4A574] text-[#141414] text-[10px] font-bold tracking-widest uppercase hover:bg-[#c8955b] rounded-full transition-all"
-                                                >
-                                                    <Sparkles className="w-3 h-3" />
-                                                    {cloneData ? 'Open Clone Engine' : 'Clone This Mechanic'}
-                                                </button>
-                                                <div className="relative group">
-                                                    <button
-                                                        onClick={handleCopyEmbed}
-                                                        className="no-print flex items-center gap-2 px-4 py-2 bg-[#FFFCF7] border border-[#D4A574]/30 text-[#D4A574] text-[10px] font-bold tracking-widest uppercase hover:bg-[#FFFCF7]/80 rounded-full transition-all"
-                                                    >
-                                                        <Code className="w-3 h-3" />
-                                                        Copy Embed Widget
-                                                        <Info className="w-3 h-3 text-[#D4A574]/70" />
-                                                    </button>
-                                                    <div className="pointer-events-none absolute right-0 top-full z-40 mt-3 w-[320px] rounded-[1.5rem] border border-[#D4A574]/20 bg-[#141414] p-5 text-left opacity-0 shadow-2xl transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 translate-y-1">
-                                                        <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#D4A574]">Embed Widget</p>
-                                                        <p className="mt-3 text-[12px] leading-relaxed text-[#6A6257]">
-                                                            Paste this iFrame into a client portal, strategy deck, Notion page, or internal dashboard to display a self-contained forensic intelligence panel.
-                                                        </p>
-                                                        <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-[#D4A574]/60">
-                                                            Use for: client-facing reports · internal strategy decks · agency dashboards
-                                                        </p>
-                                                        <pre className="mt-4 overflow-x-auto rounded-2xl border border-[#D4A574]/10 bg-white/30 p-3 text-[10px] leading-relaxed text-[#151310]/75">
+                                        <div className="mb-6 rounded-[2rem] border border-[#D4A574]/20 bg-[#171717] px-5 py-5">
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">Embed Widget</p>
+                                            <p className="mt-3 text-[13px] leading-relaxed text-[#d6cec3]">
+                                                Paste this iFrame into a client portal, strategy deck, Notion page, or internal dashboard to display a self-contained forensic intelligence panel.
+                                            </p>
+                                            <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-[#D4A574]/75">
+                                                Use for: client-facing reports · internal strategy decks · agency dashboards
+                                            </p>
+                                            <pre className="mt-4 overflow-x-auto rounded-2xl border border-[#D4A574]/20 bg-[#0f0f0f] p-3 text-[10px] leading-relaxed text-[#ded5ca]">
 {`<iframe src="visualdecompiler.com/embed/${asset.id}" width="100%" height="600px" />`}
-                                                        </pre>
-                                                    </div>
-                                                </div>
-                                                <button
-                                                    onClick={() => setShowExportModal(true)}
-                                                    className="no-print flex items-center gap-2 px-4 py-2 bg-[#4A4A4A] text-[#151310] text-[10px] font-bold tracking-widest uppercase hover:bg-[#FFFCF7] rounded-full transition-all"
-                                                >
-                                                    <FileDown className="w-3 h-3" />
-                                                    Export Dossier (Print/PDF)
-                                                </button>
-                                            </div>
+                                            </pre>
+                                            <button
+                                                onClick={handleCopyEmbed}
+                                                className="mt-4 no-print inline-flex items-center gap-2 rounded-full border border-[#D4A574]/40 bg-[#1f1f1f] px-4 py-2 text-[10px] font-bold tracking-widest uppercase text-[#D4A574] transition-all hover:border-[#D4A574] hover:text-[#f4d5a5]"
+                                            >
+                                                <Copy className="h-3 w-3" />
+                                                Copy Embed Widget
+                                            </button>
+                                        </div>
+                                        <div className="relative flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
+                                            <button
+                                                onClick={handleOpenCloneDrawer}
+                                                className="no-print inline-flex items-center gap-2 rounded-full bg-[#D4A574] px-4 py-2 text-[10px] font-bold tracking-widest uppercase text-[#141414] transition-all hover:bg-[#c8955b]"
+                                            >
+                                                <Sparkles className="h-3 w-3" />
+                                                {cloneData ? 'Open Clone Engine' : 'Clone This Mechanic'}
+                                            </button>
                                             <div className="relative xl:min-w-[96px] xl:text-right">
                                                 <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
                                             </div>
