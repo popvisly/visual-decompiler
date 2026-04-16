@@ -3508,58 +3508,80 @@ export default function AssetWorkspace({
                                                 <p className={`text-[10px] font-semibold uppercase tracking-[0.5em] mb-6 border-b border-white/10 pb-6 ${group.accent}`}>{group.title}</p>
                                                 <p className="mb-8 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/75">{group.guidance}</p>
                                                 <div className="space-y-4">
+                                                    {group.title === 'Adaptive Delta' && (
+                                                        <div className="border border-white/10 bg-[#151310] px-6 py-4">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Element</p>
+                                                        </div>
+                                                    )}
                                                     {group.items.length > 0 ? (
-                                                        group.items.map((item, id) => (
-                                                            <div key={`${group.title}-${id}`} className="border border-white/10 bg-[#151310] p-6">
-                                                                <div className="border-b border-white/10 pb-4">
-                                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Element</p>
-                                                                </div>
-                                                                <div className="mt-4">
-                                                                    <p className="text-[13px] font-medium leading-relaxed text-[#F3F1ED]/92">
-                                                                        {item.text}
-                                                                    </p>
-                                                                </div>
+                                                        group.items.map((item, id) => {
+                                                            const isAdaptiveDelta = group.title === 'Adaptive Delta';
+                                                            const itemMatch = item.text.match(/^\s*([^:]+):\s*(.*)$/);
+                                                            const itemTitle = isAdaptiveDelta
+                                                                ? (itemMatch?.[1]?.trim().toUpperCase() || `VARIANT ${id + 1}`)
+                                                                : null;
+                                                            const itemBody = isAdaptiveDelta
+                                                                ? (itemMatch?.[2]?.trim() || item.text)
+                                                                : item.text;
 
-                                                                <div className="mt-6 grid gap-4 border-t border-white/10 pt-5 sm:grid-cols-[auto_1fr] sm:items-start">
-                                                                    <div className="space-y-2">
-                                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Priority</p>
-                                                                        <span
-                                                                            className={`inline-flex w-fit items-center justify-center border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] ${
-                                                                                item.severity === 'critical'
-                                                                                    ? 'border-[#D4A574] text-black bg-[#D4A574]'
-                                                                                    : item.severity === 'high'
-                                                                                        ? 'border-[#D4A574]/40 text-[#D4A574]'
-                                                                                        : 'border-[#D6D0C6]/30 text-[#D6D0C6]/88 bg-white/[0.03]'
-                                                                            }`}
-                                                                        >
-                                                                            {item.severity}
-                                                                        </span>
-                                                                    </div>
-                                                                    <div className="space-y-2">
-                                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Protocol Note</p>
-                                                                        <p className="text-[13px] leading-relaxed text-[#D6D0C6]/78">
-                                                                            {group.title === 'Retention Protocol'
-                                                                                ? item.severity === 'critical'
-                                                                                    ? 'Must be preserved exactly to hold route integrity.'
-                                                                                    : item.severity === 'high'
-                                                                                        ? 'Keep in most variants unless tightly justified.'
-                                                                                        : 'Can flex during iteration without collapsing route.'
-                                                                                : group.title === 'Negation Protocol'
-                                                                                    ? item.severity === 'critical'
-                                                                                        ? 'Must be avoided to prevent strategic route collapse.'
-                                                                                        : item.severity === 'high'
-                                                                                            ? 'Avoid by default; use only in deliberate stress tests.'
-                                                                                            : 'Remove when simplification strengthens transfer.'
-                                                                                    : item.severity === 'critical'
-                                                                                        ? 'Primary safe adaptation lane with strict guardrails.'
-                                                                                        : item.severity === 'high'
-                                                                                            ? 'High-value controlled variation for route optimization.'
-                                                                                            : 'Optional exploratory variation within safe boundaries.'}
+                                                            return (
+                                                                <div key={`${group.title}-${id}`} className="border border-white/10 bg-[#151310] p-6">
+                                                                    {!isAdaptiveDelta && (
+                                                                        <div className="border-b border-white/10 pb-4">
+                                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Element</p>
+                                                                        </div>
+                                                                    )}
+
+                                                                    <div className={isAdaptiveDelta ? 'space-y-3' : 'mt-4'}>
+                                                                        {isAdaptiveDelta && (
+                                                                            <p className="text-[24px] font-semibold uppercase tracking-[-0.02em] text-[#F3F1ED]">{itemTitle}</p>
+                                                                        )}
+                                                                        <p className={`leading-relaxed text-[#F3F1ED]/92 ${isAdaptiveDelta ? 'text-[16px] font-medium' : 'text-[13px] font-medium'}`}>
+                                                                            {itemBody}
                                                                         </p>
                                                                     </div>
+
+                                                                    <div className="mt-6 grid gap-4 border-t border-white/10 pt-5 sm:grid-cols-[auto_1fr] sm:items-start">
+                                                                        <div className="space-y-2">
+                                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Priority</p>
+                                                                            <span
+                                                                                className={`inline-flex w-fit items-center justify-center border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] ${
+                                                                                    item.severity === 'critical'
+                                                                                        ? 'border-[#D4A574] text-black bg-[#D4A574]'
+                                                                                        : item.severity === 'high'
+                                                                                            ? 'border-[#D4A574]/40 text-[#D4A574]'
+                                                                                            : 'border-[#D6D0C6]/30 text-[#D6D0C6]/88 bg-white/[0.03]'
+                                                                                }`}
+                                                                            >
+                                                                                {item.severity}
+                                                                            </span>
+                                                                        </div>
+                                                                        <div className="space-y-2">
+                                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Protocol Note</p>
+                                                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/78">
+                                                                                {group.title === 'Retention Protocol'
+                                                                                    ? item.severity === 'critical'
+                                                                                        ? 'Must be preserved exactly to hold route integrity.'
+                                                                                        : item.severity === 'high'
+                                                                                            ? 'Keep in most variants unless tightly justified.'
+                                                                                            : 'Can flex during iteration without collapsing route.'
+                                                                                    : group.title === 'Negation Protocol'
+                                                                                        ? item.severity === 'critical'
+                                                                                            ? 'Must be avoided to prevent strategic route collapse.'
+                                                                                            : item.severity === 'high'
+                                                                                                ? 'Avoid by default; use only in deliberate stress tests.'
+                                                                                                : 'Remove when simplification strengthens transfer.'
+                                                                                        : item.severity === 'critical'
+                                                                                            ? 'Primary safe adaptation lane with strict guardrails.'
+                                                                                            : item.severity === 'high'
+                                                                                                ? 'High-value controlled variation for route optimization.'
+                                                                                                : 'Optional exploratory variation within safe boundaries.'}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        ))
+                                                            );
+                                                        })
                                                     ) : (
                                                         <div className="border border-dashed border-white/20 bg-[#151310] p-12 text-center text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D6D0C6]/45">
                                                             Pending trace reconstruction.
