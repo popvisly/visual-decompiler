@@ -727,6 +727,25 @@ const withSeverity = (items: string[], order: ConstraintSeverity[]): ConstraintI
             severity: order[index] || order[order.length - 1] || 'optional',
         }));
 
+const deriveConstraintItemCopy = (text: string, index: number): { title: string; body: string } => {
+    const colonMatch = text.match(/^\s*([^:]+):\s*(.*)$/);
+    if (colonMatch) {
+        return {
+            title: colonMatch[1].trim(),
+            body: colonMatch[2].trim() || text,
+        };
+    }
+
+    const cleaned = text.replace(/["']/g, '').replace(/\s+/g, ' ').trim();
+    const words = cleaned.split(' ').filter(Boolean);
+    const title = words.slice(0, 4).join(' ') || `Constraint ${String(index).padStart(2, '0')}`;
+
+    return {
+        title,
+        body: text,
+    };
+};
+
 const deriveStressLabRows = ({
     dossier,
     blueprintData,
@@ -3480,7 +3499,7 @@ export default function AssetWorkspace({
                                         </div>
                                     </div>
 
-                                    <div className="grid gap-6 xl:grid-cols-2">
+                                    <div className="grid items-start gap-6 xl:auto-rows-min xl:grid-cols-2">
                                         {[
                                             {
                                                 title: 'Retention Protocol',
@@ -3503,7 +3522,7 @@ export default function AssetWorkspace({
                                         ].map((group, index) => (
                                             <div
                                                 key={group.title}
-                                                className={`rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] ${index === 2 ? 'xl:col-span-2' : ''}`}
+                                                className={`self-start h-fit rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
                                                 <p className={`text-[10px] font-semibold uppercase tracking-[0.5em] mb-6 border-b border-white/10 pb-6 ${group.accent}`}>{group.title}</p>
                                                 <p className="mb-8 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/75">{group.guidance}</p>
@@ -3517,18 +3536,17 @@ export default function AssetWorkspace({
                                                         group.items.map((item, id) => {
                                                             const isAdaptiveDelta = group.title === 'Adaptive Delta';
                                                             const itemMatch = item.text.match(/^\s*([^:]+):\s*(.*)$/);
-                                                            const itemTitle = isAdaptiveDelta
-                                                                ? (itemMatch?.[1]?.trim().toUpperCase() || `VARIANT ${id + 1}`)
-                                                                : null;
-                                                            const itemBody = isAdaptiveDelta
-                                                                ? (itemMatch?.[2]?.trim() || item.text)
-                                                                : item.text;
+                                                            const adaptiveTitle = itemMatch?.[1]?.trim().toUpperCase() || `VARIANT ${id + 1}`;
+                                                            const adaptiveBody = itemMatch?.[2]?.trim() || item.text;
+                                                            const constraintCopy = deriveConstraintItemCopy(item.text, id + 1);
+                                                            const itemTitle = isAdaptiveDelta ? adaptiveTitle : constraintCopy.title;
+                                                            const itemBody = isAdaptiveDelta ? adaptiveBody : constraintCopy.body;
 
                                                             return (
                                                                 <div key={`${group.title}-${id}`} className="border border-white/10 bg-[#151310] p-6">
                                                                     {!isAdaptiveDelta && (
                                                                         <div className="border-b border-white/10 pb-4">
-                                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Element</p>
+                                                                            <p className="text-[16px] font-semibold uppercase tracking-[0.08em] text-[#F3F1ED]">{itemTitle}</p>
                                                                         </div>
                                                                     )}
 
