@@ -3193,22 +3193,22 @@ export default function AssetWorkspace({
                                                                  </span>
                                                              </div>
 
-                                                             <div>
-                                                                 <h2 className="text-[30px] font-semibold uppercase tracking-[-0.028em] text-[#F3F1ED] sm:text-[38px] lg:text-[44px]">{dossierCampaignName}</h2>
+                                                             <div className="max-w-[22ch]">
+                                                                 <h2 className="text-[28px] font-semibold uppercase leading-[0.96] tracking-[-0.024em] text-[#F3F1ED] sm:text-[36px] lg:text-[42px]">{dossierCampaignName}</h2>
                                                              </div>
 
-                                                             <div className="grid gap-5 text-[12px] sm:grid-cols-3">
-                                                                 <div>
+                                                             <div className="grid gap-4 text-[12px] sm:grid-cols-3">
+                                                                 <div className="rounded-[1.2rem] border border-white/10 bg-[#1A1A1A] px-4 py-4">
                                                                      <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Prepared For</p>
-                                                                     <p className="mt-2 font-medium text-[#F3F1ED]">{dossierPreparedFor}</p>
+                                                                     <p className="mt-2 text-[16px] font-medium leading-none text-[#F3F1ED]">{dossierPreparedFor}</p>
                                                                  </div>
-                                                                 <div>
+                                                                 <div className="rounded-[1.2rem] border border-white/10 bg-[#1A1A1A] px-4 py-4">
                                                                      <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Mode</p>
-                                                                     <p className="mt-2 font-medium text-[#F3F1ED]">{dossierModeLabel}</p>
+                                                                     <p className="mt-2 text-[16px] font-medium leading-none text-[#F3F1ED]">{dossierModeLabel}</p>
                                                                  </div>
-                                                                 <div>
+                                                                 <div className="rounded-[1.2rem] border border-white/10 bg-[#1A1A1A] px-4 py-4">
                                                                      <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55">Date</p>
-                                                                     <p className="mt-2 font-medium text-[#F3F1ED]">{dossierReportDate}</p>
+                                                                     <p className="mt-2 text-[16px] font-medium leading-none text-[#F3F1ED]">{dossierReportDate}</p>
                                                                  </div>
                                                              </div>
                                                          </header>
@@ -3216,11 +3216,11 @@ export default function AssetWorkspace({
                                                          <div className="space-y-14 pt-14">
                                                              <section className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Primary Scores</p>
-                                                                 <div className="mt-7 grid grid-cols-2 items-end gap-x-10 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
+                                                                 <div className="mt-7 grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
                                                                      {analysisLanguage.primaryScores.map((score) => (
-                                                                         <div key={score.label} className="min-w-0 rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5">
+                                                                         <div key={score.label} className="min-w-0 rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] px-5 py-5">
                                                                              <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D6D0C6]/60">{score.label}</p>
-                                                                             <p className="mt-4 text-[52px] font-semibold leading-none tracking-[-0.02em] tabular-nums text-[#F3F1ED]">{score.value}</p>
+                                                                             <p className="mt-4 text-[56px] font-semibold leading-none tracking-[-0.02em] tabular-nums text-[#F3F1ED]">{score.value}</p>
                                                                          </div>
                                                                      ))}
                                                                  </div>
