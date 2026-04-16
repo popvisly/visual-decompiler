@@ -2932,16 +2932,16 @@ export default function AssetWorkspace({
                         </div>
 
                         {/* Desktop: grounded two-tier navigation */}
-                        <div className="hidden md:block md:pb-6">
-                            <div className="rounded-[2.25rem] border border-white/10 bg-[#1A1A1A] p-3">
-                                <div className="grid grid-cols-4 gap-2">
+                        <div className="hidden md:block md:pb-8">
+                            <div className="rounded-[2.25rem] border border-white/10 bg-[#1A1A1A] p-4 md:p-5">
+                                <div className="grid grid-cols-4 gap-3">
                                     {primaryNavTabs.map((tab) => (
                                         <button
                                             key={tab}
                                             type="button"
                                             onClick={() => setActiveTab(tab)}
                                             aria-current={activeTab === tab ? 'page' : undefined}
-                                            className={`w-full rounded-[0.95rem] border px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                            className={`w-full rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
                                                 activeTab === tab
                                                     ? 'border-[#D4A574]/35 bg-[#151310] text-[#F3F1ED]'
                                                     : 'border-white/10 bg-[#151310] text-[#D6D0C6]/65 hover:text-[#F3F1ED] hover:border-[#D4A574]/35 hover:bg-[#201C16]'
@@ -2953,15 +2953,15 @@ export default function AssetWorkspace({
                                 </div>
 
                                 {secondaryNavTabs.length > 0 && (
-                                    <div className="mt-3 border-t border-white/10 pt-3">
-                                        <div className="grid grid-cols-5 gap-2">
+                                    <div className="mt-4 border-t border-white/10 pt-4">
+                                        <div className="grid grid-cols-5 gap-3">
                                             {secondaryNavTabs.map((tab) => (
                                                 <button
                                                     key={tab}
                                                     type="button"
                                                     onClick={() => setActiveTab(tab)}
                                                     aria-current={activeTab === tab ? 'page' : undefined}
-                                                    className={`w-full rounded-[0.95rem] border px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                                    className={`w-full rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
                                                         activeTab === tab
                                                             ? 'border-[#D4A574]/35 bg-[#151310] text-[#F3F1ED]'
                                                             : 'border-white/10 bg-[#151310] text-[#D6D0C6]/65 hover:text-[#F3F1ED] hover:border-[#D4A574]/35 hover:bg-[#201C16]'
