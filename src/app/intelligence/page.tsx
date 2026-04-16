@@ -15,7 +15,7 @@ export default async function IntelligenceIndex() {
         <div className="max-w-7xl mx-auto px-6">
             <div className="mb-20">
                 <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Intelligence Hub</p>
-                <h1 className="text-[clamp(56px,9vw,96px)] font-semibold uppercase text-[#FBF7EF] tracking-[-0.04em] leading-[0.9] mb-6">
+                <h1 className="text-[clamp(52px,6.4vw,102px)] font-black uppercase text-[#FBF7EF] tracking-[-0.045em] leading-[0.9] mb-6">
                     Intelligence <br />
                     <span className="text-white/38">Briefings.</span>
                 </h1>

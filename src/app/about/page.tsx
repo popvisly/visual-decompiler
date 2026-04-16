@@ -20,7 +20,7 @@ export default function AboutPage() {
                         <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674] mb-6">
                             A Forensic Intelligence OS
                         </p>
-                        <h1 className="text-[clamp(56px,9vw,102px)] font-semibold leading-[0.9] tracking-[-0.04em] uppercase text-white max-w-[15ch]">
+                        <h1 className="text-[clamp(52px,6.4vw,102px)] font-black leading-[0.9] tracking-[-0.045em] uppercase text-white max-w-[15ch]">
                             Built for defensible decisions.
                         </h1>
                     </motion.div>
