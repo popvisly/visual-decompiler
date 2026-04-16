@@ -2933,7 +2933,7 @@ export default function AssetWorkspace({
 
                         {/* Desktop: grounded two-tier navigation */}
                         <div className="hidden md:block md:pb-6">
-                            <div className="rounded-[2.25rem] border border-[#E7DED1] bg-white/72 p-3 shadow-[0_16px_36px_rgba(20,16,10,0.08)]">
+                            <div className="rounded-[2.25rem] border border-white/10 bg-[#1A1A1A] p-3">
                                 <div className="grid grid-cols-4 gap-2">
                                     {primaryNavTabs.map((tab) => (
                                         <button
@@ -2943,8 +2943,8 @@ export default function AssetWorkspace({
                                             aria-current={activeTab === tab ? 'page' : undefined}
                                             className={`w-full rounded-[0.95rem] border px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
                                                 activeTab === tab
-                                                    ? 'border-[#151310] bg-[#151310] text-[#F3F1ED] shadow-[0_6px_18px_rgba(20,16,10,0.2)]'
-                                                    : 'border-[#E7DED1] bg-[#FBF7F1] text-[#141414]/60 hover:text-[#141414]/86 hover:border-[#D4A574]/35 hover:bg-white'
+                                                    ? 'border-[#D4A574]/35 bg-[#151310] text-[#F3F1ED]'
+                                                    : 'border-white/10 bg-[#151310] text-[#D6D0C6]/65 hover:text-[#F3F1ED] hover:border-[#D4A574]/35 hover:bg-[#201C16]'
                                             }`}
                                         >
                                             {DOSSIER_TAB_LABELS[tab]}
@@ -2953,7 +2953,7 @@ export default function AssetWorkspace({
                                 </div>
 
                                 {secondaryNavTabs.length > 0 && (
-                                    <div className="mt-3 border-t border-[#E7DED1] pt-3">
+                                    <div className="mt-3 border-t border-white/10 pt-3">
                                         <div className="grid grid-cols-5 gap-2">
                                             {secondaryNavTabs.map((tab) => (
                                                 <button
@@ -2963,8 +2963,8 @@ export default function AssetWorkspace({
                                                     aria-current={activeTab === tab ? 'page' : undefined}
                                                     className={`w-full rounded-[0.95rem] border px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
                                                         activeTab === tab
-                                                            ? 'border-[#151310] bg-[#151310] text-[#F3F1ED] shadow-[0_6px_18px_rgba(20,16,10,0.2)]'
-                                                            : 'border-[#E7DED1] bg-[#FBF7F1] text-[#141414]/60 hover:text-[#141414]/86 hover:border-[#D4A574]/35 hover:bg-white'
+                                                            ? 'border-[#D4A574]/35 bg-[#151310] text-[#F3F1ED]'
+                                                            : 'border-white/10 bg-[#151310] text-[#D6D0C6]/65 hover:text-[#F3F1ED] hover:border-[#D4A574]/35 hover:bg-[#201C16]'
                                                     }`}
                                                 >
                                                     {DOSSIER_TAB_LABELS[tab]}
