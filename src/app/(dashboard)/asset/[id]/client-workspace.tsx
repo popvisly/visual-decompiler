@@ -4092,14 +4092,9 @@ export default function AssetWorkspace({
                                     ) : (
                                         <div className="space-y-12">
                                             <div className="flex flex-col gap-8 rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] p-12 text-[#1a1a1a] md:flex-row md:items-center md:justify-between shadow-2xl">
-                                                <div className="flex items-center gap-6">
-                                                    <div className="flex h-14 w-14 items-center justify-center border border-[#D4A574]/30 bg-[#D4A574]/10">
-                                                        <Sparkles className="h-6 w-6 text-[#D4A574]" />
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D4A574]">Blueprint Trace Active · Vault Index</p>
-                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#666]">Indexed for reproducibility and multi-agent audit.</p>
-                                                    </div>
+                                                <div>
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D4A574]">Blueprint Trace Active · Vault Index</p>
+                                                    <p className="mt-2 text-[13px] leading-relaxed text-[#666]">Indexed for reproducibility and multi-agent audit.</p>
                                                 </div>
                                                 <button
                                                     onClick={handleGenerateBlueprint}
