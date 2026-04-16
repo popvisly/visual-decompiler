@@ -2931,49 +2931,49 @@ export default function AssetWorkspace({
                             <div className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-[#faf7f2]/95 to-transparent" />
                         </div>
 
-                        {/* Desktop: two-tier navigation (no hidden options) */}
-                        <div className="hidden md:flex md:flex-col md:gap-6 md:pb-6">
-                            <div className="flex flex-wrap gap-x-10 gap-y-5">
-                                {primaryNavTabs.map((tab) => (
-                                    <button
-                                        key={tab}
-                                        type="button"
-                                        onClick={() => setActiveTab(tab)}
-                                        aria-current={activeTab === tab ? 'page' : undefined}
-                                        className={`-mx-2 -my-2 rounded-full border px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.4em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
-                                            activeTab === tab
-                                                ? 'border-[#D4A574]/25 bg-white/70 text-[#141414] shadow-sm'
-                                                : (sampleMode
-                                                    ? 'border-transparent text-[#141414]/35 hover:text-[#141414]/75 hover:border-[#E7DED1] hover:bg-white/55'
-                                                    : 'border-transparent text-[#141414]/35 hover:text-[#141414]/70 hover:border-[#E7DED1] hover:bg-white/55')
-                                        }`}
-                                    >
-                                        {DOSSIER_TAB_LABELS[tab]}
-                                    </button>
-                                ))}
-                            </div>
-
-                            {secondaryNavTabs.length > 0 && (
-                                <div className="flex flex-wrap gap-x-10 gap-y-5">
-                                    {secondaryNavTabs.map((tab) => (
+                        {/* Desktop: grounded two-tier navigation */}
+                        <div className="hidden md:block md:pb-6">
+                            <div className="rounded-[2.25rem] border border-[#E7DED1] bg-white/72 p-3 shadow-[0_16px_36px_rgba(20,16,10,0.08)]">
+                                <div className="grid grid-cols-4 gap-2">
+                                    {primaryNavTabs.map((tab) => (
                                         <button
                                             key={tab}
                                             type="button"
                                             onClick={() => setActiveTab(tab)}
                                             aria-current={activeTab === tab ? 'page' : undefined}
-                                            className={`-mx-2 -my-2 rounded-full border px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.4em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                            className={`w-full rounded-[0.95rem] border px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
                                                 activeTab === tab
-                                                    ? 'border-[#D4A574]/25 bg-white/70 text-[#141414] shadow-sm'
-                                                    : (sampleMode
-                                                        ? 'border-transparent text-[#141414]/35 hover:text-[#141414]/75 hover:border-[#E7DED1] hover:bg-white/55'
-                                                        : 'border-transparent text-[#141414]/35 hover:text-[#141414]/70 hover:border-[#E7DED1] hover:bg-white/55')
+                                                    ? 'border-[#151310] bg-[#151310] text-[#F3F1ED] shadow-[0_6px_18px_rgba(20,16,10,0.2)]'
+                                                    : 'border-[#E7DED1] bg-[#FBF7F1] text-[#141414]/60 hover:text-[#141414]/86 hover:border-[#D4A574]/35 hover:bg-white'
                                             }`}
                                         >
                                             {DOSSIER_TAB_LABELS[tab]}
                                         </button>
                                     ))}
                                 </div>
-                            )}
+
+                                {secondaryNavTabs.length > 0 && (
+                                    <div className="mt-3 border-t border-[#E7DED1] pt-3">
+                                        <div className="grid grid-cols-5 gap-2">
+                                            {secondaryNavTabs.map((tab) => (
+                                                <button
+                                                    key={tab}
+                                                    type="button"
+                                                    onClick={() => setActiveTab(tab)}
+                                                    aria-current={activeTab === tab ? 'page' : undefined}
+                                                    className={`w-full rounded-[0.95rem] border px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                                        activeTab === tab
+                                                            ? 'border-[#151310] bg-[#151310] text-[#F3F1ED] shadow-[0_6px_18px_rgba(20,16,10,0.2)]'
+                                                            : 'border-[#E7DED1] bg-[#FBF7F1] text-[#141414]/60 hover:text-[#141414]/86 hover:border-[#D4A574]/35 hover:bg-white'
+                                                    }`}
+                                                >
+                                                    {DOSSIER_TAB_LABELS[tab]}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
 
