@@ -3263,19 +3263,19 @@ export default function AssetWorkspace({
 
                                                              <section className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Structural Signals</p>
-                                                                 <div className="mt-7 space-y-4">
+                                                                 <div className="mt-7 grid gap-4">
                                                                      {analysisLanguage.structuralSignals.map((signal) => (
-                                                                         <div key={signal.label} className="rounded-[1.25rem] border border-white/10 bg-[#1A1A1A] p-4">
-                                                                         <div className="flex items-center justify-between">
-                                                                             <span className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/58">{signal.label}</span>
-                                                                             <span className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#F3F1ED]/96">{signal.value}</span>
+                                                                         <div key={signal.label} className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-5 py-4">
+                                                                             <div className="flex items-center justify-between gap-4">
+                                                                                 <span className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">{signal.label}</span>
+                                                                                 <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#F3F1ED]/96">{signal.value}</span>
+                                                                             </div>
                                                                          </div>
-                                                                     </div>
                                                                      ))}
                                                                  </div>
-                                                                 <div className="mt-7 border-t border-white/10 pt-5">
-                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/58">Overall Structure</p>
-                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/70">{structuralSummary}</p>
+                                                                 <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-5 py-5">
+                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Overall Structure</p>
+                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/78">{structuralSummary}</p>
                                                                  </div>
                                                              </section>
 
