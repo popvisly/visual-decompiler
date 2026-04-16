@@ -3692,9 +3692,9 @@ export default function AssetWorkspace({
                                         ) : (
                                             <>
                                                 <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <div className="grid grid-cols-12 border-b border-white/12 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]">
-                                                        <div className="col-span-5 px-8 py-5 border-r border-white/10">Metric</div>
-                                                        <div className="col-span-2 px-8 py-5 border-r border-white/10 text-center">Value</div>
+                                                    <div className="grid grid-cols-12 border-b border-white/8 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]">
+                                                        <div className="col-span-5 px-8 py-5 border-r border-white/8">Metric</div>
+                                                        <div className="col-span-2 px-8 py-5 border-r border-white/8 text-center">Value</div>
                                                         <div className="col-span-5 px-8 py-5">Context Signal</div>
                                                     </div>
                                                     {[
@@ -3723,23 +3723,23 @@ export default function AssetWorkspace({
                                                                     : 'Fatigue is controlled. Current route remains viable with selective refinement.',
                                                         },
                                                     ].map((row) => (
-                                                        <div key={row.label} className="grid grid-cols-12 border-b border-white/10 last:border-b-0">
-                                                            <div className="col-span-5 border-r border-white/10 px-8 py-6">
+                                                        <div key={row.label} className="grid grid-cols-12 border-b border-white/8 last:border-b-0">
+                                                            <div className="col-span-5 border-r border-white/8 px-8 py-6">
                                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#E3DBCE]">{row.label}</p>
                                                             </div>
-                                                            <div className="col-span-2 border-r border-white/10 px-8 py-6 text-center">
+                                                            <div className="col-span-2 border-r border-white/8 px-8 py-6 text-center">
                                                                 <p className="text-[24px] font-semibold text-[#F3F1ED]">{row.value}%</p>
                                                             </div>
                                                             <div className="col-span-5 px-8 py-6">
-                                                                <p className="text-[13px] leading-relaxed text-[#F3F1ED]/96">{row.insight}</p>
+                                                                <p className="text-[13px] leading-relaxed text-[#F3F1ED]">{row.insight}</p>
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
 
                                                 <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] mb-6 border-b border-white/10 pb-5">Directional Estimate</p>
-                                                    <p className="max-w-[74ch] text-[13px] leading-relaxed text-[#F3F1ED]/92">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] mb-6 border-b border-white/8 pb-5">Directional Estimate</p>
+                                                    <p className="max-w-[74ch] text-[13px] leading-relaxed text-[#F3F1ED]">
                                                         {marketPulseFallback.interpretation || 'Category pressure is elevated, so this route requires sharper differentiation and strict execution discipline before scale expansion.'}
                                                     </p>
                                                 </div>
@@ -3748,7 +3748,7 @@ export default function AssetWorkspace({
                                                     <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                         Strategic Implication
                                                     </p>
-                                                    <p className="max-w-[78ch] rounded-[1.75rem] border border-white/10 bg-[#151310] px-5 py-4 text-[13px] leading-relaxed text-[#F3F1ED]/92">
+                                                    <p className="max-w-[78ch] rounded-[1.75rem] border border-white/10 bg-[#151310] px-5 py-4 text-[13px] leading-relaxed text-[#F3F1ED]">
                                                         To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.
                                                     </p>
                                                     <span className="mt-8 inline-flex border border-[#D4A574]/75 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#F3F1ED] bg-[#D4A574]/24">
