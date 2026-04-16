@@ -1204,7 +1204,7 @@ const InfoButton = ({ section }: { section: keyof typeof INTELLIGENCE_DEFINITION
                 className="p-1 hover:bg-[#D4A574]/10 rounded-full transition-colors group flex items-center justify-center"
                 aria-label="Information"
             >
-                <Info className={`w-3.5 h-3.5 ${isOpen ? 'text-[#D4A574]' : 'text-[#D4A574]/40 group-hover:text-[#D4A574]'}`} />
+                <Info className={`w-3.5 h-3.5 ${isOpen ? 'text-[#D4A574]' : 'text-[#D4A574]/55 group-hover:text-[#D4A574]'}`} />
             </button>
             
             {isOpen && (
@@ -1536,7 +1536,7 @@ function SovereignProcessingView({ assetId, agency }: { assetId: string, agency?
                             <span className="ml-auto text-[8px] font-mono text-[#D4A574] tracking-widest animate-pulse">PROCESSING</span>
                         )}
                         {i < activeNode && (
-                            <span className="ml-auto text-[8px] font-mono text-[#D4A574]/40 tracking-widest">ANALYSED</span>
+                            <span className="ml-auto text-[8px] font-mono text-[#D4A574]/55 tracking-widest">ANALYSED</span>
                         )}
                     </div>
                 ))}
@@ -2991,7 +2991,7 @@ export default function AssetWorkspace({
 
                                         <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
                                             <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.46em] text-[#D4A574]/70 mb-10 [word-spacing:0.24em]">Strategic Recommendation</p>
+                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10 [word-spacing:0.24em]">Strategic Recommendation</p>
                                                 {(() => {
                                                     const thesis = integratedRecommendation.thesis || '';
                                                     const [firstSentence, ...restParts] = thesis.split(/(?<=[.!?])\s+/);
@@ -3002,16 +3002,17 @@ export default function AssetWorkspace({
                                                                 {firstSentence || thesis}
                                                             </p>
                                                             {remainingText ? (
-                                                                <p className="mt-4 text-[16px] lg:text-[24px] leading-[1.3] font-medium tracking-tight text-[#D6D0C6]/88">
+                                                                <p className="mt-4 text-[16px] leading-relaxed font-medium text-[#D6D0C6]/70">
                                                                     {remainingText}
                                                                 </p>
                                                             ) : null}
                                                         </div>
                                                     );
                                                 })()}
-                                                <p className="max-w-[58ch] text-[13px] leading-relaxed text-[#D6D0C6]/65 mb-10 font-medium">{integratedRecommendation.whyNow}</p>
+                                                <p className="max-w-[58ch] text-[13px] leading-relaxed text-[#D6D0C6]/70 mb-10 font-medium">{integratedRecommendation.whyNow}</p>
                                                 <div className="rounded-[2.25rem] border border-white/10 bg-[#151310] p-6 mb-10">
-                                                    <p className="text-[13px] leading-relaxed text-[#D4A574] font-medium italic">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 mb-3">Risk / Reward Tension</p>
+                                                    <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70 font-medium">
                                                         {integratedRecommendation.riskRewardTension}
                                                     </p>
                                                 </div>
@@ -3063,7 +3064,7 @@ export default function AssetWorkspace({
                                                         </div>
                                                     </div>
                                                     <div className="mt-8 pt-8 border-t border-white/10">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]/40 mb-2">Source Validation</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]/55 mb-2">Source Validation</p>
                                                         <p className="text-[10px] leading-relaxed text-[#D6D0C6]/55 tracking-[0.18em]">
                                                             Blueprint trace • Focal routing • Semiotic overlap
                                                         </p>
@@ -3108,7 +3109,7 @@ export default function AssetWorkspace({
                                                                 {integratedRecommendation.inferences.map((inference, index) => (
                                                                     <div key={index} className="flex gap-3">
                                                                         <span className="text-[10px] font-semibold text-[#D6D0C6]/45">{String(index+1).padStart(2, '0')}</span>
-                                                                        <p className="text-[13px] leading-relaxed text-[#D6D0C6]/65 font-medium">{inference}</p>
+                                                                        <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70 font-medium">{inference}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -3124,7 +3125,7 @@ export default function AssetWorkspace({
                                                 <h3 className="text-[24px] font-semibold leading-[0.92] tracking-tightest text-balance text-[#F3F1ED] uppercase mb-6">
                                                     {qualityVerdict}
                                                 </h3>
-                                                <p className="max-w-[62ch] text-[13px] leading-relaxed text-[#D6D0C6]/65 font-medium mb-12">
+                                                <p className="max-w-[62ch] text-[13px] leading-relaxed text-[#D6D0C6]/70 font-medium mb-12">
                                                     Decision signal based on strategic alignment and evidence quality.
                                                 </p>
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -3151,7 +3152,7 @@ export default function AssetWorkspace({
                                                     {failureReasons.map((reason, index) => (
                                                         <div key={`${reason.title}-${index}`} className="border-l-2 border-[#D4A574] pl-8 py-2">
                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] mb-3">{reason.title}</p>
-                                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/65 font-medium">{reason.detail}</p>
+                                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70 font-medium">{reason.detail}</p>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -3205,7 +3206,7 @@ export default function AssetWorkspace({
                                                              <div className="flex flex-wrap items-start justify-between gap-4">
                                                                  <div className="space-y-2">
                                                                      <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574]">Visual Decompiler</p>
-                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D6D0C6]/72">Creative Intelligence Dossier</p>
+                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D6D0C6]/70">Creative Intelligence Dossier</p>
                                                                  </div>
                                                                  <span className="rounded-full border border-white/10 bg-[#1A1916] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">
                                                                      {qualityVerdict}
@@ -3266,8 +3267,8 @@ export default function AssetWorkspace({
                                                                          ))}
                                                                      </div>
                                                                      <aside className="self-start rounded-[1.2rem] border border-white/10 px-5 py-5">
-                                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/65">Drop-Off Detected</p>
-                                                                         <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/78">{analysisLanguage.attentionPath.dropOff}</p>
+                                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/70">Drop-Off Detected</p>
+                                                                         <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/70">{analysisLanguage.attentionPath.dropOff}</p>
                                                                      </aside>
                                                                  </div>
                                                              </section>
@@ -3284,13 +3285,13 @@ export default function AssetWorkspace({
                                                                  </div>
                                                                  <div className="mt-7 border-t border-white/10 pt-5">
                                                                      <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/58">Overall Structure</p>
-                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/78">{structuralSummary}</p>
+                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/70">{structuralSummary}</p>
                                                                  </div>
                                                              </section>
 
                                                              <section className="border-t border-white/10 pt-12">
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Strategic Read</p>
-                                                                 <p className="mt-3 max-w-[62ch] text-[13px] leading-relaxed text-[#D6D0C6]/72">A concise strategic summary of what the work is doing, why it lands, and where friction appears.</p>
+                                                                 <p className="mt-3 max-w-[62ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">A concise strategic summary of what the work is doing, why it lands, and where friction appears.</p>
                                                                  <div className="mt-8 space-y-10">
                                                                      {[
                                                                          ['Strategic Thesis', firstSentence(analysisLanguage.strategicRead.thesis)],
@@ -3309,7 +3310,7 @@ export default function AssetWorkspace({
                                                              <section className="border-t border-white/10 pt-16">
                                                                  <p className="text-[18px] font-semibold leading-relaxed tracking-[-0.01em] text-[#F3F1ED]">Confidence Index: {analysisLanguage.confidenceIndex}</p>
                                                                  <p className="mt-2 max-w-[70ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">A higher index indicates stronger decision confidence for review and presentation.</p>
-                                                                 <p className="mt-2 max-w-[70ch] text-[14px] leading-relaxed text-[#D6D0C6]/78">{confidenceRationale}</p>
+                                                                 <p className="mt-2 max-w-[70ch] text-[14px] leading-relaxed text-[#D6D0C6]/70">{confidenceRationale}</p>
                                                              </section>
                                                          </div>
                                                      </article>
@@ -3424,7 +3425,7 @@ export default function AssetWorkspace({
                                                                 {item.lens}
                                                             </h3>
                                                             <div className="flex-1 max-h-[400px] overflow-y-auto pt-2">
-                                                                <p className="text-[14px] leading-relaxed text-[#D6D0C6]/65 font-medium">{item.reading}</p>
+                                                                <p className="text-[14px] leading-relaxed text-[#D6D0C6]/70 font-medium">{item.reading}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -3463,7 +3464,7 @@ export default function AssetWorkspace({
                                     <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                         <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Constraint Priority Legend</p>
                                         <div className="overflow-hidden border border-white/10 bg-[#151310]">
-                                            <div className="grid grid-cols-12 border-b border-white/10 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/65">
+                                            <div className="grid grid-cols-12 border-b border-white/10 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/70">
                                                 <span className="col-span-4">Priority Level</span>
                                                 <span className="col-span-8">Description</span>
                                             </div>
@@ -3493,7 +3494,7 @@ export default function AssetWorkspace({
                                                         />
                                                         {level}
                                                     </span>
-                                                    <span className="col-span-8 text-[#D6D0C6]/75">{description}</span>
+                                                    <span className="col-span-8 text-[#D6D0C6]/70">{description}</span>
                                                 </div>
                                             ))}
                                         </div>
@@ -3525,7 +3526,7 @@ export default function AssetWorkspace({
                                                 className={`self-start h-fit rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
                                                 <p className={`text-[10px] font-semibold uppercase tracking-[0.5em] mb-6 border-b border-white/10 pb-6 ${group.accent}`}>{group.title}</p>
-                                                <p className="mb-8 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/75">{group.guidance}</p>
+                                                <p className="mb-8 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">{group.guidance}</p>
                                                 <div className="space-y-4">
                                                     {group.title === 'Adaptive Delta' && (
                                                         <div className="border border-white/10 bg-[#151310] px-6 py-4">
@@ -3577,7 +3578,7 @@ export default function AssetWorkspace({
                                                                                         </div>
                                                                                         <div className="space-y-2">
                                                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Protocol Note</p>
-                                                                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/78">
+                                                                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                                                                 {entry.severity === 'critical'
                                                                                                     ? 'Primary safe adaptation lane with strict guardrails.'
                                                                                                     : entry.severity === 'high'
@@ -3625,7 +3626,7 @@ export default function AssetWorkspace({
                                                                             </div>
                                                                             <div className="space-y-2">
                                                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Protocol Note</p>
-                                                                                <p className="text-[13px] leading-relaxed text-[#D6D0C6]/78">
+                                                                                <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                                                     {group.title === 'Retention Protocol'
                                                                                         ? item.severity === 'critical'
                                                                                             ? 'Must be preserved exactly to hold route integrity.'
@@ -3691,7 +3692,7 @@ export default function AssetWorkspace({
                                                             ['Fatigue', '0.0%'],
                                                         ].map(([label, val]) => (
                                                             <div key={label} className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/65 mb-4">{label}</p>
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/70 mb-4">{label}</p>
                                                                 <p className="text-[24px] font-semibold text-[#F3F1ED]">{val}</p>
                                                             </div>
                                                         ))}
@@ -3734,7 +3735,7 @@ export default function AssetWorkspace({
                                                     ].map((row) => (
                                                         <div key={row.label} className="grid grid-cols-12 border-b border-white/10 last:border-b-0">
                                                             <div className="col-span-5 border-r border-white/10 px-8 py-6">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/88">{row.label}</p>
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/70">{row.label}</p>
                                                             </div>
                                                             <div className="col-span-2 border-r border-white/10 px-8 py-6 text-center">
                                                                 <p className="text-[24px] font-semibold text-[#F3F1ED]">{row.value}%</p>
@@ -3757,7 +3758,7 @@ export default function AssetWorkspace({
                                                     <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                         Strategic Implication
                                                     </p>
-                                                    <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/82">
+                                                    <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                         To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.
                                                     </p>
                                                     <span className="mt-8 inline-flex border border-[#D4A574]/70 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#F3F1ED] bg-[#D4A574]/18">
@@ -3948,7 +3949,7 @@ export default function AssetWorkspace({
                                                 })()}
                                             </div>
 
-                                            <p className="mt-10 text-[13px] leading-relaxed text-[#D6D0C6]/65">
+                                            <p className="mt-10 text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                 This distribution quantifies the creative's psychological surface area, identifying which aspiration levers are being engaged to command consumer compliance.
                                             </p>
                                         </div>
@@ -3960,7 +3961,7 @@ export default function AssetWorkspace({
                                                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Field_Map</span>
                                             </div>
 
-                                            <p className="text-[14px] leading-relaxed text-[#D6D0C6]/75">
+                                            <p className="text-[14px] leading-relaxed text-[#D6D0C6]/70">
                                                 {firstSentence((dossier as any)?.archetype_mapping?.target_posture) || 'Icon Maintenance — the brand is not challenging for position or disrupting the category; it is asserting the permanence of an already-won cultural throne'}
                                             </p>
 
@@ -4009,7 +4010,7 @@ export default function AssetWorkspace({
                                             </div>
 
                                             <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55 font-mono">Conversion Density</p>
-                                            <p className="mt-6 max-w-[60ch] text-[13px] leading-relaxed text-[#D6D0C6]/65">
+                                            <p className="mt-6 max-w-[60ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                 Measures the creative's informational compression, how efficiently it transfers brand signal into consumer memory structures.
                                             </p>
 
@@ -4039,7 +4040,7 @@ export default function AssetWorkspace({
                                             </div>
 
                                             <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55 font-mono">Resistance Index</p>
-                                            <p className="mt-6 max-w-[60ch] text-[13px] leading-relaxed text-[#D6D0C6]/65">
+                                            <p className="mt-6 max-w-[60ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                 Quantifies neural resistance to message adoption. Low scores indicate frictionless persuasion pathways.
                                             </p>
 
@@ -4306,7 +4307,7 @@ export default function AssetWorkspace({
                                             <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                 Variable Diagnostics
                                             </p>
-                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/82">
+                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                 <p><span className="text-[#F3F1ED] font-semibold">Composition Emphasis:</span> The brand asserts cultural status through controlled visual posture.</p>
                                                 <p><span className="text-[#F3F1ED] font-semibold">Chromatic Intensity:</span> Current color pressure remains persuasive without over-saturation.</p>
                                                 <p><span className="text-[#F3F1ED] font-semibold">Gaze Direction:</span> Oblique address sustains intimacy without direct confrontation.</p>
@@ -4319,7 +4320,7 @@ export default function AssetWorkspace({
                                             <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                 Gaze Direction Breakdown
                                             </p>
-                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/82">
+                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                 <p><span className="text-[#F3F1ED] font-semibold">Positioning:</span> Upper-center frame priority with directional control.</p>
                                                 <p><span className="text-[#F3F1ED] font-semibold">Direction:</span> Oblique vector maintains aspirational distance.</p>
                                                 <p><span className="text-[#F3F1ED] font-semibold">Tilt:</span> Slight downward bias supports mixed-mode address.</p>
@@ -4330,7 +4331,7 @@ export default function AssetWorkspace({
 
                                     <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10">
                                         <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574]">Stress Test Summary</p>
-                                        <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/82">
+                                        <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                             These stress signals define where controlled adjustments can improve lift without destabilizing the route. Next iteration should prioritize gaze and hierarchy tests first, then validate copy and CTA compression only where structural confidence remains intact.
                                         </p>
                                     </div>
@@ -4377,7 +4378,7 @@ export default function AssetWorkspace({
                                                             value={decisionNote}
                                                             onChange={(e) => setDecisionNote(e.target.value)}
                                                             rows={6}
-                                                            className="w-full border border-white/10 bg-[#151310] p-6 text-[13px] leading-relaxed text-[#D6D0C6]/82 outline-none placeholder:text-[#D6D0C6]/45 focus:border-[#D4A574]/40 transition-colors"
+                                                            className="w-full border border-white/10 bg-[#151310] p-6 text-[13px] leading-relaxed text-[#D6D0C6]/70 outline-none placeholder:text-[#D6D0C6]/45 focus:border-[#D4A574]/40 transition-colors"
                                                             placeholder="Enter reasoning for this decision..."
                                                         />
                                                     </div>
@@ -4407,7 +4408,7 @@ export default function AssetWorkspace({
                                                     </div>
                                                     <div className="grid grid-cols-12 border-b border-white/10 py-4 text-[13px]">
                                                         <p className="col-span-4 font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Timestamp</p>
-                                                        <p className="col-span-8 text-[#D6D0C6]/82">{decisionSummaryTimestamp}</p>
+                                                        <p className="col-span-8 text-[#D6D0C6]/70">{decisionSummaryTimestamp}</p>
                                                     </div>
                                                     <div className="grid grid-cols-12 border-b border-white/10 py-4 text-[13px]">
                                                         <p className="col-span-4 font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Verdict</p>
@@ -4460,7 +4461,7 @@ export default function AssetWorkspace({
 
                                         <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 xl:col-span-2">
                                             <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/70">Audit Purpose</p>
-                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/72">
+                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                 This log ensures every decision is documented for future reference and accountability, supporting a transparent creative process.
                                             </p>
                                         </div>
