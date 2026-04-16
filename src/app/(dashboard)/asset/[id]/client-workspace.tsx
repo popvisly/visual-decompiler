@@ -3228,7 +3228,7 @@ export default function AssetWorkspace({
                                                                      {analysisLanguage.primaryScores.map((score) => (
                                                                          <div key={score.label} className="min-w-0 rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] px-5 py-5 text-center">
                                                                              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/60">{PRIMARY_SCORE_DISPLAY_LABELS[score.label]}</p>
-                                                                             <p className="mt-4 text-[56px] font-semibold leading-none tracking-[-0.02em] tabular-nums text-[#F3F1ED]">{score.value}</p>
+                                                                             <p className="mt-4 text-center text-[56px] font-semibold leading-none tracking-[-0.02em] tabular-nums text-[#F3F1ED]">{score.value}</p>
                                                                          </div>
                                                                      ))}
                                                                  </div>
