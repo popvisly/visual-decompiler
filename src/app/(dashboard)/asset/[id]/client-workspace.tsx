@@ -339,6 +339,14 @@ type IntegratedRecommendationData = {
 
 type PrimaryScoreLabel = 'Clarity' | 'Attention' | 'Cohesion' | 'Intent' | 'Distinction';
 
+const PRIMARY_SCORE_DISPLAY_LABELS: Record<PrimaryScoreLabel, string> = {
+    Clarity: 'Clarity',
+    Attention: 'Focus',
+    Cohesion: 'Unity',
+    Intent: 'Intent',
+    Distinction: 'Edge',
+};
+
 type PrimaryScoreRow = {
     label: PrimaryScoreLabel;
     value: number;
@@ -3218,8 +3226,8 @@ export default function AssetWorkspace({
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Primary Scores</p>
                                                                  <div className="mt-7 grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
                                                                      {analysisLanguage.primaryScores.map((score) => (
-                                                                         <div key={score.label} className="min-w-0 rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] px-5 py-5">
-                                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D6D0C6]/60">{score.label}</p>
+                                                                         <div key={score.label} className="min-w-0 rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] px-5 py-5 text-center">
+                                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/60">{PRIMARY_SCORE_DISPLAY_LABELS[score.label]}</p>
                                                                              <p className="mt-4 text-[56px] font-semibold leading-none tracking-[-0.02em] tabular-nums text-[#F3F1ED]">{score.value}</p>
                                                                          </div>
                                                                      ))}
