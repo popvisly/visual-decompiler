@@ -4260,16 +4260,19 @@ export default function AssetWorkspace({
                                         <div className="divide-y divide-white/10">
                                             {(stressLabRows || []).map((row, i) => (
                                                 <div key={i} className="grid grid-cols-[1fr_1.7fr_0.7fr_0.7fr] items-center bg-[#171513] group hover:bg-[#211d18] transition-colors">
-                                                    <div className="px-8 py-7 border-r border-white/10">
+                                                    <div className="relative px-8 py-7">
                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#E3DBCE] group-hover:text-[#D4A574] transition-colors">{row.variable}</p>
+                                                        <span className="pointer-events-none absolute right-0 top-1/2 h-20 w-px -translate-y-1/2 bg-white/10" />
                                                     </div>
-                                                    <div className="px-8 py-7 border-r border-white/10 text-center">
+                                                    <div className="relative px-8 py-7 text-center">
                                                         <p className="text-[13px] font-medium text-[#F3F1ED] leading-relaxed">{row.currentState}</p>
+                                                        <span className="pointer-events-none absolute right-0 top-1/2 h-20 w-px -translate-y-1/2 bg-white/10" />
                                                     </div>
-                                                    <div className="px-8 py-7 border-r border-white/10 text-center">
+                                                    <div className="relative px-8 py-7 text-center">
                                                         <span className={`text-[10px] font-semibold uppercase tracking-[0.28em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : row.predictedLift === 'Medium' ? 'text-[#E3DBCE]' : 'text-[#CFC6B8]'}`}>
                                                             {row.predictedLift}
                                                         </span>
+                                                        <span className="pointer-events-none absolute right-0 top-1/2 h-20 w-px -translate-y-1/2 bg-white/10" />
                                                     </div>
                                                     <div className="px-8 py-7 text-center">
                                                         <span className={`inline-block border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] ${
