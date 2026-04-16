@@ -3163,7 +3163,7 @@ export default function AssetWorkspace({
                                             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Adaptation Priorities</p>
                                             <div className="mt-5 grid gap-4 lg:grid-cols-2">
                                                 {fixPriorities.map((item, index) => (
-                                                    <div key={item.priority} className={`rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-5 py-5 ${index === fixPriorities.length - 1 ? 'lg:col-span-2' : ''}`}>
+                                                    <div key={item.priority} className={`rounded-[1.4rem] border border-white/20 bg-[#151310] px-5 py-5 ${index === fixPriorities.length - 1 ? 'lg:col-span-2' : ''}`}>
                                                         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">{item.priority}</p>
                                                         <p className="mt-3 text-[13px] font-semibold tracking-tight text-[#F3F1ED]">{item.title}</p>
                                                         <p className="mt-2 max-w-[56ch] text-[13px] leading-6 text-[#D6D0C6]">{item.detail}</p>
@@ -3234,11 +3234,11 @@ export default function AssetWorkspace({
                                                          </header>
 
                                                          <div className="space-y-14 pt-14">
-                                                             <section>
+                                                             <section className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Primary Scores</p>
                                                                  <div className="mt-7 grid grid-cols-2 items-end gap-x-10 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
                                                                      {analysisLanguage.primaryScores.map((score) => (
-                                                                         <div key={score.label} className="min-w-0">
+                                                                         <div key={score.label} className="min-w-0 rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5">
                                                                              <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D6D0C6]/60">{score.label}</p>
                                                                              <p className="mt-4 text-[52px] font-semibold leading-none tracking-[-0.02em] tabular-nums text-[#F3F1ED]">{score.value}</p>
                                                                          </div>
@@ -3246,7 +3246,7 @@ export default function AssetWorkspace({
                                                                  </div>
                                                              </section>
 
-                                                             <section className="border-t border-white/10 pt-12">
+                                                             <section className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Attention Path</p>
                                                                  <div className="mt-7 grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
                                                                      <div className="space-y-10">
@@ -3255,7 +3255,7 @@ export default function AssetWorkspace({
                                                                              ['Brand Mark', analysisLanguage.attentionPath.secondaryFocus],
                                                                              ['Supporting Copy Layer', supportingCopyPath],
                                                                          ].map(([title, detail], index) => (
-                                                                             <div key={title as string} className="pb-1">
+                                                                             <div key={title as string} className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5">
                                                                                  <div className="flex flex-col gap-3">
                                                                                      <span className="block text-[34px] font-semibold leading-none tracking-[-0.03em] text-[#F3F1ED]">{index + 1}</span>
                                                                                      <div>
@@ -3266,21 +3266,23 @@ export default function AssetWorkspace({
                                                                              </div>
                                                                          ))}
                                                                      </div>
-                                                                     <aside className="self-start rounded-[1.2rem] border border-white/10 px-5 py-5">
+                                                                     <aside className="self-start rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] px-5 py-5">
                                                                          <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/70">Drop-Off Detected</p>
                                                                          <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/70">{analysisLanguage.attentionPath.dropOff}</p>
                                                                      </aside>
                                                                  </div>
                                                              </section>
 
-                                                             <section className="border-t border-white/10 pt-12">
+                                                             <section className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Structural Signals</p>
                                                                  <div className="mt-7 space-y-4">
                                                                      {analysisLanguage.structuralSignals.map((signal) => (
-                                                                         <div key={signal.label} className="flex items-center justify-between border-b border-white/10 pb-4">
+                                                                         <div key={signal.label} className="rounded-[1.25rem] border border-white/10 bg-[#1A1A1A] p-4">
+                                                                         <div className="flex items-center justify-between">
                                                                              <span className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#D6D0C6]/58">{signal.label}</span>
                                                                              <span className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#F3F1ED]/96">{signal.value}</span>
                                                                          </div>
+                                                                     </div>
                                                                      ))}
                                                                  </div>
                                                                  <div className="mt-7 border-t border-white/10 pt-5">
@@ -3289,7 +3291,7 @@ export default function AssetWorkspace({
                                                                  </div>
                                                              </section>
 
-                                                             <section className="border-t border-white/10 pt-12">
+                                                             <section className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Strategic Read</p>
                                                                  <p className="mt-3 max-w-[62ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">A concise strategic summary of what the work is doing, why it lands, and where friction appears.</p>
                                                                  <div className="mt-8 space-y-10">
@@ -3299,15 +3301,15 @@ export default function AssetWorkspace({
                                                                          ['Friction Points', firstSentence(analysisLanguage.strategicRead.frictionPoints)],
                                                                          ['Category Positioning', firstSentence(analysisLanguage.strategicRead.categoryPositioning)],
                                                                      ].map(([label, value]) => (
-                                                                         <div key={label as string} className="pb-1">
+                                                                         <div key={label as string} className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5">
                                                                              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/58">{label}</p>
-                                                                             <p className="mt-2 max-w-[70ch] text-[14px] leading-relaxed text-[#F3F1ED]/86">{value as string}</p>
+                                                                             <p className="mt-2 max-w-[70ch] text-[14px] leading-relaxed text-[#F3F1ED]/92">{value as string}</p>
                                                                          </div>
                                                                      ))}
                                                                  </div>
                                                              </section>
 
-                                                             <section className="border-t border-white/10 pt-16">
+                                                             <section className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
                                                                  <p className="text-[18px] font-semibold leading-relaxed tracking-[-0.01em] text-[#F3F1ED]">Confidence Index: {analysisLanguage.confidenceIndex}</p>
                                                                  <p className="mt-2 max-w-[70ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">A higher index indicates stronger decision confidence for review and presentation.</p>
                                                                  <p className="mt-2 max-w-[70ch] text-[14px] leading-relaxed text-[#D6D0C6]/70">{confidenceRationale}</p>
@@ -3339,21 +3341,21 @@ export default function AssetWorkspace({
                                         />
                                         
                                         {/* UNIFIED TECHNICAL AUTOPSY CONTAINER */}
-                                        <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10 space-y-12 text-[#1a1a1a] shadow-xl">
+                                        <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 space-y-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             {/* Top: Radiant Architecture Toggle */}
-                                            <div className="flex flex-col gap-10 md:flex-row md:items-center justify-between pb-10 border-b border-[#E7DED1]">
+                                            <div className="flex flex-col gap-10 md:flex-row md:items-center justify-between pb-10 border-b border-white/10">
                                                 <div className="flex items-center gap-8">
-                                                    <div className="h-14 w-14 bg-white flex items-center justify-center border border-[#d4c9b8] text-[#D4A574]">
+                                                    <div className="h-14 w-14 bg-[#151310] flex items-center justify-center border border-white/10 text-[#D4A574]">
                                                         <Sparkles className="h-6 w-6" />
                                                     </div>
                                                     <div className="flex flex-col gap-2">
                                                         <h3 className="text-[12px] font-semibold uppercase tracking-[0.5em] text-[#D4A574]">Macro-Diagnostic Grid</h3>
-                                                        <p className="text-[14px] text-[#999] uppercase font-medium tracking-wide">Visualize focal routing and attention-routing cues.</p>
+                                                        <p className="text-[13px] text-[#D6D0C6]/70 uppercase font-medium tracking-wide">Visualize focal routing and attention-routing cues.</p>
                                                     </div>
                                                 </div>
                                                 <button 
                                                     onClick={() => setShowRadiant(!showRadiant)}
-                                                    className={`px-10 py-4 border text-[11px] font-semibold uppercase tracking-[0.3em] transition-all duration-500 flex items-center gap-4 ${showRadiant ? "bg-[#D4A574] text-black border-[#D4A574] shadow-[0_0_20px_rgba(212,165,116,0.25)]" : "bg-white text-[#D4A574] border-[#d4c9b8] hover:border-[#D4A574]/60"}`}
+                                                    className={`px-10 py-4 border text-[11px] font-semibold uppercase tracking-[0.3em] transition-all duration-500 flex items-center gap-4 ${showRadiant ? "bg-[#D4A574] text-black border-[#D4A574] shadow-[0_0_20px_rgba(212,165,116,0.25)]" : "bg-[#151310] text-[#D4A574] border-white/20 hover:border-[#D4A574]/60"}`}
                                                 >
                                                     <div className={`h-2 w-2 ${showRadiant ? "bg-white animate-pulse" : "bg-[#D4A574]"}`} />
                                                     {showRadiant ? "[ HUD_ACTIVE ]" : "INITIALIZE OPTICAL HUD"}
@@ -3375,9 +3377,9 @@ export default function AssetWorkspace({
                                                 <div className="flex items-center gap-10">
                                                     <div className="flex flex-col gap-3">
                                                         <h2 className="text-[12px] font-semibold uppercase tracking-[0.6em] text-[#D4A574]">Gaze Topology</h2>
-                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#aaa]">Mode of Address & Viewer Positioning</p>
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/70">Mode of Address & Viewer Positioning</p>
                                                     </div>
-                                                    <div className="h-px flex-1 bg-[#f5f0e8]" />
+                                                    <div className="h-px flex-1 bg-white/10" />
                                                 </div>
 
                                                 <div className="grid grid-cols-1 items-start gap-3 lg:grid-cols-3">
@@ -3386,22 +3388,22 @@ export default function AssetWorkspace({
                                                         { label: 'Viewer Position', value: (extraction.full_dossier as any).gaze_topology.viewer_position },
                                                         { label: 'Power Holder', value: (extraction.full_dossier as any).gaze_topology.power_holder },
                                                     ].map((item, i) => (
-                                                        <div key={i} className="flex min-h-[200px] flex-col justify-between rounded-[2.5rem] border border-[#E7DED1] bg-[#FBF7EF] px-8 py-8 text-[#1a1a1a]">
-                                                            <h3 className="mb-6 w-full border-b border-[#E7DED1] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                                        <div key={i} className="flex min-h-[200px] flex-col justify-between rounded-[2.5rem] border border-white/10 bg-[#151310] px-8 py-8 text-[#F3F1ED]">
+                                                            <h3 className="mb-6 w-full border-b border-white/10 pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                                 {item.label}
                                                             </h3>
                                                             <div className="flex-1 flex items-center">
-                                                                <span className="text-[28px] font-semibold uppercase tracking-tightest leading-tight text-[#1a1a1a]">{item.value}</span>
+                                                                <span className="text-[24px] font-semibold uppercase tracking-tightest leading-tight text-[#F3F1ED]">{item.value}</span>
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10">
-                                                    <h3 className="mb-8 border-b border-[#E7DED1] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                                <div className="rounded-[2.75rem] border border-white/10 bg-[#151310] p-10">
+                                                    <h3 className="mb-8 border-b border-white/10 pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                         Forensic Gaze Diagnostic
                                                     </h3>
-                                                    <p className="max-w-[72ch] text-[15px] font-medium leading-relaxed text-[#1a1a1a]/60 uppercase">
+                                                    <p className="max-w-[72ch] text-[13px] font-medium leading-relaxed text-[#D6D0C6]/70 uppercase">
                                                         {(extraction.full_dossier as any).gaze_topology.reading}
                                                     </p>
                                                 </div>
@@ -3414,18 +3416,18 @@ export default function AssetWorkspace({
                                                 <div className="flex items-center gap-10">
                                                     <div className="flex flex-col gap-3">
                                                         <h2 className="text-[12px] font-semibold uppercase tracking-[0.6em] text-[#D4A574]">Counter-Reading Matrix</h2>
-                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#aaa]">Polysemic Deconstruction via Critical Theory</p>
+                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/70">Polysemic Deconstruction via Critical Theory</p>
                                                     </div>
-                                                    <div className="h-px flex-1 bg-[#f5f0e8]" />
+                                                    <div className="h-px flex-1 bg-white/10" />
                                                 </div>
                                                 <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
                                                     {((extraction.full_dossier as any).counter_reading_matrix as { lens: string; reading: string }[]).map((item, i) => (
-                                                        <div key={i} className="flex min-h-[220px] flex-col rounded-[2.5rem] border border-[#E7DED1] bg-[#FBF7EF] px-8 py-8 text-[#1a1a1a]">
+                                                        <div key={i} className="flex min-h-[220px] flex-col rounded-[2.5rem] border border-white/10 bg-[#151310] px-8 py-8 text-[#F3F1ED]">
                                                             <h3 className="mb-6 w-full border-b border-[#E7DED1] pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                                 {item.lens}
                                                             </h3>
                                                             <div className="flex-1 max-h-[400px] overflow-y-auto pt-2">
-                                                                <p className="text-[14px] leading-relaxed text-[#D6D0C6]/70 font-medium">{item.reading}</p>
+                                                                <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70 font-medium">{item.reading}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -3434,12 +3436,12 @@ export default function AssetWorkspace({
                                         )}
                                     </div>
                                 ) : (
-                                     <div className="rounded-[2.5rem] border border-dashed border-[#4E3D2A] bg-white/70 p-20 flex flex-col items-center justify-center text-center">
-                                         <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#4E3D2A] bg-[#171512]">
+                                     <div className="rounded-[2.5rem] border border-dashed border-white/20 bg-[#1A1A1A] p-20 flex flex-col items-center justify-center text-center">
+                                         <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-[#151310]">
                                          <Info className="h-5 w-5 text-[#D4A574]/50" />
                                          </div>
                                          <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574] mb-2">Deep Intelligence Required</h3>
-                                         <p className="max-w-xs text-[13px] font-light tracking-wide text-[#B9B19F]">Signal interception requires deep architectural extraction of this asset's semiotic layers.</p>
+                                         <p className="max-w-xs text-[13px] font-light tracking-wide text-[#D6D0C6]/70">Signal interception requires deep architectural extraction of this asset's semiotic layers.</p>
                                      </div>
                                 )}
                             </div>
@@ -3758,7 +3760,7 @@ export default function AssetWorkspace({
                                                     <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                         Strategic Implication
                                                     </p>
-                                                    <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">
+                                                    <p className="max-w-[78ch] rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] px-5 py-4 text-[13px] leading-relaxed text-[#D6D0C6]/82">
                                                         To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.
                                                     </p>
                                                     <span className="mt-8 inline-flex border border-[#D4A574]/70 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#F3F1ED] bg-[#D4A574]/18">
@@ -4274,12 +4276,12 @@ export default function AssetWorkspace({
                                         </div>
                                         <div className="divide-y divide-white/10">
                                             {(stressLabRows || []).map((row, i) => (
-                                                <div key={i} className="grid grid-cols-4 items-center group hover:bg-white/[0.02] transition-colors">
+                                                <div key={i} className="grid grid-cols-4 items-center bg-[#151310] group hover:bg-[#1F1B16] transition-colors">
                                                     <div className="px-8 py-7 border-r border-white/10">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/88 group-hover:text-[#D4A574] transition-colors">{row.variable}</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/82 group-hover:text-[#D4A574] transition-colors">{row.variable}</p>
                                                     </div>
                                                     <div className="px-8 py-7 border-r border-white/10 text-center">
-                                                        <p className="text-[13px] font-medium text-[#F3F1ED]/86 leading-relaxed">{row.currentState}</p>
+                                                        <p className="text-[13px] font-medium text-[#F3F1ED]/92 leading-relaxed">{row.currentState}</p>
                                                     </div>
                                                     <div className="px-8 py-7 border-r border-white/10 text-center">
                                                         <span className={`text-[10px] font-semibold uppercase tracking-[0.3em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : row.predictedLift === 'Medium' ? 'text-[#D6D0C6]/88' : 'text-[#D6D0C6]/72'}`}>
@@ -4303,33 +4305,33 @@ export default function AssetWorkspace({
                                     </div>
 
                                     <div className="grid gap-6 xl:grid-cols-2">
-                                        <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                        <div className="rounded-[2.75rem] border border-white/10 bg-[#151310] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                 Variable Diagnostics
                                             </p>
-                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/70">
-                                                <p><span className="text-[#F3F1ED] font-semibold">Composition Emphasis:</span> The brand asserts cultural status through controlled visual posture.</p>
-                                                <p><span className="text-[#F3F1ED] font-semibold">Chromatic Intensity:</span> Current color pressure remains persuasive without over-saturation.</p>
-                                                <p><span className="text-[#F3F1ED] font-semibold">Gaze Direction:</span> Oblique address sustains intimacy without direct confrontation.</p>
-                                                <p><span className="text-[#F3F1ED] font-semibold">Copy Compression:</span> Heritage messaging carries effectively with room for selective tightening.</p>
-                                                <p><span className="text-[#F3F1ED] font-semibold">CTA Prominence:</span> Product-scale authority is currently doing the conversion work.</p>
+                                            <div className="space-y-3 text-[13px] leading-relaxed text-[#D6D0C6]/82">
+                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Composition Emphasis:</span> The brand asserts cultural status through controlled visual posture.</p>
+                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Chromatic Intensity:</span> Current color pressure remains persuasive without over-saturation.</p>
+                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Gaze Direction:</span> Oblique address sustains intimacy without direct confrontation.</p>
+                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Copy Compression:</span> Heritage messaging carries effectively with room for selective tightening.</p>
+                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">CTA Prominence:</span> Product-scale authority is currently doing the conversion work.</p>
                                             </div>
                                         </div>
 
-                                        <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                        <div className="rounded-[2.75rem] border border-white/10 bg-[#151310] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                 Gaze Direction Breakdown
                                             </p>
-                                            <div className="space-y-4 text-[13px] leading-relaxed text-[#D6D0C6]/70">
-                                                <p><span className="text-[#F3F1ED] font-semibold">Positioning:</span> Upper-center frame priority with directional control.</p>
-                                                <p><span className="text-[#F3F1ED] font-semibold">Direction:</span> Oblique vector maintains aspirational distance.</p>
-                                                <p><span className="text-[#F3F1ED] font-semibold">Tilt:</span> Slight downward bias supports mixed-mode address.</p>
-                                                <p><span className="text-[#F3F1ED] font-semibold">Focus Tone:</span> Eye contrast retains focal attraction without dominance drift.</p>
+                                            <div className="space-y-3 text-[13px] leading-relaxed text-[#D6D0C6]/82">
+                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Positioning:</span> Upper-center frame priority with directional control.</p>
+                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Direction:</span> Oblique vector maintains aspirational distance.</p>
+                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Tilt:</span> Slight downward bias supports mixed-mode address.</p>
+                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Focus Tone:</span> Eye contrast retains focal attraction without dominance drift.</p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10">
+                                    <div className="rounded-[2.75rem] border border-white/10 bg-[#151310] p-10">
                                         <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574]">Stress Test Summary</p>
                                         <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                             These stress signals define where controlled adjustments can improve lift without destabilizing the route. Next iteration should prioritize gaze and hierarchy tests first, then validate copy and CTA compression only where structural confidence remains intact.
