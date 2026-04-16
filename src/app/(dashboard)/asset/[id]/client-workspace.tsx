@@ -3228,27 +3228,27 @@ export default function AssetWorkspace({
 
                                                              <section className="rounded-[2.5rem] border border-white/10 bg-[#151310] p-8">
                                                                  <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Attention Path</p>
-                                                                 <div className="mt-7 grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
-                                                                     <div className="space-y-10">
+                                                                 <div className="mt-7 grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
+                                                                     <div className="space-y-6">
                                                                          {[
                                                                              ['Product Silhouette', analysisLanguage.attentionPath.primaryFocus],
                                                                              ['Brand Mark', analysisLanguage.attentionPath.secondaryFocus],
                                                                              ['Supporting Copy Layer', supportingCopyPath],
                                                                          ].map(([title, detail], index) => (
-                                                                             <div key={title as string} className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5">
-                                                                                 <div className="flex flex-col gap-3">
-                                                                                     <span className="block text-[34px] font-semibold leading-none tracking-[-0.03em] text-[#F3F1ED]">{index + 1}</span>
-                                                                                     <div>
-                                                                                         <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#F3F1ED]/85">{title as string}</p>
-                                                                                         <p className="mt-2 text-[14px] leading-relaxed text-[#D6D0C6]/85">{detail as string}</p>
+                                                                             <div key={title as string} className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] px-5 py-5">
+                                                                                 <div className="flex items-start gap-4">
+                                                                                     <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/12 bg-[#151310] text-[20px] font-semibold leading-none tracking-[-0.02em] text-[#F3F1ED]">{index + 1}</span>
+                                                                                     <div className="min-w-0">
+                                                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#F3F1ED]/88">{title as string}</p>
+                                                                                         <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/82">{detail as string}</p>
                                                                                      </div>
                                                                                  </div>
                                                                              </div>
                                                                          ))}
                                                                      </div>
-                                                                     <aside className="self-start rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] px-5 py-5">
-                                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/70">Drop-Off Detected</p>
-                                                                         <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/70">{analysisLanguage.attentionPath.dropOff}</p>
+                                                                     <aside className="self-start rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] px-5 py-5 lg:min-h-[220px]">
+                                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">Drop-Off Detected</p>
+                                                                         <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/78">{analysisLanguage.attentionPath.dropOff}</p>
                                                                      </aside>
                                                                  </div>
                                                              </section>
