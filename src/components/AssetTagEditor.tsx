@@ -134,11 +134,11 @@ export default function AssetTagEditor({
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Asset Tags</p>
-                    <p className="mt-2 max-w-xl text-[12px] leading-relaxed text-[#FFFFFF]/55">
+                    <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#d6cec3]">
                         Label this asset with campaign, client, format, territory, or tactic tags so the vault becomes easier to search later.
                     </p>
                 </div>
-                <div className="text-[9px] uppercase tracking-[0.2em] text-[#D4A574]/55">
+                <div className="text-[10px] uppercase tracking-[0.2em] text-[#D4A574]/55">
                     {isSaving ? 'Saving tags...' : `${tags.length}/12 applied`}
                 </div>
             </div>

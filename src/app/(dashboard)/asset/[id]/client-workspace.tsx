@@ -2761,7 +2761,7 @@ export default function AssetWorkspace({
                                             <p className="mt-3 text-[13px] leading-relaxed text-[#d6cec3]">
                                                 Paste this iFrame into a client portal, strategy deck, Notion page, or internal dashboard to display a self-contained forensic intelligence panel.
                                             </p>
-                                            <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-[#D4A574]/75">
+                                            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#D4A574]/75">
                                                 Use for: client-facing reports · internal strategy decks · agency dashboards
                                             </p>
                                             <pre className="mt-4 overflow-x-auto rounded-2xl border border-[#D4A574]/20 bg-[#0f0f0f] p-3 text-[10px] leading-relaxed text-[#ded5ca]">
