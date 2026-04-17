@@ -21,7 +21,7 @@ export default function ProductHero() {
 
                     <div className="mt-10 max-w-[760px] rounded-[1.75rem] border border-white/10 bg-[#0D0D0D]/70 px-8 py-8 shadow-[0_0_36px_rgba(0,0,0,0.34)] ring-1 ring-white/5 backdrop-blur-md">
                         <p className="text-[16px] leading-[1.7] text-[#F6F1E7]/78">
-                            Visual Decompiler analyzes advertising at a structural level — turning creative instinct into clear, defensible reasoning.
+                            Visual Decompiler helps agencies defend creative decisions, align teams faster, and get work approved without endless back-and-forth.
                         </p>
 
                         <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">

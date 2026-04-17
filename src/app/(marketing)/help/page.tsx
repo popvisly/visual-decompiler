@@ -127,7 +127,7 @@ export default function HelpPage() {
                             <span className="text-[#C1A674]">for Decision Workflows.</span>
                         </h1>
                         <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78">
-                            Use this centre to move from analysis to approval faster — onboarding, dossier flow, Intelligence Pulse, and delivery protocols for agency teams.
+                            Use this centre to help agency teams defend decisions, align faster, and get work approved with less back-and-forth.
                         </p>
                     </div>
 

@@ -76,7 +76,7 @@ export default function UserGuidePage() {
                             Using Visual Decompiler
                         </h1>
                         <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78">
-                            How to turn creative instinct into decisions that move forward.
+                            How agencies turn creative instinct into decisions that move forward and get approved faster.
                         </p>
                     </motion.div>
 

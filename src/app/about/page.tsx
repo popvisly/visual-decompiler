@@ -25,7 +25,7 @@ export default function AboutPage() {
                             Creative decisions deserve better tools.
                         </h1>
                         <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78">
-                            Visual Decompiler exists to make creative work easier to defend, easier to align, and easier to approve.
+                            Visual Decompiler exists to make creative work easier to defend, faster to align, and faster to get approved.
                         </p>
                     </motion.div>
                 </div>

@@ -76,8 +76,7 @@ export default function PricingPage() {
                         transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
                         className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78"
                     >
-                        Every tier includes real intelligence depth. Observer proves the diagnostic system. 
-                        Professional and Agency expand analysis coverage, decision confidence, and delivery readiness.
+                        Choose the depth your team needs to defend decisions, align faster, and get work approved without costly back-and-forth.
                     </motion.p>
                 </div>
             </section>

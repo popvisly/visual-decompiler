@@ -20,7 +20,7 @@ export default async function IntelligenceIndex() {
                     <span className="text-white/38">Briefings.</span>
                 </h1>
                 <p className="mt-10 max-w-[760px] text-[#F6F1E7]/78 text-[16px] leading-[1.7]">
-                    Technical deep dives into advertising forensics, trigger mechanics, and autonomous creative strategy.
+                    Decision-ready briefings on advertising structure, strategic signals, and approval-critical execution patterns.
                 </p>
             </div>
 
