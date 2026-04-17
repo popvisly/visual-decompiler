@@ -726,9 +726,9 @@ const qualityFixPriorities = ({
     return priorities;
 };
 
-const withSeverity = (items: string[], order: ConstraintSeverity[]): ConstraintItem[] =>
+const withSeverity = (items: unknown[], order: ConstraintSeverity[]): ConstraintItem[] =>
     items
-        .map((item) => item?.trim())
+        .map((item) => (typeof item === 'string' ? item.trim() : ''))
         .filter(Boolean)
         .map((text, index) => ({
             text,
