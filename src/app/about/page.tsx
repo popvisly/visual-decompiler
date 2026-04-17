@@ -10,17 +10,17 @@ export default function AboutPage() {
             <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Open Sample Read', href: '/share/sample-dossier' }} />
 
             {/* Hero Section */}
-            <section className="px-6 pb-28 pt-32 lg:pt-40 lg:pb-36">
+            <section className="px-6 pt-30 pb-24 lg:pt-36 lg:pb-28">
                 <div className="mx-auto max-w-[1400px]">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                     >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674] mb-6">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">
                             A Forensic Intelligence OS
                         </p>
-                        <h1 className="text-[clamp(52px,6.4vw,102px)] font-black leading-[0.9] tracking-[-0.045em] uppercase text-white max-w-[15ch]">
+                        <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black leading-[0.9] tracking-[-0.045em] uppercase text-white max-w-[15ch]">
                             Built for defensible decisions.
                         </h1>
                     </motion.div>

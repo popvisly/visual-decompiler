@@ -14,12 +14,12 @@ export default async function IntelligenceIndex() {
     return (
         <div className="max-w-[1400px] mx-auto px-6">
             <div className="mb-20">
-                <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Intelligence Hub</p>
-                <h1 className="text-[clamp(52px,6.4vw,102px)] font-black uppercase text-[#FBF7EF] tracking-[-0.045em] leading-[0.9] mb-6">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Intelligence Hub</p>
+                <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black uppercase text-[#FBF7EF] tracking-[-0.045em] leading-[0.9] max-w-[14ch]">
                     Intelligence <br />
                     <span className="text-white/38">Briefings.</span>
                 </h1>
-                <p className="max-w-xl text-white/62 text-[16px] font-medium leading-[1.7]">
+                <p className="mt-10 max-w-[760px] text-[#F6F1E7]/78 text-[16px] leading-[1.7]">
                     Technical deep dives into advertising forensics, trigger mechanics, and autonomous creative strategy.
                 </p>
             </div>

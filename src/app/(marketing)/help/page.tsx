@@ -118,15 +118,15 @@ export default function HelpPage() {
             <div className="px-6 pb-24 pt-30">
                 <div className="mx-auto max-w-[1400px]">
                     <div className="mb-14">
-                        <span className="mb-4 block text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">
+                        <span className="block text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">
                             Operational Manual
                         </span>
-                        <h1 className="text-[clamp(56px,9vw,96px)] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7]">
+                        <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#F6F1E7] max-w-[14ch]">
                             Help
                             <br />
                             <span className="text-[#C1A674]">Centre.</span>
                         </h1>
-                        <p className="mt-8 max-w-2xl text-[16px] font-medium leading-[1.7] text-[#F6F1E7]/62">
+                        <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78">
                             Operational guidance for ingestion, dossier navigation, Intelligence Pulse, white-labelling, and agency
                             delivery workflows.
                         </p>
