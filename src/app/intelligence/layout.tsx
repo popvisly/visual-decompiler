@@ -10,7 +10,7 @@ export default function IntelligenceLayout({
         <div className="min-h-screen bg-[#101010] text-[#FBF7EF] selection:bg-accent/30 font-sans flex flex-col">
             <UnifiedSovereignHeader forceDark={true} />
 
-            <main className="flex-1 w-full relative z-10 pt-30 pb-32">
+            <main className="flex-1 w-full relative z-10 pt-30 pb-32 lg:pt-36">
                 {children}
             </main>
 
