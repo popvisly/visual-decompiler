@@ -198,7 +198,7 @@ export default function UserGuidePage() {
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                             className="mt-12 max-w-[900px] text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]"
                         >
-                            Visual Decompiler is most powerful when used in real decision environments — not in isolation.
+                            Visual Decompiler is most effective when used in real decision environments — not in isolation.
                         </motion.p>
                     </div>
                 </div>

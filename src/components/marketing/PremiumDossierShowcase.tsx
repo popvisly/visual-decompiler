@@ -29,6 +29,8 @@ export default function PremiumDossierShowcase() {
                             A structured document built for presentation, alignment, and decision-making.
                             <br />
                             Built for the moment decisions are made.
+                            <br />
+                            Full system includes multi-layer analysis across structure, psychology, and decision logic.
                         </p>
                     </motion.div>
 
