@@ -58,6 +58,21 @@ const OUTPUTS = [
     },
 ];
 
+const ADVANCED_USAGE = [
+    {
+        title: 'Route Comparison',
+        body: 'Compare multiple creative routes to identify strategic differences.',
+    },
+    {
+        title: 'Performance Isolation',
+        body: 'Use the system to isolate why one execution outperforms another.',
+    },
+    {
+        title: 'Cross-Campaign Consistency',
+        body: 'Apply findings across campaigns to keep decision logic aligned over time.',
+    },
+];
+
 export default function UserGuidePage() {
     return (
         <main className="min-h-screen bg-[#050505] text-[#F6F1E7]">
@@ -76,7 +91,7 @@ export default function UserGuidePage() {
                             Using Visual Decompiler
                         </h1>
                         <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78">
-                            How agencies turn creative instinct into decisions that move forward and get approved faster.
+                            How to turn creative instinct into decisions that move forward.
                         </p>
                     </motion.div>
 
@@ -189,6 +204,33 @@ export default function UserGuidePage() {
                             <p className="mt-6 text-[16px] leading-[1.7] text-[#F6F1E7]/75">
                                 It is a system for explaining and defending work — not replacing it.
                             </p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 18 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-80px' }}
+                            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                            className="mt-10"
+                        >
+                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Advanced usage</p>
+                            <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+                                {ADVANCED_USAGE.map((item, idx) => (
+                                    <motion.article
+                                        key={item.title}
+                                        initial={{ opacity: 0, y: 16 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, margin: '-60px' }}
+                                        transition={{ duration: 0.6, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                                        className="rounded-[20px] border border-white/10 bg-white/[0.02] p-6"
+                                    >
+                                        <h3 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]">
+                                            {item.title}
+                                        </h3>
+                                        <p className="mt-4 text-[16px] leading-[1.7] text-[#F6F1E7]/75">{item.body}</p>
+                                    </motion.article>
+                                ))}
+                            </div>
                         </motion.div>
 
                         <motion.p
