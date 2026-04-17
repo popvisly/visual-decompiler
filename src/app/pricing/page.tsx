@@ -53,7 +53,7 @@ export default function PricingPage() {
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.65, ease: EASE }}
-                        className="mb-12 border-t border-white/10 pt-8"
+                        className="max-w-[900px]"
                     >
                         <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">
                             Sovereign Infrastructure · Pricing OS
@@ -64,7 +64,7 @@ export default function PricingPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-                        className="text-[clamp(52px,6.4vw,102px)] font-black leading-[0.9] tracking-[-0.045em] text-white uppercase max-w-[14ch]"
+                        className="mt-5 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-white"
                     >
                         Start free. <br />
                         <span className="text-white/20">Scale when it matters.</span>
@@ -74,7 +74,7 @@ export default function PricingPage() {
                         initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-                        className="mt-8 max-w-3xl text-[16px] leading-[1.7] text-white/62 font-medium"
+                        className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78"
                     >
                         Every tier includes real intelligence depth. Observer proves the diagnostic system. 
                         Professional and Agency expand analysis coverage, decision confidence, and delivery readiness.
