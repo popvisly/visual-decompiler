@@ -116,7 +116,7 @@ export default function HelpPage() {
             <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Bring In The Work', href: '/ingest' }} />
 
             <div className="px-6 pb-24 pt-30">
-                <div className="mx-auto max-w-7xl">
+                <div className="mx-auto max-w-[1400px]">
                     <div className="mb-14">
                         <span className="mb-4 block text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">
                             Operational Manual

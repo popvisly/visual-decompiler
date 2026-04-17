@@ -7,7 +7,7 @@ import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 export default function ProductHero() {
     return (
         <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-28 pb-36 lg:pt-36 lg:pb-44" data-presence-tone="dark">
-            <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
+            <div className="mx-auto w-full max-w-[1400px] px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
