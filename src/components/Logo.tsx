@@ -27,7 +27,7 @@ export default function Logo({
               : hoverColor === 'red'
                 ? 'group-hover:text-[#FF003C]'
                 : forceDark
-                  ? 'group-hover:text-[#00E5FF]'
+                  ? 'group-hover:text-[#C1A674]'
                   : 'group-hover:text-[#FF003C]';
 
     const content = (
