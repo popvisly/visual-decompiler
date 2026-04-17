@@ -3181,7 +3181,7 @@ export default function AssetWorkspace({
                                 {extraction ? (
                                     <div className="space-y-10">
                                         <WorkspaceTabHeader
-                                            kicker="Strategic Insight"
+                                            kicker="INTELLIGENCE"
                                             title="Strategic Insight Overview"
                                             intro="A comprehensive analysis of core mechanics, persuasive structures, and actionable paths."
                                         />
@@ -3189,20 +3189,19 @@ export default function AssetWorkspace({
                                         {extraction.primary_mechanic && extraction.full_dossier && (
                                              <>
                                                  <div className="mx-auto w-full max-w-[960px]">
-                                                     <article className="rounded-[2rem] border border-white/10 bg-[#12110F] p-8 text-[#EFE9DE] shadow-[0_30px_110px_rgba(0,0,0,0.36)] sm:p-10 lg:p-12">
+                                                     <article className="rounded-[2rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#EFE9DE] shadow-[0_30px_110px_rgba(0,0,0,0.36)] sm:p-10 lg:p-12">
                                                          <header className="space-y-10 border-b border-white/10 pb-12">
                                                              <div className="flex flex-wrap items-start justify-between gap-4">
                                                                  <div className="space-y-2">
-                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574]">Visual Decompiler</p>
-                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D6D0C6]/70">Creative Intelligence Dossier</p>
+                                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574]">Creative Intelligence Dossier</p>
                                                                  </div>
                                                                  <span className="rounded-full border border-white/10 bg-[#1A1916] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">
                                                                      {qualityVerdict}
                                                                  </span>
                                                              </div>
 
-                                                             <div className="max-w-[22ch]">
-                                                                 <h2 className="text-[28px] font-semibold uppercase leading-[0.96] tracking-[-0.024em] text-[#F3F1ED] sm:text-[36px] lg:text-[42px]">{dossierCampaignName}</h2>
+                                                             <div>
+                                                                 <h2 className="text-[28px] font-semibold uppercase leading-[0.96] tracking-[-0.024em] text-[#F3F1ED] whitespace-nowrap sm:text-[36px] lg:text-[42px]">{dossierCampaignName}</h2>
                                                              </div>
 
                                                              <div className="grid gap-4 text-[12px] sm:grid-cols-3">
@@ -3290,7 +3289,7 @@ export default function AssetWorkspace({
                                                                          ['Category Positioning', firstSentence(analysisLanguage.strategicRead.categoryPositioning)],
                                                                      ].map(([label, value]) => (
                                                                          <div key={label as string} className="rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] p-5">
-                                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/58">{label}</p>
+                                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">{label}</p>
                                                                              <p className="mt-2 max-w-[70ch] text-[14px] leading-relaxed text-[#F3F1ED]/92">{value as string}</p>
                                                                          </div>
                                                                      ))}
