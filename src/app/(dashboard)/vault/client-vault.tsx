@@ -19,6 +19,11 @@ interface VaultAsset {
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
+const safeTrim = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
+
+const asStringArray = (value: unknown): string[] =>
+    Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
+
 export default function VaultClient({ initialAssets }: { initialAssets: VaultAsset[] }) {
     const [assets, setAssets] = useState<VaultAsset[]>(initialAssets);
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -33,7 +38,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
     const sectorOptions = useMemo(() => {
         const sectors = new Set<string>();
         for (const asset of assets) {
-            const sector = asset.brand?.market_sector?.trim();
+            const sector = safeTrim(asset.brand?.market_sector);
             if (sector) sectors.add(sector);
         }
         return ['ALL SECTORS', ...Array.from(sectors).sort()];
@@ -44,7 +49,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
         for (const asset of assets) {
             const rawExtraction = asset.extraction || asset.extractions;
             const extraction = Array.isArray(rawExtraction) ? rawExtraction[0] : rawExtraction;
-            const mechanic = extraction?.primary_mechanic?.trim();
+            const mechanic = safeTrim(extraction?.primary_mechanic);
             if (mechanic) mechanics.add(mechanic);
         }
         return ['ALL MECHANICS', ...Array.from(mechanics).sort()];
@@ -53,8 +58,8 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
     const tagOptions = useMemo(() => {
         const tags = new Set<string>();
         for (const asset of assets) {
-            for (const tag of asset.tags || []) {
-                const normalized = tag.trim();
+            for (const tag of asStringArray(asset.tags)) {
+                const normalized = safeTrim(tag);
                 if (normalized) tags.add(normalized);
             }
         }
@@ -74,7 +79,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                     asset.brand?.name,
                     asset.brand?.market_sector,
                     extraction?.primary_mechanic,
-                    ...(asset.tags || []),
+                    ...asStringArray(asset.tags),
                     asset.id,
                 ]
                     .filter(Boolean)
@@ -95,7 +100,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
         }
 
         if (tagFilter !== 'ALL TAGS') {
-            next = next.filter((asset) => (asset.tags || []).includes(tagFilter));
+            next = next.filter((asset) => asStringArray(asset.tags).includes(tagFilter));
         }
 
         next.sort((a, b) => {

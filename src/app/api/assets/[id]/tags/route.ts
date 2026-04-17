@@ -3,8 +3,8 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 
-const normalizeTag = (value: string) =>
-    value
+const normalizeTag = (value: unknown) =>
+    (typeof value === 'string' ? value : '')
         .trim()
         .replace(/\s+/g, ' ')
         .slice(0, 32);
@@ -17,7 +17,7 @@ const sanitizeTags = (value: unknown) => {
     const seen = new Set<string>();
 
     return value
-        .map((tag) => (typeof tag === 'string' ? normalizeTag(tag) : ''))
+        .map((tag: unknown) => normalizeTag(tag))
         .filter((tag) => {
             if (!tag) return false;
             const key = tag.toLowerCase();
@@ -59,8 +59,8 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
 
     const suggestionSet = new Set<string>(
         (tagRows || [])
-            .flatMap((row: { tags: string[] | null }) => (Array.isArray(row.tags) ? row.tags : []))
-            .map((tag: string) => normalizeTag(tag))
+            .flatMap((row: { tags: unknown[] | null }) => (Array.isArray(row.tags) ? row.tags : []))
+            .map((tag: unknown) => normalizeTag(tag))
             .filter(Boolean)
     );
 
@@ -69,7 +69,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
         .slice(0, 24);
 
     return NextResponse.json({
-        tags: Array.isArray(asset.tags) ? asset.tags : [],
+        tags: sanitizeTags(asset.tags),
         suggestions,
     });
 }
@@ -100,6 +100,6 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     }
 
     return NextResponse.json({
-        tags: Array.isArray(updatedAsset.tags) ? updatedAsset.tags : [],
+        tags: sanitizeTags(updatedAsset.tags),
     });
 }
