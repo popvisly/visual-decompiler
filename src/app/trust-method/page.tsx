@@ -14,11 +14,11 @@ const METHOD_PILLARS = [
         body: 'We analyze the exact creative asset you provide — including your own work-in-progress, competitor campaigns, and client references. No hidden prompt shortcuts, no generic template scoring.',
     },
     {
-        title: 'Multi-Surface Analysis',
-        body: 'Each extraction resolves into multiple diagnostic surfaces, including persuasion mechanics, trigger and friction signals, strategic posture, and differential deltas across assets. This creates depth beyond one-dimensional scoring.',
+        title: 'Fixed System Language',
+        body: 'Each extraction is organized into five fixed labels: Primary Scores, Attention Path, Structural Signals, Strategic Read, and Confidence Index. The system stays repeatable across every asset and every team.',
     },
     {
-        title: 'Structured Strategic Readout',
+        title: 'Strategic Read',
         body: 'Outputs are organized for decision use: what is happening, why it matters, and what to do next. The goal is not just interpretation, but execution-ready direction.',
     },
     {
@@ -51,7 +51,7 @@ export default function TrustMethodPage() {
                         How Visual Decompiler generates strategic intelligence you can defend.
                     </h1>
                     <p className="mt-8 max-w-3xl text-lg leading-relaxed text-[#5E5A53] md:text-xl">
-                        Visual Decompiler is designed to produce client-defensible outputs — not generic AI commentary. Every dossier is built from structured visual analysis, strategic interpretation layers, and transparent output logic.
+                        Visual Decompiler is designed to produce client-defensible outputs — not generic AI commentary. Every dossier is built from structured visual analysis and a fixed system language: Primary Scores, Attention Path, Structural Signals, Strategic Read, and Confidence Index.
                     </p>
                 </div>
             </section>
@@ -98,7 +98,7 @@ export default function TrustMethodPage() {
             <section className="px-6 py-16 md:py-20">
                 <div className="mx-auto max-w-5xl text-center">
                     <p className="mx-auto max-w-3xl text-[18px] leading-relaxed text-[#3F3A33] md:text-[22px]">
-                        Faster than manual analysis. Deeper than ChatGPT alone. Built for white-label agency authority.
+                        Built to defend creative decisions, align teams faster, and get work approved with less back-and-forth.
                     </p>
                     <Link
                         href="/compare"

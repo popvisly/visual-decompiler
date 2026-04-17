@@ -1144,13 +1144,13 @@ const stringifyValue = (value: unknown): string => {
 
 const ANALYSIS_STEPS = [
     'Extracting visual elements',
-    'Analysing trigger mechanics',
-    'Decoding semiotic subtext',
-    'Mapping narrative framework',
-    'Identifying evidence anchors',
-    'Evaluating persuasion strategy',
-    'Computing confidence scores',
-    'Assembling intelligence report',
+    'Calculating Primary Scores',
+    'Tracing Attention Path',
+    'Resolving Structural Signals',
+    'Drafting Strategic Read',
+    'Calibrating Confidence Index',
+    'Finalizing Confidence Index',
+    'Assembling structured dossier',
 ];
 
 const BLUEPRINT_STEPS = [
@@ -3183,7 +3183,7 @@ export default function AssetWorkspace({
                                         <WorkspaceTabHeader
                                             kicker="INTELLIGENCE"
                                             title="Strategic Insight Overview"
-                                            intro="A comprehensive analysis of core mechanics, persuasive structures, and actionable paths."
+                                            intro="A structured read organized into Primary Scores, Attention Path, Structural Signals, Strategic Read, and Confidence Index."
                                         />
                                         {(!extraction.primary_mechanic || !extraction.full_dossier) && <SovereignProcessingView assetId={asset.id} agency={agency} />}
                                         {extraction.primary_mechanic && extraction.full_dossier && (
