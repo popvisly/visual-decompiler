@@ -122,13 +122,12 @@ export default function HelpPage() {
                             Operational Manual
                         </span>
                         <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#F6F1E7] max-w-[14ch]">
-                            Help
+                            Support
                             <br />
-                            <span className="text-[#C1A674]">Centre.</span>
+                            <span className="text-[#C1A674]">for Decision Workflows.</span>
                         </h1>
                         <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78">
-                            Operational guidance for ingestion, dossier navigation, Intelligence Pulse, white-labelling, and agency
-                            delivery workflows.
+                            Use this centre to move from analysis to approval faster — onboarding, dossier flow, Intelligence Pulse, and delivery protocols for agency teams.
                         </p>
                     </div>
 
