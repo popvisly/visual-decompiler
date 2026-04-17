@@ -3256,7 +3256,7 @@ export default function AssetWorkspace({
                                                                      </div>
                                                                      <aside className="self-start rounded-[1.75rem] border border-white/10 bg-[#1A1A1A] px-5 py-5 lg:min-h-[220px]">
                                                                          <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">Drop-Off Detected</p>
-                                                                         <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/78">{analysisLanguage.attentionPath.dropOff}</p>
+                                                                         <p className="mt-3 text-[13px] leading-relaxed text-[#F3F1ED]/86">{analysisLanguage.attentionPath.dropOff}</p>
                                                                      </aside>
                                                                  </div>
                                                              </section>
@@ -3275,7 +3275,7 @@ export default function AssetWorkspace({
                                                                  </div>
                                                                  <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-5 py-5">
                                                                      <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Overall Structure</p>
-                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/78">{structuralSummary}</p>
+                                                                     <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/86">{structuralSummary}</p>
                                                                  </div>
                                                              </section>
 
@@ -3338,7 +3338,7 @@ export default function AssetWorkspace({
                                                     </div>
                                                     <div className="flex flex-col gap-2">
                                                         <h3 className="text-[12px] font-semibold uppercase tracking-[0.5em] text-[#D4A574]">Macro-Diagnostic Grid</h3>
-                                                        <p className="text-[13px] leading-relaxed text-[#D6D0C6]/78">Visualize focal routing and attention-routing cues.</p>
+                                                        <p className="text-[13px] leading-relaxed text-[#F3F1ED]/86">Visualize focal routing and attention-routing cues.</p>
                                                     </div>
                                                 </div>
                                                 <button 
@@ -3391,7 +3391,7 @@ export default function AssetWorkspace({
                                                     <h3 className="mb-8 border-b border-white/10 pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                         Forensic Gaze Diagnostic
                                                     </h3>
-                                                    <p className="max-w-[72ch] text-[13px] leading-relaxed text-[#D6D0C6]/78">
+                                                    <p className="max-w-[72ch] text-[13px] leading-relaxed text-[#F3F1ED]/86">
                                                         {(extraction.full_dossier as any).gaze_topology.reading}
                                                     </p>
                                                 </div>

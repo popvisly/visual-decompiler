@@ -123,7 +123,7 @@ export default function UserGuidePage() {
                                         transition={{ duration: 0.6, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
                                         className="rounded-[20px] border border-white/10 bg-white/[0.02] p-6"
                                     >
-                                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">{step.title}</p>
+                                        <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-[#C1A674]">{step.title}</p>
                                         <p className="mt-4 text-[16px] leading-[1.7] text-[#F6F1E7]/78">{step.body}</p>
                                     </motion.article>
                                 ))}
