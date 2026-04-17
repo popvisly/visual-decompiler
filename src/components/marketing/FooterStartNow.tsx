@@ -88,7 +88,7 @@ export default function FooterStartNow() {
                         <span className="mt-3 block bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent tracking-[0.01em]" style={{ wordSpacing: '0.14em' }}>Explain it.</span>
                     </h2>
                     <p className="text-[18px] leading-[1.7] text-[#9a9a94] max-w-[480px]">
-                        Decompile your next ad before anyone else does.
+                        Defend creative decisions. Get work approved faster.
                     </p>
                 </motion.div>
 
