@@ -2,193 +2,208 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Scan, MousePointer2, TrendingUp, Info } from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
-import Link from 'next/link';
 
-const SECTIONS = [
+const USE_CASES = [
     {
-        title: "Forensic Intelligence",
-        icon: <Scan className="w-6 h-6" />,
-        content: "The v2.0 dashboard is an auditable evidence base powered by our proprietary Neural Pipeline. Move past high-level summaries into concrete proof-points.",
-        subsections: [
-            {
-                subtitle: "1. Unified Persuasion Stack",
-                desc: "A weighted DNA of the ad's psychological architecture. Identify the 'Primary Driver'—the strongest visual weight—to either duplicate or counter-program."
-            },
-            {
-                subtitle: "2. Evidence Layer ('The Receipts')",
-                desc: "Precise coordinate-based bounding boxes pointing to concrete visual cues. Use these as 'Proof Points' for strategy decks and client presentations."
-            },
-            {
-                subtitle: "3. 14-Day Tactical Sprint",
-                desc: "A hypothesis-driven test plan generated from the reading. Focus on 'High Impact' cells to resolve detected visual density bottlenecks."
-            }
-        ]
+        title: 'Pre-Pitch',
+        body: 'Break down references before the room does.',
     },
     {
-        title: "Platform Forensics",
-        icon: <MousePointer2 className="w-6 h-6" />,
-        content: "Ensure your creative survives the platform constraints before a single dollar is spent. We deconstruct the UI layer to protect your narrative.",
-        subsections: [
-            {
-                subtitle: "Safe Zone Overlays",
-                desc: "Toggle interactive overlays for TikTok, IG, and YouTube to ensure CTA buttons aren't occluded by native sidebar navigation."
-            },
-            {
-                subtitle: "Regulatory Risk Scoring",
-                desc: "Scores > 70 indicate high algorithmic ban risk. Review the 'Diagnostic' section for potential policy-triggering visual cues."
-            }
-        ]
-    }
+        title: 'Creative Review',
+        body: 'Remove opinion. Align on structure.',
+    },
+    {
+        title: 'Client Presentation',
+        body: 'Defend decisions with clarity, not instinct.',
+    },
 ];
 
-const RELATED_ARTICLES = [
-    { title: "v2.0 Neural Engine Overview", href: "/docs/v1-overview" },
-    { title: "The Forensic QA Checklist", href: "/docs/qa-checklist" },
-    { title: "Standard Schema v1.0", href: "/docs/schema-contract" },
-    { title: "Release Archive", href: "/docs/release-notes" }
+const STEPS = [
+    {
+        title: 'Step 1',
+        body: 'Upload your ad',
+    },
+    {
+        title: 'Step 2',
+        body: 'Visual Decompiler analyzes structure, hierarchy, and intent',
+    },
+    {
+        title: 'Step 3',
+        body: 'Receive a structured dossier designed for decision-making',
+    },
+];
+
+const OUTPUTS = [
+    {
+        title: 'Primary Scores',
+        body: 'Clarity, Attention, Cohesion, Intent, Distinction',
+    },
+    {
+        title: 'Attention Path',
+        body: 'A mapped sequence of how the eye moves',
+    },
+    {
+        title: 'Structural Signals',
+        body: 'Hierarchy, balance, contrast, density, focus integrity',
+    },
+    {
+        title: 'Strategic Read',
+        body: 'What the work is doing, why it works, and where it breaks',
+    },
+    {
+        title: 'Confidence Index',
+        body: 'Final structured verdict',
+    },
 ];
 
 export default function UserGuidePage() {
     return (
-        <main className="bg-[#050505] min-h-screen text-white">
+        <main className="min-h-screen bg-[#050505] text-[#F6F1E7]">
             <UnifiedSovereignHeader forceDark />
-            
-            <section className="pt-48 pb-32 px-6 lg:pt-64 lg:pb-64">
-                <div className="max-w-[1400px] mx-auto">
-                    
-                    {/* Navigation Breadcrumb */}
-                    <motion.div 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="flex items-center gap-4 mb-24 text-[10px] font-black uppercase tracking-[0.4em] text-white/30"
+
+            <section className="px-6 pt-30 pb-28 lg:pt-36 lg:pb-36">
+                <div className="mx-auto max-w-[1400px]">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        className="max-w-[900px]"
                     >
-                        <Link href="/vault" className="hover:text-white transition-colors">Intelligence Hub</Link>
-                        <div className="w-1 h-1 rounded-full bg-white/20" />
-                        <span className="text-white">User Guide</span>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">User Guide</p>
+                        <h1 className="mt-5 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#F6F1E7]">
+                            Using Visual Decompiler
+                        </h1>
+                        <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78">
+                            How to turn creative instinct into decisions that move forward.
+                        </p>
                     </motion.div>
 
-                    {/* Hero Branding */}
-                    <div className="mb-48">
-                        <motion.p 
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="text-[12px] font-black uppercase tracking-[0.6em] text-[#00E5FF] mb-10"
+                    <div className="mt-16 border-t border-white/10 pt-14 lg:mt-20 lg:pt-16">
+                        <motion.div
+                            initial={{ opacity: 0, y: 18 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-80px' }}
+                            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                         >
-                            Training Protocol 001
-                        </motion.p>
-                        <motion.h1 
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1, duration: 0.8 }}
-                            className="text-[10vw] lg:text-[7vw] font-black leading-[0.85] tracking-[-0.05em] text-white mb-12 uppercase max-w-[12ch]"
-                        >
-                            The Agency <br />
-                            <span className="text-white/20">Handoff.</span>
-                        </motion.h1>
-                        <motion.p 
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.3 }}
-                            className="text-xl lg:text-2xl text-white/50 leading-relaxed max-w-3xl font-medium"
-                        >
-                            Welcome to the new standard in advertising intelligence. 
-                            Move from browsing surface-level insights to executing forensic deconstruction.
-                        </motion.p>
-                    </div>
-
-                    {/* Core Intelligence Briefs */}
-                    <div className="space-y-48 lg:space-y-64">
-                        {SECTIONS.map((section, idx) => (
-                            <motion.div 
-                                key={idx}
-                                initial={{ opacity: 0, y: 40 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.8 }}
-                            >
-                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 border-t border-white/10 pt-16">
-                                    <div className="lg:col-span-5">
-                                        <div className="flex items-center gap-6 mb-12">
-                                            <div className="text-[#00E5FF]">
-                                                {section.icon}
-                                            </div>
-                                            <h2 className="text-4xl font-black text-white uppercase tracking-[-0.03em]">{section.title}</h2>
-                                        </div>
-                                        <p className="text-[20px] lg:text-[24px] text-white font-medium leading-[1.5] mb-12">
-                                            {section.content}
-                                        </p>
-                                    </div>
-                                    
-                                    <div className="lg:col-span-6 lg:col-start-7">
-                                        <div className="space-y-16">
-                                            {section.subsections.map((sub, sIdx) => (
-                                                <div key={sIdx} className="space-y-5">
-                                                    <h3 className="text-[12px] font-black uppercase tracking-[0.4em] text-[#00E5FF]">{sub.subtitle}</h3>
-                                                    <p className="text-[18px] text-white/50 leading-relaxed max-w-xl">{sub.desc}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-
-                    {/* Process UI */}
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.98 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        className="mt-64 p-12 lg:p-24 bg-white/5 rounded-[4rem] border border-white/10 backdrop-blur-3xl"
-                    >
-                        <div className="flex items-center gap-4 mb-16">
-                            <TrendingUp className="w-6 h-6 text-[#00E5FF]" />
-                            <h2 className="text-3xl font-black uppercase tracking-[-0.02em] text-white">Execution Cycle</h2>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-12">
-                            {['Ingest competitor asset', 'Identify Persuasion DNA', 'Deconstruct Strategic Move'].map((step, i) => (
-                                <div key={i} className="space-y-6 relative">
-                                    <span className="text-[10px] font-black text-[#00E5FF] block uppercase tracking-[0.4em]">Phase 0{i + 1}</span>
-                                    <p className="text-2xl font-black text-white uppercase leading-tight">{step}</p>
-                                    {i < 2 && (
-                                        <div className="hidden lg:block absolute -right-6 top-1/2 -translate-y-1/2 text-white/10">
-                                            <ArrowRight size={32} />
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    </motion.div>
-
-                    {/* Resources Area */}
-                    <div className="pt-32 mt-64 border-t border-white/10">
-                        <div className="flex flex-col lg:flex-row justify-between items-start gap-16">
-                            <div className="max-w-sm">
-                                <h2 className="text-[12px] font-black uppercase tracking-[0.6em] text-[#00E5FF] mb-8">Intelligence Archive</h2>
-                                <p className="text-white/40 text-lg leading-relaxed">
-                                    Access the full technical specifications of the Visual Decompiler OS pipeline.
-                                </p>
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 flex-1 w-full max-w-2xl">
-                                {RELATED_ARTICLES.map((article) => (
-                                    <Link
-                                        key={article.title}
-                                        href={article.href}
-                                        className="group flex items-center justify-between p-8 bg-white/5 border border-white/10 rounded-[2rem] hover:bg-[#00E5FF] transition-all duration-500"
+                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Where this is used</p>
+                            <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+                                {USE_CASES.map((item, idx) => (
+                                    <motion.article
+                                        key={item.title}
+                                        initial={{ opacity: 0, y: 16 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, margin: '-60px' }}
+                                        transition={{ duration: 0.6, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                                        className="rounded-[20px] border border-white/10 bg-white/[0.02] p-6"
                                     >
-                                        <span className="text-[12px] font-black uppercase tracking-[0.2em] text-white group-hover:text-black transition-colors">{article.title}</span>
-                                        <ArrowRight className="w-5 h-5 text-white/40 group-hover:text-black group-hover:translate-x-1 transition-all" />
-                                    </Link>
+                                        <h2 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]">{item.title}</h2>
+                                        <p className="mt-4 text-[16px] leading-[1.7] text-[#F6F1E7]/75">{item.body}</p>
+                                    </motion.article>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 18 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-80px' }}
+                            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                            className="mt-16"
+                        >
+                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">How it works</p>
+                            <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+                                {STEPS.map((step, idx) => (
+                                    <motion.article
+                                        key={step.title}
+                                        initial={{ opacity: 0, y: 16 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, margin: '-60px' }}
+                                        transition={{ duration: 0.6, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                                        className="rounded-[20px] border border-white/10 bg-white/[0.02] p-6"
+                                    >
+                                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">{step.title}</p>
+                                        <p className="mt-4 text-[16px] leading-[1.7] text-[#F6F1E7]/78">{step.body}</p>
+                                    </motion.article>
+                                ))}
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 18 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-80px' }}
+                            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                            className="mt-16"
+                        >
+                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">What you get</p>
+                            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                                {OUTPUTS.map((output, idx) => (
+                                    <motion.article
+                                        key={output.title}
+                                        initial={{ opacity: 0, y: 16 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, margin: '-60px' }}
+                                        transition={{ duration: 0.6, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                                        className="rounded-[20px] border border-white/10 bg-[#101010] p-6"
+                                    >
+                                        <h3 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]">
+                                            {output.title}
+                                        </h3>
+                                        <p className="mt-4 text-[16px] leading-[1.7] text-[#F6F1E7]/75">{output.body}</p>
+                                    </motion.article>
+                                ))}
+                            </div>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 18 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-80px' }}
+                            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                            className="mt-16 rounded-[24px] border border-white/10 bg-white/[0.02] p-8"
+                        >
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">How to use it properly</p>
+                            <ul className="mt-6 space-y-4 text-[16px] leading-[1.7] text-[#F6F1E7]/78">
+                                <li>– align internal teams faster</li>
+                                <li>– remove subjective feedback</li>
+                                <li>– present decisions clearly to clients</li>
+                                <li>– reduce revision cycles</li>
+                            </ul>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 18 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-80px' }}
+                            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                            className="mt-10 rounded-[24px] border border-[#C1A674]/25 bg-[#0F0F0F] p-8"
+                        >
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">What not to do</p>
+                            <ul className="mt-6 space-y-4 text-[16px] leading-[1.7] text-[#F6F1E7]/78">
+                                <li>– an idea generator</li>
+                                <li>– a creative shortcut</li>
+                                <li>– a replacement for judgment</li>
+                            </ul>
+                            <p className="mt-6 text-[16px] leading-[1.7] text-[#F6F1E7]/75">
+                                It is a system for explaining and defending work — not replacing it.
+                            </p>
+                        </motion.div>
+
+                        <motion.p
+                            initial={{ opacity: 0, y: 18 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-80px' }}
+                            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                            className="mt-12 max-w-[900px] text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]"
+                        >
+                            Visual Decompiler is most powerful when used in real decision environments — not in isolation.
+                        </motion.p>
                     </div>
                 </div>
             </section>
-            
+
             <FooterStartNow />
         </main>
     );
