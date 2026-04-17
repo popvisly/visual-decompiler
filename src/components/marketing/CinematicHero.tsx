@@ -68,14 +68,6 @@ export default function CinematicHero() {
                             <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent)]" />
 
                             <div className="relative mx-auto max-w-[560px] text-center">
-                                <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-4 py-1.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-[#F3EEE3]">
-                                    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z" />
-                                        <path d="m21 21-4.3-4.3" />
-                                    </svg>
-                                    Scan
-                                </div>
-
                                 <h2 className="mt-6 text-[28px] font-semibold leading-[1.25] tracking-[-0.015em] text-[#F3EEE3] md:text-[36px]">
                                     The system agencies use to defend creative decisions — and get work approved faster.
                                 </h2>
