@@ -77,14 +77,11 @@ export default function CinematicHero() {
                                 </div>
 
                                 <h2 className="mt-6 text-[28px] font-semibold leading-[1.25] tracking-[-0.015em] text-[#F3EEE3] md:text-[36px]">
-                                    The sovereign system for elite agencies.
+                                    The system agencies use to defend creative decisions — and get work approved faster.
                                 </h2>
 
                                 <p className="mt-4 text-[19px] leading-[1.6] tracking-[-0.01em] text-[#F3EEE3] md:text-[22px]">
-                                    Read the architecture of persuasion —
-                                    <br className="hidden md:block" />
-                                    <span className="md:hidden"> </span>
-                                    and defend high-stakes creative with clarity.
+                                    Turn creative instinct into decisions clients approve.
                                 </p>
 
                                 <div className="mt-8 flex flex-col items-center">

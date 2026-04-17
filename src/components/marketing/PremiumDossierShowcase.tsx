@@ -27,6 +27,8 @@ export default function PremiumDossierShowcase() {
                             Not a chat response.
                             <br />
                             A structured document built for presentation, alignment, and decision-making.
+                            <br />
+                            Built for the moment decisions are made.
                         </p>
                     </motion.div>
 

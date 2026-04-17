@@ -19,16 +19,13 @@ export default function HowItWorks() {
                         Make the work make sense.
                     </h2>
                     <p className="text-[18px] leading-[1.7] text-[#9a9a94] max-w-[520px]">
-                        You already know when something works.
+                        Creative work doesn't fail because it's bad.
                         <br />
                         <br />
-                        Visual Decompiler shows you why.
+                        It fails because it can't be explained.
                         <br />
                         <br />
-                        Upload your ad and receive a structured breakdown of composition, hierarchy, tone, and strategy — translated into language a client understands.
-                        <br />
-                        <br />
-                        No guesswork. No filler. Just clarity you can stand behind.
+                        Visual Decompiler turns instinct into structured reasoning — so clients understand, align, and approve.
                     </p>
                 </motion.div>
 

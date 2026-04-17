@@ -5,15 +5,15 @@ import { motion } from 'framer-motion';
 const FIT_BLOCKS = [
     {
         title: 'Pre-Pitch',
-        body: 'Deconstruct references and competitor work in minutes.',
+        body: 'Break down references before the room does.',
     },
     {
         title: 'Creative Review',
-        body: 'Align teams using shared visual language.',
+        body: 'Remove opinion. Align on structure.',
     },
     {
         title: 'Client Presentation',
-        body: 'Present decisions with structured reasoning.',
+        body: 'Defend decisions with clarity, not instinct.',
     },
 ];
 

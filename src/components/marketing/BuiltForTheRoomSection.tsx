@@ -40,11 +40,17 @@ export default function BuiltForTheRoomSection() {
                     </div>
 
                     <h2 className="max-w-4xl text-4xl font-semibold uppercase leading-[0.95] tracking-[-0.03em] text-white sm:text-5xl md:text-6xl">
-                        Built for the moments that decide the work.
+                        Where creative decisions actually get made.
                     </h2>
 
                     <p className="mt-6 max-w-2xl text-base leading-8 text-white/70 sm:text-lg">
-                        Visual Decompiler is designed for pitch rooms, internal reviews, and client conversations where instinct alone is not enough.
+                        Creative reviews stall when everything is subjective.
+                        <br />
+                        <br />
+                        Feedback turns into opinion. Rounds drag. Decisions slow.
+                        <br />
+                        <br />
+                        Visual Decompiler replaces opinion with structure — so teams align faster and clients move forward.
                     </p>
                 </motion.div>
 
@@ -83,7 +89,7 @@ export default function BuiltForTheRoomSection() {
                 >
                     <div>
                         <div className="text-[10px] uppercase tracking-[0.28em] text-[#C1A674]">Positioning</div>
-                        <p className="mt-3 text-lg leading-8 text-white/82 sm:text-xl">A system for visual due diligence.</p>
+                        <p className="mt-3 text-lg leading-8 text-white/82 sm:text-xl">Less back-and-forth. Faster approvals. Stronger outcomes.</p>
                     </div>
 
                     <Link

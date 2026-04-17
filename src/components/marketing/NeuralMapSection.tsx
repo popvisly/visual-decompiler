@@ -35,9 +35,12 @@ export default function NeuralMapSection() {
                     <p className="mb-6 text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674]">
                         Platform frame
                     </p>
-                    <h2 className="mb-8 max-w-[14ch] text-[10vw] font-black uppercase leading-[0.88] tracking-[-0.04em] text-[#F6F1E7] lg:text-[72px]">
+                    <h2 className="mb-4 max-w-[14ch] text-[10vw] font-black uppercase leading-[0.88] tracking-[-0.04em] text-[#F6F1E7] lg:text-[72px]">
                         A complete creative intelligence system.
                     </h2>
+                    <p className="max-w-[680px] text-[16px] leading-[1.7] text-white/72">
+                        A structured system for explaining why the work works.
+                    </p>
                 </motion.div>
 
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
