@@ -142,9 +142,9 @@ export default function HowItWorks() {
 
                 <div className="mt-0 grid grid-cols-1 gap-16 md:grid-cols-3 lg:gap-12">
                     {[
-                        { n: '1', title: 'Upload the Work', detail: 'Your concept, your layout, your frame.' },
-                        { n: '2', title: 'Decompile', detail: 'Analyze the creative at a structural level — beyond surface description.' },
-                        { n: '3', title: 'Present with Authority', detail: 'Receive a structured read — ready for decks, internal reviews, and client conversations.' },
+                        { n: '1', title: 'Upload the Ad', detail: 'Bring in your ad, reference, or campaign frame.' },
+                        { n: '2', title: 'Decompile', detail: 'Deconstruct visual structure, hierarchy, and intent — so the reasoning is clear and defensible.' },
+                        { n: '3', title: 'Present with Authority', detail: 'Walk in with a decision-ready dossier built to align teams and get work approved faster.' },
                     ].map((step, idx) => (
                         <motion.div
                             key={step.n}
