@@ -69,7 +69,7 @@ export default function DossierPreview() {
                         <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Dossier Layer</p>
                         <CanonicalDossierArtifact mode="attention-zoom" />
                     </div>
-                    <div className="lg:-mt-5">
+                    <div className="lg:pt-9">
                         <DossierFlowMapCard />
                     </div>
                 </motion.div>
