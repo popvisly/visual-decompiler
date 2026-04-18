@@ -15,7 +15,7 @@ export default function ProductHero() {
                     className="max-w-[900px]"
                 >
                     <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Product</p>
-                    <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#F6F1E7]">
+                    <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#F6F1E7]" style={{ wordSpacing: '0.12em' }}>
                         A system for visual due diligence.
                     </h1>
 
