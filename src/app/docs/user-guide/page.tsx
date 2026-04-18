@@ -78,8 +78,8 @@ export default function UserGuidePage() {
         <main className="min-h-screen bg-[#050505] text-[#F6F1E7]">
             <UnifiedSovereignHeader forceDark />
 
-            <section className="px-6 pt-30 pb-28 lg:pt-36 lg:pb-36">
-                <div className="mx-auto max-w-[1400px]">
+            <section className="pt-30 pb-28 lg:pt-36 lg:pb-36">
+                <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
