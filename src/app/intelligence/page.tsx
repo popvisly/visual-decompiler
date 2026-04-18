@@ -12,7 +12,7 @@ export default async function IntelligenceIndex() {
     const posts = await getAllPosts();
 
     return (
-        <div className="max-w-[1400px] mx-auto px-6">
+        <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
             <div className="mb-20">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Intelligence Hub</p>
                 <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black uppercase text-[#FBF7EF] tracking-[-0.045em] leading-[0.9] max-w-[14ch]">
