@@ -154,7 +154,7 @@ export default function HowItWorks() {
                             transition={{ duration: 0.8, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
                         >
                             <div className="flex items-start gap-5">
-                                <span className="text-[48px] font-black leading-none text-[#F6F1E7]/[0.06]">{step.n}</span>
+                                <span className={`text-[48px] font-black leading-none ${idx === 0 ? 'text-[#F28C28]/70' : idx === 1 ? 'text-[#F7B43A]/70' : 'text-[#FFD600]/70'}`}>{step.n}</span>
                                 <div>
                                     <h3 className="mb-2 text-[18px] font-black uppercase tracking-[-0.01em] text-[#F6F1E7]">{step.title}</h3>
                                     <p className="text-[15px] leading-[1.65] text-[#9a9a94]">{step.detail}</p>
