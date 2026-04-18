@@ -10,8 +10,8 @@ export default function AboutPage() {
             <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Open Sample Read', href: '/share/sample-dossier' }} />
 
             {/* Hero */}
-            <section className="px-6 pt-30 pb-24 lg:pt-36 lg:pb-28">
-                <div className="mx-auto max-w-[1400px]">
+            <section className="pt-30 pb-24 lg:pt-36 lg:pb-28">
+                <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
