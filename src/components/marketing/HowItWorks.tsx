@@ -129,7 +129,7 @@ export default function HowItWorks() {
                                 Visual Decompiler turns instinct into structured reasoning — so clients understand, align, and approve.
                             </p>
                         </div>
-                        <div className="lg:pt-5">
+                        <div className="">
                             <CoreValueRadar />
                         </div>
                     </div>
