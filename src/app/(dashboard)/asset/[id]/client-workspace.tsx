@@ -4346,13 +4346,13 @@ export default function AssetWorkspace({
                                                             <button
                                                                 key={v}
                                                                 onClick={() => setDecisionVerdict(v)}
-                                                                className={`border px-6 py-5 text-[13px] font-semibold uppercase tracking-[0.26em] transition-all ${
+                                                                className={`flex items-center justify-center border px-6 py-5 text-[13px] font-semibold uppercase tracking-[0.26em] transition-all ${
                                                                     decisionVerdict === v
                                                                         ? 'border-[#D4A574] bg-[#D4A574] text-black'
                                                                         : 'border-white/15 bg-[#151310] text-[#D6D0C6]/78 hover:border-[#D4A574]/35 hover:text-[#F3F1ED]'
                                                                 }`}
                                                             >
-                                                                <span className="inline-flex items-center gap-2">
+                                                                <span className="inline-flex w-full items-center justify-center gap-2">
                                                                     <span aria-hidden>{v === 'Ship' ? '✔' : v === 'Revise' ? '✎' : '✕'}</span>
                                                                     <span>{v}</span>
                                                                 </span>

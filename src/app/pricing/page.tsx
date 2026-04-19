@@ -67,7 +67,7 @@ export default function PricingPage() {
                         className="mt-5 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-white"
                     >
                         Start free. <br />
-                        <span className="text-white/20">Scale when it matters.</span>
+                        <span className="text-[#D2B176]">Scale when it matters.</span>
                     </motion.h1>
                     
                     <motion.p
