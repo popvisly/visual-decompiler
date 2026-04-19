@@ -1336,6 +1336,26 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
         title: text.trim().split(' — ')[0] || ''
     }));
 
+    const toParagraphs = (raw: string): string[] => {
+        const normalized = raw.replace(/\s+/g, ' ').trim();
+        if (!normalized) return [];
+
+        const manual = raw
+            .split(/\n+/)
+            .map((p) => p.trim())
+            .filter(Boolean);
+        if (manual.length > 1) return manual;
+
+        const sentences = normalized.split(/(?<=[.!?])\s+/).filter(Boolean);
+        if (sentences.length <= 2) return [normalized];
+
+        const chunks: string[] = [];
+        for (let i = 0; i < sentences.length; i += 2) {
+            chunks.push(sentences.slice(i, i + 2).join(' ').trim());
+        }
+        return chunks;
+    };
+
     return (
         <div className="space-y-8">
             {/* Semiotic Subtext Header Card */}
@@ -1348,10 +1368,12 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
 
                     {/* Overture */}
                     {overture && (
-                        <div className="max-h-[400px] overflow-y-auto">
-                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
-                                {overture}
-                            </p>
+                        <div className="max-h-[400px] space-y-4 overflow-y-auto pr-1">
+                            {toParagraphs(overture).map((paragraph, pi) => (
+                                <p key={pi} className="text-[13px] leading-relaxed text-[#D6D0C6]/72">
+                                    {paragraph}
+                                </p>
+                            ))}
                         </div>
                     )}
                 </div>
@@ -1386,7 +1408,7 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                     <AnalyticWaveMap index={i} isActive={activeAct === block.label} />
                                     <div className="flex-1 pt-1">
                                         <div className="max-w-[78ch] space-y-4">
-                                            {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
+                                            {toParagraphs(block.text).map((paragraph, pi) => (
                                                 <p key={pi} className="text-[15px] font-light leading-8 text-[#D6D0C6]">
                                                     {paragraph.trim()}
                                                 </p>
@@ -1405,7 +1427,7 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                     </h3>
                                     <div className="flex-1 pt-6">
                                         <div className="max-w-[78ch] space-y-4">
-                                            {block.text.split('\n').filter(p => p.trim()).map((paragraph, pi) => (
+                                            {toParagraphs(block.text).map((paragraph, pi) => (
                                                 <p key={pi} className="text-[15px] font-light leading-9 text-[#D6D0C6]">
                                                     {paragraph.trim()}
                                                 </p>
