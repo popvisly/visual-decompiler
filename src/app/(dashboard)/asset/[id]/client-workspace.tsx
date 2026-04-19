@@ -1718,9 +1718,8 @@ export default function AssetWorkspace({
     });
     const dossierPreparedFor = exportClientName?.trim() || 'Client Review';
     const dossierModeLabel = agency?.is_whitelabel_active ? 'White Label Ready' : 'Internal Review';
-    const dossierCampaignName = asset.brand?.name
-        ? `${asset.brand.name} — ${asset.id.toUpperCase().slice(0, 8)}`
-        : `Campaign — ${asset.id.toUpperCase().slice(0, 8)}`;
+    const dossierCampaignBrand = asset.brand?.name || 'Campaign';
+    const dossierCampaignCode = asset.id.toUpperCase().slice(0, 8);
     const failureReasons = qualityFailureReasons({
         confidenceScore,
         frictionScore,
@@ -3223,7 +3222,10 @@ export default function AssetWorkspace({
                                                              </div>
 
                                                              <div>
-                                                                 <h2 className="text-[28px] font-semibold uppercase leading-[0.96] tracking-[-0.024em] text-[#F3F1ED] whitespace-nowrap sm:text-[36px] lg:text-[42px]">{dossierCampaignName}</h2>
+                                                                 <h2 className="text-[28px] font-semibold uppercase leading-[0.96] tracking-[-0.024em] text-[#F3F1ED] whitespace-nowrap sm:text-[36px] lg:text-[42px]">
+                                                                     <span>{dossierCampaignBrand}</span>
+                                                                     <span className="ml-2 font-medium text-[#D6D0C6]/66">— {dossierCampaignCode}</span>
+                                                                 </h2>
                                                              </div>
 
                                                              <div className="grid gap-4 text-[12px] sm:grid-cols-3">
