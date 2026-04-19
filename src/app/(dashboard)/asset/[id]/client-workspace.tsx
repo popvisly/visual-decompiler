@@ -4401,9 +4401,11 @@ export default function AssetWorkspace({
                                                         <p className="font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Verdict</p>
                                                         <p className="font-semibold uppercase text-[#D4A574]">{decisionVerdict || 'Pending'}</p>
                                                     </div>
-                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 pt-4">
+                                                    <div className="pt-4">
                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Operating Status</p>
-                                                        <p className="text-[16px] font-semibold leading-tight text-[#F3F1ED]">{integratedRecommendation.recommendedDirection}</p>
+                                                        <p className="mt-3 text-[16px] font-semibold leading-[1.5] text-[#F3F1ED]">
+                                                            {integratedRecommendation.recommendedDirection}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
