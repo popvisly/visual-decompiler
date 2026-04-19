@@ -4389,21 +4389,21 @@ export default function AssetWorkspace({
                                                     </button>
                                                 </div>
                                                 <div className="border border-white/10 bg-[#151310] p-8">
-                                                    <div className="grid grid-cols-12 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/55">
-                                                        <p className="col-span-4">Field</p>
-                                                        <p className="col-span-8">Value</p>
+                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/55">
+                                                        <p>Field</p>
+                                                        <p>Value</p>
                                                     </div>
-                                                    <div className="grid grid-cols-12 border-b border-white/10 py-4 text-[13px]">
-                                                        <p className="col-span-4 font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Timestamp</p>
-                                                        <p className="col-span-8 text-[#D6D0C6]/70">{decisionSummaryTimestamp}</p>
+                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-white/10 py-4 text-[13px]">
+                                                        <p className="font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Timestamp</p>
+                                                        <p className="text-[#D6D0C6]/70">{decisionSummaryTimestamp}</p>
                                                     </div>
-                                                    <div className="grid grid-cols-12 border-b border-white/10 py-4 text-[13px]">
-                                                        <p className="col-span-4 font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Verdict</p>
-                                                        <p className="col-span-8 font-semibold uppercase text-[#D4A574]">{decisionVerdict || 'Pending'}</p>
+                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-white/10 py-4 text-[13px]">
+                                                        <p className="font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Verdict</p>
+                                                        <p className="font-semibold uppercase text-[#D4A574]">{decisionVerdict || 'Pending'}</p>
                                                     </div>
-                                                    <div className="grid grid-cols-12 pt-4">
-                                                        <p className="col-span-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Operating Status</p>
-                                                        <p className="col-span-8 text-[16px] font-semibold leading-tight text-[#F3F1ED]">{integratedRecommendation.recommendedDirection}</p>
+                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 pt-4">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Operating Status</p>
+                                                        <p className="text-[16px] font-semibold leading-tight text-[#F3F1ED]">{integratedRecommendation.recommendedDirection}</p>
                                                     </div>
                                                 </div>
                                             </div>
