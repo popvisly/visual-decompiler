@@ -21,63 +21,69 @@ function BaseIcon({ size = 32, className, children, ...props }: IconProps) {
   );
 }
 
+// Clean geometric frame mark
 export function MarkFrameIcon({ size, className, ...props }: IconProps) {
   return (
     <BaseIcon size={size} className={className} {...props}>
-      <rect x="6" y="6" width="16" height="16" stroke="currentColor" strokeWidth="1.9" rx="0.7" />
-      <path d="M6 3v2M6 23v2M22 3v2M22 23v2M3 6h2M23 6h2M3 22h2M23 22h2" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+      <rect x="4.5" y="4.5" width="19" height="19" rx="4.2" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M8.5 14h11M14 8.5v11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
     </BaseIcon>
   );
 }
 
+// Observer: radial striped disc
 export function DotReticleIcon({ size, className, ...props }: IconProps) {
   return (
     <BaseIcon size={size} className={className} {...props}>
-      <circle cx="14" cy="14" r="2.6" fill="currentColor" />
-      <path d="M14 4.5v2.6M14 20.9v2.6M4.5 14h2.6M20.9 14h2.6" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
-      <circle cx="14" cy="14" r="7.2" stroke="currentColor" strokeWidth="1.8" strokeDasharray="0.2 4.8" strokeLinecap="round" />
+      <circle cx="14" cy="14" r="8.9" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M8 9.5c2.1-.9 4.2-.9 6.3 0 2.1.9 4.2.9 6.3 0" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M7.7 13.8c2.2-.95 4.3-.95 6.5 0 2.2.95 4.3.95 6.5 0" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <path d="M8 18.1c2.1-.9 4.2-.9 6.3 0 2.1.9 4.2.9 6.3 0" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="14" cy="14" r="1.5" fill="currentColor" />
     </BaseIcon>
   );
 }
 
+// Strategic: stepped parallel bands
 export function BaselineTicksIcon({ size, className, ...props }: IconProps) {
   return (
     <BaseIcon size={size} className={className} {...props}>
-      <path d="M3.5 14h21" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
-      <path d="M8.8 11.8v4.4M14 10.8v6.4M18.6 11.9v4.2M21.6 12.4v3.2" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+      <path d="M5 7.5h14.8c2 0 3.2 1.2 3.2 3.2 0 2-1.2 3.2-3.2 3.2H5z" fill="currentColor" />
+      <path d="M5 12.4h12.3c2 0 3.2 1.2 3.2 3.2 0 2-1.2 3.2-3.2 3.2H5z" fill="currentColor" opacity="0.9" />
+      <path d="M5 17.3h9.9c2 0 3.2 1.2 3.2 3.2 0 2-1.2 3.2-3.2 3.2H5z" fill="currentColor" opacity="0.82" />
     </BaseIcon>
   );
 }
 
+// Professional: interlocked path mark
 export function SignalWaveIcon({ size, className, ...props }: IconProps) {
   return (
     <BaseIcon size={size} className={className} {...props}>
-      <path
-        d="M2.5 18.5c2.7 0 4.3-.8 5.8-3 1.4-2 2.2-7.5 5.8-7.5 3.2 0 3.8 5.6 5.2 7.6 1.1 1.6 2.6 2.9 6.2 2.9"
-        stroke="currentColor"
-        strokeWidth="2.1"
-        strokeLinecap="round"
-      />
+      <path d="M4.8 19.6c2.8 0 4.4-1.5 5.7-4.3 1.3-2.7 2.8-4.3 5.7-4.3h1.9v4h-1.9c-1 0-1.6.5-2.2 1.8-1.3 2.8-2.9 4.3-5.7 4.3H4.8z" fill="currentColor" />
+      <path d="M23.2 8.4c-2.8 0-4.4 1.5-5.7 4.3-1.3 2.7-2.8 4.3-5.7 4.3h-1.9v-4h1.9c1 0 1.6-.5 2.2-1.8 1.3-2.8 2.9-4.3 5.7-4.3h3.5z" fill="currentColor" opacity="0.88" />
     </BaseIcon>
   );
 }
 
+// Focus: circular lens with stem
 export function FocusLoopIcon({ size, className, ...props }: IconProps) {
   return (
     <BaseIcon size={size} className={className} {...props}>
-      <circle cx="16.5" cy="11.5" r="5.2" stroke="currentColor" strokeWidth="2.0" />
-      <path d="M12.8 15.2 7 21" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" />
-      <path d="M15.1 12.9 18 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="12.2" cy="12.2" r="6.1" stroke="currentColor" strokeWidth="1.9" />
+      <path d="M16.9 16.9 23 23" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+      <circle cx="12.2" cy="12.2" r="1.9" fill="currentColor" />
     </BaseIcon>
   );
 }
 
+// Agency: precision dial + directional notch
 export function RadialDialIcon({ size, className, ...props }: IconProps) {
   return (
     <BaseIcon size={size} className={className} {...props}>
-      <circle cx="14" cy="14" r="9.2" stroke="currentColor" strokeWidth="1.9" strokeDasharray="0.2 4.2" strokeLinecap="round" />
-      <path d="m14 4.7 2.9 2.1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      <circle cx="14" cy="14" r="2.2" fill="currentColor" />
+      <circle cx="14" cy="14" r="9.2" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M14 6.6a7.4 7.4 0 1 1-5.23 2.17" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="m7.25 8.2 1.75 2.9 3.05-1.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="14" cy="14" r="1.7" fill="currentColor" />
     </BaseIcon>
   );
 }
