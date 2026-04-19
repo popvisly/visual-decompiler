@@ -68,9 +68,11 @@ export default function BuiltForTheRoomSection() {
                             <div className="relative">
                                 <div className="text-[10px] uppercase tracking-[0.28em] text-[#C1A674]">{card.label}</div>
 
-                                <h3 className="mt-5 text-2xl font-semibold uppercase leading-tight tracking-[-0.02em] text-white">
-                                    {card.title}
-                                </h3>
+                                <div className="mt-5 rounded-2xl border border-[#C1A674]/28 bg-[linear-gradient(180deg,rgba(193,166,116,0.12),rgba(18,18,18,0.92)_72%)] px-4 py-4">
+                                    <h3 className="text-2xl font-semibold uppercase leading-tight tracking-[-0.02em] text-[#F8F3E9]">
+                                        {card.title}
+                                    </h3>
+                                </div>
 
                                 <p className="mt-5 text-sm leading-7 text-white/62 sm:text-[15px]">{card.lead}</p>
 
