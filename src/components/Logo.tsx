@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
+import vdMiniLogo from '../../Logo/vd_mini_logo.png';
 
 interface LogoProps {
     href?: string;
@@ -31,18 +33,31 @@ export default function Logo({
                   : 'group-hover:text-[#FF003C]';
 
     const content = (
-        <div className={`group flex flex-col text-left ${className}`}>
-            <h1
-                className={`text-[16px] lg:text-[18px] font-black uppercase tracking-[0.22em] transition-colors ${forceDark ? 'text-white' : 'text-black'} ${hoverClass}`}
-            >
-                Visual Decompiler
-            </h1>
-            <p
-                className={`mt-0.5 font-bold uppercase tracking-[0.3em] transition-colors ${forceDark ? 'text-white/40' : 'text-[#8A8A8A]'}`}
-                style={{ fontSize: '9px' }}
-            >
-                {sublabel}
-            </p>
+        <div className={`group flex items-center gap-3 text-left ${className}`}>
+            <Image
+                src={vdMiniLogo}
+                alt="Visual Decompiler mark"
+                width={38}
+                height={38}
+                className="h-9 w-9 rounded-full object-cover"
+                priority
+            />
+            <div className="flex flex-col leading-[0.9]">
+                <h1
+                    className={`text-[16px] lg:text-[18px] font-black uppercase tracking-[0.22em] transition-colors ${forceDark ? 'text-white' : 'text-black'} ${hoverClass}`}
+                >
+                    <span className="block">Visual</span>
+                    <span className="block mt-0.5">Decompiler</span>
+                </h1>
+                {sublabel ? (
+                    <p
+                        className={`mt-1 font-bold uppercase tracking-[0.3em] transition-colors ${forceDark ? 'text-white/40' : 'text-[#8A8A8A]'}`}
+                        style={{ fontSize: '9px' }}
+                    >
+                        {sublabel}
+                    </p>
+                ) : null}
+            </div>
         </div>
     );
 

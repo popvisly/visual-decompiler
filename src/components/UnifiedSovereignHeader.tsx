@@ -97,7 +97,7 @@ export default function UnifiedSovereignHeader({
 
                     {/* ── Left: Logo ── */}
                     <div className="flex flex-1 items-center py-1">
-                        <Logo href="/" sublabel="BUILT FOR CREATIVES" forceDark={forceDark} className="origin-left scale-90 lg:scale-100 transition-transform" />
+                        <Logo href="/" sublabel="" forceDark={forceDark} className="origin-left scale-90 lg:scale-100 transition-transform" />
                     </div>
 
                     {/* ── Center: Desktop Pillars ── */}
