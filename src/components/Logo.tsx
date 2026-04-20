@@ -48,12 +48,12 @@ export default function Logo({
                 <h1
                     className={`text-[16px] lg:text-[18px] font-black uppercase tracking-[0.22em] ${forceDark ? 'text-white' : 'text-black'}`}
                 >
-                    <span className={`block transition-colors ${visualHoverClass}`}>Visual</span>
-                    <span className={`block mt-0.5 transition-colors ${decompilerHoverClass}`}>Decompiler</span>
+                    <span className={`block transition-colors duration-500 ease-out ${visualHoverClass}`}>Visual</span>
+                    <span className={`block mt-0.5 transition-colors duration-500 ease-out ${decompilerHoverClass}`}>Decompiler</span>
                 </h1>
                 {sublabel ? (
                     <p
-                        className={`mt-1 font-bold uppercase tracking-[0.3em] transition-colors ${forceDark ? 'text-white/40' : 'text-[#8A8A8A]'}`}
+                        className={`mt-1 font-bold uppercase tracking-[0.3em] transition-colors duration-500 ease-out ${forceDark ? 'text-white/40' : 'text-[#8A8A8A]'}`}
                         style={{ fontSize: '9px' }}
                     >
                         {sublabel}
