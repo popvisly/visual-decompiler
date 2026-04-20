@@ -62,7 +62,6 @@ export default function UnifiedSovereignHeader({
             { key: 'product', label: 'Product', href: '/product' },
             { key: 'pricing', label: 'Pricing', href: '/pricing' },
             { key: 'intelligence', label: 'Insights', href: '/intelligence' },
-            { key: 'vault', label: 'Vault', href: '/vault' },
             { key: 'about', label: 'About', href: '/about' },
             { key: 'help', label: 'Help Center', href: '/docs/user-guide' },
         ]
@@ -136,7 +135,17 @@ export default function UnifiedSovereignHeader({
 
                     {/* ── Right: Utility Bar ── */}
                     <div className="flex flex-1 items-center justify-end gap-4">
-                        <div className="hidden lg:flex items-center">
+                        <div className="hidden lg:flex items-center gap-3">
+                            <Link
+                                href="/vault"
+                                className={`group relative overflow-hidden px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.28em] transition-colors duration-500 ${
+                                    forceDark
+                                        ? 'bg-white/5 text-white hover:bg-[#F28C28] hover:text-black hover:border-transparent border border-white/10'
+                                        : 'bg-black/5 text-black hover:bg-[#F28C28] hover:text-black border border-white/10'
+                                }`}
+                            >
+                                Vault
+                            </Link>
                             {primaryCta ? (
                                 <Link
                                     href={primaryCta.href}
@@ -206,6 +215,17 @@ export default function UnifiedSovereignHeader({
                             ))}
 
                             <div className="mt-12 flex flex-col items-center gap-6">
+                                <Link
+                                    href="/vault"
+                                    onClick={() => setMobileOpen(false)}
+                                    className={`px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] transition-colors ${
+                                        forceDark
+                                            ? 'border border-white/10 text-white hover:bg-[#F28C28] hover:text-black hover:border-transparent'
+                                            : 'border border-black/20 text-black hover:bg-[#F28C28]'
+                                    }`}
+                                >
+                                    Vault
+                                </Link>
                                 {primaryCta ? (
                                     <Link
                                         href={primaryCta.href}
