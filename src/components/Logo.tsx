@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import vdMiniLogo from '../../Logo/vd_mini_logo.png';
 
 interface LogoProps {
     href?: string;
@@ -35,7 +34,7 @@ export default function Logo({
     const content = (
         <div className={`group flex items-center gap-3 text-left ${className}`}>
             <Image
-                src={vdMiniLogo}
+                src="/vd_mini_logo.png"
                 alt="Visual Decompiler mark"
                 width={38}
                 height={38}
