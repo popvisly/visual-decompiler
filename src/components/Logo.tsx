@@ -20,16 +20,19 @@ export default function Logo({
     hoverColor = 'default',
     onClick,
 }: LogoProps) {
-    const hoverClass =
-        hoverColor === 'yellow'
-            ? 'group-hover:text-[#C1A674]'
-            : hoverColor === 'cyan'
-              ? 'group-hover:text-[#00E5FF]'
-              : hoverColor === 'red'
-                ? 'group-hover:text-[#FF003C]'
-                : forceDark
-                  ? 'group-hover:text-[#C1A674]'
-                  : 'group-hover:text-[#FF003C]';
+    const visualHoverClass =
+        hoverColor === 'cyan'
+            ? 'group-hover:text-[#00E5FF]'
+            : hoverColor === 'red'
+              ? 'group-hover:text-[#FF003C]'
+              : 'group-hover:text-[#FFD600]';
+
+    const decompilerHoverClass =
+        hoverColor === 'cyan'
+            ? 'group-hover:text-[#7CF5FF]'
+            : hoverColor === 'red'
+              ? 'group-hover:text-[#FF4C70]'
+              : 'group-hover:text-[#F28C28]';
 
     const content = (
         <div className={`group flex items-center gap-3 text-left ${className}`}>
@@ -43,10 +46,10 @@ export default function Logo({
             />
             <div className="flex flex-col leading-[0.9]">
                 <h1
-                    className={`text-[16px] lg:text-[18px] font-black uppercase tracking-[0.22em] transition-colors ${forceDark ? 'text-white' : 'text-black'} ${hoverClass}`}
+                    className={`text-[16px] lg:text-[18px] font-black uppercase tracking-[0.22em] ${forceDark ? 'text-white' : 'text-black'}`}
                 >
-                    <span className="block">Visual</span>
-                    <span className="block mt-0.5">Decompiler</span>
+                    <span className={`block transition-colors ${visualHoverClass}`}>Visual</span>
+                    <span className={`block mt-0.5 transition-colors ${decompilerHoverClass}`}>Decompiler</span>
                 </h1>
                 {sublabel ? (
                     <p
