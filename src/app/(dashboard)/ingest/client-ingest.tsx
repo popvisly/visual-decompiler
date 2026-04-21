@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AlertCircle, FileImage } from 'lucide-react';
-import posthog from 'posthog-js';
 import GatekeeperIntercept from '@/components/GatekeeperIntercept';
 import { supabaseClient } from '@/lib/supabase-client';
 import type { UsageStatus } from '@/lib/usage';
@@ -59,20 +58,6 @@ function formatResetDate(resetDate: string | null) {
     });
 }
 
-function resolvePlanLabel(tier?: UsageStatus['tier']) {
-    if (tier === 'agency') return 'agency_sovereignty';
-    if (tier === 'pro') return 'strategic_unit';
-    if (tier === 'free') return 'observer';
-    return 'unknown';
-}
-
-function formatUsageLine(usageStatus: UsageStatus) {
-    if (usageStatus.limit === null) {
-        return `${usageStatus.usageCount} analyses run this cycle. Unlimited access is active.`;
-    }
-
-    return `${usageStatus.usageCount} of ${usageStatus.limit} extractions used this cycle.`;
-}
 
 export default function IngestClient({ isSovereign }: { isSovereign: boolean }) {
     const router = useRouter();
@@ -85,7 +70,6 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
     const [marketSector, setMarketSector] = useState<SectorTaxonomyValue>('Luxury Fashion');
     const [error, setError] = useState<string | null>(null);
     const [usageStatus, setUsageStatus] = useState<UsageStatus | null>(null);
-    const [usageLoading, setUsageLoading] = useState(true);
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
@@ -123,10 +107,6 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                 }
             } catch {
                 // Keep ingest resilient if usage status cannot be fetched.
-            } finally {
-                if (isMounted) {
-                    setUsageLoading(false);
-                }
             }
         };
 
@@ -146,8 +126,6 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
     }, [stagedFile]);
 
     const observerLimitReached = usageStatus?.tier === 'free' && usageStatus.reachedLimit;
-    const isObserverTrial = usageStatus?.tier === 'free';
-    const showTrialReminder = usageStatus?.tier === 'free' && usageStatus.usageCount >= 3 && !usageStatus.reachedLimit;
     const supportedAssetsLabel = 'Supports JPG, PNG, WEBP - max 25MB';
     const resetLabel = useMemo(
         () => formatResetDate(usageStatus?.billingCycleReset ?? null),
@@ -452,71 +430,9 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                             </div>
                         )}
 
-                        {!observerLimitReached && (
-                            <div className="mt-6 rounded-[1.5rem] border border-[rgba(212,165,116,0.18)] bg-[#1F1F1F] px-5 py-5 text-[#FBFBF6]">
-                                <div className="grid gap-5 md:grid-cols-[1.1fr_1fr] md:items-start">
-                                    <div>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">Best first move</p>
-                                        <p className="mt-3 text-[15px] leading-7 text-[#D6D0C6]">
-                                            Start with the current concept or the latest client ad you need to review today. The first read gives you primary mechanic, friction profile, and a next strategic move.
-                                        </p>
-                                        {!stagedFile && !isProcessing && (
-                                            <button
-                                                onClick={() => {
-                                                    posthog.capture('trial_run_first_analysis_click', {
-                                                        surface: 'ingest',
-                                                        step: 'try_1',
-                                                        plan: resolvePlanLabel(usageStatus?.tier),
-                                                        href: '/ingest',
-                                                    });
-                                                    document.getElementById('file-upload')?.click();
-                                                }}
-                                                className="mt-5 inline-flex items-center rounded-full border border-[#4E3D2A] bg-[#171512] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574] transition hover:border-[#D4A574]/60 hover:bg-[#201b15] hover:text-[#F3F1ED]"
-                                            >
-                                                Run First Analysis
-                                            </button>
-                                        )}
-                                    </div>
-
-                                    <div className="rounded-[1.25rem] border border-[rgba(212,165,116,0.14)] bg-[#171512] px-4 py-4">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A574]">What to do next</p>
-                                        <p className="mt-3 text-[14px] leading-6 text-[#D6D0C6]">
-                                            Compare it against a second route, then save the strongest direction into a board.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {!usageLoading && usageStatus && !observerLimitReached && (
-                            <div className="mt-6 rounded-[1.5rem] border border-[#D8CCB5] bg-[#FBFBF6] px-5 py-5 text-[#141414] shadow-[0_12px_28px_rgba(20,20,20,0.04)]">
-                                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                                    <div>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#C1A67B]">
-                                            {isObserverTrial ? 'Trial Progress' : 'Usage Status'}
-                                        </p>
-                                        <p className="mt-3 text-[15px] leading-7 text-[#4F4A43]">
-                                            {formatUsageLine(usageStatus)}
-                                        </p>
-                                    </div>
-                                    {isObserverTrial && (
-                                        <div className="grid gap-1 text-[11px] leading-5 text-[#756D61] md:text-right">
-                                            <p>Try 1: Baseline read</p>
-                                            <p>Try 2: Compare route</p>
-                                            <p>Try 3: Save to board</p>
-                                        </div>
-                                    )}
-                                </div>
-                                {showTrialReminder && (
-                                    <p className="mt-4 text-[12px] leading-6 text-[#756D61]">
-                                        You&apos;re seeing surface-level gains. Unlock full workflow: boards, compounding memory, and team collaboration.
-                                    </p>
-                                )}
-                            </div>
-                        )}
                     </div>
 
-                    <div className="mt-10 w-full max-w-5xl">
+                    <div className="mt-10 w-full max-w-4xl">
                         <div className="grid gap-4 md:grid-cols-3">
                             {PROCESS_STEPS.map((step) => (
                                 <div
