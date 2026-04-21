@@ -4276,10 +4276,10 @@ export default function AssetWorkspace({
                                     <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                         <table className="w-full table-fixed border-collapse">
                                             <colgroup>
-                                                <col style={{ width: '22%' }} />
-                                                <col style={{ width: '42%' }} />
-                                                <col style={{ width: '18%' }} />
-                                                <col style={{ width: '18%' }} />
+                                                <col style={{ width: '21%' }} />
+                                                <col style={{ width: '39%' }} />
+                                                <col style={{ width: '16%' }} />
+                                                <col style={{ width: '24%' }} />
                                             </colgroup>
                                             <thead className="border-b border-white/12 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]">
                                                 <tr>
