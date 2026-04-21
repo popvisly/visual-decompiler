@@ -3,7 +3,7 @@ import { getServerSession } from '@/lib/auth-server';
 import { decompileAd, VisionInput } from '@/lib/vision';
 import { AdDigestSchema } from '@/types/digest';
 import { supabaseAdmin } from '@/lib/supabase';
-import { getTierEntitlements } from '@/lib/plans';
+import { assertUsageAvailable } from '@/lib/usage';
 
 async function getMediaInfo(mediaUrl: string): Promise<{ ok: boolean; reason?: string; type: 'image' | null; contentType?: string | null; sizeMB?: number; finalUrl?: string }> {
     if (!/^https?:\/\//i.test(mediaUrl)) {
@@ -150,24 +150,21 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        // Upsert user to ensure they exist in our tracking
-        const { data: user, error: userErr } = await supabaseAdmin
-            .from('users')
-            .upsert({ id: userId }, { onConflict: 'id' })
-            .select()
-            .single();
+        try {
+            await assertUsageAvailable(userId);
+        } catch (error) {
+            if (error instanceof Error && error.message === 'LIMIT_REACHED') {
+                const limit = (error as Error & { usage?: any }).usage?.limit;
+                const tier = (error as Error & { usage?: any }).usage?.tier || 'current';
+                return NextResponse.json({
+                    error: 'LIMIT_REACHED',
+                    message: `You have reached your ${tier} plan limit${typeof limit === 'number' ? ` of ${limit} reports per month.` : '.'}`,
+                    usage: (error as Error & { usage?: any }).usage,
+                }, { status: 429 });
+            }
 
-        if (userErr || !user) {
-            console.error('[Ingest] User sync failed:', userErr);
+            console.error('[Ingest] Usage gate failed:', error);
             return NextResponse.json({ error: 'Failed to verify account status' }, { status: 500 });
-        }
-
-        const tierLimit = getTierEntitlements(user.tier).monthlyAnalysisLimit;
-        if (tierLimit !== null && user.usage_count >= tierLimit) {
-            return NextResponse.json({
-                error: 'LIMIT_REACHED',
-                message: `You have reached your ${user.tier} plan limit of ${tierLimit} reports per month.`
-            }, { status: 429 });
         }
 
         let accessLevel: 'full' | 'limited' = 'full';
