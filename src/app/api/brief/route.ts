@@ -5,6 +5,44 @@ import { getOpenAI } from '@/lib/vision';
 import { VisualDNAService } from '@/lib/visual_dna';
 import { ForecastingService } from '@/lib/forecasting';
 
+const BRIEF_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep findings specific, comparative, and decision-oriented.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export async function POST(req: Request) {
     const { userId, orgId } = await getServerSession();
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -110,7 +148,8 @@ Strategic Anomaly: ${ad.is_anomaly ? 'YES - Significant Pivot Detected' : 'No'}
                     - Phase: ${forecasting.trendPhase}
                     - Velocity: ${forecasting.marketVelocity}
                     - Est. Lifespan: ${forecasting.estimatedLifespanDays} days
-                    
+
+                    ${BRIEF_STYLE_CONTRACT}                    
                     OUTPUT FORMAT: Return a JSON object with:
                     - "brief": The Markdown strategic answer.
                     - "visual_mirror": { "title": string, "directive": string, "rationale": string } based on the most significant visual contrast detected.
@@ -133,7 +172,17 @@ Strategic Anomaly: ${ad.is_anomaly ? 'YES - Significant Pivot Detected' : 'No'}
             response_format: { type: "json_object" }
         });
 
-        const result = JSON.parse(response.choices[0].message.content || '{}');
+        const rawResult = JSON.parse(response.choices[0].message.content || '{}');
+        const result = normalizeStrategyLanguage(rawResult) as {
+            brief: string;
+            visual_mirror: { title: string; directive: string; rationale: string };
+            sentiment: {
+                metrics: Array<{ label: string; score: number; resonance: 'High' | 'Medium' | 'Low'; description: string }>;
+                psychologicalFootprint: string;
+                alignmentScore: number;
+            };
+        };
+
         const brief = result.brief;
         const visualMirror = result.visual_mirror;
         const sentiment = result.sentiment;
