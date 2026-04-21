@@ -10,6 +10,16 @@ const FALLBACK_TRIGGERS = ['Status', 'Scarcity', 'Utility', 'Authority', 'Social
 const WINDOW_OPTIONS = [30, 60, 90] as const;
 const CACHE_TTL_HOURS = 24;
 
+const MARKET_PULSE_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep findings specific, comparative, and decision-oriented.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
 type IntelligenceFlag = {
     type: 'SATURATION SIGNAL' | 'UNTAPPED MECHANIC' | 'VELOCITY ALERT';
     finding: string;
@@ -63,6 +73,34 @@ const percentileLabel = (position: number, total: number) => {
     return 'Below category benchmark';
 };
 
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 const clampWindowDays = (value: unknown) => {
     if (typeof value !== 'number') {
         return 30;
@@ -81,7 +119,7 @@ async function generateOpportunityGaps(mechanics: string[]) {
         const response = await anthropic.messages.create({
             model: CLAUDE_MODEL,
             max_tokens: 300,
-            system: 'You identify strategic whitespace in creative category mechanics. Return only valid JSON.',
+            system: `You identify strategic whitespace in creative category mechanics. Return only valid JSON.\n\n${MARKET_PULSE_STYLE_CONTRACT}`,
             messages: [{
                 role: 'user',
                 content: `Given these dominant persuasion mechanics in a category: ${JSON.stringify(mechanics)}.
@@ -101,7 +139,10 @@ Return JSON:
         const end = text.lastIndexOf('}');
         const parsed = JSON.parse(text.slice(start, end + 1));
         return Array.isArray(parsed.opportunity_gaps)
-            ? parsed.opportunity_gaps.filter((item: unknown) => typeof item === 'string').slice(0, 3)
+            ? parsed.opportunity_gaps
+                .filter((item: unknown) => typeof item === 'string')
+                .map((item: string) => cleanStrategyLine(item))
+                .slice(0, 3)
             : [];
     } catch (error) {
         console.error('[Market Pulse] Failed to generate opportunity gaps:', error);
@@ -157,7 +198,7 @@ async function generateIntelligenceFlags(input: {
         const response = await anthropic.messages.create({
             model: CLAUDE_MODEL,
             max_tokens: 500,
-            system: 'You generate concise strategic intelligence flags from aggregate market data. Return only valid JSON.',
+            system: `You generate concise strategic intelligence flags from aggregate market data. Return only valid JSON.\n\n${MARKET_PULSE_STYLE_CONTRACT}`,
             messages: [{
                 role: 'user',
                 content: `Given this aggregated Mechanic Intelligence data for ${input.sector}:
@@ -195,6 +236,11 @@ Generate 3 JSON flags with this schema:
                     && typeof candidate.recommendation === 'string'
                     && typeof candidate.asset_count === 'number';
             })
+            .map((flag: IntelligenceFlag) => ({
+                ...flag,
+                finding: cleanStrategyLine(flag.finding),
+                recommendation: cleanStrategyLine(flag.recommendation),
+            }))
             .slice(0, 3);
     } catch (error) {
         console.error('[Market Pulse] Failed to generate intelligence flags:', error);
@@ -465,7 +511,7 @@ export async function POST(req: Request) {
             sector: normalizedSector || 'Vault-wide',
         });
 
-        const payload = {
+        const payload = normalizeStrategyLanguage({
             status: 'success',
             scope: normalizedSector || 'Vault-wide',
             sector_options: sectorOptions,
@@ -484,7 +530,7 @@ export async function POST(req: Request) {
             },
             chromatic_saturation: chromaticSaturation,
             opportunity_gaps: opportunityGaps,
-        };
+        }) as Record<string, unknown>;
         const computedAt = new Date().toISOString();
 
         await supabaseAdmin
