@@ -8,6 +8,44 @@ const openai = process.env.OPENAI_API_KEY ? new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 }) : null as unknown as OpenAI;
 
+const BRIEFING_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep findings specific, comparative, and decision-oriented.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export type AgencyMetrics = {
     totalBoards: number;
     totalAds: number;
@@ -97,7 +135,8 @@ export class SovereigntyEngine {
                     - Strategic Rarity: ${metrics.strategicRarity * 100}%
                     - Trend Longevity Classification: ${metrics.trendLongevity}
                     - Intent Mapping Score: ${metrics.intentMappingScore * 100}%
-                    
+
+                    ${BRIEFING_STYLE_CONTRACT}                    
                     Return a JSON object with:
                     - macroNarrative: A 2-sentence summary of the current market state.
                     - commandDirectives: 3-4 bullet-point executive orders.
@@ -121,7 +160,8 @@ export class SovereigntyEngine {
             if (text.includes('```json')) text = text.split('```json')[1].split('```')[0].trim();
             else if (text.includes('```')) text = text.split('```')[1].split('```')[0].trim();
 
-            return JSON.parse(text) as ExecutiveBriefing;
+            const parsed = JSON.parse(text);
+            return normalizeStrategyLanguage(parsed) as ExecutiveBriefing;
         }
 
         console.log("[Sovereignty] Using OpenAI for executive briefing");
@@ -139,6 +179,7 @@ export class SovereigntyEngine {
         const content = response.choices[0].message.content;
         if (!content) throw new Error("Executive Briefing failed generation.");
 
-        return JSON.parse(content) as ExecutiveBriefing;
+        const parsed = JSON.parse(content);
+        return normalizeStrategyLanguage(parsed) as ExecutiveBriefing;
     }
 }
