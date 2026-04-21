@@ -3,6 +3,44 @@ import { getOpenAI } from '@/lib/vision';
 import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 
+const NARRATIVE_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep findings specific, comparative, and decision-oriented.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export async function POST(req: Request) {
     const { userId } = await getServerSession();
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -30,7 +68,9 @@ export async function POST(req: Request) {
                     1. Minimum 300 words per section.
                     2. Cite specific "Evidence Anchors" (mechanics found in the deconstructions).
                     3. Do NOT make ads. Provide pure strategic analysis and production directives.
-                    
+
+                    ${NARRATIVE_STYLE_CONTRACT}
+
                     Output JSON format:
                     {
                         "title": string (Technical and authoritative),
@@ -62,7 +102,8 @@ export async function POST(req: Request) {
             response_format: { type: "json_object" }
         });
 
-        const result = JSON.parse(response.choices[0].message.content || '{}');
+        const rawResult = JSON.parse(response.choices[0].message.content || '{}');
+        const result = normalizeStrategyLanguage(rawResult) as Record<string, unknown>;
         const whitePaper = {
             ...result,
             generatedAt: new Date().toISOString()
