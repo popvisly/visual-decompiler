@@ -26,6 +26,34 @@ function coerceString(value: unknown, fallback = '') {
     }
 }
 
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export async function POST(req: Request) {
     try {
         const session = await getServerSession(req);
@@ -270,7 +298,19 @@ RULES:
 - For gaze_topology and counter_reading_matrix, be precise and genuinely critical rather than softened.
 - Ensure trigger_distribution values are integers from 0-100.
 - Ensure cognitive_friction and persuasion_density are integers from 0-100.
-- Keep the writing dense, clinical, and premium, but concise enough to fit within the response window.`;
+STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.
+- Write short, decisive sentences.
+- Prefer plain strategic wording over abstract jargon.
+- Avoid repetition, filler, and phrase stacking.
+- Never output truncated fragments, dangling clauses, or half-finished quotes.
+- Keep all recommendations executable and specific.
+- Keep copy in sentence case (no random ALL CAPS blocks in prose).
+
+QUALITY GATE WRITING RULES (MANDATORY):
+- Strategic Recommendation: exactly 1 clear decision sentence + 1 rationale sentence.
+- Action Protocol: exactly 3 numbered actions, one sentence each, imperative voice.
+- Known Unknowns: concise and factual, no speculative flourish.
+- System Verdict: one-line verdict + one-line reason.`;
 
         const base64Data = buffer.toString('base64');
 
@@ -326,6 +366,13 @@ RULES:
         let extractionResult;
         try {
             extractionResult = JSON.parse(text);
+            extractionResult = {
+                ...extractionResult,
+                primary_mechanic: cleanStrategyLine(String(extractionResult?.primary_mechanic || '')),
+                visual_style: cleanStrategyLine(String(extractionResult?.visual_style || '')),
+                dna_prompt: cleanStrategyLine(String(extractionResult?.dna_prompt || '')),
+                full_dossier: normalizeStrategyLanguage(extractionResult?.full_dossier),
+            };
         } catch (jsonError: any) {
             console.error(`[Ingest] JSON Parse Error at length ${responseLength}. Stop Reason: ${stopReason}`);
             console.error(`[Ingest] Last 100 chars of response: ${text.slice(-100)}`);
