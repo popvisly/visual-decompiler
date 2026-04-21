@@ -6,6 +6,35 @@ import { getServerSession } from '@/lib/auth-server';
 export const maxDuration = 300; // 5 minutes max function duration for Pro/Enterprise tier
 export const dynamic = 'force-dynamic';
 
+
+const cleanStrategyLine = (value: string): string => {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+};
+
+const normalizeStrategyLanguage = (input: unknown): unknown => {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+};
+
 export async function POST(req: Request) {
     try {
         const session = await getServerSession(req);
@@ -170,7 +199,21 @@ CRITICAL: The 'narrative_framework' MUST use the 'ACT I: [TITLE]' format and the
 CRITICAL: For 'radiant_architecture', analyse the actual image composition. 'x' and 'y' are percentage coordinates (0-100) of where the viewer's eye is drawn. Anchor 1 should be where the eye FIRST lands, Anchor 2 where it travels next, and Anchor 3 where it settles. The 'escape_vector' angle (0-360 degrees, 0=right, 90=down) marks where visual momentum exits the frame. Provide realistic coordinates based on the ACTUAL layout, do NOT use the example values.
 CRITICAL: For 'gaze_topology', analyse whether the subject(s) look directly at the camera (direct) or away (averted). Determine if the viewer is positioned as a voyeur, participant, aspirant, or confronted. For 'counter_reading_matrix', provide genuinely critical readings — do NOT soften or hedge. Each lens must identify a specific power dynamic or ideological tension.
 
-STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive fluff to ensure the entire JSON payload fits within the 8,192 token window. Ensure 'trigger_distribution' keys (Status, Scarcity, Utility, Authority, Social Proof) map to integers 0-100. Similarly 'cognitive_friction' and 'persuasion_density' should be integers 0-100.`;
+STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.
+- Write short, decisive sentences.
+- Prefer plain strategic wording over abstract jargon.
+- Avoid repetition, filler, and phrase stacking.
+- Never output truncated fragments, dangling clauses, or half-finished quotes.
+- Keep all recommendations executable and specific.
+- Keep copy in sentence case (no random ALL CAPS blocks in prose).
+
+QUALITY GATE WRITING RULES (MANDATORY):
+- Strategic Recommendation: exactly 1 clear decision sentence + 1 rationale sentence.
+- Action Protocol: exactly 3 numbered actions, one sentence each, imperative voice.
+- Known Unknowns: concise and factual, no speculative flourish.
+- System Verdict: one-line verdict + one-line reason.
+
+Ensure 'trigger_distribution' keys (Status, Scarcity, Utility, Authority, Social Proof) map to integers 0-100. Similarly 'cognitive_friction' and 'persuasion_density' should be integers 0-100.`;
 
         type AuthImageMedia = "image/jpeg" | "image/png" | "image/webp" | "image/gif";
         type ContentBlock =
@@ -221,6 +264,13 @@ STYLE: Use a "Dense Forensic" style. Provide maximum depth but avoid repetitive 
         let extractionResult;
         try {
             extractionResult = JSON.parse(text);
+            extractionResult = {
+                ...extractionResult,
+                primary_mechanic: cleanStrategyLine(String(extractionResult?.primary_mechanic || '')),
+                visual_style: cleanStrategyLine(String(extractionResult?.visual_style || '')),
+                dna_prompt: cleanStrategyLine(String(extractionResult?.dna_prompt || '')),
+                full_dossier: normalizeStrategyLanguage(extractionResult?.full_dossier),
+            };
         } catch (jsonError: any) {
             console.error(`[Extract] JSON Parse Error at length ${responseLength}. Stop Reason: ${stopReason}`);
             console.error(`[Extract] Last 100 chars of response: ${text.slice(-100)}`);
