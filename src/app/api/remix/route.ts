@@ -6,6 +6,44 @@ const openai = process.env.OPENAI_API_KEY ? new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 }) : null as unknown as OpenAI;
 
+const REMIX_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep each remix commercially clear and execution-ready.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export async function POST(req: Request) {
     const { userId } = await getServerSession();
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -31,6 +69,8 @@ CRITICAL RULES:
    - "Visual Scene Description": What we see.
 4. Return ONLY a valid JSON array of 3 objects. No markdown.
 
+${REMIX_STYLE_CONTRACT}
+
 Input Digest Context:
 - Brand: ${digest.meta?.brand_guess}
 - Original Trigger: ${digest.classification?.trigger_mechanic}
@@ -49,10 +89,11 @@ Input Digest Context:
 
         const content = response.choices[0].message.content;
         const parsed = JSON.parse(content || '{"remixes": []}');
+        const remixes = normalizeStrategyLanguage(parsed.remixes || parsed.variants || parsed);
 
         return NextResponse.json({
             success: true,
-            remixes: parsed.remixes || parsed.variants || parsed
+            remixes
         });
 
     } catch (err: any) {
