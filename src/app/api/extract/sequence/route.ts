@@ -19,6 +19,35 @@ export interface SequentialArchitectureResponse {
     }>;
 }
 
+
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export async function POST(req: Request) {
     try {
         const { assetId, fileUrls } = await req.json();
@@ -51,7 +80,15 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
   ]
 }
 
-Analyse the narrative arc, cognitive load, and visual hooks across the frames. Keep your textual explanations concise (1-2 sentences max).`;
+Analyse the narrative arc, cognitive load, and visual hooks across the frames. Keep your textual explanations concise (1-2 sentences max).
+
+STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.
+- Write short, decisive sentences.
+- Prefer plain strategic wording over abstract jargon.
+- Avoid repetition, filler, and phrase stacking.
+- Never output truncated fragments, dangling clauses, or half-finished quotes.
+- Keep findings specific and executable.
+- Keep copy in sentence case (no random ALL CAPS blocks in prose).`;
 
         type AuthImageMedia = "image/jpeg" | "image/png" | "image/webp" | "image/gif";
         type ContentBlock =
@@ -107,7 +144,8 @@ Analyse the narrative arc, cognitive load, and visual hooks across the frames. K
             text = text.split('```')[1].split('```')[0].trim();
         }
 
-        const result = JSON.parse(text) as SequentialArchitectureResponse;
+        const rawResult = JSON.parse(text) as SequentialArchitectureResponse;
+        const result = normalizeStrategyLanguage(rawResult) as SequentialArchitectureResponse;
 
         // 3. Save sequence extraction to Intelligence Vault (Phase 2 tables)
         // Note: To match Phase 2 schema strictly `extractions` expects specific fields. 
