@@ -4,6 +4,16 @@ import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
 import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 
+const CLONE_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep concepts commercially clear and execution-ready.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
 const extractJsonObject = (value: string) => {
     const fenced = value.match(/```json\s*([\s\S]*?)```/i) || value.match(/```\s*([\s\S]*?)```/i);
     const candidate = fenced?.[1] || value;
@@ -16,6 +26,34 @@ const extractJsonObject = (value: string) => {
 
     return JSON.parse(candidate.slice(start, end + 1));
 };
+
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
 
 export async function POST(req: Request) {
     const session = await getServerSession(req);
@@ -85,7 +123,7 @@ You are NOT copying the ad. You are extracting the MECHANISM and deploying it fr
 
 Return a single valid JSON object. No markdown. No preamble.
 
-Keep every field concise and production-useful. Do not write essays.`;
+Keep every field concise and production-useful. Do not write essays.\n\n${CLONE_STYLE_CONTRACT}`;
 
         const userMessage = `Generate 5 original campaign concepts that use the same persuasion architecture as this forensic extraction.
 
@@ -138,7 +176,8 @@ Return this JSON structure:
 
         let cloneOutput;
         try {
-            cloneOutput = extractJsonObject(textResponse);
+            const rawCloneOutput = extractJsonObject(textResponse);
+            cloneOutput = normalizeStrategyLanguage(rawCloneOutput);
         } catch (parseError) {
             console.error('[Clone API] JSON parse failure:', {
                 stopReason: response.stop_reason,
