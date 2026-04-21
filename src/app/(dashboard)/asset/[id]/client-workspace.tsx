@@ -3865,16 +3865,28 @@ export default function AssetWorkspace({
                                                     const labels = axes.map((a, i) => {
                                                         const [x, y] = polar(i, r + 44);
                                                         const lines = a.label.split('\n');
-                                                        const anchor: 'start' | 'middle' | 'end' = x > cx + 8 ? 'end' : x < cx - 8 ? 'start' : 'middle';
-                                                        const adjustedX = x > cx + 8 ? -8 : x < cx - 8 ? 8 : 0;
+
+                                                        const labelLayout: Record<string, { anchor: 'start' | 'middle' | 'end'; x: number; y: number }> = {
+                                                            STATUS: { anchor: 'middle', x: 0, y: -2 },
+                                                            UTILITY: { anchor: 'start', x: 8, y: 0 },
+                                                            'SOCIAL PROOF': { anchor: 'end', x: -8, y: 0 },
+                                                            AUTHORITY: { anchor: 'start', x: 16, y: 10 },
+                                                            SCARCITY: { anchor: 'end', x: -16, y: 10 },
+                                                        };
+
+                                                        const fallbackAnchor: 'start' | 'middle' | 'end' =
+                                                            x > cx + 8 ? 'end' : x < cx - 8 ? 'start' : 'middle';
+                                                        const fallbackX = x > cx + 8 ? -8 : x < cx - 8 ? 8 : 0;
+                                                        const layout = labelLayout[a.key] || { anchor: fallbackAnchor, x: fallbackX, y: 0 };
+
                                                         return (
-                                                            <g key={a.key} transform={`translate(${x + adjustedX},${y})`}>
+                                                            <g key={a.key} transform={`translate(${x + layout.x},${y + layout.y})`}>
                                                                 {lines.map((t, li) => (
                                                                     <text
                                                                         key={li}
                                                                         x={0}
                                                                         y={li * 14}
-                                                                        textAnchor={anchor}
+                                                                        textAnchor={layout.anchor}
                                                                         fontSize={10}
                                                                         fontWeight={600}
                                                                         letterSpacing={3}
