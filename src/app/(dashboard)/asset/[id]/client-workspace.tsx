@@ -2687,9 +2687,10 @@ export default function AssetWorkspace({
                     <div className="vault-analysis-frame">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    <aside className={`vault-analysis-asset-rail w-full border-r ${sampleMode ? 'border-[#D4A574]/20' : 'border-[#E7DED1]'} relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'} z-10`}>
-                        <div className="flex flex-col items-center justify-center px-[clamp(12px,1.6vw,24px)] pt-10 pb-8 lg:pt-20">
+                    <aside className={`vault-analysis-asset-rail w-full border-r ${sampleMode ? 'border-[#D4A574]/20' : 'border-[#E7DED1]'} relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'} z-10 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto`}>
+                        <div className="flex flex-col items-center justify-start px-[clamp(12px,1.6vw,24px)] pt-10 pb-8 lg:pt-20">
 
+                            <div className="w-full max-w-[390px]">
                             <div 
                                 className={`w-full max-w-[390px] aspect-[4/5] relative flex items-center justify-center overflow-hidden rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] group shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75' : ''}`}
                                 style={getAssetStyle()}
@@ -2721,6 +2722,7 @@ export default function AssetWorkspace({
                                         <span className={`text-[10px] font-semibold uppercase tracking-[0.4em] ${sampleMode ? 'text-[#D4A574]' : 'text-[#D4A574]'}`}>{asset.type}</span>
                                     </div>
                                 )}
+                            </div>
                             </div>
 
                             <div className={`w-full max-w-[390px] mt-12 ${sampleMode ? '' : 'border-b border-[#E7DED1]'} pb-8`}>
