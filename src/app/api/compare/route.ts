@@ -4,6 +4,16 @@ import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { DIFFERENTIAL_DIAGNOSTIC_PROMPT } from '@/lib/prompts';
 
+const DIFFERENTIAL_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep findings specific, comparative, and decision-oriented.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
 // SCHEMA 1: Differential Diagnostics interface
 export interface DifferentialDiagnosticResponse {
     diagnostic_id: string;
@@ -44,6 +54,35 @@ export interface DifferentialDiagnosticResponse {
     }>;
 }
 
+
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export async function POST(req: Request) {
     try {
         const session = await getServerSession(req);
@@ -71,7 +110,7 @@ export async function POST(req: Request) {
         const anthropic = getAnthropic();
         const model = getClaudeModel('agency'); // Use most capable model for comparison
 
-        const systemPrompt = DIFFERENTIAL_DIAGNOSTIC_PROMPT;
+        const systemPrompt = `${DIFFERENTIAL_DIAGNOSTIC_PROMPT}\n\n${DIFFERENTIAL_STYLE_CONTRACT}`;
 
         const userMessage = `Compare these two asset extractions and provide the Differential Diagnostic JSON following the requested schema.
 Asset A Data:
@@ -102,7 +141,8 @@ ${JSON.stringify(assetB.data.extractions?.length ? assetB.data.extractions[0] : 
             text = text.split('```')[1].split('```')[0].trim();
         }
 
-        const result = JSON.parse(text) as DifferentialDiagnosticResponse;
+        const rawResult = JSON.parse(text) as DifferentialDiagnosticResponse;
+        const result = normalizeStrategyLanguage(rawResult) as DifferentialDiagnosticResponse;
 
         const { data: agency } = await supabaseAdmin
             .from('agencies')
