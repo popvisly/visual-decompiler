@@ -18,6 +18,16 @@ export type VisionInput =
     | { type: 'url'; url: string }
     | { type: 'base64'; data: string; mimeType: string };
 
+const STRATEGY_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep recommendations and findings specific and executable.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
 export async function decompileAd(
     inputs: VisionInput[],
     version: string = 'V1',
@@ -30,6 +40,7 @@ export async function decompileAd(
     else if (version === 'V3') systemPrompt = BLACK_BOX_PROMPT_V3;
     else if (version === 'V4' || version === 'V4.1') systemPrompt = BLACK_BOX_PROMPT_V4;
 
+    systemPrompt = `${systemPrompt}\n\n${STRATEGY_STYLE_CONTRACT}`;
 
     const anthropic = getAnthropic();
     const isClaude = !!anthropic;
