@@ -3863,8 +3863,8 @@ export default function AssetWorkspace({
                                                     const labels = axes.map((a, i) => {
                                                         const [x, y] = polar(i, r + 44);
                                                         const lines = a.label.split('\n');
-                                                        const anchor: 'start' | 'middle' | 'end' = x > cx + 8 ? 'start' : x < cx - 8 ? 'end' : 'middle';
-                                                        const adjustedX = x > cx + 8 ? 8 : x < cx - 8 ? -8 : 0;
+                                                        const anchor: 'start' | 'middle' | 'end' = x > cx + 8 ? 'end' : x < cx - 8 ? 'start' : 'middle';
+                                                        const adjustedX = x > cx + 8 ? -8 : x < cx - 8 ? 8 : 0;
                                                         return (
                                                             <g key={a.key} transform={`translate(${x + adjustedX},${y})`}>
                                                                 {lines.map((t, li) => (
