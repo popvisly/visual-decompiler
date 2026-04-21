@@ -4274,47 +4274,52 @@ export default function AssetWorkspace({
                                         intro="This section outlines experimental stress testing on key creative variables, measuring response variance and structural durability."
                                     />
                                     <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                        <div
-                                            className="grid border-b border-white/12 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]"
-                                            style={{ gridTemplateColumns: '1.1fr 2fr 0.8fr 0.8fr' }}
-                                        >
-                                            <div className="px-8 py-5 border-r border-white/10 text-center">Variable</div>
-                                            <div className="px-8 py-5 border-r border-white/10 text-center">Baseline</div>
-                                            <div className="px-8 py-5 border-r border-white/10 text-center">Predicted Lift</div>
-                                            <div className="px-8 py-5 text-center">Recommendation</div>
-                                        </div>
-                                        <div className="divide-y divide-white/10">
-                                            {(stressLabRows || []).map((row, i) => (
-                                                <div
-                                                    key={i}
-                                                    className="grid items-center bg-[#171513] group hover:bg-[#211d18] transition-colors"
-                                                    style={{ gridTemplateColumns: '1.1fr 2fr 0.8fr 0.8fr' }}
-                                                >
-                                                    <div className="px-8 py-7 text-center border-r border-white/10">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#E3DBCE] group-hover:text-[#D4A574] transition-colors">{row.variable}</p>
-                                                    </div>
-                                                    <div className="px-8 py-7 text-center border-r border-white/10">
-                                                        <p className="text-[13px] font-medium text-[#F3F1ED] leading-relaxed">{row.currentState}</p>
-                                                    </div>
-                                                    <div className="px-8 py-7 text-center border-r border-white/10">
-                                                        <span className={`text-[10px] font-semibold uppercase tracking-[0.28em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : row.predictedLift === 'Medium' ? 'text-[#E3DBCE]' : 'text-[#CFC6B8]'}`}>
-                                                            {row.predictedLift}
-                                                        </span>
-                                                    </div>
-                                                    <div className="px-8 py-7 text-center">
-                                                        <span className={`inline-block border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] ${
-                                                            row.recommendation === 'Test'
-                                                                ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5'
-                                                                : row.recommendation === 'Avoid'
-                                                                    ? 'border-[#b77868]/65 text-[#dfb1a5] bg-[#2a1a17]'
-                                                                    : 'border-[#D6D0C6]/40 text-[#E3DBCE] bg-white/[0.04]'
-                                                        }`}>
-                                                            {row.recommendation}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
+                                        <table className="w-full table-fixed border-collapse">
+                                            <colgroup>
+                                                <col style={{ width: '22%' }} />
+                                                <col style={{ width: '42%' }} />
+                                                <col style={{ width: '18%' }} />
+                                                <col style={{ width: '18%' }} />
+                                            </colgroup>
+                                            <thead className="border-b border-white/12 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]">
+                                                <tr>
+                                                    <th className="border-r border-white/10 px-8 py-5 text-center">Variable</th>
+                                                    <th className="border-r border-white/10 px-8 py-5 text-center">Baseline</th>
+                                                    <th className="border-r border-white/10 px-8 py-5 text-center">Predicted Lift</th>
+                                                    <th className="px-8 py-5 text-center">Recommendation</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-white/10">
+                                                {(stressLabRows || []).map((row, i) => (
+                                                    <tr key={i} className="bg-[#171513] transition-colors hover:bg-[#211d18]">
+                                                        <td className="border-r border-white/10 px-8 py-7 text-center align-middle">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#E3DBCE]">{row.variable}</p>
+                                                        </td>
+                                                        <td className="border-r border-white/10 px-8 py-7 text-center align-middle">
+                                                            <p className="text-[13px] font-medium leading-relaxed text-[#F3F1ED]">{row.currentState}</p>
+                                                        </td>
+                                                        <td className="border-r border-white/10 px-8 py-7 text-center align-middle">
+                                                            <span className={`text-[10px] font-semibold uppercase tracking-[0.28em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : row.predictedLift === 'Medium' ? 'text-[#E3DBCE]' : 'text-[#CFC6B8]'}`}>
+                                                                {row.predictedLift}
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-8 py-7 text-center align-middle">
+                                                            <span
+                                                                className={`inline-block border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] ${
+                                                                    row.recommendation === 'Test'
+                                                                        ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5'
+                                                                        : row.recommendation === 'Avoid'
+                                                                            ? 'border-[#b77868]/65 text-[#dfb1a5] bg-[#2a1a17]'
+                                                                            : 'border-[#D6D0C6]/40 text-[#E3DBCE] bg-white/[0.04]'
+                                                                }`}
+                                                            >
+                                                                {row.recommendation}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
                                     </div>
 
                                     <div className="grid gap-6 xl:grid-cols-2">
