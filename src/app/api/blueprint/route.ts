@@ -4,6 +4,16 @@ import { getServerSession } from '@/lib/auth-server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { assertUsageAvailable } from '@/lib/usage';
 
+const BLUEPRINT_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep recommendations and findings specific and executable.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
 const extractJsonObject = (value: string) => {
     const fenced = value.match(/```json\s*([\s\S]*?)```/i) || value.match(/```\s*([\s\S]*?)```/i);
     const candidate = fenced?.[1] || value;
@@ -18,6 +28,34 @@ const extractJsonObject = (value: string) => {
 };
 
 // SCHEMA 3: Production Blueprints interface
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export interface ProductionBlueprintResponse {
     blueprint_id: string;
     status: 'success' | 'error';
@@ -131,8 +169,7 @@ CRITICAL INSTRUCTION: You MUST return a valid JSON object matching this exact sc
       "concept": "Minimalist Iteration",
       "prompt": "string"
     }
-  ]
-}`;
+  ]\n}\n\n${BLUEPRINT_STYLE_CONTRACT}`;
 
         const userMessage = `Based on the following Forensic Extraction from our Intelligence Vault, synthesize a highly actionable, premium Production Blueprint. Keep language clinical, forensic, and elite.
 Extraction Data:
@@ -151,7 +188,8 @@ ${JSON.stringify(extraction, null, 2)}`;
 
         let result: ProductionBlueprintResponse;
         try {
-            result = extractJsonObject(contentBlock.text) as ProductionBlueprintResponse;
+            const rawResult = extractJsonObject(contentBlock.text) as ProductionBlueprintResponse;
+            result = normalizeStrategyLanguage(rawResult) as ProductionBlueprintResponse;
         } catch (parseError) {
             console.error('[Blueprint API] JSON parse failure:', {
                 stopReason: response.stop_reason,
