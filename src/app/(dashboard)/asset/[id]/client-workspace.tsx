@@ -2687,7 +2687,7 @@ export default function AssetWorkspace({
                     <div className="vault-analysis-frame">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    <aside className={`vault-analysis-asset-rail w-full border-r ${sampleMode ? 'border-[#D4A574]/20' : 'border-[#E7DED1]'} relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'} lg:sticky ${sampleMode ? 'lg:top-[66px]' : 'lg:top-0'} z-10`}>
+                    <aside className={`vault-analysis-asset-rail w-full border-r ${sampleMode ? 'border-[#D4A574]/20' : 'border-[#E7DED1]'} relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'} z-10`}>
                         <div className="flex flex-col items-center justify-center px-[clamp(12px,1.6vw,24px)] pt-10 pb-8 lg:pt-20">
 
                             <div 
