@@ -4278,7 +4278,7 @@ export default function AssetWorkspace({
                                             className="grid border-b border-white/12 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]"
                                             style={{ gridTemplateColumns: '1.1fr 2fr 0.8fr 0.8fr' }}
                                         >
-                                            <div className="px-8 py-5 border-r border-white/10">Variable</div>
+                                            <div className="px-8 py-5 border-r border-white/10 text-center">Variable</div>
                                             <div className="px-8 py-5 border-r border-white/10 text-center">Baseline</div>
                                             <div className="px-8 py-5 border-r border-white/10 text-center">Predicted Lift</div>
                                             <div className="px-8 py-5 text-center">Recommendation</div>
@@ -4290,19 +4290,16 @@ export default function AssetWorkspace({
                                                     className="grid items-center bg-[#171513] group hover:bg-[#211d18] transition-colors"
                                                     style={{ gridTemplateColumns: '1.1fr 2fr 0.8fr 0.8fr' }}
                                                 >
-                                                    <div className="relative px-8 py-7">
+                                                    <div className="px-8 py-7 text-center border-r border-white/10">
                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#E3DBCE] group-hover:text-[#D4A574] transition-colors">{row.variable}</p>
-                                                        <span className="pointer-events-none absolute right-0 top-1/2 h-20 w-px -translate-y-1/2 bg-white/10" />
                                                     </div>
-                                                    <div className="relative px-8 py-7 text-center">
+                                                    <div className="px-8 py-7 text-center border-r border-white/10">
                                                         <p className="text-[13px] font-medium text-[#F3F1ED] leading-relaxed">{row.currentState}</p>
-                                                        <span className="pointer-events-none absolute right-0 top-1/2 h-20 w-px -translate-y-1/2 bg-white/10" />
                                                     </div>
-                                                    <div className="relative px-8 py-7 text-center">
+                                                    <div className="px-8 py-7 text-center border-r border-white/10">
                                                         <span className={`text-[10px] font-semibold uppercase tracking-[0.28em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : row.predictedLift === 'Medium' ? 'text-[#E3DBCE]' : 'text-[#CFC6B8]'}`}>
                                                             {row.predictedLift}
                                                         </span>
-                                                        <span className="pointer-events-none absolute right-0 top-1/2 h-20 w-px -translate-y-1/2 bg-white/10" />
                                                     </div>
                                                     <div className="px-8 py-7 text-center">
                                                         <span className={`inline-block border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] ${
