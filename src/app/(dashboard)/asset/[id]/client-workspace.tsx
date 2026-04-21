@@ -3222,9 +3222,11 @@ export default function AssetWorkspace({
                                                              </div>
 
                                                              <div>
-                                                                 <h2 className="text-[28px] font-semibold uppercase leading-[0.96] tracking-[-0.024em] text-[#F3F1ED] whitespace-nowrap sm:text-[36px] lg:text-[42px]">
-                                                                     <span>{dossierCampaignBrand}</span>
-                                                                     <span className="ml-2 font-medium text-[#D6D0C6]/66">— {dossierCampaignCode}</span>
+                                                                 <h2 className="text-[28px] font-semibold uppercase leading-[0.96] tracking-[-0.024em] text-[#F3F1ED] sm:text-[36px] lg:text-[42px]">
+                                                                     <span className="block break-words">{dossierCampaignBrand}</span>
+                                                                     <span className="mt-2 block text-[22px] font-medium tracking-[-0.01em] text-[#D6D0C6]/72 sm:text-[26px] lg:text-[30px]">
+                                                                         {dossierCampaignCode}
+                                                                     </span>
                                                                  </h2>
                                                              </div>
 
@@ -3414,7 +3416,7 @@ export default function AssetWorkspace({
                                                     <h3 className="mb-8 border-b border-white/10 pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                         Forensic Gaze Diagnostic
                                                     </h3>
-                                                    <p className="max-w-[72ch] text-[13px] leading-relaxed text-[#F3F1ED]/86">
+                                                    <p className="max-w-[72ch] text-[13px] font-medium leading-relaxed text-[#F3F1ED]">
                                                         {(extraction.full_dossier as any).gaze_topology.reading}
                                                     </p>
                                                 </div>
@@ -3466,13 +3468,6 @@ export default function AssetWorkspace({
                                         title="Operational Guardrails & Constraint Map"
                                         intro="This section defines the non-negotiables, avoidances, and safe adaptation boundaries required to preserve the working forensic logic."
                                     />
-
-                                    <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                        <p className="mb-8 border-b border-white/10 pb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Guardrail Intent</p>
-                                        <p className="max-w-[62ch] text-[24px] font-semibold leading-tight tracking-[-0.01em] text-[#F3F1ED]">
-                                            VD judges, diagnoses, and directs creative quality. Not for asset generation.
-                                        </p>
-                                    </div>
 
                                     <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                         <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Constraint Priority Legend</p>
@@ -3797,7 +3792,10 @@ export default function AssetWorkspace({
                                         {/* Trigger Distribution Map */}
                                         <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-8">
-                                                <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Trigger Distribution Map</p>
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.44em] text-[#D4A574] font-mono">
+                                                    <span className="block">Trigger Distribution</span>
+                                                    <span className="block">Map</span>
+                                                </p>
                                                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Surface_Area</span>
                                             </div>
 
@@ -3825,7 +3823,7 @@ export default function AssetWorkspace({
                                                         return Math.max(0, Math.min(100, n));
                                                     };
 
-                                                    const size = 280;
+                                                    const size = 320;
                                                     const cx = size / 2;
                                                     const cy = size / 2;
                                                     const r = 92;
@@ -3863,16 +3861,18 @@ export default function AssetWorkspace({
                                                     });
 
                                                     const labels = axes.map((a, i) => {
-                                                        const [x, y] = polar(i, r + 38);
+                                                        const [x, y] = polar(i, r + 44);
                                                         const lines = a.label.split('\n');
+                                                        const anchor: 'start' | 'middle' | 'end' = x > cx + 8 ? 'start' : x < cx - 8 ? 'end' : 'middle';
+                                                        const adjustedX = x > cx + 8 ? 8 : x < cx - 8 ? -8 : 0;
                                                         return (
-                                                            <g key={a.key} transform={`translate(${x},${y})`}>
+                                                            <g key={a.key} transform={`translate(${x + adjustedX},${y})`}>
                                                                 {lines.map((t, li) => (
                                                                     <text
                                                                         key={li}
                                                                         x={0}
                                                                         y={li * 14}
-                                                                        textAnchor="middle"
+                                                                        textAnchor={anchor}
                                                                         fontSize={10}
                                                                         fontWeight={600}
                                                                         letterSpacing={3}
@@ -3892,7 +3892,7 @@ export default function AssetWorkspace({
                                                     });
 
                                                     return (
-                                                        <motion.svg width="280" height="280" viewBox={`0 0 ${size} ${size}`}>
+                                                        <motion.svg width="320" height="320" viewBox={`0 0 ${size} ${size}`}>
                                                             <defs>
                                                                 <radialGradient id="vdRadarGlow" cx="50%" cy="50%" r="60%">
                                                                     <stop offset="0%" stopColor="rgba(212,165,116,0.25)" />
@@ -4274,7 +4274,10 @@ export default function AssetWorkspace({
                                         intro="This section outlines experimental stress testing on key creative variables, measuring response variance and structural durability."
                                     />
                                     <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                        <div className="grid grid-cols-[1fr_1.7fr_0.7fr_0.7fr] border-b border-white/12 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]">
+                                        <div
+                                            className="grid border-b border-white/12 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]"
+                                            style={{ gridTemplateColumns: '1.1fr 2fr 0.8fr 0.8fr' }}
+                                        >
                                             <div className="px-8 py-5 border-r border-white/10">Variable</div>
                                             <div className="px-8 py-5 border-r border-white/10 text-center">Baseline</div>
                                             <div className="px-8 py-5 border-r border-white/10 text-center">Predicted Lift</div>
@@ -4282,7 +4285,11 @@ export default function AssetWorkspace({
                                         </div>
                                         <div className="divide-y divide-white/10">
                                             {(stressLabRows || []).map((row, i) => (
-                                                <div key={i} className="grid grid-cols-[1fr_1.7fr_0.7fr_0.7fr] items-center bg-[#171513] group hover:bg-[#211d18] transition-colors">
+                                                <div
+                                                    key={i}
+                                                    className="grid items-center bg-[#171513] group hover:bg-[#211d18] transition-colors"
+                                                    style={{ gridTemplateColumns: '1.1fr 2fr 0.8fr 0.8fr' }}
+                                                >
                                                     <div className="relative px-8 py-7">
                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#E3DBCE] group-hover:text-[#D4A574] transition-colors">{row.variable}</p>
                                                         <span className="pointer-events-none absolute right-0 top-1/2 h-20 w-px -translate-y-1/2 bg-white/10" />
