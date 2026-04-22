@@ -3902,7 +3902,7 @@ export default function AssetWorkspace({
                                     <WorkspaceTabHeader
                                         kicker="Cognitive Dynamics"
                                         title="Semiotic Channel Interceptions"
-                                        intro="How the asset encodes meaning, identity cues, and emotional triggers to shape perception and decision momentum."
+                                        intro="How the asset encodes meaning, identity cues, and emotional triggers to shape perception and approval momentum."
                                     />
                                     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                                         {/* Trigger Distribution Map */}
@@ -3912,7 +3912,7 @@ export default function AssetWorkspace({
                                                     <span className="block">Trigger Distribution</span>
                                                     <span className="block">Map</span>
                                                 </p>
-                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/60">Surface_Area</span>
+                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/72">Surface Map</span>
                                             </div>
 
                                             <div className="flex items-center justify-center">
@@ -4099,12 +4099,23 @@ export default function AssetWorkspace({
                                         <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-8">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Strategic Posture</p>
-                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/60">Field_Map</span>
+                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/72">Field Map</span>
                                             </div>
 
-                                            <p className="text-[14px] leading-relaxed text-[#D6D0C6]/70">
-                                                {firstSentence((dossier as any)?.archetype_mapping?.target_posture) || 'Icon Maintenance — the brand is not challenging for position or disrupting the category; it is asserting the permanence of an already-won cultural throne'}
-                                            </p>
+                                            <div className="space-y-3">
+                                                {proseParagraphs((dossier as any)?.archetype_mapping?.target_posture, 2)
+                                                    .slice(0, 2)
+                                                    .map((paragraph, index) => (
+                                                        <p key={index} className="text-[14px] leading-relaxed text-[#D6D0C6]/82">
+                                                            {paragraph}
+                                                        </p>
+                                                    ))}
+                                                {proseParagraphs((dossier as any)?.archetype_mapping?.target_posture, 2).length === 0 && (
+                                                    <p className="text-[14px] leading-relaxed text-[#D6D0C6]/82">
+                                                        Icon Maintenance — the brand is not challenging for position or disrupting the category; it is asserting the permanence of an already-won cultural throne.
+                                                    </p>
+                                                )}
+                                            </div>
 
                                             <div className="mt-10 flex items-center justify-center">
                                                 {(() => {
