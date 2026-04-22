@@ -129,7 +129,7 @@ export class SimulationService {
                     aggression: boardMetrics.aggression,
                     consistency: boardMetrics.consistency * 0.9
                 },
-                impactReport: 'Fallback: Significant degradation in production value resonance detected. Pivot towards intellectual utility recommended.'
+                impactReport: 'Production resonance is softening under this shock. Rebalance toward clearer utility and stronger structural clarity.'
             };
         }
     }

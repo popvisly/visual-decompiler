@@ -168,11 +168,11 @@ export class PredictionService {
     private static getFallbackPrediction(): TrendPrediction {
         return {
             title: 'Synthetic Realism Pivot',
-            description: 'Market saturation of AI-generated perfection leads to a high-velocity pivot toward raw, unpolished realism.',
+            description: 'Category polish is peaking. The next shift favors restrained, human texture over synthetic perfection.',
             confidence: 82,
             projectedDNA: { emotional: 0.9, intellectual: 0.4, production: 0.2, aggression: 0.6, consistency: 0.8 },
             exhaustionDate: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toISOString(),
-            counterTrend: 'Manual Authenticity'
+            counterTrend: 'Human Texture'
         };
     }
 }

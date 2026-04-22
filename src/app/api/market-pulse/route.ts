@@ -163,8 +163,8 @@ async function generateIntelligenceFlags(input: {
     if (saturation) {
         fallbackFlags.push({
             type: 'SATURATION SIGNAL',
-            finding: `${saturation.mechanic} appears in ${saturation.share}% of ${input.sector} assets in your vault, suggesting mechanic fatigue may be building.`,
-            recommendation: `Reduce direct dependence on ${saturation.mechanic} and introduce a contrasting posture before the category signal collapses into sameness.`,
+            finding: `${saturation.mechanic} appears in ${saturation.share}% of ${input.sector} assets in your vault. Fatigue risk is rising.`,
+            recommendation: `Reduce dependence on ${saturation.mechanic} and introduce a contrasting posture before the category pattern flattens.`,
             asset_count: saturation.count,
         });
     }
@@ -174,7 +174,7 @@ async function generateIntelligenceFlags(input: {
         fallbackFlags.push({
             type: 'VELOCITY ALERT',
             finding: `${velocity.mechanic} has accelerated by ${velocity.delta}% across the active ${input.sector} window.`,
-            recommendation: `Decide whether to ride ${velocity.mechanic} early or deliberately counter-program against it before the window closes.`,
+            recommendation: `Decide whether to ride ${velocity.mechanic} early or counter-program with a clear alternative while timing remains open.`,
             asset_count: Math.round((velocity.share / 100) * input.assetCount),
         });
     }
@@ -183,7 +183,7 @@ async function generateIntelligenceFlags(input: {
     if (untapped) {
         fallbackFlags.push({
             type: 'UNTAPPED MECHANIC',
-            finding: `${untapped} is materially underrepresented in this sector snapshot, leaving a usable persuasion gap.`,
+            finding: `${untapped} is underrepresented in this sector snapshot, leaving a usable persuasion gap.`,
             recommendation: `Prototype a creative route that makes ${untapped} the dominant signal while the category remains light on that trigger.`,
             asset_count: 0,
         });
