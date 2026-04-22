@@ -28,6 +28,34 @@ const STRATEGY_STYLE_CONTRACT = [
     '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
 ].join('\n');
 
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi\'m\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export async function decompileAd(
     inputs: VisionInput[],
     version: string = 'V1',
@@ -170,7 +198,8 @@ async function performAnalysis(
             text = text.split('```')[1].split('```')[0].trim();
         }
 
-        const result = JSON.parse(text);
+        const rawResult = JSON.parse(text);
+        const result = normalizeStrategyLanguage(rawResult);
 
         // Cache the result if hash and model provided
         if (imageHash && modelName) {
@@ -244,7 +273,8 @@ async function performAnalysis(
     const content = response.choices[0].message.content;
     if (!content) throw new Error("No response from Vision API");
 
-    return JSON.parse(content);
+    const rawResult = JSON.parse(content);
+    return normalizeStrategyLanguage(rawResult);
 }
 
 export async function transcribeAudio(audioPath: string) {
