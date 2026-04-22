@@ -1663,6 +1663,22 @@ export default function AssetWorkspace({
     const [activeAct, setActiveAct] = useState<string | null>(null);
 
     const printRef = useRef<HTMLDivElement>(null);
+    const tabContentTopRef = useRef<HTMLDivElement>(null);
+
+    const handleTabChange = (tab: DossierTab) => {
+        if (tab === activeTab) return;
+        setActiveTab(tab);
+
+        if (typeof window !== 'undefined') {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            requestAnimationFrame(() => {
+                tabContentTopRef.current?.scrollIntoView({
+                    behavior: prefersReducedMotion ? 'auto' : 'smooth',
+                    block: 'start',
+                });
+            });
+        }
+    };
 
     // Normalize extraction payload (V1 array vs V2 object)
     const extraction = Array.isArray(asset.extraction) ? asset.extraction[0] : asset.extraction;
@@ -2687,7 +2703,7 @@ export default function AssetWorkspace({
                     <div className="vault-analysis-frame">
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    <aside className={`vault-analysis-asset-rail w-full border-r ${sampleMode ? 'border-[#D4A574]/20' : 'border-[#E7DED1]'} relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'} z-10 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto`}>
+                    <aside className={`vault-analysis-asset-rail w-full border-r ${sampleMode ? 'border-[#D4A574]/20' : 'border-[#E7DED1]'} relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'} z-10 lg:sticky lg:top-0`}>
                         <div className="flex flex-col items-center justify-start px-[clamp(12px,1.6vw,24px)] pt-10 pb-8 lg:pt-20">
 
                             <div className="w-full max-w-[390px]">
@@ -2925,7 +2941,7 @@ export default function AssetWorkspace({
                                     <button
                                         key={tab}
                                         type="button"
-                                        onClick={() => setActiveTab(tab)}
+                                        onClick={() => handleTabChange(tab)}
                                         aria-current={activeTab === tab ? 'page' : undefined}
                                         className={`-mx-2 -my-2 rounded-full border px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.4em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
                                             activeTab === tab
@@ -2950,7 +2966,7 @@ export default function AssetWorkspace({
                                         <button
                                             key={tab}
                                             type="button"
-                                            onClick={() => setActiveTab(tab)}
+                                            onClick={() => handleTabChange(tab)}
                                             aria-current={activeTab === tab ? 'page' : undefined}
                                             className={`w-full rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
                                                 activeTab === tab
@@ -2970,7 +2986,7 @@ export default function AssetWorkspace({
                                                 <button
                                                     key={tab}
                                                     type="button"
-                                                    onClick={() => setActiveTab(tab)}
+                                                    onClick={() => handleTabChange(tab)}
                                                     aria-current={activeTab === tab ? 'page' : undefined}
                                                     className={`w-full rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
                                                         activeTab === tab
@@ -2989,7 +3005,7 @@ export default function AssetWorkspace({
                     </div>
 
                     {/* Tab Content Area */}
-                    <div className="px-[clamp(12px,1.6vw,24px)] py-[clamp(16px,1.6vw,28px)]">
+                    <div ref={tabContentTopRef} className="px-[clamp(12px,1.6vw,24px)] py-[clamp(16px,1.6vw,28px)]">
                         {activeTab === 'QUALITY GATE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
@@ -3418,7 +3434,7 @@ export default function AssetWorkspace({
                                                     <h3 className="mb-8 border-b border-white/10 pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                         Forensic Gaze Diagnostic
                                                     </h3>
-                                                    <p className="max-w-[72ch] text-[13px] font-medium leading-relaxed text-[#F3F1ED]">
+                                                    <p className="max-w-[72ch] text-[13px] font-medium leading-relaxed break-words text-[#F3F1ED]">
                                                         {(extraction.full_dossier as any).gaze_topology.reading}
                                                     </p>
                                                 </div>
@@ -3616,7 +3632,7 @@ export default function AssetWorkspace({
                                                                         </div>
 
                                                                         <div className="mt-4">
-                                                                            <p className="text-[13px] font-medium leading-relaxed text-[#F3F1ED]/92">{itemBody}</p>
+                                                                            <p className="text-[13px] font-medium leading-relaxed break-words text-[#F3F1ED]/92">{itemBody}</p>
                                                                         </div>
 
                                                                         <div className="mt-6 grid gap-4 border-t border-white/10 pt-5 sm:grid-cols-[auto_1fr] sm:items-start">
@@ -3798,7 +3814,7 @@ export default function AssetWorkspace({
                                                     <span className="block">Trigger Distribution</span>
                                                     <span className="block">Map</span>
                                                 </p>
-                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Surface_Area</span>
+                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/60">Surface_Area</span>
                                             </div>
 
                                             <div className="flex items-center justify-center">
@@ -3870,8 +3886,8 @@ export default function AssetWorkspace({
                                                             STATUS: { anchor: 'middle', x: 0, y: -2 },
                                                             UTILITY: { anchor: 'start', x: 8, y: 0 },
                                                             'SOCIAL PROOF': { anchor: 'end', x: -8, y: 0 },
-                                                            AUTHORITY: { anchor: 'start', x: 16, y: 10 },
-                                                            SCARCITY: { anchor: 'end', x: -16, y: 10 },
+                                                            AUTHORITY: { anchor: 'start', x: 18, y: 4 },
+                                                            SCARCITY: { anchor: 'end', x: -18, y: 18 },
                                                         };
 
                                                         const fallbackAnchor: 'start' | 'middle' | 'end' =
@@ -3985,7 +4001,7 @@ export default function AssetWorkspace({
                                         <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-8">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Strategic Posture</p>
-                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Field_Map</span>
+                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/60">Field_Map</span>
                                             </div>
 
                                             <p className="text-[14px] leading-relaxed text-[#D6D0C6]/70">
@@ -4310,7 +4326,7 @@ export default function AssetWorkspace({
                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#E3DBCE]">{row.variable}</p>
                                                         </td>
                                                         <td className="border-r border-white/10 px-8 py-7 text-center align-middle">
-                                                            <p className="text-[13px] font-medium leading-relaxed text-[#F3F1ED]">{row.currentState}</p>
+                                                            <p className="text-[13px] font-medium leading-relaxed break-words text-[#F3F1ED]">{row.currentState}</p>
                                                         </td>
                                                         <td className="border-r border-white/10 px-8 py-7 text-center align-middle">
                                                             <span className={`text-[10px] font-semibold uppercase tracking-[0.28em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : row.predictedLift === 'Medium' ? 'text-[#E3DBCE]' : 'text-[#CFC6B8]'}`}>
