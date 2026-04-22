@@ -4,6 +4,44 @@ const openai = process.env.OPENAI_API_KEY ? new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 }) : null as unknown as OpenAI;
 
+const SIMULATION_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep findings specific, comparative, and decision-oriented.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi\'m\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export type ShockTemplate = {
     id: string;
     alias: string;
@@ -53,6 +91,8 @@ export class SimulationService {
                 "durabilityScore": int,
                 "impactReport": string
             }
+
+            ${SIMULATION_STYLE_CONTRACT}
         `;
 
         try {
@@ -65,7 +105,13 @@ export class SimulationService {
             const content = response.choices[0].message.content;
             if (!content) throw new Error('Empty AI response');
 
-            const result = JSON.parse(content);
+            const rawResult = JSON.parse(content);
+            const result = normalizeStrategyLanguage(rawResult) as {
+                durabilityScore: number;
+                shiftedMetrics: any;
+                impactReport: string;
+            };
+
             return {
                 durabilityScore: result.durabilityScore,
                 shiftedMetrics: result.shiftedMetrics,
