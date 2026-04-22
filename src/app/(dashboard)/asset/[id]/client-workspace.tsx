@@ -780,8 +780,8 @@ const deriveConstraintItemCopy = (text: string, index: number): { title: string;
     const colonMatch = text.match(/^\s*([^:]+):\s*(.*)$/);
     if (colonMatch) {
         return {
-            title: colonMatch[1].trim(),
-            body: colonMatch[2].trim() || text,
+            title: normalizeProseText(colonMatch[1].trim()),
+            body: normalizeProseText(colonMatch[2].trim() || text),
         };
     }
 
@@ -790,8 +790,8 @@ const deriveConstraintItemCopy = (text: string, index: number): { title: string;
     const title = words.slice(0, 4).join(' ') || `Constraint ${String(index).padStart(2, '0')}`;
 
     return {
-        title,
-        body: text,
+        title: normalizeProseText(title),
+        body: normalizeProseText(text),
     };
 };
 
@@ -3636,7 +3636,7 @@ export default function AssetWorkspace({
                                                 className={`self-start h-fit rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
                                                 <p className={`text-[10px] font-semibold uppercase tracking-[0.5em] mb-6 border-b border-white/10 pb-6 ${group.accent}`}>{group.title}</p>
-                                                <p className="mb-8 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">{group.guidance}</p>
+                                                <p className="mb-8 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/76">{normalizeProseText(group.guidance)}</p>
                                                 <div className="space-y-4">
                                                     {group.title === 'Adaptive Delta' && (
                                                         <div className="border border-white/10 bg-[#151310] px-6 py-4">
@@ -3648,7 +3648,7 @@ export default function AssetWorkspace({
                                                             (() => {
                                                                 const adaptiveGroups = group.items.reduce((acc, adaptiveItem, adaptiveIndex) => {
                                                                     const adaptiveMatch = adaptiveItem.text.match(/^\s*([^:]+):\s*(.*)$/);
-                                                                    const laneTitle = adaptiveMatch?.[1]?.trim().toUpperCase() || `VARIANT ${adaptiveIndex + 1}`;
+                                                                    const laneTitle = normalizeProseText(adaptiveMatch?.[1]?.trim()) || `Variant ${adaptiveIndex + 1}`;
                                                                     const laneBody = adaptiveMatch?.[2]?.trim() || adaptiveItem.text;
                                                                     const existingLane = acc.find((lane) => lane.title === laneTitle);
                                                                     const laneEntry = { id: adaptiveIndex, body: laneBody, severity: adaptiveItem.severity };
@@ -3665,12 +3665,12 @@ export default function AssetWorkspace({
                                                                 return adaptiveGroups.map((lane) => (
                                                                     <div key={`${group.title}-${lane.title}`} className="border border-white/10 bg-[#151310] p-6">
                                                                         <div className="border-b border-white/10 pb-4">
-                                                                            <p className="text-[24px] font-semibold uppercase tracking-[-0.02em] text-[#F3F1ED]">{lane.title}</p>
+                                                                            <p className="text-[24px] font-semibold tracking-[-0.02em] text-[#F3F1ED]">{lane.title}</p>
                                                                         </div>
                                                                         <div className="mt-4 space-y-4">
                                                                             {lane.entries.map((entry) => (
                                                                                 <div key={`${group.title}-${lane.title}-${entry.id}`} className="space-y-4 border border-white/10 bg-[#131110] p-4">
-                                                                                    <p className="text-[16px] font-medium leading-relaxed text-[#F3F1ED]/92">{entry.body}</p>
+                                                                                    <p className="text-[16px] font-medium leading-relaxed text-[#F3F1ED]/92">{normalizeProseText(entry.body)}</p>
                                                                                     <div className="grid gap-4 border-t border-white/10 pt-4 sm:grid-cols-[auto_1fr] sm:items-start">
                                                                                         <div className="space-y-2">
                                                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Priority</p>
@@ -3712,11 +3712,13 @@ export default function AssetWorkspace({
                                                                 return (
                                                                     <div key={`${group.title}-${id}`} className="border border-white/10 bg-[#151310] p-6">
                                                                         <div className="border-b border-white/10 pb-4">
-                                                                            <p className="text-[16px] font-semibold uppercase tracking-[0.08em] text-[#F3F1ED]">{itemTitle}</p>
+                                                                            <p className="text-[16px] font-semibold tracking-[0.02em] text-[#F3F1ED]">{normalizeProseText(itemTitle)}</p>
                                                                         </div>
 
-                                                                        <div className="mt-4">
-                                                                            <p className="text-[13px] font-medium leading-relaxed break-words text-[#F3F1ED]/92">{itemBody}</p>
+                                                                        <div className="mt-4 space-y-3">
+                                                                            {proseParagraphs(itemBody, 2).map((paragraph, paragraphIndex) => (
+                                                                                <p key={paragraphIndex} className="text-[13px] font-medium leading-relaxed break-words text-[#F3F1ED]/92">{paragraph}</p>
+                                                                            ))}
                                                                         </div>
 
                                                                         <div className="mt-6 grid gap-4 border-t border-white/10 pt-5 sm:grid-cols-[auto_1fr] sm:items-start">
