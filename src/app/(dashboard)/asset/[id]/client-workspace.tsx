@@ -442,6 +442,47 @@ const firstSentence = (value: string | undefined | null) => {
     return (match?.[0] || trimmed).trim();
 };
 
+const normalizeProseText = (value: string | undefined | null) => {
+    if (!value) return '';
+    const cleaned = value.replace(/\s+/g, ' ').trim();
+    if (!cleaned) return '';
+
+    const alpha = cleaned.replace(/[^A-Za-z]/g, '');
+    if (alpha.length < 24) return cleaned;
+
+    const upperRatio = alpha.length === 0
+      ? 0
+      : (alpha.match(/[A-Z]/g)?.length || 0) / alpha.length;
+
+    if (upperRatio < 0.72) return cleaned;
+
+    const lowered = cleaned.toLowerCase();
+    return lowered
+      .replace(/(^|[.!?]\s+)([a-z])/g, (_m, start, ch) => `${start}${ch.toUpperCase()}`)
+      .replace(/\b(chanel|vb|ad|cta|dna|hud)\b/gi, (m) => m.toUpperCase());
+};
+
+const proseParagraphs = (value: string | undefined | null, sentenceChunkSize = 2): string[] => {
+    const normalized = normalizeProseText(value);
+    if (!normalized) return [];
+
+    const manual = String(value)
+        .split(/\n+/)
+        .map((p) => normalizeProseText(p))
+        .filter(Boolean);
+
+    if (manual.length > 1) return manual;
+
+    const sentences = normalized.split(/(?<=[.!?])\s+/).filter(Boolean);
+    if (sentences.length <= sentenceChunkSize) return [normalized];
+
+    const chunks: string[] = [];
+    for (let i = 0; i < sentences.length; i += sentenceChunkSize) {
+        chunks.push(sentences.slice(i, i + sentenceChunkSize).join(' ').trim());
+    }
+    return chunks;
+};
+
 const normalizeConfidenceScore = (value?: number | null) => {
     if (value == null) return null;
     return value <= 1 ? Math.round(value * 100) : Math.round(value);
@@ -4198,15 +4239,15 @@ export default function AssetWorkspace({
                                                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mb-8">
                                                         <div className="rounded-[1.75rem] border border-[#E7DED1] bg-white/70 p-5">
                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Subject</p>
-                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(blueprintData.execution_constraints?.primary_trigger) || 'Primary subject lock captured from forensic route.'}</p>
+                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(normalizeProseText(blueprintData.execution_constraints?.primary_trigger)) || 'Primary subject lock captured from forensic route.'}</p>
                                                         </div>
                                                         <div className="rounded-[1.75rem] border border-[#E7DED1] bg-white/70 p-5">
                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Setting</p>
-                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(blueprintData.technical_specs?.material_cues?.[0]) || 'Controlled studio context with minimal environmental noise.'}</p>
+                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(normalizeProseText(blueprintData.technical_specs?.material_cues?.[0])) || 'Controlled studio context with minimal environmental noise.'}</p>
                                                         </div>
                                                         <div className="rounded-[1.75rem] border border-[#E7DED1] bg-white/70 p-5">
                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Lighting</p>
-                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(blueprintData.technical_specs?.lighting_architecture) || 'Soft, directional lighting architecture retained from route.'}</p>
+                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(normalizeProseText(blueprintData.technical_specs?.lighting_architecture)) || 'Soft, directional lighting architecture retained from route.'}</p>
                                                         </div>
                                                     </div>
                                                     <div className="rounded-[2.75rem] border border-[#E7DED1] bg-white/60 p-10 shadow-inner">
@@ -4219,7 +4260,7 @@ export default function AssetWorkspace({
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                     <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10">
                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D4A574] mb-8 border-b border-[#E7DED1] pb-4">Primary Trigger</p>
-                                                        <p className="text-[20px] font-semibold leading-tight text-[#1a1a1a] tracking-[-0.01em]">{blueprintData.execution_constraints?.primary_trigger}</p>
+                                                        <p className="text-[16px] font-medium leading-relaxed text-[#2f2a24]">{normalizeProseText(blueprintData.execution_constraints?.primary_trigger)}</p>
                                                         <div className="mt-8 space-y-3">
                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#999]">Mechanism</p>
                                                             <ul className="space-y-2">
@@ -4232,9 +4273,9 @@ export default function AssetWorkspace({
                                                     <div className="rounded-[2.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-10">
                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#999] mb-8 border-b border-[#E7DED1] pb-4">Aesthetic Architecture</p>
                                                         <ul className="space-y-3">
-                                                            <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#aaa]" />{firstSentence(blueprintData.technical_specs?.lighting_architecture) || 'Lighting architecture captured in route trace.'}</li>
-                                                            <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#aaa]" />{firstSentence(blueprintData.technical_specs?.gaze_vector) || 'Gaze topology remains controlled and directional.'}</li>
-                                                            <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#aaa]" />{firstSentence(blueprintData.technical_specs?.material_cues?.join(', ')) || 'Material cues preserve surface authority and status coding.'}</li>
+                                                            <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#aaa]" />{firstSentence(normalizeProseText(blueprintData.technical_specs?.lighting_architecture)) || 'Lighting architecture captured in route trace.'}</li>
+                                                            <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#aaa]" />{firstSentence(normalizeProseText(blueprintData.technical_specs?.gaze_vector)) || 'Gaze topology remains controlled and directional.'}</li>
+                                                            <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#aaa]" />{firstSentence(normalizeProseText(blueprintData.technical_specs?.material_cues?.join(', '))) || 'Material cues preserve surface authority and status coding.'}</li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -4251,7 +4292,7 @@ export default function AssetWorkspace({
                                                             <div className="space-y-3">
                                                                 {(blueprintData.execution_constraints?.must_include || []).map((item: string, i: number) => (
                                                                     <div key={`inc-${i}`} className="rounded-[1.75rem] border border-[#E7DED1] bg-[#FBF7EF] p-4 hover:border-[#D4A574]/40 transition-all">
-                                                                        <p className="text-[12px] font-semibold text-[#666] leading-relaxed">• {item}</p>
+                                                                        <p className="text-[13px] font-normal text-[#4e463d] leading-relaxed">• {normalizeProseText(item)}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -4267,7 +4308,7 @@ export default function AssetWorkspace({
                                                             <div className="space-y-3">
                                                                 {(blueprintData.execution_constraints?.must_not_include || []).map((item: string, i: number) => (
                                                                     <div key={`exc-${i}`} className="rounded-[1.5rem] border border-[#e8ddd0] bg-white/85 p-4">
-                                                                        <p className="text-[12px] text-[#7a7267] leading-relaxed">• {item}</p>
+                                                                        <p className="text-[13px] font-normal text-[#5e554a] leading-relaxed">• {normalizeProseText(item)}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -4288,7 +4329,7 @@ export default function AssetWorkspace({
                                                                     <p className="mb-4 border-b border-[#e8ddd0] pb-4 text-[9px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">{remix.angle}</p>
                                                                     <p className="text-[10px] uppercase tracking-[0.28em] text-[#999] mb-3">Intent Angle</p>
                                                                     <p className="text-[17px] font-semibold leading-tight text-[#1a1a1a]/85 group-hover:text-[#1a1a1a] transition-colors tracking-[-0.01em]">
-                                                                        "{remix.copy}"
+                                                                        "{normalizeProseText(remix.copy)}"
                                                                     </p>
                                                                 </div>
                                                             ))}
@@ -4310,9 +4351,11 @@ export default function AssetWorkspace({
                                                                         <span className="text-[10px] font-semibold text-[#b4aa9c] tracking-[0.24em] uppercase">Variant 0{i+1}</span>
                                                                     </div>
                                                                     <div className="border border-[#e8ddd0] bg-white/90 p-10 shadow-inner">
-                                                                        <pre className="whitespace-pre-wrap text-[13px] leading-relaxed text-[#6d6559] selection:bg-[#D4A574]/30">
-                                                                            {variant.prompt}
-                                                                        </pre>
+                                                                        {proseParagraphs(variant.prompt, 2).map((paragraph, pIndex) => (
+                                                                            <p key={pIndex} className="text-[13px] leading-relaxed text-[#6d6559] selection:bg-[#D4A574]/30 mb-4 last:mb-0">
+                                                                                {paragraph}
+                                                                            </p>
+                                                                        ))}
                                                                     </div>
                                                                 </div>
                                                             ))}
