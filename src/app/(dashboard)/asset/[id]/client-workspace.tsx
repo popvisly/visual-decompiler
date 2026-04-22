@@ -3839,7 +3839,7 @@ export default function AssetWorkspace({
                                                                 <p className="text-[24px] font-semibold text-[#F3F1ED]">{row.value}%</p>
                                                             </div>
                                                             <div className="col-span-5 px-8 py-6">
-                                                                <p className="text-[13px] leading-relaxed text-[#F3F1ED]">{row.insight}</p>
+                                                                <p className="text-[13px] leading-relaxed text-[#F3F1ED]/88">{normalizeProseText(row.insight)}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -3847,18 +3847,32 @@ export default function AssetWorkspace({
 
                                                 <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] p-10 shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] mb-6 border-b border-white/10 pb-5">Directional Estimate</p>
-                                                    <p className="max-w-[74ch] text-[13px] leading-relaxed text-[#F3F1ED]">
-                                                        {marketPulseFallback.interpretation || 'Category pressure is elevated, so this route requires sharper differentiation and strict execution discipline before scale expansion.'}
-                                                    </p>
+                                                    <div className="max-w-[74ch] space-y-3">
+                                                        {proseParagraphs(
+                                                            marketPulseFallback.interpretation || 'Category pressure is elevated, so this route requires sharper differentiation and strict execution discipline before scale expansion.',
+                                                            2,
+                                                        ).map((paragraph, idx) => (
+                                                            <p key={idx} className="text-[13px] leading-relaxed text-[#F3F1ED]/88">
+                                                                {paragraph}
+                                                            </p>
+                                                        ))}
+                                                    </div>
                                                 </div>
 
                                                 <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                     <p className="mb-6 border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                         Strategic Implication
                                                     </p>
-                                                    <p className="max-w-[78ch] rounded-[1.75rem] border border-white/10 bg-[#151310] px-5 py-4 text-[13px] leading-relaxed text-[#F3F1ED]">
-                                                        To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.
-                                                    </p>
+                                                    <div className="max-w-[78ch] rounded-[1.75rem] border border-white/10 bg-[#151310] px-5 py-4">
+                                                        {proseParagraphs(
+                                                            'To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.',
+                                                            2,
+                                                        ).map((paragraph, idx) => (
+                                                            <p key={idx} className="text-[13px] leading-relaxed text-[#F3F1ED]/88">
+                                                                {paragraph}
+                                                            </p>
+                                                        ))}
+                                                    </div>
                                                     <span className="mt-8 inline-flex border border-[#D4A574]/75 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#F3F1ED] bg-[#D4A574]/24">
                                                         {marketPulseFallback.confidenceLabel}
                                                     </span>
@@ -4400,7 +4414,13 @@ export default function AssetWorkspace({
                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#E3DBCE]">{row.variable}</p>
                                                         </td>
                                                         <td className="border-r border-white/10 px-8 py-7 text-center align-middle">
-                                                            <p className="text-[13px] font-medium leading-relaxed break-words text-[#F3F1ED]">{row.currentState}</p>
+                                                            <div className="space-y-2">
+                                                                {proseParagraphs(row.currentState, 1).slice(0, 3).map((line, idx) => (
+                                                                    <p key={idx} className="text-[13px] font-normal leading-relaxed break-words text-[#F3F1ED]/90">
+                                                                        {line}
+                                                                    </p>
+                                                                ))}
+                                                            </div>
                                                         </td>
                                                         <td className="border-r border-white/10 px-8 py-7 text-center align-middle">
                                                             <span className={`text-[10px] font-semibold uppercase tracking-[0.28em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : row.predictedLift === 'Medium' ? 'text-[#E3DBCE]' : 'text-[#CFC6B8]'}`}>
@@ -4432,11 +4452,18 @@ export default function AssetWorkspace({
                                                 Variable Diagnostics
                                             </p>
                                             <div className="space-y-3 text-[13px] leading-relaxed text-[#D6D0C6]/82">
-                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Composition Emphasis:</span> The brand asserts cultural status through controlled visual posture.</p>
-                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Chromatic Intensity:</span> Current color pressure remains persuasive without over-saturation.</p>
-                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Gaze Direction:</span> Oblique address sustains intimacy without direct confrontation.</p>
-                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Copy Compression:</span> Heritage messaging carries effectively with room for selective tightening.</p>
-                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">CTA Prominence:</span> Product-scale authority is currently doing the conversion work.</p>
+                                                {[
+                                                    ['Composition Emphasis', 'The brand asserts cultural status through controlled visual posture.'],
+                                                    ['Chromatic Intensity', 'Current color pressure remains persuasive without over-saturation.'],
+                                                    ['Gaze Direction', 'Oblique address sustains intimacy without direct confrontation.'],
+                                                    ['Copy Compression', 'Heritage messaging carries effectively with room for selective tightening.'],
+                                                    ['CTA Prominence', 'Product-scale authority is currently doing the conversion work.'],
+                                                ].map(([label, body]) => (
+                                                    <div key={label} className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{label}</p>
+                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/86">{body}</p>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
 
@@ -4445,19 +4472,33 @@ export default function AssetWorkspace({
                                                 Gaze Direction Breakdown
                                             </p>
                                             <div className="space-y-3 text-[13px] leading-relaxed text-[#D6D0C6]/82">
-                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Positioning:</span> Upper-center frame priority with directional control.</p>
-                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Direction:</span> Oblique vector maintains aspirational distance.</p>
-                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Tilt:</span> Slight downward bias supports mixed-mode address.</p>
-                                                <p className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3"><span className="text-[#F3F1ED] font-semibold">Focus Tone:</span> Eye contrast retains focal attraction without dominance drift.</p>
+                                                {[
+                                                    ['Positioning', 'Upper-center frame priority with directional control.'],
+                                                    ['Direction', 'Oblique vector maintains aspirational distance.'],
+                                                    ['Tilt', 'Slight downward bias supports mixed-mode address.'],
+                                                    ['Focus Tone', 'Eye contrast retains focal attraction without dominance drift.'],
+                                                ].map(([label, body]) => (
+                                                    <div key={label} className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{label}</p>
+                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/86">{body}</p>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className="rounded-[2.75rem] border border-white/10 bg-[#151310] p-10">
                                         <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574]">Stress Test Summary</p>
-                                        <p className="max-w-[78ch] text-[13px] leading-relaxed text-[#D6D0C6]/70">
-                                            These stress signals define where controlled adjustments can improve lift without destabilizing the route. Next iteration should prioritize gaze and hierarchy tests first, then validate copy and CTA compression only where structural confidence remains intact.
-                                        </p>
+                                        <div className="max-w-[78ch] space-y-3">
+                                            {proseParagraphs(
+                                                'These stress signals define where controlled adjustments can improve lift without destabilizing the route. Next iteration should prioritize gaze and hierarchy tests first, then validate copy and CTA compression only where structural confidence remains intact.',
+                                                2,
+                                            ).map((paragraph, idx) => (
+                                                <p key={idx} className="text-[13px] leading-relaxed text-[#D6D0C6]/78">
+                                                    {paragraph}
+                                                </p>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
