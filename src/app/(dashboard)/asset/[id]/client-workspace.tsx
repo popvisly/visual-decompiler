@@ -1330,11 +1330,38 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
 
     // The first part is usually intro text (Overture)
     const overture = parts[0]?.trim();
-    const blocks = parts.slice(1).map((text, i) => ({
-        label: matches[i]?.replace(':', '').trim(),
-        text: text.trim().split(' — ')[1] || text.trim(),
-        title: text.trim().split(' — ')[0] || ''
-    }));
+    const normalizeShoutyText = (raw: string): string => {
+        const cleaned = raw.replace(/\s+/g, ' ').trim();
+        if (!cleaned) return '';
+        const alpha = cleaned.replace(/[^A-Za-z]/g, '');
+        if (alpha.length < 24) return cleaned;
+        const upperRatio =
+            alpha.length === 0
+                ? 0
+                : (alpha.match(/[A-Z]/g)?.length || 0) / alpha.length;
+        if (upperRatio < 0.72) return cleaned;
+
+        const lowered = cleaned.toLowerCase();
+        return lowered
+            .replace(/(^|[.!?]\s+)([a-z])/g, (_m, start, ch) => `${start}${ch.toUpperCase()}`)
+            .replace(/\b(chanel|vb|ad|cta|dna|hud)\b/gi, (m) => m.toUpperCase());
+    };
+
+    const blocks = parts.slice(1).map((text, i) => {
+        const trimmed = text.trim();
+        if (type === 'CHANNEL') {
+            return {
+                label: matches[i]?.replace(':', '').trim(),
+                text: normalizeShoutyText(trimmed),
+                title: ''
+            };
+        }
+        return {
+            label: matches[i]?.replace(':', '').trim(),
+            text: trimmed.split(' — ')[1] || trimmed,
+            title: trimmed.split(' — ')[0] || ''
+        };
+    });
 
     const toParagraphs = (raw: string): string[] => {
         const normalized = raw.replace(/\s+/g, ' ').trim();
@@ -1422,13 +1449,17 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                         <div className="w-2 h-2 rounded-full bg-[#D4A574]/60" />
                                         <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.35em]">{block.label}</span>
                                     </div>
-                                    <h3 className="border-b border-white/10 pb-5 text-[1.75rem] font-semibold uppercase tracking-tightest text-[#F3F1ED] md:text-[2rem]">
-                                        {block.title}
-                                    </h3>
+                                    {block.title ? (
+                                        <h3 className="border-b border-white/10 pb-5 text-[1.75rem] font-semibold uppercase tracking-tightest text-[#F3F1ED] md:text-[2rem]">
+                                            {block.title}
+                                        </h3>
+                                    ) : (
+                                        <div className="border-b border-white/10 pb-5" />
+                                    )}
                                     <div className="flex-1 pt-6">
                                         <div className="max-w-[78ch] space-y-4">
                                             {toParagraphs(block.text).map((paragraph, pi) => (
-                                                <p key={pi} className="text-[15px] font-light leading-9 text-[#D6D0C6]">
+                                                <p key={pi} className="text-[16px] font-normal leading-8 text-[#D6D0C6]/90">
                                                     {paragraph.trim()}
                                                 </p>
                                             ))}
