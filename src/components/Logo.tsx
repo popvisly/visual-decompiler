@@ -56,10 +56,10 @@ export default function Logo({
             </span>
             <div className="flex flex-col leading-[0.9]">
                 <h1
-                    className={`text-[16px] lg:text-[18px] font-black uppercase tracking-[0.22em] ${forceDark ? 'text-white' : 'text-black'}`}
+                    className={`text-[16px] lg:text-[18px] uppercase tracking-[0.22em] ${forceDark ? 'text-white' : 'text-black'}`}
                 >
-                    <span className={`block transition-colors duration-500 ease-out ${visualHoverClass}`}>Visual</span>
-                    <span className={`block mt-0.5 transition-colors duration-500 ease-out ${decompilerHoverClass}`}>Decompiler</span>
+                    <span className={`block font-medium transition-colors duration-500 ease-out ${visualHoverClass}`}>Visual</span>
+                    <span className={`block mt-0.5 font-black transition-colors duration-500 ease-out ${decompilerHoverClass}`}>Decompiler</span>
                 </h1>
                 {sublabel ? (
                     <p
