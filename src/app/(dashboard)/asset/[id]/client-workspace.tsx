@@ -1380,7 +1380,19 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
             alpha.length === 0
                 ? 0
                 : (alpha.match(/[A-Z]/g)?.length || 0) / alpha.length;
-        if (upperRatio < 0.72) return cleaned;
+
+        const sentences = cleaned.split(/(?<=[.!?])\s+/).filter(Boolean);
+        const hasShoutySentence = sentences.some((sentence) => {
+            const sentenceAlpha = sentence.replace(/[^A-Za-z]/g, '');
+            if (sentenceAlpha.length < 20) return false;
+            const sentenceUpperRatio =
+                sentenceAlpha.length === 0
+                    ? 0
+                    : (sentenceAlpha.match(/[A-Z]/g)?.length || 0) / sentenceAlpha.length;
+            return sentenceUpperRatio > 0.78;
+        });
+
+        if (upperRatio < 0.72 && !hasShoutySentence) return cleaned;
 
         const lowered = cleaned.toLowerCase();
         return lowered
@@ -1495,12 +1507,12 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                             {block.title}
                                         </h3>
                                     ) : (
-                                        <div className="border-b border-white/10 pb-5" />
+                                        <div className="h-1" />
                                     )}
-                                    <div className="flex-1 pt-6">
+                                    <div className={`flex-1 ${block.title ? 'pt-6' : 'pt-3'}`}>
                                         <div className="max-w-[78ch] space-y-4">
                                             {toParagraphs(block.text).map((paragraph, pi) => (
-                                                <p key={pi} className="text-[16px] font-normal leading-8 text-[#D6D0C6]/90">
+                                                <p key={pi} className="text-[15px] font-normal leading-[1.8] text-[#D6D0C6]/90">
                                                     {paragraph.trim()}
                                                 </p>
                                             ))}
