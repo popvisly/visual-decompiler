@@ -1,3 +1,3 @@
-export const SAMPLE_DOSSIER_ASSET_ID = '1cb30400-1ba3-4dda-8fe2-7650674aeb4a';
+export const SAMPLE_DOSSIER_ASSET_ID = 'e631b134-c5b5-420e-bb7f-d90c86e7ec35';
 export const SAMPLE_DOSSIER_SLUG = 'sample-dossier';
 export const SAMPLE_DOSSIER_HREF = `/share/${SAMPLE_DOSSIER_SLUG}`;
