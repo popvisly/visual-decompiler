@@ -4414,7 +4414,7 @@ export default function AssetWorkspace({
                                     <WorkspaceTabHeader
                                         kicker="Causal Intelligence"
                                         title="Stress Lab: Causal Intelligence"
-                                        intro="This section outlines experimental stress testing on key creative variables, measuring response variance and structural durability."
+                                        intro="This section stress-tests key creative variables to predict lift, control risk, and protect decision confidence."
                                     />
                                     <div className="rounded-[3rem] border border-white/10 bg-[#1A1A1A] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                         <table className="w-full table-fixed border-collapse">
@@ -4436,7 +4436,7 @@ export default function AssetWorkspace({
                                                 {(stressLabRows || []).map((row, i) => (
                                                     <tr key={i} className="bg-[#171513] transition-colors hover:bg-[#211d18]">
                                                         <td className="border-r border-white/10 px-8 py-7 text-center align-middle">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#E3DBCE]">{row.variable}</p>
+                                                            <p className="text-[13px] font-semibold tracking-[0.02em] text-[#E3DBCE]">{normalizeProseText(row.variable)}</p>
                                                         </td>
                                                         <td className="border-r border-white/10 px-8 py-7 text-center align-middle">
                                                             <div className="space-y-2">
@@ -4477,16 +4477,10 @@ export default function AssetWorkspace({
                                                 Variable Diagnostics
                                             </p>
                                             <div className="space-y-3 text-[13px] leading-relaxed text-[#D6D0C6]/82">
-                                                {[
-                                                    ['Composition Emphasis', 'The brand asserts cultural status through controlled visual posture.'],
-                                                    ['Chromatic Intensity', 'Current color pressure remains persuasive without over-saturation.'],
-                                                    ['Gaze Direction', 'Oblique address sustains intimacy without direct confrontation.'],
-                                                    ['Copy Compression', 'Heritage messaging carries effectively with room for selective tightening.'],
-                                                    ['CTA Prominence', 'Product-scale authority is currently doing the conversion work.'],
-                                                ].map(([label, body]) => (
-                                                    <div key={label} className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{label}</p>
-                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/86">{body}</p>
+                                                {(stressLabRows || []).slice(0, 5).map((row) => (
+                                                    <div key={row.variable} className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{normalizeProseText(row.variable)}</p>
+                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/86">{normalizeProseText(row.proposedShift)}</p>
                                                     </div>
                                                 ))}
                                             </div>
@@ -4498,14 +4492,14 @@ export default function AssetWorkspace({
                                             </p>
                                             <div className="space-y-3 text-[13px] leading-relaxed text-[#D6D0C6]/82">
                                                 {[
-                                                    ['Positioning', 'Upper-center frame priority with directional control.'],
-                                                    ['Direction', 'Oblique vector maintains aspirational distance.'],
-                                                    ['Tilt', 'Slight downward bias supports mixed-mode address.'],
-                                                    ['Focus Tone', 'Eye contrast retains focal attraction without dominance drift.'],
+                                                    ['Positioning', firstSentence(blueprintData?.technical_specs?.gaze_vector) || 'Upper-center frame priority with directional control.'],
+                                                    ['Direction', firstSentence(dossier?.gaze_topology?.viewer_position) || 'Oblique vector maintains aspirational distance.'],
+                                                    ['Tilt', firstSentence(dossier?.gaze_topology?.mode_of_address) || 'Slight downward bias supports mixed-mode address.'],
+                                                    ['Focus Tone', firstSentence(dossier?.gaze_topology?.reading) || 'Eye contrast retains focal attraction without dominance drift.'],
                                                 ].map(([label, body]) => (
-                                                    <div key={label} className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{label}</p>
-                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/86">{body}</p>
+                                                    <div key={String(label)} className="rounded-[1.5rem] border border-white/10 bg-[#1A1A1A] px-4 py-3">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{normalizeProseText(String(label))}</p>
+                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/86">{normalizeProseText(String(body))}</p>
                                                     </div>
                                                 ))}
                                             </div>
