@@ -4581,9 +4581,13 @@ export default function AssetWorkspace({
                                                     </div>
                                                     <div className="pt-4">
                                                         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Operating Status</p>
-                                                        <p className="mt-3 text-[16px] font-semibold leading-[1.5] text-[#F3F1ED]">
-                                                            {integratedRecommendation.recommendedDirection}
-                                                        </p>
+                                                        <div className="mt-3 space-y-2">
+                                                            {proseParagraphs(integratedRecommendation.recommendedDirection, 2).map((paragraph, idx) => (
+                                                                <p key={idx} className="text-[15px] font-medium leading-[1.55] text-[#F3F1ED]/90">
+                                                                    {paragraph}
+                                                                </p>
+                                                            ))}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -4612,9 +4616,16 @@ export default function AssetWorkspace({
                                                                     {new Date(entry.timestamp).toLocaleDateString([], { day: '2-digit', month: 'short' })}
                                                                 </span>
                                                             </div>
-                                                            <p className="text-[13px] font-medium leading-relaxed text-[#D6D0C6]/80">{entry.rationale}</p>
+                                                            <div className="space-y-2">
+                                                                {proseParagraphs(entry.rationale, 2).map((paragraph, idx) => (
+                                                                    <p key={idx} className="text-[13px] font-normal leading-relaxed text-[#D6D0C6]/82">
+                                                                        {paragraph}
+                                                                    </p>
+                                                                ))}
+                                                            </div>
                                                             <div className="mt-6 border-t border-white/10 pt-5">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]/70">P1 Fix: {entry.p1Fix}</p>
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]/70">P1 Fix</p>
+                                                                <p className="mt-2 text-[12px] leading-relaxed text-[#D6D0C6]/76">{normalizeProseText(entry.p1Fix)}</p>
                                                             </div>
                                                         </div>
                                                     ))
@@ -4628,9 +4639,16 @@ export default function AssetWorkspace({
 
                                         <div className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-10 xl:col-span-2">
                                             <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/70">Audit Purpose</p>
-                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
-                                                This log ensures every decision is documented for future reference and accountability, supporting a transparent creative process.
-                                            </p>
+                                            <div className="max-w-[78ch] space-y-3">
+                                                {proseParagraphs(
+                                                    'This log ensures every decision is documented for future reference and accountability, supporting a transparent creative process.',
+                                                    2,
+                                                ).map((paragraph, idx) => (
+                                                    <p key={idx} className="text-[13px] leading-relaxed text-[#D6D0C6]/74">
+                                                        {paragraph}
+                                                    </p>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
