@@ -3,6 +3,44 @@ import { generateEmbedding } from '@/lib/embeddings';
 import { getOpenAI } from '@/lib/vision';
 import { AdDigest } from '@/types/digest';
 
+const COPILOT_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep findings specific, comparative, and decision-oriented.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export async function queryCopilot(
     prompt: string,
     context: {
@@ -53,7 +91,9 @@ USE THE PROVIDED CONTEXT ONLY. If the context is empty, inform the user that you
 Context from user's library:
 ${strategicContext}
 
-Format your response in professional, concise markdown. Focus on psychological mechanics and strategic patterns.`
+Format your response in professional, concise markdown. Focus on psychological mechanics and strategic patterns.
+
+${COPILOT_STYLE_CONTRACT}`
                 },
                 {
                     role: "user",
@@ -63,8 +103,11 @@ Format your response in professional, concise markdown. Focus on psychological m
             temperature: 0.7,
         });
 
+        const rawAnswer = response.choices[0].message.content || '';
+        const normalizedAnswer = normalizeStrategyLanguage(rawAnswer) as string;
+
         return {
-            answer: response.choices[0].message.content,
+            answer: normalizedAnswer,
             sources: (ads || []).map((ad: any) => ({
                 id: ad.id,
                 brand: ad.brand_guess,
