@@ -5,6 +5,44 @@ import { generateEmbedding } from '@/lib/embeddings';
 import { triggerWebhook } from '@/lib/webhooks';
 import { AdDigest } from '@/types/digest';
 
+const PULSE_STYLE_CONTRACT = [
+    'STYLE CONTRACT (MANDATORY): Use clean strategy language that is calm, direct, and boardroom-ready.',
+    '- Write short, decisive sentences.',
+    '- Prefer plain strategic wording over abstract jargon.',
+    '- Avoid repetition, filler, and phrase stacking.',
+    '- Keep findings specific, comparative, and decision-oriented.',
+    '- Keep prose in sentence case (no random ALL CAPS blocks in narrative copy).',
+    '- Never output truncated fragments, dangling clauses, or half-finished quotes.',
+].join('\n');
+
+function cleanStrategyLine(value: string): string {
+    const compact = value
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([,:;.!?])\s*/g, '$1 ')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\bam i\b/gi, 'am I')
+        .replace(/\bi'm\b/gi, "I'm")
+        .trim();
+
+    if (!compact) return compact;
+
+    const noDangling = compact.replace(/[\u2014\-:;,]+$/g, '').trim();
+    if (!noDangling) return compact;
+
+    return noDangling.charAt(0).toUpperCase() + noDangling.slice(1);
+}
+
+function normalizeStrategyLanguage(input: unknown): unknown {
+    if (typeof input === 'string') return cleanStrategyLine(input);
+    if (Array.isArray(input)) return input.map((item) => normalizeStrategyLanguage(item));
+    if (input && typeof input === 'object') {
+        return Object.fromEntries(
+            Object.entries(input as Record<string, unknown>).map(([key, value]) => [key, normalizeStrategyLanguage(value)]),
+        );
+    }
+    return input;
+}
+
 export async function GET() {
     try {
         const now = new Date();
@@ -127,7 +165,9 @@ export async function GET() {
                     1. Dominant Psychological Triggers & Macro Surges.
                     2. Creative Convergence (where competitors are doing the same thing).
                     3. Strategic Pivots (marked as [STRATEGIC PIVOT]). Explain why these are significant deviations.
-                    Format as professional, concise markdown.`
+                    Format as professional, concise markdown.
+
+                    ${PULSE_STYLE_CONTRACT}`
                 },
                 {
                     role: "user",
@@ -136,7 +176,8 @@ export async function GET() {
             ]
         });
 
-        const reportText = response.choices[0].message.content;
+        const rawReportText = response.choices[0].message.content || '';
+        const reportText = normalizeStrategyLanguage(rawReportText) as string;
 
         // 6. Store Report
         await supabaseAdmin.from('pulse_reports').insert({
