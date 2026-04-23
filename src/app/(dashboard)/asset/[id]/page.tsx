@@ -1,21 +1,38 @@
 import { supabaseAdmin } from '@/lib/supabase';
+import { getServerSession } from '@/lib/auth-server';
 import AssetWorkspace from './client-workspace';
 
 export const dynamic = 'force-dynamic';
 
 export default async function AssetPage({ params }: { params: Promise<{ id: string }> }) {
+    const session = await getServerSession();
+    if (!session.userId) {
+        return (
+            <div className="min-h-screen bg-[#F5F5DC] flex items-center justify-center font-sans tracking-widest text-xs uppercase text-[#8B4513]/50">
+                Unauthorized.
+            </div>
+        );
+    }
+
     const { id } = await params;
 
-    // 1. Try fetching from Phase 2 assets
-    let { data: rawAsset, error } = await supabaseAdmin
+    // 1. Try fetching from Phase 2 assets with ownership scope.
+    let assetQuery = supabaseAdmin
         .from('assets')
         .select(`
       *,
       brands ( name, market_sector ),
       extractions ( * )
     `)
-        .eq('id', id)
-        .single();
+        .eq('id', id);
+
+    if (session.orgId && session.orgId !== session.userId) {
+        assetQuery = assetQuery.or(`user_id.eq.${session.userId},org_id.eq.${session.orgId}`);
+    } else {
+        assetQuery = assetQuery.eq('user_id', session.userId);
+    }
+
+    let { data: rawAsset, error } = await assetQuery.single();
         
     let asset: any = rawAsset;
 
@@ -31,11 +48,18 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
             extraction: rawAsset.extractions ? rawAsset.extractions : undefined
         };
     } else {
-        const { data: digestRow, error: digestError } = await supabaseAdmin
+        let digestQuery = supabaseAdmin
             .from('ad_digests')
             .select('*')
-            .eq('id', id)
-            .single();
+            .eq('id', id);
+
+        if (session.orgId && session.orgId !== session.userId) {
+            digestQuery = digestQuery.or(`user_id.eq.${session.userId},org_id.eq.${session.orgId}`);
+        } else {
+            digestQuery = digestQuery.eq('user_id', session.userId);
+        }
+
+        const { data: digestRow, error: digestError } = await digestQuery.single();
 
         if (digestError || !digestRow) {
             return (

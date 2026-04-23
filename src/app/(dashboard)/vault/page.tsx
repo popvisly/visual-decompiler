@@ -1,11 +1,22 @@
 import { Suspense } from 'react';
 import { supabaseAdmin } from '@/lib/supabase';
+import { getServerSession } from '@/lib/auth-server';
 import VaultClient from './client-vault';
 
 export const dynamic = 'force-dynamic';
 
 export default async function IntelligenceVaultPage() {
-    const { data: assets } = await supabaseAdmin
+    const session = await getServerSession();
+
+    if (!session.userId) {
+        return (
+            <Suspense fallback={<VaultSkeleton />}>
+                <VaultClient initialAssets={[]} />
+            </Suspense>
+        );
+    }
+
+    let query = supabaseAdmin
         .from('assets')
         .select(`
       id,
@@ -16,7 +27,15 @@ export default async function IntelligenceVaultPage() {
       brand:brands ( name, market_sector ),
       extraction:extractions ( primary_mechanic, visual_style, confidence_score, full_dossier )
     `)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .eq('user_id', session.userId);
+
+    // Preserve org-level visibility only when org context is explicit and not just user fallback.
+    if (session.orgId && session.orgId !== session.userId) {
+        query = query.or(`user_id.eq.${session.userId},org_id.eq.${session.orgId}`);
+    }
+
+    const { data: assets } = await query;
 
     return (
         <Suspense fallback={<VaultSkeleton />}>

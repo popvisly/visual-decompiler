@@ -7,46 +7,39 @@ import { supabaseAdmin } from '@/lib/supabase';
 
 const VALID_ROLES = new Set(['owner', 'admin', 'analyst']);
 
-async function getPrimaryAgency() {
-    const { data: agency, error } = await supabaseAdmin
+async function getSessionAgency(userId: string, email?: string | null) {
+    let membershipQuery = supabaseAdmin
+        .from('agency_members')
+        .select('agency_id')
+        .eq('status', 'active')
+        .limit(1);
+
+    if (email) {
+        membershipQuery = membershipQuery.or(`user_id.eq.${userId},email.ilike.${email}`);
+    } else {
+        membershipQuery = membershipQuery.eq('user_id', userId);
+    }
+
+    const { data: membership, error: membershipError } = await membershipQuery.maybeSingle();
+    if (membershipError) {
+        throw membershipError;
+    }
+
+    if (!membership?.agency_id) {
+        return null;
+    }
+
+    const { data: agency, error: agencyError } = await supabaseAdmin
         .from('agencies')
         .select('id, name, tier')
-        .limit(1)
-        .single();
-
-    if (error || !agency) {
-        throw new Error('Agency context unavailable');
-    }
-
-    return agency;
-}
-
-async function ensureOwnerMember(agencyId: string, userId: string, email?: string | null) {
-    if (!email) return;
-
-    const { data: existing } = await supabaseAdmin
-        .from('agency_members')
-        .select('id')
-        .eq('agency_id', agencyId)
-        .ilike('email', email)
-        .limit(1)
+        .eq('id', membership.agency_id)
         .maybeSingle();
 
-    if (existing) {
-        return;
+    if (agencyError) {
+        throw agencyError;
     }
 
-    await supabaseAdmin
-        .from('agency_members')
-        .insert({
-            agency_id: agencyId,
-            user_id: userId,
-            email,
-            role: 'owner',
-            status: 'active',
-            invited_by: userId,
-            joined_at: new Date().toISOString(),
-        });
+    return agency || null;
 }
 
 export async function GET(req: Request) {
@@ -56,10 +49,26 @@ export async function GET(req: Request) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const agency = await getPrimaryAgency();
-        await ensureOwnerMember(agency.id, session.userId, session.email);
+        const agency = await getSessionAgency(session.userId, session.email);
 
-        const [{ data: members, error: membersError }, { data: invitations, error: invitationsError }, { data: currentUser, error: userError }] = await Promise.all([
+        const { data: currentUser, error: userError } = await supabaseAdmin
+            .from('users')
+            .select('tier')
+            .eq('id', session.userId)
+            .maybeSingle();
+
+        if (userError) throw userError;
+
+        if (!agency) {
+            return NextResponse.json({
+                agency: null,
+                currentTier: currentUser?.tier || null,
+                members: [],
+                invitations: [],
+            });
+        }
+
+        const [{ data: members, error: membersError }, { data: invitations, error: invitationsError }] = await Promise.all([
             supabaseAdmin
                 .from('agency_members')
                 .select('*')
@@ -71,16 +80,10 @@ export async function GET(req: Request) {
                 .eq('agency_id', agency.id)
                 .is('revoked_at', null)
                 .order('created_at', { ascending: false }),
-            supabaseAdmin
-                .from('users')
-                .select('tier')
-                .eq('id', session.userId)
-                .maybeSingle(),
         ]);
 
         if (membersError) throw membersError;
         if (invitationsError) throw invitationsError;
-        if (userError) throw userError;
 
         return NextResponse.json({
             agency,
@@ -103,8 +106,10 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const agency = await getPrimaryAgency();
-        await ensureOwnerMember(agency.id, session.userId, session.email);
+        const agency = await getSessionAgency(session.userId, session.email);
+        if (!agency) {
+            return NextResponse.json({ error: 'Team workspace unavailable for this account' }, { status: 403 });
+        }
 
         const body = await req.json();
         const email = typeof body?.email === 'string' ? body.email.trim().toLowerCase() : '';
@@ -205,7 +210,10 @@ export async function PATCH(req: Request) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const agency = await getPrimaryAgency();
+        const agency = await getSessionAgency(session.userId, session.email);
+        if (!agency) {
+            return NextResponse.json({ error: 'Team workspace unavailable for this account' }, { status: 403 });
+        }
         const body = await req.json();
         const mode = body?.mode;
 
