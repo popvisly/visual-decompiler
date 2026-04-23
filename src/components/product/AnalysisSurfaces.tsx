@@ -10,7 +10,7 @@ const STEPS = [
     },
     {
         title: 'Decompile the Creative',
-        body: 'Break down hierarchy, attention flow, tone, and strategic intent — so the reasoning behind the work becomes clear and defendable.',
+        body: 'Break down hierarchy, attention flow, tone, and strategic intent — so the reasoning behind the work becomes clear and defensible.',
     },
     {
         title: 'Present with Authority',
@@ -40,15 +40,16 @@ export default function AnalysisSurfaces() {
                             Output designed for the room.
                         </h2>
                         <p className="mt-7 text-[19px] leading-[1.8] text-[#F6F1E7]/72">
-                            Not a chat response.
-                            <br />
-                            Not generic commentary.
+                            Not a chat response. Not vague AI commentary.
                             <br />
                             <br />
                             A structured dossier designed for decks, internal reviews, and client conversations.
                         </p>
                         <p className="mt-5 text-[14px] font-medium uppercase tracking-[0.18em] text-[#C1A674]">
                             Built for the moments where creative decisions get made.
+                        </p>
+                        <p className="mt-3 text-[14px] uppercase tracking-[0.18em] text-[#F6F1E7]/70">
+                            This is the artifact you receive.
                         </p>
                     </div>
 
@@ -136,7 +137,7 @@ export default function AnalysisSurfaces() {
                     <div className="max-w-[860px] rounded-[28px] border border-white/10 bg-white/[0.02] p-8 md:p-10">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">Dossier Clarity</p>
                         <h3 className="mt-5 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[46px]">
-                            What the dossier actually reveals
+                            What the dossier reveals
                         </h3>
 
                         <div className="mt-8 grid grid-cols-1 gap-y-3 sm:grid-cols-2 sm:gap-x-8">
@@ -146,7 +147,7 @@ export default function AnalysisSurfaces() {
                         </div>
 
                         <p className="mt-8 text-[16px] leading-[1.75] text-[#F6F1E7]/68">
-                            Structured analysis designed to support better creative conversations and clearer decisions.
+                            Structured analysis designed to support better creative conversations and stronger decisions.
                         </p>
                     </div>
                 </div>

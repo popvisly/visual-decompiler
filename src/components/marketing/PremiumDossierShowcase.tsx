@@ -24,11 +24,14 @@ export default function PremiumDossierShowcase() {
                         </h2>
 
                         <p className="mt-5 max-w-xl text-base leading-8 text-[#F6F1E7]/74 sm:text-lg">
-                            Not a chat response. Not generic commentary. A structured dossier designed for decks, internal reviews, and client conversations.
+                            Not a chat response. Not vague AI commentary. A structured dossier designed for decks, internal reviews, and client conversations.
                         </p>
 
                         <p className="mt-5 max-w-xl text-[15px] leading-[1.75] text-[#F6F1E7]/66">
-                            Built for the people defending the work. Whether you&apos;re a strategist preparing rationale, a creative director defending a campaign, or an agency team aligning around creative decisions, Visual Decompiler helps structure the conversation around the work.
+                            Built for strategists, creative leads, and agency teams presenting work under pressure.
+                            <br />
+                            <br />
+                            This is the artifact you receive.
                         </p>
                     </motion.div>
 

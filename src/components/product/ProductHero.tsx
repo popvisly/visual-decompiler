@@ -27,7 +27,7 @@ export default function ProductHero() {
                             It fails because teams struggle to explain, defend, and align around it.
                             <br />
                             <br />
-                            Visual Decompiler helps strategists, creative leads, and agency teams turn instinct into structured reasoning — so pitches land stronger, reviews move faster, and clients approve with confidence.
+                            Visual Decompiler turns creative instinct into structured reasoning — so pitches land stronger, reviews move faster, and clients approve with confidence.
                         </p>
 
                         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">

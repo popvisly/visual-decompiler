@@ -5,11 +5,11 @@ import { motion } from 'framer-motion';
 const OUTCOME_CARDS = [
     {
         title: 'Strategists',
-        body: 'Turn visual instinct into structured rationale for decks, presentations, and pitch narratives.',
+        body: 'Turn visual instinct into structured rationale for decks and pitch presentations.',
     },
     {
         title: 'Creative Directors',
-        body: 'Defend bold creative decisions with clearer alignment and strategic framing.',
+        body: 'Defend bold creative decisions with clearer alignment and framing.',
     },
     {
         title: 'Agency Teams',
