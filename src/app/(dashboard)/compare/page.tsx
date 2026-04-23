@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import posthog from 'posthog-js';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
-import { supabaseAdmin } from '@/lib/supabase';
+import { supabaseClient } from '@/lib/supabase-client';
 import { Asset } from '@/lib/intelligence_service';
 import IntelligenceArchiveDrawer from '@/components/IntelligenceArchiveDrawer';
 import { FileDown } from 'lucide-react';
@@ -103,45 +103,87 @@ export default function DifferentialDiagnosticsPage() {
     ];
 
     useEffect(() => {
-        async function fetchAgency() {
-            const { data } = await supabaseAdmin
-                .from('agencies')
-                .select('name, is_whitelabel_active')
+        async function fetchWorkspaceContext() {
+            const {
+                data: { user },
+            } = await supabaseClient.auth.getUser();
+
+            // Load Persistent Workspace regardless of auth state to preserve local selections.
+            const savedA = localStorage.getItem('pulse_asset_a');
+            const savedB = localStorage.getItem('pulse_asset_b');
+            const savedResults = localStorage.getItem('pulse_results');
+
+            if (savedA) setAssetA(JSON.parse(savedA));
+            if (savedB) setAssetB(JSON.parse(savedB));
+            if (savedResults) {
+                setResult(JSON.parse(savedResults));
+                setStatus('success');
+            }
+
+            if (!user) {
+                setAgency(null);
+                setVaultAssets([]);
+                setIsWorkspaceHydrated(true);
+                return;
+            }
+
+            const { data: membershipByUser } = await supabaseClient
+                .from('agency_members')
+                .select('agency_id')
+                .eq('user_id', user.id)
+                .eq('status', 'active')
+                .order('created_at', { ascending: true })
                 .limit(1)
-                .single();
-            if (data) setAgency(data);
-        }
-        fetchAgency();
+                .maybeSingle();
 
-        // Load Persistent Workspace
-        const savedA = localStorage.getItem('pulse_asset_a');
-        const savedB = localStorage.getItem('pulse_asset_b');
-        const savedResults = localStorage.getItem('pulse_results');
+            const membership = membershipByUser
+                ? membershipByUser
+                : user.email
+                  ? await (async () => {
+                        const { data: membershipByEmail } = await supabaseClient
+                            .from('agency_members')
+                            .select('agency_id')
+                            .ilike('email', user.email!.toLowerCase())
+                            .eq('status', 'active')
+                            .order('created_at', { ascending: true })
+                            .limit(1)
+                            .maybeSingle();
+                        return membershipByEmail;
+                    })()
+                  : null;
 
-        if (savedA) setAssetA(JSON.parse(savedA));
-        if (savedB) setAssetB(JSON.parse(savedB));
-        if (savedResults) {
-            setResult(JSON.parse(savedResults));
-            setStatus('success');
-        }
+            if (membership?.agency_id) {
+                const { data: scopedAgency } = await supabaseClient
+                    .from('agencies')
+                    .select('name, is_whitelabel_active')
+                    .eq('id', membership.agency_id)
+                    .maybeSingle();
+                setAgency(scopedAgency || null);
+            } else {
+                setAgency(null);
+            }
 
-        async function fetchAssets() {
-            const { data } = await supabaseAdmin
+            const { data } = await supabaseClient
                 .from('assets')
                 .select('id, file_url, type, brand:brands(name, market_sector), extractions(primary_mechanic, confidence_score, full_dossier)')
+                .eq('user_id', user.id)
                 .order('created_at', { ascending: false })
                 .limit(20);
-            
+
             if (data) {
                 const formatted = data.map((item: any) => ({
                     ...item,
                     extractions: item.extractions?.[0] || item.extractions
                 }));
                 setVaultAssets(formatted as PulseAsset[]);
+            } else {
+                setVaultAssets([]);
             }
+
+            setIsWorkspaceHydrated(true);
         }
-        fetchAssets();
-        setIsWorkspaceHydrated(true);
+
+        fetchWorkspaceContext();
     }, []);
 
     // Sync state to localStorage

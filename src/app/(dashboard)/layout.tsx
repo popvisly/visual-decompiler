@@ -14,12 +14,52 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         const fetchAgency = async () => {
+            const {
+                data: { user },
+            } = await supabaseClient.auth.getUser();
+
+            if (!user) {
+                setAgency(null);
+                return;
+            }
+
+            const { data: membershipByUser } = await supabaseClient
+                .from('agency_members')
+                .select('agency_id')
+                .eq('user_id', user.id)
+                .eq('status', 'active')
+                .order('created_at', { ascending: true })
+                .limit(1)
+                .maybeSingle();
+
+            const membership = membershipByUser
+                ? membershipByUser
+                : user.email
+                  ? await (async () => {
+                        const { data: membershipByEmail } = await supabaseClient
+                            .from('agency_members')
+                            .select('agency_id')
+                            .ilike('email', user.email!.toLowerCase())
+                            .eq('status', 'active')
+                            .order('created_at', { ascending: true })
+                            .limit(1)
+                            .maybeSingle();
+                        return membershipByEmail;
+                    })()
+                  : null;
+
+            if (!membership?.agency_id) {
+                setAgency(null);
+                return;
+            }
+
             const { data } = await supabaseClient
                 .from('agencies')
                 .select('name, is_whitelabel_active')
-                .limit(1)
-                .single();
-            if (data) setAgency(data);
+                .eq('id', membership.agency_id)
+                .maybeSingle();
+
+            setAgency(data || null);
         };
         fetchAgency();
     }, []);

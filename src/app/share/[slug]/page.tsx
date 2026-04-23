@@ -43,13 +43,14 @@ export default async function SharedPortalPage({
             extraction: rawAsset.extractions ? rawAsset.extractions : undefined,
         };
 
-        const { data: agency } = await supabaseAdmin
-            .from('agencies')
-            .select('name, whitelabel_logo, primary_hex, tier')
-            .limit(1)
-            .single();
+        const sampleAgency = {
+            name: 'Visual Decompiler',
+            whitelabel_logo: null,
+            primary_hex: '#D4A574',
+            tier: 'Agency Sovereignty',
+        };
 
-        return <AssetWorkspace initialAsset={asset} isSovereign={true} agency={agency} sampleMode />;
+        return <AssetWorkspace initialAsset={asset} isSovereign={true} agency={sampleAgency} sampleMode />;
     }
 
     // Check Authorization

@@ -37,11 +37,26 @@ export default async function EmbedPage({ params }: { params: Promise<{ id: stri
         );
     }
 
-    const { data: agency } = await supabaseAdmin
-        .from('agencies')
-        .select('name, whitelabel_logo, primary_hex, tier')
-        .limit(1)
-        .single();
+    const assetOwnerId = asset.user_id || null;
+
+    const { data: membership } = assetOwnerId
+        ? await supabaseAdmin
+              .from('agency_members')
+              .select('agency_id')
+              .eq('user_id', assetOwnerId)
+              .eq('status', 'active')
+              .order('created_at', { ascending: true })
+              .limit(1)
+              .maybeSingle()
+        : { data: null };
+
+    const { data: agency } = membership?.agency_id
+        ? await supabaseAdmin
+              .from('agencies')
+              .select('name, whitelabel_logo, primary_hex, tier')
+              .eq('id', membership.agency_id)
+              .maybeSingle()
+        : { data: null };
 
     const rawTier = agency?.tier || '';
     const isSovereign = rawTier === 'Agency Sovereignty' || rawTier === 'pro';
