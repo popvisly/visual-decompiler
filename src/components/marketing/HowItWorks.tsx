@@ -22,7 +22,7 @@ const STEPS = [
 
 export default function HowItWorks() {
     return (
-        <section className="relative overflow-hidden bg-[#0B0B0B] pt-20 pb-24 text-[#F6F1E7] lg:pt-28 lg:pb-32" data-presence-tone="dark">
+        <section className="relative overflow-hidden bg-[#0B0B0B] pt-24 pb-28 text-[#F6F1E7] lg:pt-32 lg:pb-36" data-presence-tone="dark">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
                 <motion.div
                     initial={{ opacity: 0, y: 28 }}
@@ -45,7 +45,7 @@ export default function HowItWorks() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-12 rounded-[26px] border border-white/10 bg-white/[0.02] px-7 py-8 md:px-10"
+                    className="mt-14 rounded-[26px] border border-white/10 bg-white/[0.02] px-7 py-8 md:px-10"
                 >
                     <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#C1A674]">Why it matters</p>
                     <h3 className="mt-4 text-[30px] font-black uppercase leading-[1.02] tracking-[-0.025em] text-[#F6F1E7] md:text-[38px]">
@@ -56,19 +56,21 @@ export default function HowItWorks() {
                     </p>
                 </motion.div>
 
+                <div className="mt-16 h-px w-full bg-white/10 lg:mt-20" />
+
                 <motion.div
                     initial={{ opacity: 0, y: 28 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.85, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-16"
+                    className="mt-16 lg:mt-20"
                 >
                     <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.36em] text-[#C1A674]">Workflow</p>
                     <h3 className="text-[34px] font-black uppercase tracking-[-0.03em] text-[#F6F1E7] md:text-[44px]">
                         From upload to approval-ready reasoning.
                     </h3>
 
-                    <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+                    <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
                         {STEPS.map((step, idx) => (
                             <motion.article
                                 key={step.n}
