@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Check } from 'lucide-react';
-import { DotReticleIcon, BaselineTicksIcon, SignalWaveIcon, RadialDialIcon } from '@/components/icons/StudioMarkupIcons';
+import { MarkFrameIcon, BaselineTicksIcon, FocusLoopIcon, SignalWaveIcon } from '@/components/icons/StudioMarkupIcons';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 import { PRICING, PRICING_COMPARISON_ROWS, PRICING_POSITIONING_LINES } from '@/lib/pricing';
@@ -96,7 +96,7 @@ export default function PricingPage() {
                             className="bg-white/5 border border-white/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between"
                         >
                             <div>
-                                <DotReticleIcon className="mb-10 h-9 w-9 text-[#C1A674]" />
+                                <MarkFrameIcon className="mb-10 h-9 w-9 text-[#C1A674]" />
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.observer.name}</p>
                                 <h3 className="text-6xl font-black tracking-tightest mb-4">{PRICING.observer.priceLabel}</h3>
                                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 mb-10">{PRICING.observer.cadenceLabel}</p>
@@ -164,7 +164,7 @@ export default function PricingPage() {
                                 Highly Recommended
                             </div>
                             <div>
-                                <SignalWaveIcon className="mb-10 h-9 w-9 text-[#C1A674]" />
+                                <FocusLoopIcon className="mb-10 h-9 w-9 text-[#C1A674]" />
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.professional.name}</p>
                                 <h3 className="text-6xl font-black tracking-tightest mb-2">${PRICING.professional.monthlyPrice}</h3>
                                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#C1A674] mb-10">Unlimited Inbound</p>
@@ -197,9 +197,9 @@ export default function PricingPage() {
                             className="bg-white/5 border border-white/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between"
                         >
                             <div>
-                                <RadialDialIcon className="mb-10 h-9 w-9 text-[#C1A674]" />
+                                <SignalWaveIcon className="mb-10 h-9 w-9 text-[#C1A674]" />
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.agency.name}</p>
-                                <h3 className="text-5xl font-black tracking-tightest mb-2">From $1K</h3>
+                                <h3 className="text-5xl font-black tracking-tightest mb-2">Let's Talk</h3>
                                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 mb-10">Infrastructure Tier</p>
                                 
                                 <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.agency.tagline}</p>
