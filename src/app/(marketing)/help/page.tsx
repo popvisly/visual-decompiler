@@ -281,7 +281,7 @@ export default function HelpPage() {
 
                     <section
                         id="support"
-                        className="mt-24 rounded-[32px] border border-[#E7DED1] bg-[#141414] p-8 text-[#FBF7EF] shadow-[0_24px_60px_rgba(20,20,20,0.08)] md:p-12"
+                        className="mt-24 rounded-[32px] border border-[#C1A674]/22 bg-[#141414] p-8 text-[#FBF7EF] shadow-[0_24px_60px_rgba(20,20,20,0.08)] md:p-12"
                     >
                         <div className="max-w-3xl">
                             <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.35em] text-[#C1A674]">Need Further Assistance?</p>
