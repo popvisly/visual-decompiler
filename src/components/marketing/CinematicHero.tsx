@@ -6,7 +6,7 @@ import ParticleField from "@/components/marketing/ParticleField";
 export default function CinematicHero() {
     return (
         <section
-            className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#0B0B0B] px-6 pb-24 pt-32 md:px-10 md:pb-28 md:pt-36"
+            className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#0B0B0B] px-6 pb-20 pt-28 md:px-10 md:pb-24 md:pt-32"
             data-presence-tone="dark"
         >
             <div
@@ -18,10 +18,11 @@ export default function CinematicHero() {
 
             <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-center text-center">
                 <h1 className="max-w-[18ch] text-[clamp(48px,8.2vw,118px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7]">
-                    Creative analysis for pitches, reviews, and approvals.
+                    <span className="bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent">Creative analysis</span>{' '}
+                    <span>for pitches, reviews, and approvals.</span>
                 </h1>
 
-                <div className="relative mt-14 w-full max-w-[860px]">
+                <div className="relative mt-12 w-full max-w-[860px]">
                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
                         <div className="h-[420px] w-[860px] rounded-[40px] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.62),rgba(0,0,0,0.32)_48%,transparent_78%)] blur-2xl" />
                     </div>
@@ -32,7 +33,7 @@ export default function CinematicHero() {
 
                         <div className="relative mx-auto max-w-[700px] text-center">
                             <p className="text-[20px] leading-[1.6] tracking-[-0.01em] text-[#F3EEE3] md:text-[24px]">
-                                Visual Decompiler turns any ad into a structured dossier that helps teams explain, defend, and present creative with confidence.
+                                Visual Decompiler helps strategists, creative leads, and agency teams turn visual instinct into structured reasoning for pitches, reviews, and client approvals.
                             </p>
 
                             <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:flex-nowrap sm:gap-4">

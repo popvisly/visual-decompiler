@@ -4,20 +4,20 @@ import { motion } from 'framer-motion';
 
 const FIT_BLOCKS = [
     {
-        title: 'Client Presentations',
-        body: 'Walk in with clear reasoning behind every visual decision.',
+        title: 'Strategists',
+        body: 'Turn visual instinct into structured rationale for decks, presentations, and pitch narratives.',
     },
     {
-        title: 'Pre-Pitch Refinement',
-        body: 'Pressure-test the work before it leaves the building.',
+        title: 'Creative Directors',
+        body: 'Defend bold creative decisions with clearer alignment and strategic framing.',
     },
     {
-        title: 'Internal Reviews',
-        body: 'Reduce taste debates and align faster around what matters.',
+        title: 'Agency Teams',
+        body: 'Reduce subjective feedback loops during reviews and approvals.',
     },
     {
-        title: 'Campaign Analysis',
-        body: 'Study reference or competitor work beyond surface-level inspiration.',
+        title: 'Freelancers & Consultants',
+        body: 'Present work with stronger rationale and more client confidence.',
     },
 ];
 

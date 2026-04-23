@@ -4,16 +4,20 @@ import { motion } from 'framer-motion';
 
 const OUTCOME_CARDS = [
     {
-        title: 'Creative Reviews',
-        body: 'When feedback stays subjective, strong work gets diluted. Visual Decompiler creates a shared language for discussing the work — helping teams align faster and reduce endless opinion loops.',
+        title: 'Strategists',
+        body: 'Turn visual instinct into structured rationale for decks, presentations, and pitch narratives.',
     },
     {
-        title: 'Pitch Preparation',
-        body: 'Creative rationale often gets rebuilt from scratch before every presentation. Visual Decompiler turns ads and references into structured reasoning ready for decks, reviews, and client conversations.',
+        title: 'Creative Directors',
+        body: 'Defend bold creative decisions with clearer alignment and strategic framing.',
     },
     {
-        title: 'Client Confidence',
-        body: 'Clients hesitate when they can’t clearly see the reasoning behind the work. Visual Decompiler makes creative intent visible — helping decisions feel grounded, strategic, and easier to approve.',
+        title: 'Agency Teams',
+        body: 'Reduce subjective feedback loops during reviews and approvals.',
+    },
+    {
+        title: 'Freelancers & Consultants',
+        body: 'Present work with stronger rationale and more client confidence.',
     },
 ];
 
@@ -27,14 +31,14 @@ export default function PlatformLayer() {
                         Where creative decisions actually get made.
                     </h2>
                     <p className="mt-7 text-[18px] leading-[1.75] text-[#F6F1E7]/72">
-                        Creative reviews break down when everything stays subjective. Feedback turns into opinion, strong ideas get diluted, and decisions slow down.
+                        Built for the people defending the work.
                         <br />
                         <br />
-                        Visual Decompiler creates a shared language for discussing the work — helping teams align faster and defend creative decisions more clearly.
+                        Whether you&apos;re a strategist preparing rationale, a creative director defending a campaign, or an agency team aligning around creative decisions, Visual Decompiler helps structure the conversation around the work.
                     </p>
                 </div>
 
-                <div className="mt-10 grid gap-6 lg:grid-cols-3">
+                <div className="mt-10 grid gap-6 md:grid-cols-2">
                     {OUTCOME_CARDS.map((card, idx) => (
                         <motion.article
                             key={card.title}
@@ -45,7 +49,7 @@ export default function PlatformLayer() {
                             className="rounded-[26px] border border-white/10 bg-white/[0.025] p-8"
                         >
                             <h3 className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{card.title}</h3>
-                            <p className="mt-5 text-[17px] leading-[1.75] text-[#F6F1E7]/80">{card.body}</p>
+                            <p className="mt-5 text-[16px] leading-[1.72] text-[#F6F1E7]/80">{card.body}</p>
                         </motion.article>
                     ))}
                 </div>

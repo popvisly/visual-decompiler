@@ -5,7 +5,7 @@ import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArt
 
 export default function PremiumDossierShowcase() {
     return (
-        <section className="relative overflow-hidden bg-[#0B0B0B] pt-16 pb-24 text-[#F6F1E7] lg:pt-24 lg:pb-32" data-presence-tone="dark">
+        <section className="relative overflow-hidden bg-[#0B0B0B] pt-16 pb-24 text-[#F6F1E7] lg:pt-20 lg:pb-28" data-presence-tone="dark">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0B0B0B]/75 via-[#0B0B0B]/30 to-transparent" aria-hidden="true" />
 
             <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 lg:px-12">
@@ -25,6 +25,10 @@ export default function PremiumDossierShowcase() {
 
                         <p className="mt-5 max-w-xl text-base leading-8 text-[#F6F1E7]/74 sm:text-lg">
                             Not a chat response. Not generic commentary. A structured dossier designed for decks, internal reviews, and client conversations.
+                        </p>
+
+                        <p className="mt-5 max-w-xl text-[15px] leading-[1.75] text-[#F6F1E7]/66">
+                            Built for the people defending the work. Whether you&apos;re a strategist preparing rationale, a creative director defending a campaign, or an agency team aligning around creative decisions, Visual Decompiler helps structure the conversation around the work.
                         </p>
                     </motion.div>
 
