@@ -19,7 +19,7 @@ export default function ProductHero() {
                         Make the work make sense.
                     </h1>
 
-                    <div className="mt-8 max-w-[840px] rounded-[1.75rem] border border-[#C1A674]/22 bg-[#0D0D0D]/72 px-8 py-8 shadow-[0_0_36px_rgba(0,0,0,0.34)] backdrop-blur-md">
+                    <div className="mt-8 max-w-[840px] rounded-[1.75rem] border border-[rgba(193,166,116,0.22)] bg-[#0D0D0D]/72 px-8 py-8 shadow-[0_0_36px_rgba(0,0,0,0.34)] backdrop-blur-md">
                         <p className="text-[17px] leading-[1.85] text-[#F6F1E7]/78">
                             Creative work rarely fails because it lacks quality.
                             <br />

@@ -32,7 +32,7 @@ export default function BeforeAfterContrast({ compact = false }: Props) {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-50px' }}
                         transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                        className="rounded-[22px] border border-[#C1A674]/22 bg-white/[0.02] p-6"
+                        className="rounded-[22px] border border-[rgba(193,166,116,0.22)] bg-white/[0.02] p-6"
                     >
                         <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Without Visual Decompiler</p>
                         <ul className="mt-4 space-y-2 text-[16px] leading-[1.7] text-[#F6F1E7]/76">
@@ -49,7 +49,7 @@ export default function BeforeAfterContrast({ compact = false }: Props) {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-50px' }}
                         transition={{ duration: 0.65, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-                        className="rounded-[22px] border border-[#C1A674]/22 bg-white/[0.03] p-6"
+                        className="rounded-[22px] border border-[rgba(193,166,116,0.22)] bg-white/[0.03] p-6"
                     >
                         <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">With Visual Decompiler</p>
                         <ul className="mt-4 space-y-2 text-[16px] leading-[1.7] text-[#F6F1E7]/90">

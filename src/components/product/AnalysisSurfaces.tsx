@@ -87,7 +87,7 @@ export default function AnalysisSurfaces() {
 
             <section className="pt-16 pb-16 lg:pt-20 lg:pb-20" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <div className="max-w-[860px] rounded-[28px] border border-[#C1A674]/22 bg-white/[0.02] p-8 md:p-10">
+                    <div className="max-w-[860px] rounded-[28px] border border-[rgba(193,166,116,0.22)] bg-white/[0.02] p-8 md:p-10">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">Positioning</p>
                         <h3 className="mt-5 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[46px]">
                             Built for creative decisions under pressure.
@@ -104,7 +104,7 @@ export default function AnalysisSurfaces() {
 
             <section className="pt-16 pb-20 lg:pt-20 lg:pb-24" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <div className="rounded-[24px] border border-[#C1A674]/20 bg-white/[0.015] px-6 py-8 lg:px-8 lg:py-10">
+                    <div className="rounded-[24px] border border-[rgba(193,166,116,0.20)] bg-white/[0.015] px-6 py-8 lg:px-8 lg:py-10">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">How it works</p>
                         <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[58px]">
                             From concept to conviction.
@@ -118,7 +118,7 @@ export default function AnalysisSurfaces() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: '-40px' }}
                                 transition={{ duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                                className="rounded-[20px] border border-[#C1A674]/22 bg-white/[0.02] p-6"
+                                className="rounded-[20px] border border-[rgba(193,166,116,0.22)] bg-white/[0.02] p-6"
                             >
                                 <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">Step {idx + 1}</p>
                                 <h3 className="mt-4 text-[24px] font-semibold leading-[1.1] tracking-[-0.02em] text-[#F6F1E7]">
@@ -134,7 +134,7 @@ export default function AnalysisSurfaces() {
 
             <section className="pt-16 pb-16 lg:pt-20 lg:pb-20" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <div className="max-w-[860px] rounded-[28px] border border-[#C1A674]/22 bg-white/[0.02] p-8 md:p-10">
+                    <div className="max-w-[860px] rounded-[28px] border border-[rgba(193,166,116,0.22)] bg-white/[0.02] p-8 md:p-10">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">Dossier Clarity</p>
                         <h3 className="mt-5 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[46px]">
                             What the dossier reveals

@@ -46,7 +46,7 @@ export default function PlatformLayer() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-60px' }}
                             transition={{ duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                            className="rounded-[26px] border border-[#C1A674]/22 bg-white/[0.025] p-8"
+                            className="rounded-[26px] border border-[rgba(193,166,116,0.22)] bg-white/[0.025] p-8"
                         >
                             <h3 className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{card.title}</h3>
                             <p className="mt-5 text-[16px] leading-[1.72] text-[#F6F1E7]/80">{card.body}</p>
