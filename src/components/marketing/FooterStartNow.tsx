@@ -71,7 +71,7 @@ export default function FooterStartNow() {
     return (
         <footer className="relative bg-[#0B0B0B] text-[#F6F1E7] border-t border-[#222]">
             {/* ── OUTRO CTA BLOCK ── */}
-            <div className="mx-auto max-w-[1200px] px-6 pt-32 pb-24 sm:px-8 lg:px-10 lg:pt-48 lg:pb-32">
+            <div className="mx-auto max-w-[1200px] px-6 pt-24 pb-20 sm:px-8 lg:px-10 lg:pt-32 lg:pb-24">
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -82,7 +82,7 @@ export default function FooterStartNow() {
                         Final CTA
                     </p>
                     <h2 className="font-black leading-[0.88] tracking-[-0.05em] text-[#F6F1E7] uppercase mb-10"
-                        style={{ fontSize: 'clamp(48px, 9vw, 100px)' }}
+                        style={{ fontSize: 'clamp(44px, 8vw, 86px)' }}
                     >
                         Don't just show the work.<br />
                         <span className="mt-3 block bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent tracking-[0.01em]" style={{ wordSpacing: '0.14em' }}>Defend it.</span>
@@ -97,7 +97,7 @@ export default function FooterStartNow() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: 0.3 }}
-                    className="mt-16 flex flex-col sm:flex-row items-start sm:items-center gap-6"
+                    className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-6"
                 >
                     <a
                         href="/ingest"

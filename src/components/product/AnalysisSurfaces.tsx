@@ -32,17 +32,17 @@ const DOSSIER_REVEALS = [
 export default function AnalysisSurfaces() {
     return (
         <>
-            <section className="pt-28 pb-36 lg:pt-36 lg:pb-44" data-presence-tone="dark">
+            <section className="pt-20 pb-24 lg:pt-28 lg:pb-32" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[640px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Dossier Proof</p>
-                        <h2 className="mt-6 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[56px]">
+                        <h2 className="mt-6 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[52px]">
                             Output designed for the room.
                         </h2>
                         <p className="mt-7 text-[19px] leading-[1.8] text-[#F6F1E7]/72">
                             Not a chat response.
                             <br />
-                            Not vague AI commentary.
+                            Not generic commentary.
                             <br />
                             <br />
                             A structured dossier designed for decks, internal reviews, and client conversations.
@@ -57,18 +57,18 @@ export default function AnalysisSurfaces() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-80px' }}
                         transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                        className="mt-16"
+                        className="mt-12"
                     >
                         <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1000px]" />
                     </motion.div>
                 </div>
             </section>
 
-            <section className="pt-24 pb-24 lg:pt-30 lg:pb-30" data-presence-tone="dark">
+            <section className="pt-16 pb-20 lg:pt-20 lg:pb-24" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[900px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Core Value</p>
-                        <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[64px]">
+                        <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[58px]">
                             Make the work make sense.
                         </h2>
                         <p className="mt-8 text-[19px] leading-[1.8] text-[#F6F1E7]/72">
@@ -84,11 +84,11 @@ export default function AnalysisSurfaces() {
                 </div>
             </section>
 
-            <section className="pt-24 pb-20 lg:pt-28 lg:pb-24" data-presence-tone="dark">
+            <section className="pt-16 pb-16 lg:pt-20 lg:pb-20" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[860px] rounded-[28px] border border-white/10 bg-white/[0.02] p-8 md:p-10">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">Positioning</p>
-                        <h3 className="mt-5 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[50px]">
+                        <h3 className="mt-5 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[46px]">
                             Built for creative decisions under pressure.
                         </h3>
                         <p className="mt-7 text-[18px] leading-[1.75] text-[#F6F1E7]/72">
@@ -101,10 +101,10 @@ export default function AnalysisSurfaces() {
                 </div>
             </section>
 
-            <section className="pt-24 pb-24 lg:pt-30 lg:pb-30" data-presence-tone="dark">
+            <section className="pt-16 pb-20 lg:pt-20 lg:pb-24" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">How it works</p>
-                    <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[64px]">
+                    <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[58px]">
                         From concept to conviction.
                     </h2>
 
@@ -129,11 +129,11 @@ export default function AnalysisSurfaces() {
                 </div>
             </section>
 
-            <section className="pt-24 pb-16 lg:pt-30 lg:pb-20" data-presence-tone="dark">
+            <section className="pt-16 pb-16 lg:pt-20 lg:pb-20" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[860px] rounded-[28px] border border-white/10 bg-white/[0.02] p-8 md:p-10">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">Dossier Clarity</p>
-                        <h3 className="mt-5 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[50px]">
+                        <h3 className="mt-5 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[46px]">
                             What the dossier actually reveals
                         </h3>
 
@@ -144,7 +144,7 @@ export default function AnalysisSurfaces() {
                         </div>
 
                         <p className="mt-8 text-[16px] leading-[1.75] text-[#F6F1E7]/68">
-                            Structured analysis designed to support better creative conversations and stronger decisions.
+                            Structured analysis designed to support better creative conversations and clearer decisions.
                         </p>
                     </div>
                 </div>

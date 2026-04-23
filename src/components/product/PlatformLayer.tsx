@@ -19,25 +19,22 @@ const OUTCOME_CARDS = [
 
 export default function PlatformLayer() {
     return (
-        <section className="pt-24 pb-24 lg:pt-30 lg:pb-32" data-presence-tone="dark">
+        <section className="pt-20 pb-20 lg:pt-24 lg:pb-24" data-presence-tone="dark">
             <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                 <div className="max-w-[900px]">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Built for the Room</p>
-                    <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[62px]">
+                    <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[56px]">
                         Where creative decisions actually get made.
                     </h2>
-                    <p className="mt-8 text-[19px] leading-[1.8] text-[#F6F1E7]/72">
-                        Creative reviews break down when everything stays subjective.
-                        <br />
-                        <br />
-                        Feedback turns into opinion. Strong ideas get diluted. Decisions slow down.
+                    <p className="mt-7 text-[18px] leading-[1.75] text-[#F6F1E7]/72">
+                        Creative reviews break down when everything stays subjective. Feedback turns into opinion, strong ideas get diluted, and decisions slow down.
                         <br />
                         <br />
                         Visual Decompiler creates a shared language for discussing the work — helping teams align faster and defend creative decisions more clearly.
                     </p>
                 </div>
 
-                <div className="mt-12 grid gap-6 lg:grid-cols-3">
+                <div className="mt-10 grid gap-6 lg:grid-cols-3">
                     {OUTCOME_CARDS.map((card, idx) => (
                         <motion.article
                             key={card.title}

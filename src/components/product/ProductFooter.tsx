@@ -7,11 +7,11 @@ import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 export default function ProductFooter() {
     return (
         <footer className="bg-[#0B0B0B] text-[#F6F1E7]" data-presence-tone="dark">
-            <section className="pt-56 pb-[8rem] lg:pt-72 lg:pb-[12rem]">
+            <section className="pt-32 pb-20 lg:pt-40 lg:pb-24">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[860px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Final CTA</p>
-                        <h2 className="mt-6 text-[12vw] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[9vw] lg:text-[76px]">
+                        <h2 className="mt-6 text-[12vw] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[9vw] lg:text-[68px]">
                             Don&apos;t just present the work.
                             <br />
                             Defend it.
@@ -19,7 +19,7 @@ export default function ProductFooter() {
                         <p className="mt-6 text-[18px] leading-[1.75] text-[#F6F1E7]/72">
                             Decompile your next ad before the room starts asking questions.
                         </p>
-                        <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center">
+                        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
                             <Link
                                 href="/ingest"
                                 className="inline-flex items-center justify-center border border-[#C1A674]/70 bg-[#C1A674] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#D1B98E]"

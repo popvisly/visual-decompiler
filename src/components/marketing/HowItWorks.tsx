@@ -22,7 +22,7 @@ const STEPS = [
 
 export default function HowItWorks() {
     return (
-        <section className="relative overflow-hidden bg-[#0B0B0B] py-28 text-[#F6F1E7] lg:py-40" data-presence-tone="dark">
+        <section className="relative overflow-hidden bg-[#0B0B0B] pt-20 pb-24 text-[#F6F1E7] lg:pt-28 lg:pb-32" data-presence-tone="dark">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
                 <motion.div
                     initial={{ opacity: 0, y: 28 }}
@@ -32,7 +32,7 @@ export default function HowItWorks() {
                     className="max-w-[900px]"
                 >
                     <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.36em] text-[#C1A674]">Core Value</p>
-                    <h2 className="max-w-[14ch] text-[10vw] font-black uppercase leading-[0.88] tracking-[-0.04em] text-[#F6F1E7] lg:text-[72px]">
+                    <h2 className="max-w-[14ch] text-[10vw] font-black uppercase leading-[0.88] tracking-[-0.04em] text-[#F6F1E7] lg:text-[64px]">
                         Make the work easier to defend.
                     </h2>
                     <p className="mt-8 max-w-[780px] text-[18px] leading-[1.78] text-[#F6F1E7]/74">
@@ -45,10 +45,10 @@ export default function HowItWorks() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-14 rounded-[26px] border border-white/10 bg-white/[0.02] px-7 py-8 md:px-10"
+                    className="mt-12 rounded-[26px] border border-white/10 bg-white/[0.02] px-7 py-8 md:px-10"
                 >
                     <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#C1A674]">Why it matters</p>
-                    <h3 className="mt-4 text-[30px] font-black uppercase leading-[1.02] tracking-[-0.025em] text-[#F6F1E7] md:text-[42px]">
+                    <h3 className="mt-4 text-[30px] font-black uppercase leading-[1.02] tracking-[-0.025em] text-[#F6F1E7] md:text-[38px]">
                         Creative reviews break down when everything stays subjective.
                     </h3>
                     <p className="mt-5 max-w-[860px] text-[17px] leading-[1.75] text-[#F6F1E7]/74">
@@ -61,10 +61,10 @@ export default function HowItWorks() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.85, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-18"
+                    className="mt-16"
                 >
                     <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.36em] text-[#C1A674]">Workflow</p>
-                    <h3 className="text-[34px] font-black uppercase tracking-[-0.03em] text-[#F6F1E7] md:text-[48px]">
+                    <h3 className="text-[34px] font-black uppercase tracking-[-0.03em] text-[#F6F1E7] md:text-[44px]">
                         From upload to approval-ready reasoning.
                     </h3>
 
@@ -79,7 +79,7 @@ export default function HowItWorks() {
                                 className="rounded-[20px] border border-white/10 bg-white/[0.02] p-6"
                             >
                                 <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#C1A674]">Step {step.n}</p>
-                                <h4 className="mt-4 text-[24px] font-black leading-[1.08] tracking-[-0.015em] text-[#F6F1E7]">{step.title}</h4>
+                                <h4 className="mt-4 text-[22px] font-black leading-[1.08] tracking-[-0.015em] text-[#F6F1E7]">{step.title}</h4>
                                 <p className="mt-4 text-[15px] leading-[1.7] text-[#F6F1E7]/74">{step.detail}</p>
                             </motion.article>
                         ))}
