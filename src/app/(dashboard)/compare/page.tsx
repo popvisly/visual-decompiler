@@ -1064,7 +1064,7 @@ function AssetSelectorPanel({
 
             {/* Panel UI Layer */}
             <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between">
-                <div className="inline-flex max-w-[300px] flex-col gap-3 rounded-[1.2rem] border border-white/55 bg-[#FBF7EF]/62 px-4 py-3 shadow-[0_10px_30px_rgba(20,20,20,0.16)] backdrop-blur-md">
+                <div className="inline-flex max-w-[300px] flex-col gap-3 rounded-[1.2rem] border border-[#D4A574]/35 bg-[#FBF7EF]/62 px-4 py-3 shadow-[0_10px_30px_rgba(20,20,20,0.16)] backdrop-blur-md">
                     <h3 className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]">
                         {label}
                     </h3>
