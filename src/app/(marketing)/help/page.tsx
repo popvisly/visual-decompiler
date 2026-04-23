@@ -131,49 +131,49 @@ export default function HelpPage() {
                         </p>
                     </div>
 
-                    <nav className="mb-10 rounded-[1.8rem] border border-white/10 bg-[#101010] p-5">
+                    <nav className="mb-10 rounded-[1.8rem] border border-[#C1A674]/22 bg-[#101010] p-5">
                         <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">Navigate Help Centre</p>
                         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
                             <a
                                 href="#product-overview"
-                                className="rounded-full border border-white/12 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
                             >
                                 Product Overview
                             </a>
                             <a
                                 href="#core-features"
-                                className="rounded-full border border-white/12 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
                             >
                                 Core Features
                             </a>
                             <a
                                 href="#getting-started"
-                                className="rounded-full border border-white/12 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
                             >
                                 Getting Started
                             </a>
                             <a
                                 href="#advanced-workflows"
-                                className="rounded-full border border-white/12 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
                             >
                                 Advanced
                             </a>
                             <a
                                 href="#common-questions"
-                                className="rounded-full border border-white/12 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
                             >
                                 Common Questions
                             </a>
                             <a
                                 href="#support"
-                                className="rounded-full border border-white/12 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
                             >
                                 Support
                             </a>
                         </div>
                     </nav>
 
-                    <section className="mb-14 rounded-[2rem] border border-white/10 bg-[#141414] p-8 md:p-10">
+                    <section className="mb-14 rounded-[2rem] border border-[#C1A674]/22 bg-[#141414] p-8 md:p-10">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">Fast Access</p>
                         <h2 className="mt-4 text-[24px] font-semibold uppercase leading-[1.2] text-[#F6F1E7]">Training Protocol 001</h2>
                         <p className="mt-4 max-w-3xl text-[16px] leading-[1.7] text-[#F6F1E7]/62">
@@ -197,7 +197,7 @@ export default function HelpPage() {
 
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
                         {SECTIONS.map((section) => (
-                            <article id={section.id} key={section.id} className="rounded-[2rem] border border-white/10 bg-[#141414] p-8 md:p-10">
+                            <article id={section.id} key={section.id} className="rounded-[2rem] border border-[#C1A674]/22 bg-[#141414] p-8 md:p-10">
                                 <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">{section.kicker}</p>
                                 <h3 className="mt-4 text-[24px] font-semibold uppercase leading-[1.2] text-[#F6F1E7]">{section.title}</h3>
                                 <p className="mb-8 text-[13px] font-medium leading-relaxed text-[#F6F1E7]/62">{section.description}</p>
@@ -240,7 +240,7 @@ export default function HelpPage() {
 
                         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                             {filteredFaqs.map((faq) => (
-                                <article key={faq.question} className="rounded-[28px] border border-white/10 bg-[#141414] p-8 shadow-[0_4px_24px_rgba(20,20,20,0.02)]">
+                                <article key={faq.question} className="rounded-[28px] border border-[#C1A674]/22 bg-[#141414] p-8 shadow-[0_4px_24px_rgba(20,20,20,0.02)]">
                                     <h3 className="mb-4 text-[24px] font-semibold leading-[1.25] tracking-tight text-[#F6F1E7]">{faq.question}</h3>
                                     <p className="text-[13px] font-medium leading-relaxed text-[#F6F1E7]/62">{faq.answer}</p>
                                     <div className="mt-6 border-t border-white/10 pt-4">

@@ -14,15 +14,15 @@ type CanonicalDossierArtifactProps = {
 
 function shellClass(mode: NonNullable<CanonicalDossierArtifactProps['mode']>) {
     if (mode === 'hero-slice') {
-        return 'rounded-[1.4rem] border border-white/10 bg-[#12110F]/75 p-5 backdrop-blur-[2px]';
+        return 'rounded-[1.4rem] border border-[#C1A674]/22 bg-[#12110F]/75 p-5 backdrop-blur-[2px]';
     }
     if (mode === 'attention-zoom') {
-        return 'rounded-[1.9rem] border border-white/12 bg-[#12110F] p-6 shadow-[0_28px_80px_rgba(0,0,0,0.4)] sm:p-8';
+        return 'rounded-[1.9rem] border border-[#C1A674]/22 bg-[#12110F] p-6 shadow-[0_28px_80px_rgba(0,0,0,0.4)] sm:p-8';
     }
     if (mode.startsWith('layer-')) {
-        return 'rounded-[1.25rem] border border-white/10 bg-[#12110F] p-5 min-h-[168px]';
+        return 'rounded-[1.25rem] border border-[#C1A674]/22 bg-[#12110F] p-5 min-h-[168px]';
     }
-    return 'rounded-[2rem] border border-white/12 bg-[#12110F] p-7 shadow-[0_30px_100px_rgba(0,0,0,0.42)] sm:p-9';
+    return 'rounded-[2rem] border border-[#C1A674]/22 bg-[#12110F] p-7 shadow-[0_30px_100px_rgba(0,0,0,0.42)] sm:p-9';
 }
 
 export default function CanonicalDossierArtifact({ mode = 'preview', className = '' }: CanonicalDossierArtifactProps) {
@@ -122,7 +122,7 @@ export default function CanonicalDossierArtifact({ mode = 'preview', className =
                             </div>
                         ))}
                     </div>
-                    <aside className="self-start rounded-[1rem] border border-white/10 px-4 py-4">
+                    <aside className="self-start rounded-[1rem] border border-[#C1A674]/22 px-4 py-4">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#C1A674]">Drop-Off Detected</p>
                         <p className="mt-3 text-[12px] leading-relaxed text-[#F6F1E7]/70">
                             Attention falls between subject and copy layer, reducing message transfer.

@@ -5,7 +5,7 @@ import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArt
 
 function DossierFlowMapCard() {
     return (
-        <aside className="w-full rounded-[1.8rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(14,14,14,0.96)_34%)] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
+        <aside className="w-full rounded-[1.8rem] border border-[#C1A674]/22 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(14,14,14,0.96)_34%)] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
             <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#C1A674]">Attention Flow</p>
 
             <svg viewBox="0 0 320 230" className="mt-6 h-[220px] w-full" aria-hidden="true">

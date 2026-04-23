@@ -27,9 +27,8 @@ export default function CinematicHero() {
                         <div className="h-[420px] w-[860px] rounded-[40px] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.62),rgba(0,0,0,0.32)_48%,transparent_78%)] blur-2xl" />
                     </div>
 
-                    <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,10,10,0.72),rgba(5,5,5,0.58))] px-7 py-7 shadow-[0_18px_60px_rgba(0,0,0,0.34)] backdrop-blur-2xl md:px-12 md:py-10">
-                        <div className="pointer-events-none absolute inset-0 rounded-[30px] ring-1 ring-inset ring-white/5" />
-                        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent)]" />
+                    <div className="relative overflow-hidden rounded-[30px] border border-[#C1A674]/22 bg-[linear-gradient(180deg,rgba(10,10,10,0.72),rgba(5,5,5,0.58))] px-7 py-7 shadow-[0_18px_60px_rgba(0,0,0,0.34)] backdrop-blur-2xl md:px-12 md:py-10">
+                                                <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent)]" />
 
                         <div className="relative mx-auto max-w-[700px] text-center">
                             <p className="text-[20px] leading-[1.6] tracking-[-0.01em] text-[#F3EEE3] md:text-[24px]">
