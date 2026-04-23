@@ -1,13 +1,11 @@
-import IngestClient from './client-ingest';
-import { supabaseAdmin } from '@/lib/supabase';
+import IngestClient from "./client-ingest";
+import { getServerSession } from "@/lib/auth-server";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function IngestPage() {
-    const { data: agency } = await supabaseAdmin.from('agencies').select('tier').limit(1).single();
-    // Normalize tier string to ensure user can proceed if they bought it
-    const rawTier = agency?.tier || '';
-    const isSovereign = rawTier === 'Agency Sovereignty' || rawTier === 'pro';
+    const session = await getServerSession();
+    const canExtract = Boolean(session.userId);
 
-    return <IngestClient isSovereign={isSovereign} />;
+    return <IngestClient isSovereign={canExtract} />;
 }

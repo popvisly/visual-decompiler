@@ -144,11 +144,30 @@ ${JSON.stringify(assetB.data.extractions?.length ? assetB.data.extractions[0] : 
         const rawResult = JSON.parse(text) as DifferentialDiagnosticResponse;
         const result = normalizeStrategyLanguage(rawResult) as DifferentialDiagnosticResponse;
 
-        const { data: agency } = await supabaseAdmin
-            .from('agencies')
-            .select('id')
+        const normalizedEmail = (session.email || (session.userId + '@local.visualdecompiler')).toLowerCase();
+
+        const { data: membershipByUser } = await supabaseAdmin
+            .from('agency_members')
+            .select('agency_id')
+            .eq('user_id', session.userId)
+            .eq('status', 'active')
+            .order('created_at', { ascending: true })
             .limit(1)
-            .single();
+            .maybeSingle();
+
+        const membership = membershipByUser
+            ? membershipByUser
+            : await (async () => {
+                  const { data: membershipByEmail } = await supabaseAdmin
+                      .from('agency_members')
+                      .select('agency_id')
+                      .ilike('email', normalizedEmail)
+                      .eq('status', 'active')
+                      .order('created_at', { ascending: true })
+                      .limit(1)
+                      .maybeSingle();
+                  return membershipByEmail;
+              })();
 
         const payload = {
             ...result,
@@ -159,7 +178,7 @@ ${JSON.stringify(assetB.data.extractions?.length ? assetB.data.extractions[0] : 
         const { data: pulseResult, error: pulseError } = await supabaseAdmin
             .from('pulse_results')
             .insert({
-                agency_id: agency?.id || null,
+                agency_id: membership?.agency_id || null,
                 asset_a_id: assetAId,
                 asset_b_id: assetBId,
                 differential_analysis: payload,

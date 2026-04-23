@@ -10,6 +10,14 @@ import { normalizeSector } from '@/lib/sector-taxonomy';
 export const maxDuration = 300; // 5 minutes max function duration for Pro/Enterprise tier
 export const dynamic = 'force-dynamic';
 
+function normalizeAgencyTier(rawTier?: string | null) {
+    const tier = (rawTier || '').toLowerCase().trim();
+    if (tier === 'agency' || tier === 'agency sovereignty' || tier === 'enterprise') return 'Agency Sovereignty';
+    if (tier === 'professional') return 'Professional';
+    if (tier === 'pro' || tier === 'strategic') return 'Strategic';
+    return 'Observer';
+}
+
 function coerceString(value: unknown, fallback = '') {
     if (typeof value === 'string') {
         return value;
@@ -84,17 +92,67 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Failed to verify account status' }, { status: 500 });
         }
 
-        // Enforce Server-Side checking with strictly parsed strings
-        const { data: agency, error: agencyError } = await supabaseAdmin.from('agencies').select('tier').limit(1).single();
-        if (agencyError || !agency) {
-            return NextResponse.json({ error: 'No agency found in the vault to validate tier.' }, { status: 401 });
-        }
+        const { data: currentUser } = await supabaseAdmin
+            .from('users')
+            .select('tier')
+            .eq('id', session.userId)
+            .maybeSingle();
 
-        const rawTier = (agency.tier || '').toLowerCase().trim();
-        const isSovereign = rawTier === 'agency sovereignty' || rawTier === 'pro';
+        const normalizedEmail = (session.email || `${session.userId}@local.visualdecompiler`).toLowerCase();
 
-        if (!isSovereign) {
-            return NextResponse.json({ error: 'Agency Sovereignty Tier Required' }, { status: 403 });
+        const { data: membershipByUser } = await supabaseAdmin
+            .from('agency_members')
+            .select('agency_id')
+            .eq('user_id', session.userId)
+            .eq('status', 'active')
+            .order('created_at', { ascending: true })
+            .limit(1)
+            .maybeSingle();
+
+        const membership = membershipByUser
+            ? membershipByUser
+            : await (async () => {
+                  const { data: membershipByEmail } = await supabaseAdmin
+                      .from('agency_members')
+                      .select('agency_id')
+                      .ilike('email', normalizedEmail)
+                      .eq('status', 'active')
+                      .order('created_at', { ascending: true })
+                      .limit(1)
+                      .maybeSingle();
+                  return membershipByEmail;
+              })();
+
+        let workspaceAgencyId = membership?.agency_id || null;
+
+        if (!workspaceAgencyId) {
+            const { data: newAgency, error: newAgencyError } = await supabaseAdmin
+                .from('agencies')
+                .insert({
+                    name: `${normalizedEmail.split("@")[0] || "visual decompiler"} studio`,
+                    tier: normalizeAgencyTier(currentUser?.tier),
+                })
+                .select('id')
+                .single();
+
+            if (newAgencyError || !newAgency) {
+                return NextResponse.json({ error: 'Failed to initialize workspace.' }, { status: 500 });
+            }
+
+            workspaceAgencyId = newAgency.id;
+
+            await supabaseAdmin.from('agency_members').upsert(
+                {
+                    agency_id: workspaceAgencyId,
+                    user_id: session.userId,
+                    email: normalizedEmail,
+                    role: 'owner',
+                    status: 'active',
+                    joined_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString(),
+                },
+                { onConflict: 'agency_id,email' },
+            );
         }
 
         // Handle both FormData (file) and JSON (mediaUrl)
@@ -174,6 +232,7 @@ export async function POST(req: Request) {
 
         const { data: existingAssets } = await supabaseAdmin.from('assets')
             .select('id')
+            .eq('user_id', session.userId)
             .ilike('file_url', `%${fileHash}%`)
             .limit(1);
 
@@ -400,6 +459,7 @@ QUALITY GATE WRITING RULES (MANDATORY):
         // Check if brand exists in Intelligence Vault
         const { data: existingBrand } = await supabaseAdmin.from('brands')
             .select('id')
+            .eq('agency_id', workspaceAgencyId)
             .ilike('name', resolvedBrandName)
             .limit(1)
             .maybeSingle();
@@ -407,14 +467,12 @@ QUALITY GATE WRITING RULES (MANDATORY):
         if (existingBrand) {
             targetBrandId = existingBrand.id;
         } else {
-            // Need an agency context to create a new Brand
-            const { data: agencies } = await supabaseAdmin.from('agencies').select('id').limit(1).single();
-            if (!agencies) throw new Error("No Agency found to anchor new Brand.");
-            
+            if (!workspaceAgencyId) throw new Error('No agency context found for this workspace.');
+
             const { data: newBrand, error: newBrandError } = await supabaseAdmin.from('brands').insert({
                 name: resolvedBrandName,
                 market_sector: marketSector,
-                agency_id: agencies.id
+                agency_id: workspaceAgencyId
             }).select('id').single();
 
             if (newBrandError) throw newBrandError;

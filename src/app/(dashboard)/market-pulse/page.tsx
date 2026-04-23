@@ -1,12 +1,19 @@
-import MechanicIntelligenceClient from './pulse-client';
-import { supabaseAdmin } from '@/lib/supabase';
+import MechanicIntelligenceClient from "./pulse-client";
+import { getServerSession } from "@/lib/auth-server";
+import { getUsageStatusForUser } from "@/lib/usage";
+import { getTierEntitlements } from "@/lib/plans";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function MarketPulseDashboardPage() {
-    const { data: agency } = await supabaseAdmin.from('agencies').select('tier').limit(1).single();
-    const rawTier = (agency?.tier || '').toLowerCase().trim();
-    const hasAccess = rawTier === 'agency sovereignty' || rawTier === 'agency' || rawTier === 'enterprise' || rawTier === 'pro';
+    const session = await getServerSession();
 
-    return <MechanicIntelligenceClient hasAccess={hasAccess} tierLabel={agency?.tier || 'Observer'} />;
+    if (!session.userId) {
+        return <MechanicIntelligenceClient hasAccess={false} tierLabel="Observer" />;
+    }
+
+    const usage = await getUsageStatusForUser(session.userId, session.email);
+    const entitlements = getTierEntitlements(usage.tier);
+
+    return <MechanicIntelligenceClient hasAccess={entitlements.hasMarketPulse} tierLabel={entitlements.label} />;
 }

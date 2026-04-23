@@ -1,6 +1,7 @@
 import { supabaseAdmin } from '@/lib/supabase';
 import { getServerSession } from '@/lib/auth-server';
 import AssetWorkspace from './client-workspace';
+import { normalizeAppTier } from '@/lib/plans';
 
 export const dynamic = 'force-dynamic';
 
@@ -120,10 +121,34 @@ export default async function AssetPage({ params }: { params: Promise<{ id: stri
         }
     }
 
-    // Standardize gating logic & Branding
-    const { data: agency } = await supabaseAdmin.from('agencies').select('name, whitelabel_logo, primary_hex, tier').limit(1).single();
-    const rawTier = agency?.tier || '';
-    const isSovereign = rawTier === 'Agency Sovereignty' || rawTier === 'pro';
+    // Standardize gating logic & branding using session ownership context
+    const { data: currentUser } = await supabaseAdmin
+        .from('users')
+        .select('tier')
+        .eq('id', session.userId)
+        .maybeSingle();
+
+    const userTier = normalizeAppTier(currentUser?.tier || null);
+    const isSovereign = userTier !== 'free';
+
+    const { data: membership } = await supabaseAdmin
+        .from('agency_members')
+        .select('agency_id')
+        .eq('user_id', session.userId)
+        .eq('status', 'active')
+        .order('created_at', { ascending: true })
+        .limit(1)
+        .maybeSingle();
+
+    let agency: any = null;
+    if (membership?.agency_id) {
+        const { data: scopedAgency } = await supabaseAdmin
+            .from('agencies')
+            .select('name, whitelabel_logo, primary_hex, tier')
+            .eq('id', membership.agency_id)
+            .maybeSingle();
+        agency = scopedAgency || null;
+    }
 
     // Pass down to the interactive forensic console
     return <AssetWorkspace initialAsset={asset} isSovereign={isSovereign} agency={agency} />;
