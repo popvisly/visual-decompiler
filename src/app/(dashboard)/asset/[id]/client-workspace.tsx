@@ -235,6 +235,14 @@ const DOSSIER_TAB_LABELS: Record<DossierTab, string> = {
     'DECISION LOG': 'DECISION LOG',
 };
 
+const SOCIAL_PLATFORM_GLYPHS: Record<SocialPlatformKey, string> = {
+    'Meta Feed': 'MF',
+    'Instagram Reels': 'IR',
+    TikTok: 'TK',
+    'YouTube Shorts': 'YS',
+    LinkedIn: 'LI',
+};
+
 function formatMarketPulseDate(value?: string) {
     if (!value) return 'Just now';
 
@@ -711,6 +719,8 @@ const deriveSocialContext = ({
         riskFlags.push('No critical social execution risk detected at first pass.');
     }
 
+    const compactRiskFlags = riskFlags.slice(0, 3);
+
     const adaptationMoves: SocialContextModel['adaptationMoves'] = [
         {
             platform: 'Meta Feed',
@@ -737,7 +747,7 @@ const deriveSocialContext = ({
     return {
         platformScores,
         hookHoldDiagnostics,
-        riskFlags,
+        riskFlags: compactRiskFlags,
         adaptationMoves,
     };
 };
@@ -3199,7 +3209,7 @@ export default function AssetWorkspace({
                                             type="button"
                                             onClick={() => handleTabChange(tab)}
                                             aria-current={activeTab === tab ? 'page' : undefined}
-                                            className={`w-full rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                            className={`inline-flex min-h-[52px] w-full items-center justify-center text-center rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
                                                 activeTab === tab
                                                     ? 'border-[#D4A574]/35 bg-[#151310] text-[#F3F1ED]'
                                                     : 'border-white/10 bg-[#151310] text-[#D6D0C6]/65 hover:text-[#F3F1ED] hover:border-[#D4A574]/35 hover:bg-[#201C16]'
@@ -3219,7 +3229,7 @@ export default function AssetWorkspace({
                                                     type="button"
                                                     onClick={() => handleTabChange(tab)}
                                                     aria-current={activeTab === tab ? 'page' : undefined}
-                                                    className={`w-full rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                                    className={`inline-flex min-h-[52px] w-full items-center justify-center text-center rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
                                                         activeTab === tab
                                                             ? 'border-[#D4A574]/35 bg-[#151310] text-[#F3F1ED]'
                                                             : 'border-white/10 bg-[#151310] text-[#D6D0C6]/65 hover:text-[#F3F1ED] hover:border-[#D4A574]/35 hover:bg-[#201C16]'
@@ -3757,8 +3767,8 @@ export default function AssetWorkspace({
                                         </section>
                                     </div>
 
-                                    <div className="grid gap-6 xl:grid-cols-2">
-                                        <section className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                    <div className="space-y-6">
+                                        <section className="self-start rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Creative Risk Flags</p>
                                             <div className="mt-6 space-y-3">
                                                 {socialContext.riskFlags.map((flag, index) => (
@@ -3774,8 +3784,15 @@ export default function AssetWorkspace({
                                             <div className="mt-6 space-y-3">
                                                 {socialContext.adaptationMoves.map((move) => (
                                                     <div key={move.platform} className="rounded-[1.5rem] border border-white/10 bg-[#151310] p-4">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{move.platform}</p>
-                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/86">{move.move}</p>
+                                                        <div className="flex items-start gap-3">
+                                                            <div className="mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#D4A574]/55 bg-[#D4A574]/10 text-[9px] font-semibold tracking-[0.14em] text-[#D4A574]">
+                                                                {SOCIAL_PLATFORM_GLYPHS[move.platform]}
+                                                            </div>
+                                                            <div className="min-w-0 flex-1">
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{move.platform}</p>
+                                                                <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/86">{move.move}</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 ))}
                                             </div>
@@ -4076,7 +4093,7 @@ export default function AssetWorkspace({
                                                                 <p className="text-[24px] font-semibold text-[#F3F1ED]">{row.value}%</p>
                                                             </div>
                                                             <div className="col-span-5 px-8 py-6">
-                                                                <p className="text-[13px] leading-relaxed text-[#F3F1ED]/88">{normalizeProseText(row.insight)}</p>
+                                                                <p className="text-[13px] leading-relaxed text-[#F3F1ED]">{normalizeProseText(row.insight)}</p>
                                                             </div>
                                                         </div>
                                                     ))}
@@ -4089,7 +4106,7 @@ export default function AssetWorkspace({
                                                             marketPulseFallback.interpretation || 'Category pressure is elevated, so this route requires sharper differentiation and strict execution discipline before scale expansion.',
                                                             2,
                                                         ).map((paragraph, idx) => (
-                                                            <p key={idx} className="text-[13px] leading-relaxed text-[#F3F1ED]/88">
+                                                            <p key={idx} className="text-[13px] leading-relaxed text-[#F3F1ED]">
                                                                 {paragraph}
                                                             </p>
                                                         ))}
