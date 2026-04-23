@@ -1,38 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import ParticleField from "@/components/marketing/ParticleField";
 
 export default function CinematicHero() {
-    const [typedIdx, setTypedIdx] = useState(0);
-    const [showCursor, setShowCursor] = useState(true);
-    const fullText = "ADVERTISING INTELLIGENCE.\nDECONSTRUCTED.";
-    const TOTAL_CHARS = fullText.length;
-
-    useEffect(() => {
-        const startTimeout = setTimeout(() => {
-            const interval = setInterval(() => {
-                setTypedIdx((prev) => {
-                    if (prev >= TOTAL_CHARS) {
-                        clearInterval(interval);
-                        setTimeout(() => setShowCursor(false), 3000);
-                        return prev;
-                    }
-                    return prev + 1;
-                });
-            }, 50);
-
-            return () => clearInterval(interval);
-        }, 800);
-
-        return () => clearTimeout(startTimeout);
-    }, []);
-
-    const visibleText = fullText.substring(0, typedIdx);
-    const [line1, line2] = visibleText.split("\n");
-    const hasLine2 = visibleText.includes("\n");
-
     return (
         <section
             className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#0B0B0B] px-6 pb-24 pt-32 md:px-10 md:pb-28 md:pt-36"
@@ -45,66 +16,53 @@ export default function CinematicHero() {
                 <ParticleField />
             </div>
 
-            <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col items-center text-center">
-                <h1 className="text-[12vw] font-black leading-[0.82] tracking-[-0.05em] xl:text-[160px]">
-                    <span className="text-[#F6F1E7]">{line1 || " "}</span>
-                    <br />
-                    <span className="bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent">
-                        {hasLine2 ? line2 : "\u00A0"}
-                    </span>
-                    {showCursor && typedIdx < TOTAL_CHARS && (
-                        <span className="ml-[4px] -mb-2 inline-block h-[0.85em] w-[6px] animate-pulse bg-[#FFD600]" />
-                    )}
+            <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-center text-center">
+                <h1 className="max-w-[18ch] text-[clamp(48px,8.2vw,118px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7]">
+                    Creative analysis for pitches, reviews, and approvals.
                 </h1>
 
-                <div className="relative mt-16 w-full max-w-[760px]">
+                <div className="relative mt-14 w-full max-w-[860px]">
                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
-                        <div className="h-[420px] w-[820px] rounded-[40px] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.62),rgba(0,0,0,0.32)_48%,transparent_78%)] blur-2xl" />
+                        <div className="h-[420px] w-[860px] rounded-[40px] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.62),rgba(0,0,0,0.32)_48%,transparent_78%)] blur-2xl" />
                     </div>
 
-                    <div className="relative mx-auto w-full max-w-[760px]">
-                        <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,10,10,0.72),rgba(5,5,5,0.58))] px-7 py-6 shadow-[0_18px_60px_rgba(0,0,0,0.34)] backdrop-blur-2xl md:px-12 md:py-10">
-                            <div className="pointer-events-none absolute inset-0 rounded-[30px] ring-1 ring-inset ring-white/5" />
-                            <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent)]" />
+                    <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,10,10,0.72),rgba(5,5,5,0.58))] px-7 py-7 shadow-[0_18px_60px_rgba(0,0,0,0.34)] backdrop-blur-2xl md:px-12 md:py-10">
+                        <div className="pointer-events-none absolute inset-0 rounded-[30px] ring-1 ring-inset ring-white/5" />
+                        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent)]" />
 
-                            <div className="relative mx-auto max-w-[560px] text-center">
-                                <h2 className="mt-6 text-[28px] font-semibold leading-[1.25] tracking-[-0.015em] text-[#F3EEE3] md:text-[36px]">
-                                    The system agencies use to defend creative decisions — and get work approved faster.
-                                </h2>
+                        <div className="relative mx-auto max-w-[700px] text-center">
+                            <p className="text-[20px] leading-[1.6] tracking-[-0.01em] text-[#F3EEE3] md:text-[24px]">
+                                Visual Decompiler turns any ad into a structured dossier that helps teams explain, defend, and present creative with confidence.
+                            </p>
 
-                                <p className="mt-4 text-[19px] leading-[1.6] tracking-[-0.01em] text-[#F3EEE3] md:text-[22px]">
-                                    Turn creative instinct into decisions clients approve.
+                            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:flex-nowrap sm:gap-4">
+                                <Link
+                                    href="/ingest"
+                                    className="inline-flex h-12 items-center justify-center rounded-2xl bg-white px-8 text-[15px] font-medium tracking-[0.01em] text-black shadow-[0_8px_24px_rgba(255,255,255,0.08)] transition-all duration-200 hover:bg-white/92 hover:shadow-[0_10px_30px_rgba(255,255,255,0.1)]"
+                                >
+                                    Decompile an Ad
+                                    <span className="ml-2 text-[15px]">↗</span>
+                                </Link>
+
+                                <Link
+                                    href="/share/sample-dossier"
+                                    className="inline-flex h-12 items-center justify-center rounded-2xl border border-white/20 bg-white/[0.04] px-6 text-[14px] text-[#F3EEE3] transition-all duration-200 hover:border-white/35 hover:bg-white/[0.1] hover:text-white"
+                                >
+                                    View Sample Dossier
+                                </Link>
+                            </div>
+
+                            <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#FFD24A]">
+                                5 free analyses on signup
+                            </p>
+
+                            <div className="mt-6 rounded-xl border border-white/16 bg-[#121212]/88 px-5 py-3 text-center">
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C7A768]">
+                                    Secure & Confidential
                                 </p>
-
-                                <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:flex-nowrap sm:gap-4">
-                                    <Link
-                                        href="/ingest"
-                                        className="inline-flex h-12 items-center justify-center rounded-2xl bg-white px-8 text-[15px] font-medium tracking-[0.01em] text-black shadow-[0_8px_24px_rgba(255,255,255,0.08)] transition-all duration-200 hover:bg-white/92 hover:shadow-[0_10px_30px_rgba(255,255,255,0.1)]"
-                                    >
-                                        Decompile Your Ad
-                                        <span className="ml-2 text-[15px]">↗</span>
-                                    </Link>
-
-                                    <Link
-                                        href="/share/sample-dossier"
-                                        className="inline-flex h-11 items-center justify-center rounded-xl border border-white/20 bg-white/[0.04] px-5 text-[14px] text-[#F3EEE3] transition-all duration-200 hover:border-white/35 hover:bg-white/[0.1] hover:text-white"
-                                    >
-                                        View Sample Dossier
-                                    </Link>
-                                </div>
-
-                                <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#FFD24A]">
-                                    5 free analyses on signup
+                                <p className="mt-2 text-[14px] font-medium leading-[1.5] text-[#F6F1E7]">
+                                    Private workspace access only. Even our team cannot view the ads you decompile.
                                 </p>
-
-                                <div className="mt-6 rounded-xl border border-white/16 bg-[#121212]/88 px-5 py-3 text-center">
-                                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C7A768]">
-                                        Secure & Confidential
-                                    </p>
-                                    <p className="mt-2 text-[14px] font-medium leading-[1.5] text-[#F6F1E7]">
-                                        Private workspace access only. Even our team cannot view the ads you decompile.
-                                    </p>
-                                </div>
                             </div>
                         </div>
                     </div>

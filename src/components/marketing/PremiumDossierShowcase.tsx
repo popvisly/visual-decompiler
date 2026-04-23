@@ -17,20 +17,14 @@ export default function PremiumDossierShowcase() {
                         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                         className="max-w-xl"
                     >
-                        <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.28em] text-[#C1A674]">Sample Dossier</p>
+                        <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.28em] text-[#C1A674]">Proof</p>
 
                         <h2 className="max-w-lg text-[13vw] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[72px]">
-                            Output designed for the room.
+                            Built for the room.
                         </h2>
 
-                        <p className="mt-6 max-w-xl text-base leading-8 text-[#F6F1E7]/72 sm:text-lg">
-                            Not a chat response.
-                            <br />
-                            A structured document built for presentation, alignment, and decision-making.
-                            <br />
-                            Built for the moment decisions are made.
-                            <br />
-                            Full system includes multi-layer analysis across structure, psychology, and decision logic.
+                        <p className="mt-6 max-w-xl text-base leading-8 text-[#F6F1E7]/74 sm:text-lg">
+                            Not a chat response. Not vague AI commentary. A structured dossier designed for decks, internal reviews, and client conversations.
                         </p>
                     </motion.div>
 

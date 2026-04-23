@@ -4,16 +4,20 @@ import { motion } from 'framer-motion';
 
 const FIT_BLOCKS = [
     {
-        title: 'Pre-Pitch',
-        body: 'Break down references before the room does.',
+        title: 'Client Presentations',
+        body: 'Walk in with clear reasoning behind every visual decision.',
     },
     {
-        title: 'Creative Review',
-        body: 'Remove opinion. Align on structure.',
+        title: 'Pre-Pitch Refinement',
+        body: 'Pressure-test the work before it leaves the building.',
     },
     {
-        title: 'Client Presentation',
-        body: 'Defend decisions with clarity, not instinct.',
+        title: 'Internal Reviews',
+        body: 'Reduce taste debates and align faster around what matters.',
+    },
+    {
+        title: 'Campaign Analysis',
+        body: 'Study reference or competitor work beyond surface-level inspiration.',
     },
 ];
 
@@ -34,18 +38,18 @@ export default function WhyDifferent() {
                     </h2>
                 </motion.div>
 
-                <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     {FIT_BLOCKS.map((block, idx) => (
                         <motion.article
                             key={block.title}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
-                            transition={{ duration: 0.7, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                            transition={{ duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                             className="rounded-[20px] border border-white/10 bg-white/[0.02] p-6"
                         >
                             <h3 className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#C1A674]">{block.title}</h3>
-                            <p className="mt-4 text-[16px] leading-[1.6] text-[#F6F1E7]/82">{block.body}</p>
+                            <p className="mt-4 text-[17px] leading-[1.65] text-[#F6F1E7]/82">{block.body}</p>
                         </motion.article>
                     ))}
                 </div>

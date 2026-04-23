@@ -84,11 +84,11 @@ export default function FooterStartNow() {
                     <h2 className="font-black leading-[0.88] tracking-[-0.05em] text-[#F6F1E7] uppercase mb-10"
                         style={{ fontSize: 'clamp(48px, 9vw, 100px)' }}
                     >
-                        Don't just present the work.<br />
-                        <span className="mt-3 block bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent tracking-[0.01em]" style={{ wordSpacing: '0.14em' }}>Explain it.</span>
+                        Don't just show the work.<br />
+                        <span className="mt-3 block bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent tracking-[0.01em]" style={{ wordSpacing: '0.14em' }}>Defend it.</span>
                     </h2>
                     <p className="text-[18px] leading-[1.7] text-[#9a9a94] max-w-[480px]">
-                        Defend creative decisions. Get work approved faster.
+                        Decompile your next ad before the room starts asking questions.
                     </p>
                 </motion.div>
 
