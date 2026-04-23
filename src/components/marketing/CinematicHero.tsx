@@ -76,7 +76,7 @@ export default function CinematicHero() {
                                     Turn creative instinct into decisions clients approve.
                                 </p>
 
-                                <div className="mt-8 flex flex-col items-center">
+                                <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                                     <Link
                                         href="/ingest"
                                         className="inline-flex h-12 items-center justify-center rounded-2xl bg-white px-8 text-[15px] font-medium tracking-[0.01em] text-black shadow-[0_8px_24px_rgba(255,255,255,0.08)] transition-all duration-200 hover:bg-white/92 hover:shadow-[0_10px_30px_rgba(255,255,255,0.1)]"
@@ -87,21 +87,22 @@ export default function CinematicHero() {
 
                                     <Link
                                         href="/share/sample-dossier"
-                                        className="mt-6 inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/[0.04] px-5 py-2.5 text-[15px] text-[#F3EEE3] transition-all duration-200 hover:border-white/35 hover:bg-white/[0.1] hover:text-white"
+                                        className="inline-flex h-11 items-center justify-center rounded-xl border border-white/20 bg-white/[0.04] px-5 text-[14px] text-[#F3EEE3] transition-all duration-200 hover:border-white/35 hover:bg-white/[0.1] hover:text-white"
                                     >
                                         View Sample Dossier
                                     </Link>
                                 </div>
 
+                                <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#FFD24A]">
+                                    5 free analyses on signup
+                                </p>
+
                                 <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3 text-center">
                                     <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C7A768]">
                                         Secure & Confidential
                                     </p>
-                                    <p className="mt-2 text-[14px] leading-[1.5] text-[#F3EEE3]/84">
+                                    <p className="mt-2 text-[14px] leading-[1.5] text-[#F3EEE3]/96">
                                         Private workspace access only. Even our team cannot view the ads you decompile.
-                                    </p>
-                                    <p className="mt-2 text-[12px] font-semibold uppercase tracking-[0.18em] text-[#FFD24A]">
-                                        5 free analyses on signup
                                     </p>
                                 </div>
                             </div>
