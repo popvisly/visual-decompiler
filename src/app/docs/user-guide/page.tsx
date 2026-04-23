@@ -114,7 +114,7 @@ export default function UserGuidePage() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: '-60px' }}
                                         transition={{ duration: 0.6, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                                        className="rounded-[20px] border border-[#C1A674]/20 bg-[linear-gradient(180deg,rgba(193,166,116,0.06),rgba(12,12,12,0.96)_34%)] p-6"
+                                        className="rounded-[20px] border border-[rgba(193,166,116,0.20)] bg-[linear-gradient(180deg,rgba(193,166,116,0.06),rgba(12,12,12,0.96)_34%)] p-6"
                                     >
                                         <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">Use case {idx + 1}</p>
                                         <h2 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]">{item.title}</h2>
@@ -143,10 +143,10 @@ export default function UserGuidePage() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: '-60px' }}
                                         transition={{ duration: 0.6, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                                        className="rounded-[20px] border border-[#C1A674]/22 bg-[#101010] p-6"
+                                        className="rounded-[20px] border border-[rgba(193,166,116,0.22)] bg-[#101010] p-6"
                                     >
                                         <div className="flex items-center gap-4">
-                                            <span className="inline-flex h-8 min-w-8 items-center justify-center rounded-full border border-[#C1A674]/35 bg-[#C1A674]/10 px-2 text-[13px] font-bold text-[#C1A674]">
+                                            <span className="inline-flex h-8 min-w-8 items-center justify-center rounded-full border border-[rgba(193,166,116,0.35)] bg-[#C1A674]/10 px-2 text-[13px] font-bold text-[#C1A674]">
                                                 {idx + 1}
                                             </span>
                                             <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-[#C1A674]">{step.title}</p>
@@ -176,9 +176,9 @@ export default function UserGuidePage() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: '-60px' }}
                                         transition={{ duration: 0.6, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                                        className="rounded-[20px] border border-[#C1A674]/22 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(16,16,16,0.96)_30%)] p-6"
+                                        className="rounded-[20px] border border-[rgba(193,166,116,0.22)] bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(16,16,16,0.96)_30%)] p-6"
                                     >
-                                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]/85">System Output</p>
+                                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[rgba(193,166,116,0.85)]">System Output</p>
                                         <h3 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]">
                                             {output.title}
                                         </h3>
@@ -193,7 +193,7 @@ export default function UserGuidePage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-80px' }}
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                            className="mt-16 rounded-[24px] border border-[#C1A674]/22 bg-white/[0.02] p-8"
+                            className="mt-16 rounded-[24px] border border-[rgba(193,166,116,0.22)] bg-white/[0.02] p-8"
                         >
                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">How to use it properly</p>
                             <ul className="mt-6 space-y-4 text-[16px] leading-[1.7] text-[#F6F1E7]/78">
@@ -209,7 +209,7 @@ export default function UserGuidePage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-80px' }}
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                            className="mt-10 rounded-[24px] border border-[#C1A674]/25 bg-[#0F0F0F] p-8"
+                            className="mt-10 rounded-[24px] border border-[rgba(193,166,116,0.25)] bg-[#0F0F0F] p-8"
                         >
                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">What not to do</p>
                             <ul className="mt-6 space-y-4 text-[16px] leading-[1.7] text-[#F6F1E7]/78">
@@ -238,7 +238,7 @@ export default function UserGuidePage() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: '-60px' }}
                                         transition={{ duration: 0.6, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                                        className="rounded-[20px] border border-[#C1A674]/20 bg-[linear-gradient(180deg,rgba(193,166,116,0.06),rgba(12,12,12,0.96)_34%)] p-6"
+                                        className="rounded-[20px] border border-[rgba(193,166,116,0.20)] bg-[linear-gradient(180deg,rgba(193,166,116,0.06),rgba(12,12,12,0.96)_34%)] p-6"
                                     >
                                         <h3 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]">
                                             {item.title}
