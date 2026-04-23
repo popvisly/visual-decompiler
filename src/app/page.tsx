@@ -6,6 +6,7 @@ import BuiltForTheRoomSection from '@/components/marketing/BuiltForTheRoomSectio
 import NeuralMapSection from '@/components/marketing/NeuralMapSection';
 import DossierPreview from '@/components/marketing/DossierPreview';
 import WhyDifferent from '@/components/marketing/WhyDifferent';
+import DecisionReadinessFramework from '@/components/marketing/DecisionReadinessFramework';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 
 export default function HomePage() {
@@ -16,6 +17,7 @@ export default function HomePage() {
             <PremiumDossierShowcase />
             <HowItWorks />
             <BuiltForTheRoomSection />
+            <DecisionReadinessFramework />
             <DossierPreview />
             <NeuralMapSection />
             <WhyDifferent />
