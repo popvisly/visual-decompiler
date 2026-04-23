@@ -96,7 +96,7 @@ export default function PricingPage() {
                         >
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.observer.name}</p>
-                                <h3 className="text-6xl font-black tracking-tightest mb-4">{PRICING.observer.priceLabel}</h3>
+                                <h3 className="text-6xl font-medium tracking-tightest mb-4">{PRICING.observer.priceLabel}</h3>
                                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 mb-10">{PRICING.observer.cadenceLabel}</p>
                                 
                                 <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.observer.tagline}</p>
@@ -127,7 +127,7 @@ export default function PricingPage() {
                         >
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.strategic.name}</p>
-                                <h3 className="text-6xl font-black tracking-tightest mb-2">${PRICING.strategic.monthlyPrice}</h3>
+                                <h3 className="text-6xl font-medium tracking-tightest mb-2">${PRICING.strategic.monthlyPrice}</h3>
                                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#C1A674] mb-10">Monthly Protocol</p>
                                 
                                 <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.strategic.tagline}</p>
@@ -162,7 +162,7 @@ export default function PricingPage() {
                             </div>
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.professional.name}</p>
-                                <h3 className="text-6xl font-black tracking-tightest mb-2">${PRICING.professional.monthlyPrice}</h3>
+                                <h3 className="text-6xl font-medium tracking-tightest mb-2">${PRICING.professional.monthlyPrice}</h3>
                                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#C1A674] mb-10">Unlimited Inbound</p>
                                 
                                 <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.professional.tagline}</p>
@@ -194,7 +194,7 @@ export default function PricingPage() {
                         >
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.agency.name}</p>
-                                <h3 className="text-5xl font-black tracking-tightest mb-2">Let's Talk</h3>
+                                <h3 className="text-5xl font-medium tracking-tightest mb-2">Let's Talk</h3>
                                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 mb-10">Infrastructure Tier</p>
                                 
                                 <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.agency.tagline}</p>
