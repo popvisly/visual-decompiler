@@ -63,7 +63,7 @@ export default function HowItWorks() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.85, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-16 lg:mt-20"
+                    className="mt-16 rounded-[24px] border border-white/8 bg-white/[0.015] px-6 py-8 lg:mt-20 lg:px-8 lg:py-10"
                 >
                     <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.36em] text-[#C1A674]">Workflow</p>
                     <h3 className="text-[34px] font-black uppercase tracking-[-0.03em] text-[#F6F1E7] md:text-[44px]">
