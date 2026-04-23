@@ -103,12 +103,13 @@ export default function AnalysisSurfaces() {
 
             <section className="pt-16 pb-20 lg:pt-20 lg:pb-24" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">How it works</p>
-                    <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[58px]">
-                        From concept to conviction.
-                    </h2>
+                    <div className="rounded-[24px] border border-white/8 bg-white/[0.015] px-6 py-8 lg:px-8 lg:py-10">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">How it works</p>
+                        <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[58px]">
+                            From concept to conviction.
+                        </h2>
 
-                    <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
+                        <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
                         {STEPS.map((step, idx) => (
                             <motion.article
                                 key={step.title}
@@ -125,6 +126,7 @@ export default function AnalysisSurfaces() {
                                 <p className="mt-4 text-[15px] leading-[1.7] text-[#F6F1E7]/72">{step.body}</p>
                             </motion.article>
                         ))}
+                        </div>
                     </div>
                 </div>
             </section>
