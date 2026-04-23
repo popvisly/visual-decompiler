@@ -53,9 +53,6 @@ export default function CinematicHero() {
                                 </Link>
                             </div>
 
-                            <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#FFD24A]">
-                                5 free analyses on signup
-                            </p>
 
                         </div>
                     </div>
