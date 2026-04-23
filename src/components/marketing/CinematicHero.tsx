@@ -76,7 +76,7 @@ export default function CinematicHero() {
                                     Turn creative instinct into decisions clients approve.
                                 </p>
 
-                                <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                                <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:flex-nowrap sm:gap-4">
                                     <Link
                                         href="/ingest"
                                         className="inline-flex h-12 items-center justify-center rounded-2xl bg-white px-8 text-[15px] font-medium tracking-[0.01em] text-black shadow-[0_8px_24px_rgba(255,255,255,0.08)] transition-all duration-200 hover:bg-white/92 hover:shadow-[0_10px_30px_rgba(255,255,255,0.1)]"
@@ -97,11 +97,11 @@ export default function CinematicHero() {
                                     5 free analyses on signup
                                 </p>
 
-                                <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3 text-center">
+                                <div className="mt-6 rounded-xl border border-white/16 bg-[#121212]/88 px-5 py-3 text-center">
                                     <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C7A768]">
                                         Secure & Confidential
                                     </p>
-                                    <p className="mt-2 text-[14px] leading-[1.5] text-[#F3EEE3]/96">
+                                    <p className="mt-2 text-[14px] font-medium leading-[1.5] text-[#F6F1E7]">
                                         Private workspace access only. Even our team cannot view the ads you decompile.
                                     </p>
                                 </div>
