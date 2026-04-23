@@ -3,41 +3,53 @@
 import { motion } from 'framer-motion';
 import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArtifact';
 
-const ANALYSIS_LAYERS = [
+const STEPS = [
     {
-        title: 'Primary Scores',
-        body: 'Clarity. Attention. Cohesion. Intent. Distinction.',
-        proof: 'layer-primary' as const,
+        title: 'Upload the Ad',
+        body: 'Bring in the work — or the references shaping it.',
     },
     {
-        title: 'Attention Path',
-        body: 'A mapped sequence of how the eye moves — and where it drops.',
-        proof: 'layer-attention' as const,
+        title: 'Decompile the Creative',
+        body: 'Break down hierarchy, attention flow, tone, and strategic intent — so the reasoning behind the work becomes clear and defendable.',
     },
     {
-        title: 'Structural Signals',
-        body: 'Hierarchy, balance, contrast, density, and focus integrity.',
-        proof: 'layer-structural' as const,
+        title: 'Present with Authority',
+        body: 'Walk into reviews, pitches, and client conversations with a structured dossier built for alignment and approval.',
     },
-    {
-        title: 'Strategic Read',
-        body: 'A clear articulation of what the work is doing, why it works, and where it breaks.',
-        proof: 'layer-strategic' as const,
-    },
+];
+
+const DOSSIER_REVEALS = [
+    'Attention flow',
+    'Visual hierarchy',
+    'Emotional positioning',
+    'Brand tension',
+    'Audience fit',
+    'Friction points',
+    'Strategic clarity',
+    'Trust signals',
 ];
 
 export default function AnalysisSurfaces() {
     return (
         <>
-            <section className="pt-44 pb-36 lg:pt-60 lg:pb-48" data-presence-tone="dark">
+            <section className="pt-28 pb-36 lg:pt-36 lg:pb-44" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <div className="max-w-[520px]">
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Sample Dossier</p>
-                        <h2 className="mt-6 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[52px]">
-                            Visual Decompiler
-                            <br />
-                            Creative Intelligence Dossier
+                    <div className="max-w-[640px]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Dossier Proof</p>
+                        <h2 className="mt-6 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[56px]">
+                            Output designed for the room.
                         </h2>
+                        <p className="mt-7 text-[19px] leading-[1.8] text-[#F6F1E7]/72">
+                            Not a chat response.
+                            <br />
+                            Not vague AI commentary.
+                            <br />
+                            <br />
+                            A structured dossier designed for decks, internal reviews, and client conversations.
+                        </p>
+                        <p className="mt-5 text-[14px] font-medium uppercase tracking-[0.18em] text-[#C1A674]">
+                            Built for the moments where creative decisions get made.
+                        </p>
                     </div>
 
                     <motion.div
@@ -45,82 +57,95 @@ export default function AnalysisSurfaces() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-80px' }}
                         transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                        className="mt-28 lg:mt-32"
+                        className="mt-16"
                     >
                         <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1000px]" />
                     </motion.div>
                 </div>
             </section>
 
-            <section className="pt-28 pb-[5.5rem] lg:pt-[8.5rem] lg:pb-[6.5rem]" data-presence-tone="dark">
+            <section className="pt-24 pb-24 lg:pt-30 lg:pb-30" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <div className="max-w-[760px]">
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">The Problem</p>
-                        <h2 className="mt-6 text-[12vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[9vw] lg:text-[64px]">
-                            Creative decisions are still defended with opinion.
+                    <div className="max-w-[900px]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Core Value</p>
+                        <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[64px]">
+                            Make the work make sense.
                         </h2>
-                        <p className="mt-8 text-[19px] leading-[1.8] text-[#F6F1E7]/70">
-                            Work is judged on instinct.
-                            <br />
-                            Feedback slows.
-                            <br />
-                            Clients hesitate.
+                        <p className="mt-8 text-[19px] leading-[1.8] text-[#F6F1E7]/72">
+                            Creative work doesn&apos;t fail because it&apos;s bad.
                             <br />
                             <br />
-                            Not because the work is weak —
+                            It fails because it can&apos;t be clearly explained.
                             <br />
-                            but because the reasoning isn&apos;t visible.
+                            <br />
+                            Visual Decompiler turns instinct into structured reasoning — helping teams align faster, defend stronger ideas, and move work toward approval with more confidence.
                         </p>
                     </div>
                 </div>
             </section>
 
-            <section className="pt-[7.5rem] pb-24 lg:pt-36 lg:pb-28" data-presence-tone="dark">
+            <section className="pt-24 pb-20 lg:pt-28 lg:pb-24" data-presence-tone="dark">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <div className="max-w-[920px]">
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">The System</p>
-                        <h2 className="mt-6 text-[12vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[9vw] lg:text-[64px]">
-                            Visual Decompiler makes creative reasoning readable.
-                        </h2>
+                    <div className="max-w-[860px] rounded-[28px] border border-white/10 bg-white/[0.02] p-8 md:p-10">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">Positioning</p>
+                        <h3 className="mt-5 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[50px]">
+                            Built for creative decisions under pressure.
+                        </h3>
+                        <p className="mt-7 text-[18px] leading-[1.75] text-[#F6F1E7]/72">
+                            Whether you&apos;re preparing for a pitch, reviewing campaign work internally, or presenting to clients, Visual Decompiler helps turn subjective reactions into structured discussion.
+                        </p>
+                        <p className="mt-5 text-[14px] font-medium uppercase tracking-[0.17em] text-[#C1A674]">
+                            Less opinion loops. Clearer reasoning. Faster approvals.
+                        </p>
                     </div>
+                </div>
+            </section>
 
-                    <div className="mt-14 space-y-10">
-                        {ANALYSIS_LAYERS.map((layer, index) => {
-                            const isPrimary = index === 0;
-                            const isAttention = index === 1;
-                            const titleClass = isPrimary
-                                ? 'text-[15px] tracking-[0.32em] text-[#C1A674]'
-                                : isAttention
-                                    ? 'text-[12px] tracking-[0.29em] text-[#C1A674]/95'
-                                    : 'text-[11px] tracking-[0.27em] text-[#C1A674]/70';
-                            const bodyClass = isPrimary
-                                ? 'mt-4 max-w-[48ch] text-[21px] leading-[1.68] text-[#F6F1E7]/86'
-                                : isAttention
-                                    ? 'mt-4 max-w-[48ch] text-[17px] leading-[1.8] text-[#F6F1E7]/70'
-                                    : 'mt-4 max-w-[48ch] text-[15px] leading-[1.8] text-[#F6F1E7]/56';
-                            const proofClass = isPrimary
-                                ? 'lg:scale-[1.06] lg:origin-top-left ring-1 ring-[#C1A674]/18 bg-[#16140F]' 
-                                : isAttention
-                                    ? ''
-                                    : 'opacity-85';
+            <section className="pt-24 pb-24 lg:pt-30 lg:pb-30" data-presence-tone="dark">
+                <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">How it works</p>
+                    <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[64px]">
+                        From concept to conviction.
+                    </h2>
 
-                            return (
-                                <motion.article
-                                    key={layer.title}
-                                    initial={{ opacity: 0, y: 18 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: '-80px' }}
-                                    transition={{ duration: 0.6, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                                    className="grid items-start gap-7 border-t border-white/10 pt-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-10"
-                                >
-                                    <div>
-                                        <p className={`font-semibold uppercase ${titleClass}`}>{layer.title}</p>
-                                        <p className={bodyClass}>{layer.body}</p>
-                                    </div>
-                                    <CanonicalDossierArtifact mode={layer.proof} className={proofClass} />
-                                </motion.article>
-                            );
-                        })}
+                    <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
+                        {STEPS.map((step, idx) => (
+                            <motion.article
+                                key={step.title}
+                                initial={{ opacity: 0, y: 18 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-40px' }}
+                                transition={{ duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                                className="rounded-[20px] border border-white/10 bg-white/[0.02] p-6"
+                            >
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">Step {idx + 1}</p>
+                                <h3 className="mt-4 text-[24px] font-semibold leading-[1.1] tracking-[-0.02em] text-[#F6F1E7]">
+                                    {step.title}
+                                </h3>
+                                <p className="mt-4 text-[15px] leading-[1.7] text-[#F6F1E7]/72">{step.body}</p>
+                            </motion.article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <section className="pt-24 pb-16 lg:pt-30 lg:pb-20" data-presence-tone="dark">
+                <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
+                    <div className="max-w-[860px] rounded-[28px] border border-white/10 bg-white/[0.02] p-8 md:p-10">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">Dossier Clarity</p>
+                        <h3 className="mt-5 text-[10vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[7vw] lg:text-[50px]">
+                            What the dossier actually reveals
+                        </h3>
+
+                        <div className="mt-8 grid grid-cols-1 gap-y-3 sm:grid-cols-2 sm:gap-x-8">
+                            {DOSSIER_REVEALS.map((item) => (
+                                <p key={item} className="text-[16px] leading-[1.7] text-[#F6F1E7]/82">• {item}</p>
+                            ))}
+                        </div>
+
+                        <p className="mt-8 text-[16px] leading-[1.75] text-[#F6F1E7]/68">
+                            Structured analysis designed to support better creative conversations and stronger decisions.
+                        </p>
                     </div>
                 </div>
             </section>

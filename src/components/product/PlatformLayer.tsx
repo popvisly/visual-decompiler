@@ -2,64 +2,57 @@
 
 import { motion } from 'framer-motion';
 
-const WORKFLOW = [
+const OUTCOME_CARDS = [
     {
-        title: 'Pre-Pitch',
-        body: 'Break down references before the room does.',
+        title: 'Creative Reviews',
+        body: 'When feedback stays subjective, strong work gets diluted. Visual Decompiler creates a shared language for discussing the work — helping teams align faster and reduce endless opinion loops.',
     },
     {
-        title: 'Creative Review',
-        body: 'Remove opinion. Align on structure.',
+        title: 'Pitch Preparation',
+        body: 'Creative rationale often gets rebuilt from scratch before every presentation. Visual Decompiler turns ads and references into structured reasoning ready for decks, reviews, and client conversations.',
     },
     {
-        title: 'Client Presentation',
-        body: 'Defend decisions with clarity, not instinct.',
+        title: 'Client Confidence',
+        body: 'Clients hesitate when they can’t clearly see the reasoning behind the work. Visual Decompiler makes creative intent visible — helping decisions feel grounded, strategic, and easier to approve.',
     },
 ];
 
 export default function PlatformLayer() {
     return (
-        <>
-            <section className="pt-28 pb-[5.5rem] lg:pt-[8.5rem] lg:pb-[6.5rem]" data-presence-tone="dark">
-                <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <div className="max-w-[900px]">
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Workflow</p>
-                        <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[62px]">
-                            Built into the way agencies already work.
-                        </h2>
-                    </div>
-
-                    <div className="mt-14 divide-y divide-white/12 border-y border-white/10">
-                        {WORKFLOW.map((item, index) => (
-                            <motion.article
-                                key={item.title}
-                                initial={{ opacity: 0, y: 14 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-60px' }}
-                                transition={{ duration: 0.55, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                                className="grid gap-5 py-10 md:grid-cols-[220px_1fr]"
-                            >
-                                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{item.title}</p>
-                                <p className="text-[17px] font-medium leading-[1.8] text-[#F6F1E7]/80">{item.body}</p>
-                            </motion.article>
-                        ))}
-                    </div>
+        <section className="pt-24 pb-24 lg:pt-30 lg:pb-32" data-presence-tone="dark">
+            <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
+                <div className="max-w-[900px]">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Built for the Room</p>
+                    <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[62px]">
+                        Where creative decisions actually get made.
+                    </h2>
+                    <p className="mt-8 text-[19px] leading-[1.8] text-[#F6F1E7]/72">
+                        Creative reviews break down when everything stays subjective.
+                        <br />
+                        <br />
+                        Feedback turns into opinion. Strong ideas get diluted. Decisions slow down.
+                        <br />
+                        <br />
+                        Visual Decompiler creates a shared language for discussing the work — helping teams align faster and defend creative decisions more clearly.
+                    </p>
                 </div>
-            </section>
 
-            <section className="pt-24 pb-20 lg:pt-[7.5rem] lg:pb-24" data-presence-tone="dark">
-                <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <div className="max-w-[760px]">
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">White Label</p>
-                        <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[62px]">
-                            Your thinking. Your system.
-                        </h2>
-                        <p className="mt-7 text-[19px] leading-[1.8] text-[#F6F1E7]/70">
-                            Deliver Visual Decompiler outputs under your agency or brand.
-                        </p>
-                    </div>
+                <div className="mt-12 grid gap-6 lg:grid-cols-3">
+                    {OUTCOME_CARDS.map((card, idx) => (
+                        <motion.article
+                            key={card.title}
+                            initial={{ opacity: 0, y: 24 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-60px' }}
+                            transition={{ duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                            className="rounded-[26px] border border-white/10 bg-white/[0.025] p-8"
+                        >
+                            <h3 className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">{card.title}</h3>
+                            <p className="mt-5 text-[17px] leading-[1.75] text-[#F6F1E7]/80">{card.body}</p>
+                        </motion.article>
+                    ))}
                 </div>
-            </section>
-        </>
+            </div>
+        </section>
     );
 }

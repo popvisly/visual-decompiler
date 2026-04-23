@@ -2,28 +2,37 @@
 
 import Link from 'next/link';
 import Logo from '@/components/Logo';
+import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 export default function ProductFooter() {
     return (
         <footer className="bg-[#0B0B0B] text-[#F6F1E7]" data-presence-tone="dark">
             <section className="pt-56 pb-[8rem] lg:pt-72 lg:pb-[12rem]">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
-                    <div className="max-w-[760px]">
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Final</p>
+                    <div className="max-w-[860px]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Final CTA</p>
                         <h2 className="mt-6 text-[12vw] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[9vw] lg:text-[76px]">
                             Don&apos;t just present the work.
                             <br />
-                            Explain it.
+                            Defend it.
                         </h2>
                         <p className="mt-6 text-[18px] leading-[1.75] text-[#F6F1E7]/72">
-                            Decompile your next ad before anyone else does.
+                            Decompile your next ad before the room starts asking questions.
                         </p>
-                        <Link
-                            href="/ingest"
-                            className="mt-12 inline-flex items-center justify-center border border-[#C1A674]/70 bg-[#C1A674] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#D1B98E]"
-                        >
-                            Decompile Your Ad
-                        </Link>
+                        <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center">
+                            <Link
+                                href="/ingest"
+                                className="inline-flex items-center justify-center border border-[#C1A674]/70 bg-[#C1A674] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#D1B98E]"
+                            >
+                                Decompile an Ad
+                            </Link>
+                            <Link
+                                href={SAMPLE_DOSSIER_HREF}
+                                className="inline-flex items-center justify-center border border-white/14 bg-white/5 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#F6F1E7] transition hover:border-white/25 hover:bg-white/10"
+                            >
+                                View Sample Dossier
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
