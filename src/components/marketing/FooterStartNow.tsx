@@ -27,6 +27,10 @@ const FAQS = [
         q: 'Can I use this with clients or in pitches?',
         a: 'Yes. The reads are designed to travel into client rooms, decks, strategy sessions, and creative reviews without feeling like software output.',
     },
+    {
+        q: 'Secure & Confidential',
+        a: 'Private workspace access only. Even our team cannot view the ads you decompile.',
+    },
 ];
 
 function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {

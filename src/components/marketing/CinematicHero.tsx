@@ -57,14 +57,6 @@ export default function CinematicHero() {
                                 5 free analyses on signup
                             </p>
 
-                            <div className="mt-6 rounded-xl border border-white/16 bg-[#121212]/88 px-5 py-3 text-center">
-                                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C7A768]">
-                                    Secure & Confidential
-                                </p>
-                                <p className="mt-2 text-[14px] font-medium leading-[1.5] text-[#F6F1E7]">
-                                    Private workspace access only. Even our team cannot view the ads you decompile.
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>
