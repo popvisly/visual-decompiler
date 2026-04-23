@@ -192,6 +192,7 @@ type DossierTab =
     | 'INTELLIGENCE'
     | 'SIGNALS'
     | 'PSYCHOLOGY'
+    | 'SOCIAL CONTEXT'
     | 'CONSTRAINT MAP'
     | 'BLUEPRINT'
     | 'STRESS LAB'
@@ -203,6 +204,7 @@ const FULL_DOSSIER_TABS: readonly DossierTab[] = [
     'INTELLIGENCE',
     'SIGNALS',
     'PSYCHOLOGY',
+    'SOCIAL CONTEXT',
     'CONSTRAINT MAP',
     'BLUEPRINT',
     'STRESS LAB',
@@ -215,6 +217,7 @@ const SAMPLE_DOSSIER_TABS: readonly DossierTab[] = [
     'INTELLIGENCE',
     'SIGNALS',
     'PSYCHOLOGY',
+    'SOCIAL CONTEXT',
     'CONSTRAINT MAP',
     'BLUEPRINT',
 ] as const;
@@ -224,6 +227,7 @@ const DOSSIER_TAB_LABELS: Record<DossierTab, string> = {
     'INTELLIGENCE': 'INTELLIGENCE',
     'SIGNALS': 'MECHANICS',
     'PSYCHOLOGY': 'PSYCHOLOGY',
+    'SOCIAL CONTEXT': 'SOCIAL CONTEXT',
     'CONSTRAINT MAP': 'CONSTRAINT MAP',
     'BLUEPRINT': 'BLUEPRINT TRACE',
     'STRESS LAB': 'STRESS LAB',
@@ -376,6 +380,29 @@ type AnalysisLanguageSystem = {
     structuralSignals: StructuralSignalRow[];
     strategicRead: StrategicRead;
     confidenceIndex: 'High' | 'Medium' | 'Low';
+};
+
+type SocialPlatformKey = 'Meta Feed' | 'Instagram Reels' | 'TikTok' | 'YouTube Shorts' | 'LinkedIn';
+
+type SocialPlatformScore = {
+    platform: SocialPlatformKey;
+    score: number;
+    signal: 'Strong' | 'Usable' | 'At Risk';
+};
+
+type SocialContextModel = {
+    platformScores: SocialPlatformScore[];
+    hookHoldDiagnostics: {
+        first2sClarity: string;
+        thumbStopStrength: string;
+        readabilityAtSpeed: string;
+        messageRetention: string;
+    };
+    riskFlags: string[];
+    adaptationMoves: {
+        platform: SocialPlatformKey;
+        move: string;
+    }[];
 };
 
 const parseBlueprint = (value: BlueprintData | string | null | undefined): BlueprintData | null => {
@@ -598,6 +625,120 @@ const deriveAnalysisLanguageSystem = ({
             categoryPositioning,
         },
         confidenceIndex: confidence >= 85 ? 'High' : confidence >= 65 ? 'Medium' : 'Low',
+    };
+};
+
+
+const deriveSocialContext = ({
+    analysisLanguage,
+    confidenceScore,
+    frictionScore,
+    persuasionDensity,
+}: {
+    analysisLanguage: AnalysisLanguageSystem;
+    confidenceScore: number | null;
+    frictionScore: number | null;
+    persuasionDensity: number | null;
+}): SocialContextModel => {
+    const byLabel = Object.fromEntries(
+        analysisLanguage.primaryScores.map((score) => [score.label, score.value]),
+    ) as Record<PrimaryScoreLabel, number>;
+
+    const clarity = byLabel.Clarity ?? 60;
+    const attention = byLabel.Attention ?? 60;
+    const cohesion = byLabel.Cohesion ?? 60;
+    const intent = byLabel.Intent ?? 60;
+    const distinction = byLabel.Distinction ?? 60;
+    const density = persuasionDensity ?? 68;
+    const friction = frictionScore ?? 24;
+    const confidence = confidenceScore ?? 72;
+
+    const clamp = (value: number) => Math.max(0, Math.min(100, Math.round(value)));
+    const toSignal = (score: number): SocialPlatformScore['signal'] => {
+        if (score >= 75) return 'Strong';
+        if (score >= 60) return 'Usable';
+        return 'At Risk';
+    };
+
+    const metaFeedScore = clamp(clarity * 0.36 + intent * 0.26 + cohesion * 0.2 + attention * 0.18);
+    const reelsScore = clamp(attention * 0.34 + distinction * 0.24 + clarity * 0.22 + density * 0.2);
+    const tiktokScore = clamp(attention * 0.38 + distinction * 0.24 + density * 0.2 + clarity * 0.18);
+    const shortsScore = clamp(attention * 0.3 + clarity * 0.27 + intent * 0.23 + distinction * 0.2);
+    const linkedinScore = clamp(clarity * 0.38 + intent * 0.32 + cohesion * 0.2 + confidence * 0.1);
+
+    const platformScores: SocialPlatformScore[] = [
+        { platform: 'Meta Feed', score: metaFeedScore, signal: toSignal(metaFeedScore) },
+        { platform: 'Instagram Reels', score: reelsScore, signal: toSignal(reelsScore) },
+        { platform: 'TikTok', score: tiktokScore, signal: toSignal(tiktokScore) },
+        { platform: 'YouTube Shorts', score: shortsScore, signal: toSignal(shortsScore) },
+        { platform: 'LinkedIn', score: linkedinScore, signal: toSignal(linkedinScore) },
+    ];
+
+    const hookHoldDiagnostics = {
+        first2sClarity:
+            clarity >= 80
+                ? 'Strong entry. Hook clarity lands inside the first two seconds.'
+                : clarity >= 65
+                  ? 'Usable entry. Clarify the first-frame value cue for faster recognition.'
+                  : 'At risk. The opening cue is too soft for social-speed scanning.',
+        thumbStopStrength:
+            attention >= 80
+                ? 'High stop power. The frame captures attention quickly.'
+                : attention >= 65
+                  ? 'Moderate stop power. Increase contrast around the primary focal object.'
+                  : 'Low stop power. The frame can pass by without immediate capture.',
+        readabilityAtSpeed:
+            cohesion >= 78 && friction <= 20
+                ? 'Reading path is stable at scroll speed.'
+                : cohesion >= 65
+                  ? 'Reading path is serviceable. Tighten hierarchy to reduce scan drop-off.'
+                  : 'Reading path is fragmented. Compress copy and simplify visual competition.',
+        messageRetention:
+            intent >= 78 && density >= 75
+                ? 'Message retention is strong after first exposure.'
+                : intent >= 65
+                  ? 'Retention is moderate. Strengthen one clear memory anchor.'
+                  : 'Retention is weak. Core claim is not locking fast enough.',
+    };
+
+    const riskFlags: string[] = [];
+    if (clarity < 65) riskFlags.push('First-frame value signal is underdefined for feed environments.');
+    if (attention < 65) riskFlags.push('Thumb-stop pressure is below social benchmark.');
+    if (friction > 25) riskFlags.push('Message friction may reduce completion and response confidence.');
+    if (density < 68) riskFlags.push('Information compression is low for short-form decision windows.');
+    if (distinction < 62) riskFlags.push('Execution risks blending into category-native creative patterns.');
+    if (riskFlags.length === 0) {
+        riskFlags.push('No critical social execution risk detected at first pass.');
+    }
+
+    const adaptationMoves: SocialContextModel['adaptationMoves'] = [
+        {
+            platform: 'Meta Feed',
+            move: 'Lead with one explicit value line in frame one; keep supporting copy secondary.',
+        },
+        {
+            platform: 'Instagram Reels',
+            move: 'Strengthen opening contrast and crop safety around the primary subject lock.',
+        },
+        {
+            platform: 'TikTok',
+            move: 'Increase first-second visual tension and shorten copy to one hard-working line.',
+        },
+        {
+            platform: 'YouTube Shorts',
+            move: 'Front-load brand cue earlier so recognition occurs before mid-sequence drop-off.',
+        },
+        {
+            platform: 'LinkedIn',
+            move: 'Prioritize strategic clarity and outcome framing over stylistic ambiguity.',
+        },
+    ];
+
+    return {
+        platformScores,
+        hookHoldDiagnostics,
+        riskFlags,
+        adaptationMoves,
     };
 };
 
@@ -1794,6 +1935,12 @@ export default function AssetWorkspace({
         frictionScore,
         persuasionDensity,
         marketPulseData,
+    });
+    const socialContext = deriveSocialContext({
+        analysisLanguage,
+        confidenceScore,
+        frictionScore,
+        persuasionDensity,
     });
     const scoreByLabel = Object.fromEntries(analysisLanguage.primaryScores.map((score) => [score.label, score.value])) as Record<'Clarity' | 'Attention' | 'Cohesion' | 'Intent' | 'Distinction', number>;
     const signalByLabel = Object.fromEntries(analysisLanguage.structuralSignals.map((signal) => [signal.label, signal.value])) as Record<'Hierarchy' | 'Balance' | 'Contrast' | 'Density' | 'Focus Integrity', string>;
@@ -3065,7 +3212,7 @@ export default function AssetWorkspace({
 
                                 {secondaryNavTabs.length > 0 && (
                                     <div className="mt-4 border-t border-white/10 pt-4">
-                                        <div className="grid grid-cols-5 gap-3">
+                                        <div className="grid grid-cols-3 gap-3 lg:grid-cols-6">
                                             {secondaryNavTabs.map((tab) => (
                                                 <button
                                                     key={tab}
@@ -3559,6 +3706,82 @@ export default function AssetWorkspace({
                                          <p className="max-w-xs text-[13px] font-light tracking-wide text-[#D6D0C6]/70">Signal interception requires deep architectural extraction of this asset's semiotic layers.</p>
                                      </div>
                                 )}
+                            </div>
+                        )}
+
+                        {activeTab === 'SOCIAL CONTEXT' && (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="space-y-10">
+                                    <WorkspaceTabHeader
+                                        kicker="Social Context"
+                                        title="Social-First Execution"
+                                        intro="Platform-context scoring that translates creative quality into feed performance readiness."
+                                    />
+
+                                    <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+                                        <section className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Social Context Score</p>
+                                            <div className="mt-6 overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#151310]">
+                                                <div className="grid grid-cols-12 border-b border-white/10 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/62">
+                                                    <span className="col-span-5">Platform</span>
+                                                    <span className="col-span-4 text-center">Score</span>
+                                                    <span className="col-span-3 text-right">Signal</span>
+                                                </div>
+                                                {socialContext.platformScores.map((row) => (
+                                                    <div key={row.platform} className="grid grid-cols-12 items-center border-b border-white/10 px-6 py-4 text-[13px] last:border-b-0">
+                                                        <span className="col-span-5 text-[#F3F1ED]/90">{row.platform}</span>
+                                                        <span className="col-span-4 text-center text-[20px] font-semibold leading-none tracking-[-0.01em] text-[#F3F1ED] tabular-nums">{row.score}</span>
+                                                        <span className={'col-span-3 text-right text-[10px] font-semibold uppercase tracking-[0.24em] ' + (row.signal === 'Strong' ? 'text-[#D4A574]' : row.signal === 'Usable' ? 'text-[#E3DBCE]' : 'text-[#d9a69c]')}>
+                                                            {row.signal}
+                                                        </span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </section>
+
+                                        <section className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Hook & Hold Diagnostics</p>
+                                            <div className="mt-6 space-y-3">
+                                                {[
+                                                    ['First-2s Clarity', socialContext.hookHoldDiagnostics.first2sClarity],
+                                                    ['Thumb-Stop Strength', socialContext.hookHoldDiagnostics.thumbStopStrength],
+                                                    ['Readability at Speed', socialContext.hookHoldDiagnostics.readabilityAtSpeed],
+                                                    ['Message Retention', socialContext.hookHoldDiagnostics.messageRetention],
+                                                ].map(([label, detail]) => (
+                                                    <div key={label as string} className="rounded-[1.5rem] border border-white/10 bg-[#151310] p-4">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{label}</p>
+                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/86">{detail as string}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                    <div className="grid gap-6 xl:grid-cols-2">
+                                        <section className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Creative Risk Flags</p>
+                                            <div className="mt-6 space-y-3">
+                                                {socialContext.riskFlags.map((flag, index) => (
+                                                    <div key={index} className="rounded-[1.5rem] border border-white/10 bg-[#151310] p-4">
+                                                        <p className="text-[13px] leading-relaxed text-[#F3F1ED]/86">{flag}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </section>
+
+                                        <section className="rounded-[2.75rem] border border-white/10 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Social Adaptation Moves</p>
+                                            <div className="mt-6 space-y-3">
+                                                {socialContext.adaptationMoves.map((move) => (
+                                                    <div key={move.platform} className="rounded-[1.5rem] border border-white/10 bg-[#151310] p-4">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{move.platform}</p>
+                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/86">{move.move}</p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
                             </div>
                         )}
 
