@@ -32,8 +32,9 @@ export default function AboutPage() {
             </section>
 
             {/* Problem + Why + What + Commercial + Positioning + Vision */}
-            <section className="px-6 pb-40 lg:pb-56">
-                <div className="mx-auto max-w-[1400px] border-t border-white/10 pt-16 lg:pt-24">
+            <section className="pb-40 lg:pb-56">
+                <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
+                    <div className="border-t border-white/10 pt-16 lg:pt-24">
                     <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
                         <motion.article
                             initial={{ opacity: 0, y: 20 }}
@@ -130,6 +131,7 @@ export default function AboutPage() {
                             From internal reviews to final client decisions.
                         </p>
                     </motion.div>
+                    </div>
                 </div>
             </section>
 
