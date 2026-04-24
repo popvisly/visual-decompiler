@@ -6,7 +6,7 @@ import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 export default function ProductHero() {
     return (
-        <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 pb-28 lg:pt-32 lg:pb-36" data-presence-tone="dark">
+        <section className="relative overflow-hidden pt-24 pb-16 lg:pt-28 lg:pb-20" data-presence-tone="dark">
             <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
@@ -20,15 +20,11 @@ export default function ProductHero() {
                     </h1>
 
                     <div className="mt-8 max-w-[840px] rounded-[1.75rem] border border-[rgba(193,166,116,0.22)] bg-[#0D0D0D]/72 px-8 py-8 shadow-[0_0_36px_rgba(0,0,0,0.34)] backdrop-blur-md">
-                        <p className="text-[17px] leading-[1.85] text-[#F6F1E7]/78">
-                            Creative work rarely fails because it lacks quality.
-                            <br />
-                            <br />
-                            It fails because teams struggle to explain, defend, and align around it.
-                            <br />
-                            <br />
-                            Visual Decompiler turns creative instinct into structured reasoning — so pitches land stronger, reviews move faster, and clients approve with confidence.
-                        </p>
+                        <div className="space-y-6 text-[17px] leading-[1.85] text-[#F6F1E7]/78">
+                            <p>Creative work rarely fails because it lacks quality.</p>
+                            <p>It fails because teams struggle to explain, defend, and align around it.</p>
+                            <p>Visual Decompiler turns creative instinct into structured reasoning — so pitches land stronger, reviews move faster, and clients approve with confidence.</p>
+                        </div>
 
                         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
                             <Link
