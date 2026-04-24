@@ -7,7 +7,7 @@ import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 export default function ProductFooter() {
     return (
         <footer className="bg-[#0B0B0B] text-[#F6F1E7]" data-presence-tone="dark">
-            <section className="pt-32 pb-20 lg:pt-40 lg:pb-24">
+            <section className="pt-24 pb-20 lg:pt-28 lg:pb-24">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[860px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Final CTA</p>

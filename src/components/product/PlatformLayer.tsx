@@ -23,19 +23,17 @@ const OUTCOME_CARDS = [
 
 export default function PlatformLayer() {
     return (
-        <section className="pt-20 pb-20 lg:pt-24 lg:pb-24" data-presence-tone="dark">
+        <section className="pt-14 pb-16 lg:pt-20 lg:pb-20" data-presence-tone="dark">
             <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                 <div className="max-w-[900px]">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Built for the Room</p>
                     <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] sm:text-[8vw] lg:text-[56px]">
                         Where creative decisions actually get made.
                     </h2>
-                    <p className="mt-7 text-[18px] leading-[1.75] text-[#F6F1E7]/72">
-                        Built for the people defending the work.
-                        <br />
-                        <br />
-                        Whether you&apos;re a strategist preparing rationale, a creative director defending a campaign, or an agency team aligning around creative decisions, Visual Decompiler helps structure the conversation around the work.
-                    </p>
+                    <div className="mt-7 max-w-[860px] space-y-5 text-[18px] leading-[1.75] text-[#F6F1E7]/72">
+                        <p>Built for the people defending the work.</p>
+                        <p>Whether you&apos;re a strategist preparing rationale, a creative director defending a campaign, or an agency team aligning around creative decisions, Visual Decompiler helps structure the conversation around the work.</p>
+                    </div>
                 </div>
 
                 <div className="mt-10 grid gap-6 md:grid-cols-2">
