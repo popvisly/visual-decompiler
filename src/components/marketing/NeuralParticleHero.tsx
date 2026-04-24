@@ -269,6 +269,7 @@ export default function NeuralParticleHero() {
                         style={{ display: 'block', minHeight: '360px' }}
                     />
                 </div>
+                </div>
             </div>
         </section>
     );
