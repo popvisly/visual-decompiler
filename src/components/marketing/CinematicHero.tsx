@@ -25,8 +25,8 @@ export default function CinematicHero() {
             </div>
 
             <div className="relative z-10 mx-auto w-full max-w-[1200px]">
-                <div className="mx-auto max-w-[18ch] text-center">
-                    <h1 className="text-[clamp(48px,8.2vw,118px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7]">
+                <div className="w-full text-center">
+                    <h1 className="mx-auto w-full text-center text-[clamp(52px,8.8vw,132px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7]">
                         <span>Advertising intelligence.</span>{" "}
                         <span className="bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent">Deconstructed.</span>
                     </h1>
