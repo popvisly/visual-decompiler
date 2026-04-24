@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import ParticleField from "@/components/marketing/ParticleField";
 
 const HERO_ADS = [
@@ -11,7 +12,58 @@ const HERO_ADS = [
     { src: "/images/examples/CHLOE.jpg", alt: "Luxury fragrance campaign" },
 ];
 
+const HERO_TYPED_WORDS = ["Decoded.", "Scored.", "Mapped.", "Read.", "Deconstructed."];
+
 export default function CinematicHero() {
+    const [heroVisible, setHeroVisible] = useState(false);
+    const [wordIndex, setWordIndex] = useState(0);
+    const [charIndex, setCharIndex] = useState(0);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [isComplete, setIsComplete] = useState(false);
+
+    const finalWordIndex = HERO_TYPED_WORDS.length - 1;
+    const currentWord = HERO_TYPED_WORDS[wordIndex] ?? HERO_TYPED_WORDS[finalWordIndex];
+
+    const typedWord = useMemo(() => currentWord.slice(0, charIndex), [currentWord, charIndex]);
+
+    useEffect(() => {
+        const revealTimer = window.setTimeout(() => setHeroVisible(true), 140);
+        return () => window.clearTimeout(revealTimer);
+    }, []);
+
+    useEffect(() => {
+        if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            setWordIndex(finalWordIndex);
+            setCharIndex(HERO_TYPED_WORDS[finalWordIndex].length);
+            setIsDeleting(false);
+            setIsComplete(true);
+            return;
+        }
+
+        if (isComplete) return;
+
+        let timer: number | undefined;
+
+        if (!isDeleting && charIndex < currentWord.length) {
+            timer = window.setTimeout(() => setCharIndex((prev) => prev + 1), 82);
+        } else if (!isDeleting && charIndex === currentWord.length) {
+            if (wordIndex === finalWordIndex) {
+                timer = window.setTimeout(() => setIsComplete(true), 520);
+            } else {
+                timer = window.setTimeout(() => setIsDeleting(true), 620);
+            }
+        } else if (isDeleting && charIndex > 0) {
+            timer = window.setTimeout(() => setCharIndex((prev) => prev - 1), 44);
+        } else if (isDeleting && charIndex === 0) {
+            setIsDeleting(false);
+            setWordIndex((prev) => Math.min(prev + 1, finalWordIndex));
+        }
+
+        return () => {
+            if (timer) window.clearTimeout(timer);
+        };
+    }, [charIndex, currentWord, finalWordIndex, isComplete, isDeleting, wordIndex]);
+
     return (
         <section className="relative overflow-hidden bg-[#0B0B0B] px-6 md:px-10" data-presence-tone="dark">
             <div
@@ -23,9 +75,16 @@ export default function CinematicHero() {
 
             <div className="relative z-10 mx-auto w-full max-w-[1200px]">
                 <div className="flex min-h-[100svh] items-center justify-center pt-28 pb-16 md:pt-32 md:pb-20">
-                    <h1 className="mx-auto w-full text-center text-[clamp(52px,8.8vw,132px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7]">
+                    <h1
+                        className={`mx-auto w-full text-center text-[clamp(52px,8.8vw,132px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] transition-all duration-[1400ms] ease-out ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
+                    >
                         <span>Advertising intelligence.</span>{" "}
-                        <span className="bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent">Deconstructed.</span>
+                        <span className="bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent">{typedWord}</span>
+                        {!isComplete && (
+                            <span className="ml-[0.02em] inline-block bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent animate-pulse">
+                                |
+                            </span>
+                        )}
                     </h1>
                 </div>
 
