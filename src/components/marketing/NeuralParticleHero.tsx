@@ -4,12 +4,11 @@ import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const ANALYSIS_SECTIONS = [
-    { label: 'Report', desc: 'Primary Scores & Attention Path' },
-    { label: 'Intelligence', desc: 'Strategic Read' },
-    { label: 'Forensics', desc: 'Structural Signals' },
-    { label: 'Pulse', desc: 'Confidence Index' },
-    { label: 'Prompt', desc: 'Reconstruction blueprint' },
-    { label: 'Audience', desc: 'Psychographic persona mapping' },
+    { label: 'Primary Scores', desc: 'Clarity, Attention, Cohesion, Intent, Distinction' },
+    { label: 'Attention Path', desc: 'Entry point, flow sequence, and drop-off points' },
+    { label: 'Structural Signals', desc: 'Hierarchy, Balance, Contrast, Density, Focus Integrity' },
+    { label: 'Strategic Read', desc: 'Thesis, trigger mechanic, friction points, category positioning' },
+    { label: 'Confidence Index', desc: 'Final decision confidence statement' },
 ];
 
 const INNER_RING = [
@@ -214,7 +213,7 @@ export default function NeuralParticleHero() {
                     >
                         <span className="w-1.5 h-1.5 rounded-full bg-[#C1A67B] animate-pulse" />
                         <span className="text-[8px] font-mono text-[#C1A67B]/60 uppercase tracking-[0.3em]">
-                            Intelligence Active
+                            Dossier Active
                         </span>
                     </motion.div>
 
@@ -224,7 +223,7 @@ export default function NeuralParticleHero() {
                         transition={{ duration: 0.7, delay: 0.15 }}
                     >
                         <h2 className="text-[26px] font-bold text-[#C1A67B] leading-[1.1] tracking-tight uppercase mb-10">
-                            Neural<br />Intelligence<br />Ad Analysis
+                            Creative<br />Intelligence<br />Dossier
                         </h2>
                     </motion.div>
 
@@ -250,7 +249,7 @@ export default function NeuralParticleHero() {
 
                     <div className="mt-10 pt-8 border-t border-white/5">
                         <p className="text-[8px] font-mono text-[#FBFBF6]/15 uppercase tracking-[0.25em]">
-                            Visual Decompiler — Sovereignty Tier
+                            Visual Decompiler — Decision Support
                         </p>
                     </div>
                 </div>
@@ -259,7 +258,7 @@ export default function NeuralParticleHero() {
                     <div className="absolute top-4 left-5 z-10 flex items-center gap-2">
                         <span className="w-1 h-1 rounded-full bg-[#C1A67B]/50 animate-pulse" />
                         <span className="text-[8px] font-mono text-[#FBFBF6]/20 uppercase tracking-[0.25em]">
-                            Neural Map — Live
+                            Decision Map — Live
                         </span>
                     </div>
 
