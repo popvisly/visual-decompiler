@@ -12,7 +12,7 @@ export default function BeforeAfterContrast({ compact = false }: Props) {
             className={compact ? 'relative overflow-hidden bg-[#0B0B0B] pt-14 pb-16 text-[#F6F1E7] lg:pt-18 lg:pb-20' : 'relative overflow-hidden bg-[#0B0B0B] pt-16 pb-20 text-[#F6F1E7] lg:pt-20 lg:pb-24'}
             data-presence-tone="dark"
         >
-            <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
+            <div className="relative z-10 mx-auto max-w-[1120px] px-6 lg:px-12">
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
