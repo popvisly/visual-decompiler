@@ -22,7 +22,7 @@ export default function CinematicHero() {
                     <span>for pitches, reviews, and approvals.</span>
                 </h1>
 
-                <div className="relative mt-12 w-full max-w-[860px]">
+                <div className="relative mt-16 w-full max-w-[860px] md:mt-20">
                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
                         <div className="h-[420px] w-[860px] rounded-[40px] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.62),rgba(0,0,0,0.32)_48%,transparent_78%)] blur-2xl" />
                     </div>
