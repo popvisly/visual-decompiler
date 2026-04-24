@@ -49,10 +49,11 @@ export default function CinematicHero() {
                                 <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
                                     <Link
                                         href="/ingest"
-                                        className="inline-flex h-12 items-center justify-center rounded-2xl bg-white px-8 text-[15px] font-medium tracking-[0.01em] text-black shadow-[0_8px_24px_rgba(255,255,255,0.08)] transition-all duration-200 hover:bg-white/92 hover:shadow-[0_10px_30px_rgba(255,255,255,0.1)]"
+                                        className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-2xl border border-white/20 bg-white px-8 text-[15px] font-medium tracking-[0.01em] text-black shadow-[0_8px_24px_rgba(255,255,255,0.08)] transition-all duration-500 hover:-translate-y-[1px] hover:border-[#F7B43A]/70 hover:bg-gradient-to-r hover:from-[#FFD600] hover:to-[#F28C28] hover:shadow-[0_14px_34px_rgba(242,140,40,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F7B43A]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0B0B] active:translate-y-0"
                                     >
+                                        <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.45),transparent_38%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                                         Decompile an Ad
-                                        <span className="ml-2 text-[15px]">↗</span>
+                                        <span className="ml-2 text-[15px] transition-transform duration-500 group-hover:translate-x-[2px] group-hover:-translate-y-[1px]">↗</span>
                                     </Link>
 
                                     <Link
