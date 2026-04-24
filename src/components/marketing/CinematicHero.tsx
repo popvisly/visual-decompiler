@@ -6,7 +6,7 @@ import ParticleField from "@/components/marketing/ParticleField";
 
 const HERO_ADS = [
     { src: "/images/examples/Chanel_No5.webp", alt: "Chanel No.5 campaign" },
-    { src: "/images/examples/Model_Mirror.jpg", alt: "Campaign reference creative" },
+    { src: "/images/examples/Sony.jpg", alt: "Sony campaign creative" },
     { src: "/images/examples/ACNE.png", alt: "Acne Studios campaign" },
     { src: "/images/examples/CHLOE.jpg", alt: "Luxury fragrance campaign" },
 ];
@@ -27,8 +27,8 @@ export default function CinematicHero() {
             <div className="relative z-10 mx-auto w-full max-w-[1200px]">
                 <div className="mx-auto max-w-[18ch] text-center">
                     <h1 className="text-[clamp(48px,8.2vw,118px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7]">
-                        <span className="bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent">Creative analysis</span>{" "}
-                        <span>for pitches, reviews, and approvals.</span>
+                        <span>Advertising intelligence.</span>{" "}
+                        <span className="bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent">Deconstructed.</span>
                     </h1>
                 </div>
 
