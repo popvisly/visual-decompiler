@@ -13,26 +13,23 @@ const HERO_ADS = [
 
 export default function CinematicHero() {
     return (
-        <section
-            className="relative overflow-hidden bg-[#0B0B0B] px-6 pb-20 pt-28 md:px-10 md:pb-24 md:pt-32"
-            data-presence-tone="dark"
-        >
+        <section className="relative overflow-hidden bg-[#0B0B0B] px-6 md:px-10" data-presence-tone="dark">
             <div
-                className="pointer-events-none absolute inset-x-0 top-0 bottom-[-6vh] z-0 opacity-44 [mask-image:linear-gradient(to_bottom,black_0%,black_58%,transparent_92%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_58%,transparent_92%)]"
+                className="pointer-events-none absolute inset-x-0 top-0 bottom-[-10vh] z-0 opacity-44 [mask-image:linear-gradient(to_bottom,black_0%,black_72%,transparent_96%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_72%,transparent_96%)]"
                 aria-hidden="true"
             >
                 <ParticleField />
             </div>
 
             <div className="relative z-10 mx-auto w-full max-w-[1200px]">
-                <div className="w-full text-center">
+                <div className="flex min-h-[100svh] items-center justify-center pt-28 pb-16 md:pt-32 md:pb-20">
                     <h1 className="mx-auto w-full text-center text-[clamp(52px,8.8vw,132px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7]">
                         <span>Advertising intelligence.</span>{" "}
                         <span className="bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent">Deconstructed.</span>
                     </h1>
                 </div>
 
-                <div className="relative mt-14 md:mt-20">
+                <div className="relative pb-20 md:pb-24">
                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
                         <div className="h-[520px] w-full max-w-[1120px] rounded-[44px] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.62),rgba(0,0,0,0.34)_48%,transparent_78%)] blur-2xl" />
                     </div>
