@@ -1,5 +1,4 @@
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
-import NewsAggregatorFooter from '@/components/blog/NewsAggregatorFooter';
 
 export default function IntelligenceLayout({
     children,
@@ -13,8 +12,6 @@ export default function IntelligenceLayout({
             <main className="flex-1 w-full relative z-10 pt-30 pb-32 lg:pt-36">
                 {children}
             </main>
-
-            <NewsAggregatorFooter />
         </div>
     );
 }

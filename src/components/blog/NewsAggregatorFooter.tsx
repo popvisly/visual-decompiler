@@ -25,8 +25,8 @@ const NEWS_ITEMS = [
 
 export default function NewsAggregatorFooter() {
     return (
-        <section className="bg-black border-t border-white/10 pt-16 pb-20 mt-auto relative z-10">
-            <div className="max-w-7xl mx-auto px-6">
+        <section className="mt-12 border-t border-white/10 pt-12 pb-6 relative z-10">
+            <div className="w-full">
                 <div className="flex items-center gap-4 mb-10">
                     <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
                         <Newspaper className="w-5 h-5 text-accent" />

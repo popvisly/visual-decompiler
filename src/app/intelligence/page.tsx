@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getAllPosts } from '@/lib/mdx';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Metadata } from 'next';
+import NewsAggregatorFooter from '@/components/blog/NewsAggregatorFooter';
 
 export const metadata: Metadata = {
     title: 'Intelligence Briefings | Visual Decompiler',
@@ -75,6 +76,8 @@ export default async function IntelligenceIndex() {
                     </Link>
                 ))}
             </div>
+
+            <NewsAggregatorFooter />
         </div>
     );
 }
