@@ -46,7 +46,7 @@ export default function WhyDifferent() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
                             transition={{ duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                            className="rounded-[20px] border border-[#C1A674]/22 bg-white/[0.02] p-6"
+                            className="rounded-[20px] border border-[rgba(193,166,116,0.22)] bg-white/[0.02] p-6"
                         >
                             <h3 className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#C1A674]">{block.title}</h3>
                             <p className="mt-4 text-[16px] leading-[1.65] text-[#F6F1E7]/82">{block.body}</p>

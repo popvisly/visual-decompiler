@@ -22,7 +22,7 @@ const STEPS = [
 
 function DecisionRadarCard() {
     return (
-        <aside className="w-full rounded-[1.8rem] border border-[#C1A674]/22 bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(14,14,14,0.96)_34%)] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
+        <aside className="w-full rounded-[1.8rem] border border-[rgba(193,166,116,0.22)] bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(14,14,14,0.96)_34%)] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
             <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#C1A674]">Decision Radar</p>
 
             <svg viewBox="0 0 320 250" className="mt-6 h-[220px] w-full" aria-hidden="true">
@@ -101,7 +101,7 @@ export default function HowItWorks() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-14 rounded-[26px] border border-[#C1A674]/22 bg-white/[0.02] px-7 py-8 md:px-10"
+                    className="mt-14 rounded-[26px] border border-[rgba(193,166,116,0.22)] bg-white/[0.02] px-7 py-8 md:px-10"
                 >
                     <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#C1A674]">Why it matters</p>
                     <h3 className="mt-4 text-[30px] font-black uppercase leading-[1.02] tracking-[-0.025em] text-[#F6F1E7] md:text-[38px]">
@@ -119,7 +119,7 @@ export default function HowItWorks() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.85, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-16 rounded-[24px] border border-[#C1A674]/20 bg-white/[0.015] px-6 py-8 lg:mt-20 lg:px-8 lg:py-10"
+                    className="mt-16 rounded-[24px] border border-[rgba(193,166,116,0.20)] bg-white/[0.015] px-6 py-8 lg:mt-20 lg:px-8 lg:py-10"
                 >
                     <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.36em] text-[#C1A674]">Workflow</p>
                     <h3 className="text-[34px] font-black uppercase tracking-[-0.03em] text-[#F6F1E7] md:text-[44px]">
@@ -134,7 +134,7 @@ export default function HowItWorks() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: '-40px' }}
                                 transition={{ duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                                className="rounded-[20px] border border-[#C1A674]/22 bg-white/[0.02] p-6"
+                                className="rounded-[20px] border border-[rgba(193,166,116,0.22)] bg-white/[0.02] p-6"
                             >
                                 <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#C1A674]">Step {step.n}</p>
                                 <h4 className="mt-4 text-[22px] font-black leading-[1.08] tracking-[-0.015em] text-[#F6F1E7]">{step.title}</h4>
