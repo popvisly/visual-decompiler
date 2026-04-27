@@ -3279,7 +3279,7 @@ export default function AssetWorkspace({
                                                 </div>
                                             </div>
 
-                                            <div className="self-start rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="self-start rounded-[2.75rem] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-10">Critical Risk Points</p>
                                                 <div className="space-y-6">
                                                     {failureReasons.map((reason, index) => (
@@ -3596,7 +3596,7 @@ export default function AssetWorkspace({
                                     <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
                                         <section className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Social Context Score</p>
-                                            <div className="mt-6 overflow-hidden rounded-[1.75rem] border border-[#8B6A3D]/8 bg-[#151310]">
+                                            <div className="mt-6 overflow-hidden rounded-[1.75rem] bg-[#151310]">
                                                 <div className="grid grid-cols-12 border-b border-[#8B6A3D]/8 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/62">
                                                     <span className="col-span-5">Platform</span>
                                                     <span className="col-span-4 text-center">Score</span>
@@ -3738,7 +3738,7 @@ export default function AssetWorkspace({
                                         ].map((group, index) => (
                                             <div
                                                 key={group.title}
-                                                className={`self-start h-fit rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] ${index === 2 ? 'xl:col-span-2' : ''}`}
+                                                className={`self-start h-fit rounded-[2.75rem] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
                                                 <p className={`text-[10px] font-semibold uppercase tracking-[0.5em] mb-6 border-b border-[#8B6A3D]/8 pb-6 ${group.accent}`}>{group.title}</p>
                                                 <p className="mb-8 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/76">{normalizeProseText(group.guidance)}</p>
@@ -3978,11 +3978,11 @@ export default function AssetWorkspace({
                                                     </div>
                                                 </div>
 
-                                                <div className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                                <div className="rounded-[2.75rem] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                     <p className="mb-6 border-b border-[#8B6A3D]/8 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
                                                         Strategic Implication
                                                     </p>
-                                                    <div className="max-w-[78ch] rounded-[1.75rem] border border-[#8B6A3D]/8 bg-[#151310] px-5 py-4">
+                                                    <div className="max-w-[78ch] rounded-[1.75rem] bg-[#151310] px-5 py-4">
                                                         {proseParagraphs(
                                                             'To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.',
                                                             2,
@@ -4638,7 +4638,7 @@ export default function AssetWorkspace({
                                     />
                                     <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
                                         <div className="space-y-6">
-                                            <div className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="rounded-[2.75rem] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                 <p className="mb-8 border-b border-[#8B6A3D]/8 pb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
                                                     Capture Decision
                                                 </p>
@@ -4680,7 +4680,7 @@ export default function AssetWorkspace({
                                                 </div>
                                             </div>
 
-                                            <div className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="rounded-[2.75rem] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                                 <div className="mb-8 flex items-center justify-between gap-6 border-b border-[#8B6A3D]/8 pb-5">
                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Decision Shorthand Summary</p>
                                                     <button
@@ -4717,12 +4717,12 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
 
-                                        <div className="self-start rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                        <div className="self-start rounded-[2.75rem] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <p className="mb-8 border-b border-[#8B6A3D]/8 pb-5 text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574]">Decision History</p>
                                             <div className="custom-scrollbar max-h-[800px] space-y-4 overflow-y-auto pr-4">
                                                 {decisionLogEntries.length > 0 ? (
                                                     decisionLogEntries.map((entry) => (
-                                                        <div key={entry.id} className="rounded-[2rem] border border-[#8B6A3D]/8 bg-[#151310] p-8 transition-all hover:border-[#8B6A3D]/38">
+                                                        <div key={entry.id} className="rounded-[2rem] bg-[#151310] p-8 transition-all hover:border-[#8B6A3D]/38">
                                                             <div className="mb-6 flex items-center justify-between">
                                                                 <span
                                                                     className={`inline-block border px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.3em] ${
@@ -4761,7 +4761,7 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
 
-                                        <div className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-10 xl:col-span-2">
+                                        <div className="rounded-[2.75rem] bg-[#1A1A1A] p-10 xl:col-span-2">
                                             <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/70">Audit Purpose</p>
                                             <div className="max-w-[78ch] space-y-3">
                                                 {proseParagraphs(

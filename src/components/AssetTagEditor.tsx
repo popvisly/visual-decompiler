@@ -130,7 +130,7 @@ export default function AssetTagEditor({
         .slice(0, 8);
 
     return (
-        <div className="rounded-[1.75rem] border border-[#D4A574]/20 bg-[#111110] px-5 py-4 text-[#F5F3EE]">
+        <div className="rounded-[1.75rem] border border-[#8B6A3D]/8 bg-[#111110] px-5 py-4 text-[#F5F3EE] shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Asset Tags</p>
@@ -150,14 +150,14 @@ export default function AssetTagEditor({
                             key={tag}
                             type="button"
                             onClick={() => void handleRemoveTag(tag)}
-                            className="inline-flex items-center gap-2 rounded-full border border-[#D4A574]/25 bg-[#D4A574]/10 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#F5F3EE] transition-colors hover:border-[#D4A574]/50 hover:bg-[#D4A574]/18"
+                            className="inline-flex items-center gap-2 rounded-full border border-[#8B6A3D]/12 bg-[#D4A574]/10 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#F5F3EE] transition-colors hover:bg-[#D4A574]/18"
                         >
                             {tag}
                             <X className="h-3 w-3" />
                         </button>
                     ))
                 ) : (
-                    <div className="rounded-full border border-dashed border-[#D4A574]/20 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[#FFFFFF]/35">
+                    <div className="rounded-full border border-[#8B6A3D]/12 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[#FFFFFF]/35">
                         No tags assigned yet
                     </div>
                 )}
@@ -169,7 +169,7 @@ export default function AssetTagEditor({
                     value={tagInput}
                     onChange={(event) => setTagInput(event.target.value)}
                     placeholder="Add tag — campaign, market, format, audience..."
-                    className="flex-1 rounded-full border border-[#D4A574]/20 bg-black/25 px-5 py-3 text-[11px] uppercase tracking-[0.16em] text-[#F5F3EE] outline-none transition-colors placeholder:text-[#FFFFFF]/25 focus:border-[#D4A574]"
+                    className="flex-1 rounded-full border border-[#8B6A3D]/12 bg-black/25 px-5 py-3 text-[11px] uppercase tracking-[0.16em] text-[#F5F3EE] outline-none transition-colors placeholder:text-[#FFFFFF]/25"
                 />
                 <button
                     type="submit"
@@ -190,7 +190,7 @@ export default function AssetTagEditor({
                                 key={tag}
                                 type="button"
                                 onClick={() => void handleAddTag(tag)}
-                                className="rounded-full border border-[#D4A574]/18 px-3 py-2 text-[10px] uppercase tracking-[0.16em] text-[#FFFFFF]/60 transition-colors hover:border-[#D4A574]/45 hover:bg-[#D4A574]/10 hover:text-[#F5F3EE]"
+                                className="rounded-full border border-[#8B6A3D]/12 px-3 py-2 text-[10px] uppercase tracking-[0.16em] text-[#FFFFFF]/60 transition-colors hover:bg-[#D4A574]/10 hover:text-[#F5F3EE]"
                             >
                                 {tag}
                             </button>
