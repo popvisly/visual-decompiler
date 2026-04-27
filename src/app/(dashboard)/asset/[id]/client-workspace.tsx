@@ -3523,27 +3523,29 @@ export default function AssetWorkspace({
 
                         {activeTab === 'SOCIAL CONTEXT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="space-y-10">
-                                    <WorkspaceTabHeader
-                                        kicker="Social Context"
-                                        title="Social-First Execution"
-                                        intro="Platform-context scoring that translates creative quality into feed performance readiness."
-                                    />
+                                <div className="flex flex-col gap-4">
+                                    <div className="px-6">
+                                        <WorkspaceTabHeader
+                                            kicker="Social Context"
+                                            title="Social-First Execution"
+                                            intro="Platform-context scoring that translates creative quality into feed performance readiness."
+                                        />
+                                    </div>
 
-                                    <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-                                        <section className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Social Context Score</p>
-                                            <div className="mt-6 overflow-hidden rounded-[1.75rem] bg-[#151310]">
-                                                <div className="grid grid-cols-12 border-b border-[#8B6A3D]/8 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/62">
+                                    <div className="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Social Context Score</p>
+                                            <div className="overflow-hidden rounded-xl border border-black/5 bg-[#FCFBF9]">
+                                                <div className="grid grid-cols-12 border-b border-black/5 px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">
                                                     <span className="col-span-5">Platform</span>
                                                     <span className="col-span-4 text-center">Score</span>
                                                     <span className="col-span-3 text-right">Signal</span>
                                                 </div>
                                                 {socialContext.platformScores.map((row) => (
-                                                    <div key={row.platform} className="grid grid-cols-12 items-center border-b border-[#8B6A3D]/8 px-6 py-4 text-[13px] last:border-b-0">
-                                                        <span className="col-span-5 text-[#F3F1ED]/90">{row.platform}</span>
-                                                        <span className="col-span-4 text-center text-[20px] font-semibold leading-none tracking-[-0.01em] text-[#F3F1ED] tabular-nums">{row.score}</span>
-                                                        <span className={'col-span-3 text-right text-[10px] font-semibold uppercase tracking-[0.24em] ' + (row.signal === 'Strong' ? 'text-[#D4A574]' : row.signal === 'Usable' ? 'text-[#E3DBCE]' : 'text-[#d9a69c]')}>
+                                                    <div key={row.platform} className="grid grid-cols-12 items-center border-b border-black/5 px-6 py-4 text-[13px] last:border-b-0 bg-white">
+                                                        <span className="col-span-5 font-semibold text-[#1a1a1a]">{row.platform}</span>
+                                                        <span className="col-span-4 text-center text-[20px] font-semibold leading-none text-[#1a1a1a] tabular-nums">{row.score}</span>
+                                                        <span className={'col-span-3 text-right text-[10px] font-bold uppercase tracking-wider ' + (row.signal === 'Strong' ? 'text-[#8B6A3D]' : row.signal === 'Usable' ? 'text-[#1a1a1a]' : 'text-[#d9a69c]')}>
                                                             {row.signal}
                                                         </span>
                                                     </div>
@@ -3551,48 +3553,48 @@ export default function AssetWorkspace({
                                             </div>
                                         </section>
 
-                                        <section className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Hook & Hold Diagnostics</p>
-                                            <div className="mt-6 space-y-3">
+                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Hook & Hold Diagnostics</p>
+                                            <div className="space-y-3">
                                                 {[
                                                     ['First-2s Clarity', socialContext.hookHoldDiagnostics.first2sClarity],
                                                     ['Thumb-Stop Strength', socialContext.hookHoldDiagnostics.thumbStopStrength],
                                                     ['Readability at Speed', socialContext.hookHoldDiagnostics.readabilityAtSpeed],
                                                     ['Message Retention', socialContext.hookHoldDiagnostics.messageRetention],
                                                 ].map(([label, detail]) => (
-                                                    <div key={label as string} className="rounded-[1.5rem] border border-[#8B6A3D]/8 bg-[#151310] p-4">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{label}</p>
-                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/86">{detail as string}</p>
+                                                    <div key={label as string} className="rounded-2xl border border-black/5 bg-[#FCFBF9] p-4">
+                                                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">{label}</p>
+                                                        <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{detail as string}</p>
                                                     </div>
                                                 ))}
                                             </div>
                                         </section>
                                     </div>
 
-                                    <div className="space-y-6">
-                                        <section className="self-start rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Creative Risk Flags</p>
-                                            <div className="mt-6 space-y-3">
+                                    <div className="grid gap-4 xl:grid-cols-2">
+                                        <section className="self-start rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Creative Risk Flags</p>
+                                            <div className="space-y-3">
                                                 {socialContext.riskFlags.map((flag, index) => (
-                                                    <div key={index} className="rounded-[1.5rem] border border-[#8B6A3D]/8 bg-[#151310] p-4">
-                                                        <p className="text-[13px] leading-relaxed text-[#F3F1ED]/86">{flag}</p>
+                                                    <div key={index} className="rounded-xl border border-black/5 bg-[#FCFBF9] p-4 text-[#1a1a1a]">
+                                                        <p className="text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{flag}</p>
                                                     </div>
                                                 ))}
                                             </div>
                                         </section>
 
-                                        <section className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Social Adaptation Moves</p>
-                                            <div className="mt-6 space-y-3">
+                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Social Adaptation Moves</p>
+                                            <div className="space-y-3">
                                                 {socialContext.adaptationMoves.map((move) => (
-                                                    <div key={move.platform} className="rounded-[1.5rem] border border-[#8B6A3D]/8 bg-[#151310] p-4">
-                                                        <div className="flex items-start gap-3">
-                                                            <div className="mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#D4A574]/55 bg-[#D4A574]/10 text-[9px] font-semibold tracking-[0.14em] text-[#D4A574]">
+                                                    <div key={move.platform} className="rounded-xl border border-black/5 bg-[#FCFBF9] p-4">
+                                                        <div className="flex items-start gap-4">
+                                                            <div className="mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-full border border-black/5 bg-white shadow-sm text-[10px] font-bold tracking-wider text-[#8B6A3D]">
                                                                 {SOCIAL_PLATFORM_GLYPHS[move.platform]}
                                                             </div>
                                                             <div className="min-w-0 flex-1">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{move.platform}</p>
-                                                                <p className="mt-2 text-[13px] leading-relaxed text-[#F3F1ED]/86">{move.move}</p>
+                                                                <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">{move.platform}</p>
+                                                                <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{move.move}</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -3606,17 +3608,19 @@ export default function AssetWorkspace({
 
                         {activeTab === 'CONSTRAINT MAP' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="space-y-10">
-                                    <WorkspaceTabHeader
-                                        kicker="Operational Guardrails"
-                                        title="Operational Guardrails & Constraint Map"
-                                        intro="This section defines the non-negotiables, avoidances, and safe adaptation boundaries required to preserve the working forensic logic."
-                                    />
+                                <div className="flex flex-col gap-4">
+                                    <div className="px-6">
+                                        <WorkspaceTabHeader
+                                            kicker="Operational Guardrails"
+                                            title="Operational Guardrails & Constraint Map"
+                                            intro="This section defines the non-negotiables, avoidances, and safe adaptation boundaries required to preserve the working forensic logic."
+                                        />
+                                    </div>
 
-                                    <div className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                        <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D4A574]">Constraint Priority Legend</p>
-                                        <div className="overflow-hidden border border-[#8B6A3D]/8 bg-[#151310]">
-                                            <div className="grid grid-cols-12 border-b border-[#8B6A3D]/8 px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/70">
+                                    <div className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                        <p className="mb-5 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">Constraint Priority Legend</p>
+                                        <div className="overflow-hidden border border-black/5 bg-[#FCFBF9] rounded-xl">
+                                            <div className="grid grid-cols-12 border-b border-black/5 px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">
                                                 <span className="col-span-4">Priority Level</span>
                                                 <span className="col-span-8">Description</span>
                                             </div>
@@ -3625,64 +3629,64 @@ export default function AssetWorkspace({
                                                 ['High', 'Important but not critical'],
                                                 ['Optional', 'Enhancements that can vary'],
                                             ].map(([level, description]) => (
-                                                <div key={level} className="grid grid-cols-12 border-b border-[#8B6A3D]/8 px-6 py-4 text-[13px] last:border-b-0">
+                                                <div key={level} className="grid grid-cols-12 border-b border-black/5 px-6 py-4 text-[13px] last:border-b-0 bg-white">
                                                     <span
-                                                        className={`col-span-4 inline-flex items-center gap-2 font-semibold uppercase tracking-[0.22em] ${
+                                                        className={`col-span-4 inline-flex items-center gap-2 font-bold uppercase tracking-wider ${
                                                             level === 'Critical'
-                                                                ? 'text-[#F3F1ED]'
+                                                                ? 'text-[#1a1a1a]'
                                                                 : level === 'High'
-                                                                    ? 'text-[#D4A574]'
-                                                                    : 'text-[#B7AFA3]'
+                                                                    ? 'text-[#8B6A3D]'
+                                                                    : 'text-[#6B6B6B]'
                                                         }`}
                                                     >
                                                         <span
-                                                            className={`h-1.5 w-1.5 ${
+                                                            className={`h-1.5 w-1.5 rounded-full ${
                                                                 level === 'Critical'
-                                                                    ? 'bg-[#F3F1ED]'
+                                                                    ? 'bg-[#1a1a1a]'
                                                                     : level === 'High'
-                                                                        ? 'bg-[#D4A574]'
-                                                                        : 'bg-[#B7AFA3]'
+                                                                        ? 'bg-[#8B6A3D]'
+                                                                        : 'bg-[#C4C4C4]'
                                                             }`}
                                                         />
                                                         {level}
                                                     </span>
-                                                    <span className="col-span-8 text-[#D6D0C6]/70">{description}</span>
+                                                    <span className="col-span-8 text-[#6B6B6B]">{description}</span>
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
 
-                                    <div className="grid items-start gap-6 xl:auto-rows-min xl:grid-cols-2">
+                                    <div className="grid items-start gap-4 xl:auto-rows-min xl:grid-cols-2">
                                         {[
                                             {
                                                 title: 'Retention Protocol',
                                                 guidance: "Preserve these elements to protect the route's strategic spine.",
                                                 items: mustKeepConstraints,
-                                                accent: 'text-[#D4A574]',
+                                                accent: 'text-[#8B6A3D]',
                                             },
                                             {
                                                 title: 'Negation Protocol',
                                                 guidance: 'Avoid these shifts to prevent degradation of message transfer.',
                                                 items: mustAvoidConstraints,
-                                                accent: 'text-[#F3F1ED]',
+                                                accent: 'text-[#1a1a1a]',
                                             },
                                             {
                                                 title: 'Adaptive Delta',
                                                 guidance: 'Safe variation zone for controlled testing and iteration.',
                                                 items: safeAdaptationZone,
-                                                accent: 'text-[#D4A574]',
+                                                accent: 'text-[#8B6A3D]',
                                             },
                                         ].map((group, index) => (
                                             <div
                                                 key={group.title}
-                                                className={`self-start h-fit rounded-[2.75rem] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)] ${index === 2 ? 'xl:col-span-2' : ''}`}
+                                                className={`self-start h-fit rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col ${index === 2 ? 'xl:col-span-2' : ''}`}
                                             >
-                                                <p className={`text-[10px] font-semibold uppercase tracking-[0.5em] mb-6 border-b border-[#8B6A3D]/8 pb-6 ${group.accent}`}>{group.title}</p>
-                                                <p className="mb-8 max-w-[66ch] text-[13px] leading-relaxed text-[#D6D0C6]/76">{normalizeProseText(group.guidance)}</p>
+                                                <p className={`text-[10px] font-bold uppercase tracking-wider mb-6 border-b border-black/5 pb-4 ${group.accent}`}>{group.title}</p>
+                                                <p className="mb-6 max-w-[66ch] text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{normalizeProseText(group.guidance)}</p>
                                                 <div className="space-y-4">
                                                     {group.title === 'Adaptive Delta' && (
-                                                        <div className="border border-[#8B6A3D]/8 bg-[#151310] px-6 py-4">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Variation Lanes</p>
+                                                        <div className="border border-black/5 bg-[#FCFBF9] px-6 py-4 rounded-xl">
+                                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B6B6B]">Variation Lanes</p>
                                                         </div>
                                                     )}
                                                     {group.items.length > 0 ? (
@@ -3705,32 +3709,32 @@ export default function AssetWorkspace({
                                                                 }, [] as Array<{ title: string; entries: Array<{ id: number; body: string; severity: ConstraintSeverity }> }>);
 
                                                                 return adaptiveGroups.map((lane) => (
-                                                                    <div key={`${group.title}-${lane.title}`} className="border border-[#8B6A3D]/8 bg-[#151310] p-6">
-                                                                        <div className="border-b border-[#8B6A3D]/8 pb-4">
-                                                                            <p className="text-[24px] font-semibold tracking-[-0.02em] text-[#F3F1ED]">{lane.title}</p>
+                                                                    <div key={`${group.title}-${lane.title}`} className="border border-black/5 bg-[#FCFBF9] p-6 rounded-xl">
+                                                                        <div className="border-b border-black/5 pb-4">
+                                                                            <p className="text-[20px] font-semibold text-[#1a1a1a]">{lane.title}</p>
                                                                         </div>
                                                                         <div className="mt-4 space-y-4">
                                                                             {lane.entries.map((entry) => (
-                                                                                <div key={`${group.title}-${lane.title}-${entry.id}`} className="space-y-4 border border-[#8B6A3D]/8 bg-[#131110] p-4">
-                                                                                    <p className="text-[16px] font-medium leading-relaxed text-[#F3F1ED]/92">{normalizeProseText(entry.body)}</p>
-                                                                                    <div className="grid gap-4 border-t border-[#8B6A3D]/8 pt-4 sm:grid-cols-[auto_1fr] sm:items-start">
+                                                                                <div key={`${group.title}-${lane.title}-${entry.id}`} className="space-y-4 border border-black/5 bg-white p-4 rounded-xl">
+                                                                                    <p className="text-[14px] font-medium leading-relaxed text-[#1a1a1a]">{normalizeProseText(entry.body)}</p>
+                                                                                    <div className="grid gap-4 border-t border-black/5 pt-4 sm:grid-cols-[auto_1fr] sm:items-start">
                                                                                         <div className="space-y-2">
-                                                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Priority</p>
+                                                                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B6B6B]">Priority</p>
                                                                                             <span
-                                                                                                className={`inline-flex w-fit items-center justify-center border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] ${
+                                                                                                className={`inline-flex w-fit items-center justify-center border px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${
                                                                                                     entry.severity === 'critical'
-                                                                                                        ? 'border-[#D4A574] text-black bg-[#D4A574]'
+                                                                                                        ? 'border-[#8B6A3D] text-white bg-[#8B6A3D]'
                                                                                                         : entry.severity === 'high'
-                                                                                                            ? 'border-[#D4A574]/40 text-[#D4A574]'
-                                                                                                            : 'border-[#8B6A3D]/8 text-[#D6D0C6]/88 bg-white/[0.03]'
+                                                                                                            ? 'border-[#8B6A3D]/40 text-[#8B6A3D] bg-white'
+                                                                                                            : 'border-black/5 text-[#6B6B6B] bg-[#FCFBF9]'
                                                                                                 }`}
                                                                                             >
                                                                                                 {entry.severity}
                                                                                             </span>
                                                                                         </div>
                                                                                         <div className="space-y-2">
-                                                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Protocol Note</p>
-                                                                                            <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
+                                                                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B6B6B]">Protocol Note</p>
+                                                                                            <p className="text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
                                                                                                 {entry.severity === 'critical'
                                                                                                     ? 'Primary safe adaptation lane with strict guardrails.'
                                                                                                     : entry.severity === 'high'
@@ -3752,35 +3756,35 @@ export default function AssetWorkspace({
                                                                 const itemBody = constraintCopy.body;
 
                                                                 return (
-                                                                    <div key={`${group.title}-${id}`} className="border border-[#8B6A3D]/8 bg-[#151310] p-6">
-                                                                        <div className="border-b border-[#8B6A3D]/8 pb-4">
-                                                                            <p className="text-[16px] font-semibold tracking-[0.02em] text-[#F3F1ED]">{normalizeProseText(itemTitle)}</p>
+                                                                    <div key={`${group.title}-${id}`} className="border border-black/5 bg-[#FCFBF9] p-6 rounded-xl">
+                                                                        <div className="border-b border-black/5 pb-4">
+                                                                            <p className="text-[16px] font-bold text-[#1a1a1a]">{normalizeProseText(itemTitle)}</p>
                                                                         </div>
 
                                                                         <div className="mt-4 space-y-3">
                                                                             {proseParagraphs(itemBody, 2).map((paragraph, paragraphIndex) => (
-                                                                                <p key={paragraphIndex} className="text-[13px] font-medium leading-relaxed break-words text-[#F3F1ED]/92">{paragraph}</p>
+                                                                                <p key={paragraphIndex} className="text-[13px] font-medium leading-relaxed break-words text-[#1a1a1a]">{paragraph}</p>
                                                                             ))}
                                                                         </div>
 
-                                                                        <div className="mt-6 grid gap-4 border-t border-[#8B6A3D]/8 pt-5 sm:grid-cols-[auto_1fr] sm:items-start">
+                                                                        <div className="mt-6 grid gap-4 border-t border-black/5 pt-5 sm:grid-cols-[auto_1fr] sm:items-start">
                                                                             <div className="space-y-2">
-                                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Priority</p>
+                                                                                <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B6B6B]">Priority</p>
                                                                                 <span
-                                                                                    className={`inline-flex w-fit items-center justify-center border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] ${
+                                                                                    className={`inline-flex w-fit items-center justify-center border px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${
                                                                                         item.severity === 'critical'
-                                                                                            ? 'border-[#D4A574] text-black bg-[#D4A574]'
+                                                                                            ? 'border-[#8B6A3D] text-white bg-[#8B6A3D]'
                                                                                             : item.severity === 'high'
-                                                                                                ? 'border-[#D4A574]/40 text-[#D4A574]'
-                                                                                                : 'border-[#8B6A3D]/8 text-[#D6D0C6]/88 bg-white/[0.03]'
+                                                                                                ? 'border-[#8B6A3D]/40 text-[#8B6A3D] bg-white'
+                                                                                                : 'border-black/5 text-[#6B6B6B] bg-[#FCFBF9]'
                                                                                     }`}
                                                                                 >
                                                                                     {item.severity}
                                                                                 </span>
                                                                             </div>
                                                                             <div className="space-y-2">
-                                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/58">Protocol Note</p>
-                                                                                <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
+                                                                                <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B6B6B]">Protocol Note</p>
+                                                                                <p className="text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
                                                                                     {group.title === 'Retention Protocol'
                                                                                         ? item.severity === 'critical'
                                                                                             ? 'Must be preserved exactly to hold route integrity.'
@@ -3800,7 +3804,7 @@ export default function AssetWorkspace({
                                                             })
                                                         )
                                                     ) : (
-                                                        <div className="border border-dashed border-[#8B6A3D]/8 bg-[#151310] p-12 text-center text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D6D0C6]/45">
+                                                        <div className="border border-dashed border-black/10 bg-[#FCFBF9] rounded-xl p-12 text-center text-[10px] font-bold uppercase tracking-wider text-[#6B6B6B]">
                                                             Pending trace reconstruction.
                                                         </div>
                                                     )}
