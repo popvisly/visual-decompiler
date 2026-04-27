@@ -40,8 +40,7 @@ export default function AnalysisSurfaces() {
                             Output designed for the room.
                         </h2>
                         <div className="mt-7 space-y-5 text-[19px] leading-[1.8] text-[#F6F1E7]/72">
-                            <p>Not a chat response. Not vague AI commentary.</p>
-                            <p>A structured dossier designed for decks, internal reviews, and client conversations.</p>
+                            <p>A structured dossier designed for clarity, direction, validation and conversation.</p>
                         </div>
                     </div>
 
