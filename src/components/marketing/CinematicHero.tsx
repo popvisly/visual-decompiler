@@ -69,7 +69,7 @@ export default function CinematicHero() {
     return (
         <section className="relative overflow-hidden bg-[#0B0B0B] px-6 md:px-10" data-presence-tone="dark">
             <div
-                className="pointer-events-none absolute inset-x-0 top-0 bottom-[-10vh] z-0 opacity-44 [mask-image:linear-gradient(to_bottom,black_0%,black_72%,transparent_96%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_72%,transparent_96%)]"
+                className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[100svh] opacity-44 [mask-image:linear-gradient(to_bottom,black_0%,black_78%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_78%,transparent_100%)]"
                 aria-hidden="true"
             >
                 <ParticleField />
