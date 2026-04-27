@@ -2989,10 +2989,10 @@ export default function AssetWorkspace({
                                                     type="button"
                                                     onClick={() => handleTabChange(tab)}
                                                     aria-current={activeTab === tab ? 'page' : undefined}
-                                                    className={`inline-flex min-h-[40px] w-full items-center justify-center text-center rounded-xl border px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.26em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                                    className={`inline-flex min-h-[40px] w-full items-center justify-center text-center rounded-xl px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.26em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/10 ${
                                                         activeTab === tab
-                                                            ? 'border-[#8B6A3D]/45 bg-[#1A1A1A] text-[#F3F1ED] shadow-sm'
-                                                            : 'border-transparent bg-transparent text-[#D6D0C6]/70 hover:text-[#F3F1ED] hover:bg-[#201C16]'
+                                                            ? 'bg-[#1A1A1A] text-white shadow-sm'
+                                                            : 'bg-transparent text-[#1A1A1A]/30 hover:text-[#1A1A1A] hover:bg-black/5'
                                                     }`}
                                                 >
                                                     {DOSSIER_TAB_LABELS[tab]}
