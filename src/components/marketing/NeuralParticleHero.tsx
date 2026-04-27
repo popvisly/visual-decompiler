@@ -204,6 +204,16 @@ export default function NeuralParticleHero() {
     return (
         <section className="relative overflow-hidden bg-[#0B0B0B] pt-6 pb-10 md:pt-8 md:pb-12" data-presence-tone="dark">
             <div className="w-full max-w-[1200px] mx-auto px-6 lg:px-12">
+                <div className="mb-8 max-w-[920px] lg:mb-10">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#C1A674]">Decision Map</p>
+                    <h3 className="mt-4 text-[34px] font-black uppercase tracking-[-0.03em] text-[#F6F1E7] md:text-[44px]">
+                        Insight beyond the surface.
+                    </h3>
+                    <p className="mt-5 max-w-[860px] text-[17px] leading-[1.75] text-[#F6F1E7]/72">
+                        Visual Decompiler goes deep into the unseen layers of an ad. From luxury automotive to a cold beer campaign, there is always more than surface-level execution — and the dossier makes those insights readable.
+                    </p>
+                </div>
+
                 <div className="rounded-[32px] overflow-hidden bg-[#1A1A1A] border border-[rgba(212,165,116,0.20)] flex flex-col lg:flex-row" style={{ minHeight: '420px' }}>
                 <div className="lg:w-[300px] shrink-0 flex flex-col justify-center px-10 py-12 border-b lg:border-b-0 lg:border-r border-white/5">
                     <motion.div
