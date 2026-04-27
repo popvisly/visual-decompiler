@@ -3006,7 +3006,7 @@ export default function AssetWorkspace({
                     </div>
 
 
-                    <div ref={tabContentTopRef} className="scroll-mt-[250px] md:scroll-mt-[210px]">
+                    <div ref={tabContentTopRef} className="scroll-mt-[250px] md:scroll-mt-[210px] pb-24 lg:pb-32">
                         {activeTab === 'ASSET CONTEXT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="space-y-10">
