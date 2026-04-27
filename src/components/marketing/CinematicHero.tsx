@@ -10,6 +10,8 @@ const HERO_ADS = [
     { src: "/images/examples/Sony.jpg", alt: "Sony campaign creative" },
     { src: "/images/examples/ACNE.png", alt: "Acne Studios campaign" },
     { src: "/images/examples/CHLOE.jpg", alt: "Luxury fragrance campaign" },
+    { src: "/images/examples/Miss_DIOR.jpg", alt: "Miss Dior campaign" },
+    { src: "/images/examples/valentino-voce-viva.png", alt: "Valentino Voce Viva campaign" },
 ];
 
 const HERO_TYPED_WORDS = ["Decoded.", "Scored.", "Mapped.", "Read.", "Deconstructed."];
@@ -123,17 +125,17 @@ export default function CinematicHero() {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-3">
+                            <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
                                 {HERO_ADS.map((ad) => (
                                     <div
                                         key={ad.src}
-                                        className="relative overflow-hidden rounded-[18px] border border-[rgba(193,166,116,0.20)] bg-[#101010] aspect-[0.95]"
+                                        className="relative overflow-hidden rounded-[18px] border border-[rgba(193,166,116,0.20)] bg-[#101010] aspect-[3/4]"
                                     >
                                         <Image
                                             src={ad.src}
                                             alt={ad.alt}
                                             fill
-                                            sizes="(max-width: 1024px) 50vw, 26vw"
+                                            sizes="(max-width: 768px) 45vw, (max-width: 1200px) 22vw, 16vw"
                                             className="object-cover"
                                         />
                                     </div>
