@@ -92,7 +92,8 @@ export default function CinematicHero() {
                     <h1
                         className={`relative z-10 mx-auto w-full text-center text-[clamp(52px,8.8vw,132px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] transition-all duration-[1400ms] ease-out ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
                     >
-                        <span>Advertising intelligence.&nbsp;</span>
+                        <span>Advertising </span>
+                        <span className="font-serif italic font-medium tracking-[-0.02em] text-[#F6F1E7]/96">intelligence.</span>{" "}
                         <span className="inline-flex min-w-[14ch] items-baseline justify-center whitespace-nowrap text-center align-baseline">
                             <span className="bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent">{typedWord}</span>
                             {!isComplete && (
