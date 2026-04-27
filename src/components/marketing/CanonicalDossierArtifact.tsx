@@ -80,7 +80,7 @@ export default function CanonicalDossierArtifact({ mode = 'preview', className =
                         ['Density', 'High'],
                         ['Focus Integrity', 'Fragmented'],
                     ].map(([l, v]) => (
-                        <div key={l} className="flex items-center justify-between border-b border-white/10 pb-2">
+                        <div key={l} className="flex items-center justify-between border-b border-[#8B6A3D]/10 pb-2">
                             <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#F6F1E7]/56">{l}</span>
                             <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#F6F1E7]/95">{v}</span>
                         </div>
@@ -115,7 +115,7 @@ export default function CanonicalDossierArtifact({ mode = 'preview', className =
                             ['2', 'Brand mark', 'Recognition occurs after subject lock.'],
                             ['3', 'Supporting copy', 'Engagement weakens at the information layer.'],
                         ].map(([n, t, d]) => (
-                            <div key={n} className="border-b border-white/10 pb-4 last:border-b-0">
+                            <div key={n} className="border-b border-[#8B6A3D]/10 pb-4 last:border-b-0">
                                 <p className="text-[24px] font-semibold leading-none text-[#F6F1E7]">{n}</p>
                                 <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#F6F1E7]/86">{t}</p>
                                 <p className="mt-2 text-[13px] leading-relaxed text-[#F6F1E7]/70">{d}</p>
@@ -135,7 +135,7 @@ export default function CanonicalDossierArtifact({ mode = 'preview', className =
 
     const preview = (
         <div className={`${shellClass(mode)} ${className}`}>
-            <div className="flex items-center justify-between border-b border-white/10 pb-6">
+            <div className="flex items-center justify-between border-b border-[#8B6A3D]/10 pb-6">
                 <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#C1A674]">Visual Decompiler</p>
                     <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#F6F1E7]/55">Creative Intelligence Dossier</p>
@@ -162,7 +162,7 @@ export default function CanonicalDossierArtifact({ mode = 'preview', className =
                     </div>
                 </div>
 
-                <div className="border-t border-white/10 pt-6">
+                <div className="border-t border-[#8B6A3D]/10 pt-6">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C1A674]">Strategic Read</p>
                     <div className="mt-4 space-y-4">
                         <p className="text-[12px] leading-relaxed text-[#F6F1E7]/74">Strategic Thesis: Positions the product as premium through restraint and visual isolation.</p>
@@ -171,7 +171,7 @@ export default function CanonicalDossierArtifact({ mode = 'preview', className =
                     </div>
                 </div>
 
-                <div className="border-t border-white/10 pt-6">
+                <div className="border-t border-[#8B6A3D]/10 pt-6">
                     <p className="text-[13px] font-semibold text-[#F6F1E7]">Confidence Index: High</p>
                     <p className="mt-2 text-[12px] leading-relaxed text-[#F6F1E7]/66">Based on alignment between clarity, attention control, and strategic intent.</p>
                 </div>

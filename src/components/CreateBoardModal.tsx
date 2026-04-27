@@ -98,7 +98,7 @@ export default function CreateBoardModal({
                             </div>
                             <button
                                 onClick={() => setIsOpen(false)}
-                                className="rounded-full border border-white/10 p-2 text-[#D4A574] transition-colors hover:bg-white/5"
+                                className="rounded-full border border-[#8B6A3D]/10 p-2 text-[#D4A574] transition-colors hover:bg-white/5"
                             >
                                 <X className="h-4 w-4" />
                             </button>

@@ -35,7 +35,7 @@ export default function BuiltForTheRoomSection() {
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <div className="mb-5 inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.28em] text-[#C1A674]">
+                    <div className="mb-5 inline-flex items-center rounded-full border border-[#8B6A3D]/10 bg-white/[0.03] px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.28em] text-[#C1A674]">
                         Built for the Room
                     </div>
 
@@ -58,7 +58,7 @@ export default function BuiltForTheRoomSection() {
                     {PRESSURE_CARDS.map((card, idx) => (
                         <motion.article
                             key={card.label}
-                            className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.025] p-8 shadow-[0_25px_80px_rgba(0,0,0,0.35)] backdrop-blur-sm transition duration-500 hover:bg-white/[0.04]"
+                            className="group relative overflow-hidden rounded-[28px] border border-[#8B6A3D]/10 bg-white/[0.025] p-8 shadow-[0_25px_80px_rgba(0,0,0,0.35)] backdrop-blur-sm transition duration-500 hover:bg-white/[0.04]"
                             initial={{ opacity: 0, y: 24 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-60px' }}
@@ -83,7 +83,7 @@ export default function BuiltForTheRoomSection() {
                 </div>
 
                 <motion.div
-                    className="mt-12 flex flex-col gap-4 rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.015))] px-8 py-7 shadow-[0_20px_70px_rgba(0,0,0,0.28)] sm:flex-row sm:items-center sm:justify-between"
+                    className="mt-12 flex flex-col gap-4 rounded-[28px] border border-[#8B6A3D]/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.015))] px-8 py-7 shadow-[0_20px_70px_rgba(0,0,0,0.28)] sm:flex-row sm:items-center sm:justify-between"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-60px' }}
@@ -96,7 +96,7 @@ export default function BuiltForTheRoomSection() {
 
                     <Link
                         href="/ingest"
-                        className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white px-6 py-3 text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:bg-white/90"
+                        className="inline-flex items-center justify-center rounded-xl border border-[#8B6A3D]/10 bg-white px-6 py-3 text-sm font-medium uppercase tracking-[0.18em] text-black transition hover:bg-white/90"
                     >
                         Decompile an Ad
                     </Link>

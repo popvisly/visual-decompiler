@@ -240,7 +240,7 @@ export default function SettingsClient() {
                                             value={settings.primary_color}
                                             onChange={(e) => setSettings({ ...settings, primary_color: e.target.value })}
                                         />
-                                        <div className="absolute inset-0 rounded-2xl border-2 border-white/20 pointer-events-none group-hover:border-white/40 transition-all" />
+                                        <div className="absolute inset-0 rounded-2xl border-2 border-[#8B6A3D]/20 pointer-events-none group-hover:border-[#D4A574]/40 transition-all" />
                                     </div>
                                     <div className="flex-1">
                                         <input
@@ -307,10 +307,10 @@ export default function SettingsClient() {
 
                                 <div className="mt-8 grid gap-3 md:grid-cols-3">
                                     {whitelabelReadiness.map((item) => (
-                                        <div key={item.label} className="rounded-[1.75rem] border border-white/10 bg-white/5 px-5 py-5">
+                                        <div key={item.label} className="rounded-[1.75rem] border border-[#8B6A3D]/10 bg-white/5 px-5 py-5">
                                             <div className="flex items-center justify-between gap-3">
                                                 <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#E7D7BF]">{item.label}</p>
-                                                <span className={`rounded-full border px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${item.ready ? 'border-[#BB9E7B]/40 text-[#D4A574]' : 'border-white/10 text-white/45'}`}>
+                                                <span className={`rounded-full border px-3 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ${item.ready ? 'border-[#BB9E7B]/40 text-[#D4A574]' : 'border-[#8B6A3D]/10 text-white/45'}`}>
                                                     {item.ready ? 'Ready' : 'Missing'}
                                                 </span>
                                             </div>
@@ -318,7 +318,7 @@ export default function SettingsClient() {
                                     ))}
                                 </div>
 
-                                <div className="mt-6 border-t border-white/10 pt-5">
+                                <div className="mt-6 border-t border-[#8B6A3D]/10 pt-5">
                                     <button
                                         type="button"
                                         onClick={() => setShowWhitelabelHelp((current) => !current)}

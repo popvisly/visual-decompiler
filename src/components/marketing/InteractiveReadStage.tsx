@@ -84,7 +84,7 @@ function ImageReveal({ src, alt }: { src: string, alt: string }) {
             ref={containerRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="group relative aspect-[0.75] w-full max-w-[640px] overflow-hidden rounded-[40px] border border-white/20 shadow-2xl transition-transform duration-700 hover:scale-[1.02] cursor-crosshair select-none"
+            className="group relative aspect-[0.75] w-full max-w-[640px] overflow-hidden rounded-[40px] border border-[#8B6A3D]/20 shadow-2xl transition-transform duration-700 hover:scale-[1.02] cursor-crosshair select-none"
         >
             {/* Obscured Base Layer (Blurry/Grayscale/Noisy) */}
             <div className="absolute inset-0 grayscale blur-xl opacity-20 scale-110 transition-all duration-700 group-hover:opacity-40">
@@ -124,19 +124,19 @@ function ImageReveal({ src, alt }: { src: string, alt: string }) {
             
             {/* Target HUD UI */}
             <motion.div 
-                className="absolute pointer-events-none border border-white/30 rounded-full w-[480px] h-[480px] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="absolute pointer-events-none border border-[#8B6A3D]/30 rounded-full w-[480px] h-[480px] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{
                     left: mouseX,
                     top: mouseY,
                 }}
             >
-                <div className="w-10 h-10 border border-white/40 border-dashed rounded-full animate-[spin_8s_linear_infinite]" />
+                <div className="w-10 h-10 border border-[#8B6A3D]/40 border-dashed rounded-full animate-[spin_8s_linear_infinite]" />
                 <div className="absolute w-full h-px bg-white/10" />
                 <div className="absolute h-full w-px bg-white/10" />
             </motion.div>
 
             {/* Status Badge */}
-            <div className="absolute top-10 lg:top-14 left-10 lg:left-14 border border-white/20 bg-black/40 px-5 py-2.5 backdrop-blur-3xl rounded-full">
+            <div className="absolute top-10 lg:top-14 left-10 lg:left-14 border border-[#8B6A3D]/20 bg-black/40 px-5 py-2.5 backdrop-blur-3xl rounded-full">
                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Neurolensing Active</p>
             </div>
         </div>
@@ -167,7 +167,7 @@ export default function InteractiveReadStage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    className="mb-32 lg:mb-64 border-t border-white/10 pt-10"
+                    className="mb-32 lg:mb-64 border-t border-[#8B6A3D]/10 pt-10"
                 >
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
                         <h2 className="text-[12vw] lg:text-[7vw] font-black leading-[0.82] tracking-[-0.05em] uppercase text-white max-w-[12ch]">
@@ -177,7 +177,7 @@ export default function InteractiveReadStage() {
                             <p className="text-[18px] leading-[1.6] text-[#A0A0A0] mb-8">
                                 Filter the frame through specialized analytical modes: from posture authority down to texture restraint. Zero overlapping. Pure focused sight.
                             </p>
-                            <a href={SAMPLE_DOSSIER_HREF} className="inline-flex items-center gap-3 border-b border-[#00E5FF] pb-1 text-[11px] font-black uppercase tracking-[0.2em] text-[#00E5FF] transition hover:text-black hover:border-white">
+                            <a href={SAMPLE_DOSSIER_HREF} className="inline-flex items-center gap-3 border-b border-[#00E5FF] pb-1 text-[11px] font-black uppercase tracking-[0.2em] text-[#00E5FF] transition hover:text-black hover:border-[#D4A574]">
                                 Open Sample Read
                                 <ArrowUpRight size={16} />
                             </a>
@@ -230,7 +230,7 @@ export default function InteractiveReadStage() {
                                         {item.detail}
                                     </p>
 
-                                    <div className="grid grid-cols-2 gap-12 border-t border-white/10 pt-10">
+                                    <div className="grid grid-cols-2 gap-12 border-t border-[#8B6A3D]/10 pt-10">
                                         {item.metrics.map(metric => (
                                             <div key={metric.label}>
                                                 <p className="text-[10px] font-black uppercase tracking-[0.25em] text-white/40 mb-3">{metric.label}</p>

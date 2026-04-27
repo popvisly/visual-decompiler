@@ -30,7 +30,7 @@ export default function TestPlanBuilder({ testPlan, variants }: Props) {
     return (
         <div className="space-y-10">
             {/* Strategy Hypothesis */}
-            <div className="relative p-6 bg-[#141414] rounded-3xl border border-white/10 overflow-hidden group">
+            <div className="relative p-6 bg-[#141414] rounded-3xl border border-[#8B6A3D]/10 overflow-hidden group">
                 <div className="absolute top-0 right-0 p-4">
                     <div className="px-2 py-1 rounded bg-accent text-[#141414] text-[8px] font-bold uppercase tracking-widest">
                         Core Hypothesis

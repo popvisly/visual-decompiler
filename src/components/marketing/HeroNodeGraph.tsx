@@ -74,13 +74,13 @@ export default function HeroNodeGraph({ stageImage }: Props) {
                 <div className="flex flex-col gap-6 justify-center">
                     {/* Node 1: Palette */}
                     <motion.div custom={2} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-[#141414]/80 backdrop-blur-md rounded-xl border border-white/5 shadow-2xl p-5 flex flex-col relative group hover:border-[#00F0FF]/30 transition-colors"
+                        className="bg-[#141414]/80 backdrop-blur-md rounded-xl border border-[#8B6A3D]/5 shadow-2xl p-5 flex flex-col relative group hover:border-[#00F0FF]/30 transition-colors"
                     >
                         <div className="absolute top-3 right-3 text-[8px] font-mono text-white/20">[HEX_EXTRACT]</div>
                         <div className="text-[10px] font-bold tracking-[0.2em] text-[#00F0FF]/70 uppercase mb-3 flex items-center gap-2">
                             Palette Logic
                         </div>
-                        <div className="flex w-full h-5 rounded overflow-hidden mb-3 border border-white/5">
+                        <div className="flex w-full h-5 rounded overflow-hidden mb-3 border border-[#8B6A3D]/5">
                             <div className="w-1/3 bg-[#2B2132]" />
                             <div className="w-1/4 bg-[#7D5A7B]" />
                             <div className="w-1/4 bg-[#AF8D9E]" />
@@ -105,7 +105,7 @@ export default function HeroNodeGraph({ stageImage }: Props) {
 
                     {/* Node 3: Semiotics */}
                     <motion.div custom={4} initial="hidden" animate="visible" variants={nodeVariants}
-                        className="bg-[#141414]/80 backdrop-blur-md rounded-xl border border-white/5 shadow-2xl p-5 flex flex-col relative hover:border-[#00F0FF]/30 transition-colors"
+                        className="bg-[#141414]/80 backdrop-blur-md rounded-xl border border-[#8B6A3D]/5 shadow-2xl p-5 flex flex-col relative hover:border-[#00F0FF]/30 transition-colors"
                     >
                         <div className="absolute top-3 right-3 text-[8px] font-mono text-white/20">[SUBTEXT]</div>
                         <div className="text-[10px] font-bold tracking-[0.2em] text-[#00F0FF]/70 uppercase mb-3">Semiotics</div>

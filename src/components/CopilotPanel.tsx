@@ -70,9 +70,9 @@ export default function CopilotPanel({ boardId }: { boardId?: string }) {
             </button>
 
             {/* Sidebar Panel */}
-            <div className={`fixed top-0 right-0 h-screen w-full md:w-[450px] bg-[#0A0A0A] border-l border-white/10 shadow-2xl z-50 transform transition-transform duration-500 ease-out flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+            <div className={`fixed top-0 right-0 h-screen w-full md:w-[450px] bg-[#0A0A0A] border-l border-[#8B6A3D]/10 shadow-2xl z-50 transform transition-transform duration-500 ease-out flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                 {/* Header */}
-                <div className="p-6 border-b border-white/10 flex items-center justify-between bg-surface/50 backdrop-blur-md">
+                <div className="p-6 border-b border-[#8B6A3D]/10 flex items-center justify-between bg-surface/50 backdrop-blur-md">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-accent/10 rounded-xl">
                             <Bot className="w-5 h-5 text-accent" />
@@ -118,7 +118,7 @@ export default function CopilotPanel({ boardId }: { boardId?: string }) {
                                         <p className="text-[9px] font-bold text-accent uppercase tracking-widest">Retrieved Intel</p>
                                         <div className="grid grid-cols-1 gap-2">
                                             {m.sources.map(s => (
-                                                <Link key={s.id} href={`/asset/${s.id}`} className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/5 hover:border-accent/40 transition-all group">
+                                                <Link key={s.id} href={`/asset/${s.id}`} className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-[#8B6A3D]/5 hover:border-accent/40 transition-all group">
                                                     <Bookmark className="w-3 h-3 text-txt-on-dark-muted group-hover:text-accent" />
                                                     <span className="text-[10px] text-txt-on-dark-muted truncate font-medium">
                                                         <span className="text-txt-on-dark mr-1">{s.brand}:</span> {s.headline}
@@ -147,7 +147,7 @@ export default function CopilotPanel({ boardId }: { boardId?: string }) {
                 </div>
 
                 {/* Input */}
-                <div className="p-6 border-t border-white/10 bg-[#0A0A0A]">
+                <div className="p-6 border-t border-[#8B6A3D]/10 bg-[#0A0A0A]">
                     <div className="relative group">
                         <textarea
                             value={input}
@@ -159,7 +159,7 @@ export default function CopilotPanel({ boardId }: { boardId?: string }) {
                                 }
                             }}
                             placeholder="Ask for strategic patterns..."
-                            className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-4 pr-12 text-sm text-txt-on-dark placeholder-txt-on-dark-muted focus:outline-none focus:border-accent transition-all resize-none h-24"
+                            className="w-full bg-white/5 border border-[#8B6A3D]/10 rounded-2xl px-4 py-4 pr-12 text-sm text-txt-on-dark placeholder-txt-on-dark-muted focus:outline-none focus:border-accent transition-all resize-none h-24"
                         />
                         <button
                             onClick={handleSend}

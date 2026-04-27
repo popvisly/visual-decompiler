@@ -61,7 +61,7 @@ function DecisionRadarCard() {
                 </text>
             </svg>
 
-            <div className="mt-2 space-y-3 border-t border-white/10 pt-5">
+            <div className="mt-2 space-y-3 border-t border-[#8B6A3D]/10 pt-5">
                 <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#C1A674]">Decision Sequence</p>
                 <p className="text-[15px] leading-[1.65] text-[#F6F1E7]/74">
                     Structured reasoning helps teams understand faster, align tighter, and move approvals forward with less debate.

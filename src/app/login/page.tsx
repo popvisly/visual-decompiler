@@ -207,7 +207,7 @@ function LoginPageShell({
             <div className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(#F3F1EA_1px,transparent_1px),linear-gradient(90deg,#F3F1EA_1px,transparent_1px)] [background-size:40px_40px]" />
 
             <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl items-center justify-center px-6 py-16 md:px-10">
-                <div className="w-full max-w-[980px] rounded-[32px] border border-white/10 bg-[#0F0F0F]/92 p-8 shadow-[0_28px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl md:p-12">
+                <div className="w-full max-w-[980px] rounded-[32px] border border-[#8B6A3D]/10 bg-[#0F0F0F]/92 p-8 shadow-[0_28px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl md:p-12">
                     <div className="grid gap-10 md:grid-cols-[1.05fr_0.95fr] md:gap-12">
                         <section>
                             <div className="mb-10">
@@ -232,7 +232,7 @@ function LoginPageShell({
                                     : 'Access your private Visual Decompiler workspace and continue with decision-ready analysis.'}
                             </p>
 
-                            <div className="mt-10 rounded-2xl border border-white/10 bg-[#131313] p-5">
+                            <div className="mt-10 rounded-2xl border border-[#8B6A3D]/10 bg-[#131313] p-5">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Trust Layer</p>
                                 <ul className="mt-4 space-y-2 text-[13px] leading-relaxed text-[#CFCBBF]/78">
                                     <li>Private workspace isolation per account.</li>
@@ -242,8 +242,8 @@ function LoginPageShell({
                             </div>
                         </section>
 
-                        <section className="rounded-2xl border border-white/10 bg-[#111111] p-6 md:p-7">
-                            <div className="mb-8 flex items-center gap-2 rounded-full border border-white/10 bg-[#0D0D0D] p-1">
+                        <section className="rounded-2xl border border-[#8B6A3D]/10 bg-[#111111] p-6 md:p-7">
+                            <div className="mb-8 flex items-center gap-2 rounded-full border border-[#8B6A3D]/10 bg-[#0D0D0D] p-1">
                                 <button
                                     type="button"
                                     onClick={() => setMode?.('signin')}
@@ -280,7 +280,7 @@ function LoginPageShell({
                                         value={email}
                                         onChange={(e) => setEmail?.(e.target.value)}
                                         autoComplete="email"
-                                        className="w-full rounded-xl border border-white/12 bg-[#0C0C0C] px-4 py-3 text-[16px] text-[#F3F1EA] outline-none transition-colors placeholder:text-[#7D7A70] focus:border-[#D4A574]/70"
+                                        className="w-full rounded-xl border border-[#8B6A3D]/12 bg-[#0C0C0C] px-4 py-3 text-[16px] text-[#F3F1EA] outline-none transition-colors placeholder:text-[#7D7A70] focus:border-[#D4A574]/70"
                                         placeholder="you@agency.com"
                                         required
                                     />
@@ -297,14 +297,14 @@ function LoginPageShell({
                                         value={password}
                                         onChange={(e) => setPassword?.(e.target.value)}
                                         autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
-                                        className="w-full rounded-xl border border-white/12 bg-[#0C0C0C] px-4 py-3 text-[16px] text-[#F3F1EA] outline-none transition-colors placeholder:text-[#7D7A70] focus:border-[#D4A574]/70"
+                                        className="w-full rounded-xl border border-[#8B6A3D]/12 bg-[#0C0C0C] px-4 py-3 text-[16px] text-[#F3F1EA] outline-none transition-colors placeholder:text-[#7D7A70] focus:border-[#D4A574]/70"
                                         placeholder="Enter password"
                                         required
                                     />
                                 </div>
 
                                 {(status === 'error' || status === 'success') && (
-                                    <div className={`rounded-xl border border-white/10 bg-[#0C0C0C] px-4 py-3 text-[12px] uppercase tracking-[0.12em] ${messageTone}`}>
+                                    <div className={`rounded-xl border border-[#8B6A3D]/10 bg-[#0C0C0C] px-4 py-3 text-[12px] uppercase tracking-[0.12em] ${messageTone}`}>
                                         {message}
                                     </div>
                                 )}

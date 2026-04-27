@@ -28,7 +28,7 @@ export default function ProductFooter() {
                             </Link>
                             <Link
                                 href={SAMPLE_DOSSIER_HREF}
-                                className="inline-flex items-center justify-center border border-white/14 bg-white/5 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#F6F1E7] transition hover:border-white/25 hover:bg-white/10"
+                                className="inline-flex items-center justify-center border border-[#8B6A3D]/14 bg-white/5 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#F6F1E7] transition hover:border-[#D4A574]/25 hover:bg-white/10"
                             >
                                 View Sample Dossier
                             </Link>

@@ -93,7 +93,7 @@ export default function AdDetailClient({
             <div className={`max-w-[1400px] mx-auto px-6 transition-all duration-300 ${showBanner ? 'pt-8 mb-0' : 'pt-0 mb-16'}`}>
                 {showBanner && (
                     <div className="animate-in fade-in slide-in-from-top-4 duration-1000">
-                        <div className="bg-[#141414] rounded-3xl p-6 md:p-8 flex items-center justify-between shadow-2xl shadow-black/20 border border-white/5 relative overflow-hidden group">
+                        <div className="bg-[#141414] rounded-3xl p-6 md:p-8 flex items-center justify-between shadow-2xl shadow-black/20 border border-[#8B6A3D]/5 relative overflow-hidden group">
                             {/* Progress Glow */}
                             <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent" />
 
@@ -164,7 +164,7 @@ export default function AdDetailClient({
                     <div className="lg:col-span-4 space-y-8 md:space-y-12">
                         <div className="sticky top-12 space-y-6 md:space-y-8">
                             <div className={`transition-all duration-500 ${tab === 'report'
-                                ? 'p-3 bg-white rounded-[2.5rem] md:rounded-[4rem] shadow-[0_40px_100px_rgba(20,20,20,0.08)] border border-white/10'
+                                ? 'p-3 bg-white rounded-[2.5rem] md:rounded-[4rem] shadow-[0_40px_100px_rgba(20,20,20,0.08)] border border-[#8B6A3D]/10'
                                 : 'rounded-[2rem] md:rounded-[3.5rem] overflow-hidden shadow-[0_40px_100px_rgba(20,20,20,0.03)]'
                                 }`}>
                                 <div className={`overflow-hidden ${tab === 'report' ? 'rounded-[1.5rem] md:rounded-[3rem]' : ''}`}>

@@ -25,8 +25,8 @@ export default function ForensicTooltip({ term, definition, children, mode = 'in
                 {children}
                 {open && (
                     <div className="absolute z-50 left-0 top-full mt-2 w-80 max-w-[90vw] animate-in fade-in slide-in-from-top-2 duration-300">
-                        <div className="bg-[#141414] text-white rounded-2xl p-5 shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-white/10 relative">
-                            <div className="absolute -top-1.5 left-6 w-3 h-3 bg-[#141414] rotate-45 border-l border-t border-white/10" />
+                        <div className="bg-[#141414] text-white rounded-2xl p-5 shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-[#8B6A3D]/10 relative">
+                            <div className="absolute -top-1.5 left-6 w-3 h-3 bg-[#141414] rotate-45 border-l border-t border-[#8B6A3D]/10" />
                             <p className="text-[9px] font-bold text-accent/60 uppercase tracking-[0.3em] mb-2">{term}</p>
                             <p className="text-[11px] text-white/70 leading-relaxed font-light">{definition}</p>
                         </div>
@@ -51,8 +51,8 @@ export default function ForensicTooltip({ term, definition, children, mode = 'in
             </button>
             {open && (
                 <div className="absolute z-50 left-0 top-full mt-2 w-80 max-w-[90vw] animate-in fade-in slide-in-from-top-2 duration-300">
-                    <div className="bg-[#141414] text-white rounded-2xl p-5 shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-white/10 relative">
-                        <div className="absolute -top-1.5 left-4 w-3 h-3 bg-[#141414] rotate-45 border-l border-t border-white/10" />
+                    <div className="bg-[#141414] text-white rounded-2xl p-5 shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-[#8B6A3D]/10 relative">
+                        <div className="absolute -top-1.5 left-4 w-3 h-3 bg-[#141414] rotate-45 border-l border-t border-[#8B6A3D]/10" />
                         <p className="text-[9px] font-bold text-accent/60 uppercase tracking-[0.3em] mb-2">{term}</p>
                         <p className="text-[11px] text-white/70 leading-relaxed font-light">{definition}</p>
                     </div>

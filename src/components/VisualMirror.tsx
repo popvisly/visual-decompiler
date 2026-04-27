@@ -61,7 +61,7 @@ export default function VisualMirror({
                                 </div>
                                 <span className="text-[10px] font-bold text-accent uppercase tracking-[0.3em]">Strategic Directive</span>
                             </div>
-                            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-[#8B6A3D]/10">
                                 <Zap className="w-3 h-3 text-accent" />
                                 <span className="text-[8px] font-bold uppercase tracking-widest">High IQ Impact</span>
                             </div>
@@ -77,7 +77,7 @@ export default function VisualMirror({
                             </p>
                         </div>
 
-                        <div className="mt-auto pt-10 border-t border-white/10">
+                        <div className="mt-auto pt-10 border-t border-[#8B6A3D]/10">
                             <div className="flex items-center gap-3 mb-4">
                                 <ArrowRight className="w-4 h-4 text-accent" />
                                 <span className="text-[9px] font-bold uppercase tracking-widest text-accent">Strategic Rationale</span>

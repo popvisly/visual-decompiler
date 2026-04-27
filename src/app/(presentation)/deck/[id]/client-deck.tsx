@@ -84,7 +84,7 @@ export default function DeckClient({ asset, extraction, agency }: { asset: DeckA
             {/* EXPORT BUTTON (Absolute TR) */}
             <button
                 onClick={() => window.print()}
-                className="no-print fixed top-8 right-8 z-50 bg-black/50 backdrop-blur-sm border border-neutral-700 hover:border-white px-6 py-3 transition-colors text-[9px] font-bold tracking-[0.2em] uppercase"
+                className="no-print fixed top-8 right-8 z-50 bg-black/50 backdrop-blur-sm border border-neutral-700 hover:border-[#D4A574] px-6 py-3 transition-colors text-[9px] font-bold tracking-[0.2em] uppercase"
             >
                 Export Artifact
             </button>
@@ -216,7 +216,7 @@ export default function DeckClient({ asset, extraction, agency }: { asset: DeckA
 
                     {/* DNA Prompt Codeblock */}
                     <div className="mb-24">
-                        <h3 className="text-sm font-bold tracking-[0.2em] uppercase text-white mb-8 border-l-2 border-white pl-6">
+                        <h3 className="text-sm font-bold tracking-[0.2em] uppercase text-white mb-8 border-l-2 border-[#8B6A3D]/20 pl-6">
                             Verified DNA Prompt
                         </h3>
                         <div className="bg-black border border-neutral-800 p-8 md:p-12">

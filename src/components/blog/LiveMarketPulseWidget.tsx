@@ -10,8 +10,8 @@ export default function LiveMarketPulseWidget() {
     const saturationPercentage = 72;
 
     return (
-        <div className="sticky top-28 bg-[#141414] p-8 rounded-[2rem] border border-white/10 shadow-lg">
-            <div className="flex items-center gap-3 mb-6 pb-6 border-b border-white/10">
+        <div className="sticky top-28 bg-[#141414] p-8 rounded-[2rem] border border-[#8B6A3D]/10 shadow-lg">
+            <div className="flex items-center gap-3 mb-6 pb-6 border-b border-[#8B6A3D]/10">
                 <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
                     <Activity className="w-4 h-4 text-accent" />
                 </div>
@@ -38,7 +38,7 @@ export default function LiveMarketPulseWidget() {
                 </p>
                 <Link
                     href="/pricing"
-                    className="flex w-full items-center justify-center py-3 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-[#FBF7EF] uppercase tracking-[0.15em] transition-all hover:bg-white hover:text-[#141414] shadow-sm"
+                    className="flex w-full items-center justify-center py-3 rounded-full bg-white/5 border border-[#8B6A3D]/10 text-[10px] font-bold text-[#FBF7EF] uppercase tracking-[0.15em] transition-all hover:bg-white hover:text-[#141414] shadow-sm"
                 >
                     Upgrade to Strategic (${PRICING.strategic.monthlyPrice}/mo)
                 </Link>

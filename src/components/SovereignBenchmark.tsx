@@ -46,7 +46,7 @@ export default function SovereignBenchmark({ percentile, category, resonanceScor
                         className="absolute -top-1 transition-all duration-1000"
                         style={{ left: `${percentile}%`, transform: 'translateX(-50%)' }}
                     >
-                        <div className="w-7 h-7 rounded-full bg-[#141414] border-[3px] border-white shadow-lg flex items-center justify-center">
+                        <div className="w-7 h-7 rounded-full bg-[#141414] border-[3px] border-[#8B6A3D]/20 shadow-lg flex items-center justify-center">
                             <Target className="w-3 h-3 text-white" />
                         </div>
                     </div>

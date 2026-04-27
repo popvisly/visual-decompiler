@@ -85,11 +85,11 @@ export default function UnifiedSovereignHeader({
                         transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]
                         ${isScrolled
                             ? forceDark
-                                ? 'py-2.5 lg:py-3 px-5 lg:px-8 bg-[#050505]/60 backdrop-blur-xl rounded-full border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
-                                : 'py-2.5 lg:py-3 px-5 lg:px-8 bg-white/60 backdrop-blur-xl rounded-full border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)]'
+                                ? 'py-2.5 lg:py-3 px-5 lg:px-8 bg-[#050505]/60 backdrop-blur-xl rounded-full border border-[#8B6A3D]/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
+                                : 'py-2.5 lg:py-3 px-5 lg:px-8 bg-white/60 backdrop-blur-xl rounded-full border border-[#8B6A3D]/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)]'
                             : forceDark
-                                ? 'py-2.5 lg:py-3 px-5 backdrop-blur-xl rounded-full border border-white/10 bg-[#050505]/30'
-                                : 'py-2.5 lg:py-3 px-5 backdrop-blur-xl rounded-full border border-white/10 bg-white/30'
+                                ? 'py-2.5 lg:py-3 px-5 backdrop-blur-xl rounded-full border border-[#8B6A3D]/10 bg-[#050505]/30'
+                                : 'py-2.5 lg:py-3 px-5 backdrop-blur-xl rounded-full border border-[#8B6A3D]/10 bg-white/30'
                         }
                     `}
                 >
@@ -140,8 +140,8 @@ export default function UnifiedSovereignHeader({
                                 href="/vault"
                                 className={`group relative overflow-hidden px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.28em] transition-colors duration-500 ${
                                     forceDark
-                                        ? 'bg-white/5 text-white hover:bg-[#F28C28] hover:text-black hover:border-transparent border border-white/10'
-                                        : 'bg-black/5 text-black hover:bg-[#F28C28] hover:text-black border border-white/10'
+                                        ? 'bg-white/5 text-white hover:bg-[#F28C28] hover:text-black hover:border-transparent border border-[#8B6A3D]/10'
+                                        : 'bg-black/5 text-black hover:bg-[#F28C28] hover:text-black border border-[#8B6A3D]/10'
                                 }`}
                             >
                                 Vault
@@ -151,21 +151,21 @@ export default function UnifiedSovereignHeader({
                                     href={primaryCta.href}
                                     className={`group relative overflow-hidden px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.28em] transition-colors duration-500 ${
                                         forceDark 
-                                        ? 'bg-white/5 text-white hover:bg-white hover:text-black border border-white/10' 
-                                        : 'bg-black/5 text-black hover:bg-black hover:text-white border border-white/10'
+                                        ? 'bg-white/5 text-white hover:bg-white hover:text-black border border-[#8B6A3D]/10' 
+                                        : 'bg-black/5 text-black hover:bg-black hover:text-white border border-[#8B6A3D]/10'
                                     }`}
                                 >
                                     {primaryCta.label}
                                 </Link>
                             ) : isAuthenticated === null ? (
-                                <div className={`h-[40px] w-[140px] border ${forceDark ? 'border-white/10' : 'border-white/10'}`} />
+                                <div className={`h-[40px] w-[140px] border ${forceDark ? 'border-[#8B6A3D]/10' : 'border-[#8B6A3D]/10'}`} />
                             ) : isAuthenticated ? (
                                 <Link
                                     href="/ingest"
                                     className={`group relative overflow-hidden px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.28em] transition-colors duration-500 ${
                                         forceDark 
-                                        ? 'bg-white/5 text-white hover:bg-[#00E5FF] hover:text-black hover:border-transparent border border-white/10' 
-                                        : 'bg-black/5 text-black hover:bg-black hover:text-white border border-white/10'
+                                        ? 'bg-white/5 text-white hover:bg-[#00E5FF] hover:text-black hover:border-transparent border border-[#8B6A3D]/10' 
+                                        : 'bg-black/5 text-black hover:bg-black hover:text-white border border-[#8B6A3D]/10'
                                     }`}
                                 >
                                     Bring In The Work
@@ -220,7 +220,7 @@ export default function UnifiedSovereignHeader({
                                     onClick={() => setMobileOpen(false)}
                                     className={`px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] transition-colors ${
                                         forceDark
-                                            ? 'border border-white/10 text-white hover:bg-[#F28C28] hover:text-black hover:border-transparent'
+                                            ? 'border border-[#8B6A3D]/10 text-white hover:bg-[#F28C28] hover:text-black hover:border-transparent'
                                             : 'border border-black/20 text-black hover:bg-[#F28C28]'
                                     }`}
                                 >

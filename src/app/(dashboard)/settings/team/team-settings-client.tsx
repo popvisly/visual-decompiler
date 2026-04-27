@@ -347,7 +347,7 @@ export default function TeamSettingsClient() {
                                         value={email}
                                         onChange={(event) => setEmail(event.target.value)}
                                         placeholder="strategist@agency.com"
-                                        className="mt-3 w-full rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-white outline-none placeholder:text-white/25"
+                                        className="mt-3 w-full rounded-full border border-[#8B6A3D]/10 bg-white/5 px-5 py-3 text-sm text-white outline-none placeholder:text-white/25"
                                     />
                                 </div>
 
@@ -356,7 +356,7 @@ export default function TeamSettingsClient() {
                                     <select
                                         value={role}
                                         onChange={(event) => setRole(event.target.value as TeamMember['role'])}
-                                        className="mt-3 w-full rounded-full border border-white/10 bg-white/5 px-5 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-white outline-none"
+                                        className="mt-3 w-full rounded-full border border-[#8B6A3D]/10 bg-white/5 px-5 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-white outline-none"
                                     >
                                         {ROLE_OPTIONS.map((roleOption) => (
                                             <option key={roleOption} value={roleOption} className="text-black">
@@ -373,7 +373,7 @@ export default function TeamSettingsClient() {
                                         onChange={(event) => setMessage(event.target.value)}
                                         rows={4}
                                         placeholder="Optional context for the person joining the agency workspace"
-                                        className="mt-3 w-full resize-none rounded-[1.5rem] border border-white/10 bg-white/5 px-5 py-4 text-sm text-white outline-none placeholder:text-white/25"
+                                        className="mt-3 w-full resize-none rounded-[1.5rem] border border-[#8B6A3D]/10 bg-white/5 px-5 py-4 text-sm text-white outline-none placeholder:text-white/25"
                                     />
                                 </div>
 

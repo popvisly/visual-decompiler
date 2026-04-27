@@ -57,10 +57,10 @@ function ImageStrip({
     return (
         <motion.article
             style={{ x }}
-            className="relative min-w-[860px] max-w-[860px] border border-white/10 bg-[rgba(255,255,255,0.03)] p-3 backdrop-blur-sm sm:min-w-[980px] sm:max-w-[980px] lg:min-w-[1120px] lg:max-w-[1120px]"
+            className="relative min-w-[860px] max-w-[860px] border border-[#8B6A3D]/10 bg-[rgba(255,255,255,0.03)] p-3 backdrop-blur-sm sm:min-w-[980px] sm:max-w-[980px] lg:min-w-[1120px] lg:max-w-[1120px]"
         >
             <div className="grid gap-3 lg:grid-cols-[0.34fr_0.66fr]">
-                <div className="flex flex-col justify-between border border-white/10 bg-[rgba(18,16,14,0.72)] p-5">
+                <div className="flex flex-col justify-between border border-[#8B6A3D]/10 bg-[rgba(18,16,14,0.72)] p-5">
                     <div>
                         <p className="text-[9px] font-black uppercase tracking-[0.32em] text-[#D4A574]">{label}</p>
                         <p className="mt-4 text-[24px] font-black leading-[0.95] tracking-[-0.04em] text-[#FBF7EF] sm:text-[30px]">
@@ -70,10 +70,10 @@ function ImageStrip({
                     <p className="mt-8 max-w-[18rem] text-[13px] leading-[1.7] text-white/62">{caption}</p>
                 </div>
 
-                <div className="relative aspect-[1.55] overflow-hidden border border-white/10">
+                <div className="relative aspect-[1.55] overflow-hidden border border-[#8B6A3D]/10">
                     <Image src={src} alt={alt} fill className="object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/24 via-transparent to-black/28" />
-                    <div className="absolute left-4 top-4 border border-white/16 bg-black/20 px-3 py-2 text-[9px] font-black uppercase tracking-[0.32em] text-white/74 backdrop-blur-sm">
+                    <div className="absolute left-4 top-4 border border-[#8B6A3D]/16 bg-black/20 px-3 py-2 text-[9px] font-black uppercase tracking-[0.32em] text-white/74 backdrop-blur-sm">
                         Visual signal
                     </div>
                 </div>
@@ -113,7 +113,7 @@ export default function SignalCorridorStage() {
                     </p>
                 </div>
 
-                <div className="relative mt-16 overflow-hidden border-y border-white/10 py-10 lg:mt-20 lg:py-14">
+                <div className="relative mt-16 overflow-hidden border-y border-[#8B6A3D]/10 py-10 lg:mt-20 lg:py-14">
                     <motion.p
                         style={{ y: wordOneY }}
                         className="pointer-events-none absolute left-0 top-0 hidden text-[19vw] font-black uppercase leading-none tracking-[-0.08em] text-white/[0.05] lg:block"
@@ -152,7 +152,7 @@ export default function SignalCorridorStage() {
                     </div>
                 </div>
 
-                <div className="mt-10 flex flex-col gap-8 border-t border-white/10 pt-8 lg:flex-row lg:items-end lg:justify-between">
+                <div className="mt-10 flex flex-col gap-8 border-t border-[#8B6A3D]/10 pt-8 lg:flex-row lg:items-end lg:justify-between">
                     <div className="max-w-[28rem]">
                         <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#8F877B]">Visual impact note</p>
                         <p className="mt-3 text-[14px] leading-[1.8] text-white/58">

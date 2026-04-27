@@ -46,7 +46,7 @@ export default function SchemaContractPage() {
 
                     <div className="space-y-4 mb-32">
                         {SCHEMA_LAYERS.map((layer, idx) => (
-                            <div key={idx} className="flex items-center justify-between p-8 bg-white/5 border border-white/10 rounded-3xl group hover:bg-white/10 transition-all">
+                            <div key={idx} className="flex items-center justify-between p-8 bg-white/5 border border-[#8B6A3D]/10 rounded-3xl group hover:bg-white/10 transition-all">
                                 <div>
                                     <span className="text-accent text-[9px] font-bold uppercase tracking-widest mb-1 block">{layer.type}</span>
                                     <h3 className="text-2xl font-light text-white tracking-tight">digest.<span className="text-accent">{layer.name}</span></h3>
@@ -78,7 +78,7 @@ export default function SchemaContractPage() {
                         </div>
                     </div>
 
-                    <div className="mt-32 p-12 bg-white/5 rounded-[3rem] border border-white/10 shadow-xl">
+                    <div className="mt-32 p-12 bg-white/5 rounded-[3rem] border border-[#8B6A3D]/10 shadow-xl">
                         <div className="flex items-center gap-3 mb-6">
                             <Code className="w-5 h-5 text-accent" />
                             <h2 className="text-xl font-light uppercase tracking-tight text-white">Development Integration</h2>
@@ -100,14 +100,14 @@ export default function SchemaContractPage() {
                     </div>
 
                     {/* ── Related Articles ── */}
-                    <div className="pt-20 mt-32 border-t border-white/10">
+                    <div className="pt-20 mt-32 border-t border-[#8B6A3D]/10">
                         <h2 className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/40 mb-8">Related articles</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {RELATED_ARTICLES.map((article) => (
                                 <Link
                                     key={article.title}
                                     href={article.href}
-                                    className="group flex items-center justify-between p-6 bg-white/5 border border-white/10 rounded-2xl hover:border-accent transition-all"
+                                    className="group flex items-center justify-between p-6 bg-white/5 border border-[#8B6A3D]/10 rounded-2xl hover:border-accent transition-all"
                                 >
                                     <span className="text-[11px] font-bold uppercase tracking-widest text-white group-hover:text-accent transition-colors">{article.title}</span>
                                     <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-accent transition-all" />

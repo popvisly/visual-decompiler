@@ -30,7 +30,7 @@ export default async function IntelligenceIndex() {
                     <Link
                         key={post.slug}
                         href={`/intelligence/briefings/${post.slug}`}
-                        className="group flex flex-col h-full bg-[#141414] rounded-3xl border border-white/10 overflow-hidden hover:border-[#BB9E7B]/40 transition-all shadow-lg hover:shadow-[#BB9E7B]/5"
+                        className="group flex flex-col h-full bg-[#141414] rounded-3xl border border-[#8B6A3D]/10 overflow-hidden hover:border-[#BB9E7B]/40 transition-all shadow-lg hover:shadow-[#BB9E7B]/5"
                     >
                         {post.imageUrl ? (
                             <div className="relative aspect-[16/10] overflow-hidden bg-white/5">
@@ -41,7 +41,7 @@ export default async function IntelligenceIndex() {
                                 />
                             </div>
                         ) : (
-                            <div className="relative aspect-[16/10] bg-gradient-to-br from-white/5 to-transparent flex items-center justify-center border-b border-white/5">
+                            <div className="relative aspect-[16/10] bg-gradient-to-br from-white/5 to-transparent flex items-center justify-center border-b border-[#8B6A3D]/5">
                                 <Sparkles className="w-8 h-8 text-white/10" />
                             </div>
                         )}
@@ -64,7 +64,7 @@ export default async function IntelligenceIndex() {
                                 {post.excerpt}
                             </p>
 
-                            <div className="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
+                            <div className="mt-auto flex items-center justify-between border-t border-[#8B6A3D]/5 pt-4">
                                 <div className="text-[10px] text-white/40 uppercase tracking-widest font-medium">
                                     {post.readingTime} Read
                                 </div>

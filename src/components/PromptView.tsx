@@ -34,7 +34,7 @@ export default function PromptView({ digest }: { digest: AdDigest }) {
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             {/* Main Prompt Stage */}
-            <div className="bg-[#141414] rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-12 border border-white/10 shadow-2xl relative overflow-hidden group">
+            <div className="bg-[#141414] rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-12 border border-[#8B6A3D]/10 shadow-2xl relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -translate-y-32 translate-x-32 blur-[80px] pointer-events-none" />
 
                 <div className="relative z-10 space-y-8">
@@ -45,7 +45,7 @@ export default function PromptView({ digest }: { digest: AdDigest }) {
                         </div>
                         <button
                             onClick={handleCopy}
-                            className="flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest bg-white/10 text-white hover:bg-white/20 transition-all border border-white/10"
+                            className="flex items-center gap-2 px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest bg-white/10 text-white hover:bg-white/20 transition-all border border-[#8B6A3D]/10"
                         >
                             {copied ? (
                                 <>
@@ -61,13 +61,13 @@ export default function PromptView({ digest }: { digest: AdDigest }) {
                         </button>
                     </div>
 
-                    <div className="bg-white/[0.03] rounded-3xl p-6 md:p-8 border border-white/5 relative group/prompt">
+                    <div className="bg-white/[0.03] rounded-3xl p-6 md:p-8 border border-[#8B6A3D]/5 relative group/prompt">
                         <p className="text-lg md:text-xl font-light text-[#FBF7EF] leading-relaxed italic pr-4">
                             "{prompt}"
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-4 text-[10px] text-white/40 font-bold uppercase tracking-widest pt-4 border-t border-white/10">
+                    <div className="flex items-center gap-4 text-[10px] text-white/40 font-bold uppercase tracking-widest pt-4 border-t border-[#8B6A3D]/10">
                         <span className="flex items-center gap-1.5"><Camera className="w-3 h-3" /> Photorealistic</span>
                         <span className="flex items-center gap-1.5"><Clapperboard className="w-3 h-3" /> 8K Architecture</span>
                         <span className="flex items-center gap-1.5 text-accent/60">Optimized for DALL-E 3 / Midjourney</span>

@@ -34,14 +34,14 @@ export default function AboutPage() {
             {/* Problem + Why + What + Commercial + Positioning + Vision */}
             <section className="pb-40 lg:pb-56">
                 <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
-                    <div className="border-t border-white/10 pt-16 lg:pt-24">
+                    <div className="border-t border-[#8B6A3D]/10 pt-16 lg:pt-24">
                     <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
                         <motion.article
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                            className="rounded-[28px] border border-white/10 bg-white/[0.03] p-8 lg:p-10"
+                            className="rounded-[28px] border border-[#8B6A3D]/10 bg-white/[0.03] p-8 lg:p-10"
                         >
                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">The Problem</p>
                             <p className="mt-5 text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]">
@@ -63,7 +63,7 @@ export default function AboutPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-                            className="rounded-[28px] border border-white/10 bg-white/[0.03] p-8 lg:p-10"
+                            className="rounded-[28px] border border-[#8B6A3D]/10 bg-white/[0.03] p-8 lg:p-10"
                         >
                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Why This Exists</p>
                             <p className="mt-5 text-[16px] leading-[1.7] text-white/78">
@@ -82,7 +82,7 @@ export default function AboutPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                            className="rounded-[28px] border border-white/10 bg-white/[0.03] p-8 lg:p-10"
+                            className="rounded-[28px] border border-[#8B6A3D]/10 bg-white/[0.03] p-8 lg:p-10"
                         >
                             <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">What It Is</p>
                             <p className="mt-5 text-[16px] leading-[1.7] text-white/78">
@@ -118,7 +118,7 @@ export default function AboutPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                        className="mt-12 rounded-[28px] border border-white/10 bg-white/[0.02] px-8 py-10 lg:px-10"
+                        className="mt-12 rounded-[28px] border border-[#8B6A3D]/10 bg-white/[0.02] px-8 py-10 lg:px-10"
                     >
                         <p className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]">
                             This isn’t about generating ideas.

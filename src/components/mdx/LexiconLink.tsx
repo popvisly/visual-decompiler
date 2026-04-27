@@ -15,7 +15,7 @@ export default function LexiconLink({ term, href = '/docs' }: { term: string; hr
             <BookOpen className="w-3 h-3 text-white/30 group-hover:text-accent transition-colors shrink-0" />
 
             {/* Tooltip */}
-            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-[200px] bg-[#141414] text-white/70 text-[10px] p-2 rounded-lg border border-white/10 shadow-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all pointer-events-none z-50 text-center leading-tight">
+            <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-[200px] bg-[#141414] text-white/70 text-[10px] p-2 rounded-lg border border-[#8B6A3D]/10 shadow-xl opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all pointer-events-none z-50 text-center leading-tight">
                 View definition in the Intelligence Lexicon
             </span>
         </span>

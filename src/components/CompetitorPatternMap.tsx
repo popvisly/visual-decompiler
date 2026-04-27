@@ -98,7 +98,7 @@ export default function CompetitorPatternMap({ intel }: Props) {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {intel.strategic_shift.moves.map((move, i) => (
-                                <div key={i} className="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                                <div key={i} className="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-[#8B6A3D]/10 hover:bg-white/10 transition-colors">
                                     <div className="w-6 h-6 rounded-full bg-accent text-[#141414] flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
                                         {i + 1}
                                     </div>
@@ -109,7 +109,7 @@ export default function CompetitorPatternMap({ intel }: Props) {
                             ))}
                         </div>
 
-                        <div className="flex items-center gap-3 pt-4 border-t border-white/10">
+                        <div className="flex items-center gap-3 pt-4 border-t border-[#8B6A3D]/10">
                             <Target className="w-4 h-4 text-accent" />
                             <p className="text-white/40 text-[9px] font-bold uppercase tracking-widest">Objective: Break away from generic product-first framing.</p>
                         </div>

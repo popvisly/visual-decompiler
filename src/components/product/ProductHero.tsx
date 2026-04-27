@@ -29,13 +29,13 @@ export default function ProductHero() {
                         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
                             <Link
                                 href="/ingest"
-                                className="inline-flex items-center justify-center border border-white/12 bg-white px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#F6F1E7]"
+                                className="inline-flex items-center justify-center border border-[#8B6A3D]/12 bg-white px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0B0B0B] transition hover:bg-[#F6F1E7]"
                             >
                                 Decompile an Ad
                             </Link>
                             <Link
                                 href={SAMPLE_DOSSIER_HREF}
-                                className="inline-flex items-center justify-center border border-white/12 bg-white/5 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#F6F1E7] transition hover:border-white/22 hover:bg-white/10"
+                                className="inline-flex items-center justify-center border border-[#8B6A3D]/12 bg-white/5 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#F6F1E7] transition hover:border-[#D4A574]/22 hover:bg-white/10"
                             >
                                 View Sample Dossier
                             </Link>

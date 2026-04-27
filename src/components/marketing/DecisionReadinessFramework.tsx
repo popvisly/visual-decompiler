@@ -67,16 +67,16 @@ export default function DecisionReadinessFramework({ tone = 'dark' }: DecisionRe
                     </p>
                 </div>
 
-                <div className={`mt-12 rounded-[28px] border ${isDark ? 'border-white/12 bg-white/[0.02]' : 'border-[#D8CCB9] bg-[#FBF8F1]'} p-5 sm:p-7`}>
+                <div className={`mt-12 rounded-[28px] border ${isDark ? 'border-[#8B6A3D]/12 bg-white/[0.02]' : 'border-[#D8CCB9] bg-[#FBF8F1]'} p-5 sm:p-7`}>
                     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                         {DECISION_STAGES.map((item) => (
-                            <article key={item.stage} className={`rounded-[20px] border p-5 ${isDark ? 'border-white/12 bg-[#121212]' : 'border-[#DED4C3] bg-[#F7F2E8]'}`}>
+                            <article key={item.stage} className={`rounded-[20px] border p-5 ${isDark ? 'border-[#8B6A3D]/12 bg-[#121212]' : 'border-[#DED4C3] bg-[#F7F2E8]'}`}>
                                 <p className={`text-[10px] font-semibold uppercase tracking-[0.26em] ${isDark ? 'text-[#C1A674]' : 'text-[#B58C4B]'}`}>{item.stage}</p>
                                 <p className={`mt-4 text-[16px] font-medium leading-[1.55] ${isDark ? 'text-[#F6F1E7]/92' : 'text-[#181818]/92'}`}>
                                     {item.audienceQuestion}
                                 </p>
                                 <p className={`mt-4 text-[14px] leading-[1.65] ${isDark ? 'text-[#F6F1E7]/68' : 'text-[#1B1B1B]/68'}`}>{item.whatToDesign}</p>
-                                <div className={`mt-5 rounded-xl border px-3 py-2 ${isDark ? 'border-white/10 bg-white/[0.03]' : 'border-[#D8CCB9] bg-[#F3ECDF]'}`}>
+                                <div className={`mt-5 rounded-xl border px-3 py-2 ${isDark ? 'border-[#8B6A3D]/10 bg-white/[0.03]' : 'border-[#D8CCB9] bg-[#F3ECDF]'}`}>
                                     <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${isDark ? 'text-[#C1A674]' : 'text-[#B58C4B]'}`}>System Read</p>
                                     <p className={`mt-1 text-[13px] font-medium ${isDark ? 'text-[#F6F1E7]/86' : 'text-[#171717]/86'}`}>{item.systemRead}</p>
                                 </div>

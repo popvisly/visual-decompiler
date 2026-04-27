@@ -91,7 +91,7 @@ function SingleAssetDeconstruction() {
 
                 <div className="mt-12 grid gap-3 sm:max-w-xl lg:hidden">
                     {ANNOTATIONS.map((ann) => (
-                        <div key={ann.id} className="rounded-[1.25rem] border border-white/10 bg-white/[0.04] px-4 py-4 backdrop-blur-sm" data-presence-target="annotation">
+                        <div key={ann.id} className="rounded-[1.25rem] border border-[#8B6A3D]/10 bg-white/[0.04] px-4 py-4 backdrop-blur-sm" data-presence-target="annotation">
                             <div className="flex items-start gap-3">
                                 <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#D4A574] bg-[#D4A574]/20 text-[9px] font-black text-[#D4A574]">
                                     {ann.id}
@@ -342,7 +342,7 @@ function DifferentialDiagnosisSection() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/70 via-transparent to-transparent" />
                         {/* Label */}
-                        <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/50 px-3.5 py-1.5 backdrop-blur-sm">
+                        <div className="absolute left-5 top-5 rounded-full border border-[#8B6A3D]/20 bg-black/50 px-3.5 py-1.5 backdrop-blur-sm">
                             <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/80">Reference · Asset A</p>
                         </div>
                         <div className="absolute bottom-6 left-6 right-6">
@@ -369,7 +369,7 @@ function DifferentialDiagnosisSection() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/70 via-transparent to-transparent" />
                         {/* Label */}
-                        <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/50 px-3.5 py-1.5 backdrop-blur-sm">
+                        <div className="absolute left-5 top-5 rounded-full border border-[#8B6A3D]/20 bg-black/50 px-3.5 py-1.5 backdrop-blur-sm">
                             <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/80">Challenger · Asset B</p>
                         </div>
                         <div className="absolute bottom-6 left-6 right-6">
@@ -510,7 +510,7 @@ function TrustBoundaryPanel() {
                 {/* ── Bottom CTA row ── */}
                 <motion.div
                     {...REVEAL}
-                    className="mt-20 flex flex-col items-start justify-between gap-6 border-t border-white/10 pt-12 md:flex-row md:items-end"
+                    className="mt-20 flex flex-col items-start justify-between gap-6 border-t border-[#8B6A3D]/10 pt-12 md:flex-row md:items-end"
                 >
                     <p className="max-w-sm text-[14px] leading-relaxed text-white/40">
                         The rigor lives underneath the surface: in the read, the comparison, and the direction that follows. The judgment still belongs to the creative.

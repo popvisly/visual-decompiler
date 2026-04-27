@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function SovereignCTA() {
     return (
-        <div className="my-12 p-8 rounded-[2rem] bg-gradient-to-br from-[#141414] to-[#1a1a1a] border border-white/10 shadow-2xl relative overflow-hidden group">
+        <div className="my-12 p-8 rounded-[2rem] bg-gradient-to-br from-[#141414] to-[#1a1a1a] border border-[#8B6A3D]/10 shadow-2xl relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -translate-y-32 translate-x-32 blur-[80px]" />
 
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">

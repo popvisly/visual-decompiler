@@ -20,7 +20,7 @@ export default function SafeZoneOverlay({ imageUrl, platform }: Props) {
                         {/* Header Safe Zone */}
                         <div className="absolute top-0 inset-x-0 h-[10%] bg-gradient-to-b from-black/20 to-transparent flex items-start justify-between p-4">
                             <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-white/20 border border-white/30" />
+                                <div className="w-8 h-8 rounded-full bg-white/20 border border-[#8B6A3D]/30" />
                                 <div className="w-24 h-2 bg-white/20 rounded-full" />
                             </div>
                             <div className="w-6 h-6 rounded-full bg-white/20" />
@@ -29,7 +29,7 @@ export default function SafeZoneOverlay({ imageUrl, platform }: Props) {
                         {/* Right Sidebar Interaction Zone (TikTok style) */}
                         <div className="absolute right-2 bottom-32 flex flex-col gap-6 items-center">
                             {[1, 2, 3, 4].map(i => (
-                                <div key={i} className="w-10 h-10 rounded-full bg-white/20 border border-white/30 backdrop-blur-sm" />
+                                <div key={i} className="w-10 h-10 rounded-full bg-white/20 border border-[#8B6A3D]/30 backdrop-blur-sm" />
                             ))}
                         </div>
 
@@ -37,13 +37,13 @@ export default function SafeZoneOverlay({ imageUrl, platform }: Props) {
                         <div className="absolute bottom-0 inset-x-0 h-[20%] bg-gradient-to-t from-black/40 to-transparent p-6 flex flex-col justify-end gap-3">
                             <div className="w-[70%] h-3 bg-white/30 rounded-full" />
                             <div className="w-[50%] h-2 bg-white/20 rounded-full" />
-                            <div className="w-full h-10 bg-white/20 border border-white/30 rounded-lg flex items-center justify-center">
+                            <div className="w-full h-10 bg-white/20 border border-[#8B6A3D]/30 rounded-lg flex items-center justify-center">
                                 <span className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Learn More</span>
                             </div>
                         </div>
 
                         {/* Safe Zone Boundary Lines (Dashed) */}
-                        <div className="absolute inset-x-0 top-[10%] bottom-[20%] border-x border-white/20 border-dashed" />
+                        <div className="absolute inset-x-0 top-[10%] bottom-[20%] border-x border-[#8B6A3D]/20 border-dashed" />
                     </div>
                 );
             case 'Instagram_Post':

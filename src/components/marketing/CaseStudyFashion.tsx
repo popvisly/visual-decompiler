@@ -75,7 +75,7 @@ export default function CaseStudyFashion({ id, label, title, body, stageImage, c
                     </div>
 
                     {/* Right: Massive Ad Feature */}
-                    <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden border-[8px] md:border-[12px] border-white shadow-[0_40px_100px_rgba(20,20,20,0.12)] bg-white rotate-1 hover:rotate-0 transition-transform duration-700">
+                    <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden border-[8px] md:border-[12px] border-[#8B6A3D]/20 shadow-[0_40px_100px_rgba(20,20,20,0.12)] bg-white rotate-1 hover:rotate-0 transition-transform duration-700">
                         <img src={stageImage.src} alt={stageImage.alt} className="w-full h-full object-cover rounded-[12px]" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#141414]/5 to-transparent rounded-[12px]" />
                     </div>

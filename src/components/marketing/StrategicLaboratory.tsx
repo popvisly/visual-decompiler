@@ -26,7 +26,7 @@ export default function StrategicLaboratory() {
     ];
 
     return (
-        <section className="bg-[#141414] text-[#FBF7EF] py-32 md:py-40 overflow-hidden relative border-t border-white/5">
+        <section className="bg-[#141414] text-[#FBF7EF] py-32 md:py-40 overflow-hidden relative border-t border-[#8B6A3D]/5">
             {/* Subtle grid */}
             <div className="absolute inset-0 opacity-[0.025] pointer-events-none [background-image:linear-gradient(#FBF7EF_1px,transparent_1px),linear-gradient(90deg,#FBF7EF_1px,transparent_1px)] [background-size:100px_100px]" />
 
@@ -83,7 +83,7 @@ export default function StrategicLaboratory() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: 0.1 * idx, duration: 0.8 }}
-                                className={`relative group p-8 md:p-10 rounded-[2.5rem] border border-white/8 bg-[#1C1C1A] hover:bg-[#222220] transition-all duration-500 overflow-hidden hover:border-[#C1A67B]/20 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)] ${idx === 1 ? 'lg:ml-8' : idx === 2 ? 'lg:ml-16' : ''
+                                className={`relative group p-8 md:p-10 rounded-[2.5rem] border border-[#8B6A3D]/8 bg-[#1C1C1A] hover:bg-[#222220] transition-all duration-500 overflow-hidden hover:border-[#C1A67B]/20 hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)] ${idx === 1 ? 'lg:ml-8' : idx === 2 ? 'lg:ml-16' : ''
                                     }`}
                             >
                                 {/* Subtle gold glow on hover */}
@@ -92,7 +92,7 @@ export default function StrategicLaboratory() {
                                 <div className="relative z-10">
                                     <div className="flex items-center justify-between mb-8">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-2xl bg-[#2A2A28] flex items-center justify-center border border-white/8 group-hover:border-[#C1A67B]/20 transition-colors duration-500">
+                                            <div className="w-12 h-12 rounded-2xl bg-[#2A2A28] flex items-center justify-center border border-[#8B6A3D]/8 group-hover:border-[#C1A67B]/20 transition-colors duration-500">
                                                 {pillar.icon}
                                             </div>
                                             <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#C1A67B]/70 group-hover:text-[#C1A67B] transition-colors duration-300">

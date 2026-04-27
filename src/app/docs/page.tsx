@@ -363,7 +363,7 @@ export default function DocsPage() {
 
                                 <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
                                     {['Executive Summary', 'Visual Architecture', 'Schema Autopsy', 'Tactical Intelligence', 'Security Verification'].map((section, i) => (
-                                        <div key={section} className="text-center p-4 rounded-2xl bg-white/5 border border-white/10">
+                                        <div key={section} className="text-center p-4 rounded-2xl bg-white/5 border border-[#8B6A3D]/10">
                                             <span className="text-[8px] font-bold text-accent/40 uppercase tracking-widest block mb-2">§{i + 1}</span>
                                             <span className="text-[10px] font-bold text-white/60 uppercase tracking-[0.1em]">{section}</span>
                                         </div>

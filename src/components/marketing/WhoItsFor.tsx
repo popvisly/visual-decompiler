@@ -78,7 +78,7 @@ export default function WhoItsFor() {
                             <div className="rounded-[32px] bg-[#1A1A1A] text-white p-10 lg:p-12 h-full border border-[#D4A574]/10 group hover:border-[#D4A574]/25 transition-colors duration-500">
                                 {/* Icon + role */}
                                 <div className="flex items-center gap-4 mb-8">
-                                    <div className="flex items-center justify-center w-12 h-12 rounded-xl border border-white/[0.08] bg-white/[0.04] text-[#C1A674]">
+                                    <div className="flex items-center justify-center w-12 h-12 rounded-xl border border-[#8B6A3D]/20/[0.08] bg-white/[0.04] text-[#C1A674]">
                                         <persona.icon size={20} strokeWidth={1.5} />
                                     </div>
                                     <h3 className="text-[20px] font-black uppercase tracking-[-0.01em] text-white">

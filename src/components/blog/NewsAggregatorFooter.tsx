@@ -25,7 +25,7 @@ const NEWS_ITEMS = [
 
 export default function NewsAggregatorFooter() {
     return (
-        <section className="mt-12 border-t border-white/10 pt-12 pb-6 relative z-10">
+        <section className="mt-12 border-t border-[#8B6A3D]/10 pt-12 pb-6 relative z-10">
             <div className="w-full">
                 <div className="flex items-center gap-4 mb-10">
                     <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
@@ -44,7 +44,7 @@ export default function NewsAggregatorFooter() {
                             href={item.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="block p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-accent/40 hover:bg-white/[0.07] transition-all group"
+                            className="block p-6 rounded-2xl bg-white/5 border border-[#8B6A3D]/5 hover:border-accent/40 hover:bg-white/[0.07] transition-all group"
                         >
                             <div className="flex items-center justify-between mb-4">
                                 <span className="text-[9px] font-bold bg-white/10 text-white/80 px-2 py-1 rounded-md uppercase tracking-widest">
@@ -59,7 +59,7 @@ export default function NewsAggregatorFooter() {
                                 "{item.headline}"
                             </h4>
 
-                            <div className="pt-4 border-t border-white/10">
+                            <div className="pt-4 border-t border-[#8B6A3D]/10">
                                 <p className="text-[10px] font-bold text-accent/80 uppercase tracking-widest mb-2">Visual Decompiler Analysis</p>
                                 <p className="text-sm text-white/60 leading-relaxed font-light">
                                     {item.analysis}

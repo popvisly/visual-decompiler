@@ -89,7 +89,7 @@ export default function PlatformFitness({ imageUrl, fitnessData }: Props) {
             {/* Platform Preview Modal/Container */}
             {selectedPlatform && (
                 <div className="mt-8 animate-in fade-in slide-in-from-top-4 duration-500">
-                    <div className="bg-[#141414] rounded-3xl p-8 border border-white/10 shadow-2xl overflow-hidden relative">
+                    <div className="bg-[#141414] rounded-3xl p-8 border border-[#8B6A3D]/10 shadow-2xl overflow-hidden relative">
                         <div className="flex justify-between items-center mb-6">
                             <div>
                                 <h3 className="text-white text-lg font-bold uppercase tracking-tight">
@@ -110,14 +110,14 @@ export default function PlatformFitness({ imageUrl, fitnessData }: Props) {
                             </button>
                         </div>
 
-                        <div className="max-w-[400px] mx-auto relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.5)]">
+                        <div className="max-w-[400px] mx-auto relative rounded-2xl overflow-hidden border border-[#8B6A3D]/10 shadow-[0_0_100px_rgba(0,0,0,0.5)]">
                             <SafeZoneOverlay
                                 imageUrl={imageUrl}
                                 platform={selectedPlatform}
                             />
                         </div>
 
-                        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-white/5">
+                        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-[#8B6A3D]/5">
                             <div className="space-y-1">
                                 <p className="text-white/30 text-[9px] font-bold uppercase tracking-widest">Platform Specifics</p>
                                 <p className="text-white/70 text-[11px] leading-relaxed">

@@ -62,7 +62,7 @@ export default function AdRolodexScanner() {
                                 />
                                 
                                 {/* Live Labels */}
-                                <div className="absolute top-8 left-8 rounded-md border border-white/10 bg-black/70 px-4 py-2 backdrop-blur-md">
+                                <div className="absolute top-8 left-8 rounded-md border border-[#8B6A3D]/10 bg-black/70 px-4 py-2 backdrop-blur-md">
                                     <div className="flex items-center gap-2">
                                         <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574] animate-pulse" />
                                         <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#D4A574]">Extracting: {activeAd.label}</span>

@@ -105,14 +105,14 @@ export default function FooterStartNow() {
                 >
                     <a
                         href="/ingest"
-                        className="inline-flex items-center gap-3 rounded-xl border border-white/10 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition-all duration-300 ease-out hover:bg-[#F28C28] hover:text-black"
+                        className="inline-flex items-center gap-3 rounded-xl border border-[#8B6A3D]/10 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition-all duration-300 ease-out hover:bg-[#F28C28] hover:text-black"
                     >
                         Decompile an Ad
                         <ArrowUpRight size={16} />
                     </a>
                     <a
                         href={SAMPLE_DOSSIER_HREF}
-                        className="inline-flex items-center gap-3 rounded-xl border border-white/10 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition-all duration-300 ease-out hover:bg-[#FFD600] hover:text-black"
+                        className="inline-flex items-center gap-3 rounded-xl border border-[#8B6A3D]/10 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition-all duration-300 ease-out hover:bg-[#FFD600] hover:text-black"
                     >
                         View Sample Dossier
                     </a>

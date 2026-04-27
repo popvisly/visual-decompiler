@@ -75,7 +75,7 @@ export default function ExecutiveSummaryView({ boardName, strategicAnswer, stats
             {/* Nav Header */}
             <div className="p-8 md:p-12 flex justify-between items-center relative z-10">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full border border-[#8B6A3D]/10 flex items-center justify-center">
                         <Layout className="w-4 h-4 text-accent" />
                     </div>
                     <div>
@@ -168,7 +168,7 @@ export default function ExecutiveSummaryView({ boardName, strategicAnswer, stats
             </div>
 
             {/* Footer / Controls */}
-            <div className="p-8 md:p-12 flex justify-between items-center relative z-10 border-t border-white/5">
+            <div className="p-8 md:p-12 flex justify-between items-center relative z-10 border-t border-[#8B6A3D]/5">
                 <div className="hidden md:block">
                     <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.5em]">Villains at Large — Strategic Intelligence Agency</p>
                 </div>
@@ -185,7 +185,7 @@ export default function ExecutiveSummaryView({ boardName, strategicAnswer, stats
                     <div className="flex items-center gap-4">
                         <button
                             onClick={prevSlide}
-                            className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-[#141414] transition-all text-white"
+                            className="w-14 h-14 rounded-full border border-[#8B6A3D]/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-[#141414] transition-all text-white"
                         >
                             <ChevronLeft className="w-6 h-6" />
                         </button>
@@ -219,7 +219,7 @@ export default function ExecutiveSummaryView({ boardName, strategicAnswer, stats
                     .text-white { color: #141414 !important; }
                     .text-white\/40, .text-white\/50, .text-white\/60, .text-white\/20 { color: #6B6B6B !important; }
                     .text-accent { color: #BB9E7B !important; }
-                    .border-white\/5, .border-white\/10 { border-color: #E7DED1 !important; }
+                    .border-[#8B6A3D]/20\/5, .border-[#8B6A3D]/20\/10 { border-color: #E7DED1 !important; }
                     .blur-\[120px\] { display: none !important; }
                     
                     /* Force one slide per page */

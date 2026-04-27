@@ -4,7 +4,7 @@ import { Activity, BrainCircuit, Maximize } from 'lucide-react';
 
 export default function DeconstructionModule() {
     return (
-        <div className="my-12 p-6 md:p-10 rounded-[2rem] bg-[#101010] border border-white/5 shadow-inner">
+        <div className="my-12 p-6 md:p-10 rounded-[2rem] bg-[#101010] border border-[#8B6A3D]/5 shadow-inner">
             <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
@@ -22,7 +22,7 @@ export default function DeconstructionModule() {
             </div>
 
             {/* Simulated Data Visualization */}
-            <div className="relative h-48 rounded-xl bg-gradient-to-r from-[#141414] to-[#1a1a1a] border border-white/5 overflow-hidden flex items-end px-4 gap-1">
+            <div className="relative h-48 rounded-xl bg-gradient-to-r from-[#141414] to-[#1a1a1a] border border-[#8B6A3D]/5 overflow-hidden flex items-end px-4 gap-1">
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px]" />
 
                 {/* Simulated Bars */}

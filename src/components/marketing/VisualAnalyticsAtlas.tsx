@@ -462,7 +462,7 @@ function DiagramCard({
             whileHover={{ y: -6 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className={`group relative border p-6 shadow-[0_20px_40px_rgba(0,0,0,0.8)] transition-colors duration-300 ${
-                active ? 'border-[#00E5FF] bg-[#00E5FF]/10 text-white' : 'border-white/10 bg-[#0A0A0A] text-white'
+                active ? 'border-[#00E5FF] bg-[#00E5FF]/10 text-white' : 'border-[#8B6A3D]/10 bg-[#0A0A0A] text-white'
             }`}
         >
             <motion.div
@@ -470,7 +470,7 @@ function DiagramCard({
                 animate={{ opacity: active ? 1 : 0, scaleX: active ? 1 : 0.65 }}
                 className="absolute inset-x-0 top-0 h-px origin-left bg-[#00E5FF]"
             />
-            <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+            <div className="flex items-start justify-between gap-4 border-b border-[#8B6A3D]/10 pb-4">
                 <div>
                     <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#00E5FF]">{card.eyebrow}</p>
                     <h3 className="mt-3 max-w-[16ch] text-[24px] font-black leading-[1.02] tracking-[-0.04em] text-white">
@@ -487,7 +487,7 @@ function DiagramCard({
             </div>
 
             <p className="mt-8 text-[14px] leading-[1.7] text-white/60">{card.body}</p>
-            <p className="mt-4 border-t border-white/10 pt-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#00E5FF]">
+            <p className="mt-4 border-t border-[#8B6A3D]/10 pt-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#00E5FF]">
                 {card.detail}
             </p>
         </motion.article>
@@ -513,7 +513,7 @@ export default function VisualAnalyticsAtlas() {
             </div>
 
             <div className="relative mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-10">
-                <div className="overflow-x-auto border-y border-white/10 py-4">
+                <div className="overflow-x-auto border-y border-[#8B6A3D]/10 py-4">
                     <div className="flex min-w-max items-center gap-2 pr-6">
                         {ANALYSIS_TABS.map((tab) => {
                             const active = tab === activeTab;
@@ -528,7 +528,7 @@ export default function VisualAnalyticsAtlas() {
                                     className={`relative overflow-hidden border px-3 py-2 text-[10px] font-black uppercase tracking-[0.24em] transition-colors duration-300 ${
                                         active
                                             ? 'border-[#00E5FF] bg-[#00E5FF]/10 text-white text-[#00E5FF]'
-                                            : 'border-transparent text-white/40 hover:border-white/10 hover:bg-[#0A0A0A] text-white'
+                                            : 'border-transparent text-white/40 hover:border-[#D4A574]/10 hover:bg-[#0A0A0A] text-white'
                                     }`}
                                 >
                                     {active ? (
@@ -576,14 +576,14 @@ export default function VisualAnalyticsAtlas() {
                             </AnimatePresence>
                         </div>
 
-                        <div className="mt-10 border-t border-white/10 pt-5">
+                        <div className="mt-10 border-t border-[#8B6A3D]/10 pt-5">
                             <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#00E5FF]">Interaction note</p>
                             <p className="mt-3 max-w-[28rem] text-[14px] leading-[1.75] text-white/60">
                                 Click through the analytical modes, then hover a card to trace its route. The motion is there to explain the system, not decorate it.
                             </p>
                             <a
                                 href="/trust-method"
-                                className="mt-7 inline-flex items-center gap-2 border-b border-transparent pb-1 text-[10px] font-black uppercase tracking-[0.28em] text-white transition hover:border-white/30 hover:text-[#00E5FF]"
+                                className="mt-7 inline-flex items-center gap-2 border-b border-transparent pb-1 text-[10px] font-black uppercase tracking-[0.28em] text-white transition hover:border-[#D4A574]/30 hover:text-[#00E5FF]"
                             >
                                 {activeContent.cta}
                                 <ArrowUpRight size={14} />

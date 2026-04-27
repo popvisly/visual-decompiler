@@ -94,7 +94,7 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                             className={`w-64 px-4 py-2 text-xs rounded-full focus:outline-none focus:ring-1 transition-all font-medium border shadow-sm ${forceDark
-                                ? 'bg-white/10 text-white placeholder-white/30 border-white/10 focus:ring-white/20'
+                                ? 'bg-white/10 text-white placeholder-white/30 border-[#8B6A3D]/10 focus:ring-white/20'
                                 : 'bg-white text-[#1A1A1A] placeholder-[#1A1A1A]/30 border-[#E5E5E1] focus:ring-[#D4A574]/50 focus:border-[#D4A574]'}`}
                             required
                         />
@@ -116,7 +116,7 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
                     </button>
                 </div>
             ) : (
-                <div className={`w-[32rem] border shadow-[0_20px_40px_rgba(0,0,0,0.04)] backdrop-blur-xl rounded-[24px] p-6 space-y-4 ${forceDark ? 'bg-black/80 border-white/10 text-white' : 'bg-white border-[#E5E5E1]'}`}>
+                <div className={`w-[32rem] border shadow-[0_20px_40px_rgba(0,0,0,0.04)] backdrop-blur-xl rounded-[24px] p-6 space-y-4 ${forceDark ? 'bg-black/80 border-[#8B6A3D]/10 text-white' : 'bg-white border-[#E5E5E1]'}`}>
                     <div className="flex items-center justify-between">
                         <h3 className={`text-[10px] font-bold uppercase tracking-[0.2em] ${forceDark ? 'text-white/40' : 'text-[#8B4513]'}`}>Bulk Ingest Pipeline</h3>
                         <button onClick={(e) => { e.preventDefault(); setBulkMode(false); setBatchItems([]); setErrorObj(null); }} className={`transition-colors ${forceDark ? 'text-white/40 hover:text-white' : 'text-[#4A4A4A]/40 hover:text-[#4A4A4A]'}`}>
@@ -130,7 +130,7 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
                                 value={bulkText}
                                 onChange={(e) => setBulkText(e.target.value)}
                                 placeholder={"Paste URLs, one per line:\nhttps://example.com/ad1.jpg\nhttps://example.com/ad2.mp4"}
-                                className={`w-full h-36 px-4 py-3 text-xs font-mono rounded-xl focus:outline-none focus:ring-2 transition-all resize-none ${forceDark ? 'bg-white/10 text-white placeholder-white/20 border-white/10 focus:ring-white/20' : 'bg-black/5 text-[#141414] placeholder-[#141414]/30 border border-black/10 focus:ring-black/20'}`}
+                                className={`w-full h-36 px-4 py-3 text-xs font-mono rounded-xl focus:outline-none focus:ring-2 transition-all resize-none ${forceDark ? 'bg-white/10 text-white placeholder-white/20 border-[#8B6A3D]/10 focus:ring-white/20' : 'bg-black/5 text-[#141414] placeholder-[#141414]/30 border border-black/10 focus:ring-black/20'}`}
                             />
                             <div className="flex items-center justify-between">
                                 <span className={`text-[9px] font-bold uppercase tracking-[0.15em] ${forceDark ? 'text-white/40' : 'text-[#141414]/40'}`}>
@@ -152,7 +152,7 @@ export default function IngestForm({ forceDark = false }: { forceDark?: boolean 
                                 {batchItems.map((item, i) => (
                                     <div key={i} className="flex items-center gap-3 text-xs">
                                         <div className="shrink-0">
-                                            {item.status === 'pending' && <div className="w-3.5 h-3.5 rounded-full border-2 border-white/20" />}
+                                            {item.status === 'pending' && <div className="w-3.5 h-3.5 rounded-full border-2 border-[#8B6A3D]/20" />}
                                             {item.status === 'queuing' && <Loader2 className="w-3.5 h-3.5 text-accent animate-spin" />}
                                             {item.status === 'queued' && <Check className="w-3.5 h-3.5 text-green-400" />}
                                             {item.status === 'error' && <AlertCircle className="w-3.5 h-3.5 text-red-500" />}

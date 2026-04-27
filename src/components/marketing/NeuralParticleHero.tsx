@@ -215,7 +215,7 @@ export default function NeuralParticleHero() {
                 </div>
 
                 <div className="rounded-[32px] overflow-hidden bg-[#1A1A1A] border border-[rgba(212,165,116,0.20)] flex flex-col lg:flex-row" style={{ minHeight: '420px' }}>
-                <div className="lg:w-[300px] shrink-0 flex flex-col justify-center px-10 py-12 border-b lg:border-b-0 lg:border-r border-white/5">
+                <div className="lg:w-[300px] shrink-0 flex flex-col justify-center px-10 py-12 border-b lg:border-b-0 lg:border-r border-[#8B6A3D]/5">
                     <motion.div
                         initial={{ opacity: 0, y: -8 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -258,7 +258,7 @@ export default function NeuralParticleHero() {
                         ))}
                     </div>
 
-                    <div className="mt-10 pt-8 border-t border-white/5">
+                    <div className="mt-10 pt-8 border-t border-[#8B6A3D]/5">
                         <p className="text-[8px] font-mono text-[#FBFBF6]/15 uppercase tracking-[0.25em]">
                             Visual Decompiler — Decision Support
                         </p>

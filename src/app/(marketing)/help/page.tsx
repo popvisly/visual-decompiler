@@ -188,7 +188,7 @@ export default function HelpPage() {
                             </a>
                             <a
                                 href="/docs/schema-contract"
-                                className="rounded-full border border-white/15 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/60 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-[#8B6A3D]/15 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/60 hover:text-[#F6F1E7]"
                             >
                                 View System Schema
                             </a>
@@ -233,7 +233,7 @@ export default function HelpPage() {
                                     value={faqQuery}
                                     onChange={(event) => setFaqQuery(event.target.value)}
                                     placeholder="Search a question or keyword..."
-                                    className="w-full rounded-full border border-white/15 bg-[#111111] px-5 py-3 text-[13px] text-[#F6F1E7] outline-none transition placeholder:text-[#F6F1E7]/35 focus:border-[#C1A674]/70"
+                                    className="w-full rounded-full border border-[#8B6A3D]/15 bg-[#111111] px-5 py-3 text-[13px] text-[#F6F1E7] outline-none transition placeholder:text-[#F6F1E7]/35 focus:border-[#C1A674]/70"
                                 />
                             </div>
                         </div>
@@ -243,7 +243,7 @@ export default function HelpPage() {
                                 <article key={faq.question} className="rounded-[28px] border border-[#C1A674]/22 bg-[#141414] p-8 shadow-[0_4px_24px_rgba(20,20,20,0.02)]">
                                     <h3 className="mb-4 text-[24px] font-semibold leading-[1.25] tracking-tight text-[#F6F1E7]">{faq.question}</h3>
                                     <p className="text-[13px] font-medium leading-relaxed text-[#F6F1E7]/62">{faq.answer}</p>
-                                    <div className="mt-6 border-t border-white/10 pt-4">
+                                    <div className="mt-6 border-t border-[#8B6A3D]/10 pt-4">
                                         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#C1A674]/80">Was this helpful?</p>
                                         <div className="mt-3 flex gap-2">
                                             <button
@@ -252,7 +252,7 @@ export default function HelpPage() {
                                                 className={`rounded-full border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] transition ${
                                                     faqFeedback[faq.question] === 'yes'
                                                         ? 'border-[#C1A674] bg-[#C1A674]/20 text-[#F6F1E7]'
-                                                        : 'border-white/15 text-[#F6F1E7]/70 hover:border-[#C1A674]/55'
+                                                        : 'border-[#8B6A3D]/15 text-[#F6F1E7]/70 hover:border-[#C1A674]/55'
                                                 }`}
                                             >
                                                 Yes
@@ -263,7 +263,7 @@ export default function HelpPage() {
                                                 className={`rounded-full border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] transition ${
                                                     faqFeedback[faq.question] === 'no'
                                                         ? 'border-[#C1A674] bg-[#C1A674]/20 text-[#F6F1E7]'
-                                                        : 'border-white/15 text-[#F6F1E7]/70 hover:border-[#C1A674]/55'
+                                                        : 'border-[#8B6A3D]/15 text-[#F6F1E7]/70 hover:border-[#C1A674]/55'
                                                 }`}
                                             >
                                                 No

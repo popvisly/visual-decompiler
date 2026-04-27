@@ -225,7 +225,7 @@ export default function ResultsView({
                 {showMedia && (
                     <div className="lg:col-span-2">
                         <div className="sticky top-24 space-y-4">
-                            <div className="p-3 bg-white rounded-[2.5rem] shadow-[0_40px_100px_rgba(20,20,20,0.08)] border border-white/50 overflow-hidden">
+                            <div className="p-3 bg-white rounded-[2.5rem] shadow-[0_40px_100px_rgba(20,20,20,0.08)] border border-[#8B6A3D]/50 overflow-hidden">
                                 <div className="rounded-[1.5rem] overflow-hidden">
                                     {mediaKind === 'video' ? (
                                         <video

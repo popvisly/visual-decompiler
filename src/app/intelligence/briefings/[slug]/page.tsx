@@ -107,7 +107,7 @@ export default async function BriefingPage({ params }: { params: Promise<{ slug:
                 </p>
 
                 {post.meta.imageUrl && (
-                    <div className="relative w-full aspect-[21/9] md:aspect-[3/1] rounded-3xl overflow-hidden mb-12 border border-white/10 shadow-2xl">
+                    <div className="relative w-full aspect-[21/9] md:aspect-[3/1] rounded-3xl overflow-hidden mb-12 border border-[#8B6A3D]/10 shadow-2xl">
                         <img
                             src={post.meta.imageUrl}
                             alt={post.meta.title}
@@ -127,7 +127,7 @@ export default async function BriefingPage({ params }: { params: Promise<{ slug:
                         <MDXRemote source={post.content} components={components} />
                     </main>
 
-                    <div className="mt-24 pt-10 border-t border-white/10">
+                    <div className="mt-24 pt-10 border-t border-[#8B6A3D]/10">
                         <div className="flex items-center justify-between">
                             <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-white/50">Written by <span className="text-white">{post.meta.author}</span></span>
                             <Link href="/intelligence" className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#BB9E7B] hover:text-white transition-colors">More Briefings</Link>

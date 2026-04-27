@@ -29,7 +29,7 @@ const PERSONAS = [
 
 export default function PersonaGrid() {
     return (
-        <section className="bg-[#141414] py-32 md:py-40 px-6 border-t border-white/5">
+        <section className="bg-[#141414] py-32 md:py-40 px-6 border-t border-[#8B6A3D]/5">
             {/* Subtle grid */}
             <div className="absolute inset-0 opacity-[0.018] pointer-events-none [background-image:linear-gradient(#FBF7EF_1px,transparent_1px),linear-gradient(90deg,#FBF7EF_1px,transparent_1px)] [background-size:100px_100px]" />
 
@@ -75,7 +75,7 @@ export default function PersonaGrid() {
                             </div>
 
                             {/* Category pill */}
-                            <div className="inline-block bg-[#1C1C1A] px-8 py-2.5 rounded-full border border-white/8 mb-6 group-hover:border-[#C1A67B]/30 transition-colors duration-300">
+                            <div className="inline-block bg-[#1C1C1A] px-8 py-2.5 rounded-full border border-[#8B6A3D]/8 mb-6 group-hover:border-[#C1A67B]/30 transition-colors duration-300">
                                 <span
                                     className="text-[10px] font-bold tracking-[0.3em] uppercase"
                                     style={{ color: persona.color }}

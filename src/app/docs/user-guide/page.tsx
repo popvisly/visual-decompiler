@@ -95,7 +95,7 @@ export default function UserGuidePage() {
                         </p>
                     </motion.div>
 
-                    <div className="mt-16 border-t border-white/10 pt-14 lg:mt-20 lg:pt-16">
+                    <div className="mt-16 border-t border-[#8B6A3D]/10 pt-14 lg:mt-20 lg:pt-16">
                         <motion.div
                             initial={{ opacity: 0, y: 18 }}
                             whileInView={{ opacity: 1, y: 0 }}

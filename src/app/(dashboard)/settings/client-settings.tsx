@@ -290,7 +290,7 @@ export default function SettingsClient({
                                             type="text"
                                             value={agencyName}
                                             onChange={(e) => setAgencyName(e.target.value)}
-                                            className="w-full rounded-[1.5rem] border border-white/10 bg-transparent px-6 py-5 text-2xl font-light text-white outline-none transition-all placeholder:text-white/20 focus:border-[#D4A574]/60"
+                                            className="w-full rounded-[1.5rem] border border-[#8B6A3D]/10 bg-transparent px-6 py-5 text-2xl font-light text-white outline-none transition-all placeholder:text-white/20 focus:border-[#D4A574]/60"
                                             placeholder="e.g., OMNI GLOBAL"
                                             required
                                         />

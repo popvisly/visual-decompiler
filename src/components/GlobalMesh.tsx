@@ -24,7 +24,7 @@ export default function GlobalMesh() {
     }, []);
 
     if (loading) return (
-        <div className="h-[400px] flex flex-col items-center justify-center space-y-4 bg-[#141414] rounded-[3rem] border border-white/5 relative overflow-hidden">
+        <div className="h-[400px] flex flex-col items-center justify-center space-y-4 bg-[#141414] rounded-[3rem] border border-[#8B6A3D]/5 relative overflow-hidden">
             <div className="absolute inset-0 opacity-10 [background-image:linear-gradient(#FBF7EF_1px,transparent_1px),linear-gradient(90deg,#FBF7EF_1px,transparent_1px)] [background-size:48px_48px]" />
             <div className="w-12 h-12 border-2 border-accent border-t-transparent rounded-full animate-spin relative z-10" />
             <p className="text-[10px] font-bold text-accent uppercase tracking-[0.4em] relative z-10 animate-pulse">Syncing Intelligence Mesh...</p>
@@ -32,7 +32,7 @@ export default function GlobalMesh() {
     );
 
     if (!data || !data.clusters || data.clusters.length === 0) return (
-        <div className="p-16 bg-[#141414] rounded-[3rem] border border-white/5 relative overflow-hidden flex items-center justify-between group">
+        <div className="p-16 bg-[#141414] rounded-[3rem] border border-[#8B6A3D]/5 relative overflow-hidden flex items-center justify-between group">
             <div className="absolute inset-0 opacity-5 [background-image:linear-gradient(#FBF7EF_1px,transparent_1px),linear-gradient(90deg,#FBF7EF_1px,transparent_1px)] [background-size:64px_64px]" />
             <div className="relative z-10">
                 <h3 className="text-[10px] font-bold text-accent uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
@@ -52,7 +52,7 @@ export default function GlobalMesh() {
             {/* Mesh Overview Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Global Cluster Feed */}
-                <div className="lg:col-span-2 bg-[#141414] rounded-[3rem] p-12 border border-white/5 relative overflow-hidden">
+                <div className="lg:col-span-2 bg-[#141414] rounded-[3rem] p-12 border border-[#8B6A3D]/5 relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-8 opacity-5">
                         <Network className="w-64 h-64 text-accent" />
                     </div>
@@ -75,7 +75,7 @@ export default function GlobalMesh() {
 
                     <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8">
                         {data.clusters.map(cluster => (
-                            <div key={cluster.id} className="p-8 bg-white/5 border border-white/10 rounded-[2rem] space-y-6 hover:border-accent/40 transition-all group">
+                            <div key={cluster.id} className="p-8 bg-white/5 border border-[#8B6A3D]/10 rounded-[2rem] space-y-6 hover:border-accent/40 transition-all group">
                                 <div className="flex items-center justify-between">
                                     <span className="bg-accent/10 text-accent text-[8px] font-bold px-3 py-1 rounded uppercase tracking-[0.2em]">Macro Shift</span>
                                     <span className={`text-[8px] font-bold uppercase tracking-widest ${cluster.impactLevel === 'high' ? 'text-red-400' : 'text-blue-400'}`}>
@@ -86,7 +86,7 @@ export default function GlobalMesh() {
                                     <h4 className="text-[14px] font-bold text-[#FBF7EF] uppercase tracking-widest mb-2 group-hover:text-accent transition-colors">{cluster.title}</h4>
                                     <p className="text-[13px] text-[#FBF7EF]/50 font-light leading-relaxed">{cluster.description}</p>
                                 </div>
-                                <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                                <div className="pt-4 border-t border-[#8B6A3D]/5 flex items-center justify-between">
                                     <div className="flex items-center gap-2">
                                         <Users className="w-3 h-3 text-[#FBF7EF]/40" />
                                         <span className="text-[9px] font-bold text-[#FBF7EF]/40 uppercase tracking-widest">{cluster.boardsInvolved.length} Boards In-Sync</span>

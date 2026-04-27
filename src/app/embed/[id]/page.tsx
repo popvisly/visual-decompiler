@@ -87,8 +87,8 @@ export default async function EmbedPage({ params }: { params: Promise<{ id: stri
                 `,
             }} />
 
-            <div className="mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-white/10 bg-[#111110] shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
-                <div className="flex flex-col gap-4 border-b border-white/10 px-6 py-6 md:flex-row md:items-center md:justify-between md:px-8">
+            <div className="mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-[#8B6A3D]/10 bg-[#111110] shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
+                <div className="flex flex-col gap-4 border-b border-[#8B6A3D]/10 px-6 py-6 md:flex-row md:items-center md:justify-between md:px-8">
                     <div className="flex items-center gap-4">
                         {isSovereign && agency?.whitelabel_logo ? (
                             <img src={agency.whitelabel_logo} alt={agency.name} className="h-10 w-auto object-contain" />
@@ -110,17 +110,17 @@ export default async function EmbedPage({ params }: { params: Promise<{ id: stri
                 {extraction ? (
                     <div className="grid gap-8 px-6 py-6 md:grid-cols-[minmax(260px,380px)_1fr] md:px-8 md:py-8">
                         <div className="space-y-5">
-                            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] border border-white/10 bg-black">
+                            <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] border border-[#8B6A3D]/10 bg-black">
                                 <img src={asset.file_url} alt={asset.brand?.name || 'Embedded asset'} className="h-full w-full object-contain" />
                             </div>
 
                             {Array.isArray(extraction.color_palette) && extraction.color_palette.length > 0 && (
-                                <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-4">
+                                <div className="rounded-[1.5rem] border border-[#8B6A3D]/10 bg-black/20 p-4">
                                     <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-white/45">Chromatic Base</p>
                                     <div className="mt-4 flex flex-wrap gap-2">
                                         {extraction.color_palette.slice(0, 8).map((hex: string, index: number) => (
-                                            <div key={`${hex}-${index}`} className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2">
-                                                <div className="h-3.5 w-3.5 rounded-full border border-white/10" style={{ backgroundColor: hex }} />
+                                            <div key={`${hex}-${index}`} className="flex items-center gap-2 rounded-full border border-[#8B6A3D]/10 bg-white/5 px-3 py-2">
+                                                <div className="h-3.5 w-3.5 rounded-full border border-[#8B6A3D]/10" style={{ backgroundColor: hex }} />
                                                 <span className="text-[10px] font-mono tracking-[0.14em] text-white/65">{hex}</span>
                                             </div>
                                         ))}
@@ -130,7 +130,7 @@ export default async function EmbedPage({ params }: { params: Promise<{ id: stri
                         </div>
 
                         <div className="space-y-5">
-                            <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5 md:p-6">
+                            <div className="rounded-[1.5rem] border border-[#8B6A3D]/10 bg-black/20 p-5 md:p-6">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em]" style={{ color: accent }}>Primary Mechanic</p>
                                 <h1 className="mt-3 text-3xl font-light uppercase tracking-tight text-white md:text-4xl">
                                     {extraction.primary_mechanic}
@@ -142,7 +142,7 @@ export default async function EmbedPage({ params }: { params: Promise<{ id: stri
                                 </div>
                             </div>
 
-                            <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5 md:p-6">
+                            <div className="rounded-[1.5rem] border border-[#8B6A3D]/10 bg-black/20 p-5 md:p-6">
                                 <div className="flex items-end justify-between gap-4">
                                     <div>
                                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-white/45">Confidence</p>
@@ -161,7 +161,7 @@ export default async function EmbedPage({ params }: { params: Promise<{ id: stri
                             </div>
 
                             {overture && (
-                                <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5 md:p-6">
+                                <div className="rounded-[1.5rem] border border-[#8B6A3D]/10 bg-black/20 p-5 md:p-6">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-white/45">Semiotic Overture</p>
                                     <p className="mt-4 text-sm leading-relaxed text-white/72 md:text-[15px]">
                                         {overture}
@@ -169,14 +169,14 @@ export default async function EmbedPage({ params }: { params: Promise<{ id: stri
                                 </div>
                             )}
 
-                            <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5 md:p-6">
+                            <div className="rounded-[1.5rem] border border-[#8B6A3D]/10 bg-black/20 p-5 md:p-6">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-white/45">DNA Prompt</p>
                                 <p className="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-white/72 md:text-[15px]">
                                     {extraction.dna_prompt || 'DNA prompt unavailable.'}
                                 </p>
                             </div>
 
-                            <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
+                            <div className="rounded-[1.5rem] border border-[#8B6A3D]/10 bg-black/20 p-5">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/35">
                                     Asset ID: {asset.id.split('-')[0]}
                                 </p>

@@ -145,25 +145,25 @@ export default function DossierDecisionSummary({
         firstSentence(dossier?.test_plan?.hypothesis) ||
         'Make the value claim more explicit, then align the CTA with the same status or utility promise already signalled visually.';
     const triadStates: DecisionState[] = ['KEEP', 'REFINE', 'KILL'];
-    const DARK_TEXT_PRIMARY = 'text-[#F3F1ED]';
-    const DARK_TEXT_SECONDARY = 'text-[#D6D0C6]';
-    const DARK_TEXT_MUTED = 'text-[#B9B19F]';
+    const DARK_TEXT_PRIMARY = 'text-[#1a1a1a]';
+    const DARK_TEXT_SECONDARY = 'text-[#6B6B6B]';
+    const DARK_TEXT_MUTED = 'text-[#8B6A3D]/80';
 
     return (
         <section className="space-y-[clamp(12px,1vw,18px)]">
-            <div className="flex flex-col gap-4 rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-5 md:flex-row md:items-center md:justify-between md:p-6">
+            <div className="flex flex-col gap-4 rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:flex-row md:items-center md:justify-between md:p-6">
                 <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Decision view</p>
-                    <p className={`mt-3 max-w-[62ch] text-sm leading-relaxed ${DARK_TEXT_SECONDARY}`}>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Decision view</p>
+                    <p className={`mt-3 max-w-[62ch] text-[13px] leading-relaxed font-medium ${DARK_TEXT_SECONDARY}`}>
                         Toggle between the executive read and the full forensic surface without losing the underlying analysis.
                     </p>
                 </div>
-                <div className="inline-flex rounded-full border border-[#4E3D2A] bg-[#171512] p-1">
+                <div className="inline-flex rounded-full border border-black/5 bg-[#FCFBF9] p-1 shadow-sm">
                     <button
                         type="button"
                         onClick={() => onToggleExecutiveSummary(false)}
                         className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] transition ${
-                            !isExecutiveSummary ? 'bg-[#D4A574] text-[#141414]' : 'text-[#B9B19F] hover:bg-[#201b15]'
+                            !isExecutiveSummary ? 'bg-[#1a1a1a] text-white shadow-sm' : 'text-[#8B6A3D]/80 hover:bg-black/5'
                         }`}
                     >
                         Full Analysis
@@ -172,7 +172,7 @@ export default function DossierDecisionSummary({
                         type="button"
                         onClick={() => onToggleExecutiveSummary(true)}
                         className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] transition ${
-                            isExecutiveSummary ? 'bg-[#D4A574] text-[#141414]' : 'text-[#B9B19F] hover:bg-[#201b15]'
+                            isExecutiveSummary ? 'bg-[#1a1a1a] text-white shadow-sm' : 'text-[#8B6A3D]/80 hover:bg-black/5'
                         }`}
                     >
                         Executive Summary
@@ -180,36 +180,36 @@ export default function DossierDecisionSummary({
                 </div>
             </div>
 
-            <div className="rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-5 md:p-6">
+            <div className="rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:p-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Creative Director Decision Triad</p>
-                        <p className={`mt-3 max-w-[62ch] text-sm leading-relaxed ${DARK_TEXT_PRIMARY}`}>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Creative Director Decision Triad</p>
+                        <p className={`mt-3 max-w-[62ch] text-[15px] font-medium leading-relaxed ${DARK_TEXT_PRIMARY}`}>
                             {decisionRationale(decision, strategicMove, confidenceScore)}
                         </p>
                     </div>
                     <a
                         href={evidenceHref}
-                        className="inline-flex items-center justify-center rounded-full border border-[#6B5337] bg-[#171512] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:bg-[#201b15] hover:text-[#F3F1ED]"
+                        className="inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#1a1a1a] shadow-sm transition hover:bg-black/5"
                     >
                         Jump to Evidence
                     </a>
                 </div>
 
-                <div className="mt-5 grid items-start gap-3 lg:grid-cols-3">
+                <div className="mt-5 grid items-start gap-3 md:grid-cols-3">
                     {triadStates.map((state) => (
                         <div
                             key={state}
-                            className={`rounded-[1.4rem] border px-4 py-4 ${
+                            className={`rounded-xl border p-4 shadow-sm ${
                                 state === decision
-                                    ? 'border-[#6B5337] bg-[#171512]'
-                                    : 'border-[#4E3D2A] bg-[#171512]'
+                                    ? 'border-[#D4A574]/40 bg-[#FCFBF9]'
+                                    : 'border-black/5 bg-[#FCFBF9]'
                             }`}
                         >
                             <p className={`text-[10px] font-bold uppercase tracking-[0.22em] ${state === decision ? 'text-[#D4A574]' : DARK_TEXT_MUTED}`}>
                                 {state}
                             </p>
-                            <p className={`mt-3 text-[13px] leading-6 ${state === decision ? DARK_TEXT_PRIMARY : DARK_TEXT_SECONDARY}`}>
+                            <p className={`mt-3 text-[13px] font-medium leading-relaxed ${state === decision ? DARK_TEXT_PRIMARY : DARK_TEXT_SECONDARY}`}>
                                 {state === decision
                                     ? 'Recommended state for this route.'
                                     : state === 'KEEP'
@@ -223,9 +223,9 @@ export default function DossierDecisionSummary({
                 </div>
             </div>
 
-            <div className="rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-5 md:p-6">
-                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Strategy Director Framework</p>
-                <div className="mt-5 grid items-start gap-3 xl:grid-cols-2">
+            <div className="rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:p-6">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Strategy Director Framework</p>
+                <div className="mt-5 grid items-start gap-4 xl:grid-cols-2">
                     {[
                         {
                             label: 'Audience tension',
@@ -240,30 +240,30 @@ export default function DossierDecisionSummary({
                             value: summaryRecommendedMove,
                         },
                     ].map((item) => (
-                        <div key={item.label} className="rounded-[1.4rem] border border-[#4E3D2A] bg-[#171512] px-4 py-4">
-                            <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
-                            <p className={`mt-3 text-[14px] leading-6 ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
+                        <div key={item.label} className="rounded-xl border border-black/5 bg-[#FCFBF9] shadow-sm px-4 py-4">
+                            <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
+                            <p className={`mt-3 text-[13px] font-medium leading-relaxed ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
                         </div>
                     ))}
                 </div>
             </div>
 
-            <div className="grid items-start gap-4 2xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-                <div className="rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-5 md:p-6">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Brief Alignment</p>
-                    <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                        <span className="inline-flex w-fit rounded-full border border-[#6B5337] bg-[#171512] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">
+            <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+                <div className="rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:p-8">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Brief Alignment</p>
+                    <div className="mt-6 flex flex-col gap-6 items-start">
+                        <span className="inline-flex w-fit rounded-full border border-[#D4A574]/40 bg-[#FCFBF9] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">
                             {briefAlignment}
                         </span>
-                        <p className={`max-w-[62ch] text-sm leading-relaxed ${DARK_TEXT_SECONDARY}`}>
+                        <p className={`max-w-[62ch] text-[13px] font-medium leading-relaxed ${DARK_TEXT_SECONDARY}`}>
                             {briefAlignmentRationale(briefAlignment, strategicMove, audienceTension)}
                         </p>
                     </div>
                 </div>
 
-                <div className="rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-5 md:p-6">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Copywriter Persuasion Alignment</p>
-                    <div className="mt-5 grid items-start gap-3 xl:grid-cols-2">
+                <div className="rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:p-6">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Copywriter Persuasion Alignment</p>
+                    <div className="mt-5 grid items-start gap-4 xl:grid-cols-2">
                         {[
                             {
                                 label: 'Promise clarity',
@@ -286,19 +286,19 @@ export default function DossierDecisionSummary({
                                 span: 'xl:col-span-2',
                             },
                         ].map((item) => (
-                            <div key={item.label} className={`rounded-[1.4rem] border border-[#5A4630] bg-[#171512] px-4 py-4 ${item.span}`}>
-                                <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
-                                <p className={`mt-3 text-[14px] leading-6 ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
+                            <div key={item.label} className={`rounded-xl border border-black/5 bg-[#FCFBF9] shadow-sm px-4 py-4 ${item.span}`}>
+                                <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
+                                <p className={`mt-3 text-[13px] font-medium leading-relaxed ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
 
-            {isExecutiveSummary ? (
-                <div className="rounded-3xl border border-[rgba(212,165,116,0.2)] bg-[#1F1F1F] p-5 md:p-6">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Executive Summary</p>
-                    <div className="mt-5 grid items-start gap-3 xl:grid-cols-2">
+            {isExecutiveSummary && (
+                <div className="rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:p-6">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Executive Summary</p>
+                    <div className="mt-5 grid items-start gap-4 xl:grid-cols-3">
                         {[
                             {
                                 label: 'What it’s doing',
@@ -313,14 +313,14 @@ export default function DossierDecisionSummary({
                                 value: confidenceNote(confidenceScore),
                             },
                         ].map((item) => (
-                            <div key={item.label} className="rounded-[1.4rem] border border-[#5A4630] bg-[#171512] px-4 py-4">
-                                <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
-                                <p className={`mt-3 text-[14px] leading-6 ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
+                            <div key={item.label} className="rounded-xl border border-black/5 bg-[#FCFBF9] shadow-sm px-4 py-4">
+                                <p className={`text-[10px] font-semibold uppercase tracking-[0.2em] ${DARK_TEXT_MUTED}`}>{item.label}</p>
+                                <p className={`mt-3 text-[13px] font-medium leading-relaxed ${DARK_TEXT_PRIMARY}`}>{item.value}</p>
                             </div>
                         ))}
                     </div>
                 </div>
-            ) : null}
+            )}
         </section>
     );
 }

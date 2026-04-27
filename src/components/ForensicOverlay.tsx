@@ -54,7 +54,7 @@ export default function ForensicOverlay({ imageUrl, anchors }: Props) {
                             className={`absolute border-2 transition-all duration-300 cursor-pointer pointer-events-auto
                                 ${isHovered
                                     ? 'border-accent bg-accent/10 shadow-[0_0_20px_rgba(187,158,123,0.4)] scale-105'
-                                    : 'border-white/40 bg-transparent opacity-40 hover:opacity-100 hover:border-white/80'
+                                    : 'border-[#8B6A3D]/40 bg-transparent opacity-40 hover:opacity-100 hover:border-[#D4A574]/80'
                                 }
                             `}
                             style={{ ...style, zIndex: isHovered ? 60 : baseZIndex }}
@@ -77,7 +77,7 @@ export default function ForensicOverlay({ imageUrl, anchors }: Props) {
 
             {/* Hover Content Panel */}
             {hoveredIdx !== null && (
-                <div className="absolute bottom-4 inset-x-4 p-4 bg-[#141414]/95 backdrop-blur-xl border border-white/30 rounded-2xl z-[70] animate-in fade-in slide-in-from-bottom-2 duration-300 pointer-events-none shadow-2xl">
+                <div className="absolute bottom-4 inset-x-4 p-4 bg-[#141414]/95 backdrop-blur-xl border border-[#8B6A3D]/30 rounded-2xl z-[70] animate-in fade-in slide-in-from-bottom-2 duration-300 pointer-events-none shadow-2xl">
                     <div className="flex items-center gap-2 mb-2">
                         <span className="text-[10px] font-bold text-accent uppercase tracking-widest">Evidence Receipt</span>
                         <span className="px-1.5 py-0.5 rounded bg-white/10 text-white/80 text-[8px] font-bold uppercase">{validAnchors[hoveredIdx].type}</span>
@@ -87,7 +87,7 @@ export default function ForensicOverlay({ imageUrl, anchors }: Props) {
                         "{validAnchors[hoveredIdx].reason}"
                     </p>
                     {validAnchors[hoveredIdx].content && (
-                        <div className="mt-2 pt-2 border-t border-white/20 text-[10px] text-accent/90 font-mono truncate">
+                        <div className="mt-2 pt-2 border-t border-[#8B6A3D]/20 text-[10px] text-accent/90 font-mono truncate">
                             Value: {validAnchors[hoveredIdx].content}
                         </div>
                     )}

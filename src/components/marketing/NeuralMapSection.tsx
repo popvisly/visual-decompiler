@@ -51,7 +51,7 @@ export default function NeuralMapSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-60px' }}
                             transition={{ duration: 0.75, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                            className="rounded-[24px] border border-white/10 bg-white/[0.02] p-7 md:p-8"
+                            className="rounded-[24px] border border-[#8B6A3D]/10 bg-white/[0.02] p-7 md:p-8"
                         >
                             <h3 className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#C1A674]">
                                 {pillar.title}

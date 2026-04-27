@@ -92,7 +92,7 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: EASE }}
-                            className="bg-white/5 border border-white/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between"
+                            className="bg-white/5 border border-[#8B6A3D]/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between"
                         >
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.observer.name}</p>
@@ -111,7 +111,7 @@ export default function PricingPage() {
                             
                             <a
                                 href={PRICING.observer.ctaHref}
-                                className="inline-flex w-full items-center justify-center border border-white/10 bg-white/5 px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-white transition hover:bg-white hover:text-black"
+                                className="inline-flex w-full items-center justify-center border border-[#8B6A3D]/10 bg-white/5 px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-white transition hover:bg-white hover:text-black"
                             >
                                 {PRICING.observer.ctaLabel}
                             </a>
@@ -123,7 +123,7 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-                            className="bg-white/5 border border-white/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between"
+                            className="bg-white/5 border border-[#8B6A3D]/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between"
                         >
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.strategic.name}</p>
@@ -131,7 +131,7 @@ export default function PricingPage() {
                                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#C1A674] mb-10">Monthly Protocol</p>
                                 
                                 <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.strategic.tagline}</p>
-                                <p className="text-white/50 mb-8 leading-relaxed italic border-l border-white/20 pl-4">Everything in Observer, plus:</p>
+                                <p className="text-white/50 mb-8 leading-relaxed italic border-l border-[#8B6A3D]/20 pl-4">Everything in Observer, plus:</p>
                                 
                                 <ul className="space-y-6 mb-12">
                                     {PRICING.strategic.features.map((feature) => (
@@ -166,7 +166,7 @@ export default function PricingPage() {
                                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#C1A674] mb-10">Unlimited Inbound</p>
                                 
                                 <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.professional.tagline}</p>
-                                <p className="text-white/50 mb-8 leading-relaxed italic border-l border-white/20 pl-4">Everything in Strategic, plus:</p>
+                                <p className="text-white/50 mb-8 leading-relaxed italic border-l border-[#8B6A3D]/20 pl-4">Everything in Strategic, plus:</p>
                                 
                                 <ul className="space-y-6 mb-12">
                                     {PRICING.professional.features.map((feature) => (
@@ -190,7 +190,7 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}
-                            className="bg-white/5 border border-white/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between"
+                            className="bg-white/5 border border-[#8B6A3D]/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between"
                         >
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.agency.name}</p>
@@ -238,7 +238,7 @@ export default function PricingPage() {
                     </div>
 
                     <div className="overflow-x-auto">
-                        <table className="min-w-[1000px] w-full border-separate border-spacing-0 rounded-[3rem] border border-white/10 overflow-hidden">
+                        <table className="min-w-[1000px] w-full border-separate border-spacing-0 rounded-[3rem] border border-[#8B6A3D]/10 overflow-hidden">
                             <thead className="bg-white/5">
                                 <tr>
                                     <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674]">System Feature</th>
@@ -250,12 +250,12 @@ export default function PricingPage() {
                             </thead>
                             <tbody>
                                 {PRICING_COMPARISON_ROWS.map((row, index) => (
-                                    <tr key={row[0]} className="border-t border-white/5 group bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
-                                        <td className="px-10 py-6 border-t border-white/5 text-[14px] font-black uppercase tracking-wider text-white">{row[0]}</td>
-                                        <td className="px-10 py-6 border-t border-white/5 text-[14px] text-white/40">{row[1]}</td>
-                                        <td className="px-10 py-6 border-t border-white/5 text-[14px] text-white/60 font-bold">{row[2]}</td>
-                                        <td className="px-10 py-6 border-t border-white/5 text-[14px] text-white/60 font-bold">{row[3]}</td>
-                                        <td className="px-10 py-6 border-t border-white/5 text-[14px] text-[#C1A674] font-black">{row[4]}</td>
+                                    <tr key={row[0]} className="border-t border-[#8B6A3D]/5 group bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
+                                        <td className="px-10 py-6 border-t border-[#8B6A3D]/5 text-[14px] font-black uppercase tracking-wider text-white">{row[0]}</td>
+                                        <td className="px-10 py-6 border-t border-[#8B6A3D]/5 text-[14px] text-white/40">{row[1]}</td>
+                                        <td className="px-10 py-6 border-t border-[#8B6A3D]/5 text-[14px] text-white/60 font-bold">{row[2]}</td>
+                                        <td className="px-10 py-6 border-t border-[#8B6A3D]/5 text-[14px] text-white/60 font-bold">{row[3]}</td>
+                                        <td className="px-10 py-6 border-t border-[#8B6A3D]/5 text-[14px] text-[#C1A674] font-black">{row[4]}</td>
                                     </tr>
                                 ))}
                             </tbody>

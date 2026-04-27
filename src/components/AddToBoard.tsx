@@ -146,7 +146,7 @@ export default function AddToBoard({
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-64 bg-[#141414] border border-white/10 rounded-2xl shadow-2xl p-3 z-50 animate-in fade-in zoom-in duration-200">
+                <div className="absolute right-0 mt-2 w-64 bg-[#141414] border border-[#8B6A3D]/10 rounded-2xl shadow-2xl p-3 z-50 animate-in fade-in zoom-in duration-200">
                     <div className="max-h-48 overflow-y-auto space-y-1 mb-3 custom-scrollbar">
                         {isLoading ? (
                             <div className="flex items-center justify-center py-4">
@@ -166,7 +166,7 @@ export default function AddToBoard({
                                     {successId === board.id ? (
                                         <Check className="w-3.5 h-3.5 text-green-400" />
                                     ) : (
-                                        <div className="w-3.5 h-3.5 rounded-full border border-white/20 group-hover:border-accent group-hover:bg-accent/10 transition-all" />
+                                        <div className="w-3.5 h-3.5 rounded-full border border-[#8B6A3D]/20 group-hover:border-accent group-hover:bg-accent/10 transition-all" />
                                     )}
                                 </button>
                             ))
@@ -186,7 +186,7 @@ export default function AddToBoard({
                     {!isCreating ? (
                         <button
                             onClick={() => setIsCreating(true)}
-                            className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl border border-dashed border-white/10 text-[10px] text-txt-on-dark-muted font-bold uppercase tracking-tight hover:border-accent hover:text-accent transition-all"
+                            className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl border border-dashed border-[#8B6A3D]/10 text-[10px] text-txt-on-dark-muted font-bold uppercase tracking-tight hover:border-accent hover:text-accent transition-all"
                         >
                             <FolderPlus className="w-3.5 h-3.5" />
                             Create New Board
@@ -203,7 +203,7 @@ export default function AddToBoard({
                                     if (e.key === 'Escape') setIsCreating(false);
                                 }}
                                 placeholder="Board Name..."
-                                className="w-full px-3 py-2 text-[11px] bg-white/5 text-txt-on-dark border border-white/10 rounded-xl focus:outline-none focus:border-accent transition-all"
+                                className="w-full px-3 py-2 text-[11px] bg-white/5 text-txt-on-dark border border-[#8B6A3D]/10 rounded-xl focus:outline-none focus:border-accent transition-all"
                             />
                             <div className="flex gap-2">
                                 <button

@@ -382,7 +382,7 @@ function VaultCard({ asset, isSelected, onToggle, index }: { asset: VaultAsset, 
             <div 
                 onClick={(e) => { e.preventDefault(); onToggle(); }}
                 className={`absolute top-6 right-6 z-30 w-8 h-8 rounded-md border cursor-pointer flex items-center justify-center transition-all duration-300 ${
-                    isSelected ? 'bg-[#C1A674] border-[#C1A674] shadow-[0_0_16px_rgba(193,166,116,0.32)]' : 'bg-[#141414]/55 border-white/25 opacity-85 group-hover:opacity-100'
+                    isSelected ? 'bg-[#C1A674] border-[#C1A674] shadow-[0_0_16px_rgba(193,166,116,0.32)]' : 'bg-[#141414]/55 border-[#8B6A3D]/25 opacity-85 group-hover:opacity-100'
                 }`}
             >
                 {isSelected && <Check className="w-4 h-4 text-black stroke-[4]" />}

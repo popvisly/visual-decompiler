@@ -143,7 +143,7 @@ export default function ChapterTransitionStage() {
                         transition={{ duration: 4.2 + index, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
                         initial={false}
                     >
-                        <div className="border border-white/10 bg-[rgba(17,15,13,0.72)] px-4 py-4 backdrop-blur-sm">
+                        <div className="border border-[#8B6A3D]/10 bg-[rgba(17,15,13,0.72)] px-4 py-4 backdrop-blur-sm">
                             <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#8A8175]">{signal.value}</p>
                             <p className="mt-2 text-[12px] font-black uppercase tracking-[0.18em] text-[#FBF7EF]">{signal.label}</p>
                         </div>
