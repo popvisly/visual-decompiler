@@ -2940,7 +2940,7 @@ export default function AssetWorkspace({
                     <div ref={assetContextTopRef} className="vault-analysis-frame scroll-mt-[250px] md:scroll-mt-[210px]">
                     {/* Top Workspace Navigation */}
                     <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-30 bg-transparent px-[clamp(12px,1.6vw,24px)] pt-4 pb-4 md:pt-6`}>
-                        <div className="mx-auto max-w-[100%] rounded-2xl border border-[#8B6A3D]/8 bg-[#151411]/74 p-2 shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-xl md:p-3 text-white">
+                        <div className="mx-auto max-w-[100%] rounded-2xl border border-black/5 bg-[#E8E2D6]/40 p-2 shadow-sm backdrop-blur-xl md:p-2">
                             <div className="relative md:hidden">
                                 <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                                     {dossierTabs.map((tab) => (
@@ -2949,10 +2949,10 @@ export default function AssetWorkspace({
                                             type="button"
                                             onClick={() => handleTabChange(tab)}
                                             aria-current={activeTab === tab ? 'page' : undefined}
-                                            className={`inline-flex min-h-[38px] items-center justify-center whitespace-nowrap rounded-xl border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.24em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                            className={`inline-flex min-h-[38px] items-center justify-center whitespace-nowrap rounded-xl px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.24em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
                                                 activeTab === tab
-                                                    ? 'border-[#8B6A3D]/45 bg-[#1A1A1A] text-[#F3F1ED] shadow-sm'
-                                                    : 'border-transparent bg-transparent text-[#D6D0C6]/70 hover:text-[#F3F1ED] hover:bg-[#201C16]'
+                                                    ? 'bg-[#1A1A1A] text-white shadow-sm'
+                                                    : 'bg-transparent text-[#1A1A1A]/30 hover:text-[#1A1A1A] hover:bg-black/5'
                                             }`}
                                         >
                                             {DOSSIER_TAB_LABELS[tab]}
@@ -2962,17 +2962,17 @@ export default function AssetWorkspace({
                             </div>
 
                             <div className="hidden md:block">
-                                <div className="grid grid-cols-5 gap-2">
+                                <div className="grid grid-cols-5 gap-1">
                                     {primaryNavTabs.map((tab) => (
                                         <button
                                             key={tab}
                                             type="button"
                                             onClick={() => handleTabChange(tab)}
                                             aria-current={activeTab === tab ? 'page' : undefined}
-                                            className={`inline-flex min-h-[40px] w-full items-center justify-center text-center rounded-xl border px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.26em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                            className={`inline-flex min-h-[40px] w-full items-center justify-center text-center rounded-xl px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.26em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/10 ${
                                                 activeTab === tab
-                                                    ? 'border-[#8B6A3D]/45 bg-[#1A1A1A] text-[#F3F1ED] shadow-sm'
-                                                    : 'border-transparent bg-transparent text-[#D6D0C6]/70 hover:text-[#F3F1ED] hover:bg-[#201C16]'
+                                                    ? 'bg-[#1A1A1A] text-white shadow-sm'
+                                                    : 'bg-transparent text-[#1A1A1A]/30 hover:text-[#1A1A1A] hover:bg-black/5'
                                             }`}
                                         >
                                             {DOSSIER_TAB_LABELS[tab]}
@@ -2981,8 +2981,8 @@ export default function AssetWorkspace({
                                 </div>
 
                                 {secondaryNavTabs.length > 0 && (
-                                    <div className="mt-2 border-t border-[#8B6A3D]/8 pt-2">
-                                        <div className="grid grid-cols-3 gap-2 lg:grid-cols-6">
+                                    <div className="mt-2 border-t border-black/5 pt-2">
+                                        <div className="grid grid-cols-3 gap-1 lg:grid-cols-6">
                                             {secondaryNavTabs.map((tab) => (
                                                 <button
                                                     key={tab}
@@ -3116,11 +3116,13 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
                                     <div className="space-y-10">
-                                        <WorkspaceTabHeader
-                                            kicker="Quality Gate"
-                                            title="Creative Decision Analysis"
-                                            intro="A structured read of decision quality based on evidence strength, strategic fit, and execution risk."
-                                        />
+                                        <div className="px-5">
+                                            <WorkspaceTabHeader
+                                                kicker="Quality Gate"
+                                                title="Creative Decision Analysis"
+                                                intro="A structured read of decision quality based on evidence strength, strategic fit, and execution risk."
+                                            />
+                                        </div>
 
                                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                             {/* Metrics Row */}
