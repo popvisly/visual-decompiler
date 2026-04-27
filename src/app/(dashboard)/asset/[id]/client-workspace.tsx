@@ -1902,6 +1902,7 @@ export default function AssetWorkspace({
     const [activeAct, setActiveAct] = useState<string | null>(null);
 
     const printRef = useRef<HTMLDivElement>(null);
+    const assetContextTopRef = useRef<HTMLDivElement>(null);
     const tabContentTopRef = useRef<HTMLDivElement>(null);
 
     const handleTabChange = (tab: DossierTab) => {
@@ -1911,7 +1912,8 @@ export default function AssetWorkspace({
         if (typeof window !== 'undefined') {
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             requestAnimationFrame(() => {
-                tabContentTopRef.current?.scrollIntoView({
+                const scrollTarget = tab === 'ASSET CONTEXT' ? assetContextTopRef.current : tabContentTopRef.current;
+                scrollTarget?.scrollIntoView({
                     behavior: prefersReducedMotion ? 'auto' : 'smooth',
                     block: 'start',
                 });
@@ -2935,7 +2937,7 @@ export default function AssetWorkspace({
                             </a>
                         </div>
                     )}
-                    <div className="vault-analysis-frame">
+                    <div ref={assetContextTopRef} className="vault-analysis-frame scroll-mt-24">
                     {/* Top Workspace Navigation */}
                     <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-30 bg-transparent px-[clamp(12px,1.6vw,24px)] pt-8 pb-3 md:pt-10`}>
                         <div className="mx-auto max-w-[100%] rounded-[2.25rem] border border-[#D4A574]/22 bg-[#1A1A1A] p-4 md:p-5">
@@ -3004,249 +3006,112 @@ export default function AssetWorkspace({
                     </div>
 
 
-                    {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    {activeTab === 'ASSET CONTEXT' && (
-<aside className={`vault-analysis-asset-rail mx-auto w-full relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'} z-10`}>
-                        <div className="mx-auto grid w-full max-w-[var(--analysis-right-max)] gap-8 px-[clamp(12px,1.6vw,24px)] pt-10 pb-8 lg:grid-cols-[minmax(280px,390px)_minmax(0,1fr)] lg:items-start lg:pt-14">
-
-                            <div className="w-full max-w-[520px] lg:max-w-[390px]">
-                            <div 
-                                className={`w-full max-w-[390px] aspect-[4/5] relative flex items-center justify-center overflow-hidden rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] group shadow-2xl transition-all duration-1000 ${showRadiant ? 'brightness-75' : ''}`}
-                                style={getAssetStyle()}
-                            >
-                                {/* Grid HUD Texture */}
-                                <div className={`absolute inset-0 pointer-events-none z-[2] ${sampleMode ? '' : ''}`} />
-
-                                {/* If multiple images, render a horizontal CSS scroll snap setup */}
-                                <div className="flex w-full h-full overflow-x-auto snap-x snap-mandatory scrollbar-hide z-[1]">
-                                    {fileUrls.map((url, idx) => (
-                                        <img
-                                            key={idx}
-                                            src={url}
-                                            alt={`Asset frame ${idx}`}
-                                            className="w-full h-full object-cover object-center shrink-0 snap-center transition-all duration-700"
-                                        />
-                                    ))}
-                                </div>
-                                {fileUrls.length > 1 && (
-                                    <div className={`absolute bottom-6 left-1/2 -translate-x-1/2 backdrop-blur-3xl px-4 py-2 flex gap-3 z-[10] ${sampleMode ? 'bg-white border border-[#d4c9b8]' : 'bg-white/90 backdrop-blur-sm border border-[#d4c9b8]'}`}>
-                                        {fileUrls.map((_, i) => (
-                                            <div key={i} className={`w-1.5 h-1.5 ${sampleMode ? 'bg-[#D4A574]/50' : 'bg-[#D4A574]/20'}`} />
-                                        ))}
-                                    </div>
-                                )}
-                                {showRadiant && <RadiantArchitectureOverlay data={(extraction?.full_dossier as any)?.radiant_architecture} />}
-                                {asset.type !== 'STATIC' && (
-                                    <div className={`absolute top-6 left-6 ${sampleMode ? 'bg-white/90 border-[#d4c9b8]' : 'bg-white border border-[#D4A574]/40'} backdrop-blur-md z-[10]`}>
-                                        <span className={`text-[10px] font-semibold uppercase tracking-[0.4em] ${sampleMode ? 'text-[#D4A574]' : 'text-[#D4A574]'}`}>{asset.type}</span>
-                                    </div>
-                                )}
-                            </div>
-                            </div>
-
-                            <div className={`w-full max-w-none mt-8 lg:mt-0 ${sampleMode ? '' : 'border-b border-[#E7DED1]'} pb-8`}>
-                                <div className="mb-6">
-                                    <h1 className={`text-[5vw] lg:text-[4vw] font-semibold tracking-tightest leading-none uppercase mb-2 ${sampleMode ? 'text-[#D4A574]' : 'text-[#1a1a1a]'}`}>{asset.brand?.name}</h1>
-                                    <span className={`text-[12px] font-semibold uppercase tracking-[0.5em] ${sampleMode ? 'text-[#D4A574]' : 'text-[#D4A574]'}`}>{asset.brand?.market_sector}</span>
-                                </div>
-                                {sampleMode ? (
-                                    <div className="rounded-[1.5rem] border border-[#D4A574]/18 bg-[#1a1a1a] px-5 py-5 text-[#faf7f2]">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">Sample access</p>
-                                        <p className="mt-3 text-[13px] leading-relaxed text-[#faf7f2]/78">This is a live sample dossier.</p>
-                                        <p className="mt-2 text-[13px] leading-relaxed text-[#faf7f2]/62">Create your own in under 60 seconds.</p>
-                                        <a
-                                            href="/ingest"
-                                            className="mt-5 inline-flex items-center rounded-full bg-[#D4A574] px-4 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#141414] transition-colors hover:bg-[#c8955b]"
-                                        >
-                                            Start Decompiling Free
-                                        </a>
-                                    </div>
-                                ) : (
-                                    <>
-                                        <div className="mb-6">
-                                            <p className="text-[9px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-3">System Guidance</p>
-                                            <p className="text-[13px] font-normal leading-relaxed text-[#5f5649]">
-                                                Engage differential diagnosis against a second route to surface high-priority strategic pivots.
-                                            </p>
-                                        </div>
-                                        <div className="mb-6 grid grid-cols-1 gap-3">
-                                            <div className="rounded-[2.25rem] border border-[#E7DED1] bg-[#FBF7EF] p-6 group hover:border-[#D4A574]/40 transition-all">
-                                                <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">Differential Diagnostic</p>
-                                                <p className="mb-5 text-[13px] leading-relaxed text-[#5f5649]">
-                                                    Put this brief beside another route and surface the strategic delta.
-                                                </p>
-                                                <a
-                                                    href="/compare"
-                                                    className="inline-flex items-center gap-2 rounded-full border border-[#D4A574] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D4A574] transition-all hover:bg-[#D4A574] hover:text-black"
-                                                >
-                                                    <Code className="h-3 w-3" />
-                                                    Run Analysis
-                                                </a>
-                                            </div>
-
-                                            <div className="rounded-[2.25rem] border border-[#E7DED1] bg-[#FBF7EF] p-6 group hover:border-[#D4A574]/40 transition-all">
-                                                <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#1a1a1a]">Intelligence Export</p>
-                                                <p className="mb-6 text-[13px] leading-relaxed text-[#5f5649]">
-                                                    Generate the briefing summary for immediate review distribution.
-                                                </p>
-                                                <button
-                                                    onClick={() => setShowExportModal(true)}
-                                                    className="inline-flex items-center gap-2 rounded-full border border-[#b0a594] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1a1a1a]/80 transition-all hover:border-[#D4A574]/70 hover:text-[#1a1a1a]"
-                                                >
-                                                    <FileDown className="h-3 w-3" />
-                                                    Export Dossier
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div className="mb-5 rounded-[2rem] border border-[#D4A574]/20 bg-[#171717] px-5 py-5">
-                                            <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">Embed Widget</p>
-                                            <p className="mt-3 text-[13px] leading-relaxed text-[#d6cec3]">
-                                                Paste this iFrame into a client portal, strategy deck, Notion page, or internal dashboard to display a self-contained forensic intelligence panel.
-                                            </p>
-                                            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#D4A574]/75">
-                                                Use for: client-facing reports · internal strategy decks · agency dashboards
-                                            </p>
-                                            <pre className="mt-4 overflow-x-auto rounded-2xl border border-[#D4A574]/20 bg-[#0f0f0f] p-3 text-[10px] leading-relaxed text-[#ded5ca]">
-{`<iframe src="visualdecompiler.com/embed/${asset.id}" width="100%" height="600px" />`}
-                                            </pre>
-                                            <button
-                                                onClick={handleCopyEmbed}
-                                                className="mt-4 no-print inline-flex items-center gap-2 rounded-full border border-[#D4A574]/40 bg-[#1f1f1f] px-4 py-2 text-[10px] font-bold tracking-widest uppercase text-[#D4A574] transition-all hover:border-[#D4A574] hover:text-[#f4d5a5]"
-                                            >
-                                                <Copy className="h-3 w-3" />
-                                                Copy Embed Widget
-                                            </button>
-                                        </div>
-                                        <div className="relative flex flex-col gap-2 xl:flex-row xl:items-start xl:justify-between">
-                                            <button
-                                                onClick={handleOpenCloneDrawer}
-                                                className="no-print inline-flex items-center gap-2 rounded-full bg-[#D4A574] px-4 py-2 text-[10px] font-bold tracking-widest uppercase text-[#141414] transition-all hover:bg-[#c8955b]"
-                                            >
-                                                <Sparkles className="h-3 w-3" />
-                                                {cloneData ? 'Open Clone Engine' : 'Clone This Mechanic'}
-                                            </button>
-                                            <div className="relative xl:min-w-[96px] xl:text-right">
-                                                <span className="text-[9px] font-mono tracking-widest text-[#8B4513]/50">ID: {asset.id.split('-')[0]}</span>
-                                            </div>
-                                            {showCopiedToast && (
-                                                <div className="absolute top-full mt-2 right-0 bg-[#8B4513] text-[#F5F5DC] text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1.5 shadow-lg animate-in fade-in slide-in-from-top-2 duration-200 z-50">
-                                                    Embed Code Copied
-                                                </div>
-                                            )}
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-
-                            {!sampleMode && (
-                                <div className="mt-5 w-full max-w-none">
-                                    <AssetTagEditor
-                                        assetId={asset.id}
-                                        initialTags={asset.tags || []}
-                                        onTagsChange={(nextTags) => {
-                                            setAsset((currentAsset) => ({
-                                                ...currentAsset,
-                                                tags: nextTags,
-                                            }));
-                                        }}
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    </aside>
-                    )}
-
-                    {showExportModal && (
-                        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-white px-6 backdrop-blur-md no-print">
-                            <div className="w-full max-w-xl rounded-[2.5rem] border border-[#E6DDCF] bg-[#FFFCF7] p-10 text-[#151310] shadow-xl">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Export Strategic Dossier</p>
-                                <h3 className="mt-4 text-2xl font-light uppercase tracking-tight">Print-safe agency dossier</h3>
-                                <p className="mt-4 text-sm leading-relaxed text-[#151310]/65">
-                                    For best results use Chrome, choose Save as PDF, set paper size to A4, and disable browser headers and footers.
-                                </p>
-
-                                <div className="mt-8 space-y-3">
-                                    <label className="block text-[11px] font-bold uppercase tracking-[0.24em] text-[#9B8662]">Export preset</label>
-                                    <div className="inline-flex rounded-full border border-[#E6DDCF] bg-[#FBF7F1] p-1.5 shadow-inner">
-                                        <button
-                                            type="button"
-                                            onClick={() => setExportPreset('standard')}
-                                            className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] transition ${
-                                                exportPreset === 'standard' ? 'bg-[#D4A574] text-[#141414]' : 'text-[#D4A574] hover:bg-[#D4A574]/10'
-                                            }`}
-                                        >
-                                            Standard Dossier
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => setExportPreset('pitch')}
-                                            className={`rounded-full px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] transition ${
-                                                exportPreset === 'pitch' ? 'bg-[#D4A574] text-[#141414]' : 'text-[#D4A574] hover:bg-[#D4A574]/10'
-                                            }`}
-                                        >
-                                            Pitch Narrative
-                                        </button>
-                                    </div>
-                                    {exportPreset === 'pitch' && (
-                                        <div className="rounded-2xl border border-[#E6DDCF] bg-[#FBF7F1]/60 p-4 text-sm leading-relaxed text-[#151310]/65">
-                                            Concise client-facing structure: Problem, Insight, Recommendation, and a Strategic Delta fallback if no comparison is attached yet.
-                                        </div>
-                                    )}
-
-                                <div className="mt-6 space-y-2">
-                                    <label className="block text-[10px] font-bold uppercase tracking-[0.24em] text-[#9B8662]">Client Name</label>
-                                    <input
-                                        type="text"
-                                        value={exportClientName}
-                                        onChange={(event) => setExportClientName(event.target.value)}
-                                        placeholder="Optional cover-page client name"
-                                        className="w-full rounded-full border border-[#E6DDCF] bg-[#FBF7F1] px-5 py-3 text-sm text-[#151310] outline-none transition-all focus:border-[#D4A574] focus:ring-1 focus:ring-[#D4A574]/20"
-                                    />
-                                </div>
-
-                                <div className="mt-6 rounded-2xl border border-[#E6DDCF] bg-[#FBF7F1]/60 p-5 text-[13px] leading-relaxed text-[#151310]/70">
-                                    {isWhitelabel
-                                        ? `Agency branding active — ${dossierAgencyName}`
-                                        : 'Visual Decompiler branding active for this export.'}
-                                </div>
-
-                                <div className="mt-8 flex flex-col gap-3 md:flex-row md:justify-end">
-                                    <button
-                                        onClick={() => setShowExportModal(false)}
-                                        className="rounded-full border border-[#D4A574]/30 px-6 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#9B8662] transition-all hover:bg-[#D4A574] hover:text-[#1a1a1a]"
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        onClick={handleInitiateExport}
-                                        className="rounded-full bg-[#D4A574] px-8 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#1a1a1a] shadow-sm transition-all hover:bg-[#8B4513]"
-                                    >
-                                        Initiate Export
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {/* RIGHT COLUMN: Scrollable Forensic Console (55%) */}
-                <div className={`vault-analysis-content-rail mx-auto w-full min-h-screen relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'}`}>
-                    {/* HUD Texture Overlay - removed for clean light aesthetic */}
-                    <div className="pointer-events-none absolute inset-0" />
-                    
-                    <div className="vault-analysis-content-inner relative z-10 min-h-screen w-full bg-transparent">
-
-                    {/* Tab Content Area */}
-                    <div ref={tabContentTopRef} className="scroll-mt-40 md:scroll-mt-52 px-[clamp(12px,1.6vw,24px)] py-[clamp(16px,1.6vw,28px)]">
+                    <div ref={tabContentTopRef} className="scroll-mt-32">
                         {activeTab === 'ASSET CONTEXT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="rounded-[2.5rem] border border-[#D4A574]/22 bg-[#1A1A1A] p-8 md:p-10 text-[#F3F1ED]">
-                                    <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574]">Asset Context</p>
-                                    <h2 className="mt-5 text-[28px] font-semibold tracking-tight text-[#F3F1ED]">Ad Image + Campaign Context</h2>
-                                    <p className="mt-4 max-w-[70ch] text-[14px] leading-relaxed text-[#D6D0C6]/82">Use this tab to review the live source ad, brand metadata, and action controls before moving into analysis modules.</p>
+                                <div className="space-y-10">
+                                    <WorkspaceTabHeader
+                                        kicker="Asset"
+                                        title="Source Asset Workspace"
+                                        intro="Review the live source ad, campaign metadata, and export actions before moving into analysis modules."
+                                    />
+
+                                    <div className="grid gap-6 xl:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
+                                        <section className="rounded-[2.75rem] border border-[#D4A574]/22 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="overflow-hidden rounded-[2rem] border border-[#D4A574]/18 bg-[#151310] p-3">
+                                                <img
+                                                    src={firstFrameUrl}
+                                                    alt={asset.brand?.name || 'Source ad'}
+                                                    className="w-full rounded-[1.35rem] object-cover"
+                                                />
+                                            </div>
+                                            <h3 className="mt-6 text-[30px] font-semibold uppercase leading-[0.92] tracking-[-0.02em] text-[#F3F1ED]">
+                                                {asset.brand?.name || 'Untitled Asset'}
+                                            </h3>
+                                            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">
+                                                {asset.brand?.market_sector || 'Uncategorised Sector'}
+                                            </p>
+                                            <div className="mt-6 space-y-3 border-t border-white/10 pt-6">
+                                                <div className="flex items-center justify-between gap-4 text-[11px] uppercase tracking-[0.2em] text-[#D6D0C6]/68">
+                                                    <span>Asset ID</span>
+                                                    <span className="text-[#F3F1ED]">{asset.id.split('-')[0].toUpperCase()}</span>
+                                                </div>
+                                                <div className="flex items-center justify-between gap-4 text-[11px] uppercase tracking-[0.2em] text-[#D6D0C6]/68">
+                                                    <span>Format</span>
+                                                    <span className="text-[#F3F1ED]">{asset.type || 'Single Frame'}</span>
+                                                </div>
+                                            </div>
+                                        </section>
+
+                                        <section className="rounded-[2.75rem] border border-[#D4A574]/22 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">System Guidance</p>
+                                            <p className="mt-4 max-w-[66ch] text-[16px] leading-relaxed text-[#F3F1ED]/90">
+                                                Engage differential diagnosis against a second route to surface high-priority strategic pivots.
+                                            </p>
+
+                                            <div className="mt-7 grid gap-4 lg:grid-cols-2">
+                                                <div className="rounded-[1.75rem] border border-[#D4A574]/22 bg-[#151310] p-5">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Differential Diagnostic</p>
+                                                    <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/84">
+                                                        Put this brief beside another route and surface the strategic delta.
+                                                    </p>
+                                                </div>
+                                                <div className="rounded-[1.75rem] border border-[#D4A574]/22 bg-[#151310] p-5">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Intelligence Export</p>
+                                                    <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/84">
+                                                        Generate a presentation-ready summary for immediate review distribution.
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="mt-7 flex flex-wrap gap-3">
+                                                <button
+                                                    type="button"
+                                                    onClick={handleCopyEmbed}
+                                                    className="inline-flex items-center gap-2 rounded-full border border-[#D4A574]/35 bg-[#151310] px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D4A574] transition-colors hover:border-[#D4A574] hover:bg-[#201C16]"
+                                                >
+                                                    <Code className="h-3.5 w-3.5" />
+                                                    Copy Embed Widget
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={handleExportDossier}
+                                                    className="inline-flex items-center gap-2 rounded-full border border-[#D4A574]/35 bg-[#151310] px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D4A574] transition-colors hover:border-[#D4A574] hover:bg-[#201C16]"
+                                                >
+                                                    <FileDown className="h-3.5 w-3.5" />
+                                                    Export Dossier (Print/PDF)
+                                                </button>
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                    <div className="grid gap-6 xl:grid-cols-2">
+                                        <section className="rounded-[2.75rem] border border-[#D4A574]/22 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Embed Widget</p>
+                                            <p className="mt-4 text-[13px] leading-relaxed text-[#D6D0C6]/82">
+                                                Paste this iframe into a client portal, strategy deck, Notion page, or internal dashboard.
+                                            </p>
+                                            <div className="mt-5 rounded-[1.5rem] border border-[#D4A574]/22 bg-[#151310] p-4">
+                                                <code className="block overflow-x-auto text-[11px] leading-relaxed text-[#D6D0C6]/82">
+                                                    {`<iframe src="https://www.visualdecompiler.com/embed/${asset.id}" width="100%" height="600px"></iframe>`}
+                                                </code>
+                                            </div>
+                                            <p className="mt-4 text-[11px] uppercase tracking-[0.2em] text-[#D6D0C6]/58">
+                                                Use for: client-facing reports · internal strategy decks · agency dashboards
+                                            </p>
+                                        </section>
+
+                                        <AssetTagEditor
+                                            assetId={asset.id}
+                                            initialTags={asset.tags || []}
+                                            onTagsChange={(nextTags) => setAsset((current) => ({ ...current, tags: nextTags }))}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         )}
+
+                    {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
                         {activeTab === 'QUALITY GATE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
@@ -4915,8 +4780,6 @@ export default function AssetWorkspace({
                         )}
                     </div>
                 </div>
-            </div>
-            </div>
             </div>
             </div>
             </div>
