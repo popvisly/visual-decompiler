@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArtifact';
+import Image from 'next/image';
 
 const STEPS = [
     {
@@ -43,12 +43,6 @@ export default function AnalysisSurfaces() {
                             <p>Not a chat response. Not vague AI commentary.</p>
                             <p>A structured dossier designed for decks, internal reviews, and client conversations.</p>
                         </div>
-                        <p className="mt-5 text-[14px] font-medium uppercase tracking-[0.18em] text-[#C1A674]">
-                            Built for the moments where creative decisions get made.
-                        </p>
-                        <p className="mt-3 text-[14px] uppercase tracking-[0.18em] text-[#F6F1E7]/70">
-                            This is the artifact you receive.
-                        </p>
                     </div>
 
                     <motion.div
@@ -58,7 +52,16 @@ export default function AnalysisSurfaces() {
                         transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
                         className="mt-10"
                     >
-                        <CanonicalDossierArtifact mode="preview" className="mx-auto max-w-[1000px]" />
+                        <div className="mx-auto max-w-[1000px] overflow-hidden rounded-[28px] border border-[rgba(193,166,116,0.22)] bg-[#0E0E0E]">
+                            <Image
+                                src="/images/examples/decompiler.webp"
+                                alt="Visual Decompiler product interface screenshot"
+                                width={1600}
+                                height={900}
+                                className="h-auto w-full object-cover"
+                                priority
+                            />
+                        </div>
                     </motion.div>
                 </div>
             </section>
