@@ -3942,13 +3942,15 @@ export default function AssetWorkspace({
 
                         {activeTab === 'PSYCHOLOGY' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="space-y-10">
-                                    <WorkspaceTabHeader
-                                        kicker="Cognitive Dynamics"
-                                        title="Semiotic Channel Interceptions"
-                                        intro="How the asset encodes meaning, identity cues, and emotional triggers to shape perception and approval momentum."
-                                    />
-                                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                                <div className="flex flex-col gap-4">
+                                    <div className="px-6">
+                                        <WorkspaceTabHeader
+                                            kicker="Cognitive Dynamics"
+                                            title="Semiotic Channel Interceptions"
+                                            intro="How the asset encodes meaning, identity cues, and emotional triggers to shape perception and approval momentum."
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                         {/* Trigger Distribution Map */}
                                         <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <div className="mb-10 flex items-center justify-between border-b border-[#8B6A3D]/8 pb-8">
@@ -4064,7 +4066,7 @@ export default function AssetWorkspace({
                                                     });
 
                                                     return (
-                                                        <motion.svg width="320" height="320" viewBox={`0 0 ${size} ${size}`}>
+                                                        <motion.svg width="100%" height="auto" className="max-w-[380px]" viewBox={`-80 -40 ${size + 160} ${size + 80}`}>
                                                             <defs>
                                                                 <radialGradient id="vdRadarGlow" cx="50%" cy="50%" r="60%">
                                                                     <stop offset="0%" stopColor="rgba(212,165,116,0.25)" />
