@@ -3115,8 +3115,8 @@ export default function AssetWorkspace({
                         {activeTab === 'QUALITY GATE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
-                                    <div className="space-y-10">
-                                        <div className="px-5">
+                                    <div className="flex flex-col gap-4">
+                                        <div className="px-6">
                                             <WorkspaceTabHeader
                                                 kicker="Quality Gate"
                                                 title="Creative Decision Analysis"
@@ -3126,26 +3126,26 @@ export default function AssetWorkspace({
 
                                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                             {/* Metrics Row */}
-                                            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+                                            <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">System Verdict</p>
                                                 <div className="flex items-end gap-2">
                                                     <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{qualityVerdict}</span>
                                                 </div>
                                             </div>
-                                            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+                                            <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">Integrity Index</p>
                                                 <div className="flex items-end gap-1">
                                                     <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{confidenceScore ?? '—'}</span>
                                                     <span className="mb-1 text-xs font-semibold uppercase tracking-wider text-[#8B6A3D]/80">/100</span>
                                                 </div>
                                             </div>
-                                            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+                                            <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">Confidence Match</p>
                                                 <div className="flex items-end gap-2">
                                                     <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{integratedRecommendation.confidence}</span>
                                                 </div>
                                             </div>
-                                            <div className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+                                            <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">Evidence Signal</p>
                                                 <div className="flex items-end gap-2">
                                                     <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{integratedRecommendation.evidenceStrength}</span>
@@ -3153,9 +3153,9 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
 
-                                        <div className="grid gap-6 xl:grid-cols-3">
+                                        <div className="grid gap-4 xl:grid-cols-3">
                                             {/* Strategic Recommendation */}
-                                            <div className="xl:col-span-2 xl:col-start-1 rounded-2xl border border-black/5 bg-white p-8 shadow-sm h-full flex flex-col">
+                                            <div className="xl:col-span-2 xl:col-start-1 rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Strategic Recommendation</p>
                                                 {(() => {
                                                     const thesis = integratedRecommendation.thesis || '';
@@ -3179,7 +3179,7 @@ export default function AssetWorkspace({
 
                                             {/* Diagnostic Flags - Spans Rows 1 & 2 */}
                                             {(failureReasons.length > 0 || integratedRecommendation.knownUnknowns.length > 0) && (
-                                            <div className="xl:col-span-1 xl:col-start-3 xl:row-span-2 xl:row-start-1 rounded-2xl border border-black/5 bg-white p-8 shadow-sm h-full flex flex-col">
+                                            <div className="xl:col-span-1 xl:col-start-3 xl:row-span-2 xl:row-start-1 rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Diagnostic Flags</p>
                                                 
                                                 {failureReasons.length > 0 && (
@@ -3206,14 +3206,14 @@ export default function AssetWorkspace({
                                             )}
 
                                             {/* Risk/Reward & Primary Watchout */}
-                                            <div className="xl:col-span-2 xl:col-start-1 grid gap-6 md:grid-cols-2">
-                                                <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm h-full flex flex-col">
+                                            <div className="xl:col-span-2 xl:col-start-1 grid gap-4 md:grid-cols-2">
+                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-4">Risk / Reward Tension</p>
                                                     <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">
                                                         {integratedRecommendation.riskRewardTension}
                                                     </p>
                                                 </div>
-                                                <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm h-full flex flex-col">
+                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-4">Primary Watchout</p>
                                                     <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">
                                                         {integratedRecommendation.watchouts}
@@ -3222,7 +3222,7 @@ export default function AssetWorkspace({
                                             </div>
 
                                             {/* Action Protocol */}
-                                            <div className="xl:col-span-2 xl:col-start-1 xl:row-start-3 rounded-2xl border border-black/5 bg-white p-8 shadow-sm h-full flex flex-col">
+                                            <div className="xl:col-span-2 xl:col-start-1 xl:row-start-3 rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
                                                 <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Action Protocol</p>
                                                 <div className="space-y-4 flex-1">
                                                     {integratedRecommendation.executionNext3.map((step, index) => (
