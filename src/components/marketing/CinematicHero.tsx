@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import ParticleField from "@/components/marketing/ParticleField";
 
 const HERO_ADS = [
     { src: "/images/examples/Chanel_No5.webp", alt: "Chanel No.5 campaign" },
@@ -15,6 +14,8 @@ const HERO_ADS = [
 ];
 
 const HERO_TYPED_WORDS = ["Decoded.", "Scored.", "Mapped.", "Read.", "Deconstructed."];
+
+const HERO_TITLE_ADS = HERO_ADS.slice(0, 3);
 
 export default function CinematicHero() {
     const [heroVisible, setHeroVisible] = useState(false);
@@ -68,17 +69,28 @@ export default function CinematicHero() {
 
     return (
         <section className="relative overflow-hidden bg-[#0B0B0B] px-6 md:px-10" data-presence-tone="dark">
-            <div
-                className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[100svh] opacity-44 [mask-image:linear-gradient(to_bottom,black_0%,black_78%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_78%,transparent_100%)]"
-                aria-hidden="true"
-            >
-                <ParticleField />
-            </div>
-
             <div className="relative z-10 mx-auto w-full max-w-[1200px]">
-                <div className="flex min-h-[100svh] items-center justify-center pt-28 pb-16 md:pt-32 md:pb-20">
+                <div className="relative flex min-h-[100svh] items-center justify-center overflow-hidden pt-28 pb-16 md:pt-32 md:pb-20">
+                    <div className="pointer-events-none absolute inset-0 hidden grid-cols-3 gap-4 md:grid" aria-hidden="true">
+                        {HERO_TITLE_ADS.map((ad) => (
+                            <div
+                                key={`hero-bg-${ad.src}`}
+                                className="relative overflow-hidden rounded-[30px] border border-[rgba(193,166,116,0.20)] bg-[#111111]"
+                            >
+                                <Image
+                                    src={ad.src}
+                                    alt={ad.alt}
+                                    fill
+                                    sizes="33vw"
+                                    className="object-cover opacity-30"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.5),rgba(0,0,0,0.62))]" aria-hidden="true" />
+
                     <h1
-                        className={`mx-auto w-full text-center text-[clamp(52px,8.8vw,132px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] transition-all duration-[1400ms] ease-out ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
+                        className={`relative z-10 mx-auto w-full text-center text-[clamp(52px,8.8vw,132px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] transition-all duration-[1400ms] ease-out ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
                     >
                         <span>Advertising intelligence.&nbsp;</span>
                         <span className="inline-flex min-w-[14ch] items-baseline justify-center whitespace-nowrap text-center align-baseline">
