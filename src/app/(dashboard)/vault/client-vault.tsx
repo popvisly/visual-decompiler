@@ -323,7 +323,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                             ))}
                         </div>
                     ) : (
-                        <div className="py-64 flex flex-col items-center justify-center text-center border-t border-[#141414]/8">
+                        <div className="py-32 mt-12 flex flex-col items-center justify-center text-center border-t border-[#141414]/8">
                             <motion.div
                                 initial={{ scale: 0.9, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
