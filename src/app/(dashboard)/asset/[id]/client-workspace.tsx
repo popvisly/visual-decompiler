@@ -3151,104 +3151,103 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
 
-                                        <div className="grid gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-                                            {/* Main Content Area */}
-                                            <div className="space-y-6">
-                                                <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Strategic Recommendation</p>
-                                                    {(() => {
-                                                        const thesis = integratedRecommendation.thesis || '';
-                                                        const [firstSentence, ...restParts] = thesis.split(/(?<=[.!?])\s+/);
-                                                        const remainingText = restParts.join(' ').trim();
-                                                        return (
-                                                            <div className="max-w-[65ch]">
-                                                                <p className="text-[20px] lg:text-[22px] leading-[1.3] font-semibold tracking-tight text-[#1a1a1a]">
-                                                                    {firstSentence || thesis}
+                                        <div className="grid gap-6 xl:grid-cols-3">
+                                            {/* Strategic Recommendation */}
+                                            <div className="xl:col-span-2 xl:col-start-1 rounded-2xl border border-black/5 bg-white p-8 shadow-sm h-full flex flex-col">
+                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Strategic Recommendation</p>
+                                                {(() => {
+                                                    const thesis = integratedRecommendation.thesis || '';
+                                                    const [firstSentence, ...restParts] = thesis.split(/(?<=[.!?])\s+/);
+                                                    const remainingText = restParts.join(' ').trim();
+                                                    return (
+                                                        <div className="max-w-[65ch]">
+                                                            <p className="text-[20px] lg:text-[22px] leading-[1.3] font-semibold tracking-tight text-[#1a1a1a]">
+                                                                {firstSentence || thesis}
+                                                            </p>
+                                                            {remainingText && (
+                                                                <p className="mt-4 text-[14px] leading-relaxed font-medium text-[#6B6B6B]">
+                                                                    {remainingText}
                                                                 </p>
-                                                                {remainingText && (
-                                                                    <p className="mt-4 text-[14px] leading-relaxed font-medium text-[#6B6B6B]">
-                                                                        {remainingText}
-                                                                    </p>
-                                                                )}
-                                                            </div>
-                                                        );
-                                                    })()}
-                                                    <p className="mt-6 max-w-[65ch] text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{integratedRecommendation.whyNow}</p>
-                                                </div>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })()}
+                                                <p className="mt-6 max-w-[65ch] text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{integratedRecommendation.whyNow}</p>
+                                            </div>
 
-                                                <div className="grid gap-6 md:grid-cols-2">
-                                                    <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-4">Risk / Reward Tension</p>
-                                                        <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">
-                                                            {integratedRecommendation.riskRewardTension}
-                                                        </p>
-                                                    </div>
-                                                    <div className="rounded-2xl border border-[rgba(212,165,116,0.3)] bg-[rgba(212,165,116,0.03)] p-8 shadow-sm">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D] mb-4">Primary Watchout</p>
-                                                        <p className="text-[13px] leading-relaxed text-[#8B6A3D]/90 font-medium">
-                                                            {integratedRecommendation.watchouts}
-                                                        </p>
-                                                    </div>
-                                                </div>
-
-                                                <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Action Protocol</p>
-                                                    <div className="space-y-4">
-                                                        {integratedRecommendation.executionNext3.map((step, index) => (
-                                                            <div key={index} className="flex gap-4 items-start">
-                                                                <span className="text-[10px] font-bold text-[#D4A574] mt-1 shrink-0">{index + 1}.</span>
-                                                                <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{step}</p>
+                                            {/* Diagnostic Flags - Spans Rows 1 & 2 */}
+                                            {(failureReasons.length > 0 || integratedRecommendation.knownUnknowns.length > 0) && (
+                                            <div className="xl:col-span-1 xl:col-start-3 xl:row-span-2 xl:row-start-1 rounded-2xl border border-black/5 bg-white p-8 shadow-sm h-full flex flex-col">
+                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Diagnostic Flags</p>
+                                                
+                                                {failureReasons.length > 0 && (
+                                                    <div className="space-y-5 mb-8 flex-1">
+                                                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-4">Critical Risk Points</p>
+                                                        {failureReasons.map((reason, index) => (
+                                                            <div key={`${reason.title}-${index}`} className="border-l-2 border-[#D4A574]/40 pl-4 py-1">
+                                                                <p className="text-[11px] font-semibold tracking-wide text-[#1a1a1a] mb-1">{reason.title}</p>
+                                                                <p className="text-[12px] leading-relaxed text-[#6B6B6B]">{reason.detail}</p>
                                                             </div>
                                                         ))}
                                                     </div>
+                                                )}
+
+                                                {integratedRecommendation.knownUnknowns.length > 0 && (
+                                                    <div className="space-y-4 pt-6 mt-auto border-t border-black/5">
+                                                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">Known Unknowns</p>
+                                                        <p className="text-[12px] leading-relaxed text-[#6B6B6B]">
+                                                            {integratedRecommendation.knownUnknowns.join(' ')}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            )}
+
+                                            {/* Risk/Reward & Primary Watchout */}
+                                            <div className="xl:col-span-2 xl:col-start-1 grid gap-6 md:grid-cols-2">
+                                                <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm h-full flex flex-col">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-4">Risk / Reward Tension</p>
+                                                    <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">
+                                                        {integratedRecommendation.riskRewardTension}
+                                                    </p>
+                                                </div>
+                                                <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm h-full flex flex-col">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-4">Primary Watchout</p>
+                                                    <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">
+                                                        {integratedRecommendation.watchouts}
+                                                    </p>
                                                 </div>
                                             </div>
 
-                                            {/* Side Panel Area */}
-                                            <div className="space-y-6">
-                                                {(failureReasons.length > 0 || integratedRecommendation.knownUnknowns.length > 0) && (
-                                                <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Diagnostic Flags</p>
-                                                    
-                                                    {failureReasons.length > 0 && (
-                                                        <div className="space-y-5 mb-8">
-                                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-4">Critical Risk Points</p>
-                                                            {failureReasons.map((reason, index) => (
-                                                                <div key={`${reason.title}-${index}`} className="border-l-2 border-[#D4A574]/40 pl-4 py-1">
-                                                                    <p className="text-[11px] font-semibold tracking-wide text-[#1a1a1a] mb-1">{reason.title}</p>
-                                                                    <p className="text-[12px] leading-relaxed text-[#6B6B6B]">{reason.detail}</p>
-                                                                </div>
-                                                            ))}
+                                            {/* Action Protocol */}
+                                            <div className="xl:col-span-2 xl:col-start-1 xl:row-start-3 rounded-2xl border border-black/5 bg-white p-8 shadow-sm h-full flex flex-col">
+                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Action Protocol</p>
+                                                <div className="space-y-4 flex-1">
+                                                    {integratedRecommendation.executionNext3.map((step, index) => (
+                                                        <div key={index} className="flex gap-4 items-start">
+                                                            <span className="text-[10px] font-bold text-[#D4A574] mt-1 shrink-0">{index + 1}.</span>
+                                                            <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{step}</p>
                                                         </div>
-                                                    )}
-
-                                                    {integratedRecommendation.knownUnknowns.length > 0 && (
-                                                        <div className="space-y-4 pt-6 border-t border-black/5">
-                                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">Known Unknowns</p>
-                                                            <p className="text-[12px] leading-relaxed text-[#6B6B6B]">
-                                                                {integratedRecommendation.knownUnknowns.join(' ')}
-                                                            </p>
-                                                        </div>
-                                                    )}
+                                                    ))}
                                                 </div>
-                                                )}
+                                            </div>
 
-                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Module Benchmarks</p>
-                                                    <div className="space-y-4">
-                                                        {integratedRecommendation.moduleScores.map((score) => (
-                                                            <div key={score.label}>
-                                                                <div className="flex items-center justify-between gap-4 mb-2">
-                                                                    <p className="text-[11px] font-medium tracking-wide text-[#1a1a1a]">{score.label}</p>
-                                                                </div>
-                                                                <div className="flex gap-1">
-                                                                    {[1,2,3,4,5].map(i => (
-                                                                        <div key={i} className={`h-1.5 flex-1 rounded-sm ${i <= score.score ? 'bg-[#D4A574]' : 'bg-[#EAEADF]'}`} />
-                                                                    ))}
-                                                                </div>
+                                            {/* Module Benchmarks */}
+                                            <div className="xl:col-span-1 xl:col-start-3 xl:row-start-3 rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
+                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Module Benchmarks</p>
+                                                <div className="space-y-4 flex-1">
+                                                    {integratedRecommendation.moduleScores.map((score) => (
+                                                        <div key={score.label}>
+                                                            <div className="flex items-center justify-between gap-4 mb-2">
+                                                                <p className="text-[11px] font-medium tracking-wide text-[#1a1a1a]">{score.label}</p>
                                                             </div>
-                                                        ))}
-                                                    </div>
+                                                            <div className="flex gap-1">
+                                                                {[1,2,3,4,5].map(i => (
+                                                                    <div key={i} className={`h-1.5 flex-1 rounded-sm ${i <= score.score ? 'bg-[#D4A574]' : 'bg-[#EAEADF]'}`} />
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    ))}
                                                 </div>
                                             </div>
                                         </div>
