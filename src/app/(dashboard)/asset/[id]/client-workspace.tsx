@@ -1592,20 +1592,20 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
     };
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-6">
             {/* Semiotic Subtext Header Card */}
             {(title || overture) && (
-                <div className="rounded-[2.75rem] border border-[rgba(255,255,255,0.08)] bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_20px_50px_rgba(0,0,0,0.25)]">
-                    <div className="mb-6 flex items-center justify-between border-b border-[#8B6A3D]/8 pb-5">
-                        <h3 className="text-[12px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">{title}</h3>
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/55">Forensic Map v2.0</span>
+                <div className="rounded-2xl border border-black/5 bg-[#FBF7EF] p-6 shadow-sm">
+                    <div className="mb-4 flex items-center justify-between border-b border-black/5 pb-4">
+                        <h3 className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">{title}</h3>
+                        <span className="text-[9px] font-mono uppercase tracking-widest text-[#1a1a1a]/40">Forensic Map v2.0</span>
                     </div>
 
                     {/* Overture */}
                     {overture && (
                         <div className="max-h-[400px] space-y-4 overflow-y-auto pr-1">
                             {toParagraphs(overture).map((paragraph, pi) => (
-                                <p key={pi} className="text-[13px] leading-relaxed text-[#D6D0C6]/72">
+                                <p key={pi} className="text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
                                     {paragraph}
                                 </p>
                             ))}
@@ -1616,35 +1616,35 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
 
             {/* Keep dossier sections vertically stacked to preserve reading width */}
             {blocks.length > 0 && (
-                <div className="space-y-8">
+                <div className="space-y-4">
                     {blocks.map((block, i) => (
                         <div
                             key={i}
                             id={type === 'ACT' ? block.label : undefined}
-                            className={`rounded-3xl border p-6 flex flex-col ${
+                            className={`rounded-2xl border p-6 flex flex-col ${
                                 type === 'ACT'
-                                    ? 'forensic-act-block min-h-[240px] xl:min-h-[280px] scroll-mt-24'
-                                    : 'min-h-[180px] xl:min-h-[210px]'
+                                    ? 'forensic-act-block min-h-[220px] scroll-mt-24'
+                                    : 'min-h-[160px]'
                             } ${
                                 type === 'ACT' && activeAct === block.label
-                                    ? 'border-[#8B6A3D]/45 bg-[#1A1A1A]'
-                                    : 'border-[rgba(255,255,255,0.08)] bg-[#1A1A1A]'
+                                    ? 'border-black/10 bg-white ring-1 ring-black/5'
+                                    : 'border-black/5 bg-[#FCFBF9]'
                             }`}
                         >
                             {type === 'ACT' ? (
                                 <>
-                                    <div className="flex items-center gap-3 mb-5">
-                                        <div className={`w-2 h-2 rounded-full transition-all ${activeAct === block.label ? 'bg-[#D4A882] shadow-[0_0_14px_rgba(212,168,130,0.45)]' : 'bg-[#D4A882]/75'}`} />
-                                        <span className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#D4A882]">{block.label}</span>
+                                    <div className="flex items-center gap-3 mb-4 border-b border-black/5 pb-4">
+                                        <div className={`w-1.5 h-1.5 rounded-full transition-all ${activeAct === block.label ? 'bg-[#8B6A3D] animate-pulse' : 'bg-[#8B6A3D]/40'}`} />
+                                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">{block.label}</span>
                                     </div>
-                                    <h3 className="border-b border-[#8B6A3D]/8 pb-4 text-[2rem] font-semibold uppercase tracking-tightest text-[#F3F1ED] md:text-[2.5rem]">
+                                    <h3 className="text-[2rem] font-semibold uppercase tracking-tight text-[#1a1a1a] md:text-[2.5rem]">
                                         {block.title}
                                     </h3>
                                     <AnalyticWaveMap index={i} isActive={activeAct === block.label} />
-                                    <div className="flex-1 pt-1">
+                                    <div className="flex-1 pt-6">
                                         <div className="max-w-[78ch] space-y-4">
                                             {toParagraphs(block.text).map((paragraph, pi) => (
-                                                <p key={pi} className="text-[15px] font-light leading-8 text-[#D6D0C6]">
+                                                <p key={pi} className="text-[14px] font-medium leading-relaxed text-[#6B6B6B]">
                                                     {paragraph.trim()}
                                                 </p>
                                             ))}
@@ -1653,21 +1653,21 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                 </>
                             ) : (
                                 <>
-                                    <div className="flex items-center gap-3 mb-5">
-                                        <div className="w-2 h-2 rounded-full bg-[#D4A574]/60" />
-                                        <span className="text-[11px] font-bold text-[#D4A574] uppercase tracking-[0.35em]">{block.label}</span>
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[#8B6A3D]/60" />
+                                        <span className="text-[10px] font-bold text-[#1a1a1a] uppercase tracking-wider">{block.label}</span>
                                     </div>
                                     {block.title ? (
-                                        <h3 className="border-b border-[#8B6A3D]/8 pb-5 text-[1.75rem] font-semibold uppercase tracking-tightest text-[#F3F1ED] md:text-[2rem]">
+                                        <h3 className="border-b border-black/5 pb-4 text-[1.5rem] font-semibold uppercase tracking-tight text-[#1a1a1a]">
                                             {block.title}
                                         </h3>
                                     ) : (
-                                        <div className="h-1" />
+                                        <div className="h-0" />
                                     )}
-                                    <div className={`flex-1 ${block.title ? 'pt-6' : 'pt-3'}`}>
+                                    <div className={`flex-1 ${block.title ? 'pt-4' : 'pt-2'}`}>
                                         <div className="max-w-[78ch] space-y-4">
                                             {toParagraphs(block.text).map((paragraph, pi) => (
-                                                <p key={pi} className="text-[15px] font-normal leading-[1.8] text-[#D6D0C6]/90">
+                                                <p key={pi} className="text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
                                                     {paragraph.trim()}
                                                 </p>
                                             ))}
@@ -1679,11 +1679,9 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                     ))}
                 </div>
             )}
-
         </div>
     );
 };
-
 
 function SovereignProcessingView({ assetId, agency }: { assetId: string, agency?: any }) {
     const [step, setStep] = useState(0);
@@ -3413,31 +3411,33 @@ export default function AssetWorkspace({
                         {activeTab === 'SIGNALS' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction?.full_dossier ? (
-                                    <div className="space-y-10">
-                                        <WorkspaceTabHeader
-                                            kicker="Pattern Extraction"
-                                            title="Mechanics"
-                                            intro="A structural decomposition of the signal stack and mechanic architecture—hooks, pacing, contrast, and attention-routing cues that drive response."
-                                        />
+                                    <div className="flex flex-col gap-4">
+                                        <div className="px-6">
+                                            <WorkspaceTabHeader
+                                                kicker="Pattern Extraction"
+                                                title="Mechanics"
+                                                intro="A structural decomposition of the signal stack and mechanic architecture—hooks, pacing, contrast, and attention-routing cues that drive response."
+                                            />
+                                        </div>
                                         
                                         {/* UNIFIED TECHNICAL AUTOPSY CONTAINER */}
-                                        <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-10 space-y-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                        <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col gap-6">
                                             {/* Top: Radiant Architecture Toggle */}
-                                            <div className="flex flex-col gap-10 md:flex-row md:items-center justify-between pb-10 border-b border-[#8B6A3D]/8">
-                                                <div className="flex items-center gap-8">
-                                                    <div className="h-14 w-14 rounded-2xl bg-[#151310] flex items-center justify-center border border-[#8B6A3D]/8 text-[#D4A574]">
-                                                        <Sparkles className="h-6 w-6" />
+                                            <div className="flex flex-col gap-6 md:flex-row md:items-center justify-between pb-6 border-b border-black/5">
+                                                <div className="flex items-center gap-6">
+                                                    <div className="h-12 w-12 rounded-xl bg-[#FBF7EF] flex items-center justify-center border border-[#E7DED1] text-[#8B6A3D]">
+                                                        <Sparkles className="h-5 w-5" />
                                                     </div>
-                                                    <div className="flex flex-col gap-2">
-                                                        <h3 className="text-[12px] font-semibold uppercase tracking-[0.5em] text-[#D4A574]">Macro-Diagnostic Grid</h3>
-                                                        <p className="text-[13px] leading-relaxed text-[#F3F1ED]/86">Visualize focal routing and attention-routing cues.</p>
+                                                    <div className="flex flex-col gap-1">
+                                                        <h3 className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">Macro-Diagnostic Grid</h3>
+                                                        <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">Visualize focal routing and attention-routing cues.</p>
                                                     </div>
                                                 </div>
                                                 <button 
                                                     onClick={() => setShowRadiant(!showRadiant)}
-                                                    className={`px-10 py-4 border text-[11px] font-semibold uppercase tracking-[0.3em] transition-all duration-500 flex items-center gap-4 ${showRadiant ? "bg-[#D4A574] text-black border-[#D4A574] shadow-[0_0_20px_rgba(212,165,116,0.25)]" : "bg-[#151310] text-[#D4A574] border-[#8B6A3D]/8 hover:border-[#8B6A3D]/45"}`}
+                                                    className={`px-6 py-3 rounded-full border text-[10px] font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-3 ${showRadiant ? "bg-[#1a1a1a] text-white border-black shadow-sm" : "bg-white text-[#1a1a1a] border-black/10 hover:bg-black/5"}`}
                                                 >
-                                                    <div className={`h-2 w-2 ${showRadiant ? "bg-white animate-pulse" : "bg-[#D4A574]"}`} />
+                                                    <div className={`h-1.5 w-1.5 rounded-full ${showRadiant ? "bg-[#D4A574] animate-pulse" : "bg-[#1a1a1a]"}`} />
                                                     {showRadiant ? "HUD Active" : "Initialize Optical HUD"}
                                                 </button>
                                             </div>
@@ -3453,75 +3453,69 @@ export default function AssetWorkspace({
                                         </div>
                                                                 {/* ── Gaze Topology ── */}
                                         {(extraction.full_dossier as any)?.gaze_topology && (
-                                            <section className="signals-section mt-14 space-y-10">
-                                                <div className="flex items-center gap-10">
-                                                    <div className="flex flex-col gap-3">
-                                                        <h2 className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Gaze Topology</h2>
-                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/68">Mode of Address and Viewer Positioning</p>
-                                                    </div>
-                                                    <div className="h-px flex-1 bg-white/10" />
+                                            <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col gap-6">
+                                                <div className="flex flex-col gap-1 border-b border-black/5 pb-6">
+                                                    <h2 className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Gaze Topology</h2>
+                                                    <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">Mode of Address and Viewer Positioning</p>
                                                 </div>
 
-                                                <div className="grid grid-cols-1 items-start gap-3 lg:grid-cols-3">
+                                                <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3">
                                                     {[
                                                         { label: 'Mode of Address', value: (extraction.full_dossier as any).gaze_topology.mode_of_address },
                                                         { label: 'Viewer Position', value: (extraction.full_dossier as any).gaze_topology.viewer_position },
                                                         { label: 'Power Holder', value: (extraction.full_dossier as any).gaze_topology.power_holder },
                                                     ].map((item, i) => (
-                                                        <div key={i} className="flex min-h-[200px] flex-col justify-between rounded-[2.5rem] border border-[#8B6A3D]/8 bg-[#151310] px-8 py-8 text-[#F3F1ED]">
-                                                            <h3 className="mb-6 w-full border-b border-[#8B6A3D]/8 pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                                        <div key={i} className="flex min-h-[140px] flex-col justify-between rounded-2xl border border-black/5 bg-[#FCFBF9] p-6 text-[#1a1a1a]">
+                                                            <h3 className="mb-4 w-full border-b border-black/5 pb-4 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">
                                                                 {item.label}
                                                             </h3>
                                                             <div className="flex-1 flex items-center">
-                                                                <span className="text-[24px] font-semibold leading-tight text-[#F3F1ED]">{item.value}</span>
+                                                                <span className="text-[20px] font-semibold leading-tight text-[#1a1a1a]">{item.value}</span>
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                <div className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#151310] p-10">
-                                                    <h3 className="mb-8 border-b border-[#8B6A3D]/8 pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                                <div className="rounded-2xl border border-black/5 bg-[#FBF7EF] p-6">
+                                                    <h3 className="mb-4 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">
                                                         Forensic Gaze Diagnostic
                                                     </h3>
-                                                    <p className="max-w-[72ch] text-[13px] font-medium leading-relaxed break-words text-[#F3F1ED]">
+                                                    <p className="max-w-[72ch] text-[13px] font-medium leading-relaxed break-words text-[#6B6B6B]">
                                                         {(extraction.full_dossier as any).gaze_topology.reading}
                                                     </p>
                                                 </div>
-                                            </section>
+                                            </div>
                                         )}
 
                                         {/* ── Counter-Reading Matrix ── */}
                                         {(extraction.full_dossier as any)?.counter_reading_matrix && (
-                                            <section className="counter-reading-section mt-14 space-y-10">
-                                                <div className="flex items-center gap-10">
-                                                    <div className="flex flex-col gap-3">
-                                                        <h2 className="text-[12px] font-semibold uppercase tracking-[0.42em] text-[#D4A574]">Counter-Reading Matrix</h2>
-                                                        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#D6D0C6]/68">Polysemic deconstruction via critical theory</p>
-                                                    </div>
-                                                    <div className="h-px flex-1 bg-white/10" />
+                                            <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col gap-6">
+                                                <div className="flex flex-col gap-1 border-b border-black/5 pb-6">
+                                                    <h2 className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Counter-Reading Matrix</h2>
+                                                    <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">Polysemic deconstruction via critical theory</p>
                                                 </div>
                                                 <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-2">
                                                     {((extraction.full_dossier as any).counter_reading_matrix as { lens: string; reading: string }[]).map((item, i) => (
-                                                        <div key={i} className="flex min-h-[220px] flex-col rounded-[2.5rem] border border-[#8B6A3D]/8 bg-[#151310] px-8 py-8 text-[#F3F1ED]">
-                                                            <h3 className="mb-6 w-full border-b border-[#D4A574]/16 pb-6 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                                        <div key={i} className="flex min-h-[160px] flex-col rounded-2xl border border-black/5 bg-[#FCFBF9] p-6 text-[#1a1a1a]">
+                                                            <h3 className="mb-4 w-full border-b border-black/5 pb-4 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">
                                                                 {item.lens}
                                                             </h3>
-                                                            <div className="flex-1 max-h-[400px] overflow-y-auto pt-2">
-                                                                <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70 font-medium">{item.reading}</p>
+                                                            <div className="flex-1 max-h-[300px] overflow-y-auto pt-2">
+                                                                <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{item.reading}</p>
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
-                                            </section>
+                                            </div>
                                         )}
                                     </div>
                                 ) : (
-                                     <div className="rounded-[2.5rem] border border-dashed border-[#8B6A3D]/8 bg-[#1A1A1A] p-20 flex flex-col items-center justify-center text-center">
-                                         <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-[#8B6A3D]/18 bg-[#151310]">
-                                         <Info className="h-5 w-5 text-[#D4A574]/50" />
+                                     <div className="rounded-2xl border border-dashed border-black/10 bg-[#FCFBF9] p-20 flex flex-col items-center justify-center text-center">
+                                         <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-black/10 bg-white shadow-sm">
+                                            <Info className="h-5 w-5 text-[#8B6A3D]/60" />
                                          </div>
-                                         <h3 className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#D4A574] mb-2">Deep Intelligence Required</h3>
-                                         <p className="max-w-xs text-[13px] font-light tracking-wide text-[#D6D0C6]/70">Signal interception requires deep architectural extraction of this asset's semiotic layers.</p>
+                                         <h3 className="text-[11px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-2">Deep Intelligence Required</h3>
+                                         <p className="max-w-xs text-[13px] font-medium tracking-wide text-[#6B6B6B]">Signal interception requires deep architectural extraction of this asset's semiotic layers.</p>
                                      </div>
                                 )}
                             </div>
