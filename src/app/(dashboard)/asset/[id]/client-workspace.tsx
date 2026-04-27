@@ -188,6 +188,7 @@ interface SequenceData {
 }
 
 type DossierTab =
+    | 'ASSET CONTEXT'
     | 'QUALITY GATE'
     | 'INTELLIGENCE'
     | 'SIGNALS'
@@ -200,6 +201,7 @@ type DossierTab =
     | 'DECISION LOG';
 
 const FULL_DOSSIER_TABS: readonly DossierTab[] = [
+    'ASSET CONTEXT',
     'QUALITY GATE',
     'INTELLIGENCE',
     'SIGNALS',
@@ -213,6 +215,7 @@ const FULL_DOSSIER_TABS: readonly DossierTab[] = [
 ] as const;
 
 const SAMPLE_DOSSIER_TABS: readonly DossierTab[] = [
+    'ASSET CONTEXT',
     'QUALITY GATE',
     'INTELLIGENCE',
     'SIGNALS',
@@ -223,6 +226,7 @@ const SAMPLE_DOSSIER_TABS: readonly DossierTab[] = [
 ] as const;
 
 const DOSSIER_TAB_LABELS: Record<DossierTab, string> = {
+    'ASSET CONTEXT': 'ASSET',
     'QUALITY GATE': 'QUALITY GATE',
     'INTELLIGENCE': 'INTELLIGENCE',
     'SIGNALS': 'MECHANICS',
@@ -1923,9 +1927,9 @@ export default function AssetWorkspace({
     const { lead: cloneIntroLead, remainder: cloneIntroRemainder } = splitLeadSentence(cloneIntroSource);
     const marketPulseBelowThreshold = (marketPulseData?.assetCount ?? 0) > 0 && (marketPulseData?.assetCount ?? 0) < 20;
     const dossierTabs = sampleMode ? SAMPLE_DOSSIER_TABS : FULL_DOSSIER_TABS;
-		type PrimaryNavTab = Extract<DossierTab, 'QUALITY GATE' | 'INTELLIGENCE' | 'SIGNALS' | 'PSYCHOLOGY'>;
+		type PrimaryNavTab = Extract<DossierTab, 'ASSET CONTEXT' | 'QUALITY GATE' | 'INTELLIGENCE' | 'SIGNALS' | 'PSYCHOLOGY'>;
 		const isPrimaryNavTab = (tab: DossierTab): tab is PrimaryNavTab =>
-			tab === 'QUALITY GATE' || tab === 'INTELLIGENCE' || tab === 'SIGNALS' || tab === 'PSYCHOLOGY';
+			tab === 'ASSET CONTEXT' || tab === 'QUALITY GATE' || tab === 'INTELLIGENCE' || tab === 'SIGNALS' || tab === 'PSYCHOLOGY';
 		const primaryNavTabs = dossierTabs.filter(isPrimaryNavTab);
 		const secondaryNavTabs = dossierTabs.filter((tab) => !isPrimaryNavTab(tab));
     const confidenceScore = normalizeConfidenceScore(extraction?.confidence_score);
@@ -2605,9 +2609,9 @@ export default function AssetWorkspace({
                 }
 
                 .vault-analysis-shell {
-                    --vault-max-width: 1680px;
+                    --vault-max-width: 100%;
                     --vault-content-pad-x: clamp(12px, 1.6vw, 24px);
-                    --analysis-right-max: 1120px;
+                    --analysis-right-max: 100%;
                     --analysis-text-measure: 72ch;
                     max-width: var(--vault-max-width);
                     margin-inline: auto;
@@ -2620,7 +2624,7 @@ export default function AssetWorkspace({
                 }
 
                 .vault-analysis-content-inner {
-                    max-width: var(--analysis-right-max);
+                    width: 100%;
                 }
 
                 .vault-analysis-content-inner p,
@@ -2932,14 +2936,82 @@ export default function AssetWorkspace({
                         </div>
                     )}
                     <div className="vault-analysis-frame">
+                    {/* Top Workspace Navigation */}
+                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-30 bg-transparent px-[clamp(12px,1.6vw,24px)] pt-8 pb-3 md:pt-10`}>
+                        <div className="mx-auto max-w-[100%] rounded-[2.25rem] border border-[#D4A574]/22 bg-[#1A1A1A] p-4 md:p-5">
+                            <div className="relative md:hidden">
+                                <div className="flex gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                                    {dossierTabs.map((tab) => (
+                                        <button
+                                            key={tab}
+                                            type="button"
+                                            onClick={() => handleTabChange(tab)}
+                                            aria-current={activeTab === tab ? 'page' : undefined}
+                                            className={`inline-flex min-h-[48px] items-center justify-center whitespace-nowrap rounded-[0.95rem] border px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                                activeTab === tab
+                                                    ? 'border-[#D4A574]/35 bg-[#151310] text-[#F3F1ED]'
+                                                    : 'border-white/10 bg-[#151310] text-[#D6D0C6]/65 hover:text-[#F3F1ED] hover:border-[#D4A574]/35 hover:bg-[#201C16]'
+                                            }`}
+                                        >
+                                            {DOSSIER_TAB_LABELS[tab]}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="hidden md:block">
+                                <div className="grid grid-cols-5 gap-3">
+                                    {primaryNavTabs.map((tab) => (
+                                        <button
+                                            key={tab}
+                                            type="button"
+                                            onClick={() => handleTabChange(tab)}
+                                            aria-current={activeTab === tab ? 'page' : undefined}
+                                            className={`inline-flex min-h-[52px] w-full items-center justify-center text-center rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                                activeTab === tab
+                                                    ? 'border-[#D4A574]/35 bg-[#151310] text-[#F3F1ED]'
+                                                    : 'border-white/10 bg-[#151310] text-[#D6D0C6]/65 hover:text-[#F3F1ED] hover:border-[#D4A574]/35 hover:bg-[#201C16]'
+                                            }`}
+                                        >
+                                            {DOSSIER_TAB_LABELS[tab]}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {secondaryNavTabs.length > 0 && (
+                                    <div className="mt-4 border-t border-white/10 pt-4">
+                                        <div className="grid grid-cols-3 gap-3 lg:grid-cols-6">
+                                            {secondaryNavTabs.map((tab) => (
+                                                <button
+                                                    key={tab}
+                                                    type="button"
+                                                    onClick={() => handleTabChange(tab)}
+                                                    aria-current={activeTab === tab ? 'page' : undefined}
+                                                    className={`inline-flex min-h-[52px] w-full items-center justify-center text-center rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                                        activeTab === tab
+                                                            ? 'border-[#D4A574]/35 bg-[#151310] text-[#F3F1ED]'
+                                                            : 'border-white/10 bg-[#151310] text-[#D6D0C6]/65 hover:text-[#F3F1ED] hover:border-[#D4A574]/35 hover:bg-[#201C16]'
+                                                    }`}
+                                                >
+                                                    {DOSSIER_TAB_LABELS[tab]}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                    <aside className={`vault-analysis-asset-rail mx-auto w-full relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'} z-10`}>
+                    {activeTab === 'ASSET CONTEXT' && (
+<aside className={`vault-analysis-asset-rail mx-auto w-full relative ${sampleMode ? 'bg-[#F6F1E7]' : 'bg-[#faf7f2]'} z-10`}>
                         <div className="mx-auto grid w-full max-w-[var(--analysis-right-max)] gap-8 px-[clamp(12px,1.6vw,24px)] pt-10 pb-8 lg:grid-cols-[minmax(280px,390px)_minmax(0,1fr)] lg:items-start lg:pt-14">
 
                             <div className="w-full max-w-[520px] lg:max-w-[390px]">
                             <div 
-                                className={`w-full max-w-[390px] aspect-[4/5] relative flex items-center justify-center overflow-hidden rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] group shadow-2xl transition-all duration-1000 ${activeTab === 'SIGNALS' && showRadiant ? 'brightness-75' : ''}`}
+                                className={`w-full max-w-[390px] aspect-[4/5] relative flex items-center justify-center overflow-hidden rounded-[3rem] border border-[#E7DED1] bg-[#FBF7EF] group shadow-2xl transition-all duration-1000 ${showRadiant ? 'brightness-75' : ''}`}
                                 style={getAssetStyle()}
                             >
                                 {/* Grid HUD Texture */}
@@ -2963,7 +3035,7 @@ export default function AssetWorkspace({
                                         ))}
                                     </div>
                                 )}
-                                {activeTab === 'SIGNALS' && showRadiant && <RadiantArchitectureOverlay data={(extraction?.full_dossier as any)?.radiant_architecture} />}
+                                {showRadiant && <RadiantArchitectureOverlay data={(extraction?.full_dossier as any)?.radiant_architecture} />}
                                 {asset.type !== 'STATIC' && (
                                     <div className={`absolute top-6 left-6 ${sampleMode ? 'bg-white/90 border-[#d4c9b8]' : 'bg-white border border-[#D4A574]/40'} backdrop-blur-md z-[10]`}>
                                         <span className={`text-[10px] font-semibold uppercase tracking-[0.4em] ${sampleMode ? 'text-[#D4A574]' : 'text-[#D4A574]'}`}>{asset.type}</span>
@@ -3082,6 +3154,7 @@ export default function AssetWorkspace({
                             )}
                         </div>
                     </aside>
+                    )}
 
                     {showExportModal && (
                         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-white px-6 backdrop-blur-md no-print">
@@ -3163,80 +3236,17 @@ export default function AssetWorkspace({
                     
                     <div className="vault-analysis-content-inner relative z-10 min-h-screen w-full bg-transparent">
 
-                    {/* Minimalist Segmented Controls */}
-                    <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-20 ${sampleMode ? 'border-b border-[#D4A574]/15' : 'border-b border-[#e8ddd0]'} ${sampleMode ? 'bg-[#F6F1E7]/95' : 'bg-[#faf7f2]/95'} px-[clamp(12px,1.6vw,24px)] pt-10 pb-0 backdrop-blur-3xl md:pt-12`}>
-                        {/* Mobile: single-row scroll with an edge cue */}
-                        <div className="relative md:hidden">
-                            <div className="flex gap-10 overflow-x-auto pb-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                                {dossierTabs.map((tab) => (
-                                    <button
-                                        key={tab}
-                                        type="button"
-                                        onClick={() => handleTabChange(tab)}
-                                        aria-current={activeTab === tab ? 'page' : undefined}
-                                        className={`-mx-2 -my-2 rounded-full border px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.4em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
-                                            activeTab === tab
-                                                ? 'border-[#D4A574]/25 bg-white/70 text-[#141414] shadow-sm'
-                                                : (sampleMode
-                                                    ? 'border-transparent text-[#141414]/35 hover:text-[#141414]/75 hover:border-[#E7DED1] hover:bg-white/55'
-                                                    : 'border-transparent text-[#141414]/35 hover:text-[#141414]/70 hover:border-[#E7DED1] hover:bg-white/55')
-                                        }`}
-                                    >
-                                        {DOSSIER_TAB_LABELS[tab]}
-                                    </button>
-                                ))}
-                            </div>
-                            <div className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-[#faf7f2]/95 to-transparent" />
-                        </div>
-
-                        {/* Desktop: grounded two-tier navigation */}
-                        <div className="hidden md:block md:pb-8">
-                            <div className="rounded-[2.25rem] border border-[#D4A574]/22 bg-[#1A1A1A] p-4 md:p-5">
-                                <div className="grid grid-cols-4 gap-3">
-                                    {primaryNavTabs.map((tab) => (
-                                        <button
-                                            key={tab}
-                                            type="button"
-                                            onClick={() => handleTabChange(tab)}
-                                            aria-current={activeTab === tab ? 'page' : undefined}
-                                            className={`inline-flex min-h-[52px] w-full items-center justify-center text-center rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
-                                                activeTab === tab
-                                                    ? 'border-[#D4A574]/35 bg-[#151310] text-[#F3F1ED]'
-                                                    : 'border-white/10 bg-[#151310] text-[#D6D0C6]/65 hover:text-[#F3F1ED] hover:border-[#D4A574]/35 hover:bg-[#201C16]'
-                                            }`}
-                                        >
-                                            {DOSSIER_TAB_LABELS[tab]}
-                                        </button>
-                                    ))}
-                                </div>
-
-                                {secondaryNavTabs.length > 0 && (
-                                    <div className="mt-4 border-t border-white/10 pt-4">
-                                        <div className="grid grid-cols-3 gap-3 lg:grid-cols-6">
-                                            {secondaryNavTabs.map((tab) => (
-                                                <button
-                                                    key={tab}
-                                                    type="button"
-                                                    onClick={() => handleTabChange(tab)}
-                                                    aria-current={activeTab === tab ? 'page' : undefined}
-                                                    className={`inline-flex min-h-[52px] w-full items-center justify-center text-center rounded-[0.95rem] border px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.28em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
-                                                        activeTab === tab
-                                                            ? 'border-[#D4A574]/35 bg-[#151310] text-[#F3F1ED]'
-                                                            : 'border-white/10 bg-[#151310] text-[#D6D0C6]/65 hover:text-[#F3F1ED] hover:border-[#D4A574]/35 hover:bg-[#201C16]'
-                                                    }`}
-                                                >
-                                                    {DOSSIER_TAB_LABELS[tab]}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-
                     {/* Tab Content Area */}
-                    <div ref={tabContentTopRef} className="px-[clamp(12px,1.6vw,24px)] py-[clamp(16px,1.6vw,28px)]">
+                    <div ref={tabContentTopRef} className="scroll-mt-40 md:scroll-mt-52 px-[clamp(12px,1.6vw,24px)] py-[clamp(16px,1.6vw,28px)]">
+                        {activeTab === 'ASSET CONTEXT' && (
+                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="rounded-[2.5rem] border border-[#D4A574]/22 bg-[#1A1A1A] p-8 md:p-10 text-[#F3F1ED]">
+                                    <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574]">Asset Context</p>
+                                    <h2 className="mt-5 text-[28px] font-semibold tracking-tight text-[#F3F1ED]">Ad Image + Campaign Context</h2>
+                                    <p className="mt-4 max-w-[70ch] text-[14px] leading-relaxed text-[#D6D0C6]/82">Use this tab to review the live source ad, brand metadata, and action controls before moving into analysis modules.</p>
+                                </div>
+                            </div>
+                        )}
                         {activeTab === 'QUALITY GATE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
