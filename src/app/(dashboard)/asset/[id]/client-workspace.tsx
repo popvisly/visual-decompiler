@@ -3007,56 +3007,58 @@ export default function AssetWorkspace({
                     <div ref={tabContentTopRef} className="scroll-mt-[250px] md:scroll-mt-[210px] pb-24 lg:pb-32">
                         {activeTab === 'ASSET CONTEXT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="space-y-10">
-                                    <WorkspaceTabHeader
-                                        kicker="Asset"
-                                        title="Source Asset Workspace"
-                                        intro="Review the live source ad, campaign metadata, and export actions before moving into analysis modules."
-                                    />
+                                <div className="flex flex-col gap-4">
+                                    <div className="px-6">
+                                        <WorkspaceTabHeader
+                                            kicker="Asset"
+                                            title="Source Asset Workspace"
+                                            intro="Review the live source ad, campaign metadata, and export actions before moving into analysis modules."
+                                        />
+                                    </div>
 
-                                    <div className="grid gap-6 xl:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
-                                        <section className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <div className="overflow-hidden rounded-[2rem] border border-[#8B6A3D]/8 bg-[#151310] p-3">
+                                    <div className="grid gap-4 xl:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
+                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                            <div className="overflow-hidden rounded-xl border border-black/5 bg-[#FCFBF9] p-3">
                                                 <img
                                                     src={firstFrameUrl}
                                                     alt={asset.brand?.name || 'Source ad'}
-                                                    className="w-full rounded-[1.35rem] object-cover"
+                                                    className="w-full rounded-[0.85rem] border border-black/5 object-cover"
                                                 />
                                             </div>
-                                            <h3 className="mt-6 text-[30px] font-semibold uppercase leading-[0.92] tracking-[-0.02em] text-[#F3F1ED]">
+                                            <h3 className="mt-6 text-[30px] font-semibold uppercase leading-[0.92] tracking-[-0.02em] text-[#1a1a1a]">
                                                 {asset.brand?.name || 'Untitled Asset'}
                                             </h3>
-                                            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">
+                                            <p className="mt-3 text-[10px] font-bold uppercase tracking-wider text-[#8B6A3D]">
                                                 {asset.brand?.market_sector || 'Uncategorised Sector'}
                                             </p>
-                                            <div className="mt-6 space-y-3 border-t border-[#8B6A3D]/8 pt-6">
-                                                <div className="flex items-center justify-between gap-4 text-[11px] uppercase tracking-[0.2em] text-[#D6D0C6]/68">
+                                            <div className="mt-6 space-y-3 border-t border-black/5 pt-6">
+                                                <div className="flex items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B]">
                                                     <span>Asset ID</span>
-                                                    <span className="text-[#F3F1ED]">{asset.id.split('-')[0].toUpperCase()}</span>
+                                                    <span className="text-[#1a1a1a]">{asset.id.split('-')[0].toUpperCase()}</span>
                                                 </div>
-                                                <div className="flex items-center justify-between gap-4 text-[11px] uppercase tracking-[0.2em] text-[#D6D0C6]/68">
+                                                <div className="flex items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B]">
                                                     <span>Format</span>
-                                                    <span className="text-[#F3F1ED]">{asset.type || 'Single Frame'}</span>
+                                                    <span className="text-[#1a1a1a]">{asset.type || 'Single Frame'}</span>
                                                 </div>
                                             </div>
                                         </section>
 
-                                        <section className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">System Guidance</p>
-                                            <p className="mt-4 max-w-[66ch] text-[16px] leading-relaxed text-[#F3F1ED]/90">
+                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">System Guidance</p>
+                                            <p className="mt-4 max-w-[66ch] text-[16px] font-medium leading-relaxed text-[#1a1a1a]">
                                                 Engage differential diagnosis against a second route to surface high-priority strategic pivots.
                                             </p>
 
                                             <div className="mt-7 grid gap-4 lg:grid-cols-2">
-                                                <div className="rounded-[1.75rem] border border-[#8B6A3D]/8 bg-[#151310] p-5">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Differential Diagnostic</p>
-                                                    <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/84">
+                                                <div className="rounded-xl border border-black/5 bg-[#FCFBF9] p-5">
+                                                    <p className="text-[10px] font-bold uppercase tracking-wider text-[#8B6A3D]">Differential Diagnostic</p>
+                                                    <p className="mt-3 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
                                                         Put this brief beside another route and surface the strategic delta.
                                                     </p>
                                                 </div>
-                                                <div className="rounded-[1.75rem] border border-[#8B6A3D]/8 bg-[#151310] p-5">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Intelligence Export</p>
-                                                    <p className="mt-3 text-[13px] leading-relaxed text-[#D6D0C6]/84">
+                                                <div className="rounded-xl border border-black/5 bg-[#FCFBF9] p-5">
+                                                    <p className="text-[10px] font-bold uppercase tracking-wider text-[#8B6A3D]">Intelligence Export</p>
+                                                    <p className="mt-3 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
                                                         Generate a presentation-ready summary for immediate review distribution.
                                                     </p>
                                                 </div>
@@ -3066,7 +3068,7 @@ export default function AssetWorkspace({
                                                 <button
                                                     type="button"
                                                     onClick={handleCopyEmbed}
-                                                    className="inline-flex items-center gap-2 rounded-full border border-[#8B6A3D]/45 bg-[#151310] px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D4A574] transition-colors hover:border-[#D4A574] hover:bg-[#201C16]"
+                                                    className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-[#FCFBF9] px-5 py-3 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] transition-colors hover:border-black/15 hover:bg-white"
                                                 >
                                                     <Code className="h-3.5 w-3.5" />
                                                     Copy Embed Widget
@@ -3074,7 +3076,7 @@ export default function AssetWorkspace({
                                                 <button
                                                     type="button"
                                                     onClick={handleExportDossier}
-                                                    className="inline-flex items-center gap-2 rounded-full border border-[#8B6A3D]/45 bg-[#151310] px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D4A574] transition-colors hover:border-[#D4A574] hover:bg-[#201C16]"
+                                                    className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-[#FCFBF9] px-5 py-3 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] transition-colors hover:border-black/15 hover:bg-white"
                                                 >
                                                     <FileDown className="h-3.5 w-3.5" />
                                                     Export Dossier (Print/PDF)
@@ -3083,18 +3085,18 @@ export default function AssetWorkspace({
                                         </section>
                                     </div>
 
-                                    <div className="grid gap-6 xl:grid-cols-2">
-                                        <section className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-8 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Embed Widget</p>
-                                            <p className="mt-4 text-[13px] leading-relaxed text-[#D6D0C6]/82">
+                                    <div className="grid gap-4 xl:grid-cols-2">
+                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col h-full">
+                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">Embed Widget</p>
+                                            <p className="mt-4 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
                                                 Paste this iframe into a client portal, strategy deck, Notion page, or internal dashboard.
                                             </p>
-                                            <div className="mt-5 rounded-[1.5rem] border border-[#8B6A3D]/8 bg-[#151310] p-4">
-                                                <code className="block overflow-x-auto text-[11px] leading-relaxed text-[#D6D0C6]/82">
+                                            <div className="mt-5 rounded-xl border border-black/5 bg-[#FCFBF9] p-4">
+                                                <code className="block overflow-x-auto text-[11px] font-mono leading-relaxed text-[#6B6B6B]">
                                                     {`<iframe src="https://www.visualdecompiler.com/embed/${asset.id}" width="100%" height="600px"></iframe>`}
                                                 </code>
                                             </div>
-                                            <p className="mt-4 text-[11px] uppercase tracking-[0.2em] text-[#D6D0C6]/58">
+                                            <p className="mt-4 text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B]">
                                                 Use for: client-facing reports · internal strategy decks · agency dashboards
                                             </p>
                                         </section>

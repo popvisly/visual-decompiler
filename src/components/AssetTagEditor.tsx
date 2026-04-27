@@ -130,51 +130,51 @@ export default function AssetTagEditor({
         .slice(0, 8);
 
     return (
-        <div className="rounded-[1.75rem] border border-[#8B6A3D]/8 bg-[#111110] px-5 py-4 text-[#F5F3EE] shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
+        <div className="rounded-2xl border border-black/5 bg-white px-6 py-6 text-[#1a1a1a] shadow-sm flex flex-col h-full">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Asset Tags</p>
-                    <p className="mt-2 max-w-xl text-[13px] leading-relaxed text-[#d6cec3]">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">Asset Tags</p>
+                    <p className="mt-2 max-w-xl text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
                         Label this asset with campaign, client, format, territory, or tactic tags so the vault becomes easier to search later.
                     </p>
                 </div>
-                <div className="text-[10px] uppercase tracking-[0.2em] text-[#D4A574]/55">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-[#8B6A3D]/70 mt-1 lg:mt-0">
                     {isSaving ? 'Saving tags...' : `${tags.length}/12 applied`}
                 </div>
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-6 flex flex-wrap gap-2">
                 {tags.length > 0 ? (
                     tags.map((tag) => (
                         <button
                             key={tag}
                             type="button"
                             onClick={() => void handleRemoveTag(tag)}
-                            className="inline-flex items-center gap-2 rounded-full border border-[#8B6A3D]/12 bg-[#D4A574]/10 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#F5F3EE] transition-colors hover:bg-[#D4A574]/18"
+                            className="inline-flex items-center gap-2 rounded-full border border-[#8B6A3D]/20 bg-[#FCFBF9] px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#8B6A3D] transition-colors hover:bg-white"
                         >
                             {tag}
                             <X className="h-3 w-3" />
                         </button>
                     ))
                 ) : (
-                    <div className="rounded-full border border-[#8B6A3D]/12 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[#FFFFFF]/35">
+                    <div className="rounded-full border border-black/10 px-4 py-2 text-[10px] font-bold uppercase tracking-wider text-[#6B6B6B]">
                         No tags assigned yet
                     </div>
                 )}
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-3 md:flex-row">
+            <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 md:flex-row">
                 <input
                     type="text"
                     value={tagInput}
                     onChange={(event) => setTagInput(event.target.value)}
                     placeholder="Add tag — campaign, market, format, audience..."
-                    className="flex-1 rounded-full border border-[#8B6A3D]/12 bg-black/25 px-5 py-3 text-[11px] uppercase tracking-[0.16em] text-[#F5F3EE] outline-none transition-colors placeholder:text-[#FFFFFF]/25"
+                    className="flex-1 rounded-full border border-black/5 bg-[#FCFBF9] px-5 py-3 text-[11px] uppercase tracking-wider text-[#1a1a1a] outline-none transition-colors placeholder:text-[#6B6B6B]/60 focus:border-black/15 focus:bg-white"
                 />
                 <button
                     type="submit"
                     disabled={isSaving || !tagInput.trim() || tags.length >= 12}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#141414] transition-colors hover:bg-[#c8955b] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a1a1a] px-6 py-3 text-[10px] font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#333333] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     <Plus className="h-3.5 w-3.5" />
                     Add Tag
@@ -182,15 +182,15 @@ export default function AssetTagEditor({
             </form>
 
             {visibleSuggestions.length > 0 && (
-                <div className="mt-4">
-                    <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/55">Agency Tag Memory</p>
+                <div className="mt-6 pt-4 border-t border-black/5">
+                    <p className="text-[9px] font-bold uppercase tracking-wider text-[#6B6B6B]">Agency Tag Memory</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                         {visibleSuggestions.map((tag) => (
                             <button
                                 key={tag}
                                 type="button"
                                 onClick={() => void handleAddTag(tag)}
-                                className="rounded-full border border-[#8B6A3D]/12 px-3 py-2 text-[10px] uppercase tracking-[0.16em] text-[#FFFFFF]/60 transition-colors hover:bg-[#D4A574]/10 hover:text-[#F5F3EE]"
+                                className="rounded-full border border-black/5 bg-[#FCFBF9] px-3 py-2 text-[10px] uppercase tracking-wider text-[#1a1a1a] transition-colors hover:border-[#8B6A3D]/30 hover:bg-white"
                             >
                                 {tag}
                             </button>
@@ -200,7 +200,7 @@ export default function AssetTagEditor({
             )}
 
             {error && (
-                <p className="mt-4 text-[10px] uppercase tracking-[0.16em] text-[#f3b1a0]">
+                <p className="mt-4 text-[10px] font-bold uppercase tracking-wider text-red-700">
                     {error}
                 </p>
             )}
