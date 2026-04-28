@@ -4289,92 +4289,98 @@ export default function AssetWorkspace({
 
                         {activeTab === 'BLUEPRINT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="space-y-10">
-                                    <WorkspaceTabHeader
-                                        kicker="Blueprint Logic"
-                                        title="Blueprint Logic: Audit & Reproducibility"
-                                        intro="This section outlines the reconstruction path used to audit the route, validate constraints, and assess reproducibility."
-                                    />
+                                <div className="flex flex-col gap-4">
+                                    <div className="px-6">
+                                        <WorkspaceTabHeader
+                                            kicker="Blueprint Logic"
+                                            title="Blueprint Logic: Audit & Reproducibility"
+                                            intro="This section outlines the reconstruction path used to audit the route, validate constraints, and assess reproducibility."
+                                        />
+                                    </div>
                                     {!blueprintData ? (
-                                        <div className="flex flex-col items-center justify-center rounded-[3.5rem] border border-[#D4A574]/16 bg-[#FBF7EF] p-20 text-center text-[#1a1a1a]">
-                                            <div className="w-16 h-16 flex items-center justify-center border border-[#8B6A3D]/38 bg-[#D4A574]/10 mb-8">
-                                                <Sparkles className="w-6 h-6 text-[#D4A574]" />
-                                            </div>
-                                            <h3 className="text-[#1a1a1a] text-2xl font-semibold mb-4 tracking-tight">Blueprint Trace Offline</h3>
-                                            <p className="mb-10 max-w-sm text-[13px] text-[#666] leading-relaxed">System requires route calibration to generate the audit-ready blueprint architecture.</p>
-                                            
-                                            {isGeneratingBlueprint && (
-                                                <div className="mb-12 w-full max-w-md border border-[#d4c9b8] p-10 bg-white shadow-2xl">
-                                                    <div className="flex items-center justify-between gap-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] mb-8 font-mono">
-                                                        <span>{BLUEPRINT_STEPS[blueprintStep]}</span>
-                                                        <span>{blueprintProgress}%</span>
-                                                    </div>
-                                                    <div className="h-[2px] w-full bg-white">
-                                                        <div
-                                                            className="h-full bg-[#D4A574] shadow-[0_0_10px_rgba(212,165,116,0.25)] transition-all duration-700"
-                                                            style={{ width: `${blueprintProgress}%` }}
-                                                        />
-                                                    </div>
+                                        <div className="px-6">
+                                            <div className="flex flex-col items-center justify-center rounded-[3.5rem] border border-black/5 bg-white p-20 text-center text-[#1a1a1a] shadow-sm">
+                                                <div className="w-16 h-16 flex items-center justify-center border border-black/10 bg-[#D4A574]/10 mb-8 rounded-[2rem]">
+                                                    <Sparkles className="w-6 h-6 text-[#8B6A3D]" />
                                                 </div>
-                                            )}
-                                            
-                                            <button
-                                                onClick={handleGenerateBlueprint}
-                                                disabled={isGeneratingBlueprint || !extraction}
-                                                className="bg-[#D4A574] text-black px-12 py-5 text-[11px] font-semibold tracking-[0.4em] uppercase hover:bg-white transition-all disabled:opacity-50 active:scale-95 shadow-[0_0_15px_rgba(212,165,116,0.2)]"
-                                            >
-                                                {isGeneratingBlueprint ? 'Generating Architecture...' : 'Initiate Blueprint'}
-                                            </button>
+                                                <h3 className="text-[#1a1a1a] text-2xl font-semibold mb-4 tracking-tight">Blueprint Trace Offline</h3>
+                                                <p className="mb-10 max-w-sm text-[13px] text-[#6B6B6B] leading-relaxed">
+                                                    System requires route calibration to generate the audit-ready blueprint architecture.
+                                                </p>
+
+                                                {isGeneratingBlueprint && (
+                                                    <div className="mb-12 w-full max-w-md rounded-[2.5rem] border border-black/10 p-10 bg-[#FBFBF6] shadow-inner">
+                                                        <div className="flex items-center justify-between gap-4 text-[11px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-8 font-mono">
+                                                            <span>{BLUEPRINT_STEPS[blueprintStep]}</span>
+                                                            <span>{blueprintProgress}%</span>
+                                                        </div>
+                                                        <div className="h-[2px] w-full bg-white">
+                                                            <div
+                                                                className="h-full bg-[#D4A574] shadow-[0_0_10px_rgba(212,165,116,0.25)] transition-all duration-700"
+                                                                style={{ width: `${blueprintProgress}%` }}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                <button
+                                                    onClick={handleGenerateBlueprint}
+                                                    disabled={isGeneratingBlueprint || !extraction}
+                                                    className="rounded-full bg-[#141414] text-[#FBF7EF] px-12 py-5 text-[11px] font-semibold tracking-[0.4em] uppercase hover:bg-black transition-all disabled:opacity-50 active:scale-95"
+                                                >
+                                                    {isGeneratingBlueprint ? 'Generating Architecture...' : 'Initiate Blueprint'}
+                                                </button>
+                                            </div>
                                         </div>
                                     ) : (
-                                        <div className="space-y-12">
-                                            <div className="flex flex-col gap-8 rounded-[3rem] border border-[#D4A574]/16 bg-[#FBF7EF] p-12 text-[#1a1a1a] md:flex-row md:items-center md:justify-between shadow-2xl">
+                                        <div className="space-y-6 px-6">
+                                            <div className="flex flex-col gap-8 rounded-[3rem] border border-black/5 bg-white p-12 text-[#1a1a1a] md:flex-row md:items-center md:justify-between shadow-sm">
                                                 <div>
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D4A574]">Blueprint Trace Active · Vault Index</p>
-                                                    <p className="mt-2 text-[13px] leading-relaxed text-[#666]">Indexed for reproducibility and multi-agent audit.</p>
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#8B6A3D]/80">Blueprint Trace Active · Vault Index</p>
+                                                    <p className="mt-2 text-[13px] leading-relaxed text-[#6B6B6B]">Indexed for reproducibility and multi-agent audit.</p>
                                                 </div>
                                                 <button
                                                     onClick={handleGenerateBlueprint}
                                                     disabled={isGeneratingBlueprint}
-                                                    className="flex items-center gap-4 rounded-full border border-[#D4A574] px-8 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574] transition-all hover:bg-[#D4A574] hover:text-black disabled:opacity-50"
+                                                    className="flex items-center gap-4 rounded-full border border-black/10 bg-[#FBFBF6] px-8 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#1a1a1a] transition-all hover:bg-[#141414] hover:text-[#FBF7EF] disabled:opacity-50"
                                                 >
                                                     {isGeneratingBlueprint ? 'Refreshing...' : 'Refresh Trace'}
                                                 </button>
                                             </div>
 
                                             <div className="grid grid-cols-1 gap-12">
-                                                <div className="rounded-[3rem] border border-[#D4A574]/16 bg-[#FBF7EF] p-12 text-[#1a1a1a] shadow-xl">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D4A574] mb-6 border-b border-[#D4A574]/16 pb-6">Blueprint Trace Active</p>
-                                                    <p className="mb-8 max-w-[70ch] text-[13px] leading-relaxed text-[#666]">
+                                                <div className="rounded-[3rem] border border-black/5 bg-white p-12 text-[#1a1a1a] shadow-sm">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#8B6A3D]/80 mb-6 border-b border-black/5 pb-6">Blueprint Trace Active</p>
+                                                    <p className="mb-8 max-w-[70ch] text-[13px] leading-relaxed text-[#6B6B6B]">
                                                         Reconstruction logic below provides an auditable handoff from diagnosis to execution framing.
                                                     </p>
                                                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mb-8">
-                                                        <div className="rounded-[1.75rem] border border-[#D4A574]/16 bg-white/70 p-5">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Subject</p>
-                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(normalizeProseText(blueprintData.execution_constraints?.primary_trigger)) || 'Primary subject lock captured from forensic route.'}</p>
+                                                        <div className="rounded-[1.75rem] border border-black/5 bg-[#FBFBF6] p-5">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">Subject</p>
+                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">{firstSentence(normalizeProseText(blueprintData.execution_constraints?.primary_trigger)) || 'Primary subject lock captured from forensic route.'}</p>
                                                         </div>
-                                                        <div className="rounded-[1.75rem] border border-[#D4A574]/16 bg-white/70 p-5">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Setting</p>
-                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(normalizeProseText(blueprintData.technical_specs?.material_cues?.[0])) || 'Controlled studio context with minimal environmental noise.'}</p>
+                                                        <div className="rounded-[1.75rem] border border-black/5 bg-[#FBFBF6] p-5">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">Setting</p>
+                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">{firstSentence(normalizeProseText(blueprintData.technical_specs?.material_cues?.[0])) || 'Controlled studio context with minimal environmental noise.'}</p>
                                                         </div>
-                                                        <div className="rounded-[1.75rem] border border-[#D4A574]/16 bg-white/70 p-5">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Lighting</p>
-                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#444]">{firstSentence(normalizeProseText(blueprintData.technical_specs?.lighting_architecture)) || 'Soft, directional lighting architecture retained from route.'}</p>
+                                                        <div className="rounded-[1.75rem] border border-black/5 bg-[#FBFBF6] p-5">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">Lighting</p>
+                                                            <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">{firstSentence(normalizeProseText(blueprintData.technical_specs?.lighting_architecture)) || 'Soft, directional lighting architecture retained from route.'}</p>
                                                         </div>
                                                     </div>
-                                                    <div className="rounded-[2.75rem] border border-[#D4A574]/16 bg-white/60 p-10 shadow-inner">
-                                                        <pre className="whitespace-pre-wrap text-[13px] leading-relaxed text-[#544b3f] selection:bg-[#C9A96E]/30">
+                                                    <div className="rounded-[2.75rem] border border-black/5 bg-[#FBFBF6] p-10 shadow-inner">
+                                                        <pre className="whitespace-pre-wrap text-[13px] leading-relaxed text-[#5E5A53] selection:bg-[#C9A96E]/30">
                                                             {blueprintData.verified_dna_prompt}
                                                         </pre>
                                                     </div>
                                                 </div>
 
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                    <div className="rounded-[2.75rem] border border-[#D4A574]/16 bg-[#FBF7EF] p-10">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D4A574] mb-8 border-b border-[#D4A574]/16 pb-4">Primary Trigger</p>
-                                                        <p className="text-[16px] font-medium leading-relaxed text-[#2f2a24]">{normalizeProseText(blueprintData.execution_constraints?.primary_trigger)}</p>
+                                                    <div className="rounded-[2.75rem] border border-black/5 bg-white p-10 shadow-sm">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#8B6A3D]/80 mb-8 border-b border-black/5 pb-4">Primary Trigger</p>
+                                                        <p className="text-[16px] font-medium leading-relaxed text-[#1a1a1a]/85">{normalizeProseText(blueprintData.execution_constraints?.primary_trigger)}</p>
                                                         <div className="mt-8 space-y-3">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#999]">Mechanism</p>
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6B6B6B]">Mechanism</p>
                                                             <ul className="space-y-2">
                                                                 <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#D4A574]" />Desire transfer routes from subject value to product object.</li>
                                                                 <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#D4A574]" />Gaze vector and composition reinforce aspirational authority.</li>
@@ -4382,8 +4388,8 @@ export default function AssetWorkspace({
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div className="rounded-[2.75rem] border border-[#D4A574]/16 bg-[#FBF7EF] p-10">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#999] mb-8 border-b border-[#D4A574]/16 pb-4">Aesthetic Architecture</p>
+                                                    <div className="rounded-[2.75rem] border border-black/5 bg-white p-10 shadow-sm">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#6B6B6B] mb-8 border-b border-black/5 pb-4">Aesthetic Architecture</p>
                                                         <ul className="space-y-3">
                                                             <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#aaa]" />{firstSentence(normalizeProseText(blueprintData.technical_specs?.lighting_architecture)) || 'Lighting architecture captured in route trace.'}</li>
                                                             <li className="flex gap-2 text-[13px] leading-relaxed text-[#555]"><span className="mt-[8px] h-1.5 w-1.5 shrink-0 bg-[#aaa]" />{firstSentence(normalizeProseText(blueprintData.technical_specs?.gaze_vector)) || 'Gaze topology remains controlled and directional.'}</li>
@@ -4392,19 +4398,19 @@ export default function AssetWorkspace({
                                                     </div>
                                                 </div>
 
-                                                <div className="rounded-[3rem] border border-[#D4A574]/16 bg-[#FBF7EF] p-12">
+                                                <div className="rounded-[3rem] border border-black/5 bg-white p-12 shadow-sm">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                         <div className="space-y-8">
                                                             <div className="flex items-center gap-4">
-                                                                <div className="w-8 h-8 flex items-center justify-center border border-[#D4A574] bg-[#D4A574] text-black">
+                                                                <div className="w-8 h-8 flex items-center justify-center rounded-xl border border-black/10 bg-[#141414] text-[#FBF7EF]">
                                                                     <Check className="w-4 h-4" />
                                                                 </div>
-                                                                <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D4A574]">Retention Protocol</span>
+                                                                <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Retention Protocol</span>
                                                             </div>
                                                             <div className="space-y-3">
                                                                 {(blueprintData.execution_constraints?.must_include || []).map((item: string, i: number) => (
-                                                                    <div key={`inc-${i}`} className="rounded-[1.75rem] border border-[#D4A574]/16 bg-[#FBF7EF] p-4 hover:border-[#D4A574]/40 transition-all">
-                                                                        <p className="text-[13px] font-normal text-[#4e463d] leading-relaxed">• {normalizeProseText(item)}</p>
+                                                                    <div key={`inc-${i}`} className="rounded-[1.75rem] border border-black/5 bg-[#FBFBF6] p-4 hover:bg-white transition-all">
+                                                                        <p className="text-[13px] font-normal text-[#5E5A53] leading-relaxed">• {normalizeProseText(item)}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -4412,15 +4418,15 @@ export default function AssetWorkspace({
 
                                                         <div className="space-y-8">
                                                             <div className="flex items-center gap-4">
-                                                                <div className="w-8 h-8 flex items-center justify-center border border-[#D4A574]/30 bg-white text-[#aaa]">
+                                                                <div className="w-8 h-8 flex items-center justify-center rounded-xl border border-black/10 bg-[#FBFBF6] text-[#6B6B6B]">
                                                                     <X className="w-4 h-4" />
                                                                 </div>
-                                                                <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#aaa]">Negation Protocol</span>
+                                                                <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#6B6B6B]">Negation Protocol</span>
                                                             </div>
                                                             <div className="space-y-3">
                                                                 {(blueprintData.execution_constraints?.must_not_include || []).map((item: string, i: number) => (
-                                                                    <div key={`exc-${i}`} className="rounded-[1.5rem] border border-[#e8ddd0] bg-white/85 p-4">
-                                                                        <p className="text-[13px] font-normal text-[#5e554a] leading-relaxed">• {normalizeProseText(item)}</p>
+                                                                    <div key={`exc-${i}`} className="rounded-[1.5rem] border border-black/5 bg-[#FBFBF6] p-4">
+                                                                        <p className="text-[13px] font-normal text-[#5E5A53] leading-relaxed">• {normalizeProseText(item)}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
@@ -4432,13 +4438,13 @@ export default function AssetWorkspace({
                                                 {blueprintData.ad_copy_remixes && blueprintData.ad_copy_remixes.length > 0 && (
                                                     <div className="space-y-10">
                                                         <div className="flex items-center gap-6">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D4A574]">Forensic Copy Remixes</p>
-                                                            <div className="h-px flex-1 bg-[#f5f0e8]"></div>
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#8B6A3D]/80">Forensic Copy Remixes</p>
+                                                            <div className="h-px flex-1 bg-black/5"></div>
                                                         </div>
                                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                             {blueprintData.ad_copy_remixes.map((remix: any, i: number) => (
-                                                                <div key={i} className="rounded-[2.75rem] border border-[#D4A574]/16 bg-[#FBF7EF] p-10 transition-all hover:border-[#D4A574]/40 shadow-xl group">
-                                                                    <p className="mb-4 border-b border-[#e8ddd0] pb-4 text-[9px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono">{remix.angle}</p>
+                                                                <div key={i} className="rounded-[2.75rem] border border-black/5 bg-white p-10 transition-all hover:bg-[#FBFBF6] shadow-sm group">
+                                                                    <p className="mb-4 border-b border-black/5 pb-4 text-[9px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80 font-mono">{remix.angle}</p>
                                                                     <p className="text-[10px] uppercase tracking-[0.28em] text-[#999] mb-3">Intent Angle</p>
                                                                     <p className="text-[17px] font-semibold leading-tight text-[#1a1a1a]/85 group-hover:text-[#1a1a1a] transition-colors tracking-[-0.01em]">
                                                                         "{normalizeProseText(remix.copy)}"
@@ -4452,19 +4458,19 @@ export default function AssetWorkspace({
                                                 {blueprintData.visual_variant_prompts && blueprintData.visual_variant_prompts.length > 0 && (
                                                     <div className="space-y-10">
                                                         <div className="flex items-center gap-6">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#aaa]">Adaptation Trace Variants</p>
-                                                            <div className="h-px flex-1 bg-[#f5f0e8]"></div>
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#6B6B6B]">Adaptation Trace Variants</p>
+                                                            <div className="h-px flex-1 bg-black/5"></div>
                                                         </div>
                                                         <div className="grid grid-cols-1 gap-10">
                                                             {blueprintData.visual_variant_prompts.map((variant: any, i: number) => (
-                                                                <div key={i} className="rounded-[3rem] border border-[#D4A574]/16 bg-[#FBF7EF] p-12 transition-all hover:bg-white/[0.07] shadow-3xl">
-                                                                    <div className="flex items-center justify-between mb-8 border-b border-[#D4A574]/16 pb-6">
-                                                                        <span className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D4A574]">{variant.concept}</span>
-                                                                        <span className="text-[10px] font-semibold text-[#b4aa9c] tracking-[0.24em] uppercase">Variant 0{i+1}</span>
+                                                                <div key={i} className="rounded-[3rem] border border-black/5 bg-white p-12 transition-all hover:bg-[#FBFBF6] shadow-sm">
+                                                                    <div className="flex items-center justify-between mb-8 border-b border-black/5 pb-6">
+                                                                        <span className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#8B6A3D]/80">{variant.concept}</span>
+                                                                        <span className="text-[10px] font-semibold text-[#999] tracking-[0.24em] uppercase">Variant 0{i+1}</span>
                                                                     </div>
-                                                                    <div className="border border-[#e8ddd0] bg-white/90 p-10 shadow-inner">
+                                                                    <div className="rounded-[2rem] border border-black/5 bg-[#FBFBF6] p-10 shadow-inner">
                                                                         {proseParagraphs(variant.prompt, 2).map((paragraph, pIndex) => (
-                                                                            <p key={pIndex} className="text-[13px] leading-relaxed text-[#6d6559] selection:bg-[#C9A96E]/30 mb-4 last:mb-0">
+                                                                            <p key={pIndex} className="text-[13px] leading-relaxed text-[#5E5A53] selection:bg-[#C9A96E]/30 mb-4 last:mb-0">
                                                                                 {paragraph}
                                                                             </p>
                                                                         ))}
