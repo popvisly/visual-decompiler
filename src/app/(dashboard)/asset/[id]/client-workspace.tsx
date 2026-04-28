@@ -4071,9 +4071,9 @@ export default function AssetWorkspace({
                                                                     <text
                                                                         key={li}
                                                                         x={0}
-                                                                        y={li * 14}
+                                                                        y={li * 16}
                                                                         textAnchor={layout.anchor}
-                                                                        fontSize={10}
+                                                                        fontSize={12.65}
                                                                         fontWeight={600}
                                                                         letterSpacing={3}
                                                                         fill="rgba(212,165,116,0.75)"
@@ -4178,12 +4178,12 @@ export default function AssetWorkspace({
                                                 {proseParagraphs((dossier as any)?.archetype_mapping?.target_posture, 2)
                                                     .slice(0, 2)
                                                     .map((paragraph, index) => (
-                                                        <p key={index} className="text-[14px] leading-relaxed text-[#D6D0C6]/82">
+                                                        <p key={index} className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                             {paragraph}
                                                         </p>
                                                     ))}
                                                 {proseParagraphs((dossier as any)?.archetype_mapping?.target_posture, 2).length === 0 && (
-                                                    <p className="text-[14px] leading-relaxed text-[#D6D0C6]/82">
+                                                    <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                         Icon Maintenance — the brand is not challenging for position or disrupting the category; it is asserting the permanence of an already-won cultural throne.
                                                     </p>
                                                 )}
