@@ -5,8 +5,8 @@ import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArt
 
 function DossierFlowMapCard() {
     return (
-        <aside className="w-full rounded-[1.8rem] border border-[rgba(193,166,116,0.22)] bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(14,14,14,0.96)_34%)] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#C1A674]">Attention Flow</p>
+        <aside className="w-full rounded-[1.8rem] border border-[#8B6A3D]/15 bg-[#141414] p-6 text-[#FBF7EF] shadow-[0_20px_60px_rgba(0,0,0,0.22)]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D4A574]">Attention Flow</p>
 
             <svg viewBox="0 0 320 230" className="mt-6 h-[220px] w-full" aria-hidden="true">
                 <defs>
@@ -45,7 +45,7 @@ function DossierFlowMapCard() {
             </svg>
 
             <div className="mt-2 space-y-3 border-t border-[#8B6A3D]/10 pt-5">
-                <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#C1A674]">Decision Sequence</p>
+                <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#D4A574]">Decision Sequence</p>
                 <p className="text-[15px] leading-[1.65] text-[#F6F1E7]/74">
                     Entry is captured by contrast, recognition is secured through brand cues, and engagement holds when meaning stays clear.
                 </p>
@@ -56,7 +56,7 @@ function DossierFlowMapCard() {
 
 export default function DossierPreview() {
     return (
-        <section className="relative overflow-hidden bg-[#0B0B0B] py-24 text-[#F6F1E7] lg:py-32" data-presence-tone="dark">
+        <section className="relative overflow-hidden bg-[#FBFBF6] py-24 text-[#141414] lg:py-32" data-presence-tone="light">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -66,8 +66,10 @@ export default function DossierPreview() {
                     className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-12"
                 >
                     <div className="min-w-0">
-                        <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#C1A674]">Dossier Layer</p>
-                        <CanonicalDossierArtifact mode="attention-zoom" />
+                        <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#8B6A3D]/80">Dossier Layer</p>
+                        <div className="overflow-hidden rounded-[1.8rem] border border-black/5 bg-white shadow-sm">
+                            <CanonicalDossierArtifact mode="attention-zoom" />
+                        </div>
                     </div>
                     <div className="lg:pt-9">
                         <DossierFlowMapCard />

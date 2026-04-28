@@ -7,8 +7,8 @@ import ProductFooter from '@/components/product/ProductFooter';
 
 export default function ProductPage() {
     return (
-        <main className="bg-[#0B0B0B] text-[#F6F1E7]">
-            <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Decompile an Ad', href: '/ingest' }} />
+        <main className="bg-[#FBFBF6] text-[#141414]">
+            <UnifiedSovereignHeader primaryCta={{ label: 'Decompile an Ad', href: '/ingest' }} />
             <ProductHero />
             <AnalysisSurfaces />
             <BeforeAfterContrast compact />

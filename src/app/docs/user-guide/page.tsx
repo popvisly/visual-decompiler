@@ -75,8 +75,8 @@ const ADVANCED_USAGE = [
 
 export default function UserGuidePage() {
     return (
-        <main className="min-h-screen bg-[#050505] text-[#F6F1E7]">
-            <UnifiedSovereignHeader forceDark />
+        <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
+            <UnifiedSovereignHeader />
 
             <section className="pt-30 pb-28 lg:pt-36 lg:pb-36">
                 <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
@@ -86,24 +86,24 @@ export default function UserGuidePage() {
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="max-w-[900px]"
                     >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">User Guide</p>
-                        <h1 className="mt-5 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#F6F1E7]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">User Guide</p>
+                        <h1 className="mt-5 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]">
                             Using Visual Decompiler
                         </h1>
-                        <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78">
+                        <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]">
                             How to turn creative instinct into decisions that move forward.
                         </p>
                     </motion.div>
 
-                    <div className="mt-16 border-t border-[#8B6A3D]/10 pt-14 lg:mt-20 lg:pt-16">
+                    <div className="mt-16 border-t border-black/5 pt-14 lg:mt-20 lg:pt-16">
                         <motion.div
                             initial={{ opacity: 0, y: 18 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-80px' }}
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                         >
-                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Where this is used</p>
-                            <p className="mb-7 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/68">
+                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">Where this is used</p>
+                            <p className="mb-7 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]">
                                 Three real decision environments where teams use Visual Decompiler to move work forward.
                             </p>
                             <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
@@ -114,11 +114,11 @@ export default function UserGuidePage() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: '-60px' }}
                                         transition={{ duration: 0.6, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                                        className="rounded-[20px] border border-[rgba(193,166,116,0.20)] bg-[linear-gradient(180deg,rgba(193,166,116,0.06),rgba(12,12,12,0.96)_34%)] p-6"
+                                        className="rounded-[20px] border border-black/5 bg-white p-6 shadow-sm"
                                     >
-                                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">Use case {idx + 1}</p>
-                                        <h2 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]">{item.title}</h2>
-                                        <p className="mt-4 text-[16px] leading-[1.7] text-[#F6F1E7]/75">{item.body}</p>
+                                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8B6A3D]/80">Use case {idx + 1}</p>
+                                        <h2 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#141414]">{item.title}</h2>
+                                        <p className="mt-4 text-[16px] leading-[1.7] text-[#6B6B6B]">{item.body}</p>
                                     </motion.article>
                                 ))}
                             </div>
@@ -131,8 +131,8 @@ export default function UserGuidePage() {
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                             className="mt-16"
                         >
-                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">How it works</p>
-                            <p className="mb-7 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/68">
+                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">How it works</p>
+                            <p className="mb-7 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]">
                                 A simple operating sequence you can run in minutes before review or presentation.
                             </p>
                             <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
@@ -143,15 +143,15 @@ export default function UserGuidePage() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: '-60px' }}
                                         transition={{ duration: 0.6, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                                        className="rounded-[20px] border border-[rgba(193,166,116,0.22)] bg-[#101010] p-6"
+                                        className="rounded-[20px] border border-black/5 bg-white p-6 shadow-sm"
                                     >
                                         <div className="flex items-center gap-4">
-                                            <span className="inline-flex h-8 min-w-8 items-center justify-center rounded-full border border-[rgba(193,166,116,0.35)] bg-[#C1A674]/10 px-2 text-[13px] font-bold text-[#C1A674]">
+                                            <span className="inline-flex h-8 min-w-8 items-center justify-center rounded-full border border-black/10 bg-[#FBFBF6] px-2 text-[13px] font-bold text-[#8B6A3D]">
                                                 {idx + 1}
                                             </span>
-                                            <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-[#C1A674]">{step.title}</p>
+                                            <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/80">{step.title}</p>
                                         </div>
-                                        <p className="mt-5 text-[16px] leading-[1.7] text-[#F6F1E7]/80">{step.body}</p>
+                                        <p className="mt-5 text-[16px] leading-[1.7] text-[#6B6B6B]">{step.body}</p>
                                     </motion.article>
                                 ))}
                             </div>
@@ -164,8 +164,8 @@ export default function UserGuidePage() {
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                             className="mt-16"
                         >
-                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">What you get</p>
-                            <p className="mb-7 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/68">
+                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">What you get</p>
+                            <p className="mb-7 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]">
                                 Fixed outputs designed to make reasoning readable and decisions easier to approve.
                             </p>
                             <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -176,13 +176,13 @@ export default function UserGuidePage() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: '-60px' }}
                                         transition={{ duration: 0.6, delay: idx * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                                        className="rounded-[20px] border border-[rgba(193,166,116,0.22)] bg-[linear-gradient(180deg,rgba(255,255,255,0.02),rgba(16,16,16,0.96)_30%)] p-6"
+                                        className="rounded-[20px] border border-black/5 bg-white p-6 shadow-sm"
                                     >
-                                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[rgba(193,166,116,0.85)]">System Output</p>
-                                        <h3 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]">
+                                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8B6A3D]/80">System Output</p>
+                                        <h3 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#141414]">
                                             {output.title}
                                         </h3>
-                                        <p className="mt-4 text-[16px] leading-[1.7] text-[#F6F1E7]/75">{output.body}</p>
+                                        <p className="mt-4 text-[16px] leading-[1.7] text-[#6B6B6B]">{output.body}</p>
                                     </motion.article>
                                 ))}
                             </div>
@@ -193,10 +193,10 @@ export default function UserGuidePage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-80px' }}
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                            className="mt-16 rounded-[24px] border border-[rgba(193,166,116,0.22)] bg-white/[0.02] p-8"
+                            className="mt-16 rounded-[24px] border border-black/5 bg-white p-8 shadow-sm"
                         >
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">How to use it properly</p>
-                            <ul className="mt-6 space-y-4 text-[16px] leading-[1.7] text-[#F6F1E7]/78">
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">How to use it properly</p>
+                            <ul className="mt-6 space-y-4 text-[16px] leading-[1.7] text-[#6B6B6B]">
                                 <li>– align internal teams faster</li>
                                 <li>– remove subjective feedback</li>
                                 <li>– present decisions clearly to clients</li>
@@ -209,15 +209,15 @@ export default function UserGuidePage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-80px' }}
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                            className="mt-10 rounded-[24px] border border-[rgba(193,166,116,0.25)] bg-[#0F0F0F] p-8"
+                            className="mt-10 rounded-[24px] border border-[#8B6A3D]/15 bg-[#141414] p-8 text-[#FBF7EF] shadow-[0_20px_60px_rgba(0,0,0,0.18)]"
                         >
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">What not to do</p>
-                            <ul className="mt-6 space-y-4 text-[16px] leading-[1.7] text-[#F6F1E7]/78">
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">What not to do</p>
+                            <ul className="mt-6 space-y-4 text-[16px] leading-[1.7] text-white/80">
                                 <li>– an idea generator</li>
                                 <li>– a creative shortcut</li>
                                 <li>– a replacement for judgment</li>
                             </ul>
-                            <p className="mt-6 text-[16px] leading-[1.7] text-[#F6F1E7]/75">
+                            <p className="mt-6 text-[16px] leading-[1.7] text-white/75">
                                 It is a system for explaining and defending work — not replacing it.
                             </p>
                         </motion.div>
@@ -229,7 +229,7 @@ export default function UserGuidePage() {
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                             className="mt-10"
                         >
-                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Advanced usage</p>
+                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">Advanced usage</p>
                             <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                                 {ADVANCED_USAGE.map((item, idx) => (
                                     <motion.article
@@ -238,12 +238,12 @@ export default function UserGuidePage() {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: '-60px' }}
                                         transition={{ duration: 0.6, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                                        className="rounded-[20px] border border-[rgba(193,166,116,0.20)] bg-[linear-gradient(180deg,rgba(193,166,116,0.06),rgba(12,12,12,0.96)_34%)] p-6"
+                                        className="rounded-[20px] border border-black/5 bg-white p-6 shadow-sm"
                                     >
-                                        <h3 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]">
+                                        <h3 className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#141414]">
                                             {item.title}
                                         </h3>
-                                        <p className="mt-4 text-[16px] leading-[1.7] text-[#F6F1E7]/75">{item.body}</p>
+                                        <p className="mt-4 text-[16px] leading-[1.7] text-[#6B6B6B]">{item.body}</p>
                                     </motion.article>
                                 ))}
                             </div>
@@ -254,7 +254,7 @@ export default function UserGuidePage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-80px' }}
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                            className="mt-12 max-w-[900px] text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#F6F1E7]"
+                            className="mt-12 max-w-[900px] text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#141414]"
                         >
                             Visual Decompiler is most effective when used in real decision environments — not in isolation.
                         </motion.p>

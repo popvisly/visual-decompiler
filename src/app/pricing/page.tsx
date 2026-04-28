@@ -12,10 +12,10 @@ const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 function CheckItem({ children }: { children: React.ReactNode }) {
     return (
         <li className="flex items-start gap-4 text-sm leading-relaxed">
-            <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#C1A674]/10 text-[#C1A674]">
+            <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-black/5 text-[#8B6A3D]">
                 <Check className="h-2.5 w-2.5 stroke-[3]" />
             </span>
-            <span className="text-white/60">{children}</span>
+            <span className="text-[#6B6B6B]">{children}</span>
         </li>
     );
 }
@@ -43,8 +43,8 @@ export default function PricingPage() {
     };
 
     return (
-        <main className="min-h-screen bg-[#050505] text-white">
-            <UnifiedSovereignHeader forceDark />
+        <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
+            <UnifiedSovereignHeader />
 
             {/* Hero Section */}
             <section className="pt-30 pb-24 lg:pt-36 lg:pb-28">
@@ -55,7 +55,7 @@ export default function PricingPage() {
                         transition={{ duration: 0.65, ease: EASE }}
                         className="max-w-[900px]"
                     >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">
                             Sovereign Infrastructure · Pricing OS
                         </p>
                     </motion.div>
@@ -64,17 +64,17 @@ export default function PricingPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-                        className="mt-5 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-white"
+                        className="mt-5 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]"
                     >
                         Start free. <br />
-                        <span className="text-[#D2B176]">Scale when it matters.</span>
+                        <span className="text-[#8B6A3D]">Scale when it matters.</span>
                     </motion.h1>
                     
                     <motion.p
                         initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-                        className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78"
+                        className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]"
                     >
                         Choose the depth your team needs to defend decisions, align faster, and get work approved without costly back-and-forth.
                     </motion.p>
@@ -92,15 +92,15 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: EASE }}
-                            className="bg-white/5 border border-[#8B6A3D]/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between"
+                            className="rounded-[3rem] border border-black/5 bg-white p-10 shadow-sm flex flex-col justify-between"
                         >
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.observer.name}</p>
+                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.observer.name}</p>
                                 <h3 className="text-6xl font-medium tracking-tightest mb-4">{PRICING.observer.priceLabel}</h3>
-                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 mb-10">{PRICING.observer.cadenceLabel}</p>
+                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#8A8A84] mb-10">{PRICING.observer.cadenceLabel}</p>
                                 
                                 <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.observer.tagline}</p>
-                                <p className="text-white/50 mb-10 leading-relaxed">{PRICING.observer.subline}</p>
+                                <p className="text-[#6B6B6B] mb-10 leading-relaxed">{PRICING.observer.subline}</p>
                                 
                                 <ul className="space-y-6 mb-12">
                                     {PRICING.observer.features.map((feature) => (
@@ -109,13 +109,13 @@ export default function PricingPage() {
                                 </ul>
                             </div>
                             
-                            <a
-                                href={PRICING.observer.ctaHref}
-                                className="inline-flex w-full items-center justify-center border border-[#8B6A3D]/10 bg-white/5 px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-white transition hover:bg-white hover:text-black"
-                            >
-                                {PRICING.observer.ctaLabel}
-                            </a>
-                        </motion.article>
+                                <a
+                                    href={PRICING.observer.ctaHref}
+                                    className="inline-flex w-full items-center justify-center rounded-[999px] border border-black/10 bg-[#141414] px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-[#FBF7EF] transition hover:bg-black"
+                                >
+                                    {PRICING.observer.ctaLabel}
+                                </a>
+                            </motion.article>
 
                         {/* Strategic */}
                         <motion.article
@@ -123,15 +123,15 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-                            className="bg-white/5 border border-[#8B6A3D]/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between"
+                            className="rounded-[3rem] border border-black/5 bg-white p-10 shadow-sm flex flex-col justify-between"
                         >
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.strategic.name}</p>
+                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.strategic.name}</p>
                                 <h3 className="text-6xl font-medium tracking-tightest mb-2">${PRICING.strategic.monthlyPrice}</h3>
-                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#C1A674] mb-10">Monthly Protocol</p>
+                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Monthly Protocol</p>
                                 
                                 <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.strategic.tagline}</p>
-                                <p className="text-white/50 mb-8 leading-relaxed italic border-l border-[#8B6A3D]/20 pl-4">Everything in Observer, plus:</p>
+                                <p className="text-[#6B6B6B] mb-8 leading-relaxed italic border-l border-black/10 pl-4">Everything in Observer, plus:</p>
                                 
                                 <ul className="space-y-6 mb-12">
                                     {PRICING.strategic.features.map((feature) => (
@@ -155,18 +155,18 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-                            className="bg-white/10 border border-[#C1A674]/40 p-10 rounded-[3.5rem] backdrop-blur-3xl flex flex-col justify-between relative"
+                            className="rounded-[3.5rem] border border-[#8B6A3D]/25 bg-[#FBFBF6] p-10 shadow-sm flex flex-col justify-between relative"
                         >
-                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#C1A674] text-black px-6 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.3em] whitespace-nowrap">
+                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-[#141414] px-6 py-1.5 text-[9px] font-black uppercase tracking-[0.3em] text-[#FBF7EF] whitespace-nowrap">
                                 Highly Recommended
                             </div>
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.professional.name}</p>
+                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.professional.name}</p>
                                 <h3 className="text-6xl font-medium tracking-tightest mb-2">${PRICING.professional.monthlyPrice}</h3>
-                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#C1A674] mb-10">Unlimited Inbound</p>
+                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Unlimited Inbound</p>
                                 
                                 <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.professional.tagline}</p>
-                                <p className="text-white/50 mb-8 leading-relaxed italic border-l border-[#8B6A3D]/20 pl-4">Everything in Strategic, plus:</p>
+                                <p className="text-[#6B6B6B] mb-8 leading-relaxed italic border-l border-black/10 pl-4">Everything in Strategic, plus:</p>
                                 
                                 <ul className="space-y-6 mb-12">
                                     {PRICING.professional.features.map((feature) => (
@@ -178,7 +178,7 @@ export default function PricingPage() {
                             <button
                                 onClick={() => handleCheckout(PRICING.professional.checkoutPlanKey)}
                                 disabled={loading !== null}
-                                className="inline-flex w-full items-center justify-center bg-[#C1A674] px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-black transition hover:bg-white disabled:opacity-50"
+                                className="inline-flex w-full items-center justify-center rounded-[999px] bg-[#141414] px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-[#FBF7EF] transition hover:bg-black disabled:opacity-50"
                             >
                                 {loading === PRICING.professional.checkoutPlanKey ? 'Processing...' : PRICING.professional.ctaLabel}
                             </button>
@@ -190,16 +190,16 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}
-                            className="bg-white/5 border border-[#8B6A3D]/10 p-10 rounded-[3rem] backdrop-blur-3xl flex flex-col justify-between"
+                            className="rounded-[3rem] border border-[#8B6A3D]/15 bg-[#141414] p-10 shadow-[0_20px_60px_rgba(0,0,0,0.18)] flex flex-col justify-between text-[#FBF7EF]"
                         >
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674] mb-4">{PRICING.agency.name}</p>
+                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#D4A574] mb-4">{PRICING.agency.name}</p>
                                 <h3 className="text-5xl font-medium tracking-tightest mb-2">Let's Talk</h3>
                                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 mb-10">Infrastructure Tier</p>
                                 
                                 <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.agency.tagline}</p>
                                 
-                                <blockquote className="my-8 bg-white/5 px-6 py-6 border-l-2 border-[#C1A674] text-sm leading-relaxed text-white/60 italic">
+                                <blockquote className="my-8 bg-white/[0.04] px-6 py-6 border-l-2 border-[#D4A574]/70 text-sm leading-relaxed text-white/70 italic">
                                     “{PRICING.agency.positioningQuote}”
                                 </blockquote>
 
@@ -212,7 +212,7 @@ export default function PricingPage() {
                             
                             <a
                                 href={PRICING.agency.ctaHref}
-                                className="inline-flex w-full items-center justify-center border border-[#C1A674] px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-[#C1A674] transition hover:bg-[#C1A674] hover:text-black"
+                                className="inline-flex w-full items-center justify-center rounded-[999px] border border-[#D4A574]/60 px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-[#D4A574] transition hover:bg-[#D4A574] hover:text-[#141414]"
                             >
                                 {PRICING.agency.ctaLabel}
                             </a>
@@ -223,14 +223,14 @@ export default function PricingPage() {
             </section>
 
             {/* Capability Matrix - Dark Refinement */}
-            <section className="bg-white/5 py-48 lg:py-64">
+            <section className="border-t border-black/5 bg-[#F6F1E7] py-48 lg:py-64">
                 <div className="mx-auto max-w-[1400px] px-6">
                     <div className="mb-24 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
                         <div className="max-w-2xl">
-                            <h2 className="text-[8vw] lg:text-[4.5vw] font-black leading-[0.88] tracking-[-0.04em] uppercase text-white mb-8">
-                                Capability <br /> <span className="text-white/20">Matrix.</span>
+                            <h2 className="text-[8vw] lg:text-[4.5vw] font-black leading-[0.88] tracking-[-0.04em] uppercase text-[#141414] mb-8">
+                                Capability <br /> <span className="text-[#141414]/25">Matrix.</span>
                             </h2>
-                            <p className="text-xl text-white/50 leading-relaxed">
+                            <p className="text-xl text-[#6B6B6B] leading-relaxed">
                                 Lower tiers unlock the core diagnostic layer. Higher tiers expand intelligence depth, 
                                 collaborative use, and client-ready delivery output.
                             </p>
@@ -238,24 +238,24 @@ export default function PricingPage() {
                     </div>
 
                     <div className="overflow-x-auto">
-                        <table className="min-w-[1000px] w-full border-separate border-spacing-0 rounded-[3rem] border border-[#8B6A3D]/10 overflow-hidden">
-                            <thead className="bg-white/5">
+                        <table className="min-w-[1000px] w-full border-separate border-spacing-0 rounded-[3rem] border border-black/5 overflow-hidden bg-white shadow-sm">
+                            <thead className="bg-[#FBFBF6]">
                                 <tr>
-                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#C1A674]">System Feature</th>
-                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Observer</th>
-                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Strategic</th>
-                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Professional</th>
-                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Sovereignty</th>
+                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80">System Feature</th>
+                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#8A8A84]">Observer</th>
+                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#8A8A84]">Strategic</th>
+                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#8A8A84]">Professional</th>
+                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#8A8A84]">Sovereignty</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {PRICING_COMPARISON_ROWS.map((row, index) => (
-                                    <tr key={row[0]} className="border-t border-[#8B6A3D]/5 group bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
-                                        <td className="px-10 py-6 border-t border-[#8B6A3D]/5 text-[14px] font-black uppercase tracking-wider text-white">{row[0]}</td>
-                                        <td className="px-10 py-6 border-t border-[#8B6A3D]/5 text-[14px] text-white/40">{row[1]}</td>
-                                        <td className="px-10 py-6 border-t border-[#8B6A3D]/5 text-[14px] text-white/60 font-bold">{row[2]}</td>
-                                        <td className="px-10 py-6 border-t border-[#8B6A3D]/5 text-[14px] text-white/60 font-bold">{row[3]}</td>
-                                        <td className="px-10 py-6 border-t border-[#8B6A3D]/5 text-[14px] text-[#C1A674] font-black">{row[4]}</td>
+                                    <tr key={row[0]} className="border-t border-black/5 group hover:bg-black/[0.02] transition-colors">
+                                        <td className="px-10 py-6 border-t border-black/5 text-[13px] font-bold uppercase tracking-wider text-[#141414]">{row[0]}</td>
+                                        <td className="px-10 py-6 border-t border-black/5 text-[14px] text-[#6B6B6B]">{row[1]}</td>
+                                        <td className="px-10 py-6 border-t border-black/5 text-[14px] text-[#141414] font-semibold">{row[2]}</td>
+                                        <td className="px-10 py-6 border-t border-black/5 text-[14px] text-[#141414] font-semibold">{row[3]}</td>
+                                        <td className="px-10 py-6 border-t border-black/5 text-[14px] text-[#8B6A3D] font-semibold">{row[4]}</td>
                                     </tr>
                                 ))}
                             </tbody>

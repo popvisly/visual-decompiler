@@ -15,12 +15,12 @@ export default async function IntelligenceIndex() {
     return (
         <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
             <div className="mb-20">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">Intelligence Hub</p>
-                <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black uppercase text-[#FBF7EF] tracking-[-0.045em] leading-[0.9] max-w-[14ch]">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">Intelligence Hub</p>
+                <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black uppercase text-[#141414] tracking-[-0.045em] leading-[0.9] max-w-[14ch]">
                     Intelligence <br />
-                    <span className="text-white/38">Briefings.</span>
+                    <span className="text-[#141414]/30">Briefings.</span>
                 </h1>
-                <p className="mt-10 max-w-[760px] text-[#F6F1E7]/78 text-[16px] leading-[1.7]">
+                <p className="mt-10 max-w-[760px] text-[#6B6B6B] text-[16px] leading-[1.7]">
                     Decision-ready briefings on advertising structure, strategic signals, and approval-critical execution patterns.
                 </p>
             </div>
@@ -30,10 +30,10 @@ export default async function IntelligenceIndex() {
                     <Link
                         key={post.slug}
                         href={`/intelligence/briefings/${post.slug}`}
-                        className="group flex flex-col h-full bg-[#141414] rounded-3xl border border-[#8B6A3D]/10 overflow-hidden hover:border-[#BB9E7B]/40 transition-all shadow-lg hover:shadow-[#BB9E7B]/5"
+                        className="group flex flex-col h-full rounded-3xl border border-black/5 bg-white overflow-hidden hover:border-black/15 transition-all shadow-sm hover:shadow-md"
                     >
                         {post.imageUrl ? (
-                            <div className="relative aspect-[16/10] overflow-hidden bg-white/5">
+                            <div className="relative aspect-[16/10] overflow-hidden bg-[#FBFBF6]">
                                 <img
                                     src={post.imageUrl}
                                     alt={post.title}
@@ -41,35 +41,35 @@ export default async function IntelligenceIndex() {
                                 />
                             </div>
                         ) : (
-                            <div className="relative aspect-[16/10] bg-gradient-to-br from-white/5 to-transparent flex items-center justify-center border-b border-[#8B6A3D]/5">
-                                <Sparkles className="w-8 h-8 text-white/10" />
+                            <div className="relative aspect-[16/10] bg-[#FBFBF6] flex items-center justify-center border-b border-black/5">
+                                <Sparkles className="w-8 h-8 text-black/10" />
                             </div>
                         )}
 
                         <div className="p-8 flex flex-col flex-1">
                             <div className="flex items-center justify-between gap-4 mb-4">
-                                <span className="text-[9px] font-bold text-[#BB9E7B] uppercase tracking-[0.2em]">
+                                <span className="text-[9px] font-bold text-[#8B6A3D]/80 uppercase tracking-[0.2em]">
                                     {post.pillar}
                                 </span>
-                                <span className="text-[10px] text-white/40 font-mono">
+                                <span className="text-[10px] text-[#8A8A84] font-mono">
                                     {new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                                 </span>
                             </div>
 
-                            <h2 className="text-xl font-medium text-[#FBF7EF] mb-3 group-hover:text-[#BB9E7B] transition-colors leading-snug">
+                            <h2 className="text-xl font-semibold text-[#141414] mb-3 group-hover:text-[#8B6A3D] transition-colors leading-snug">
                                 {post.title}
                             </h2>
 
-                            <p className="text-sm text-white/50 leading-relaxed mb-8 flex-1">
+                            <p className="text-sm text-[#6B6B6B] leading-relaxed mb-8 flex-1">
                                 {post.excerpt}
                             </p>
 
-                            <div className="mt-auto flex items-center justify-between border-t border-[#8B6A3D]/5 pt-4">
-                                <div className="text-[10px] text-white/40 uppercase tracking-widest font-medium">
+                            <div className="mt-auto flex items-center justify-between border-t border-black/5 pt-4">
+                                <div className="text-[10px] text-[#8A8A84] uppercase tracking-widest font-medium">
                                     {post.readingTime} Read
                                 </div>
-                                <div className="w-8 h-8 rounded-full bg-white/5 group-hover:bg-[#BB9E7B]/10 flex items-center justify-center transition-colors">
-                                    <ArrowRight className="w-3.5 h-3.5 text-white/40 group-hover:text-[#BB9E7B]" />
+                                <div className="w-8 h-8 rounded-full bg-[#FBFBF6] group-hover:bg-[#8B6A3D]/10 flex items-center justify-center transition-colors">
+                                    <ArrowRight className="w-3.5 h-3.5 text-[#8A8A84] group-hover:text-[#8B6A3D]" />
                                 </div>
                             </div>
                         </div>

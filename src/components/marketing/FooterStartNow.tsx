@@ -41,15 +41,15 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.5, delay: index * 0.07 }}
-            className="border-t border-[#222]"
+            className="border-t border-black/5"
         >
             <button
                 onClick={() => setOpen((v) => !v)}
                 className="flex w-full items-start justify-between gap-6 py-6 text-left"
                 aria-expanded={open}
             >
-                <span className="text-[15px] font-semibold leading-snug text-[#F6F1E7]/80 lg:text-[16px]">{q}</span>
-                <span className="mt-0.5 shrink-0 text-[#C1A674]">
+                <span className="text-[15px] font-semibold leading-snug text-[#141414] lg:text-[16px]">{q}</span>
+                <span className="mt-0.5 shrink-0 text-[#8B6A3D]/80">
                     {open ? <Minus size={16} /> : <Plus size={16} />}
                 </span>
             </button>
@@ -63,7 +63,7 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
                         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                     >
-                        <p className="pb-6 text-[14px] leading-relaxed text-[#9a9a94]">{a}</p>
+                        <p className="pb-6 text-[14px] leading-relaxed text-[#6B6B6B]">{a}</p>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -73,7 +73,7 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
 
 export default function FooterStartNow() {
     return (
-        <footer className="relative bg-[#0B0B0B] text-[#F6F1E7] border-t border-[#222]">
+        <footer className="relative bg-[#FBFBF6] text-[#141414] border-t border-black/5">
             {/* ── OUTRO CTA BLOCK ── */}
             <div className="mx-auto max-w-[1200px] px-6 pt-24 pb-20 sm:px-8 lg:px-10 lg:pt-32 lg:pb-24">
                 <motion.div
@@ -82,16 +82,16 @@ export default function FooterStartNow() {
                     viewport={{ once: true, margin: '-100px' }}
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-8">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-8">
                         Final CTA
                     </p>
-                    <h2 className="font-black leading-[0.88] tracking-[-0.05em] text-[#F6F1E7] uppercase mb-10"
+                    <h2 className="font-black leading-[0.88] tracking-[-0.05em] text-[#141414] uppercase mb-10"
                         style={{ fontSize: 'clamp(44px, 8vw, 86px)' }}
                     >
                         Don't just show the work.<br />
-                        <span className="mt-3 block bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent tracking-[0.01em]" style={{ wordSpacing: '0.14em' }}>Defend it.</span>
+                        <span className="mt-3 block text-[#8B6A3D] tracking-[0.01em]" style={{ wordSpacing: '0.14em' }}>Defend it.</span>
                     </h2>
-                    <p className="text-[18px] leading-[1.7] text-[#9a9a94] max-w-[480px]">
+                    <p className="text-[18px] leading-[1.7] text-[#6B6B6B] max-w-[480px]">
                         Decompile your next ad before the room starts asking questions.
                     </p>
                 </motion.div>
@@ -105,14 +105,14 @@ export default function FooterStartNow() {
                 >
                     <a
                         href="/ingest"
-                        className="inline-flex items-center gap-3 rounded-xl border border-[#8B6A3D]/10 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition-all duration-300 ease-out hover:bg-[#F28C28] hover:text-black"
+                        className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#FBF7EF] transition-all duration-300 ease-out hover:bg-black"
                     >
                         Decompile an Ad
                         <ArrowUpRight size={16} />
                     </a>
                     <a
                         href={SAMPLE_DOSSIER_HREF}
-                        className="inline-flex items-center gap-3 rounded-xl border border-[#8B6A3D]/10 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-white transition-all duration-300 ease-out hover:bg-[#FFD600] hover:text-black"
+                        className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-white px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#141414] transition-all duration-300 ease-out hover:bg-[#F6F1E7]"
                     >
                         View Sample Dossier
                     </a>
@@ -121,19 +121,19 @@ export default function FooterStartNow() {
 
             {/* ── FAQ STRIP ── */}
             <div className="mx-auto max-w-[1200px] px-6 py-16 sm:px-8 lg:px-10 lg:py-24">
-                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#C1A674] mb-10">Common questions</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-10">Common questions</p>
                 <div>
                     {FAQS.map((item, i) => (
                         <FaqRow key={item.q} q={item.q} a={item.a} index={i} />
                     ))}
-                    <div className="border-t border-[#222]" />
+                    <div className="border-t border-black/5" />
                 </div>
             </div>
 
             {/* ── FOOTER BAR ── */}
-            <div className="mx-auto max-w-[1200px] px-6 py-8 sm:px-8 lg:px-10 border-t border-[#222]">
+            <div className="mx-auto max-w-[1200px] px-6 py-8 sm:px-8 lg:px-10 border-t border-black/5">
                 <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
-                    <Logo sublabel="CREATIVE INTELLIGENCE, MADE READABLE." forceDark={true} hoverColor="yellow" className="scale-[0.85] origin-left" />
+                    <Logo sublabel="CREATIVE INTELLIGENCE, MADE READABLE." hoverColor="yellow" className="scale-[0.85] origin-left" />
                     <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
                         {[
                             { label: 'About', href: '/about' },
@@ -146,15 +146,15 @@ export default function FooterStartNow() {
                             <a
                                 key={link.label}
                                 href={link.href}
-                                className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#F6F1E7]/30 transition hover:text-[#F6F1E7]"
+                                className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A8A84] transition hover:text-[#141414]"
                             >
                                 {link.label}
                             </a>
                         ))}
                     </div>
-                    <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#F6F1E7]/15">
-                        <a href="/legal/terms" className="hover:text-[#F6F1E7]/40 transition">Terms</a>
-                        <a href="/legal/privacy" className="hover:text-[#F6F1E7]/40 transition">Privacy</a>
+                    <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A8A84]">
+                        <a href="/legal/terms" className="hover:text-[#141414] transition">Terms</a>
+                        <a href="/legal/privacy" className="hover:text-[#141414] transition">Privacy</a>
                         <span>© 2026</span>
                     </div>
                 </div>

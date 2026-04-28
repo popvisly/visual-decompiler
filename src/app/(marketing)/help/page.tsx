@@ -112,83 +112,83 @@ export default function HelpPage() {
     }, [faqQuery]);
 
     return (
-        <main className="min-h-screen bg-[#050505] text-[#FBF7EF]">
-            <UnifiedSovereignHeader forceDark primaryCta={{ label: 'Bring In The Work', href: '/ingest' }} />
+        <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
+            <UnifiedSovereignHeader primaryCta={{ label: 'Bring In The Work', href: '/ingest' }} />
 
             <div className="px-6 pb-24 pt-30">
                 <div className="mx-auto max-w-[1400px]">
                     <div className="mb-14">
-                        <span className="block text-[10px] font-semibold uppercase tracking-[0.28em] text-[#C1A674]">
+                        <span className="block text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">
                             Operational Manual
                         </span>
-                        <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#F6F1E7] max-w-[14ch]">
+                        <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414] max-w-[14ch]">
                             Support
                             <br />
-                            <span className="text-[#C1A674]">for Decision Workflows.</span>
+                            <span className="text-[#8B6A3D]">for Decision Workflows.</span>
                         </h1>
-                        <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#F6F1E7]/78">
+                        <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]">
                             Use this centre to help agency teams defend decisions, align faster, and get work approved with less back-and-forth.
                         </p>
                     </div>
 
-                    <nav className="mb-10 rounded-[1.8rem] border border-[#C1A674]/22 bg-[#101010] p-5">
-                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">Navigate Help Centre</p>
+                    <nav className="mb-10 rounded-[1.8rem] border border-black/5 bg-white p-5 shadow-sm">
+                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8B6A3D]/80">Navigate Help Centre</p>
                         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
                             <a
                                 href="#product-overview"
-                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-black/10 bg-[#FBFBF6] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] transition hover:border-black/20 hover:text-[#141414]"
                             >
                                 Product Overview
                             </a>
                             <a
                                 href="#core-features"
-                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-black/10 bg-[#FBFBF6] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] transition hover:border-black/20 hover:text-[#141414]"
                             >
                                 Core Features
                             </a>
                             <a
                                 href="#getting-started"
-                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-black/10 bg-[#FBFBF6] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] transition hover:border-black/20 hover:text-[#141414]"
                             >
                                 Getting Started
                             </a>
                             <a
                                 href="#advanced-workflows"
-                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-black/10 bg-[#FBFBF6] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] transition hover:border-black/20 hover:text-[#141414]"
                             >
                                 Advanced
                             </a>
                             <a
                                 href="#common-questions"
-                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-black/10 bg-[#FBFBF6] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] transition hover:border-black/20 hover:text-[#141414]"
                             >
                                 Common Questions
                             </a>
                             <a
                                 href="#support"
-                                className="rounded-full border border-[#C1A674]/22 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/50 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-black/10 bg-[#FBFBF6] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] transition hover:border-black/20 hover:text-[#141414]"
                             >
                                 Support
                             </a>
                         </div>
                     </nav>
 
-                    <section className="mb-14 rounded-[2rem] border border-[#C1A674]/22 bg-[#141414] p-8 md:p-10">
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">Fast Access</p>
-                        <h2 className="mt-4 text-[24px] font-semibold uppercase leading-[1.2] text-[#F6F1E7]">Training Protocol 001</h2>
-                        <p className="mt-4 max-w-3xl text-[16px] leading-[1.7] text-[#F6F1E7]/62">
+                    <section className="mb-14 rounded-[2rem] border border-[#8B6A3D]/15 bg-[#141414] p-8 text-[#FBF7EF] shadow-[0_20px_60px_rgba(0,0,0,0.18)] md:p-10">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#D4A574]">Fast Access</p>
+                        <h2 className="mt-4 text-[24px] font-semibold uppercase leading-[1.2] text-[#FBF7EF]">Training Protocol 001</h2>
+                        <p className="mt-4 max-w-3xl text-[16px] leading-[1.7] text-white/70">
                             Start with the official workflow guide if you are onboarding a new operator or setting up a fresh agency process.
                         </p>
                         <div className="mt-7 flex flex-wrap gap-3">
                             <a
                                 href="/docs/user-guide"
-                                className="rounded-full bg-[#C1A674] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#141414] transition hover:bg-[#d0b384]"
+                                className="rounded-full bg-[#D4A574] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#141414] transition hover:bg-[#e2b47f]"
                             >
                                 Open Training Protocol
                             </a>
                             <a
                                 href="/docs/schema-contract"
-                                className="rounded-full border border-[#8B6A3D]/15 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#F6F1E7]/80 transition hover:border-[#C1A674]/60 hover:text-[#F6F1E7]"
+                                className="rounded-full border border-white/15 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/80 transition hover:border-white/30 hover:text-white"
                             >
                                 View System Schema
                             </a>
@@ -197,23 +197,23 @@ export default function HelpPage() {
 
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
                         {SECTIONS.map((section) => (
-                            <article id={section.id} key={section.id} className="rounded-[2rem] border border-[#C1A674]/22 bg-[#141414] p-8 md:p-10">
-                                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#C1A674]">{section.kicker}</p>
-                                <h3 className="mt-4 text-[24px] font-semibold uppercase leading-[1.2] text-[#F6F1E7]">{section.title}</h3>
-                                <p className="mb-8 text-[13px] font-medium leading-relaxed text-[#F6F1E7]/62">{section.description}</p>
+                            <article id={section.id} key={section.id} className="rounded-[2rem] border border-black/5 bg-white p-8 shadow-sm md:p-10">
+                                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8B6A3D]/80">{section.kicker}</p>
+                                <h3 className="mt-4 text-[24px] font-semibold uppercase leading-[1.2] text-[#141414]">{section.title}</h3>
+                                <p className="mb-8 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{section.description}</p>
 
                                 <ul className="space-y-4">
                                     {section.bullets.map((bullet) => (
-                                        <li key={bullet} className="flex items-start gap-3 text-[13px] font-medium leading-relaxed text-[#F6F1E7]/78">
-                                            <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-[#C1A674]" />
+                                        <li key={bullet} className="flex items-start gap-3 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
+                                            <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-[#8B6A3D]/80" />
                                             {bullet}
                                         </li>
                                     ))}
                                 </ul>
 
-                                <div className="mt-8 rounded-[1.2rem] border border-[#C1A674]/20 bg-[#0F0F0F] p-5">
-                                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#C1A674]">Use Case Example</p>
-                                    <p className="mt-3 text-[13px] leading-relaxed text-[#F6F1E7]/68">{section.example}</p>
+                                <div className="mt-8 rounded-[1.2rem] border border-black/5 bg-[#FBFBF6] p-5">
+                                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/80">Use Case Example</p>
+                                    <p className="mt-3 text-[13px] leading-relaxed text-[#6B6B6B]">{section.example}</p>
                                 </div>
                             </article>
                         ))}
@@ -221,11 +221,11 @@ export default function HelpPage() {
 
                     <section id="common-questions" className="mt-24">
                         <div className="mb-10">
-                            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.35em] text-[#C1A674]">Frequently Asked Questions</p>
-                            <h2 className="text-3xl font-semibold uppercase leading-[0.92] tracking-tight text-[#F6F1E7] md:text-5xl">
+                            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.35em] text-[#8B6A3D]/80">Frequently Asked Questions</p>
+                            <h2 className="text-3xl font-semibold uppercase leading-[0.92] tracking-tight text-[#141414] md:text-5xl">
                                 Common
                                 <br />
-                                <span className="text-[#C1A674]">Operational Questions</span>
+                                <span className="text-[#8B6A3D]">Operational Questions</span>
                             </h2>
                             <div className="mt-6 max-w-xl">
                                 <input
@@ -233,26 +233,26 @@ export default function HelpPage() {
                                     value={faqQuery}
                                     onChange={(event) => setFaqQuery(event.target.value)}
                                     placeholder="Search a question or keyword..."
-                                    className="w-full rounded-full border border-[#8B6A3D]/15 bg-[#111111] px-5 py-3 text-[13px] text-[#F6F1E7] outline-none transition placeholder:text-[#F6F1E7]/35 focus:border-[#C1A674]/70"
+                                    className="w-full rounded-full border border-black/10 bg-white px-5 py-3 text-[13px] text-[#141414] outline-none transition placeholder:text-[#141414]/35 focus:border-[#8B6A3D]/45"
                                 />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                             {filteredFaqs.map((faq) => (
-                                <article key={faq.question} className="rounded-[28px] border border-[#C1A674]/22 bg-[#141414] p-8 shadow-[0_4px_24px_rgba(20,20,20,0.02)]">
-                                    <h3 className="mb-4 text-[24px] font-semibold leading-[1.25] tracking-tight text-[#F6F1E7]">{faq.question}</h3>
-                                    <p className="text-[13px] font-medium leading-relaxed text-[#F6F1E7]/62">{faq.answer}</p>
-                                    <div className="mt-6 border-t border-[#8B6A3D]/10 pt-4">
-                                        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#C1A674]/80">Was this helpful?</p>
+                                <article key={faq.question} className="rounded-[28px] border border-black/5 bg-white p-8 shadow-sm">
+                                    <h3 className="mb-4 text-[24px] font-semibold leading-[1.25] tracking-tight text-[#141414]">{faq.question}</h3>
+                                    <p className="text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{faq.answer}</p>
+                                    <div className="mt-6 border-t border-black/5 pt-4">
+                                        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8B6A3D]/80">Was this helpful?</p>
                                         <div className="mt-3 flex gap-2">
                                             <button
                                                 type="button"
                                                 onClick={() => setFaqFeedback((prev) => ({ ...prev, [faq.question]: 'yes' }))}
                                                 className={`rounded-full border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] transition ${
                                                     faqFeedback[faq.question] === 'yes'
-                                                        ? 'border-[#C1A674] bg-[#C1A674]/20 text-[#F6F1E7]'
-                                                        : 'border-[#8B6A3D]/15 text-[#F6F1E7]/70 hover:border-[#C1A674]/55'
+                                                        ? 'border-black/20 bg-black/[0.03] text-[#141414]'
+                                                        : 'border-black/10 text-[#6B6B6B] hover:border-black/20 hover:text-[#141414]'
                                                 }`}
                                             >
                                                 Yes
@@ -262,8 +262,8 @@ export default function HelpPage() {
                                                 onClick={() => setFaqFeedback((prev) => ({ ...prev, [faq.question]: 'no' }))}
                                                 className={`rounded-full border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] transition ${
                                                     faqFeedback[faq.question] === 'no'
-                                                        ? 'border-[#C1A674] bg-[#C1A674]/20 text-[#F6F1E7]'
-                                                        : 'border-[#8B6A3D]/15 text-[#F6F1E7]/70 hover:border-[#C1A674]/55'
+                                                        ? 'border-black/20 bg-black/[0.03] text-[#141414]'
+                                                        : 'border-black/10 text-[#6B6B6B] hover:border-black/20 hover:text-[#141414]'
                                                 }`}
                                             >
                                                 No
@@ -275,31 +275,31 @@ export default function HelpPage() {
                         </div>
 
                         {filteredFaqs.length === 0 && (
-                            <p className="mt-6 text-[13px] text-[#F6F1E7]/55">No matching questions found. Try another keyword.</p>
+                            <p className="mt-6 text-[13px] text-[#6B6B6B]">No matching questions found. Try another keyword.</p>
                         )}
                     </section>
 
                     <section
                         id="support"
-                        className="mt-24 rounded-[32px] border border-[#C1A674]/22 bg-[#141414] p-8 text-[#FBF7EF] shadow-[0_24px_60px_rgba(20,20,20,0.08)] md:p-12"
+                        className="mt-24 rounded-[32px] border border-black/5 bg-white p-8 shadow-sm md:p-12"
                     >
                         <div className="max-w-3xl">
-                            <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.35em] text-[#C1A674]">Need Further Assistance?</p>
+                            <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.35em] text-[#8B6A3D]/80">Need Further Assistance?</p>
                             <h2 className="mb-5 text-3xl font-semibold uppercase leading-[0.95] tracking-tight md:text-5xl">
                                 Support for technical, billing, and enterprise questions.
                             </h2>
-                            <p className="text-base font-medium leading-relaxed text-[#FBF7EF]/65">
+                            <p className="text-base font-medium leading-relaxed text-[#6B6B6B]">
                                 If your question is not answered above, our team can help with analysis delays, billing, whitelabel setup, and enterprise deployment enquiries.
                             </p>
                             <div className="mt-8 flex flex-col gap-4 md:flex-row md:items-center">
                                 <a
                                     href="mailto:support@visualdecompiler.com"
-                                    className="inline-flex items-center gap-3 rounded-full bg-[#C1A674] px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#141414] transition-colors hover:bg-[#D4B88A]"
+                                    className="inline-flex items-center gap-3 rounded-full bg-[#141414] px-6 py-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FBF7EF] transition-colors hover:bg-black"
                                 >
                                     <Mail className="h-4 w-4" />
                                     Email Support
                                 </a>
-                                <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#FBF7EF]/40">
+                                <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#8A8A84]">
                                     Typical response: within 24 hours
                                 </span>
                             </div>
