@@ -3841,40 +3841,42 @@ export default function AssetWorkspace({
 
                         {activeTab === 'MARKET PULSE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="space-y-10">
-                                    <WorkspaceTabHeader
-                                        kicker="Competitive Context"
-                                        title="Market Pulse: Competitive Context"
-                                        intro="An analysis of how the current route aligns with category pressures, novelty conditions, and timing opportunities."
-                                    />
-                                    <div className="space-y-10">
+                                <div className="flex flex-col gap-4">
+                                    <div className="px-6">
+                                        <WorkspaceTabHeader
+                                            kicker="Competitive Context"
+                                            title="Market Pulse: Competitive Context"
+                                            intro="An analysis of how the current route aligns with category pressures, novelty conditions, and timing opportunities."
+                                        />
+                                    </div>
+                                    <div className="space-y-6 px-6">
                                         {!isSovereign ? (
-                                            <div className="relative rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] overflow-hidden group shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                <div className="absolute inset-0 z-10 backdrop-blur-md bg-black/45 flex items-center justify-center">
-                                                    <div className="p-10 rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#151310] max-w-xl text-center flex flex-col items-center">
-                                                        <div className="w-12 h-12 flex items-center justify-center border border-[#8B6A3D]/38 bg-[#D4A574]/10 mb-6">
-                                                            <Lock className="w-5 h-5 text-[#D4A574]" />
+                                            <div className="relative rounded-[3rem] border border-black/5 bg-white overflow-hidden shadow-sm">
+                                                <div className="absolute inset-0 z-10 backdrop-blur-sm bg-white/70 flex items-center justify-center">
+                                                    <div className="p-10 rounded-[2.75rem] border border-black/10 bg-white max-w-xl text-center flex flex-col items-center shadow-lg">
+                                                        <div className="w-12 h-12 flex items-center justify-center border border-black/10 bg-[#D4A574]/10 mb-6 rounded-2xl">
+                                                            <Lock className="w-5 h-5 text-[#8B6A3D]" />
                                                         </div>
-                                                        <span className="text-[#D4A574] font-semibold tracking-[0.4em] uppercase text-[10px] mb-4">Sovereign Feature</span>
-                                                        <h2 className="text-[#F3F1ED] text-[24px] font-semibold mb-6 tracking-tight">Market Pulse Locked</h2>
-                                                        <p className="text-[#D6D0C6]/72 text-[13px] mb-8 leading-relaxed">
+                                                        <span className="text-[#8B6A3D] font-semibold tracking-[0.4em] uppercase text-[10px] mb-4">Sovereign Feature</span>
+                                                        <h2 className="text-[#1a1a1a] text-[24px] font-semibold mb-6 tracking-tight">Market Pulse Locked</h2>
+                                                        <p className="text-[#6B6B6B] text-[13px] mb-8 leading-relaxed">
                                                             Cross-asset statistical aggregation and category saturation density mapping is restricted to sovereign intelligence tiers.
                                                         </p>
-                                                        <button className="bg-[#D4A574] text-black px-10 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] transition hover:bg-[#E2BE84] active:scale-95">
+                                                        <button className="bg-[#141414] text-[#FBF7EF] px-10 py-4 text-[10px] font-semibold uppercase tracking-[0.3em] transition hover:bg-black active:scale-95 rounded-full">
                                                             UPGRADE TO SOVEREIGN
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <div className="p-10 opacity-25 select-none grayscale">
+                                                <div className="p-10 opacity-60 select-none">
                                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                                         {[
                                                             ['Saturation', '0.0%'],
                                                             ['Novelty', '0.0%'],
                                                             ['Fatigue', '0.0%'],
                                                         ].map(([label, val]) => (
-                                                            <div key={label} className="rounded-[2.5rem] border border-[#8B6A3D]/8 bg-[#151310] p-8">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/70 mb-4">{label}</p>
-                                                                <p className="text-[24px] font-semibold text-[#F3F1ED] drop-shadow-[0_1px_0_rgba(0,0,0,0.25)]">{val}</p>
+                                                            <div key={label} className="rounded-[2.5rem] border border-black/5 bg-[#FBFBF6] p-8">
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/70 mb-4">{label}</p>
+                                                                <p className="text-[24px] font-semibold text-[#1a1a1a]">{val}</p>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -3882,10 +3884,10 @@ export default function AssetWorkspace({
                                             </div>
                                         ) : (
                                             <>
-                                                <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <div className="grid grid-cols-12 border-b border-[#8B6A3D]/8 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]">
-                                                        <div className="col-span-5 px-8 py-5 border-r border-[#8B6A3D]/8">Metric</div>
-                                                        <div className="col-span-2 px-8 py-5 border-r border-[#8B6A3D]/8 text-center">Value</div>
+                                                <div className="rounded-[3rem] border border-black/5 bg-white overflow-hidden shadow-sm">
+                                                    <div className="grid grid-cols-12 border-b border-black/5 bg-gray-50 text-[10px] font-semibold uppercase tracking-[0.32em] text-[#8B6A3D]/80">
+                                                        <div className="col-span-5 px-8 py-5 border-r border-black/5">Metric</div>
+                                                        <div className="col-span-2 px-8 py-5 border-r border-black/5 text-center">Value</div>
                                                         <div className="col-span-5 px-8 py-5">Context Signal</div>
                                                     </div>
                                                     {[
@@ -3914,49 +3916,49 @@ export default function AssetWorkspace({
                                                                     : 'Fatigue is controlled. Current route remains viable with selective refinement.',
                                                         },
                                                     ].map((row) => (
-                                                        <div key={row.label} className="grid grid-cols-12 border-b border-[#8B6A3D]/8 last:border-b-0">
-                                                            <div className="col-span-5 border-r border-[#8B6A3D]/8 px-8 py-6">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#E3DBCE]">{row.label}</p>
+                                                        <div key={row.label} className="grid grid-cols-12 border-b border-black/5 last:border-b-0">
+                                                            <div className="col-span-5 border-r border-black/5 px-8 py-6">
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#1a1a1a]">{row.label}</p>
                                                             </div>
-                                                            <div className="col-span-2 border-r border-[#8B6A3D]/8 px-8 py-6 text-center">
-                                                                <p className="text-[24px] font-semibold text-[#F3F1ED]">{row.value}%</p>
+                                                            <div className="col-span-2 border-r border-black/5 px-8 py-6 text-center">
+                                                                <p className="text-[24px] font-semibold text-[#1a1a1a]">{row.value}%</p>
                                                             </div>
                                                             <div className="col-span-5 px-8 py-6">
-                                                                <p className="text-[13px] leading-relaxed text-[#F3F1ED]">{normalizeProseText(row.insight)}</p>
+                                                                <p className="text-[13px] leading-relaxed text-[#6B6B6B]">{normalizeProseText(row.insight)}</p>
                                                             </div>
                                                         </div>
                                                     ))}
                                                 </div>
 
-                                                <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-10 shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] mb-6 border-b border-[#8B6A3D]/8 pb-5">Directional Estimate</p>
+                                                <div className="rounded-[3rem] border border-black/5 bg-white p-10 shadow-sm">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-[#8B6A3D]/80 mb-6 border-b border-black/5 pb-5">Directional Estimate</p>
                                                     <div className="max-w-[74ch] space-y-3">
                                                         {proseParagraphs(
                                                             marketPulseFallback.interpretation || 'Category pressure is elevated, so this route requires sharper differentiation and strict execution discipline before scale expansion.',
                                                             2,
                                                         ).map((paragraph, idx) => (
-                                                            <p key={idx} className="text-[13px] leading-relaxed text-[#F3F1ED]">
+                                                            <p key={idx} className="text-[13px] leading-relaxed text-[#6B6B6B]">
                                                                 {paragraph}
                                                             </p>
                                                         ))}
                                                     </div>
                                                 </div>
 
-                                                <div className="rounded-[2.75rem] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                    <p className="mb-6 border-b border-[#8B6A3D]/8 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
+                                                <div className="rounded-[2.75rem] border border-black/5 bg-white p-10 shadow-sm">
+                                                    <p className="mb-6 border-b border-black/5 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#8B6A3D]/80">
                                                         Strategic Implication
                                                     </p>
-                                                    <div className="max-w-[78ch] rounded-[1.75rem] bg-[#151310] px-5 py-4">
+                                                    <div className="max-w-[78ch] rounded-[1.75rem] border border-black/5 bg-[#FBFBF6] px-5 py-4">
                                                         {proseParagraphs(
                                                             'To navigate saturation pressure while preserving route novelty, prioritize clear value signaling, disciplined hierarchy, and a distinct visual identity that can survive repeat exposure.',
                                                             2,
                                                         ).map((paragraph, idx) => (
-                                                            <p key={idx} className="text-[13px] leading-relaxed text-[#F3F1ED]/88">
+                                                            <p key={idx} className="text-[13px] leading-relaxed text-[#5E5A53]">
                                                                 {paragraph}
                                                             </p>
                                                         ))}
                                                     </div>
-                                                    <span className="mt-8 inline-flex border border-[#8B6A3D]/38 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#F3F1ED] bg-[#D4A574]/24">
+                                                    <span className="mt-8 inline-flex border border-black/10 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D] bg-[#FBFBF6]">
                                                         {marketPulseFallback.confidenceLabel}
                                                     </span>
                                                 </div>
