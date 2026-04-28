@@ -3980,11 +3980,11 @@ export default function AssetWorkspace({
                                         {/* Trigger Distribution Map */}
                                         <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
-                                                <p className="text-[11px] font-semibold uppercase tracking-[0.44em] text-[#D4A574] font-mono">
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">
                                                     <span className="block">Trigger Distribution</span>
                                                     <span className="block">Map</span>
                                                 </p>
-                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/72">Surface Map</span>
+                                                <span className="text-[10px] font-mono font-semibold uppercase tracking-[0.15em] text-[#D6D0C6]/60">Surface Map</span>
                                             </div>
 
                                             <div className="flex items-center justify-center">
@@ -4170,8 +4170,8 @@ export default function AssetWorkspace({
                                         {/* Strategic Posture */}
                                         <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
-                                                <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Strategic Posture</p>
-                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/72">Field Map</span>
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">Strategic Posture</p>
+                                                <span className="text-[10px] font-mono font-semibold uppercase tracking-[0.15em] text-[#D6D0C6]/60">Field Map</span>
                                             </div>
 
                                             <div className="flex items-center justify-center">
@@ -4229,8 +4229,8 @@ export default function AssetWorkspace({
                                         {/* Persuasion Density */}
                                         <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
-                                                <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Persuasion Density</p>
-                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Compression</span>
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">Persuasion Density</p>
+                                                <span className="text-[10px] font-mono font-semibold uppercase tracking-[0.15em] text-[#D6D0C6]/60">Compression</span>
                                             </div>
 
                                             <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55 font-mono">Conversion Density</p>
@@ -4259,8 +4259,8 @@ export default function AssetWorkspace({
                                         {/* Cognitive Friction */}
                                         <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
                                             <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
-                                                <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Cognitive Friction</p>
-                                                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Resistance</span>
+                                                <p className="text-[11px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">Cognitive Friction</p>
+                                                <span className="text-[10px] font-mono font-semibold uppercase tracking-[0.15em] text-[#D6D0C6]/60">Resistance</span>
                                             </div>
 
                                             <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55 font-mono">Resistance Index</p>
