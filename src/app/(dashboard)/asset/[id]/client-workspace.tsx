@@ -1863,7 +1863,7 @@ export default function AssetWorkspace({
     sampleMode?: boolean,
 }) {
     const [asset, setAsset] = useState(initialAsset);
-    const [activeTab, setActiveTab] = useState<DossierTab>('QUALITY GATE');
+    const [activeTab, setActiveTab] = useState<DossierTab>('ASSET CONTEXT');
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
     const [isGeneratingBlueprint, setIsGeneratingBlueprint] = useState(false);
     const [isGeneratingClone, setIsGeneratingClone] = useState(false);
