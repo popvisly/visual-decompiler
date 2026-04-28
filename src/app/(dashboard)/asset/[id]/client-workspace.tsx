@@ -3016,96 +3016,100 @@ export default function AssetWorkspace({
                                         />
                                     </div>
 
-                                    <div className="grid gap-4 xl:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
-                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
-                                            <div className="overflow-hidden rounded-xl border border-black/5 bg-[#FCFBF9] p-3">
-                                                <img
-                                                    src={firstFrameUrl}
-                                                    alt={asset.brand?.name || 'Source ad'}
-                                                    className="w-full rounded-[0.85rem] border border-black/5 object-cover"
-                                                />
-                                            </div>
-                                            <h3 className="mt-6 text-[30px] font-semibold uppercase leading-[0.92] tracking-[-0.02em] text-[#1a1a1a]">
-                                                {asset.brand?.name || 'Untitled Asset'}
-                                            </h3>
-                                            <p className="mt-3 text-[10px] font-bold uppercase tracking-wider text-[#8B6A3D]">
-                                                {asset.brand?.market_sector || 'Uncategorised Sector'}
-                                            </p>
-                                            <div className="mt-6 space-y-3 border-t border-black/5 pt-6">
-                                                <div className="flex items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B]">
-                                                    <span>Asset ID</span>
-                                                    <span className="text-[#1a1a1a]">{asset.id.split('-')[0].toUpperCase()}</span>
+                                    <div className="grid gap-4 items-start xl:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
+                                        {/* Left Column Stack */}
+                                        <div className="flex flex-col gap-4">
+                                            <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                                <div className="overflow-hidden rounded-xl border border-black/5 bg-[#FCFBF9] p-3">
+                                                    <img
+                                                        src={firstFrameUrl}
+                                                        alt={asset.brand?.name || 'Source ad'}
+                                                        className="w-full rounded-[0.85rem] border border-black/5 object-cover"
+                                                    />
                                                 </div>
-                                                <div className="flex items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B]">
-                                                    <span>Format</span>
-                                                    <span className="text-[#1a1a1a]">{asset.type || 'Single Frame'}</span>
+                                                <h3 className="mt-6 text-[30px] font-semibold uppercase leading-[0.92] tracking-[-0.02em] text-[#1a1a1a]">
+                                                    {asset.brand?.name || 'Untitled Asset'}
+                                                </h3>
+                                                <p className="mt-3 text-[10px] font-bold uppercase tracking-wider text-[#8B6A3D]">
+                                                    {asset.brand?.market_sector || 'Uncategorised Sector'}
+                                                </p>
+                                                <div className="mt-6 space-y-3 border-t border-black/5 pt-6">
+                                                    <div className="flex items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B]">
+                                                        <span>Asset ID</span>
+                                                        <span className="text-[#1a1a1a]">{asset.id.split('-')[0].toUpperCase()}</span>
+                                                    </div>
+                                                    <div className="flex items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B]">
+                                                        <span>Format</span>
+                                                        <span className="text-[#1a1a1a]">{asset.type || 'Single Frame'}</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </section>
+                                            </section>
 
-                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
-                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">System Guidance</p>
-                                            <p className="mt-4 max-w-[66ch] text-[16px] font-medium leading-relaxed text-[#1a1a1a]">
-                                                Engage differential diagnosis against a second route to surface high-priority strategic pivots.
-                                            </p>
-
-                                            <div className="mt-7 grid gap-4 lg:grid-cols-2">
-                                                <div className="rounded-xl border border-black/5 bg-[#FCFBF9] p-5">
-                                                    <p className="text-[10px] font-bold uppercase tracking-wider text-[#8B6A3D]">Differential Diagnostic</p>
-                                                    <p className="mt-3 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
-                                                        Put this brief beside another route and surface the strategic delta.
-                                                    </p>
+                                            <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col h-full">
+                                                <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">Embed Widget</p>
+                                                <p className="mt-4 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
+                                                    Paste this iframe into a client portal, strategy deck, Notion page, or internal dashboard.
+                                                </p>
+                                                <div className="mt-5 rounded-xl border border-black/5 bg-[#FCFBF9] p-4">
+                                                    <code className="block overflow-x-auto text-[11px] font-mono leading-relaxed text-[#6B6B6B]">
+                                                        {`<iframe src="https://www.visualdecompiler.com/embed/${asset.id}" width="100%" height="600px"></iframe>`}
+                                                    </code>
                                                 </div>
-                                                <div className="rounded-xl border border-black/5 bg-[#FCFBF9] p-5">
-                                                    <p className="text-[10px] font-bold uppercase tracking-wider text-[#8B6A3D]">Intelligence Export</p>
-                                                    <p className="mt-3 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
-                                                        Generate a presentation-ready summary for immediate review distribution.
-                                                    </p>
+                                                <p className="mt-4 text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B]">
+                                                    Use for: client-facing reports · internal strategy decks · agency dashboards
+                                                </p>
+                                            </section>
+                                        </div>
+
+                                        {/* Right Column Stack */}
+                                        <div className="flex flex-col gap-4">
+                                            <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                                <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">System Guidance</p>
+                                                <p className="mt-4 max-w-[66ch] text-[16px] font-medium leading-relaxed text-[#1a1a1a]">
+                                                    Engage differential diagnosis against a second route to surface high-priority strategic pivots.
+                                                </p>
+
+                                                <div className="mt-7 grid gap-4 lg:grid-cols-2">
+                                                    <div className="rounded-xl border border-black/5 bg-[#FCFBF9] p-5">
+                                                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#8B6A3D]">Differential Diagnostic</p>
+                                                        <p className="mt-3 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
+                                                            Put this brief beside another route and surface the strategic delta.
+                                                        </p>
+                                                    </div>
+                                                    <div className="rounded-xl border border-black/5 bg-[#FCFBF9] p-5">
+                                                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#8B6A3D]">Intelligence Export</p>
+                                                        <p className="mt-3 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
+                                                            Generate a presentation-ready summary for immediate review distribution.
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div className="mt-7 flex flex-wrap gap-3">
-                                                <button
-                                                    type="button"
-                                                    onClick={handleCopyEmbed}
-                                                    className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-[#FCFBF9] px-5 py-3 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] transition-colors hover:border-black/15 hover:bg-white"
-                                                >
-                                                    <Code className="h-3.5 w-3.5" />
-                                                    Copy Embed Widget
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    onClick={handleExportDossier}
-                                                    className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-[#FCFBF9] px-5 py-3 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] transition-colors hover:border-black/15 hover:bg-white"
-                                                >
-                                                    <FileDown className="h-3.5 w-3.5" />
-                                                    Export Dossier (Print/PDF)
-                                                </button>
-                                            </div>
-                                        </section>
-                                    </div>
+                                                <div className="mt-7 flex flex-wrap gap-3">
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleCopyEmbed}
+                                                        className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-[#FCFBF9] px-5 py-3 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] transition-colors hover:border-black/15 hover:bg-white"
+                                                    >
+                                                        <Code className="h-3.5 w-3.5" />
+                                                        Copy Embed Widget
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleExportDossier}
+                                                        className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-[#FCFBF9] px-5 py-3 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] transition-colors hover:border-black/15 hover:bg-white"
+                                                    >
+                                                        <FileDown className="h-3.5 w-3.5" />
+                                                        Export Dossier (Print/PDF)
+                                                    </button>
+                                                </div>
+                                            </section>
 
-                                    <div className="grid gap-4 xl:grid-cols-2">
-                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col h-full">
-                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">Embed Widget</p>
-                                            <p className="mt-4 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
-                                                Paste this iframe into a client portal, strategy deck, Notion page, or internal dashboard.
-                                            </p>
-                                            <div className="mt-5 rounded-xl border border-black/5 bg-[#FCFBF9] p-4">
-                                                <code className="block overflow-x-auto text-[11px] font-mono leading-relaxed text-[#6B6B6B]">
-                                                    {`<iframe src="https://www.visualdecompiler.com/embed/${asset.id}" width="100%" height="600px"></iframe>`}
-                                                </code>
-                                            </div>
-                                            <p className="mt-4 text-[11px] font-bold uppercase tracking-wider text-[#6B6B6B]">
-                                                Use for: client-facing reports · internal strategy decks · agency dashboards
-                                            </p>
-                                        </section>
-
-                                        <AssetTagEditor
-                                            assetId={asset.id}
-                                            initialTags={asset.tags || []}
-                                            onTagsChange={(nextTags) => setAsset((current) => ({ ...current, tags: nextTags }))}
-                                        />
+                                            <AssetTagEditor
+                                                assetId={asset.id}
+                                                initialTags={asset.tags || []}
+                                                onTagsChange={(nextTags) => setAsset((current) => ({ ...current, tags: nextTags }))}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -3153,103 +3157,109 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
 
-                                        <div className="grid gap-4 xl:grid-cols-3">
-                                            {/* Strategic Recommendation */}
-                                            <div className="xl:col-span-2 xl:col-start-1 rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Strategic Recommendation</p>
-                                                {(() => {
-                                                    const thesis = integratedRecommendation.thesis || '';
-                                                    const [firstSentence, ...restParts] = thesis.split(/(?<=[.!?])\s+/);
-                                                    const remainingText = restParts.join(' ').trim();
-                                                    return (
-                                                        <div className="max-w-[65ch]">
-                                                            <p className="text-[20px] lg:text-[22px] leading-[1.3] font-semibold tracking-tight text-[#1a1a1a]">
-                                                                {firstSentence || thesis}
-                                                            </p>
-                                                            {remainingText && (
-                                                                <p className="mt-4 text-[14px] leading-relaxed font-medium text-[#6B6B6B]">
-                                                                    {remainingText}
+                                        <div className="grid gap-4 xl:grid-cols-3 items-start">
+                                            {/* Left Column Stack (2 columns wide) */}
+                                            <div className="xl:col-span-2 flex flex-col gap-4">
+                                                {/* Strategic Recommendation */}
+                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Strategic Recommendation</p>
+                                                    {(() => {
+                                                        const thesis = integratedRecommendation.thesis || '';
+                                                        const [firstSentence, ...restParts] = thesis.split(/(?<=[.!?])\s+/);
+                                                        const remainingText = restParts.join(' ').trim();
+                                                        return (
+                                                            <div className="max-w-[65ch]">
+                                                                <p className="text-[20px] lg:text-[22px] leading-[1.3] font-semibold tracking-tight text-[#1a1a1a]">
+                                                                    {firstSentence || thesis}
                                                                 </p>
-                                                            )}
-                                                        </div>
-                                                    );
-                                                })()}
-                                                <p className="mt-6 max-w-[65ch] text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{integratedRecommendation.whyNow}</p>
-                                            </div>
+                                                                {remainingText && (
+                                                                    <p className="mt-4 text-[14px] leading-relaxed font-medium text-[#6B6B6B]">
+                                                                        {remainingText}
+                                                                    </p>
+                                                                )}
+                                                            </div>
+                                                        );
+                                                    })()}
+                                                    <p className="mt-6 max-w-[65ch] text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{integratedRecommendation.whyNow}</p>
+                                                </div>
 
-                                            {/* Diagnostic Flags - Spans Rows 1 & 2 */}
-                                            {(failureReasons.length > 0 || integratedRecommendation.knownUnknowns.length > 0) && (
-                                            <div className="xl:col-span-1 xl:col-start-3 xl:row-span-2 xl:row-start-1 rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Diagnostic Flags</p>
-                                                
-                                                {failureReasons.length > 0 && (
-                                                    <div className="space-y-5 mb-8 flex-1">
-                                                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-4">Critical Risk Points</p>
-                                                        {failureReasons.map((reason, index) => (
-                                                            <div key={`${reason.title}-${index}`} className="border-l-2 border-[#D4A574]/40 pl-4 py-1">
-                                                                <p className="text-[11px] font-semibold tracking-wide text-[#1a1a1a] mb-1">{reason.title}</p>
-                                                                <p className="text-[12px] leading-relaxed text-[#6B6B6B]">{reason.detail}</p>
+                                                {/* Risk/Reward & Primary Watchout */}
+                                                <div className="grid gap-4 md:grid-cols-2">
+                                                    <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-4">Risk / Reward Tension</p>
+                                                        <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">
+                                                            {integratedRecommendation.riskRewardTension}
+                                                        </p>
+                                                    </div>
+                                                    <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-4">Primary Watchout</p>
+                                                        <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">
+                                                            {integratedRecommendation.watchouts}
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Action Protocol */}
+                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Action Protocol</p>
+                                                    <div className="space-y-4">
+                                                        {integratedRecommendation.executionNext3.map((step, index) => (
+                                                            <div key={index} className="flex gap-4 items-start">
+                                                                <span className="text-[10px] font-bold text-[#D4A574] mt-1 shrink-0">{index + 1}.</span>
+                                                                <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{step}</p>
                                                             </div>
                                                         ))}
                                                     </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Right Column Stack (1 column wide) */}
+                                            <div className="xl:col-span-1 flex flex-col gap-4">
+                                                {/* Diagnostic Flags */}
+                                                {(failureReasons.length > 0 || integratedRecommendation.knownUnknowns.length > 0) && (
+                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Diagnostic Flags</p>
+                                                    
+                                                    {failureReasons.length > 0 && (
+                                                        <div className="space-y-5 mb-8">
+                                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-4">Critical Risk Points</p>
+                                                            {failureReasons.map((reason, index) => (
+                                                                <div key={`${reason.title}-${index}`} className="border-l-2 border-[#D4A574]/40 pl-4 py-1">
+                                                                    <p className="text-[11px] font-semibold tracking-wide text-[#1a1a1a] mb-1">{reason.title}</p>
+                                                                    <p className="text-[12px] leading-relaxed text-[#6B6B6B]">{reason.detail}</p>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+
+                                                    {integratedRecommendation.knownUnknowns.length > 0 && (
+                                                        <div className={`space-y-4 ${failureReasons.length > 0 ? 'pt-6 border-t border-black/5' : ''}`}>
+                                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">Known Unknowns</p>
+                                                            <p className="text-[12px] leading-relaxed text-[#6B6B6B]">
+                                                                {integratedRecommendation.knownUnknowns.join(' ')}
+                                                            </p>
+                                                        </div>
+                                                    )}
+                                                </div>
                                                 )}
 
-                                                {integratedRecommendation.knownUnknowns.length > 0 && (
-                                                    <div className="space-y-4 pt-6 mt-auto border-t border-black/5">
-                                                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">Known Unknowns</p>
-                                                        <p className="text-[12px] leading-relaxed text-[#6B6B6B]">
-                                                            {integratedRecommendation.knownUnknowns.join(' ')}
-                                                        </p>
+                                                {/* Module Benchmarks */}
+                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Module Benchmarks</p>
+                                                    <div className="space-y-4">
+                                                        {integratedRecommendation.moduleScores.map((score) => (
+                                                            <div key={score.label}>
+                                                                <div className="flex items-center justify-between gap-4 mb-2">
+                                                                    <p className="text-[11px] font-medium tracking-wide text-[#1a1a1a]">{score.label}</p>
+                                                                </div>
+                                                                <div className="flex gap-1">
+                                                                    {[1,2,3,4,5].map(i => (
+                                                                        <div key={i} className={`h-1.5 flex-1 rounded-sm ${i <= score.score ? 'bg-[#D4A574]' : 'bg-[#EAEADF]'}`} />
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                )}
-                                            </div>
-                                            )}
-
-                                            {/* Risk/Reward & Primary Watchout */}
-                                            <div className="xl:col-span-2 xl:col-start-1 grid gap-4 md:grid-cols-2">
-                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-4">Risk / Reward Tension</p>
-                                                    <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">
-                                                        {integratedRecommendation.riskRewardTension}
-                                                    </p>
-                                                </div>
-                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-4">Primary Watchout</p>
-                                                    <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">
-                                                        {integratedRecommendation.watchouts}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            {/* Action Protocol */}
-                                            <div className="xl:col-span-2 xl:col-start-1 xl:row-start-3 rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Action Protocol</p>
-                                                <div className="space-y-4 flex-1">
-                                                    {integratedRecommendation.executionNext3.map((step, index) => (
-                                                        <div key={index} className="flex gap-4 items-start">
-                                                            <span className="text-[10px] font-bold text-[#D4A574] mt-1 shrink-0">{index + 1}.</span>
-                                                            <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{step}</p>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            {/* Module Benchmarks */}
-                                            <div className="xl:col-span-1 xl:col-start-3 xl:row-start-3 rounded-2xl border border-black/5 bg-white p-6 shadow-sm h-full flex flex-col">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Module Benchmarks</p>
-                                                <div className="space-y-4 flex-1">
-                                                    {integratedRecommendation.moduleScores.map((score) => (
-                                                        <div key={score.label}>
-                                                            <div className="flex items-center justify-between gap-4 mb-2">
-                                                                <p className="text-[11px] font-medium tracking-wide text-[#1a1a1a]">{score.label}</p>
-                                                            </div>
-                                                            <div className="flex gap-1">
-                                                                {[1,2,3,4,5].map(i => (
-                                                                    <div key={i} className={`h-1.5 flex-1 rounded-sm ${i <= score.score ? 'bg-[#D4A574]' : 'bg-[#EAEADF]'}`} />
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    ))}
                                                 </div>
                                             </div>
                                         </div>
@@ -3326,77 +3336,83 @@ export default function AssetWorkspace({
                                                 </div>
 
                                                 {/* Main Grid: Attention Path & Strategic Read & Structural Signals */}
-                                                <div className="grid gap-4 xl:grid-cols-3">
-                                                    {/* Strategic Read (spans 2 columns) */}
-                                                    <div className="xl:col-span-2 rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Strategic Read</p>
-                                                        <div className="space-y-6">
-                                                            {[
-                                                                ['Strategic Thesis', firstSentence(analysisLanguage.strategicRead.thesis)],
-                                                                ['Trigger Mechanic', firstSentence(analysisLanguage.strategicRead.triggerMechanic)],
-                                                                ['Friction Points', firstSentence(analysisLanguage.strategicRead.frictionPoints)],
-                                                                ['Category Positioning', firstSentence(analysisLanguage.strategicRead.categoryPositioning)],
-                                                            ].map(([label, value]) => (
-                                                                <div key={label as string}>
-                                                                    <p className="text-[11px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-2">{label as string}</p>
-                                                                    <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{value as string}</p>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Structural Signals (1 column) */}
-                                                    <div className="xl:col-span-1 border border-black/5 bg-white shadow-sm flex flex-col h-full rounded-2xl">
-                                                        <div className="p-6 border-b border-black/5">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Structural Signals</p>
-                                                            <div className="space-y-4">
-                                                                {analysisLanguage.structuralSignals.map((signal) => (
-                                                                    <div key={signal.label} className="flex justify-between items-center bg-[#FBF7EF] px-4 py-3 rounded-xl border border-[#E7DED1]">
-                                                                        <span className="text-[10px] font-semibold uppercase tracking-wider text-[#6B6B6B]">{signal.label}</span>
-                                                                        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#1a1a1a]">{signal.value}</span>
+                                                <div className="grid gap-4 xl:grid-cols-3 items-start">
+                                                    {/* Left Column Stack (2 columns wide) */}
+                                                    <div className="xl:col-span-2 flex flex-col gap-4">
+                                                        {/* Strategic Read */}
+                                                        <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Strategic Read</p>
+                                                            <div className="space-y-6">
+                                                                {[
+                                                                    ['Strategic Thesis', firstSentence(analysisLanguage.strategicRead.thesis)],
+                                                                    ['Trigger Mechanic', firstSentence(analysisLanguage.strategicRead.triggerMechanic)],
+                                                                    ['Friction Points', firstSentence(analysisLanguage.strategicRead.frictionPoints)],
+                                                                    ['Category Positioning', firstSentence(analysisLanguage.strategicRead.categoryPositioning)],
+                                                                ].map(([label, value]) => (
+                                                                    <div key={label as string}>
+                                                                        <p className="text-[11px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-2">{label as string}</p>
+                                                                        <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{value as string}</p>
                                                                     </div>
                                                                 ))}
                                                             </div>
                                                         </div>
-                                                        <div className="p-6 bg-[#FCFBF9] h-full rounded-b-2xl">
-                                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-2">Overall Structure</p>
-                                                            <p className="text-[12px] leading-relaxed text-[#6B6B6B] font-medium">{structuralSummary}</p>
-                                                        </div>
-                                                    </div>
 
-                                                    {/* Attention Path (spans 2 columns) */}
-                                                    <div className="xl:col-span-2 rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Attention Path</p>
-                                                        <div className="space-y-6">
-                                                            {[
-                                                                ['Product Silhouette', analysisLanguage.attentionPath.primaryFocus],
-                                                                ['Brand Mark', analysisLanguage.attentionPath.secondaryFocus],
-                                                                ['Supporting Copy Layer', supportingCopyPath],
-                                                            ].map(([title, detail], index) => (
-                                                                <div key={title as string} className="flex items-start gap-4">
-                                                                    <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FBF7EF] border border-[#E7DED1] text-[12px] font-bold text-[#1a1a1a]">{index + 1}</span>
-                                                                    <div>
-                                                                        <p className="text-[11px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-1">{title as string}</p>
-                                                                        <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{detail as string}</p>
+                                                        {/* Attention Path */}
+                                                        <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex flex-col">
+                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Attention Path</p>
+                                                            <div className="space-y-6">
+                                                                {[
+                                                                    ['Product Silhouette', analysisLanguage.attentionPath.primaryFocus],
+                                                                    ['Brand Mark', analysisLanguage.attentionPath.secondaryFocus],
+                                                                    ['Supporting Copy Layer', supportingCopyPath],
+                                                                ].map(([title, detail], index) => (
+                                                                    <div key={title as string} className="flex items-start gap-4">
+                                                                        <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FBF7EF] border border-[#E7DED1] text-[12px] font-bold text-[#1a1a1a]">{index + 1}</span>
+                                                                        <div>
+                                                                            <p className="text-[11px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-1">{title as string}</p>
+                                                                            <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{detail as string}</p>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            ))}
+                                                                ))}
+                                                            </div>
                                                         </div>
                                                     </div>
 
-                                                    {/* Drop-Off Detected & Confidence */}
+                                                    {/* Right Column Stack (1 column wide) */}
                                                     <div className="xl:col-span-1 flex flex-col gap-4">
-                                                        <div className="border border-black/5 p-6 shadow-sm flex flex-col bg-[#FBF7EF] rounded-2xl">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-4">Drop-Off Detected</p>
-                                                            <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{analysisLanguage.attentionPath.dropOff}</p>
-                                                        </div>
-                                                        <div className="rounded-2xl border border-black/5 bg-[#1A1A1A] text-white p-6 shadow-sm flex flex-col h-full">
-                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C1A674] mb-4">Confidence Index</p>
-                                                            <div className="flex items-baseline gap-2 mb-2">
-                                                                <p className="text-4xl font-semibold tracking-tight text-white">{analysisLanguage.confidenceIndex}</p>
-                                                                <p className="text-[12px] font-semibold tracking-[0.2em] uppercase text-white/40">/ 100</p>
+                                                        {/* Structural Signals */}
+                                                        <div className="border border-black/5 bg-white shadow-sm flex flex-col rounded-2xl">
+                                                            <div className="p-6 border-b border-black/5">
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-6">Structural Signals</p>
+                                                                <div className="space-y-4">
+                                                                    {analysisLanguage.structuralSignals.map((signal) => (
+                                                                        <div key={signal.label} className="flex justify-between items-center bg-[#FBF7EF] px-4 py-3 rounded-xl border border-[#E7DED1]">
+                                                                            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#6B6B6B]">{signal.label}</span>
+                                                                            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#1a1a1a]">{signal.value}</span>
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
                                                             </div>
-                                                            <p className="text-[12px] leading-relaxed text-white/60 font-medium mt-auto block">{confidenceRationale}</p>
+                                                            <div className="p-6 bg-[#FCFBF9] rounded-b-2xl">
+                                                                <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-2">Overall Structure</p>
+                                                                <p className="text-[12px] leading-relaxed text-[#6B6B6B] font-medium">{structuralSummary}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Drop-Off Detected & Confidence */}
+                                                        <div className="flex flex-col gap-4">
+                                                            <div className="border border-black/5 p-6 shadow-sm flex flex-col bg-[#FBF7EF] rounded-2xl">
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80 mb-4">Drop-Off Detected</p>
+                                                                <p className="text-[13px] leading-relaxed text-[#6B6B6B] font-medium">{analysisLanguage.attentionPath.dropOff}</p>
+                                                            </div>
+                                                            <div className="rounded-2xl border border-black/5 bg-[#1A1A1A] text-white p-6 shadow-sm flex flex-col min-h-[200px]">
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C1A674] mb-4">Confidence Index</p>
+                                                                <div className="flex items-baseline gap-2 mb-2">
+                                                                    <p className="text-4xl font-semibold tracking-tight text-white">{analysisLanguage.confidenceIndex}</p>
+                                                                    <p className="text-[12px] font-semibold tracking-[0.2em] uppercase text-white/40">/ 100</p>
+                                                                </div>
+                                                                <p className="text-[12px] leading-relaxed text-white/60 font-medium mt-auto block">{confidenceRationale}</p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3534,75 +3550,79 @@ export default function AssetWorkspace({
                                         />
                                     </div>
 
-                                    <div className="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
-                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Social Context Score</p>
-                                            <div className="overflow-hidden rounded-xl border border-black/5 bg-[#FCFBF9]">
-                                                <div className="grid grid-cols-12 border-b border-black/5 px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">
-                                                    <span className="col-span-5">Platform</span>
-                                                    <span className="col-span-4 text-center">Score</span>
-                                                    <span className="col-span-3 text-right">Signal</span>
+                                    <div className="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] items-start">
+                                        {/* Left Column Stack */}
+                                        <div className="flex flex-col gap-4">
+                                            <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                                <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Social Context Score</p>
+                                                <div className="overflow-hidden rounded-xl border border-black/5 bg-[#FCFBF9]">
+                                                    <div className="grid grid-cols-12 border-b border-black/5 px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">
+                                                        <span className="col-span-5">Platform</span>
+                                                        <span className="col-span-4 text-center">Score</span>
+                                                        <span className="col-span-3 text-right">Signal</span>
+                                                    </div>
+                                                    {socialContext.platformScores.map((row) => (
+                                                        <div key={row.platform} className="grid grid-cols-12 items-center border-b border-black/5 px-6 py-4 text-[13px] last:border-b-0 bg-white">
+                                                            <span className="col-span-5 font-semibold text-[#1a1a1a]">{row.platform}</span>
+                                                            <span className="col-span-4 text-center text-[20px] font-semibold leading-none text-[#1a1a1a] tabular-nums">{row.score}</span>
+                                                            <span className={'col-span-3 text-right text-[10px] font-bold uppercase tracking-wider ' + (row.signal === 'Strong' ? 'text-[#8B6A3D]' : row.signal === 'Usable' ? 'text-[#1a1a1a]' : 'text-[#d9a69c]')}>
+                                                                {row.signal}
+                                                            </span>
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                                {socialContext.platformScores.map((row) => (
-                                                    <div key={row.platform} className="grid grid-cols-12 items-center border-b border-black/5 px-6 py-4 text-[13px] last:border-b-0 bg-white">
-                                                        <span className="col-span-5 font-semibold text-[#1a1a1a]">{row.platform}</span>
-                                                        <span className="col-span-4 text-center text-[20px] font-semibold leading-none text-[#1a1a1a] tabular-nums">{row.score}</span>
-                                                        <span className={'col-span-3 text-right text-[10px] font-bold uppercase tracking-wider ' + (row.signal === 'Strong' ? 'text-[#8B6A3D]' : row.signal === 'Usable' ? 'text-[#1a1a1a]' : 'text-[#d9a69c]')}>
-                                                            {row.signal}
-                                                        </span>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </section>
+                                            </section>
 
-                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
-                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Hook & Hold Diagnostics</p>
-                                            <div className="space-y-3">
-                                                {[
-                                                    ['First-2s Clarity', socialContext.hookHoldDiagnostics.first2sClarity],
-                                                    ['Thumb-Stop Strength', socialContext.hookHoldDiagnostics.thumbStopStrength],
-                                                    ['Readability at Speed', socialContext.hookHoldDiagnostics.readabilityAtSpeed],
-                                                    ['Message Retention', socialContext.hookHoldDiagnostics.messageRetention],
-                                                ].map(([label, detail]) => (
-                                                    <div key={label as string} className="rounded-2xl border border-black/5 bg-[#FCFBF9] p-4">
-                                                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">{label}</p>
-                                                        <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{detail as string}</p>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </section>
-                                    </div>
+                                            <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                                <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Creative Risk Flags</p>
+                                                <div className="space-y-3">
+                                                    {socialContext.riskFlags.map((flag, index) => (
+                                                        <div key={index} className="rounded-xl border border-black/5 bg-[#FCFBF9] p-4 text-[#1a1a1a]">
+                                                            <p className="text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{flag}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </section>
+                                        </div>
 
-                                    <div className="grid gap-4 xl:grid-cols-2">
-                                        <section className="self-start rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
-                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Creative Risk Flags</p>
-                                            <div className="space-y-3">
-                                                {socialContext.riskFlags.map((flag, index) => (
-                                                    <div key={index} className="rounded-xl border border-black/5 bg-[#FCFBF9] p-4 text-[#1a1a1a]">
-                                                        <p className="text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{flag}</p>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </section>
+                                        {/* Right Column Stack */}
+                                        <div className="flex flex-col gap-4">
+                                            <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                                <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Hook & Hold Diagnostics</p>
+                                                <div className="space-y-3">
+                                                    {[
+                                                        ['First-2s Clarity', socialContext.hookHoldDiagnostics.first2sClarity],
+                                                        ['Thumb-Stop Strength', socialContext.hookHoldDiagnostics.thumbStopStrength],
+                                                        ['Readability at Speed', socialContext.hookHoldDiagnostics.readabilityAtSpeed],
+                                                        ['Message Retention', socialContext.hookHoldDiagnostics.messageRetention],
+                                                    ].map(([label, detail]) => (
+                                                        <div key={label as string} className="rounded-2xl border border-black/5 bg-[#FCFBF9] p-4">
+                                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">{label}</p>
+                                                            <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{detail as string}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </section>
 
-                                        <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
-                                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Social Adaptation Moves</p>
-                                            <div className="space-y-3">
-                                                {socialContext.adaptationMoves.map((move) => (
-                                                    <div key={move.platform} className="rounded-xl border border-black/5 bg-[#FCFBF9] p-4">
-                                                        <div className="flex items-start gap-4">
-                                                            <div className="mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-full border border-black/5 bg-white shadow-sm text-[10px] font-bold tracking-wider text-[#8B6A3D]">
-                                                                {SOCIAL_PLATFORM_GLYPHS[move.platform]}
-                                                            </div>
-                                                            <div className="min-w-0 flex-1">
-                                                                <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">{move.platform}</p>
-                                                                <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{move.move}</p>
+                                            <section className="rounded-2xl border border-black/5 bg-white p-6 text-[#1a1a1a] shadow-sm flex flex-col">
+                                                <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a] mb-6 border-b border-black/5 pb-4">Social Adaptation Moves</p>
+                                                <div className="space-y-3">
+                                                    {socialContext.adaptationMoves.map((move) => (
+                                                        <div key={move.platform} className="rounded-xl border border-black/5 bg-[#FCFBF9] p-4">
+                                                            <div className="flex items-start gap-4">
+                                                                <div className="mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-full border border-black/5 bg-white shadow-sm text-[10px] font-bold tracking-wider text-[#8B6A3D]">
+                                                                    {SOCIAL_PLATFORM_GLYPHS[move.platform]}
+                                                                </div>
+                                                                <div className="min-w-0 flex-1">
+                                                                    <p className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">{move.platform}</p>
+                                                                    <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{move.move}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </section>
+                                                    ))}
+                                                </div>
+                                            </section>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
