@@ -65,28 +65,28 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     }, []);
 
     const navItems = [
-        { name: 'Analyze Asset', href: '/ingest', icon: Plus },
-        { name: 'Intelligence Vault', href: '/vault', icon: Database },
-        { name: 'Intelligence Pulse', href: '/compare', icon: Activity },
-        { name: 'Mechanic Intelligence', href: '/market-pulse', icon: LineChart },
-        { name: 'Sovereign Boards', href: '/boards', icon: LayoutGrid },
-        { name: 'Agency Settings', href: '/settings', icon: Settings },
-        { name: 'Team & Seats', href: '/settings/team', icon: Users },
+        { name: 'Analyze Asset', href: '/ingest', icon: Plus, group: 'Core' as const },
+        { name: 'Intelligence Vault', href: '/vault', icon: Database, group: 'Intelligence' as const },
+        { name: 'Intelligence Pulse', href: '/compare', icon: Activity, group: 'Intelligence' as const },
+        { name: 'Mechanic Intelligence', href: '/market-pulse', icon: LineChart, group: 'Intelligence' as const },
+        { name: 'Sovereign Boards', href: '/boards', icon: LayoutGrid, group: 'Intelligence' as const },
+        { name: 'Agency Settings', href: '/settings', icon: Settings, group: 'Settings' as const },
+        { name: 'Team & Seats', href: '/settings/team', icon: Users, group: 'Settings' as const },
     ];
 
     const displayBrandName = agency?.is_whitelabel_active ? (agency.name || 'Decompiler') : 'Decompiler';
+    const groups = ['Core', 'Intelligence', 'Settings'] as const;
 
     return (
-        <div className="flex min-h-screen bg-[#141414] text-[#FBFBF6]">
-            {/* Global Sidebar - Minimalist, app interior aesthetic */}
-            <aside className="sticky top-0 z-50 hidden h-screen w-64 flex-col justify-between border-r border-[rgba(212,165,116,0.18)] bg-[#171512] px-6 py-8 md:flex">
+        <div className="flex min-h-screen bg-[#FBFBF6] text-[#1a1a1a]">
+            <aside className="sticky top-0 z-50 hidden h-screen w-64 flex-col justify-between border-r border-black/5 bg-white px-6 py-8 md:flex">
 
                 <div className="relative z-10">
                     {/* Logo / Brand Mark */}
                     <div className="mb-12 flex items-start justify-between gap-3">
                         <Link href="/" className="group flex items-center gap-2 min-w-0">
-                            <div className="h-4 w-4 flex-shrink-0 rounded-sm bg-[#D4A574] transition-colors group-hover:bg-[#D7B07A]" />
-                            <span className="truncate font-sans text-[11px] font-bold uppercase tracking-[0.3em] text-[#FBFBF6]/88 transition-opacity group-hover:opacity-100 group-hover:text-[#D4A574]">
+                            <div className="h-4 w-4 flex-shrink-0 rounded-sm bg-[#141414] transition-colors group-hover:bg-black" />
+                            <span className="truncate font-sans text-[11px] font-bold uppercase tracking-[0.3em] text-[#1a1a1a]/85 transition-opacity group-hover:opacity-100 group-hover:text-[#8B6A3D]">
                                 {displayBrandName}
                             </span>
                         </Link>
@@ -94,25 +94,39 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     </div>
 
                     {/* Navigation */}
-                    <nav className="space-y-6">
-                        {navItems.map((item) => {
-                            const Icon = item.icon;
-                            const isActive = pathname === item.href || (item.href !== '/' && pathname?.startsWith(item.href));
+                    <nav className="space-y-8">
+                        {groups.map((group) => (
+                            <div key={group} className="space-y-2">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.34em] text-[#999]">
+                                    {group}
+                                </p>
+                                <div className="space-y-1">
+                                    {navItems
+                                        .filter((item) => item.group === group)
+                                        .map((item) => {
+                                            const Icon = item.icon;
+                                            const isActive =
+                                                pathname === item.href ||
+                                                (item.href !== '/' && pathname?.startsWith(item.href));
 
-                            return (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    className={`-ml-4 flex items-center gap-4 border-l pl-4 py-2 transition-all duration-300 group ${isActive ? 'select-none border-[#D4A574] bg-[#D4A574]/8 text-[#D4A574]' : 'border-transparent text-[#9A9A94] hover:border-[rgba(212,165,116,0.18)] hover:text-[#FBFBF6]'
-                                        }`}
-                                >
-                                    <Icon className="w-4 h-4 stroke-[1px]" />
-                                    <span className="font-sans text-[10px] font-bold tracking-[0.2em] uppercase">
-                                        {item.name}
-                                    </span>
-                                </Link>
-                            );
-                        })}
+                                            return (
+                                                <Link
+                                                    key={item.href}
+                                                    href={item.href}
+                                                    className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-[10px] font-bold uppercase tracking-[0.26em] transition-all ${
+                                                        isActive
+                                                            ? 'bg-[#141414] text-[#FBF7EF] shadow-sm'
+                                                            : 'text-[#6B6B6B] hover:bg-[#FBFBF6] hover:text-[#1a1a1a]'
+                                                    }`}
+                                                >
+                                                    <Icon className={`w-4 h-4 ${isActive ? 'text-[#D4A574]' : 'text-[#8B6A3D]/60'}`} />
+                                                    <span className="min-w-0 truncate">{item.name}</span>
+                                                </Link>
+                                            );
+                                        })}
+                                </div>
+                            </div>
+                        ))}
                     </nav>
                 </div>
 

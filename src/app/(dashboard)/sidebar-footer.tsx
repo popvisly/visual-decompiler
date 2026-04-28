@@ -56,24 +56,24 @@ export default function SidebarFooter() {
     const showUpgradeReminder = usage?.tier === 'free' && usage.usageCount >= 3 && !usage.reachedLimit;
 
     return (
-        <div className="flex flex-col gap-5 border-t border-[rgba(212,165,116,0.14)] pt-8">
+        <div className="flex flex-col gap-5 border-t border-black/5 pt-8">
             {usage && (
-                <div className="rounded-[1.25rem] border border-[rgba(212,165,116,0.18)] bg-[#1F1F1F] px-4 py-4">
+                <div className="rounded-[1.25rem] border border-black/5 bg-[#FBFBF6] px-4 py-4">
                     <div className="flex items-center justify-between gap-3">
-                        <span className="font-sans text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">
+                        <span className="font-sans text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/80">
                             {showTrialMilestones ? 'Trial Progress' : 'Usage'}
                         </span>
-                        <span className="font-mono text-[10px] text-[#D4A574]">
+                        <span className="font-mono text-[10px] text-[#1a1a1a]/80">
                             {usage.limit === null ? `${usage.usageCount}/unlimited` : `${usage.usageCount}/${usage.limit}`}
                         </span>
                     </div>
-                    <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#2A2A2A]">
+                    <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white">
                         <div
-                            className={`h-full rounded-full transition-all ${usage.reachedLimit ? 'bg-[#8B4513]' : 'bg-[#D4A574]'}`}
+                            className={`h-full rounded-full transition-all ${usage.reachedLimit ? 'bg-red-500' : 'bg-[#8B6A3D]'}`}
                             style={{ width: `${usage.percentUsed}%` }}
                         />
                     </div>
-                        <p className="mt-3 text-[9px] font-mono uppercase tracking-[0.16em] text-[#9A9A94]">
+                    <p className="mt-3 text-[9px] font-mono uppercase tracking-[0.16em] text-[#6B6B6B]">
                         {usage.reachedLimit
                             ? 'Cycle limit reached. Upgrade to keep extracting.'
                             : usage.limit === null
@@ -82,11 +82,11 @@ export default function SidebarFooter() {
                     </p>
                     {showTrialMilestones && (
                         <>
-                            <div className="mt-4 space-y-2 rounded-[1rem] border border-[rgba(212,165,116,0.14)] bg-[#171512] px-3 py-3">
-                                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">How to use your 5</p>
-                                <p className="text-[10px] leading-5 text-[#9A9A94]">Try 1: Baseline read</p>
-                                <p className="text-[10px] leading-5 text-[#9A9A94]">Try 2: Compare route</p>
-                                <p className="text-[10px] leading-5 text-[#9A9A94]">Try 3: Save to board</p>
+                            <div className="mt-4 space-y-2 rounded-[1rem] border border-black/5 bg-white px-3 py-3">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B6A3D]/80">How to use your 5</p>
+                                <p className="text-[10px] leading-5 text-[#6B6B6B]">Try 1: Baseline read</p>
+                                <p className="text-[10px] leading-5 text-[#6B6B6B]">Try 2: Compare route</p>
+                                <p className="text-[10px] leading-5 text-[#6B6B6B]">Try 3: Save to board</p>
                             </div>
                             <Link
                                 href="/help"
@@ -97,25 +97,25 @@ export default function SidebarFooter() {
                                         href: '/help',
                                     })
                                 }
-                                className="mt-3 inline-flex text-[9px] font-bold uppercase tracking-[0.18em] text-[#D4A574] transition hover:text-[#D7B07A]"
+                                className="mt-3 inline-flex text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B6A3D] transition hover:text-[#141414]"
                             >
                                 How to use your 5
                             </Link>
                         </>
                     )}
                     {showUpgradeReminder && (
-                        <p className="mt-3 text-[10px] leading-5 text-[#9A9A94]">
+                        <p className="mt-3 text-[10px] leading-5 text-[#6B6B6B]">
                             You&apos;re seeing surface-level gains. Unlock boards, compounding memory, and team collaboration next.
                         </p>
                     )}
                 </div>
             )}
-            <span className="cursor-default truncate font-mono text-[9px] text-[#9A9A94] opacity-70 transition-opacity duration-300 hover:opacity-100" title={email}>
+            <span className="cursor-default truncate font-mono text-[9px] text-[#6B6B6B] opacity-70 transition-opacity duration-300 hover:opacity-100" title={email}>
                 {email}
             </span>
             <button
                 onClick={handleDisconnect}
-                className="text-left font-sans text-[9px] font-bold uppercase tracking-[0.25em] text-[#D4A574] opacity-70 transition-opacity duration-300 hover:opacity-100"
+                className="text-left font-sans text-[9px] font-bold uppercase tracking-[0.25em] text-[#8B6A3D] opacity-70 transition-opacity duration-300 hover:opacity-100"
             >
                 [ DISCONNECT ]
             </button>
