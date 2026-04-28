@@ -2916,11 +2916,12 @@ export default function AssetWorkspace({
                 </div>
             </div>
 
-            <div className={`screen-layout w-full min-h-screen ${sampleMode ? 'bg-[#F6F1E7] selection:bg-[#C1A674] selection:text-[#141414]' : 'bg-[#ECE4D6] selection:bg-[#C9A96E] selection:text-white'}`}>
-                <div className={`vault-analysis-shell min-h-screen w-full ${sampleMode ? 'bg-[#F6F1E7] text-[#141414]' : 'bg-[#ECE4D6] text-[#1a1a1a]'}`}>
-                    <div className={`min-h-screen w-full ${sampleMode ? 'bg-[#F6F1E7] shadow-sm' : 'bg-[#ECE4D6] shadow-sm'} ${sampleMode ? 'text-[#141414]' : 'text-[#1a1a1a]'}`}>
+            <div className="relative screen-layout w-full min-h-screen bg-[#FBFBF6] text-[#141414] selection:bg-[#C1A674] selection:text-white">
+                <div className="pointer-events-none absolute inset-0 opacity-[0.02] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]" />
+                <div className="relative z-10 vault-analysis-shell min-h-screen w-full">
+                    <div className="min-h-screen w-full shadow-sm">
                     {sampleMode && (
-                        <div className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#D4A574]/15 bg-[#F6F1E7]/96 px-5 py-4 backdrop-blur-md md:px-8">
+                        <div className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-[#D4A574]/15 bg-[#FBFBF6]/96 px-5 py-4 backdrop-blur-md md:px-8">
                             <a href="/" className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513]">
                                 Visual Decompiler
                             </a>
