@@ -1592,10 +1592,10 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
     };
 
     return (
-        <div className="space-y-6">
+        <div className={`space-y-4 ${type === 'CHANNEL' ? 'mx-auto max-w-[86ch]' : ''}`}>
             {/* Semiotic Subtext Header Card */}
             {(title || overture) && (
-                <div className="rounded-2xl border border-black/5 bg-[#FBF7EF] p-6 shadow-sm">
+                <div className="rounded-2xl border border-black/5 bg-[#FBF7EF] p-5 shadow-sm">
                     <div className="mb-4 flex items-center justify-between border-b border-black/5 pb-4">
                         <h3 className="text-[10px] font-bold uppercase tracking-wider text-[#1a1a1a]">{title}</h3>
                         <span className="text-[9px] font-mono uppercase tracking-widest text-[#1a1a1a]/40">Forensic Map v2.0</span>
@@ -1616,15 +1616,15 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
 
             {/* Keep dossier sections vertically stacked to preserve reading width */}
             {blocks.length > 0 && (
-                <div className="space-y-4">
+                <div className="space-y-3">
                     {blocks.map((block, i) => (
                         <div
                             key={i}
                             id={type === 'ACT' ? block.label : undefined}
-                            className={`rounded-2xl border p-6 flex flex-col ${
+                            className={`rounded-2xl border p-5 flex flex-col ${
                                 type === 'ACT'
                                     ? 'forensic-act-block min-h-[220px] scroll-mt-24'
-                                    : 'min-h-[160px]'
+                                    : ''
                             } ${
                                 type === 'ACT' && activeAct === block.label
                                     ? 'border-black/10 bg-white ring-1 ring-black/5'
@@ -1653,7 +1653,7 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                 </>
                             ) : (
                                 <>
-                                    <div className="flex items-center gap-3 mb-4">
+                                    <div className="flex items-center gap-3 mb-3">
                                         <div className="w-1.5 h-1.5 rounded-full bg-[#8B6A3D]/60" />
                                         <span className="text-[10px] font-bold text-[#1a1a1a] uppercase tracking-wider">{block.label}</span>
                                     </div>
@@ -1664,8 +1664,8 @@ const DossierGrid = ({ title, content, type, activeAct }: { title: string, conte
                                     ) : (
                                         <div className="h-0" />
                                     )}
-                                    <div className={`flex-1 ${block.title ? 'pt-4' : 'pt-2'}`}>
-                                        <div className="max-w-[78ch] space-y-4">
+                                    <div className={`${block.title ? 'pt-4' : 'pt-2'}`}>
+                                        <div className="space-y-3">
                                             {toParagraphs(block.text).map((paragraph, pi) => (
                                                 <p key={pi} className="text-[13px] font-medium leading-relaxed text-[#6B6B6B]">
                                                     {paragraph.trim()}
