@@ -79,7 +79,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
     return (
         <div className="flex min-h-screen bg-[#FBFBF6] text-[#1a1a1a]">
-            <aside className="sticky top-0 z-50 hidden h-screen w-64 flex-col justify-between border-r border-black/5 bg-white px-6 py-8 md:flex">
+            <aside className="sticky top-0 z-50 hidden h-screen w-72 flex-col justify-between border-r border-black/5 bg-white px-6 py-8 md:flex">
 
                 <div className="relative z-10">
                     {/* Logo / Brand Mark */}
