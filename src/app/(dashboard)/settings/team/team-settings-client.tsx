@@ -209,7 +209,7 @@ export default function TeamSettingsClient() {
             <div className="relative z-10 mx-auto max-w-7xl px-8 py-10 md:px-12 md:py-14">
                 <div className="mb-12 border-b border-[#D4A574]/20 pb-8">
                     <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Team &amp; Seats</p>
-                    <h1 className="mt-4 text-4xl font-light uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
+                    <h1 className="mt-4 text-4xl font-semibold uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
                         Agency Operating Team
                     </h1>
                     <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">

@@ -441,7 +441,7 @@ export default function DifferentialDiagnosticsPage() {
                     <div className="flex flex-col gap-6 border-b border-[#D4A574]/18 pb-8 md:flex-row md:items-end md:justify-between">
                         <div>
                             <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Compare</p>
-                            <h1 className="mt-4 text-4xl font-light uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
+                            <h1 className="mt-4 text-4xl font-semibold uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
                                 Compare Routes
                             </h1>
                             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
