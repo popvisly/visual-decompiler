@@ -11,7 +11,6 @@ export default function HomeHero() {
                 className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]"
                 aria-hidden="true"
             />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(212,165,116,0.18),transparent_55%),radial-gradient(circle_at_85%_15%,rgba(20,20,20,0.10),transparent_55%)]" />
 
             <div className="relative z-10 mx-auto w-full max-w-7xl">
                 <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_520px] lg:items-start">
@@ -70,4 +69,3 @@ export default function HomeHero() {
         </section>
     );
 }
-
