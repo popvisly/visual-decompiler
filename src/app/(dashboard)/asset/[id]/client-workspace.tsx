@@ -2938,7 +2938,7 @@ export default function AssetWorkspace({
                     <div ref={assetContextTopRef} className="vault-analysis-frame scroll-mt-[250px] md:scroll-mt-[210px]">
                     {/* Top Workspace Navigation */}
                     <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-30 bg-transparent px-[clamp(12px,1.6vw,24px)] pt-4 pb-4 md:pt-6`}>
-                        <div className="mx-auto max-w-[100%] rounded-2xl border border-black/5 bg-[#E8E2D6]/40 p-2 shadow-sm backdrop-blur-xl md:p-2">
+                        <div className="mx-auto max-w-[100%] rounded-2xl border border-black/5 bg-[#FCFBF9] p-2 shadow-sm backdrop-blur-xl md:p-2">
                             <div className="relative md:hidden">
                                 <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                                     {dossierTabs.map((tab) => (
