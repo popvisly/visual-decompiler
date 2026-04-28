@@ -3978,8 +3978,8 @@ export default function AssetWorkspace({
                                     </div>
                                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                         {/* Trigger Distribution Map */}
-                                        <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
+                                        <div className="flex h-full flex-col rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="mb-10 flex items-start justify-between border-b border-white/5 pb-8 h-[76px]">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">
                                                     <span className="block">Trigger Distribution</span>
                                                     <span className="block">Map</span>
@@ -3987,7 +3987,7 @@ export default function AssetWorkspace({
                                                 <span className="text-[10px] font-mono font-semibold uppercase tracking-[0.15em] text-[#D6D0C6]/60">Surface Map</span>
                                             </div>
 
-                                            <div className="flex items-center justify-center">
+                                            <div className="flex h-[360px] items-center justify-center">
                                                 {(() => {
                                                     const axes = [
                                                         { key: 'STATUS', label: 'STATUS' },
@@ -4011,10 +4011,10 @@ export default function AssetWorkspace({
                                                         return Math.max(0, Math.min(100, n));
                                                     };
 
-                                                    const size = 320;
+                                                    const size = 380;
                                                     const cx = size / 2;
                                                     const cy = size / 2;
-                                                    const r = 92;
+                                                    const r = 110;
                                                     const ringCount = 4;
                                                     const angle0 = -Math.PI / 2;
 
@@ -4049,7 +4049,7 @@ export default function AssetWorkspace({
                                                     });
 
                                                     const labels = axes.map((a, i) => {
-                                                        const [x, y] = polar(i, r + 44);
+                                                        const [x, y] = polar(i, r + 48);
                                                         const lines = a.label.split('\n');
 
                                                         const labelLayout: Record<string, { anchor: 'start' | 'middle' | 'end'; x: number; y: number }> = {
@@ -4092,7 +4092,7 @@ export default function AssetWorkspace({
                                                     });
 
                                                     return (
-                                                        <motion.svg width="100%" height="auto" className="max-w-[380px]" viewBox={`-80 -40 ${size + 160} ${size + 80}`}>
+                                                        <motion.svg width="100%" height="auto" className="max-w-[460px] w-full" viewBox={`-80 -60 ${size + 160} ${size + 120}`}>
                                                             <defs>
                                                                 <radialGradient id="vdRadarGlow" cx="50%" cy="50%" r="60%">
                                                                     <stop offset="0%" stopColor="rgba(212,165,116,0.25)" />
@@ -4103,7 +4103,7 @@ export default function AssetWorkspace({
                                                             <motion.circle
                                                                 cx={cx}
                                                                 cy={cy}
-                                                                r={r + 18}
+                                                                r={r + 20}
                                                                 fill="url(#vdRadarGlow)"
                                                                 initial={{ opacity: 0 }}
                                                                 whileInView={{ opacity: 1 }}
@@ -4162,55 +4162,55 @@ export default function AssetWorkspace({
                                                 })()}
                                             </div>
 
-                                            <p className="mt-10 text-[13px] leading-relaxed text-[#D6D0C6]/70">
+                                            <p className="mt-auto pt-6 text-[13px] leading-relaxed text-[#D6D0C6]/70">
                                                 This distribution quantifies the creative's psychological surface area, identifying which aspiration levers are being engaged to command consumer compliance.
                                             </p>
                                         </div>
 
                                         {/* Strategic Posture */}
-                                        <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
+                                        <div className="flex h-full flex-col rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="mb-10 flex items-start justify-between border-b border-white/5 pb-8 h-[76px]">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">Strategic Posture</p>
                                                 <span className="text-[10px] font-mono font-semibold uppercase tracking-[0.15em] text-[#D6D0C6]/60">Field Map</span>
                                             </div>
 
-                                            <div className="flex items-center justify-center">
+                                            <div className="flex h-[360px] items-center justify-center">
                                                 {(() => {
-                                                    const size = 280;
+                                                    const size = 320;
                                                     const cx = size / 2;
                                                     const cy = size / 2;
-                                                    const r1 = 92;
-                                                    const r2 = 60;
-                                                    const r3 = 28;
+                                                    const r1 = 106;
+                                                    const r2 = 68;
+                                                    const r3 = 30;
 
                                                     // Optional coordinates: { dominance: -1..1, emotional: -1..1 }
                                                     const coords = ((dossier as any)?.archetype_mapping?.posture_coordinates || null) as any;
                                                     const dx = typeof coords?.dominance === 'number' ? Math.max(-1, Math.min(1, coords.dominance)) : 0.15;
                                                     const dy = typeof coords?.emotional === 'number' ? Math.max(-1, Math.min(1, coords.emotional)) : 0.18;
-                                                    const px = cx + dx * 62;
-                                                    const py = cy - dy * 62;
+                                                    const px = cx + dx * 72;
+                                                    const py = cy - dy * 72;
 
                                                     return (
-                                                        <svg width="280" height="280" viewBox={`0 0 ${size} ${size}`}>
+                                                        <svg width="100%" height="auto" className="max-w-[380px] w-full" viewBox={`0 0 ${size} ${size}`}>
                                                             <circle cx={cx} cy={cy} r={r1} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
                                                             <circle cx={cx} cy={cy} r={r2} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
                                                             <circle cx={cx} cy={cy} r={r3} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
                                                             <line x1={cx - r1} y1={cy} x2={cx + r1} y2={cy} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
                                                             <line x1={cx} y1={cy - r1} x2={cx} y2={cy + r1} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
 
-                                                            <circle cx={px} cy={py} r={5} fill="#D4A574" />
-                                                            <circle cx={px} cy={py} r={14} fill="rgba(212,165,116,0.12)" />
+                                                            <circle cx={px} cy={py} r={6} fill="#D4A574" />
+                                                            <circle cx={px} cy={py} r={16} fill="rgba(212,165,116,0.12)" />
 
-                                                            <text x={cx} y={cy - r1 - 18} textAnchor="middle" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">EMOTIONAL</text>
-                                                            <text x={cx} y={cy + r1 + 28} textAnchor="middle" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">RATIONAL</text>
-                                                            <text x={cx - r1 - 34} y={cy + 4} textAnchor="start" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">SUBMISSION</text>
-                                                            <text x={cx + r1 + 34} y={cy + 4} textAnchor="end" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">DOMINANCE</text>
+                                                            <text x={cx} y={cy - r1 - 18} textAnchor="middle" fontSize="10.5" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">EMOTIONAL</text>
+                                                            <text x={cx} y={cy + r1 + 28} textAnchor="middle" fontSize="10.5" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">RATIONAL</text>
+                                                            <text x={cx - r1 - 34} y={cy + 4} textAnchor="start" fontSize="10.5" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">SUBMISSION</text>
+                                                            <text x={cx + r1 + 34} y={cy + 4} textAnchor="end" fontSize="10.5" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">DOMINANCE</text>
                                                         </svg>
                                                     );
                                                 })()}
                                             </div>
 
-                                            <div className="mt-10 space-y-3">
+                                            <div className="mt-auto pt-6 space-y-3">
                                                 {proseParagraphs((dossier as any)?.archetype_mapping?.target_posture, 2)
                                                     .slice(0, 2)
                                                     .map((paragraph, index) => (
@@ -4227,8 +4227,8 @@ export default function AssetWorkspace({
                                         </div>
 
                                         {/* Persuasion Density */}
-                                        <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
+                                        <div className="flex h-full flex-col rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="mb-10 flex items-start justify-between border-b border-white/5 pb-8 h-[76px]">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">Persuasion Density</p>
                                                 <span className="text-[10px] font-mono font-semibold uppercase tracking-[0.15em] text-[#D6D0C6]/60">Compression</span>
                                             </div>
@@ -4248,7 +4248,7 @@ export default function AssetWorkspace({
                                                 )}
                                             </div>
 
-                                            <div className="mt-10 h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                                            <div className="mt-auto pt-10 h-2 w-full rounded-full bg-white/10 overflow-hidden">
                                                 <div
                                                     className="h-full bg-[#D4A574] shadow-[0_0_16px_rgba(212,165,116,0.25)]"
                                                     style={{ width: `${typeof persuasionDensity === 'number' ? Math.max(0, Math.min(100, Math.round(persuasionDensity))) : 0}%` }}
@@ -4257,8 +4257,8 @@ export default function AssetWorkspace({
                                         </div>
 
                                         {/* Cognitive Friction */}
-                                        <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
+                                        <div className="flex h-full flex-col rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+                                            <div className="mb-10 flex items-start justify-between border-b border-white/5 pb-8 h-[76px]">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.45em] text-[#D4A574] font-mono">Cognitive Friction</p>
                                                 <span className="text-[10px] font-mono font-semibold uppercase tracking-[0.15em] text-[#D6D0C6]/60">Resistance</span>
                                             </div>
@@ -4272,7 +4272,7 @@ export default function AssetWorkspace({
                                                 {typeof frictionScore === 'number' ? Math.round(frictionScore) : '—'}%
                                             </div>
 
-                                            <div className="mt-10 h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                                            <div className="mt-auto pt-10 h-2 w-full rounded-full bg-white/10 overflow-hidden">
                                                 <div
                                                     className="h-full bg-[#D4A574] shadow-[0_0_16px_rgba(212,165,116,0.25)]"
                                                     style={{ width: `${typeof frictionScore === 'number' ? Math.max(0, Math.min(100, Math.round(frictionScore))) : 0}%` }}
