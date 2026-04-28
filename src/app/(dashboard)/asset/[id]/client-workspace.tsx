@@ -4011,10 +4011,10 @@ export default function AssetWorkspace({
                                                         return Math.max(0, Math.min(100, n));
                                                     };
 
-                                                    const size = 380;
+                                                    const size = 360;
                                                     const cx = size / 2;
                                                     const cy = size / 2;
-                                                    const r = 110;
+                                                    const r = 125;
                                                     const ringCount = 4;
                                                     const angle0 = -Math.PI / 2;
 
@@ -4049,7 +4049,7 @@ export default function AssetWorkspace({
                                                     });
 
                                                     const labels = axes.map((a, i) => {
-                                                        const [x, y] = polar(i, r + 48);
+                                                        const [x, y] = polar(i, r + 46);
                                                         const lines = a.label.split('\n');
 
                                                         const labelLayout: Record<string, { anchor: 'start' | 'middle' | 'end'; x: number; y: number }> = {
@@ -4092,7 +4092,7 @@ export default function AssetWorkspace({
                                                     });
 
                                                     return (
-                                                        <motion.svg width="100%" height="auto" className="max-w-[460px] w-full" viewBox={`-80 -60 ${size + 160} ${size + 120}`}>
+                                                        <motion.svg width="100%" height="100%" className="max-w-[480px] w-full" viewBox="-100 -20 560 400">
                                                             <defs>
                                                                 <radialGradient id="vdRadarGlow" cx="50%" cy="50%" r="60%">
                                                                     <stop offset="0%" stopColor="rgba(212,165,116,0.25)" />
@@ -4176,35 +4176,35 @@ export default function AssetWorkspace({
 
                                             <div className="flex h-[360px] items-center justify-center">
                                                 {(() => {
-                                                    const size = 320;
+                                                    const size = 280;
                                                     const cx = size / 2;
                                                     const cy = size / 2;
-                                                    const r1 = 106;
-                                                    const r2 = 68;
-                                                    const r3 = 30;
+                                                    const r1 = 92;
+                                                    const r2 = 60;
+                                                    const r3 = 28;
 
                                                     // Optional coordinates: { dominance: -1..1, emotional: -1..1 }
                                                     const coords = ((dossier as any)?.archetype_mapping?.posture_coordinates || null) as any;
                                                     const dx = typeof coords?.dominance === 'number' ? Math.max(-1, Math.min(1, coords.dominance)) : 0.15;
                                                     const dy = typeof coords?.emotional === 'number' ? Math.max(-1, Math.min(1, coords.emotional)) : 0.18;
-                                                    const px = cx + dx * 72;
-                                                    const py = cy - dy * 72;
+                                                    const px = cx + dx * 62;
+                                                    const py = cy - dy * 62;
 
                                                     return (
-                                                        <svg width="100%" height="auto" className="max-w-[380px] w-full" viewBox={`0 0 ${size} ${size}`}>
+                                                        <svg width="280" height="280" viewBox={`0 0 ${size} ${size}`}>
                                                             <circle cx={cx} cy={cy} r={r1} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
                                                             <circle cx={cx} cy={cy} r={r2} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
                                                             <circle cx={cx} cy={cy} r={r3} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
                                                             <line x1={cx - r1} y1={cy} x2={cx + r1} y2={cy} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
                                                             <line x1={cx} y1={cy - r1} x2={cx} y2={cy + r1} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
 
-                                                            <circle cx={px} cy={py} r={6} fill="#D4A574" />
-                                                            <circle cx={px} cy={py} r={16} fill="rgba(212,165,116,0.12)" />
+                                                            <circle cx={px} cy={py} r={5} fill="#D4A574" />
+                                                            <circle cx={px} cy={py} r={14} fill="rgba(212,165,116,0.12)" />
 
-                                                            <text x={cx} y={cy - r1 - 18} textAnchor="middle" fontSize="10.5" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">EMOTIONAL</text>
-                                                            <text x={cx} y={cy + r1 + 28} textAnchor="middle" fontSize="10.5" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">RATIONAL</text>
-                                                            <text x={cx - r1 - 34} y={cy + 4} textAnchor="start" fontSize="10.5" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">SUBMISSION</text>
-                                                            <text x={cx + r1 + 34} y={cy + 4} textAnchor="end" fontSize="10.5" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">DOMINANCE</text>
+                                                            <text x={cx} y={cy - r1 - 18} textAnchor="middle" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">EMOTIONAL</text>
+                                                            <text x={cx} y={cy + r1 + 28} textAnchor="middle" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">RATIONAL</text>
+                                                            <text x={cx - r1 - 34} y={cy + 4} textAnchor="start" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">SUBMISSION</text>
+                                                            <text x={cx + r1 + 34} y={cy + 4} textAnchor="end" fontSize="10" fontWeight="600" letterSpacing="3" fill="rgba(212,165,116,0.65)">DOMINANCE</text>
                                                         </svg>
                                                     );
                                                 })()}
