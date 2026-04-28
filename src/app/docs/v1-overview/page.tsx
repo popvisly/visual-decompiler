@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import Link from 'next/link';
+import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 
 const SECTIONS = [
     {
@@ -73,7 +74,18 @@ export default function AgencyOverviewPage() {
         <main className="bg-[#F6F1E7] min-h-screen">
             <UnifiedSovereignHeader />
 
-            <section className="pt-48 pb-32 px-6">
+            <MarketingPageHeader
+                kicker="Help Center"
+                title={
+                    <>
+                        Visual Decompiler <br />
+                        <span className="text-[#8B6A3D]">v2.0 Overview</span>
+                    </>
+                }
+                description="A high-level operating overview of Sovereign Intelligence: receipts, diagnostics, risk flags, and actionable sprint outputs."
+            />
+
+            <section className="pb-32 px-6">
                 <div className="max-w-4xl mx-auto">
 
                     {/* ── Breadcrumbs ── */}
@@ -83,17 +95,7 @@ export default function AgencyOverviewPage() {
                         <span className="text-[#141414]">v2.0 Overview</span>
                     </div>
 
-                    {/* ── Header ── */}
                     <div className="mb-20">
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="text-5xl lg:text-6xl font-light leading-tight tracking-tightest text-[#141414] mb-8"
-                        >
-                            Visual Decompiler v2.0 <br />
-                            <span className="italic font-serif">(Sovereign Intelligence)</span> — Overview
-                        </motion.h1>
-
                         <div className="p-8 bg-white border border-[#E7DED1] rounded-[2.5rem] shadow-[0_20px_60px_rgba(20,20,20,0.03)]">
                             <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-[#141414] mb-4">What is Sovereign Intelligence?</h2>
                             <p className="text-lg text-[#6B6B6B] font-light leading-relaxed">

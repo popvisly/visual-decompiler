@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight, Rocket, ShieldCheck, Target, TrendingUp } from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import Link from 'next/link';
+import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 
 const HIGHLIGHTS = [
     {
@@ -40,7 +41,18 @@ export default function ReleaseNotesPage() {
     return (
         <main className="bg-[#F6F1E7] min-h-screen">
             <UnifiedSovereignHeader />
-            <section className="pt-48 pb-32 px-6">
+            <MarketingPageHeader
+                kicker="Help Center"
+                title={
+                    <>
+                        Release Notes <br />
+                        <span className="text-[#8B6A3D]">Sovereign Intelligence</span>
+                    </>
+                }
+                description="Milestone updates and capability shifts across the Visual Decompiler operating system."
+            />
+
+            <section className="pb-32 px-6">
                 <div className="max-w-4xl mx-auto">
                     <div className="flex items-center gap-2 mb-12 text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B6B6B]">
                         <Link href="/docs" className="hover:text-[#141414] transition-colors">Help Center</Link>
@@ -49,16 +61,11 @@ export default function ReleaseNotesPage() {
                     </div>
 
                     <div className="mb-20">
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="px-3 py-1 bg-accent/20 border border-accent/30 rounded-full text-accent text-[9px] font-bold uppercase tracking-widest">v2.0 — Sovereign Intelligence</div>
+                        <div className="flex items-center gap-3">
+                            <div className="px-3 py-1 bg-accent/10 border border-accent/20 rounded-full text-accent text-[9px] font-bold uppercase tracking-widest">
+                                v2.0 — Sovereign Intelligence
+                            </div>
                         </div>
-                        <h1 className="text-5xl font-light tracking-tightest text-[#141414] mb-6 uppercase">
-                            Milestone Update: <br />
-                            <span className="italic font-serif lowercase tracking-normal text-accent">The Forensic Shift</span>
-                        </h1>
-                        <p className="text-xl text-[#6B6B6B] font-light leading-relaxed max-w-2xl">
-                            Transforming the Visual Decompiler into a session-aware, sovereign-grade execution engine for elite agencies.
-                        </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">

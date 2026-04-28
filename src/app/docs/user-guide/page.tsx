@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
+import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 
 const USE_CASES = [
     {
@@ -78,23 +79,14 @@ export default function UserGuidePage() {
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader />
 
-            <section className="pt-30 pb-28 lg:pt-36 lg:pb-36">
-                <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                        className="max-w-[900px]"
-                    >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">User Guide</p>
-                        <h1 className="mt-5 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]">
-                            Using Visual Decompiler
-                        </h1>
-                        <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]">
-                            How to turn creative instinct into decisions that move forward.
-                        </p>
-                    </motion.div>
+            <MarketingPageHeader
+                kicker="User Guide"
+                title="Using Visual Decompiler"
+                description="How to turn creative instinct into decisions that move forward."
+            />
 
+            <section className="pb-28 lg:pb-36">
+                <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
                     <div className="mt-16 border-t border-black/5 pt-14 lg:mt-20 lg:pt-16">
                         <motion.div
                             initial={{ opacity: 0, y: 18 }}

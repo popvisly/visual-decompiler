@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ClipboardCheck, ArrowRight, Eye, Smartphone, AlertTriangle, Settings, TrendingUp } from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import Link from 'next/link';
+import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 
 const QA_SECTIONS = [
     {
@@ -55,7 +56,18 @@ export default function QAChecklistPage() {
     return (
         <main className="bg-[#F6F1E7] min-h-screen">
             <UnifiedSovereignHeader />
-            <section className="pt-48 pb-32 px-6">
+            <MarketingPageHeader
+                kicker="Help Center"
+                title={
+                    <>
+                        QA Checklist <br />
+                        <span className="text-[#8B6A3D]">Sovereign Rigor</span>
+                    </>
+                }
+                description="A practical validation protocol to keep outputs defensible under agency pressure."
+            />
+
+            <section className="pb-32 px-6">
                 <div className="max-w-4xl mx-auto">
                     <div className="flex items-center gap-2 mb-12 text-[10px] font-bold uppercase tracking-[0.2em] text-[#6B6B6B]">
                         <Link href="/docs" className="hover:text-[#141414] transition-colors">Help Center</Link>
@@ -63,15 +75,7 @@ export default function QAChecklistPage() {
                         <span className="text-[#141414]">QA Checklist</span>
                     </div>
 
-                    <div className="mb-20">
-                        <h1 className="text-5xl font-light tracking-tightest text-[#141414] mb-6 uppercase">
-                            v2.0 QA Checklist: <br />
-                            <span className="italic font-serif lowercase tracking-normal text-accent">Sovereign Intelligence Rigor</span>
-                        </h1>
-                        <p className="text-xl text-[#6B6B6B] font-light leading-relaxed max-w-2xl">
-                            Ensuring the decompiler remains robust across high-stakes agency use cases.
-                        </p>
-                    </div>
+                    <div className="mb-20" />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {QA_SECTIONS.map((section, idx) => (

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Code, ArrowRight, Package, Box, Search, Activity, ShieldCheck, Lock } from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import Link from 'next/link';
+import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 
 const SCHEMA_LAYERS = [
     { name: "meta", type: "System Metadata", desc: "Version, brand detection, and trend velocity." },
@@ -25,7 +26,17 @@ export default function SchemaContractPage() {
     return (
         <main className="bg-[#FBFBF6] min-h-screen text-[#141414]">
             <UnifiedSovereignHeader />
-            <section className="pt-48 pb-32 px-6">
+            <MarketingPageHeader
+                kicker="Help Center"
+                title={
+                    <>
+                        Schema Contract <br />
+                        <span className="text-[#8B6A3D]">v2.0</span>
+                    </>
+                }
+                description="A formal specification for the v2 forensic engine: invariants, layers, and integration requirements."
+            />
+            <section className="pb-32 px-6">
                 <div className="max-w-4xl mx-auto">
                     <div className="flex items-center gap-2 mb-12 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A8A84]">
                         <Link href="/docs" className="hover:text-[#141414] transition-colors">Help Center</Link>

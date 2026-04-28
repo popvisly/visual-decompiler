@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import Link from 'next/link';
+import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 
 const INTELLIGENCE_MODULES = [
     {
@@ -151,59 +152,38 @@ export default function DocsPage() {
     return (
         <main className="bg-[#F6F1E7] min-h-screen">
             <UnifiedSovereignHeader />
+            <MarketingPageHeader
+                kicker="Help Center / Lexicon"
+                title="Sovereign Central"
+                description="Guides, system terms, and operating protocols for decision-grade creative work."
+            />
 
-            <section className="pt-48 pb-32 px-6">
+            <section className="pb-32 px-6">
                 <div className="max-w-5xl mx-auto">
-
-                    {/* ── Help Center Hero ── */}
-                    <div className="max-w-4xl mb-32">
-                        <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            className="flex items-center gap-3 mb-8"
-                        >
-                            <div className="w-8 h-[1px] bg-[#141414]" />
-                            <span className="text-[#141414] text-[11px] font-bold tracking-[0.4em] uppercase">
-                                Help Center / Lexicon
-                            </span>
-                        </motion.div>
-
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                            className="text-[12vw] lg:text-[7vw] font-light leading-[0.85] tracking-tightest uppercase text-[#141414] mb-12"
-                        >
-                            Sovereign<br />
-                            <span className="italic font-serif lowercase tracking-normal">Central</span>
-                        </motion.h1>
-
-                        {/* Search Bar */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2, duration: 0.8 }}
-                            className="relative max-w-2xl"
-                        >
-                            <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
-                                <Info className="w-5 h-5 text-[#6B6B6B]" />
-                            </div>
-                            <input
-                                type="text"
-                                placeholder="Search documentation, terms, and guides..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full bg-white border border-[#E7DED1] rounded-3xl py-6 pl-14 pr-8 text-lg font-light placeholder:text-[#6B6B6B]/40 focus:outline-none focus:border-accent/40 shadow-xl transition-all"
-                            />
-                        </motion.div>
-                    </div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                        className="relative max-w-2xl"
+                    >
+                        <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
+                            <Info className="w-5 h-5 text-[#6B6B6B]" />
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="Search documentation, terms, and guides..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full bg-white border border-[#E7DED1] rounded-3xl py-6 pl-14 pr-8 text-lg font-light placeholder:text-[#6B6B6B]/40 focus:outline-none focus:border-accent/40 shadow-xl transition-all"
+                        />
+                    </motion.div>
 
                     {/* ── Article Index ── */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
-                        className="mb-40"
+                        className="mt-20 mb-40"
                     >
                         <h2 className="text-[10px] font-bold text-[#141414]/30 uppercase tracking-[0.3em] mb-8">Featured Articles</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
