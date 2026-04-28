@@ -4174,22 +4174,7 @@ export default function AssetWorkspace({
                                                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/72">Field Map</span>
                                             </div>
 
-                                            <div className="space-y-3">
-                                                {proseParagraphs((dossier as any)?.archetype_mapping?.target_posture, 2)
-                                                    .slice(0, 2)
-                                                    .map((paragraph, index) => (
-                                                        <p key={index} className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
-                                                            {paragraph}
-                                                        </p>
-                                                    ))}
-                                                {proseParagraphs((dossier as any)?.archetype_mapping?.target_posture, 2).length === 0 && (
-                                                    <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
-                                                        Icon Maintenance — the brand is not challenging for position or disrupting the category; it is asserting the permanence of an already-won cultural throne.
-                                                    </p>
-                                                )}
-                                            </div>
-
-                                            <div className="mt-10 flex items-center justify-center">
+                                            <div className="flex items-center justify-center">
                                                 {(() => {
                                                     const size = 280;
                                                     const cx = size / 2;
@@ -4223,6 +4208,21 @@ export default function AssetWorkspace({
                                                         </svg>
                                                     );
                                                 })()}
+                                            </div>
+
+                                            <div className="mt-10 space-y-3">
+                                                {proseParagraphs((dossier as any)?.archetype_mapping?.target_posture, 2)
+                                                    .slice(0, 2)
+                                                    .map((paragraph, index) => (
+                                                        <p key={index} className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
+                                                            {paragraph}
+                                                        </p>
+                                                    ))}
+                                                {proseParagraphs((dossier as any)?.archetype_mapping?.target_posture, 2).length === 0 && (
+                                                    <p className="text-[13px] leading-relaxed text-[#D6D0C6]/70">
+                                                        Icon Maintenance — the brand is not challenging for position or disrupting the category; it is asserting the permanence of an already-won cultural throne.
+                                                    </p>
+                                                )}
                                             </div>
                                         </div>
 
