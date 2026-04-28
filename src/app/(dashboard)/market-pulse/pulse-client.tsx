@@ -308,7 +308,7 @@ export default function MechanicIntelligenceClient({
             <div className="relative z-10 mx-auto max-w-7xl">
                 <div className="border-b border-[#D4A574]/18 pb-8">
                     <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Mechanic Intelligence</p>
-                    <h1 className="mt-4 text-4xl font-light uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
+                    <h1 className="mt-4 text-4xl font-semibold uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
                         Market Pulse Dashboard
                     </h1>
                     <p className="mt-4 max-w-4xl text-sm leading-relaxed text-[#6B6B6B]">
