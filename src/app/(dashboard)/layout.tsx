@@ -68,7 +68,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         { name: 'Analyze Asset', href: '/ingest', icon: Plus, group: 'Core' as const },
         { name: 'Intelligence Vault', href: '/vault', icon: Database, group: 'Intelligence' as const },
         { name: 'Intelligence Pulse', href: '/compare', icon: Activity, group: 'Intelligence' as const },
-        { name: 'Mechanic Intelligence', href: '/market-pulse', icon: LineChart, group: 'Intelligence' as const },
+        { name: 'Market Pulse', href: '/market-pulse', icon: LineChart, group: 'Intelligence' as const },
         { name: 'Sovereign Boards', href: '/boards', icon: LayoutGrid, group: 'Intelligence' as const },
         { name: 'Agency Settings', href: '/settings', icon: Settings, group: 'Settings' as const },
         { name: 'Team & Seats', href: '/settings/team', icon: Users, group: 'Settings' as const },
