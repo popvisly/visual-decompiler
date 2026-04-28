@@ -4616,16 +4616,18 @@ export default function AssetWorkspace({
 
                         {activeTab === 'DECISION LOG' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="space-y-10">
-                                    <WorkspaceTabHeader
-                                        kicker="Audit Trail"
-                                        title="Decision Log: Audit Trail"
-                                        intro="A concise record of all decisions made, providing transparency and accountability in the creative direction process."
-                                    />
-                                    <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+                                <div className="flex flex-col gap-4">
+                                    <div className="px-6">
+                                        <WorkspaceTabHeader
+                                            kicker="Audit Trail"
+                                            title="Decision Log: Audit Trail"
+                                            intro="A concise record of all decisions made, providing transparency and accountability in the creative direction process."
+                                        />
+                                    </div>
+                                    <div className="grid gap-6 px-6 xl:grid-cols-[1.2fr_0.8fr]">
                                         <div className="space-y-6">
-                                            <div className="rounded-[2.75rem] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                <p className="mb-8 border-b border-[#8B6A3D]/8 pb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">
+                                            <div className="rounded-[2.75rem] border border-black/5 bg-white p-10 shadow-sm">
+                                                <p className="mb-8 border-b border-black/5 pb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80">
                                                     Capture Decision
                                                 </p>
                                                 <div className="space-y-8">
@@ -4636,8 +4638,8 @@ export default function AssetWorkspace({
                                                                 onClick={() => setDecisionVerdict(v)}
                                                                 className={`flex items-center justify-center border px-6 py-5 text-[13px] font-semibold uppercase tracking-[0.26em] transition-all ${
                                                                     decisionVerdict === v
-                                                                        ? 'border-[#D4A574] bg-[#D4A574] text-black'
-                                                                        : 'border-[#8B6A3D]/8 bg-[#151310] text-[#D6D0C6]/78 hover:border-[#8B6A3D]/45 hover:text-[#F3F1ED]'
+                                                                        ? 'border-black/10 bg-[#141414] text-[#FBF7EF] shadow-sm'
+                                                                        : 'border-black/10 bg-[#FBFBF6] text-[#6B6B6B] hover:border-black/20 hover:bg-white'
                                                                 }`}
                                                             >
                                                                 <span className="inline-flex w-full items-center justify-center gap-2">
@@ -4648,52 +4650,52 @@ export default function AssetWorkspace({
                                                         ))}
                                                     </div>
                                                     <div className="space-y-4">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D6D0C6]/55">Rationale for Decision</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#6B6B6B]">Rationale for Decision</p>
                                                         <textarea
                                                             value={decisionNote}
                                                             onChange={(e) => setDecisionNote(e.target.value)}
                                                             rows={6}
-                                                            className="w-full border border-[#8B6A3D]/8 bg-[#151310] p-6 text-[13px] leading-relaxed text-[#D6D0C6]/70 outline-none placeholder:text-[#D6D0C6]/45 focus:border-[#D4A574]/40 transition-colors"
+                                                            className="w-full border border-black/10 bg-white p-6 text-[13px] leading-relaxed text-[#1a1a1a] outline-none placeholder:text-[#999] focus:border-[#D4A574]/40 transition-colors"
                                                             placeholder="Enter reasoning for this decision..."
                                                         />
                                                     </div>
                                                     <button
                                                         onClick={handleLogDecision}
-                                                        className="w-full border border-[#8B6A3D]/38 bg-[#151310] py-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] transition-all hover:border-[#D4A574] hover:bg-[#D4A574] hover:text-black active:scale-[0.98]"
+                                                        className="w-full rounded-full bg-[#141414] py-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#FBF7EF] transition-all hover:bg-black active:scale-[0.98]"
                                                     >
                                                         Commit to Audit Log
                                                     </button>
                                                 </div>
                                             </div>
 
-                                            <div className="rounded-[2.75rem] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                                <div className="mb-8 flex items-center justify-between gap-6 border-b border-[#8B6A3D]/8 pb-5">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]">Decision Shorthand Summary</p>
+                                            <div className="rounded-[2.75rem] border border-black/5 bg-white p-10 shadow-sm">
+                                                <div className="mb-8 flex items-center justify-between gap-6 border-b border-black/5 pb-5">
+                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80">Decision Shorthand Summary</p>
                                                     <button
                                                         onClick={() => navigator.clipboard.writeText(decisionSummaryText)}
-                                                        className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#D6D0C6]/55 hover:text-[#D4A574] transition-colors"
+                                                        className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#6B6B6B] hover:text-[#1a1a1a] transition-colors"
                                                     >
                                                         Copy Summary
                                                     </button>
                                                 </div>
-                                                <div className="border border-[#8B6A3D]/8 bg-[#151310] p-8">
-                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-[#8B6A3D]/8 pb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D6D0C6]/55">
+                                                <div className="rounded-[2rem] border border-black/5 bg-[#FBFBF6] p-8">
+                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-black/5 pb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6B6B6B]">
                                                         <p>Field</p>
                                                         <p>Value</p>
                                                     </div>
-                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-[#8B6A3D]/8 py-4 text-[13px]">
-                                                        <p className="font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Timestamp</p>
-                                                        <p className="text-[#D6D0C6]/70">{decisionSummaryTimestamp}</p>
+                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-black/5 py-4 text-[13px]">
+                                                        <p className="font-semibold uppercase tracking-[0.2em] text-[#6B6B6B]">Timestamp</p>
+                                                        <p className="text-[#1a1a1a]/80">{decisionSummaryTimestamp}</p>
                                                     </div>
-                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-[#8B6A3D]/8 py-4 text-[13px]">
-                                                        <p className="font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Verdict</p>
-                                                        <p className="font-semibold uppercase text-[#D4A574]">{decisionVerdict || 'Pending'}</p>
+                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-black/5 py-4 text-[13px]">
+                                                        <p className="font-semibold uppercase tracking-[0.2em] text-[#6B6B6B]">Verdict</p>
+                                                        <p className="font-semibold uppercase text-[#8B6A3D]">{decisionVerdict || 'Pending'}</p>
                                                     </div>
                                                     <div className="pt-4">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D6D0C6]/58">Operating Status</p>
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6B6B6B]">Operating Status</p>
                                                         <div className="mt-3 space-y-2">
                                                             {proseParagraphs(integratedRecommendation.recommendedDirection, 2).map((paragraph, idx) => (
-                                                                <p key={idx} className="text-[15px] font-medium leading-[1.55] text-[#F3F1ED]/90">
+                                                                <p key={idx} className="text-[15px] font-medium leading-[1.55] text-[#1a1a1a]/85">
                                                                     {paragraph}
                                                                 </p>
                                                             ))}
@@ -4703,58 +4705,58 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
 
-                                        <div className="self-start rounded-[2.75rem] bg-[#1A1A1A] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="mb-8 border-b border-[#8B6A3D]/8 pb-5 text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574]">Decision History</p>
+                                        <div className="self-start rounded-[2.75rem] border border-black/5 bg-white p-10 shadow-sm">
+                                            <p className="mb-8 border-b border-black/5 pb-5 text-[10px] font-semibold uppercase tracking-[0.5em] text-[#8B6A3D]/80">Decision History</p>
                                             <div className="custom-scrollbar max-h-[800px] space-y-4 overflow-y-auto pr-4">
                                                 {decisionLogEntries.length > 0 ? (
                                                     decisionLogEntries.map((entry) => (
-                                                        <div key={entry.id} className="rounded-[2rem] bg-[#151310] p-8 transition-all hover:border-[#8B6A3D]/38">
+                                                        <div key={entry.id} className="rounded-[2rem] border border-black/5 bg-[#FBFBF6] p-8 transition-all hover:bg-white">
                                                             <div className="mb-6 flex items-center justify-between">
                                                                 <span
                                                                     className={`inline-block border px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.3em] ${
                                                                         entry.verdict === 'Ship'
-                                                                            ? 'border-[#8B6A3D]/45 text-[#D4A574] bg-[#D4A574]/10'
+                                                                            ? 'border-[#8B6A3D]/30 text-[#8B6A3D] bg-[#8B6A3D]/5'
                                                                             : entry.verdict === 'Revise'
-                                                                                ? 'border-[#8B6A3D]/34 text-[#D6D0C6]/80 bg-white/5'
-                                                                                : 'border-red-500/40 text-red-300 bg-red-500/10'
+                                                                                ? 'border-black/10 text-[#6B6B6B] bg-white'
+                                                                                : 'border-red-500/30 text-red-600 bg-red-50'
                                                                     }`}
                                                                 >
                                                                     {entry.verdict}
                                                                 </span>
-                                                                <span className="text-[10px] font-semibold text-[#D6D0C6]/45">
+                                                                <span className="text-[10px] font-semibold text-[#999]">
                                                                     {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} //{' '}
                                                                     {new Date(entry.timestamp).toLocaleDateString([], { day: '2-digit', month: 'short' })}
                                                                 </span>
                                                             </div>
                                                             <div className="space-y-2">
                                                                 {proseParagraphs(entry.rationale, 2).map((paragraph, idx) => (
-                                                                    <p key={idx} className="text-[13px] font-normal leading-relaxed text-[#D6D0C6]/82">
+                                                                    <p key={idx} className="text-[13px] font-normal leading-relaxed text-[#6B6B6B]">
                                                                         {paragraph}
                                                                     </p>
                                                                 ))}
                                                             </div>
-                                                            <div className="mt-6 border-t border-[#8B6A3D]/8 pt-5">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]/70">P1 Fix</p>
-                                                                <p className="mt-2 text-[12px] leading-relaxed text-[#D6D0C6]/76">{normalizeProseText(entry.p1Fix)}</p>
+                                                            <div className="mt-6 border-t border-black/5 pt-5">
+                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/70">P1 Fix</p>
+                                                                <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B]">{normalizeProseText(entry.p1Fix)}</p>
                                                             </div>
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <div className="border border-dashed border-[#8B6A3D]/8 bg-[#151310] p-20 text-center">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D6D0C6]/45">Log Empty</p>
+                                                    <div className="rounded-[2rem] border border-dashed border-black/10 bg-[#FCFBF9] p-20 text-center">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#999]">Log Empty</p>
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
 
-                                        <div className="rounded-[2.75rem] bg-[#1A1A1A] p-10 xl:col-span-2">
-                                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574]/70">Audit Purpose</p>
+                                        <div className="rounded-[2.75rem] border border-black/5 bg-white p-10 shadow-sm xl:col-span-2">
+                                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/70">Audit Purpose</p>
                                             <div className="max-w-[78ch] space-y-3">
                                                 {proseParagraphs(
                                                     'This log ensures every decision is documented for future reference and accountability, supporting a transparent creative process.',
                                                     2,
                                                 ).map((paragraph, idx) => (
-                                                    <p key={idx} className="text-[13px] leading-relaxed text-[#D6D0C6]/74">
+                                                    <p key={idx} className="text-[13px] leading-relaxed text-[#6B6B6B]">
                                                         {paragraph}
                                                     </p>
                                                 ))}
