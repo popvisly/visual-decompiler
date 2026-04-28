@@ -4481,113 +4481,131 @@ export default function AssetWorkspace({
 
                         {activeTab === 'STRESS LAB' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="space-y-10">
-                                    <WorkspaceTabHeader
-                                        kicker="Causal Intelligence"
-                                        title="Stress Lab: Causal Intelligence"
-                                        intro="This section stress-tests key creative variables to predict lift, control risk, and protect decision confidence."
-                                    />
-                                    <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                        <table className="w-full table-fixed border-collapse">
-                                            <colgroup>
-                                                <col style={{ width: '21%' }} />
-                                                <col style={{ width: '39%' }} />
-                                                <col style={{ width: '16%' }} />
-                                                <col style={{ width: '24%' }} />
-                                            </colgroup>
-                                            <thead className="border-b border-[#8B6A3D]/8 bg-[#151310] text-[10px] font-semibold uppercase tracking-[0.32em] text-[#D4A574]">
-                                                <tr>
-                                                    <th className="border-r border-[#8B6A3D]/8 px-8 py-5 text-center">Variable</th>
-                                                    <th className="border-r border-[#8B6A3D]/8 px-8 py-5 text-center">Baseline</th>
-                                                    <th className="border-r border-[#8B6A3D]/8 px-8 py-5 text-center">Predicted Lift</th>
-                                                    <th className="px-8 py-5 text-center">Recommendation</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody className="divide-y divide-white/10">
-                                                {(stressLabRows || []).map((row, i) => (
-                                                    <tr key={i} className="bg-[#171513] transition-colors hover:bg-[#211d18]">
-                                                        <td className="border-r border-[#8B6A3D]/8 px-8 py-7 text-center align-middle">
-                                                            <p className="text-[13px] font-semibold tracking-[0.02em] text-[#E3DBCE]">{normalizeProseText(row.variable)}</p>
-                                                        </td>
-                                                        <td className="border-r border-[#8B6A3D]/8 px-8 py-7 text-center align-middle">
-                                                            <div className="space-y-2">
-                                                                {proseParagraphs(row.currentState, 1).slice(0, 3).map((line, idx) => (
-                                                                    <p key={idx} className="text-[13px] font-normal leading-relaxed break-words text-[#F3F1ED]/90">
-                                                                        {line}
-                                                                    </p>
-                                                                ))}
-                                                            </div>
-                                                        </td>
-                                                        <td className="border-r border-[#8B6A3D]/8 px-8 py-7 text-center align-middle">
-                                                            <span className={`text-[10px] font-semibold uppercase tracking-[0.28em] ${row.predictedLift === 'High' ? 'text-[#D4A574]' : row.predictedLift === 'Medium' ? 'text-[#E3DBCE]' : 'text-[#CFC6B8]'}`}>
-                                                                {row.predictedLift}
-                                                            </span>
-                                                        </td>
-                                                        <td className="px-8 py-7 text-center align-middle">
-                                                            <span
-                                                                className={`inline-block border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] ${
-                                                                    row.recommendation === 'Test'
-                                                                        ? 'border-[#D4A574] text-[#D4A574] bg-[#D4A574]/5'
-                                                                        : row.recommendation === 'Avoid'
-                                                                            ? 'border-[#b77868]/65 text-[#dfb1a5] bg-[#2a1a17]'
-                                                                            : 'border-[#8B6A3D]/8 text-[#E3DBCE] bg-white/[0.04]'
-                                                                }`}
-                                                            >
-                                                                {row.recommendation}
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                <div className="flex flex-col gap-4">
+                                    <div className="px-6">
+                                        <WorkspaceTabHeader
+                                            kicker="Causal Intelligence"
+                                            title="Stress Lab: Causal Intelligence"
+                                            intro="This section stress-tests key creative variables to predict lift, control risk, and protect decision confidence."
+                                        />
                                     </div>
+                                    <div className="space-y-6 px-6">
+                                        <div className="rounded-[3rem] border border-black/5 bg-white overflow-hidden shadow-sm">
+                                            <div className="overflow-x-auto">
+                                                <table className="min-w-[960px] w-full table-fixed border-collapse">
+                                                    <colgroup>
+                                                        <col style={{ width: '21%' }} />
+                                                        <col style={{ width: '39%' }} />
+                                                        <col style={{ width: '16%' }} />
+                                                        <col style={{ width: '24%' }} />
+                                                    </colgroup>
+                                                    <thead className="border-b border-black/5 bg-gray-50 text-[10px] font-semibold uppercase tracking-[0.32em] text-[#8B6A3D]/80">
+                                                        <tr>
+                                                            <th className="border-r border-black/5 px-8 py-5 text-left">Variable</th>
+                                                            <th className="border-r border-black/5 px-8 py-5 text-left">Baseline</th>
+                                                            <th className="border-r border-black/5 px-8 py-5 text-center">Predicted Lift</th>
+                                                            <th className="px-8 py-5 text-center">Recommendation</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="divide-y divide-black/5">
+                                                        {(stressLabRows || []).map((row, i) => (
+                                                            <tr key={i} className="bg-white transition-colors hover:bg-[#FBFBF6]">
+                                                                <td className="border-r border-black/5 px-8 py-7 text-left align-top">
+                                                                    <p className="text-[13px] font-semibold tracking-[0.02em] text-[#1a1a1a]">
+                                                                        {normalizeProseText(row.variable)}
+                                                                    </p>
+                                                                </td>
+                                                                <td className="border-r border-black/5 px-8 py-7 text-left align-top">
+                                                                    <div className="space-y-2">
+                                                                        {proseParagraphs(row.currentState, 1)
+                                                                            .slice(0, 3)
+                                                                            .map((line, idx) => (
+                                                                                <p key={idx} className="text-[13px] font-normal leading-relaxed break-words text-[#6B6B6B]">
+                                                                                    {line}
+                                                                                </p>
+                                                                            ))}
+                                                                    </div>
+                                                                </td>
+                                                                <td className="border-r border-black/5 px-8 py-7 text-center align-top">
+                                                                    <span
+                                                                        className={`text-[10px] font-semibold uppercase tracking-[0.28em] ${
+                                                                            row.predictedLift === 'High'
+                                                                                ? 'text-[#8B6A3D]'
+                                                                                : row.predictedLift === 'Medium'
+                                                                                    ? 'text-[#1a1a1a]'
+                                                                                    : 'text-[#6B6B6B]'
+                                                                        }`}
+                                                                    >
+                                                                        {row.predictedLift}
+                                                                    </span>
+                                                                </td>
+                                                                <td className="px-8 py-7 text-center align-top">
+                                                                    <span
+                                                                        className={`inline-block border px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] ${
+                                                                            row.recommendation === 'Test'
+                                                                                ? 'border-[#8B6A3D]/30 text-[#8B6A3D] bg-[#8B6A3D]/5'
+                                                                                : row.recommendation === 'Avoid'
+                                                                                    ? 'border-red-500/30 text-red-600 bg-red-50'
+                                                                                    : 'border-black/10 text-[#6B6B6B] bg-gray-50'
+                                                                        }`}
+                                                                    >
+                                                                        {row.recommendation}
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
 
-                                    <div className="grid gap-6 xl:grid-cols-2">
-                                        <div className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#151310] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="mb-6 border-b border-[#8B6A3D]/8 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
+                                        <div className="grid gap-6 xl:grid-cols-2">
+                                        <div className="rounded-[2.75rem] border border-black/5 bg-white p-10 shadow-sm">
+                                            <p className="mb-6 border-b border-black/5 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#8B6A3D]/80">
                                                 Variable Diagnostics
                                             </p>
-                                            <div className="space-y-3 text-[13px] leading-relaxed text-[#D6D0C6]/82">
+                                            <div className="space-y-3 text-[13px] leading-relaxed text-[#6B6B6B]">
                                                 {(stressLabRows || []).slice(0, 5).map((row) => (
-                                                    <div key={row.variable} className="rounded-[1.5rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] px-4 py-3">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{normalizeProseText(row.variable)}</p>
-                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/86">{normalizeProseText(row.proposedShift)}</p>
+                                                    <div key={row.variable} className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] px-4 py-3">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#8B6A3D]/80">{normalizeProseText(row.variable)}</p>
+                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">{normalizeProseText(row.proposedShift)}</p>
                                                     </div>
                                                 ))}
                                             </div>
                                         </div>
 
-                                        <div className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#151310] p-10 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <p className="mb-6 border-b border-[#8B6A3D]/8 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#D4A574]">
+                                        <div className="rounded-[2.75rem] border border-black/5 bg-white p-10 shadow-sm">
+                                            <p className="mb-6 border-b border-black/5 pb-5 text-[10px] font-semibold uppercase tracking-[0.45em] text-[#8B6A3D]/80">
                                                 Gaze Direction Breakdown
                                             </p>
-                                            <div className="space-y-3 text-[13px] leading-relaxed text-[#D6D0C6]/82">
+                                            <div className="space-y-3 text-[13px] leading-relaxed text-[#6B6B6B]">
                                                 {[
                                                     ['Positioning', firstSentence(blueprintData?.technical_specs?.gaze_vector) || 'Upper-center frame priority with directional control.'],
                                                     ['Direction', firstSentence(dossier?.gaze_topology?.viewer_position) || 'Oblique vector maintains aspirational distance.'],
                                                     ['Tilt', firstSentence(dossier?.gaze_topology?.mode_of_address) || 'Slight downward bias supports mixed-mode address.'],
                                                     ['Focus Tone', firstSentence(dossier?.gaze_topology?.reading) || 'Eye contrast retains focal attraction without dominance drift.'],
                                                 ].map(([label, body]) => (
-                                                    <div key={String(label)} className="rounded-[1.5rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] px-4 py-3">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#D4A574]">{normalizeProseText(String(label))}</p>
-                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#D6D0C6]/86">{normalizeProseText(String(body))}</p>
+                                                    <div key={String(label)} className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] px-4 py-3">
+                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#8B6A3D]/80">{normalizeProseText(String(label))}</p>
+                                                        <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">{normalizeProseText(String(body))}</p>
                                                     </div>
                                                 ))}
                                             </div>
                                         </div>
-                                    </div>
+                                        </div>
 
-                                    <div className="rounded-[2.75rem] border border-[#8B6A3D]/8 bg-[#151310] p-10">
-                                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#D4A574]">Stress Test Summary</p>
-                                        <div className="max-w-[78ch] space-y-3">
-                                            {proseParagraphs(
-                                                'These stress signals define where controlled adjustments can improve lift without destabilizing the route. Next iteration should prioritize gaze and hierarchy tests first, then validate copy and CTA compression only where structural confidence remains intact.',
-                                                2,
-                                            ).map((paragraph, idx) => (
-                                                <p key={idx} className="text-[13px] leading-relaxed text-[#D6D0C6]/78">
-                                                    {paragraph}
-                                                </p>
-                                            ))}
+                                        <div className="rounded-[2.75rem] border border-black/5 bg-white p-10 shadow-sm">
+                                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#8B6A3D]/80">Stress Test Summary</p>
+                                            <div className="max-w-[78ch] space-y-3">
+                                                {proseParagraphs(
+                                                    'These stress signals define where controlled adjustments can improve lift without destabilizing the route. Next iteration should prioritize gaze and hierarchy tests first, then validate copy and CTA compression only where structural confidence remains intact.',
+                                                    2,
+                                                ).map((paragraph, idx) => (
+                                                    <p key={idx} className="text-[13px] leading-relaxed text-[#6B6B6B]">
+                                                        {paragraph}
+                                                    </p>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
