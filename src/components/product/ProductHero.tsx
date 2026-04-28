@@ -6,7 +6,7 @@ import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 export default function ProductHero() {
     return (
-        <section className="relative overflow-hidden pt-24 pb-16 lg:pt-28 lg:pb-20">
+        <section className="relative overflow-hidden pt-30 pb-24 lg:pt-36 lg:pb-28">
             <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
@@ -15,7 +15,7 @@ export default function ProductHero() {
                     className="max-w-[920px]"
                 >
                     <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">Product</p>
-                    <h1 className="mt-5 text-[clamp(48px,6.1vw,94px)] font-semibold uppercase leading-[0.9] tracking-tight text-[#141414]">
+                    <h1 className="mt-5 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]">
                         Make the work make sense.
                     </h1>
 

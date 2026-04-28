@@ -3,33 +3,17 @@
 import { motion } from 'framer-motion';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
+import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 
 export default function AboutPage() {
     return (
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader primaryCta={{ label: 'Open Sample Read', href: '/share/sample-dossier' }} />
-
-            {/* Hero */}
-            <section className="pt-30 pb-24 lg:pt-36 lg:pb-28">
-                <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                        className="max-w-[900px]"
-                    >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">
-                            A Forensic Intelligence OS
-                        </p>
-                        <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black leading-[0.9] tracking-[-0.045em] uppercase text-[#141414] max-w-[15ch]">
-                            Creative decisions deserve better tools.
-                        </h1>
-                        <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]">
-                            Visual Decompiler exists to make creative work easier to defend, faster to align, and faster to get approved.
-                        </p>
-                    </motion.div>
-                </div>
-            </section>
+            <MarketingPageHeader
+                kicker="A Forensic Intelligence OS"
+                title="Creative decisions deserve better tools."
+                description="Visual Decompiler exists to make creative work easier to defend, faster to align, and faster to get approved."
+            />
 
             {/* Problem + Why + What + Commercial + Positioning + Vision */}
             <section className="pb-40 lg:pb-56">

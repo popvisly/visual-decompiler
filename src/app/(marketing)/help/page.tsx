@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import { ChevronRight, Mail } from 'lucide-react';
+import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 
 const SECTIONS = [
     {
@@ -115,22 +116,19 @@ export default function HelpPage() {
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader primaryCta={{ label: 'Bring In The Work', href: '/ingest' }} />
 
-            <div className="px-6 pb-24 pt-30">
-                <div className="mx-auto max-w-[1400px]">
-                    <div className="mb-14">
-                        <span className="block text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">
-                            Operational Manual
-                        </span>
-                        <h1 className="mt-5 text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414] max-w-[14ch]">
-                            Support
-                            <br />
-                            <span className="text-[#8B6A3D]">for Decision Workflows.</span>
-                        </h1>
-                        <p className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]">
-                            Use this centre to help agency teams defend decisions, align faster, and get work approved with less back-and-forth.
-                        </p>
-                    </div>
+            <MarketingPageHeader
+                kicker="Operational Manual"
+                title={
+                    <>
+                        Support <br />
+                        <span className="text-[#8B6A3D]">for Decision Workflows.</span>
+                    </>
+                }
+                description="Use this centre to help agency teams defend decisions, align faster, and get work approved with less back-and-forth."
+            />
 
+            <div className="px-6 pb-24">
+                <div className="mx-auto max-w-[1400px]">
                     <nav className="mb-10 rounded-[1.8rem] border border-black/5 bg-white p-5 shadow-sm">
                         <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#8B6A3D]/80">Navigate Help Centre</p>
                         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">

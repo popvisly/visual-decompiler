@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
+import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 import { PRICING, PRICING_COMPARISON_ROWS, PRICING_POSITIONING_LINES } from '@/lib/pricing';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -46,40 +47,16 @@ export default function PricingPage() {
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader />
 
-            {/* Hero Section */}
-            <section className="pt-30 pb-24 lg:pt-36 lg:pb-28">
-                <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.65, ease: EASE }}
-                        className="max-w-[900px]"
-                    >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">
-                            Sovereign Infrastructure · Pricing OS
-                        </p>
-                    </motion.div>
-                    
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-                        className="mt-5 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]"
-                    >
+            <MarketingPageHeader
+                kicker="Sovereign Infrastructure · Pricing OS"
+                title={
+                    <>
                         Start free. <br />
                         <span className="text-[#8B6A3D]">Scale when it matters.</span>
-                    </motion.h1>
-                    
-                    <motion.p
-                        initial={{ opacity: 0, y: 18 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-                        className="mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]"
-                    >
-                        Choose the depth your team needs to defend decisions, align faster, and get work approved without costly back-and-forth.
-                    </motion.p>
-                </div>
-            </section>
+                    </>
+                }
+                description="Choose the depth your team needs to defend decisions, align faster, and get work approved without costly back-and-forth."
+            />
 
             {/* Pricing Cards Grid */}
             <section className="px-6 pb-48">
