@@ -3979,7 +3979,7 @@ export default function AssetWorkspace({
                                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                         {/* Trigger Distribution Map */}
                                         <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <div className="mb-10 flex items-center justify-between border-b border-[#8B6A3D]/8 pb-8">
+                                            <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.44em] text-[#D4A574] font-mono">
                                                     <span className="block">Trigger Distribution</span>
                                                     <span className="block">Map</span>
@@ -4169,7 +4169,7 @@ export default function AssetWorkspace({
 
                                         {/* Strategic Posture */}
                                         <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <div className="mb-10 flex items-center justify-between border-b border-[#8B6A3D]/8 pb-8">
+                                            <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Strategic Posture</p>
                                                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/72">Field Map</span>
                                             </div>
@@ -4228,7 +4228,7 @@ export default function AssetWorkspace({
 
                                         {/* Persuasion Density */}
                                         <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <div className="mb-10 flex items-center justify-between border-b border-[#8B6A3D]/8 pb-8">
+                                            <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Persuasion Density</p>
                                                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Compression</span>
                                             </div>
@@ -4258,7 +4258,7 @@ export default function AssetWorkspace({
 
                                         {/* Cognitive Friction */}
                                         <div className="rounded-[3rem] border border-[#8B6A3D]/8 bg-[#1A1A1A] p-12 text-[#F3F1ED] shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                                            <div className="mb-10 flex items-center justify-between border-b border-[#8B6A3D]/8 pb-8">
+                                            <div className="mb-10 flex items-start justify-between border-b border-[#8B6A3D]/8 pb-8 h-[76px]">
                                                 <p className="text-[11px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Cognitive Friction</p>
                                                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#D6D0C6]/45">Resistance</span>
                                             </div>
