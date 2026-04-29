@@ -308,7 +308,7 @@ export default function UserGuidePage() {
 
             <section className="pb-28 lg:pb-36">
                 <div className="mx-auto w-full max-w-[1200px] px-6 lg:px-12">
-                    <div className="mt-10 border-t border-black/5 pt-12 lg:pt-14">
+                    <div className="mt-6">
                         <div className="flex flex-wrap items-center gap-3">
                             <p className="mr-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6B6B6B]">Jump to</p>
                             {[
@@ -552,4 +552,3 @@ export default function UserGuidePage() {
         </main>
     );
 }
-
