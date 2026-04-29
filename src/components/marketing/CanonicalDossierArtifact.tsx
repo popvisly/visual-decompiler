@@ -117,14 +117,14 @@ export default function CanonicalDossierArtifact({ mode = 'preview', className =
                         ].map(([n, t, d]) => (
                             <div key={n} className="pb-2">
                                 <p className="text-[24px] font-semibold leading-none text-[#F6F1E7]">{n}</p>
-                                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#FBF7EF]/92">{t}</p>
-                                <p className="mt-2 text-[13px] leading-relaxed text-[#FBF7EF]/78">{d}</p>
+                                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-white">{t}</p>
+                                <p className="mt-2 text-[13px] leading-relaxed text-white/80">{d}</p>
                             </div>
                         ))}
                     </div>
-                    <aside className="self-start rounded-[1rem] border border-[rgba(193,166,116,0.22)] px-4 py-4">
+                    <aside className="self-start rounded-[1rem] border border-white/10 bg-white/[0.03] px-4 py-4">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#C1A674]">Drop-Off Detected</p>
-                        <p className="mt-3 text-[12px] leading-relaxed text-[#FBF7EF]/76">
+                        <p className="mt-3 text-[12px] leading-relaxed text-white/80">
                             Attention falls between subject and copy layer, reducing message transfer.
                         </p>
                     </aside>
