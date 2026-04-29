@@ -410,8 +410,7 @@ export default function UserGuidePage() {
                             <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
                                 {TAB_SECTIONS.map((section) => (
                                     <article key={section.id} id={section.id} className="rounded-[24px] border border-black/10 bg-white p-8 shadow-sm">
-                                        <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#8B6A3D]/80">Section</p>
-                                        <h3 className="mt-4 text-[20px] font-semibold uppercase leading-[1.05] tracking-tight text-[#141414]">
+                                        <h3 className="text-[20px] font-semibold uppercase leading-[1.05] tracking-tight text-[#141414]">
                                             {section.title}
                                         </h3>
                                         <p className="mt-4 text-[14px] leading-relaxed text-[#6B6B6B] font-medium">{section.description}</p>
@@ -444,8 +443,7 @@ export default function UserGuidePage() {
                             <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
                                 {NAV_SECTIONS.map((section) => (
                                     <article key={section.id} id={section.id} className="rounded-[24px] border border-black/10 bg-white p-8 shadow-sm">
-                                        <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#8B6A3D]/80">Area</p>
-                                        <h3 className="mt-4 text-[20px] font-semibold uppercase leading-[1.05] tracking-tight text-[#141414]">
+                                        <h3 className="text-[20px] font-semibold uppercase leading-[1.05] tracking-tight text-[#141414]">
                                             {section.title}
                                         </h3>
                                         <p className="mt-4 text-[14px] leading-relaxed text-[#6B6B6B] font-medium">{section.description}</p>
