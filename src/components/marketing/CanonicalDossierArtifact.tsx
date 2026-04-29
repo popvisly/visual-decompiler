@@ -165,15 +165,15 @@ export default function CanonicalDossierArtifact({ mode = 'preview', className =
                 <div className="border-t border-[#8B6A3D]/10 pt-6">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#C1A674]">Strategic Read</p>
                     <div className="mt-4 space-y-4">
-                        <p className="text-[12px] leading-relaxed text-[#F6F1E7]/74">Strategic Thesis: Positions the product as premium through restraint and visual isolation.</p>
-                        <p className="text-[12px] leading-relaxed text-[#F6F1E7]/74">Trigger Mechanic: High contrast subject lock drives immediate attention entry.</p>
-                        <p className="text-[12px] leading-relaxed text-[#F6F1E7]/74">Friction Points: Supporting copy competes with the primary focal route.</p>
+                        <p className="text-[12px] leading-relaxed text-[#FBF7EF]/80">Strategic Thesis: Positions the product as premium through restraint and visual isolation.</p>
+                        <p className="text-[12px] leading-relaxed text-[#FBF7EF]/80">Trigger Mechanic: High contrast subject lock drives immediate attention entry.</p>
+                        <p className="text-[12px] leading-relaxed text-[#FBF7EF]/80">Friction Points: Supporting copy competes with the primary focal route.</p>
                     </div>
                 </div>
 
                 <div className="border-t border-[#8B6A3D]/10 pt-6">
-                    <p className="text-[13px] font-semibold text-[#F6F1E7]">Confidence Index: High</p>
-                    <p className="mt-2 text-[12px] leading-relaxed text-[#F6F1E7]/66">Based on alignment between clarity, attention control, and strategic intent.</p>
+                    <p className="text-[13px] font-semibold text-[#FBF7EF]">Confidence Index: High</p>
+                    <p className="mt-2 text-[12px] leading-relaxed text-[#FBF7EF]/72">Based on alignment between clarity, attention control, and strategic intent.</p>
                 </div>
             </div>
         </div>
