@@ -117,14 +117,17 @@ export default function HowItWorks() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.85, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-20 rounded-[24px] border border-black/5 bg-white px-6 py-8 shadow-sm lg:mt-24 lg:px-8 lg:py-10"
+                    className="mt-20 rounded-[24px] border border-black/5 bg-white px-6 py-9 shadow-sm lg:mt-24 lg:px-8 lg:py-11"
                 >
                     <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#8B6A3D]/80">Workflow</p>
-                    <h3 className="text-[34px] font-semibold uppercase tracking-tight text-[#141414] md:text-[44px]">
+                    <h3 className="mt-4 max-w-[22ch] text-[34px] font-semibold uppercase leading-[0.96] tracking-tight text-[#141414] md:text-[44px]">
                         From upload to approval-ready reasoning.
                     </h3>
+                    <p className="mt-5 max-w-[66ch] text-[17px] leading-[1.75] text-[#6B6B6B]">
+                        A simple operating sequence you can run in minutes before review or presentation — consistent, repeatable, and easy to defend.
+                    </p>
 
-                    <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
+                    <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
                         {STEPS.map((step, idx) => (
                             <motion.article
                                 key={step.n}
