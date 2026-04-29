@@ -6,7 +6,7 @@ import MarketingSectionHeading from '@/components/marketing/MarketingSectionHead
 
 export default function PremiumDossierShowcase() {
     return (
-        <section className="relative overflow-hidden bg-[#FBFBF6] pt-28 pb-24 text-[#141414] lg:pt-40 lg:pb-28">
+        <section className="relative overflow-hidden bg-[#FBFBF6] py-24 text-[#141414] lg:py-32">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#FBFBF6] via-[#FBFBF6]/70 to-transparent" aria-hidden="true" />
 
             <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 lg:px-12">

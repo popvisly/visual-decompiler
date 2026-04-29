@@ -115,16 +115,16 @@ export default function CanonicalDossierArtifact({ mode = 'preview', className =
                             ['2', 'Brand mark', 'Recognition occurs after subject lock.'],
                             ['3', 'Supporting copy', 'Engagement weakens at the information layer.'],
                         ].map(([n, t, d]) => (
-                            <div key={n} className="border-b border-[#8B6A3D]/10 pb-4 last:border-b-0">
+                            <div key={n} className="pb-2">
                                 <p className="text-[24px] font-semibold leading-none text-[#F6F1E7]">{n}</p>
-                                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#F6F1E7]/86">{t}</p>
-                                <p className="mt-2 text-[13px] leading-relaxed text-[#F6F1E7]/70">{d}</p>
+                                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#FBF7EF]/92">{t}</p>
+                                <p className="mt-2 text-[13px] leading-relaxed text-[#FBF7EF]/78">{d}</p>
                             </div>
                         ))}
                     </div>
                     <aside className="self-start rounded-[1rem] border border-[rgba(193,166,116,0.22)] px-4 py-4">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#C1A674]">Drop-Off Detected</p>
-                        <p className="mt-3 text-[12px] leading-relaxed text-[#F6F1E7]/70">
+                        <p className="mt-3 text-[12px] leading-relaxed text-[#FBF7EF]/76">
                             Attention falls between subject and copy layer, reducing message transfer.
                         </p>
                     </aside>

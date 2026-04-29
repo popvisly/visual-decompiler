@@ -10,7 +10,11 @@ type Props = {
 export default function BeforeAfterContrast({ compact = false }: Props) {
     return (
         <section
-            className={compact ? 'relative overflow-hidden bg-[#FBFBF6] pt-14 pb-16 text-[#141414] lg:pt-18 lg:pb-20' : 'relative overflow-hidden bg-[#FBFBF6] pt-16 pb-20 text-[#141414] lg:pt-20 lg:pb-24'}
+            className={
+                compact
+                    ? 'relative overflow-hidden bg-[#FBFBF6] pt-14 pb-16 text-[#141414] lg:pt-18 lg:pb-20'
+                    : 'relative overflow-hidden bg-[#FBFBF6] py-24 text-[#141414] lg:py-32'
+            }
         >
             <div className="relative z-10 mx-auto max-w-[1120px] px-6 lg:px-12">
                 <MarketingSectionHeading kicker="Contrast" title="Before the room starts asking questions." className="max-w-[900px]" />

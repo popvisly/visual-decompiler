@@ -74,7 +74,7 @@ function DecisionRadarCard() {
 
 export default function HowItWorks() {
     return (
-        <section className="relative overflow-hidden bg-[#FBFBF6] pt-24 pb-28 text-[#141414] lg:pt-32 lg:pb-36">
+        <section className="relative overflow-hidden bg-[#FBFBF6] py-24 text-[#141414] lg:py-32">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
                 <motion.div
                     initial={{ opacity: 0, y: 28 }}

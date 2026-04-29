@@ -203,7 +203,7 @@ export default function NeuralParticleHero() {
     }, []);
 
     return (
-        <section className="relative overflow-hidden bg-[#F6F1E7] pt-8 pb-12 md:pt-10 md:pb-14" data-presence-tone="light">
+        <section className="relative overflow-hidden bg-[#F6F1E7] py-24 lg:py-32" data-presence-tone="light">
             <div className="w-full max-w-[1200px] mx-auto px-6 lg:px-12">
                 <MarketingSectionHeading
                     kicker="Decision Map"

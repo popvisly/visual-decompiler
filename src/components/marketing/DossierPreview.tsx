@@ -45,7 +45,7 @@ function DossierFlowMapCard() {
                 </text>
             </svg>
 
-            <div className="mt-2 space-y-3 border-t border-[#8B6A3D]/10 pt-5">
+            <div className="mt-5 space-y-3 pt-2">
                 <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#D4A574]">Decision Sequence</p>
                 <p className="text-[15px] leading-[1.65] text-[#F6F1E7]/74">
                     Entry is captured by contrast, recognition is secured through brand cues, and engagement holds when meaning stays clear.
@@ -59,6 +59,13 @@ export default function DossierPreview() {
     return (
         <section className="relative overflow-hidden bg-[#FBFBF6] py-24 text-[#141414] lg:py-32" data-presence-tone="light">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
+                <MarketingSectionHeading
+                    kicker="Dossier Layer"
+                    title="Evidence you can present."
+                    description="Structured outputs built to travel into decks, client rooms, and team alignment sessions."
+                    className="mb-12 max-w-[940px]"
+                />
+
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -67,19 +74,11 @@ export default function DossierPreview() {
                     className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-12"
                 >
                     <div className="min-w-0">
-                        <MarketingSectionHeading
-                            kicker="Dossier Layer"
-                            title="Evidence you can present."
-                            description="Structured outputs built to travel into decks, client rooms, and team alignment sessions."
-                            className="mb-10 max-w-[900px]"
-                        />
                         <div className="overflow-hidden rounded-[1.8rem] border border-black/5 bg-white shadow-sm">
                             <CanonicalDossierArtifact mode="attention-zoom" />
                         </div>
                     </div>
-                    <div className="lg:pt-9">
-                        <DossierFlowMapCard />
-                    </div>
+                    <DossierFlowMapCard />
                 </motion.div>
             </div>
         </section>
