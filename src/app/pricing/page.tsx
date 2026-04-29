@@ -48,11 +48,11 @@ export default function PricingPage() {
             <UnifiedSovereignHeader />
 
             <MarketingPageHeader
-                kicker="Sovereign Infrastructure · Pricing OS"
+                kicker="Pricing"
                 title={
                     <>
-                        Start free. <br />
-                        <span className="text-[#8B6A3D]">Scale when it matters.</span>
+                        Start free.
+                        <span className="block">Scale when it matters.</span>
                     </>
                 }
                 description="Choose the depth your team needs to defend decisions, align faster, and get work approved without costly back-and-forth."
