@@ -119,12 +119,12 @@ export default function HowItWorks() {
                     transition={{ duration: 0.85, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
                     className="mt-20 rounded-[24px] border border-black/5 bg-white px-6 py-8 shadow-sm lg:mt-24 lg:px-8 lg:py-10"
                 >
-                    <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.36em] text-[#8B6A3D]/80">Workflow</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#8B6A3D]/80">Workflow</p>
                     <h3 className="text-[34px] font-semibold uppercase tracking-tight text-[#141414] md:text-[44px]">
                         From upload to approval-ready reasoning.
                     </h3>
 
-                    <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">
+                    <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
                         {STEPS.map((step, idx) => (
                             <motion.article
                                 key={step.n}
