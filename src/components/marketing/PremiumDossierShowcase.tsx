@@ -17,7 +17,7 @@ export default function PremiumDossierShowcase() {
                         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                         className="max-w-xl"
                     >
-                        <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#8B6A3D]/80">Proof</p>
+                        <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.36em] text-[#8B6A3D]/80">Proof</p>
 
                         <h2 className="max-w-lg text-[13vw] font-semibold uppercase leading-[0.9] tracking-tight text-[#141414] sm:text-[8vw] lg:text-[68px]">
                             Built for the room.

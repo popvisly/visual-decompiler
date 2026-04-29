@@ -30,7 +30,7 @@ export function ContainerScroll({
     const scale = prefersReducedMotion
         ? (1 as any)
         : useTransform(scrollYProgress, [0, 1], isMobile ? [0.86, 1] : [1.04, 1]);
-    const translate = prefersReducedMotion ? (0 as any) : useTransform(scrollYProgress, [0, 1], [0, -90]);
+    const translate = prefersReducedMotion ? (0 as any) : useTransform(scrollYProgress, [0, 1], [0, -60]);
 
     return (
         <div ref={containerRef} className="relative flex h-[56rem] items-center justify-center p-2 md:h-[78rem] md:p-12">
@@ -46,7 +46,7 @@ export function ContainerScroll({
 
 export function Header({ translate, titleComponent }: { translate: MotionValue<number>; titleComponent: React.ReactNode }) {
     return (
-        <motion.div style={{ translateY: translate }} className="mx-auto max-w-5xl text-center">
+        <motion.div style={{ translateY: translate }} className="relative z-20 mx-auto max-w-5xl pt-10 text-center md:pt-12">
             {titleComponent}
         </motion.div>
     );
