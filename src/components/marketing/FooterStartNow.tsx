@@ -89,7 +89,7 @@ export default function FooterStartNow() {
                         style={{ fontSize: 'clamp(44px, 8vw, 86px)' }}
                     >
                         Don't just show the work.<br />
-                        <span className="mt-3 block text-[#8B6A3D] tracking-[0.01em]" style={{ wordSpacing: '0.14em' }}>Defend it.</span>
+                        <span className="mt-3 block text-[#D4A574] tracking-[0.01em]" style={{ wordSpacing: '0.14em' }}>Defend it.</span>
                     </h2>
                     <p className="text-[18px] leading-[1.7] text-[#6B6B6B] max-w-[480px]">
                         Decompile your next ad before the room starts asking questions.

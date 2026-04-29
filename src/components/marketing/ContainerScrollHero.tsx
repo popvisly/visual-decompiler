@@ -42,7 +42,7 @@ export default function ContainerScrollHero() {
 
                             <h1 className="mt-8 text-[clamp(44px,6vw,74px)] font-semibold leading-[0.95] tracking-tight text-[#141414]">
                                 Turn ads into
-                                <span className="block text-[#8B6A3D]">decision-grade intelligence.</span>
+                                <span className="block text-[#D4A574]">decision-grade intelligence.</span>
                             </h1>
 
                             <p className="mx-auto mt-6 max-w-2xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
