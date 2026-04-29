@@ -25,7 +25,7 @@ const STEPS = [
 
 export default function ContainerScrollHero() {
     return (
-        <section className="relative overflow-hidden bg-[#FBFBF6] px-6 pt-28 pb-20 md:px-10 md:pt-32 md:pb-28">
+        <section className="relative overflow-hidden bg-[#FBFBF6] px-6 pt-28 pb-24 md:px-10 md:pt-32 md:pb-32">
             <div
                 className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]"
                 aria-hidden="true"

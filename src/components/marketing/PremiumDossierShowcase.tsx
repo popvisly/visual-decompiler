@@ -5,7 +5,7 @@ import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArt
 
 export default function PremiumDossierShowcase() {
     return (
-        <section className="relative overflow-hidden bg-[#FBFBF6] pt-16 pb-24 text-[#141414] lg:pt-20 lg:pb-28">
+        <section className="relative overflow-hidden bg-[#FBFBF6] pt-24 pb-24 text-[#141414] lg:pt-32 lg:pb-28">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#FBFBF6] via-[#FBFBF6]/70 to-transparent" aria-hidden="true" />
 
             <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 lg:px-12">
