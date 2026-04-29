@@ -1,396 +1,224 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useMemo, useState } from 'react';
+import Link from 'next/link';
+import { motion, useReducedMotion } from 'framer-motion';
 import {
-    Brain,
-    Layers,
-    Tv,
-    Target,
-    Sparkles,
-    ShieldCheck,
+    ArrowRight,
     BookOpen,
-    Eye,
-    Crosshair,
-    Info,
-    ArrowRight
+    Bug,
+    FileText,
+    Layers,
+    Mail,
+    Search,
+    ShieldCheck,
+    Sparkles,
 } from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
-import Link from 'next/link';
 import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 
-const INTELLIGENCE_MODULES = [
-    {
-        icon: <Brain className="w-5 h-5" />,
-        title: 'Cognitive Load Map',
-        definition: 'A neuro-analytical heatmap that quantifies "Visual Friction" — the measurable cognitive demand placed on the viewer by layout complexity, element density, and information hierarchy.',
-        strategicUse: 'Identifies if background complexity is cannibalizing the viewer\'s attention from the primary conversion trigger. Ensures the core persuasion message is not buried by excessive detail or poor hierarchy.',
-    },
-    {
-        icon: <Layers className="w-5 h-5" />,
-        title: 'Schema Autopsy',
-        definition: 'A frame-by-frame structural extraction of the ad\'s timeline, deconstructing the creative into its constituent persuasion phases with precise timing markers.',
-        strategicUse: 'Reveals the "Persuasion Sequence" — mapping exactly when hooks deploy, social proof activates, objections are dismantled, and closing triggers fire. Essential for reverse-engineering competitor creative.',
-    },
-    {
-        icon: <Tv className="w-5 h-5" />,
-        title: 'Media Buy Projections',
-        definition: 'Algorithmic alignment between creative DNA and platform-specific user behaviors, scoring fit across Instagram, TikTok, CTV/OTT, YouTube, and Web Display.',
-        strategicUse: 'Justifies spend allocation between 9:16 vertical (high-motion) and 4:5 feed-based (high-aesthetic) environments. Prevents creative-platform mismatch before the media buy is committed.',
-    },
-    {
-        icon: <Target className="w-5 h-5" />,
-        title: 'Sovereign Benchmark',
-        definition: 'A proprietary percentile ranking against the top 5% of global category performers, derived from a composite of resonance signals, creative complexity, and market saturation metrics.',
-        strategicUse: 'Provides the "Audit-Ready" proof that a campaign is optimized for market-leading resonance. The standard of evidence required when presenting to C-suite or client procurement.',
-    },
-    {
-        icon: <Sparkles className="w-5 h-5" />,
-        title: 'Neural Sentiment Breakdown',
-        definition: 'High-resolution emotional tracking that moves beyond basic positive/negative polarity to identify complex "Elite" drivers operating within the creative assets.',
-        strategicUse: 'Identifies deep emotional levers such as Aspiration, Exclusive Scarcity, Authority, and Belonging — the drivers that separate premium creative from commodity advertising.',
-    },
-];
+type HubCard = {
+    title: string;
+    description: string;
+    href: string;
+    category: string;
+    icon: React.ReactNode;
+    keywords: string;
+};
 
-const STRATEGIC_TERMS = [
-    {
-        term: 'Asset Hash Integrity',
-        definition: 'The SHA-256 system that prevents redundant deconstructions and preserves neural credits by identifying unique asset fingerprints. Ensures the OS never processes the same forensic target twice.',
-    },
-    {
-        term: 'Market Resonance',
-        definition: 'A quantitative measure of how well the creative DNA aligns with current high-performing industry benchmarks and cultural sentiment within a specific category. A high resonance score indicates the creative is operating within proven engagement corridors.',
-    },
-    {
-        term: 'Tactical Window',
-        definition: 'The estimated lifespan of the ad\'s effectiveness before reaching "Creative Fatigue" or "Pattern Saturation." Once exceeded, the creative requires a strategic pivot or complete asset refresh to maintain performance.',
-    },
-    {
-        term: 'Invisible Machinery',
-        definition: 'The underlying psychological framework and technical composition — lighting geometry, color theory, spatial hierarchy — that drives subconscious brand recall without the viewer\'s conscious awareness. The architecture that the audience never sees, but always feels.',
-    },
-    {
-        term: 'Objection Dismantling Logic',
-        definition: 'A forensic breakdown of how the creative specifically neutralizes common consumer hesitations — price resistance, effort aversion, trust deficit — through carefully deployed visual cues, copy sequencing, and social proof architecture.',
-    },
-    {
-        term: 'Sovereign Score',
-        definition: 'A proprietary aggregate metric combining Market Resonance and Tactical Window into a single intelligence index. Derived using the Claude Sonnet neural pipeline for maximum forensic fidelity.',
-    },
-    {
-        term: 'Neural Verdict',
-        definition: 'A one-sentence strategic synthesis generated by the Neural Processor, summarizing the structural integrity, persuasion effectiveness, and market positioning of the creative asset.',
-    },
-];
+const TOP_TASKS = [
+    { label: 'Read the tabs', href: '/docs/user-guide' },
+    { label: 'Export a dossier', href: '/docs/user-guide' },
+    { label: 'Find it in Vault', href: '/vault' },
+    { label: 'Compare two routes', href: '/compare' },
+    { label: 'QA checklist', href: '/docs/qa-checklist' },
+] as const;
 
-const DOSSIER_SECTIONS = [
+const HUB_CARDS: HubCard[] = [
     {
-        title: 'White-Labeling (Sovereignty Tier)',
-        content: 'Agencies can lock in their visual identity in Settings → Agency. The Primary Hex code dynamically styles all dossier accents, and the Agency Logo replaces system branding for pixel-perfect exports.',
+        title: 'User Guide',
+        description: 'How to read the dossier, run the tabs in order, and export decision-ready artifacts.',
+        href: '/docs/user-guide',
+        category: 'Start Here',
+        icon: <BookOpen className="h-5 w-5" />,
+        keywords: 'user guide, tabs, dossier, export, reading, workflow, onboarding',
     },
     {
-        title: 'The Neural Verdict',
-        content: 'A 1-sentence strategic summary of the ad\'s structural integrity, persuasion architecture, and market positioning. Generated from the composite of all intelligence signals — not a summary, but a directive.',
+        title: 'v2.0 Overview',
+        description: 'High-level operating overview of receipts, diagnostics, risk flags, and sprint outputs.',
+        href: '/docs/v1-overview',
+        category: 'Overview',
+        icon: <Sparkles className="h-5 w-5" />,
+        keywords: 'overview, v2.0, receipts, diagnostics, sprint, outputs',
     },
     {
-        title: 'Sovereign Score',
-        content: 'The proprietary aggregate that powers the Executive Summary. Combines Market Resonance (creative alignment), Category Density (competitive saturation), and Tactical Window (effectiveness lifespan) into a single strategic index.',
+        title: 'QA Checklist',
+        description: 'A practical quality checklist for repeatable, agency-grade forensic reads.',
+        href: '/docs/qa-checklist',
+        category: 'Operations',
+        icon: <ShieldCheck className="h-5 w-5" />,
+        keywords: 'qa, checklist, quality, verification, reliability',
     },
     {
-        title: 'Privacy & Sovereignty',
-        content: 'All intelligence is processed via the Claude Sonnet pipeline on infrastructure secured by Supabase Sovereign Auth. Each export includes a Data Sovereignty notice and SHA-256 integrity fingerprint.',
+        title: 'Schema Contract',
+        description: 'Reference spec for the forensic engine data structure and field definitions.',
+        href: '/docs/schema-contract',
+        category: 'Technical',
+        icon: <FileText className="h-5 w-5" />,
+        keywords: 'schema, contract, types, fields, spec',
     },
-];
+    {
+        title: 'Release Notes',
+        description: 'What shipped, what changed, and what to expect next.',
+        href: '/docs/release-notes',
+        category: 'Updates',
+        icon: <Layers className="h-5 w-5" />,
+        keywords: 'release notes, changes, updates, performance',
+    },
+    {
+        title: 'Lexicon',
+        description: 'Definitions for system terms, modules, and reference language used in reads.',
+        href: '/docs/lexicon',
+        category: 'Reference',
+        icon: <Search className="h-5 w-5" />,
+        keywords: 'lexicon, glossary, definitions, terms, modules',
+    },
+    {
+        title: 'Troubleshooting',
+        description: 'Common issues, expected behavior, and how to recover fast.',
+        href: '/docs/user-guide',
+        category: 'Support',
+        icon: <Bug className="h-5 w-5" />,
+        keywords: 'troubleshooting, errors, issues, stuck, loading, export',
+    },
+] as const;
 
-const HELP_ARTICLES = [
-    {
-        title: "Visual Decompiler v2.0 (Sovereign Intelligence) — Overview",
-        slug: "v1-overview",
-        category: "Milestones",
-        desc: "Forensic, evidence-backed insights powered by the Claude Sonnet neural pipeline.",
-        keywords: "v2.0, sovereign, intelligence, overview, receipts, safe zone, survivability, risk flags, sonnet"
-    },
-    {
-        title: "Agency Handoff: Master the ResultsView v2.0",
-        slug: "user-guide",
-        category: "Guides",
-        desc: "Move from browsing insights to executing deconstruction in the Sovereign era.",
-        keywords: "user guide, walkthrough, forensic, resultsview, tactics, v2.0"
-    },
-    {
-        title: "v2.0 QA Checklist: Agency-Grade Rigor",
-        slug: "qa-checklist",
-        category: "Technical",
-        desc: "Ensuring decompiler robustness across high-stakes agency use cases.",
-        keywords: "qa, checklist, testing, coordinates, v2.0, sovereign, sonnet"
-    },
-    {
-        title: "Schema Contract v2.0 Specification",
-        slug: "schema-contract",
-        category: "Technical",
-        desc: "Defining the formal data structure for the v2.0 forensic engine.",
-        keywords: "schema, contract, json, types, v2.0, hash, integrity"
-    },
-    {
-        title: "Release Notes: v2.0 Sovereign Intelligence",
-        slug: "release-notes",
-        category: "Milestones",
-        desc: "Highlights and performance improvements in the Sovereign Intelligence update.",
-        keywords: "release notes, v2.0, update, forensic, sonnet, supabase"
-    }
-];
+export default function DocsHubPage() {
+    const prefersReducedMotion = useReducedMotion();
+    const [query, setQuery] = useState('');
 
-export default function DocsPage() {
-    const [searchQuery, setSearchQuery] = useState('');
-
-    const filteredArticles = HELP_ARTICLES.filter(article =>
-        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        article.keywords.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredCards = useMemo(() => {
+        const q = query.trim().toLowerCase();
+        if (!q) return HUB_CARDS;
+        return HUB_CARDS.filter((card) => {
+            return (
+                card.title.toLowerCase().includes(q) ||
+                card.description.toLowerCase().includes(q) ||
+                card.category.toLowerCase().includes(q) ||
+                card.keywords.toLowerCase().includes(q)
+            );
+        });
+    }, [query]);
 
     return (
-        <main className="bg-[#F6F1E7] min-h-screen">
+        <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader />
+
             <MarketingPageHeader
-                kicker="Help Center / Lexicon"
-                title="Sovereign Central"
-                description="Guides, system terms, and operating protocols for decision-grade creative work."
+                kicker="Help Center"
+                title={
+                    <>
+                        Find answers <br />
+                        <span className="text-[#141414]/35">fast.</span>
+                    </>
+                }
+                description="Task-first guides for operators: how to read tabs, export dossiers, and move work through review with less debate."
             />
 
-            <section className="pb-32 px-6">
-                <div className="max-w-5xl mx-auto">
+            <section className="px-6 pb-28 lg:pb-36">
+                <div className="mx-auto w-full max-w-[1200px] lg:px-12">
                     <motion.div
-                        initial={{ opacity: 0, y: 14 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                        className="relative max-w-2xl"
+                        initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+                        animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                        transition={prefersReducedMotion ? undefined : { duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                        className="relative"
                     >
-                        <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
-                            <Info className="w-5 h-5 text-[#6B6B6B]" />
+                        <div className="pointer-events-none absolute inset-y-0 left-5 flex items-center">
+                            <Search className="h-4 w-4 text-[#6B6B6B]" />
                         </div>
                         <input
-                            type="text"
-                            placeholder="Search documentation, terms, and guides..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-white border border-[#E7DED1] rounded-3xl py-6 pl-14 pr-8 text-lg font-light placeholder:text-[#6B6B6B]/40 focus:outline-none focus:border-accent/40 shadow-xl transition-all"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder="Search help articles and reference terms..."
+                            className="w-full rounded-[24px] border border-black/10 bg-white py-4 pl-12 pr-5 text-[15px] font-medium text-[#141414] placeholder:text-[#6B6B6B]/55 shadow-sm transition focus:border-black/20 focus:outline-none"
                         />
                     </motion.div>
 
-                    {/* ── Article Index ── */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        className="mt-20 mb-40"
-                    >
-                        <h2 className="text-[10px] font-bold text-[#141414]/30 uppercase tracking-[0.3em] mb-8">Featured Articles</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {filteredArticles.map((article, idx) => (
+                    <div className="mt-8 flex flex-wrap items-center gap-3">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6B6B6B]">Top tasks</p>
+                        {TOP_TASKS.map((task) => (
+                            <Link
+                                key={task.label}
+                                href={task.href}
+                                className="rounded-full border border-black/10 bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] shadow-sm transition hover:border-black/20 hover:text-[#141414]"
+                            >
+                                {task.label}
+                            </Link>
+                        ))}
+                    </div>
+
+                    <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                        {filteredCards.map((card, idx) => (
+                            <motion.div
+                                key={card.href}
+                                initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+                                whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-60px' }}
+                                transition={prefersReducedMotion ? undefined : { duration: 0.55, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                            >
                                 <Link
-                                    key={article.slug}
-                                    href={`/docs/${article.slug}`}
-                                    className="group p-8 bg-white border border-[#E7DED1] rounded-[2rem] hover:border-accent hover:shadow-2xl transition-all flex flex-col justify-between"
+                                    href={card.href}
+                                    className="group flex h-full flex-col justify-between rounded-[24px] border border-black/10 bg-white p-7 shadow-sm transition hover:border-black/20 hover:shadow-md"
                                 >
                                     <div>
-                                        <span className="text-[9px] font-bold text-accent uppercase tracking-widest mb-3 block">{article.category}</span>
-                                        <h3 className="text-sm font-bold text-[#141414] uppercase tracking-[0.1em] mb-4 group-hover:text-accent transition-colors leading-tight">
-                                            {article.title}
-                                        </h3>
-                                        <p className="text-[13px] text-[#6B6B6B] leading-relaxed font-light line-clamp-2">
-                                            {article.desc}
+                                        <div className="flex items-center gap-3">
+                                            <div className="rounded-[18px] border border-black/10 bg-[#FBFBF6] p-3 text-[#141414]">
+                                                {card.icon}
+                                            </div>
+                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">{card.category}</p>
+                                        </div>
+
+                                        <h2 className="mt-6 text-[18px] font-semibold leading-tight tracking-[-0.01em] text-[#141414]">
+                                            {card.title}
+                                        </h2>
+                                        <p className="mt-4 text-[14px] leading-relaxed text-[#6B6B6B] font-medium">
+                                            {card.description}
                                         </p>
                                     </div>
-                                    <div className="mt-8 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#141414]">
-                                        Read Article <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+
+                                    <div className="mt-8 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414]">
+                                        Open <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                                     </div>
                                 </Link>
-                            ))}
-                        </div>
-                    </motion.div>
+                            </motion.div>
+                        ))}
+                    </div>
 
-                    {/* ═══════════════════════════════════════════════════ */}
-                    {/* § 1 — INTELLIGENCE MODULES */}
-                    {/* ═══════════════════════════════════════════════════ */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        className="mb-32"
-                    >
-                        <div className="flex items-center gap-4 mb-4">
-                            <span className="text-5xl font-light text-[#141414]/10 tracking-tightest">01</span>
-                            <div>
-                                <h2 className="text-2xl font-light text-[#141414] uppercase tracking-tight">Intelligence Modules</h2>
-                                <p className="text-[11px] text-[#6B6B6B] font-bold tracking-[0.3em] uppercase mt-1">Multi-Dimensional Deconstruction Architecture</p>
-                            </div>
-                        </div>
-                        <div className="w-full h-[1px] bg-[#E7DED1] mb-12" />
-
-                        <p className="text-base text-[#6B6B6B] font-light leading-relaxed max-w-2xl mb-16">
-                            The <strong className="text-[#141414] font-medium">Intelligence</strong> tab provides a multi-dimensional
-                            deconstruction of the architecture of persuasion. Each module isolates a specific signal domain
-                            for surgical strategic analysis.
+                    <div className="mt-16 rounded-[24px] border border-black/10 bg-[#141414] p-8 text-[#FBF7EF] shadow-[0_20px_60px_rgba(0,0,0,0.14)]">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Support</p>
+                        <h3 className="mt-4 text-[24px] font-semibold uppercase leading-[1.1] tracking-tight">
+                            Need help fast?
+                        </h3>
+                        <p className="mt-4 max-w-2xl text-[15px] leading-[1.75] text-white/70">
+                            If something looks stuck, check Vault first — extractions can complete before the UI updates. If it is still blocked, send the asset id and the page URL.
                         </p>
-
-                        <div className="space-y-6">
-                            {INTELLIGENCE_MODULES.map((mod, idx) => (
-                                <motion.div
-                                    key={mod.title}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: idx * 0.08, duration: 0.6 }}
-                                    className="bg-white p-8 md:p-12 rounded-[2.5rem] border border-[#E7DED1] shadow-[0_20px_60px_rgba(20,20,20,0.02)] group hover:border-[#141414]/15 transition-all"
-                                >
-                                    <div className="flex items-start gap-6">
-                                        <div className="p-3 bg-[#FBF7EF] rounded-2xl border border-[#E7DED1] text-[#141414] shrink-0 group-hover:border-accent/30 transition-colors">
-                                            {mod.icon}
-                                        </div>
-                                        <div className="flex-1">
-                                            <h3 className="text-sm font-bold text-[#141414] uppercase tracking-[0.15em] mb-4">{mod.title}</h3>
-                                            <div className="space-y-4">
-                                                <div>
-                                                    <p className="text-[9px] font-bold text-accent uppercase tracking-[0.3em] mb-1.5">Definition</p>
-                                                    <p className="text-[13px] text-[#141414] leading-relaxed font-light">{mod.definition}</p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-[9px] font-bold text-[#6B6B6B] uppercase tracking-[0.3em] mb-1.5">Strategic Application</p>
-                                                    <p className="text-[13px] text-[#6B6B6B] leading-relaxed font-light">{mod.strategicUse}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </motion.div>
-
-                    {/* ═══════════════════════════════════════════════════ */}
-                    {/* § 2 — STRATEGIC TERMS */}
-                    {/* ═══════════════════════════════════════════════════ */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        className="mb-32"
-                    >
-                        <div className="flex items-center gap-4 mb-4">
-                            <span className="text-5xl font-light text-[#141414]/10 tracking-tightest">02</span>
-                            <div>
-                                <h2 className="text-2xl font-light text-[#141414] uppercase tracking-tight">Strategic Terms & Forensic Popovers</h2>
-                                <p className="text-[11px] text-[#6B6B6B] font-bold tracking-[0.3em] uppercase mt-1">The Vocabulary of Precision</p>
-                            </div>
-                        </div>
-                        <div className="w-full h-[1px] bg-[#E7DED1] mb-12" />
-
-                        <p className="text-base text-[#6B6B6B] font-light leading-relaxed max-w-2xl mb-16">
-                            Throughout the interface, strategic terms are marked with the <span className="inline-flex items-center gap-1 bg-[#141414]/5 px-2 py-0.5 rounded-lg text-[11px] font-medium"><Info className="w-2.5 h-2.5" /> tooltip</span> icon.
-                            Hover to access the forensic definition without leaving context. Below is the complete lexicon.
-                        </p>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {STRATEGIC_TERMS.map((item, idx) => (
-                                <motion.div
-                                    key={item.term}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: idx * 0.06, duration: 0.6 }}
-                                    className="bg-white p-8 rounded-2xl border border-[#E7DED1] hover:border-[#141414]/15 transition-all"
-                                >
-                                    <p className="text-[10px] font-bold text-accent uppercase tracking-[0.25em] mb-3">{item.term}</p>
-                                    <p className="text-[13px] text-[#6B6B6B] leading-relaxed font-light">{item.definition}</p>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </motion.div>
-
-                    {/* ═══════════════════════════════════════════════════ */}
-                    {/* § 3 — THE STRATEGIC DOSSIER */}
-                    {/* ═══════════════════════════════════════════════════ */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        className="mb-32"
-                    >
-                        <div className="flex items-center gap-4 mb-4">
-                            <span className="text-5xl font-light text-[#141414]/10 tracking-tightest">03</span>
-                            <div>
-                                <h2 className="text-2xl font-light text-[#141414] uppercase tracking-tight">The Strategic Dossier</h2>
-                                <p className="text-[11px] text-[#6B6B6B] font-bold tracking-[0.3em] uppercase mt-1">Sovereignty Tier Export</p>
-                            </div>
-                        </div>
-                        <div className="w-full h-[1px] bg-[#E7DED1] mb-12" />
-
-                        <p className="text-base text-[#6B6B6B] font-light leading-relaxed max-w-2xl mb-16">
-                            The <strong className="text-[#141414] font-medium">Sovereignty Upgrade</strong> enables the generation
-                            of white-labeled intelligence reports — forensic-grade documents designed for C-suite presentation
-                            and enterprise audit requirements.
-                        </p>
-
-                        {/* Dossier dark card */}
-                        <div className="bg-[#141414] p-10 md:p-16 rounded-[2.5rem] text-[#FBF7EF] mb-12 relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-80 h-80 bg-accent/5 rounded-full -translate-y-40 translate-x-40 blur-[100px] pointer-events-none" />
-
-                            <div className="relative z-10 space-y-12">
-                                <div className="flex items-center gap-3 text-accent/40">
-                                    <ShieldCheck className="w-5 h-5" />
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.4em]">Dossier Structure</p>
-                                </div>
-
-                                <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
-                                    {['Executive Summary', 'Visual Architecture', 'Schema Autopsy', 'Tactical Intelligence', 'Security Verification'].map((section, i) => (
-                                        <div key={section} className="text-center p-4 rounded-2xl bg-white/5 border border-[#8B6A3D]/10">
-                                            <span className="text-[8px] font-bold text-accent/40 uppercase tracking-widest block mb-2">§{i + 1}</span>
-                                            <span className="text-[10px] font-bold text-white/60 uppercase tracking-[0.1em]">{section}</span>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                {DOSSIER_SECTIONS.map((item, idx) => (
-                                    <div key={idx}>
-                                        <p className="text-[9px] font-bold text-accent/50 uppercase tracking-[0.3em] mb-2">{item.title}</p>
-                                        <p className="text-[13px] text-white/50 leading-relaxed font-light">{item.content}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* CTA */}
-                        <div className="flex flex-col sm:flex-row gap-4 items-start">
-                            <Link
-                                href="/pricing"
-                                className="px-10 py-5 bg-[#141414] hover:bg-black text-[#FBF7EF] font-bold text-[11px] uppercase tracking-widest rounded-full shadow-2xl transition-all active:scale-95"
+                        <div className="mt-7 flex flex-wrap gap-3">
+                            <a
+                                href="mailto:hello@popvisly.com?subject=Visual%20Decompiler%20Help"
+                                className="inline-flex items-center gap-3 rounded-full bg-[#D4A574] px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#141414] transition hover:bg-[#e2b47f]"
                             >
-                                Upgrade to Sovereignty
-                            </Link>
+                                <Mail className="h-4 w-4" />
+                                Email support
+                            </a>
                             <Link
-                                href="/settings"
-                                className="px-10 py-5 bg-white border border-[#E7DED1] hover:border-accent text-[#141414] font-bold text-[11px] uppercase tracking-widest rounded-full shadow-xl transition-all active:scale-95"
+                                href="/ingest"
+                                className="inline-flex items-center gap-3 rounded-full border border-white/15 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/80 transition hover:border-white/30 hover:text-white"
                             >
-                                Configure Agency Identity
+                                Open ingest
+                                <ArrowRight className="h-4 w-4" />
                             </Link>
                         </div>
-                    </motion.div>
-
-                    {/* ── Footer ── */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        className="pt-16 border-t border-[#E7DED1] text-center"
-                    >
-                        <p className="text-[10px] text-[#6B6B6B]/40 font-bold uppercase tracking-[0.4em]">
-                            Visual Decompiler — The Sovereign Lexicon
-                        </p>
-                        <p className="text-[9px] text-[#6B6B6B]/25 mt-2 tracking-widest uppercase">
-                            Strategic intelligence infrastructure for elite creative operations
-                        </p>
-                    </motion.div>
-
+                    </div>
                 </div>
             </section>
         </main>
