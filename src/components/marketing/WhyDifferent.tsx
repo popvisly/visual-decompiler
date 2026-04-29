@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 const FIT_BLOCKS = [
@@ -23,6 +23,8 @@ const FIT_BLOCKS = [
 ];
 
 export default function WhyDifferent() {
+    const prefersReducedMotion = useReducedMotion();
+
     return (
         <section className="relative overflow-hidden bg-[#FBFBF6] py-24 text-[#141414] lg:py-32">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
@@ -32,11 +34,11 @@ export default function WhyDifferent() {
                     {FIT_BLOCKS.map((block, idx) => (
                         <motion.article
                             key={block.title}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+                            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
-                            transition={{ duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                            className="rounded-[20px] border border-black/5 bg-white p-6 shadow-sm"
+                            transition={prefersReducedMotion ? undefined : { duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                            className="rounded-[24px] border border-black/5 bg-white p-6 shadow-sm"
                         >
                             <h3 className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/80">{block.title}</h3>
                             <p className="mt-4 text-[16px] leading-[1.65] text-[#6B6B6B]">{block.body}</p>

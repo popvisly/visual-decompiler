@@ -1,12 +1,12 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArtifact';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 function DossierFlowMapCard() {
     return (
-        <aside className="w-full rounded-[1.8rem] border border-[#8B6A3D]/15 bg-[#141414] p-6 text-[#FBF7EF] shadow-[0_20px_60px_rgba(0,0,0,0.22)]">
+        <aside className="w-full rounded-[24px] border border-[#8B6A3D]/15 bg-[#141414] p-6 text-[#FBF7EF] shadow-[0_20px_60px_rgba(0,0,0,0.22)]">
             <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D4A574]">Attention Flow</p>
 
             <svg viewBox="0 0 320 230" className="mt-6 h-[220px] w-full" aria-hidden="true">
@@ -56,6 +56,8 @@ function DossierFlowMapCard() {
 }
 
 export default function DossierPreview() {
+    const prefersReducedMotion = useReducedMotion();
+
     return (
         <section className="relative overflow-hidden bg-[#FBFBF6] py-24 text-[#141414] lg:py-32" data-presence-tone="light">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
@@ -67,14 +69,14 @@ export default function DossierPreview() {
                 />
 
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 30 }}
+                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                    transition={prefersReducedMotion ? undefined : { duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
                     className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-12"
                 >
                     <div className="min-w-0">
-                        <div className="overflow-hidden rounded-[1.8rem] border border-black/5 bg-white shadow-sm">
+                        <div className="overflow-hidden rounded-[24px] border border-black/5 bg-white shadow-sm">
                             <CanonicalDossierArtifact mode="attention-zoom" />
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 const ANALYSIS_SECTIONS = [
@@ -37,6 +37,7 @@ interface TravelDot {
 export default function NeuralParticleHero() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const animRef = useRef<number>(0);
+    const prefersReducedMotion = useReducedMotion();
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -77,7 +78,7 @@ export default function NeuralParticleHero() {
             const rect = canvas.getBoundingClientRect();
             W = rect.width; H = rect.height;
             canvas.width = W * dpr; canvas.height = H * dpr;
-            ctx.scale(dpr, dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             buildNodes();
         };
 
@@ -96,14 +97,24 @@ export default function NeuralParticleHero() {
 
         const draw = () => {
             ctx.clearRect(0, 0, W, H);
-            t += 0.01; dotTimer++;
-            if (dotTimer % 16 === 0) spawnDot();
+            if (!prefersReducedMotion) {
+                t += 0.01;
+                dotTimer++;
+                if (dotTimer % 16 === 0) spawnDot();
+            } else {
+                dots.length = 0;
+            }
 
             for (const n of nodes) {
                 if (n.ring === 'hub') continue;
-                const drift = n.ring === 'inner' ? 7 : 11;
-                n.x = n.baseX + Math.cos(t * n.driftSpeed + n.driftPhase) * drift * 0.5;
-                n.y = n.baseY + Math.sin(t * n.driftSpeed * 1.3 + n.driftPhase) * drift * 0.4;
+                if (prefersReducedMotion) {
+                    n.x = n.baseX;
+                    n.y = n.baseY;
+                } else {
+                    const drift = n.ring === 'inner' ? 7 : 11;
+                    n.x = n.baseX + Math.cos(t * n.driftSpeed + n.driftPhase) * drift * 0.5;
+                    n.y = n.baseY + Math.sin(t * n.driftSpeed * 1.3 + n.driftPhase) * drift * 0.4;
+                }
             }
 
             for (let i = 1; i <= INNER_RING.length; i++) {
@@ -192,7 +203,9 @@ export default function NeuralParticleHero() {
                 ctx.textAlign = 'left';
             }
 
-            animRef.current = requestAnimationFrame(draw);
+            if (!prefersReducedMotion) {
+                animRef.current = requestAnimationFrame(draw);
+            }
         };
 
         draw();
@@ -200,7 +213,7 @@ export default function NeuralParticleHero() {
             cancelAnimationFrame(animRef.current);
             ro.disconnect();
         };
-    }, []);
+    }, [prefersReducedMotion]);
 
     return (
         <section className="relative overflow-hidden bg-[#F6F1E7] py-24 lg:py-32" data-presence-tone="light">
@@ -212,24 +225,24 @@ export default function NeuralParticleHero() {
                     className="mb-10 max-w-[940px] lg:mb-12"
                 />
 
-                <div className="rounded-[32px] overflow-hidden bg-[#141414] border border-[#8B6A3D]/15 flex flex-col lg:flex-row shadow-[0_24px_60px_rgba(0,0,0,0.18)]" style={{ minHeight: '420px' }}>
+                <div className="rounded-[24px] overflow-hidden bg-[#141414] border border-[#8B6A3D]/15 flex flex-col lg:flex-row shadow-[0_24px_60px_rgba(0,0,0,0.18)]" style={{ minHeight: '420px' }}>
                 <div className="lg:w-[300px] shrink-0 flex flex-col justify-center px-10 py-12 border-b lg:border-b-0 lg:border-r border-[#8B6A3D]/5">
                     <motion.div
-                        initial={{ opacity: 0, y: -8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
+                        initial={prefersReducedMotion ? false : { opacity: 0, y: -8 }}
+                        animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                        transition={prefersReducedMotion ? undefined : { duration: 0.6, delay: 0.1 }}
                         className="flex items-center gap-2 mb-8"
                     >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#C1A67B] animate-pulse" />
+                        <span className={`w-1.5 h-1.5 rounded-full bg-[#C1A67B] ${prefersReducedMotion ? '' : 'animate-pulse'}`} />
                         <span className="text-[8px] font-mono text-[#C1A67B]/60 uppercase tracking-[0.3em]">
                             Dossier Active
                         </span>
                     </motion.div>
 
                     <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.15 }}
+                        initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                        animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                        transition={prefersReducedMotion ? undefined : { duration: 0.7, delay: 0.15 }}
                     >
                         <h2 className="text-[26px] font-bold text-[#C1A67B] leading-[1.1] tracking-tight uppercase mb-10">
                             Creative<br />Intelligence<br />Dossier
@@ -240,9 +253,9 @@ export default function NeuralParticleHero() {
                         {ANALYSIS_SECTIONS.map((s, i) => (
                             <motion.div
                                 key={s.label}
-                                initial={{ opacity: 0, x: -12 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.5, delay: 0.25 + i * 0.07 }}
+                                initial={prefersReducedMotion ? false : { opacity: 0, x: -12 }}
+                                animate={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
+                                transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: 0.25 + i * 0.07 }}
                                 className="flex items-start gap-3 group"
                             >
                                 <div className="w-px h-full bg-[#C1A67B]/20 shrink-0 mt-1" style={{ minHeight: '14px' }} />
@@ -265,7 +278,7 @@ export default function NeuralParticleHero() {
 
                 <div className="flex-1 relative">
                     <div className="absolute top-4 left-5 z-10 flex items-center gap-2">
-                        <span className="w-1 h-1 rounded-full bg-[#C1A67B]/50 animate-pulse" />
+                        <span className={`w-1 h-1 rounded-full bg-[#C1A67B]/50 ${prefersReducedMotion ? '' : 'animate-pulse'}`} />
                         <span className="text-[8px] font-mono text-[#FBFBF6]/20 uppercase tracking-[0.25em]">
                             Decision Map — Live
                         </span>

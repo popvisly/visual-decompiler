@@ -1,10 +1,12 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArtifact';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 export default function PremiumDossierShowcase() {
+    const prefersReducedMotion = useReducedMotion();
+
     return (
         <section className="relative overflow-hidden bg-[#FBFBF6] py-24 text-[#141414] lg:py-32">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#FBFBF6] via-[#FBFBF6]/70 to-transparent" aria-hidden="true" />
@@ -26,10 +28,10 @@ export default function PremiumDossierShowcase() {
                     </div>
 
                     <motion.div
-                        initial={{ opacity: 0, y: 36 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={prefersReducedMotion ? false : { opacity: 0, y: 36 }}
+                        whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-80px' }}
-                        transition={{ duration: 0.95, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+                        transition={prefersReducedMotion ? undefined : { duration: 0.95, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
                     >
                         <CanonicalDossierArtifact mode="preview" />
                     </motion.div>

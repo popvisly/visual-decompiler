@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 const STEPS = [
@@ -23,7 +23,7 @@ const STEPS = [
 
 function DecisionRadarCard() {
     return (
-        <aside className="w-full rounded-[1.8rem] border border-black/10 bg-[#141414] p-6 text-[#FBF7EF] shadow-[0_20px_60px_rgba(0,0,0,0.18)]">
+        <aside className="w-full rounded-[24px] border border-black/10 bg-[#141414] p-6 text-[#FBF7EF] shadow-[0_20px_60px_rgba(0,0,0,0.18)]">
             <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#D4A574]">Decision Radar</p>
 
             <svg viewBox="0 0 320 250" className="mt-6 h-[220px] w-full" aria-hidden="true">
@@ -73,14 +73,16 @@ function DecisionRadarCard() {
 }
 
 export default function HowItWorks() {
+    const prefersReducedMotion = useReducedMotion();
+
     return (
         <section className="relative overflow-hidden bg-[#FBFBF6] py-24 text-[#141414] lg:py-32">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
                 <motion.div
-                    initial={{ opacity: 0, y: 28 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 28 }}
+                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                    transition={prefersReducedMotion ? undefined : { duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
                     className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-12"
                 >
                     <div className="max-w-[900px]">
@@ -97,11 +99,11 @@ export default function HowItWorks() {
                 </motion.div>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-14 rounded-[26px] border border-black/5 bg-white px-7 py-8 shadow-sm md:px-10"
+                    transition={prefersReducedMotion ? undefined : { duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    className="mt-14 rounded-[24px] border border-black/5 bg-white px-7 py-8 shadow-sm md:px-10"
                 >
                     <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#8B6A3D]/80">Why it matters</p>
                     <h3 className="mt-4 text-[30px] font-semibold uppercase leading-[1.02] tracking-tight text-[#141414] md:text-[38px]">
@@ -113,10 +115,10 @@ export default function HowItWorks() {
                 </motion.div>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 28 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 28 }}
+                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.85, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+                    transition={prefersReducedMotion ? undefined : { duration: 0.85, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
                     className="mt-20 rounded-[24px] border border-black/5 bg-white px-6 py-9 shadow-sm lg:mt-24 lg:px-8 lg:py-11"
                 >
                     <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#8B6A3D]/80">Workflow</p>
@@ -131,11 +133,11 @@ export default function HowItWorks() {
                         {STEPS.map((step, idx) => (
                             <motion.article
                                 key={step.n}
-                                initial={{ opacity: 0, y: 18 }}
-                                whileInView={{ opacity: 1, y: 0 }}
+                                initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
+                                whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: '-40px' }}
-                                transition={{ duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                                className="rounded-[20px] border border-black/5 bg-[#FBFBF6] p-6"
+                                transition={prefersReducedMotion ? undefined : { duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                                className="rounded-[24px] border border-black/5 bg-[#FBFBF6] p-6"
                             >
                                 <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#8B6A3D]/80">Step {step.n}</p>
                                 <h4 className="mt-4 text-[22px] font-semibold leading-[1.08] tracking-[-0.015em] text-[#141414]">{step.title}</h4>

@@ -1,8 +1,10 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ContainerScroll } from '@/components/marketing/ContainerScroll';
 
 const STEPS = [
@@ -24,6 +26,19 @@ const STEPS = [
 ] as const;
 
 export default function ContainerScrollHero() {
+    const prefersReducedMotion = useReducedMotion();
+    const [showScrollHint, setShowScrollHint] = useState(true);
+
+    useEffect(() => {
+        if (prefersReducedMotion) return;
+        const handleScroll = () => {
+            if (window.scrollY > 24) setShowScrollHint(false);
+        };
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [prefersReducedMotion]);
+
     return (
         <section className="relative overflow-hidden bg-[#FBFBF6] px-6 pt-28 pb-28 md:px-10 md:pt-32 md:pb-40">
             <div
@@ -31,7 +46,7 @@ export default function ContainerScrollHero() {
                 aria-hidden="true"
             />
 
-            <div className="relative z-10 mx-auto w-full max-w-7xl">
+            <div className="relative z-10 mx-auto w-full max-w-[1200px]">
                 <ContainerScroll
                     titleComponent={
                         <div className="mx-auto max-w-4xl">
@@ -68,7 +83,7 @@ export default function ContainerScrollHero() {
 
                             <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
                                 {STEPS.map((item) => (
-                                    <div key={item.kicker} className="rounded-[1.75rem] border border-black/5 bg-white p-6 shadow-sm">
+                                    <div key={item.kicker} className="rounded-[24px] border border-black/5 bg-white p-6 shadow-sm">
                                         <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">{item.kicker}</p>
                                         <p className="mt-3 text-[13px] font-semibold leading-snug text-[#141414]">{item.title}</p>
                                         <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{item.body}</p>
@@ -87,6 +102,21 @@ export default function ContainerScrollHero() {
                         priority
                     />
                 </ContainerScroll>
+
+                {!prefersReducedMotion ? (
+                    <motion.div
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={showScrollHint ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                        className="pointer-events-none absolute inset-x-0 bottom-10 flex justify-center"
+                        aria-hidden="true"
+                    >
+                        <div className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-white/75 px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#6B6B6B] shadow-sm backdrop-blur">
+                            <span className="h-1.5 w-1.5 rounded-full bg-[#D4A574]" />
+                            Scroll to reveal
+                        </div>
+                    </motion.div>
+                ) : null}
             </div>
         </section>
     );

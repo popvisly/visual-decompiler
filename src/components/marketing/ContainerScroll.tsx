@@ -46,7 +46,10 @@ export function ContainerScroll({
 
 export function Header({ translate, titleComponent }: { translate: MotionValue<number>; titleComponent: React.ReactNode }) {
     return (
-        <motion.div style={{ translateY: translate }} className="relative z-20 mx-auto max-w-5xl pt-10 text-center md:pt-12">
+        <motion.div
+            style={{ translateY: translate }}
+            className="relative z-20 mx-auto max-w-[1200px] px-6 pt-10 text-center md:pt-12 lg:px-12"
+        >
             {titleComponent}
         </motion.div>
     );
@@ -70,9 +73,9 @@ export function Card({
                 boxShadow:
                     '0 0 rgba(0,0,0,0.03), 0 10px 22px rgba(0,0,0,0.08), 0 42px 52px rgba(0,0,0,0.10), 0 110px 90px rgba(0,0,0,0.08), 0 200px 140px rgba(0,0,0,0.05)',
             }}
-            className="mx-auto -mt-10 h-[32rem] w-full max-w-6xl rounded-[30px] border border-black/10 bg-white p-2 shadow-sm md:-mt-14 md:h-[46rem] md:p-3"
+            className="mx-auto -mt-10 h-[32rem] w-full max-w-[1200px] rounded-[24px] border border-black/10 bg-white p-2 shadow-sm md:-mt-14 md:h-[46rem] md:p-3"
         >
-            <div className="h-full w-full overflow-hidden rounded-[22px] bg-[#FBFBF6] md:rounded-[24px]">
+            <div className="h-full w-full overflow-hidden rounded-[20px] bg-[#FBFBF6]">
                 {children}
             </div>
         </motion.div>

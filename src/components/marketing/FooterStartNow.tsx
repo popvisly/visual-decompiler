@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, Plus, Minus } from 'lucide-react';
 import Logo from '@/components/Logo';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
@@ -35,12 +35,13 @@ const FAQS = [
 
 function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
     const [open, setOpen] = useState(false);
+    const prefersReducedMotion = useReducedMotion();
     return (
         <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
+            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.5, delay: index * 0.07 }}
+            transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: index * 0.07 }}
             className="border-t border-black/5"
         >
             <button
@@ -57,10 +58,10 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
                 {open && (
                     <motion.div
                         key="content"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        initial={prefersReducedMotion ? false : { height: 0, opacity: 0 }}
+                        animate={prefersReducedMotion ? { height: 'auto', opacity: 1 } : { height: 'auto', opacity: 1 }}
+                        exit={prefersReducedMotion ? { height: 'auto', opacity: 0 } : { height: 0, opacity: 0 }}
+                        transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                     >
                         <p className="pb-6 text-[14px] leading-relaxed text-[#6B6B6B]">{a}</p>
@@ -72,15 +73,17 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
 }
 
 export default function FooterStartNow() {
+    const prefersReducedMotion = useReducedMotion();
+
     return (
         <footer className="relative bg-[#FBFBF6] text-[#141414] border-t border-black/5">
             {/* ── OUTRO CTA BLOCK ── */}
             <div className="mx-auto max-w-[1200px] px-6 pt-24 pb-20 sm:px-8 lg:px-10 lg:pt-32 lg:pb-24">
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
+                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                    transition={prefersReducedMotion ? undefined : { duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-8">
                         Final CTA
@@ -97,10 +100,10 @@ export default function FooterStartNow() {
                 </motion.div>
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
+                    transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: 0.3 }}
                     className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-6"
                 >
                     <a
