@@ -65,6 +65,7 @@ export default function QAChecklistPage() {
                     </>
                 }
                 description="A practical validation protocol to keep outputs defensible under agency pressure."
+                size="compact"
             />
 
             <section className="pb-32 px-6">

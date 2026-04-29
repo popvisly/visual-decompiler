@@ -35,6 +35,7 @@ export default function SchemaContractPage() {
                     </>
                 }
                 description="A formal specification for the v2 forensic engine: invariants, layers, and integration requirements."
+                size="compact"
             />
             <section className="pb-32 px-6">
                 <div className="max-w-4xl mx-auto">

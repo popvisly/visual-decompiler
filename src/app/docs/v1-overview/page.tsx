@@ -83,6 +83,7 @@ export default function AgencyOverviewPage() {
                     </>
                 }
                 description="A high-level operating overview of Sovereign Intelligence: receipts, diagnostics, risk flags, and actionable sprint outputs."
+                size="compact"
             />
 
             <section className="pb-32 px-6">

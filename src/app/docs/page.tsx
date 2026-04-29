@@ -123,6 +123,7 @@ export default function DocsHubPage() {
                     </>
                 }
                 description="Task-first guides for operators: how to read tabs, export dossiers, and move work through review with less debate."
+                size="compact"
             />
 
             <section className="px-6 pb-28 lg:pb-36">

@@ -50,6 +50,7 @@ export default function ReleaseNotesPage() {
                     </>
                 }
                 description="Milestone updates and capability shifts across the Visual Decompiler operating system."
+                size="compact"
             />
 
             <section className="pb-32 px-6">
