@@ -87,7 +87,7 @@ export default function UserGuidePage() {
 
             <section className="pb-28 lg:pb-36">
                 <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
-                    <div className="mt-16 border-t border-black/5 pt-14 lg:mt-20 lg:pt-16">
+                    <div className="mt-8 border-t border-black/5 pt-12 lg:mt-10 lg:pt-14">
                         <motion.div
                             initial={{ opacity: 0, y: 18 }}
                             whileInView={{ opacity: 1, y: 0 }}
