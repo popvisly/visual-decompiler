@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 const ANALYSIS_SECTIONS = [
     { label: 'Primary Scores', desc: 'Clarity, Attention, Cohesion, Intent, Distinction' },
@@ -204,15 +205,12 @@ export default function NeuralParticleHero() {
     return (
         <section className="relative overflow-hidden bg-[#F6F1E7] pt-8 pb-12 md:pt-10 md:pb-14" data-presence-tone="light">
             <div className="w-full max-w-[1200px] mx-auto px-6 lg:px-12">
-                <div className="mb-10 max-w-[940px] lg:mb-12">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#8B6A3D]/80">Decision Map</p>
-                    <h3 className="mt-4 text-[34px] font-black uppercase tracking-[-0.03em] text-[#141414] md:text-[44px]">
-                        Insight beyond the surface.
-                    </h3>
-                    <p className="mt-6 max-w-[900px] text-[18px] leading-[1.8] text-[#6B6B6B]">
-                        Visual Decompiler goes deep into the unseen layers of an ad. From luxury automotive to a cold beer campaign, there is always more than surface-level execution — and the dossier makes those insights readable.
-                    </p>
-                </div>
+                <MarketingSectionHeading
+                    kicker="Decision Map"
+                    title="Insight beyond the surface."
+                    description="Visual Decompiler goes deep into the unseen layers of an ad. From luxury automotive to a cold beer campaign, there is always more than surface-level execution — and the dossier makes those insights readable."
+                    className="mb-10 max-w-[940px] lg:mb-12"
+                />
 
                 <div className="rounded-[32px] overflow-hidden bg-[#141414] border border-[#8B6A3D]/15 flex flex-col lg:flex-row shadow-[0_24px_60px_rgba(0,0,0,0.18)]" style={{ minHeight: '420px' }}>
                 <div className="lg:w-[300px] shrink-0 flex flex-col justify-center px-10 py-12 border-b lg:border-b-0 lg:border-r border-[#8B6A3D]/5">

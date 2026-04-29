@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArtifact';
+import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 function DossierFlowMapCard() {
     return (
@@ -66,7 +67,12 @@ export default function DossierPreview() {
                     className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-12"
                 >
                     <div className="min-w-0">
-                        <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.38em] text-[#8B6A3D]/80">Dossier Layer</p>
+                        <MarketingSectionHeading
+                            kicker="Dossier Layer"
+                            title="Evidence you can present."
+                            description="Structured outputs built to travel into decks, client rooms, and team alignment sessions."
+                            className="mb-10 max-w-[900px]"
+                        />
                         <div className="overflow-hidden rounded-[1.8rem] border border-black/5 bg-white shadow-sm">
                             <CanonicalDossierArtifact mode="attention-zoom" />
                         </div>

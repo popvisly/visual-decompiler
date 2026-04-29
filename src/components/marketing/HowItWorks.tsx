@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 const STEPS = [
     {
@@ -83,13 +84,12 @@ export default function HowItWorks() {
                     className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-12"
                 >
                     <div className="max-w-[900px]">
-                        <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.36em] text-[#8B6A3D]/80">Core Value</p>
-                        <h2 className="max-w-[14ch] text-[10vw] font-semibold uppercase leading-[0.88] tracking-tight text-[#141414] lg:text-[64px]">
-                            Make the work easier to defend.
-                        </h2>
-                        <p className="mt-8 max-w-[780px] text-[18px] leading-[1.78] text-[#6B6B6B]">
-                            Visual Decompiler breaks down hierarchy, attention flow, tone, friction, and strategic intent — in language teams and clients can actually use.
-                        </p>
+                        <MarketingSectionHeading
+                            kicker="Core Value"
+                            title="Make the work easier to defend."
+                            description="Visual Decompiler breaks down hierarchy, attention flow, tone, friction, and strategic intent — in language teams and clients can actually use."
+                            className="max-w-[900px]"
+                        />
                     </div>
                     <div className="lg:pt-9">
                         <DecisionRadarCard />
