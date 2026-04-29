@@ -296,41 +296,54 @@ function SectionHeading({ kicker, title, description }: { kicker: string; title:
 export default function UserGuidePage() {
     const prefersReducedMotion = useReducedMotion();
 
+    const jumpItems = [
+        { label: 'Quick Start', href: '#quick-start' },
+        { label: 'Tabs', href: '#tabs' },
+        { label: 'Vault', href: '#intelligence-vault' },
+        { label: 'Pulse', href: '#intelligence-pulse' },
+        { label: 'Boards', href: '#sovereign-boards' },
+        { label: 'Settings', href: '#settings-agency' },
+        { label: 'Troubleshooting', href: '#troubleshooting' },
+    ] as const;
+
     return (
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader />
+
+            <div className="sticky top-[72px] z-40 px-6 lg:top-[80px] lg:px-12">
+                <div className="mx-auto w-full max-w-[1120px]">
+                    <div className="rounded-[26px] border border-[#8B6A3D]/15 bg-[#141414] p-3 shadow-[0_24px_70px_rgba(0,0,0,0.18)]">
+                        <div className="max-w-[900px]">
+                            <div className="flex flex-wrap items-center gap-3 rounded-[22px] border border-white/10 bg-white/5 px-4 py-3 backdrop-blur">
+                            <p className="mr-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/55">
+                                Jump to
+                            </p>
+                            {jumpItems.map((item) => (
+                                <a
+                                    key={item.href}
+                                    href={item.href}
+                                    className="rounded-full border border-white/10 bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] shadow-sm transition hover:border-black/20 hover:text-[#141414]"
+                                >
+                                    {item.label}
+                                </a>
+                            ))}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <MarketingPageHeader
                 kicker="User Guide"
                 title="Using Visual Decompiler"
                 description="A practical operator guide: run reads consistently, defend decisions, and export work that travels into review rooms."
                 size="compact"
+                sectionClassName="pt-24 pb-10 lg:pt-28 lg:pb-12"
             />
 
             <section className="pb-28 lg:pb-36">
                 <div className="mx-auto w-full max-w-[1200px] px-6 lg:px-12">
                     <div className="mt-2">
-                        <div className="flex flex-wrap items-center gap-3">
-                            <p className="mr-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6B6B6B]">Jump to</p>
-                            {[
-                                { label: 'Quick Start', href: '#quick-start' },
-                                { label: 'Tabs', href: '#tabs' },
-                                { label: 'Vault', href: '#intelligence-vault' },
-                                { label: 'Pulse', href: '#intelligence-pulse' },
-                                { label: 'Boards', href: '#sovereign-boards' },
-                                { label: 'Settings', href: '#settings-agency' },
-                                { label: 'Troubleshooting', href: '#troubleshooting' },
-                            ].map((item) => (
-                                <a
-                                    key={item.href}
-                                    href={item.href}
-                                    className="rounded-full border border-black/10 bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] shadow-sm transition hover:border-black/20 hover:text-[#141414]"
-                                >
-                                    {item.label}
-                                </a>
-                            ))}
-                        </div>
-
                         <motion.section
                             id="quick-start"
                             initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
