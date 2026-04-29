@@ -310,24 +310,22 @@ export default function UserGuidePage() {
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader />
 
-            <div className="sticky top-[72px] z-40 px-6 lg:top-[80px] lg:px-12">
+            <div className="sticky top-[92px] z-40 px-6 lg:top-[100px] lg:px-12">
                 <div className="mx-auto w-full max-w-[1120px]">
-                    <div className="rounded-[26px] border border-[#8B6A3D]/15 bg-[#141414] p-3 shadow-[0_24px_70px_rgba(0,0,0,0.18)]">
-                        <div className="max-w-[900px]">
-                            <div className="flex flex-wrap items-center gap-3 rounded-[22px] border border-white/10 bg-white/5 px-4 py-3 backdrop-blur">
-                            <p className="mr-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/55">
+                    <div className="max-w-[900px] rounded-[22px] border border-black/10 bg-white/70 px-4 py-3 shadow-sm backdrop-blur">
+                        <div className="flex flex-wrap items-center gap-3">
+                            <p className="mr-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6B6B6B]">
                                 Jump to
                             </p>
                             {jumpItems.map((item) => (
                                 <a
                                     key={item.href}
                                     href={item.href}
-                                    className="rounded-full border border-white/10 bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] shadow-sm transition hover:border-black/20 hover:text-[#141414]"
+                                    className="rounded-full border border-black/10 bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] shadow-sm transition hover:border-[#D4A574]/40 hover:bg-[#FBF8F1] hover:text-[#141414] active:scale-[0.99]"
                                 >
                                     {item.label}
                                 </a>
                             ))}
-                        </div>
                         </div>
                     </div>
                 </div>
