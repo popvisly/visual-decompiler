@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 const OUTCOME_CARDS = [
     {
         title: 'Strategists',
-        body: 'Turn visual instinct into structured rationale for decks and pitch presentations.',
+        body: 'Turn visual instinct into structured rationale, evidence anchors, and pitch-ready decision language.',
     },
     {
         title: 'Creative Directors',
@@ -13,7 +13,7 @@ const OUTCOME_CARDS = [
     },
     {
         title: 'Agency Teams',
-        body: 'Reduce subjective feedback loops during reviews and approvals.',
+        body: 'Reduce subjective feedback loops with a shared archive, repeatable workflow, and exportable dossier.',
     },
     {
         title: 'Freelancers & Consultants',
@@ -32,7 +32,7 @@ export default function PlatformLayer() {
                     </h2>
                     <div className="mt-7 max-w-[860px] space-y-5 text-[18px] leading-[1.75] text-[#6B6B6B]">
                         <p>Built for the people defending the work.</p>
-                        <p>Whether you&apos;re a strategist preparing rationale, a creative director defending a campaign, or an agency team aligning around creative decisions, Visual Decompiler helps structure the conversation around the work.</p>
+                        <p>Whether you&apos;re a strategist preparing rationale, a creative director defending a campaign, or an agency team aligning around creative decisions, Visual Decompiler helps structure the conversation around a repeatable evidence trail.</p>
                     </div>
                 </div>
 

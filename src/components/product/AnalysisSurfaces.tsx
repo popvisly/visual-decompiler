@@ -5,16 +5,16 @@ import Image from 'next/image';
 
 const STEPS = [
     {
-        title: 'Upload the Ad',
-        body: 'Bring in the work — or the references shaping it.',
+        title: 'Import the asset',
+        body: 'Bring in the work, or the references shaping it.',
     },
     {
-        title: 'Decompile the Creative',
-        body: 'Break down hierarchy, attention flow, tone, and strategic intent — so the reasoning behind the work becomes clear and defensible.',
+        title: 'Run the fixed read',
+        body: 'Break down hierarchy, attention flow, tone, strategic intent, and risk through the same structured modules every time.',
     },
     {
-        title: 'Present with Authority',
-        body: 'Walk into reviews, pitches, and client conversations with a structured dossier built for alignment and approval.',
+        title: 'Export the decision',
+        body: 'Walk into reviews, pitches, and client conversations with a dossier, audit trail, and recommendation built for alignment.',
     },
 ];
 
@@ -40,7 +40,7 @@ export default function AnalysisSurfaces() {
                             Output designed for the room.
                         </h2>
                         <div className="mt-7 space-y-5 text-[19px] leading-[1.8] text-[#6B6B6B]">
-                            <p>A structured dossier designed for clarity, direction, validation and conversation.</p>
+                            <p>A structured dossier designed for clarity, direction, validation, caveats, and conversation.</p>
                         </div>
                     </div>
 
@@ -75,7 +75,7 @@ export default function AnalysisSurfaces() {
                         <div className="mt-8 space-y-6 text-[19px] leading-[1.8] text-[#6B6B6B]">
                             <p>Creative work doesn&apos;t fail because it&apos;s bad.</p>
                             <p>It fails because it can&apos;t be clearly explained.</p>
-                            <p>Visual Decompiler turns instinct into structured reasoning — helping teams align faster, defend stronger ideas, and move work toward approval with more confidence.</p>
+                            <p>Visual Decompiler turns instinct into structured reasoning, helping teams align faster, defend stronger ideas, and move work toward approval with more confidence.</p>
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@ export default function AnalysisSurfaces() {
                     <div className="rounded-[24px] border border-black/5 bg-white px-6 py-8 shadow-sm lg:px-8 lg:py-10">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#8B6A3D]/80">How it works</p>
                         <h2 className="mt-6 text-[11vw] font-semibold uppercase leading-[0.9] tracking-tight text-[#141414] sm:text-[8vw] lg:text-[58px]">
-                            From concept to conviction.
+                            From asset to artifact.
                         </h2>
 
                         <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-3">

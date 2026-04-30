@@ -11,17 +11,17 @@ const STEPS = [
     {
         kicker: 'Step 01',
         title: 'Upload the asset.',
-        body: 'Start with the exact creative in front of you — work in progress, competitor, or reference.',
+        body: 'Start with the exact creative in front of you: work in progress, competitor, or reference.',
     },
     {
         kicker: 'Step 02',
-        title: 'Read the system tabs.',
-        body: 'Mechanics, Psychology, Blueprint Trace, Stress Lab, Market Pulse — the same order you use in the app.',
+        title: 'Run the fixed workflow.',
+        body: 'Quality Gate, Mechanics, Psychology, Blueprint Trace, Stress Lab, Market Pulse, and Decision Log keep the read repeatable.',
     },
     {
         kicker: 'Step 03',
-        title: 'Walk into the room ready.',
-        body: 'Export a dossier built for alignment, approval, and decision language.',
+        title: 'Ship the artifact.',
+        body: 'Export a dossier built for alignment, approval, evidence, caveats, and decision language.',
     },
 ] as const;
 
@@ -56,7 +56,7 @@ export default function ContainerScrollHero() {
                             </h1>
 
                             <p className="mx-auto mt-6 max-w-2xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
-                                Decompile any asset. Get mechanics, psychology, blueprint trace, stress tests, and a decision log—structured for teams, clients, and fast iteration.
+                                Decompile any asset into a saved, comparable dossier. Get mechanics, psychology, blueprint trace, stress tests, market context, and a decision log structured for teams, clients, and fast iteration.
                             </p>
 
                             <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:items-center">

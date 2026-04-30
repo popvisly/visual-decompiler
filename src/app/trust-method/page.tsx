@@ -2,25 +2,26 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
+import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 export const metadata: Metadata = {
     title: 'Trust & Method | Visual Decompiler',
     description:
-        'How Visual Decompiler generates strategic intelligence you can defend through structured visual analysis, transparent output logic, and agency-grade delivery.',
+        'How Visual Decompiler turns ad analysis into a repeatable, reviewable intelligence workflow with structured visual analysis, transparent output logic, and agency-grade delivery.',
 };
 
 const METHOD_PILLARS = [
     {
         title: 'Input Integrity',
-        body: 'We analyze the exact creative asset you provide — including your own work-in-progress, competitor campaigns, and client references. No hidden prompt shortcuts, no generic template scoring.',
+        body: 'We analyze the exact creative asset you provide, including your own work-in-progress, competitor campaigns, and client references. No hidden prompt shortcuts, no generic template scoring.',
     },
     {
         title: 'Fixed System Language',
-        body: 'Each extraction is organized into five fixed labels: Primary Scores, Attention Path, Structural Signals, Strategic Read, and Confidence Index. The system stays repeatable across every asset and every team.',
+        body: 'Each extraction moves through a fixed operating sequence: source asset, quality gate, intelligence, mechanics, psychology, context, stress testing, market pulse, and decision record. The system stays repeatable across every asset and every team.',
     },
     {
-        title: 'Strategic Read',
-        body: 'Outputs are organized for decision use: what is happening, why it matters, and what to do next. The goal is not just interpretation, but execution-ready direction.',
+        title: 'Decision Artifact',
+        body: 'Outputs are organized for decision use: what is happening, why it matters, what evidence supports it, what caveats remain, and what to do next. The goal is not just interpretation, but execution-ready direction.',
     },
     {
         title: 'Compounding Intelligence',
@@ -52,7 +53,7 @@ export default function TrustMethodPage() {
                             How Visual Decompiler generates strategic intelligence you can defend.
                         </>
                     }
-                    description="Visual Decompiler is designed to produce client-defensible outputs — not generic AI commentary. Every dossier is built from structured visual analysis and a fixed system language: Primary Scores, Attention Path, Structural Signals, Strategic Read, and Confidence Index."
+                    description="Visual Decompiler is designed to produce client-defensible outputs, not generic AI commentary. Every dossier is built from structured visual analysis, vault memory, decision logic, and a fixed workflow your team can review and rerun."
                 />
             </div>
 
@@ -108,10 +109,10 @@ export default function TrustMethodPage() {
             <section className="px-6 py-16 md:py-20">
                 <div className="mx-auto max-w-[1120px] text-center">
                     <p className="mx-auto max-w-3xl text-[18px] leading-relaxed text-[#6B6B6B] md:text-[22px]">
-                        Built to defend creative decisions, align teams faster, and get work approved with less back-and-forth.
+                        Built to defend creative decisions, align teams faster, and turn analysis into an artifact people can actually review.
                     </p>
                     <Link
-                        href="/compare"
+                        href={SAMPLE_DOSSIER_HREF}
                         className="mt-8 inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-6 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#141414] shadow-sm transition hover:-translate-y-[1px] hover:border-black/20 hover:bg-[#FBFBF6]"
                     >
                         View Sample Dossier

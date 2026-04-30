@@ -10,7 +10,7 @@ import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 const PROOF_POINTS = [
     ['Decision read', 'A clear recommendation, confidence signal, and risk/reward tension.'],
     ['Evidence anchors', 'Specific visual claims tied back to what is actually present in the asset.'],
-    ['Room-ready language', 'Structured rationale that can move into decks, reviews, and client conversations.'],
+    ['Reusable artifact', 'A saved dossier your team can revisit, compare, export, and defend later.'],
 ] as const;
 
 const OUTPUT_LAYERS = [
@@ -29,6 +29,11 @@ const OUTPUT_LAYERS = [
         title: 'Strategic Read',
         body: 'The thesis, trigger mechanic, friction points, and defensible direction.',
     },
+    {
+        label: 'Record',
+        title: 'Decision Log',
+        body: 'A captured verdict with rationale, evidence, and next-action language.',
+    },
 ] as const;
 
 export default function PremiumDossierShowcase() {
@@ -44,7 +49,7 @@ export default function PremiumDossierShowcase() {
                         <MarketingSectionHeading
                             kicker="Proof"
                             title="See the output before you sign up."
-                            description="Visual Decompiler does not return a loose AI answer. It produces a structured dossier with decision logic, evidence anchors, and language your team can use in the room."
+                            description="Visual Decompiler does not return a loose AI answer. It produces a structured artifact with decision logic, evidence anchors, caveats, and language your team can use in the room."
                         />
 
                         <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -84,7 +89,7 @@ export default function PremiumDossierShowcase() {
                             <CanonicalDossierArtifact mode="preview" className="shadow-none" />
                         </motion.div>
 
-                        <div className="mt-5 grid gap-5 md:grid-cols-3">
+                        <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
                             {OUTPUT_LAYERS.map((layer, index) => (
                                 <motion.article
                                     key={layer.title}
