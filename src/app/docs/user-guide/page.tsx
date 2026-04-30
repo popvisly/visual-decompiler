@@ -306,11 +306,39 @@ export default function UserGuidePage() {
         { label: 'Troubleshooting', href: '#troubleshooting' },
     ] as const;
 
+    const [activeJump, setActiveJump] = React.useState<(typeof jumpItems)[number]['href']>('#quick-start');
+
+    React.useEffect(() => {
+        const idToHref = new Map(jumpItems.map((item) => [item.href.slice(1), item.href] as const));
+        const sectionIds = jumpItems.map((item) => item.href.slice(1));
+        const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+        if (!sections.length) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const best = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
+                if (!best?.target?.id) return;
+                const next = idToHref.get(best.target.id);
+                if (next) setActiveJump(next);
+            },
+            {
+                root: null,
+                threshold: [0.08, 0.18, 0.3],
+                rootMargin: '-25% 0px -65% 0px',
+            },
+        );
+
+        for (const el of sections) observer.observe(el);
+        return () => observer.disconnect();
+    }, [jumpItems]);
+
     return (
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader />
 
-            <div className="sticky top-[92px] z-40 px-6 lg:top-[100px] lg:px-12">
+            <div className="sticky top-[92px] z-40 mb-10 px-6 lg:top-[100px] lg:px-12">
                 <div className="mx-auto w-full max-w-[1120px]">
                     <div className="max-w-[900px] rounded-[22px] border border-black/10 bg-white/70 px-4 py-3 shadow-sm backdrop-blur">
                         <div className="flex flex-wrap items-center gap-3">
@@ -321,7 +349,12 @@ export default function UserGuidePage() {
                                 <a
                                     key={item.href}
                                     href={item.href}
-                                    className="rounded-full border border-black/10 bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6B6B6B] shadow-sm transition hover:border-[#D4A574]/40 hover:bg-[#FBF8F1] hover:text-[#141414] active:scale-[0.99]"
+                                    aria-current={activeJump === item.href ? 'page' : undefined}
+                                    className={`rounded-full border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] shadow-sm transition active:scale-[0.99] ${
+                                        activeJump === item.href
+                                            ? 'border-[#D4A574]/55 bg-[#FBF8F1] text-[#141414]'
+                                            : 'border-black/10 bg-white text-[#6B6B6B] hover:border-[#D4A574]/40 hover:bg-[#FBF8F1] hover:text-[#141414]'
+                                    }`}
                                 >
                                     {item.label}
                                 </a>
