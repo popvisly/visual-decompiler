@@ -18,6 +18,7 @@ export default async function IntelligenceIndex() {
                 kicker="Intelligence Hub"
                 title="Intelligence Briefings."
                 description="Decision-ready briefings on advertising structure, strategic signals, and approval-critical execution patterns."
+                sectionClassName="pt-0 pb-20 lg:pb-24"
             />
 
             <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
@@ -37,18 +38,22 @@ export default async function IntelligenceIndex() {
                                     />
                                 </div>
                             ) : (
-                                <div className="relative aspect-[16/10] border-b border-black/5 bg-[#FBFBF6] flex items-center justify-center">
-                                    <Sparkles className="w-8 h-8 text-black/10" />
+                                <div className="relative flex aspect-[16/10] items-center justify-center border-b border-black/5 bg-[#FBFBF6]">
+                                    <Sparkles className="h-8 w-8 text-black/10" />
                                 </div>
                             )}
 
                             <div className="flex flex-1 flex-col p-8">
                                 <div className="mb-4 flex items-center justify-between gap-4">
-                                    <span className="text-[9px] font-bold text-[#8B6A3D]/80 uppercase tracking-[0.2em]">
+                                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#8B6A3D]/80">
                                         {post.pillar}
                                     </span>
-                                    <span className="text-[10px] text-[#8A8A84] font-mono">
-                                        {new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                    <span className="font-mono text-[10px] text-[#8A8A84]">
+                                        {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                                            month: 'short',
+                                            day: 'numeric',
+                                            year: 'numeric',
+                                        })}
                                     </span>
                                 </div>
 
@@ -61,7 +66,7 @@ export default async function IntelligenceIndex() {
                                 </p>
 
                                 <div className="mt-auto flex items-center justify-between border-t border-black/5 pt-4">
-                                    <div className="text-[10px] text-[#8A8A84] uppercase tracking-widest font-medium">
+                                    <div className="text-[10px] font-medium uppercase tracking-widest text-[#8A8A84]">
                                         {post.readingTime} Read
                                     </div>
                                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FBFBF6] transition-colors group-hover:bg-[#8B6A3D]/10">
