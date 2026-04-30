@@ -209,7 +209,7 @@ export default function AnalyticalHero() {
                                 <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                             </a>
                             <a href={SAMPLE_DOSSIER_HREF} className={`${HOMEPAGE_SECONDARY_CTA} w-full sm:w-auto !bg-transparent !border-[#D4A574]/30 !text-[#D4A574]`}>
-                                <span>Open Sample Dossier</span>
+                                <span>View Sample Dossier</span>
                                 <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                             </a>
                         </div>

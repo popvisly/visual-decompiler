@@ -5,7 +5,7 @@ export const PRICING = {
         cadenceLabel: 'Forever',
         tagline: 'See what the product actually does.',
         subline: 'No card required. Five complete analyses each cycle, with the full dossier intact.',
-        ctaLabel: 'Start Decompiling Free',
+        ctaLabel: 'Start Free',
         ctaHref: '/ingest',
         whoItsFor: 'For practitioners who want to see real output before committing.',
         features: [
@@ -70,7 +70,7 @@ export const PRICING = {
         cadenceLabel: 'Annual contract',
         tagline: 'For agencies that run intelligence as a service.',
         subline: 'It’s billable intelligence infrastructure your agency presents to clients as your own.',
-        ctaLabel: 'Book a Demo',
+        ctaLabel: 'Book Agency Demo',
         ctaHref: 'mailto:hello@visualdecompiler.com?subject=Agency%20Sovereignty%20Demo',
         contactLabel: 'Or start a conversation — hello@visualdecompiler.com',
         whoItsFor: 'Agency strategy teams, new business leads, and creative directors who need a shared competitive intelligence layer they can bill back to clients as premium strategic IP.',

@@ -89,7 +89,7 @@ export const ENABLEMENT_HOMEPAGE_READOUT_RULES = [
     {
         title: 'Secondary beating primary',
         threshold: 'Secondary interest unusually high',
-        action: 'Users want proof first. Keep the dossier CTA visible and clarify what happens after Start Decompiling Free.',
+        action: 'Users want proof first. Keep the dossier CTA visible and clarify what happens after Start Free.',
     },
     {
         title: 'Strong primary CTR',

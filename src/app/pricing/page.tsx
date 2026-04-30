@@ -10,14 +10,33 @@ import { PRICING, PRICING_COMPARISON_ROWS, PRICING_POSITIONING_LINES } from '@/l
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-function CheckItem({ children }: { children: React.ReactNode }) {
+const PLAN_SUMMARIES = {
+    observer: ['5 analyses', '1 private workspace', 'No card required'],
+    strategic: ['250 analyses / cycle', '1 seat', 'Weekly creative work'],
+    professional: ['250 analyses / cycle', '3-5 seats', 'Shared Vault + Boards'],
+    agency: ['Custom volume', 'Up to 10 seats', 'White-label delivery'],
+} as const;
+
+function CheckItem({ children, tone = 'light' }: { children: React.ReactNode; tone?: 'light' | 'dark' }) {
     return (
         <li className="flex items-start gap-4 text-sm leading-relaxed">
-            <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-black/5 text-[#8B6A3D]">
+            <span className={`mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full ${tone === 'dark' ? 'bg-white/10 text-[#D4A574]' : 'bg-black/5 text-[#8B6A3D]'}`}>
                 <Check className="h-2.5 w-2.5 stroke-[3]" />
             </span>
-            <span className="text-[#6B6B6B]">{children}</span>
+            <span className={tone === 'dark' ? 'text-white/72' : 'text-[#6B6B6B]'}>{children}</span>
         </li>
+    );
+}
+
+function PlanSummary({ items, tone = 'light' }: { items: readonly string[]; tone?: 'light' | 'dark' }) {
+    return (
+        <div className={`mb-8 grid gap-2 rounded-[20px] border p-4 ${tone === 'dark' ? 'border-white/10 bg-white/[0.04]' : 'border-black/5 bg-[#FBFBF6]'}`}>
+            {items.map((item) => (
+                <p key={item} className={`text-[11px] font-bold uppercase tracking-[0.18em] ${tone === 'dark' ? 'text-white/70' : 'text-[#141414]/70'}`}>
+                    {item}
+                </p>
+            ))}
+        </div>
     );
 }
 
@@ -61,6 +80,14 @@ export default function PricingPage() {
             {/* Pricing Cards Grid */}
             <section className="px-6 pb-48">
                 <div className="mx-auto max-w-[1440px]">
+                    <div className="mb-10 grid gap-4 rounded-[28px] border border-black/5 bg-white p-5 shadow-sm md:grid-cols-3 md:p-6">
+                        {PRICING_POSITIONING_LINES.map((line) => (
+                            <p key={line} className="text-[13px] leading-[1.65] text-[#6B6B6B]">
+                                {line}
+                            </p>
+                        ))}
+                    </div>
+
                     <div className="grid gap-8 lg:grid-cols-4">
                         
                         {/* Observer */}
@@ -76,8 +103,9 @@ export default function PricingPage() {
                                 <h3 className="text-6xl font-medium tracking-tightest mb-4">{PRICING.observer.priceLabel}</h3>
                                 <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#8A8A84] mb-10">{PRICING.observer.cadenceLabel}</p>
                                 
-                                <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.observer.tagline}</p>
-                                <p className="text-[#6B6B6B] mb-10 leading-relaxed">{PRICING.observer.subline}</p>
+                                <p className="text-xl font-black uppercase leading-tight mb-4">Try the full dossier.</p>
+                                <p className="text-[#6B6B6B] mb-6 leading-relaxed">{PRICING.observer.whoItsFor}</p>
+                                <PlanSummary items={PLAN_SUMMARIES.observer} />
                                 
                                 <ul className="space-y-6 mb-12">
                                     {PRICING.observer.features.map((feature) => (
@@ -105,9 +133,11 @@ export default function PricingPage() {
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.strategic.name}</p>
                                 <h3 className="text-6xl font-medium tracking-tightest mb-2">${PRICING.strategic.monthlyPrice}</h3>
-                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Monthly Protocol</p>
+                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Per month</p>
                                 
-                                <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.strategic.tagline}</p>
+                                <p className="text-xl font-black uppercase leading-tight mb-4">For weekly operators.</p>
+                                <p className="text-[#6B6B6B] mb-6 leading-relaxed">{PRICING.strategic.whoItsFor}</p>
+                                <PlanSummary items={PLAN_SUMMARIES.strategic} />
                                 <p className="text-[#6B6B6B] mb-8 leading-relaxed italic border-l border-black/10 pl-4">Everything in Observer, plus:</p>
                                 
                                 <ul className="space-y-6 mb-12">
@@ -140,9 +170,11 @@ export default function PricingPage() {
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.professional.name}</p>
                                 <h3 className="text-6xl font-medium tracking-tightest mb-2">${PRICING.professional.monthlyPrice}</h3>
-                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Unlimited Inbound</p>
+                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Per month</p>
                                 
-                                <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.professional.tagline}</p>
+                                <p className="text-xl font-black uppercase leading-tight mb-4">For small teams.</p>
+                                <p className="text-[#6B6B6B] mb-6 leading-relaxed">{PRICING.professional.whoItsFor}</p>
+                                <PlanSummary items={PLAN_SUMMARIES.professional} />
                                 <p className="text-[#6B6B6B] mb-8 leading-relaxed italic border-l border-black/10 pl-4">Everything in Strategic, plus:</p>
                                 
                                 <ul className="space-y-6 mb-12">
@@ -171,10 +203,12 @@ export default function PricingPage() {
                         >
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#D4A574] mb-4">{PRICING.agency.name}</p>
-                                <h3 className="text-5xl font-medium tracking-tightest mb-2">Let's Talk</h3>
-                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 mb-10">Infrastructure Tier</p>
+                                <h3 className="text-5xl font-medium tracking-tightest mb-2">Custom</h3>
+                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 mb-10">Annual contract</p>
                                 
-                                <p className="text-xl font-black uppercase leading-tight mb-4">{PRICING.agency.tagline}</p>
+                                <p className="text-xl font-black uppercase leading-tight mb-4">For agency infrastructure.</p>
+                                <p className="text-white/72 mb-6 leading-relaxed">{PRICING.agency.whoItsFor}</p>
+                                <PlanSummary items={PLAN_SUMMARIES.agency} tone="dark" />
                                 
                                 <blockquote className="my-8 bg-white/[0.04] px-6 py-6 border-l-2 border-[#D4A574]/70 text-sm leading-relaxed text-white/70 italic">
                                     “{PRICING.agency.positioningQuote}”
@@ -182,7 +216,7 @@ export default function PricingPage() {
 
                                 <ul className="space-y-6 mb-12">
                                     {PRICING.agency.features.map((feature) => (
-                                        <CheckItem key={feature}>{feature}</CheckItem>
+                                        <CheckItem key={feature} tone="dark">{feature}</CheckItem>
                                     ))}
                                 </ul>
                             </div>
