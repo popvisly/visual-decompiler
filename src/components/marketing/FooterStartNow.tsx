@@ -76,7 +76,7 @@ export default function FooterStartNow() {
     const prefersReducedMotion = useReducedMotion();
 
     return (
-        <footer className="relative bg-[#FBFBF6] text-[#141414] border-t border-black/5">
+        <footer className="relative bg-[#FBFBF6] text-[#141414]">
             {/* ── OUTRO CTA BLOCK ── */}
             <div className="mx-auto max-w-[1200px] px-6 pt-24 pb-20 sm:px-8 lg:px-10 lg:pt-32 lg:pb-24">
                 <motion.div

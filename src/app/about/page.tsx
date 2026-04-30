@@ -11,14 +11,14 @@ export default function AboutPage() {
             <UnifiedSovereignHeader primaryCta={{ label: 'Open Sample Read', href: '/share/sample-dossier' }} />
             <MarketingPageHeader
                 kicker="Transforming Creative Intelligence"
-                title="Creative decisions deserve better tools."
+                title="Better creative decisions."
                 description="Visual Decompiler simplifies the defense of creative work, accelerates alignment, and speeds up approval processes."
             />
 
             {/* Problem + Why + What + Commercial + Positioning + Vision */}
             <section className="pb-40 lg:pb-56">
                 <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
-                    <div className="border-t border-black/5 pt-16 lg:pt-24">
+                    <div className="pt-16 lg:pt-24">
                     <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
                         <motion.article
                             initial={{ opacity: 0, y: 20 }}
