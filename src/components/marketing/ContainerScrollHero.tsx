@@ -98,7 +98,7 @@ export default function ContainerScrollHero() {
                         alt="Visual Decompiler workspace"
                         width={1800}
                         height={1200}
-                        className="h-full w-full object-contain"
+                        className="h-full w-full origin-left scale-[1.01] object-contain"
                         priority
                     />
                 </ContainerScroll>
