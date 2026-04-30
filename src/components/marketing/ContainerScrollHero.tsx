@@ -50,12 +50,7 @@ export default function ContainerScrollHero() {
                 <ContainerScroll
                     titleComponent={
                         <div className="mx-auto max-w-4xl">
-                            <div className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-white/70 px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6B6B6B] shadow-sm backdrop-blur">
-                                <span className="h-2 w-2 rounded-full bg-[#D4A574]" aria-hidden="true" />
-                                Forensic Creative Intelligence
-                            </div>
-
-                            <h1 className="mt-8 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]">
+                            <h1 className="mx-auto max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]">
                                 Turn ads into
                                 <span className="block text-[#D4A574]">decision-grade intelligence.</span>
                             </h1>
