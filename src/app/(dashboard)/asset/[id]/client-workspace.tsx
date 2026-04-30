@@ -2137,6 +2137,14 @@ export default function AssetWorkspace({
             : 'Live benchmark'
         : marketPulseFallback.confidenceLabel;
     const primaryStressTest = stressLabRows.find((row) => row.recommendation === 'Test') || stressLabRows[0];
+    const strongestSocialPlatform = [...socialContext.platformScores].sort((a, b) => b.score - a.score)[0];
+    const socialRiskCount = socialContext.riskFlags.length;
+    const criticalConstraintCount = mustKeepConstraints.filter((item) => item.severity === 'critical').length;
+    const avoidConstraintCount = mustAvoidConstraints.length;
+    const safeAdaptationCount = safeAdaptationZone.length;
+    const stressTestCount = stressLabRows.filter((row) => row.recommendation === 'Test').length;
+    const blueprintStatusLabel = blueprintData ? 'Trace Ready' : 'Offline';
+    const decisionLogStatus = decisionLogEntries.length > 0 ? `${decisionLogEntries.length} Logged` : 'No Entries';
     const decisionSummaryTimestamp = new Date().toLocaleString('en-AU', {
         day: '2-digit',
         month: 'short',
@@ -3538,6 +3546,21 @@ export default function AssetWorkspace({
                                                 title="Mechanics"
                                                 intro="A structural decomposition of the signal stack and mechanic architecture—hooks, pacing, contrast, and attention-routing cues that drive response."
                                             />
+                                            <WorkspaceDecisionSummary
+                                                eyebrow="Mechanic Read"
+                                                title={extraction.primary_mechanic || 'Mechanic extraction is still resolving.'}
+                                                body={firstSentence(dossier?.semiotic_subtext) || 'This module isolates the working signal stack: what captures attention, what routes meaning, and what may be weakening transfer.'}
+                                                metrics={[
+                                                    { label: 'Hierarchy', value: signalByLabel.Hierarchy || 'Pending' },
+                                                    { label: 'Focus', value: signalByLabel['Focus Integrity'] || 'Pending' },
+                                                    { label: 'Attention', value: `${scoreByLabel.Attention}/100` },
+                                                ]}
+                                                actions={[
+                                                    'Use the HUD only where focal routing needs visual confirmation.',
+                                                    firstSentence(analysisLanguage.attentionPath.dropOff),
+                                                    'Treat mechanics as evidence before moving into psychological interpretation.',
+                                                ].filter(Boolean)}
+                                            />
                                         </div>
                                         
                                         {/* UNIFIED TECHNICAL AUTOPSY CONTAINER */}
@@ -3650,6 +3673,21 @@ export default function AssetWorkspace({
                                             title="Social-First Execution"
                                             intro="Platform-context scoring that translates creative quality into feed performance readiness."
                                         />
+                                        <WorkspaceDecisionSummary
+                                            eyebrow="Platform Readiness"
+                                            title={`${strongestSocialPlatform.platform} is the strongest current social lane.`}
+                                            body="This module translates the single-asset read into feed behavior: where the creative can hold attention, where it risks drop-off, and what adaptation moves should happen before distribution."
+                                            metrics={[
+                                                { label: 'Top Score', value: `${strongestSocialPlatform.score}/100` },
+                                                { label: 'Signal', value: strongestSocialPlatform.signal },
+                                                { label: 'Risk Flags', value: socialRiskCount },
+                                            ]}
+                                            actions={[
+                                                socialContext.hookHoldDiagnostics.first2sClarity,
+                                                socialContext.hookHoldDiagnostics.thumbStopStrength,
+                                                socialContext.adaptationMoves[0]?.move || 'Create a platform-specific adaptation before export.',
+                                            ].filter(Boolean)}
+                                        />
                                     </div>
 
                                     <div className="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] items-start">
@@ -3738,6 +3776,21 @@ export default function AssetWorkspace({
                                             kicker="Operational Guardrails"
                                             title="Operational Guardrails & Constraint Map"
                                             intro="This section defines the non-negotiables, avoidances, and safe adaptation boundaries required to preserve the working forensic logic."
+                                        />
+                                        <WorkspaceDecisionSummary
+                                            eyebrow="Guardrail Map"
+                                            title="Protect the route before making variations."
+                                            body="Constraint Map separates what must be retained, what must be avoided, and where controlled adaptation is safe. Use this before remixing, testing, or briefing production changes."
+                                            metrics={[
+                                                { label: 'Critical Keeps', value: criticalConstraintCount },
+                                                { label: 'Avoidances', value: avoidConstraintCount },
+                                                { label: 'Safe Lanes', value: safeAdaptationCount },
+                                            ]}
+                                            actions={[
+                                                mustKeepConstraints[0]?.text || 'Identify the primary mechanic before adapting.',
+                                                mustAvoidConstraints[0]?.text || 'Avoid changes that increase message friction.',
+                                                safeAdaptationZone[0]?.text || 'Create a controlled variation lane before broad iteration.',
+                                            ].filter(Boolean)}
                                         />
                                     </div>
 
@@ -3949,6 +4002,21 @@ export default function AssetWorkspace({
                                             title="Market Pulse: Competitive Context"
                                             intro="An analysis of how the current route aligns with category pressures, novelty conditions, and timing opportunities."
                                         />
+                                        <WorkspaceDecisionSummary
+                                            eyebrow="Category Context"
+                                            title={isSovereign ? 'Use category pressure to decide timing and differentiation.' : 'Market Pulse is available on Sovereign intelligence tiers.'}
+                                            body={marketPulseInterpretation}
+                                            metrics={[
+                                                { label: 'Signal', value: marketPulseTrustLabel },
+                                                { label: 'Sample', value: marketPulseData ? `${marketPulseData.assetCount} Assets` : 'Fallback' },
+                                                { label: 'Access', value: isSovereign ? 'Available' : 'Locked' },
+                                            ]}
+                                            actions={[
+                                                marketPulseData && !marketPulseBelowThreshold ? 'Compare this route against live category pressure.' : 'Treat current context as directional until more category assets are available.',
+                                                integratedRecommendation.executionNext3[0],
+                                                'Use Market Pulse after single-asset confidence is established.',
+                                            ]}
+                                        />
                                     </div>
                                     <div className="space-y-6 px-6">
                                         {!isSovereign ? (
@@ -4078,6 +4146,21 @@ export default function AssetWorkspace({
                                             kicker="Cognitive Dynamics"
                                             title="Semiotic Channel Interceptions"
                                             intro="How the asset encodes meaning, identity cues, and emotional triggers to shape perception and approval momentum."
+                                        />
+                                        <WorkspaceDecisionSummary
+                                            eyebrow="Psychological Read"
+                                            title="Clarify why the asset persuades before defending the route."
+                                            body={firstSentence(dossier?.archetype_mapping?.target_posture) || firstSentence(dossier?.objection_dismantling) || 'This module reads the identity posture, trigger distribution, objection logic, and possible counter-readings behind the work.'}
+                                            metrics={[
+                                                { label: 'Clarity', value: `${scoreByLabel.Clarity}/100` },
+                                                { label: 'Intent', value: `${scoreByLabel.Intent}/100` },
+                                                { label: 'Distinction', value: `${scoreByLabel.Distinction}/100` },
+                                            ]}
+                                            actions={[
+                                                firstSentence(dossier?.objection_dismantling) || 'Identify the highest-risk objection before client review.',
+                                                firstSentence(analysisLanguage.strategicRead.triggerMechanic),
+                                                firstSentence(analysisLanguage.strategicRead.categoryPositioning),
+                                            ].filter(Boolean)}
                                         />
                                     </div>
                                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -4397,6 +4480,21 @@ export default function AssetWorkspace({
                                             title="Blueprint Logic: Audit & Reproducibility"
                                             intro="This section outlines the reconstruction path used to audit the route, validate constraints, and assess reproducibility."
                                         />
+                                        <WorkspaceDecisionSummary
+                                            eyebrow="Blueprint Trace"
+                                            title={blueprintData ? 'The working logic is ready for controlled reproduction.' : 'Blueprint Trace needs route calibration.'}
+                                            body={blueprintData?.execution_constraints?.primary_trigger || 'Generate the blueprint to separate transferable persuasion DNA from surface aesthetics before briefing variants or production remixes.'}
+                                            metrics={[
+                                                { label: 'Status', value: blueprintStatusLabel },
+                                                { label: 'Keeps', value: blueprintData?.execution_constraints?.must_include?.length || 0 },
+                                                { label: 'Variants', value: blueprintData?.visual_variant_prompts?.length || 0 },
+                                            ]}
+                                            actions={[
+                                                blueprintData?.execution_constraints?.must_include?.[0] || 'Generate the blueprint architecture.',
+                                                blueprintData?.technical_specs?.lighting_architecture || 'Validate production cues before adapting.',
+                                                blueprintData?.visual_variant_prompts?.[0]?.concept || 'Create one controlled route variation.',
+                                            ].map((item) => firstSentence(normalizeProseText(item))).filter(Boolean)}
+                                        />
                                     </div>
                                     {!blueprintData ? (
                                         <div className="px-6">
@@ -4597,6 +4695,21 @@ export default function AssetWorkspace({
                                             title="Stress Lab: Causal Intelligence"
                                             intro="This section stress-tests key creative variables to predict lift, control risk, and protect decision confidence."
                                         />
+                                        <WorkspaceDecisionSummary
+                                            eyebrow="Stress Test"
+                                            title={primaryStressTest ? `${primaryStressTest.variable} is the next test variable.` : 'Stress tests are still resolving.'}
+                                            body={primaryStressTest?.proposedShift || 'Use Stress Lab to identify which creative variable can improve lift without damaging the core mechanic.'}
+                                            metrics={[
+                                                { label: 'Tests', value: stressTestCount },
+                                                { label: 'Predicted Lift', value: primaryStressTest?.predictedLift || 'Pending' },
+                                                { label: 'Recommendation', value: primaryStressTest?.recommendation || 'Pending' },
+                                            ]}
+                                            actions={[
+                                                primaryStressTest?.proposedShift || 'Select one controlled test variable.',
+                                                primaryStressTest?.risk || 'Check risk before revising.',
+                                                integratedRecommendation.fallback,
+                                            ].filter(Boolean)}
+                                        />
                                     </div>
                                     <div className="space-y-6 px-6">
                                         <div className="rounded-[3rem] border border-black/5 bg-white overflow-hidden shadow-sm">
@@ -4729,6 +4842,21 @@ export default function AssetWorkspace({
                                             kicker="Audit Trail"
                                             title="Decision Log: Audit Trail"
                                             intro="A concise record of all decisions made, providing transparency and accountability in the creative direction process."
+                                        />
+                                        <WorkspaceDecisionSummary
+                                            eyebrow="Decision Record"
+                                            title="Turn the read into an accountable creative decision."
+                                            body="Decision Log captures the final Ship, Revise, or Kill call with rationale, evidence, and exportable context so the team can move from analysis to action."
+                                            metrics={[
+                                                { label: 'Current Verdict', value: qualityVerdict },
+                                                { label: 'Log State', value: decisionLogStatus },
+                                                { label: 'Last Updated', value: decisionSummaryTimestamp },
+                                            ]}
+                                            actions={[
+                                                integratedRecommendation.recommendedDirection,
+                                                'Record the rationale before exporting the dossier.',
+                                                'Use the log as the approval trail for the next review.',
+                                            ]}
                                         />
                                     </div>
                                     <div className="grid gap-6 px-6 xl:grid-cols-[1.2fr_0.8fr]">
