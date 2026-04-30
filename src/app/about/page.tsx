@@ -10,9 +10,10 @@ export default function AboutPage() {
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader primaryCta={{ label: 'Open Sample Read', href: '/share/sample-dossier' }} />
             <MarketingPageHeader
-                kicker="A Forensic Intelligence OS"
+                kicker="Transforming Creative Intelligence"
                 title="Creative decisions deserve better tools."
-                description="Visual Decompiler exists to make creative work easier to defend, faster to align, and faster to get approved."
+                description="Visual Decompiler simplifies the defense of creative work, accelerates alignment, and speeds up approval processes."
+                size="compact"
             />
 
             {/* Problem + Why + What + Commercial + Positioning + Vision */}
@@ -27,18 +28,18 @@ export default function AboutPage() {
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                             className="rounded-[28px] border border-black/5 bg-white p-8 shadow-sm lg:p-10"
                         >
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">The Problem</p>
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">The Challenge</p>
                             <p className="mt-5 text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#141414]">
-                                Creative work is still judged the same way it was 20 years ago.
+                                Creative work has been evaluated using outdated methods for over two decades.
                             </p>
                             <p className="mt-5 text-[16px] leading-[1.7] text-[#6B6B6B]">
                                 Instinct. Opinion. Subjective feedback.
                                 <br />
                                 <br />
-                                Work gets delayed. Rounds stack up. Clients hesitate.
+                                Delays accumulate. Rounds of revisions multiply. Clients hesitate.
                                 <br />
                                 <br />
-                                Not because the work is wrong, but because the reasoning isn’t visible.
+                                Not due to shortcomings in creativity — but because the rationale behind the work remains obscured.
                             </p>
                         </motion.article>
 
@@ -49,15 +50,15 @@ export default function AboutPage() {
                             transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                             className="rounded-[28px] border border-black/5 bg-white p-8 shadow-sm lg:p-10"
                         >
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">Why This Exists</p>
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">Our Purpose</p>
                             <p className="mt-5 text-[16px] leading-[1.7] text-[#6B6B6B]">
-                                Visual Decompiler was built to change that.
+                                Visual Decompiler was designed to revolutionize this dynamic.
                                 <br />
                                 <br />
-                                To turn creative instinct into structured reasoning.
+                                We transform instinctive creativity into structured reasoning.
                                 <br />
                                 <br />
-                                To make visual work readable, explainable, and defensible in the moments that matter.
+                                Our goal is to make visual work accessible, explainable, and defensible in high-stakes moments.
                             </p>
                         </motion.article>
 
@@ -68,12 +69,12 @@ export default function AboutPage() {
                             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                             className="rounded-[28px] border border-black/5 bg-white p-8 shadow-sm lg:p-10"
                         >
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">What It Is</p>
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">What We Offer</p>
                             <p className="mt-5 text-[16px] leading-[1.7] text-[#6B6B6B]">
-                                Visual Decompiler is a creative intelligence system.
+                                Visual Decompiler is your go-to creative intelligence platform.
                                 <br />
                                 <br />
-                                It analyzes advertising at a structural level and produces a dossier designed for real-world decision environments.
+                                It examines advertising on a structural basis, crafting a dossier tailored for real-world decision-making environments.
                             </p>
                         </motion.article>
 
@@ -84,15 +85,15 @@ export default function AboutPage() {
                             transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                             className="rounded-[28px] border border-[#8B6A3D]/15 bg-[#141414] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.18)] lg:p-10"
                         >
-                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Commercial Reality</p>
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D4A574]">Understanding Commercial Realities</p>
                             <p className="mt-5 text-[16px] leading-[1.7] text-white/80">
-                                Agencies don’t lose work because they lack ideas.
+                                Agencies don’t falter due to a lack of ideas.
                                 <br />
                                 <br />
-                                They lose time and momentum in the gap between instinct and approval.
+                                They lose valuable time and momentum in the limbo between intuition and approval.
                                 <br />
                                 <br />
-                                Visual Decompiler exists to close that gap.
+                                Visual Decompiler is here to bridge that gap.
                             </p>
                         </motion.article>
                     </div>
@@ -105,14 +106,14 @@ export default function AboutPage() {
                         className="mt-12 rounded-[28px] border border-black/5 bg-white px-8 py-10 shadow-sm lg:px-10"
                     >
                         <p className="text-[24px] font-semibold leading-[1.25] tracking-[-0.01em] text-[#141414]">
-                            This isn’t about generating ideas.
+                            This isn’t merely about generating ideas.
                             <br />
-                            It’s about getting them approved.
+                            It’s about securing their approval.
                         </p>
                         <p className="mt-8 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]">
-                            We’re building the system creative teams use to explain, defend, and move work forward.
+                            We are building the system that empowers creative teams to articulate, justify, and advance their work —
                             <br />
-                            From internal reviews to final client decisions.
+                            from internal evaluations to final client decisions.
                         </p>
                     </motion.div>
                     </div>
