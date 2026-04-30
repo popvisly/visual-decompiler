@@ -8,7 +8,7 @@ import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 export default function AboutPage() {
     return (
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
-            <UnifiedSovereignHeader primaryCta={{ label: 'Open Sample Read', href: '/share/sample-dossier' }} />
+            <UnifiedSovereignHeader primaryCta={{ label: 'View Sample Dossier', href: '/share/sample-dossier' }} />
             <MarketingPageHeader
                 kicker="Transforming Creative Intelligence"
                 title="Better creative decisions."

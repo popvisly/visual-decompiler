@@ -22,17 +22,17 @@ export default function Logo({
 }: LogoProps) {
     const visualHoverClass =
         hoverColor === 'cyan'
-            ? 'group-hover:text-[#00E5FF]'
+            ? 'group-hover:text-[#D4A574]'
             : hoverColor === 'red'
-              ? 'group-hover:text-[#FF003C]'
-              : 'group-hover:text-[#FFD600]';
+              ? 'group-hover:text-[#8B6A3D]'
+              : 'group-hover:text-[#D4A574]';
 
     const decompilerHoverClass =
         hoverColor === 'cyan'
-            ? 'group-hover:text-[#7CF5FF]'
+            ? 'group-hover:text-[#E0B882]'
             : hoverColor === 'red'
-              ? 'group-hover:text-[#FF4C70]'
-              : 'group-hover:text-[#F28C28]';
+              ? 'group-hover:text-[#D4A574]'
+              : 'group-hover:text-[#8B6A3D]';
 
     const content = (
         <div className={`group flex items-center gap-3 text-left ${className}`}>

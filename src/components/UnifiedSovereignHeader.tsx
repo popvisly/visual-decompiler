@@ -61,18 +61,14 @@ export default function UnifiedSovereignHeader({
         ? [
             { key: 'product', label: 'Product', href: '/product' },
             { key: 'pricing', label: 'Pricing', href: '/pricing' },
-            { key: 'intelligence', label: 'Insights', href: '/intelligence' },
-            { key: 'about', label: 'About', href: '/about' },
-            { key: 'help', label: 'Help Center', href: '/docs/user-guide' },
+            { key: 'insights', label: 'Insights', href: '/intelligence' },
+            { key: 'help', label: 'Help', href: '/docs/user-guide' },
         ]
         : [
             { key: 'product', label: 'Product', href: '/product' },
+            { key: 'sample', label: 'Sample Dossier', href: '/share/sample-dossier' },
             { key: 'pricing', label: 'Pricing', href: '/pricing' },
-            { key: 'intelligence', label: 'Insights', href: '/intelligence' },
             { key: 'method', label: 'Method', href: '/trust-method' },
-            { key: 'reading', label: 'Sample Read', href: '/share/sample-dossier' },
-            { key: 'about', label: 'About', href: '/about' },
-            { key: 'help', label: 'Help Center', href: '/docs/user-guide' },
         ];
 
     return (
@@ -136,23 +132,25 @@ export default function UnifiedSovereignHeader({
                     {/* ── Right: Utility Bar ── */}
                     <div className="flex flex-1 items-center justify-end gap-4">
                         <div className="hidden lg:flex items-center gap-3">
-                            <Link
-                                href="/vault"
-                                className={`group relative overflow-hidden px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.28em] transition-colors duration-500 ${
-                                    forceDark
-                                        ? 'bg-white/5 text-white hover:bg-[#F28C28] hover:text-black hover:border-transparent border border-[#8B6A3D]/10'
-                                        : 'bg-black/5 text-black hover:bg-[#F28C28] hover:text-black border border-[#8B6A3D]/10'
-                                }`}
-                            >
-                                Vault
-                            </Link>
+                            {isAuthenticated ? (
+                                <Link
+                                    href="/vault"
+                                    className={`group relative overflow-hidden rounded-full px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.24em] transition-colors duration-500 ${
+                                        forceDark
+                                            ? 'border border-white/10 bg-white/5 text-white/75 hover:bg-white/10 hover:text-white'
+                                            : 'border border-black/10 bg-white/50 text-black/70 hover:bg-white hover:text-black'
+                                    }`}
+                                >
+                                    Vault
+                                </Link>
+                            ) : null}
                             {primaryCta ? (
                                 <Link
                                     href={primaryCta.href}
-                                    className={`group relative overflow-hidden px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.28em] transition-colors duration-500 ${
+                                    className={`group relative overflow-hidden rounded-full px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.24em] transition-colors duration-500 ${
                                         forceDark 
-                                        ? 'bg-white/5 text-white hover:bg-white hover:text-black border border-[#8B6A3D]/10' 
-                                        : 'bg-black/5 text-black hover:bg-black hover:text-white border border-[#8B6A3D]/10'
+                                        ? 'border border-white/10 bg-white text-black hover:bg-[#FBF7EF]'
+                                        : 'border border-black/10 bg-[#141414] text-[#FBF7EF] hover:bg-black'
                                     }`}
                                 >
                                     {primaryCta.label}
@@ -162,13 +160,13 @@ export default function UnifiedSovereignHeader({
                             ) : isAuthenticated ? (
                                 <Link
                                     href="/ingest"
-                                    className={`group relative overflow-hidden px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.28em] transition-colors duration-500 ${
+                                    className={`group relative overflow-hidden rounded-full px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.24em] transition-colors duration-500 ${
                                         forceDark 
-                                        ? 'bg-white/5 text-white hover:bg-[#00E5FF] hover:text-black hover:border-transparent border border-[#8B6A3D]/10' 
-                                        : 'bg-black/5 text-black hover:bg-black hover:text-white border border-[#8B6A3D]/10'
+                                        ? 'border border-white/10 bg-white text-black hover:bg-[#FBF7EF]'
+                                        : 'border border-black/10 bg-[#141414] text-[#FBF7EF] hover:bg-black'
                                     }`}
                                 >
-                                    Bring In The Work
+                                    Decompile an Ad
                                 </Link>
                             ) : (
                                 <Link
@@ -195,7 +193,7 @@ export default function UnifiedSovereignHeader({
 
                 {/* ── Mobile Menu ── */}
                 {mobileOpen && (
-                    <div className={`pointer-events-auto lg:hidden fixed inset-0 z-40 flex flex-col justify-center px-8 ${forceDark ? 'bg-[#050505] text-white' : 'bg-[#0B0B0B] text-black'} animate-in fade-in zoom-in-95 duration-500`}>
+                    <div className={`pointer-events-auto lg:hidden fixed inset-0 z-40 flex flex-col justify-center px-8 ${forceDark ? 'bg-[#050505] text-white' : 'bg-[#FBFBF6] text-black'} animate-in fade-in zoom-in-95 duration-500`}>
                         <button onClick={() => setMobileOpen(false)} className="absolute top-8 right-8 p-4">
                             <X size={32} strokeWidth={1} />
                         </button>
@@ -207,7 +205,7 @@ export default function UnifiedSovereignHeader({
                                     href={p.href}
                                     onClick={() => setMobileOpen(false)}
                                     className={`text-[20px] font-black uppercase tracking-[0.2em] transition-colors ${
-                                        forceDark ? 'hover:text-[#00E5FF]' : 'hover:text-[#FF003C]'
+                                        forceDark ? 'hover:text-[#D4A574]' : 'hover:text-[#8B6A3D]'
                                     }`}
                                 >
                                     {p.label}
@@ -215,22 +213,24 @@ export default function UnifiedSovereignHeader({
                             ))}
 
                             <div className="mt-12 flex flex-col items-center gap-6">
-                                <Link
-                                    href="/vault"
-                                    onClick={() => setMobileOpen(false)}
-                                    className={`px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] transition-colors ${
-                                        forceDark
-                                            ? 'border border-[#8B6A3D]/10 text-white hover:bg-[#F28C28] hover:text-black hover:border-transparent'
-                                            : 'border border-black/20 text-black hover:bg-[#F28C28]'
-                                    }`}
-                                >
-                                    Vault
-                                </Link>
+                                {isAuthenticated ? (
+                                    <Link
+                                        href="/vault"
+                                        onClick={() => setMobileOpen(false)}
+                                        className={`rounded-full px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] transition-colors ${
+                                            forceDark
+                                                ? 'border border-white/10 text-white hover:bg-white/10'
+                                                : 'border border-black/20 text-black hover:bg-black/5'
+                                        }`}
+                                    >
+                                        Vault
+                                    </Link>
+                                ) : null}
                                 {primaryCta ? (
                                     <Link
                                         href={primaryCta.href}
                                         onClick={() => setMobileOpen(false)}
-                                        className={`px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] ${
+                                        className={`rounded-full px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] ${
                                             forceDark ? 'bg-white text-black' : 'bg-black text-white'
                                         }`}
                                     >
@@ -240,11 +240,11 @@ export default function UnifiedSovereignHeader({
                                     <Link
                                         href="/ingest"
                                         onClick={() => setMobileOpen(false)}
-                                        className={`px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] ${
-                                            forceDark ? 'bg-[#00E5FF] text-black' : 'bg-black text-white'
+                                        className={`rounded-full px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] ${
+                                            forceDark ? 'bg-white text-black' : 'bg-black text-white'
                                         }`}
                                     >
-                                        Bring In The Work
+                                        Decompile an Ad
                                     </Link>
                                 ) : (
                                     <Link

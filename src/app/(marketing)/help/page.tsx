@@ -114,7 +114,7 @@ export default function HelpPage() {
 
     return (
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
-            <UnifiedSovereignHeader primaryCta={{ label: 'Bring In The Work', href: '/ingest' }} />
+            <UnifiedSovereignHeader primaryCta={{ label: 'Start Free', href: '/ingest' }} />
 
             <MarketingPageHeader
                 kicker="Operational Manual"

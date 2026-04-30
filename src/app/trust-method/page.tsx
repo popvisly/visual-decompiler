@@ -42,7 +42,7 @@ const WHAT_IT_IS_NOT = [
 export default function TrustMethodPage() {
     return (
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
-            <UnifiedSovereignHeader primaryCta={{ label: 'Start Decompiling Free', href: '/ingest' }} />
+            <UnifiedSovereignHeader primaryCta={{ label: 'Start Free', href: '/ingest' }} />
 
             <div className="border-b border-black/5">
                 <MarketingPageHeader
@@ -114,7 +114,7 @@ export default function TrustMethodPage() {
                         href="/compare"
                         className="mt-8 inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-6 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#141414] shadow-sm transition hover:-translate-y-[1px] hover:border-black/20 hover:bg-[#FBFBF6]"
                     >
-                        See Decompiler Output
+                        View Sample Dossier
                     </Link>
                 </div>
             </section>

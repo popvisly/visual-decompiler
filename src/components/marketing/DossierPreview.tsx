@@ -12,9 +12,9 @@ function DossierFlowMapCard() {
             <svg viewBox="0 0 320 230" className="mt-6 h-[220px] w-full" aria-hidden="true">
                 <defs>
                     <linearGradient id="vdFlowStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#F28C28" />
-                        <stop offset="50%" stopColor="#F7B43A" />
-                        <stop offset="100%" stopColor="#FFD600" />
+                        <stop offset="0%" stopColor="#8B6A3D" />
+                        <stop offset="50%" stopColor="#D4A574" />
+                        <stop offset="100%" stopColor="#E0B882" />
                     </linearGradient>
                 </defs>
 
@@ -26,9 +26,9 @@ function DossierFlowMapCard() {
                     strokeLinecap="round"
                 />
 
-                <circle cx="54" cy="168" r="6" fill="#F28C28" />
-                <circle cx="166" cy="72" r="6" fill="#F7B43A" />
-                <circle cx="266" cy="58" r="6" fill="#FFD600" />
+                <circle cx="54" cy="168" r="6" fill="#8B6A3D" />
+                <circle cx="166" cy="72" r="6" fill="#D4A574" />
+                <circle cx="266" cy="58" r="6" fill="#E0B882" />
 
                 <line x1="54" y1="168" x2="54" y2="196" stroke="rgba(246,241,231,0.22)" />
                 <line x1="166" y1="72" x2="166" y2="34" stroke="rgba(246,241,231,0.22)" />

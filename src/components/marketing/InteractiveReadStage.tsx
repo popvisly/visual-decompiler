@@ -171,14 +171,14 @@ export default function InteractiveReadStage() {
                 >
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
                         <h2 className="text-[12vw] lg:text-[7vw] font-black leading-[0.82] tracking-[-0.05em] uppercase text-white max-w-[12ch]">
-                            Extract the <span className="text-[#00E5FF]">absolute</span> signals.
+                            Extract the <span className="text-[#D4A574]">absolute</span> signals.
                         </h2>
                         <div className="max-w-[400px]">
                             <p className="text-[18px] leading-[1.6] text-[#A0A0A0] mb-8">
                                 Filter the frame through specialized analytical modes: from posture authority down to texture restraint. Zero overlapping. Pure focused sight.
                             </p>
-                            <a href={SAMPLE_DOSSIER_HREF} className="inline-flex items-center gap-3 border-b border-[#00E5FF] pb-1 text-[11px] font-black uppercase tracking-[0.2em] text-[#00E5FF] transition hover:text-black hover:border-[#D4A574]">
-                                Open Sample Read
+                            <a href={SAMPLE_DOSSIER_HREF} className="inline-flex items-center gap-3 border-b border-[#D4A574] pb-1 text-[11px] font-black uppercase tracking-[0.2em] text-[#D4A574] transition hover:border-[#E0B882] hover:text-[#E0B882]">
+                                View Sample Dossier
                                 <ArrowUpRight size={16} />
                             </a>
                         </div>

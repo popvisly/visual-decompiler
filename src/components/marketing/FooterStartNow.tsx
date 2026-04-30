@@ -110,7 +110,7 @@ export default function FooterStartNow() {
                         href="/ingest"
                         className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#FBF7EF] transition-all duration-300 ease-out hover:bg-black"
                     >
-                        Decompile an Ad
+                        Start Free
                         <ArrowUpRight size={16} />
                     </a>
                     <a

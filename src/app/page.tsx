@@ -11,7 +11,7 @@ import FooterStartNow from '@/components/marketing/FooterStartNow';
 export default function HomePage() {
     return (
         <main>
-            <UnifiedSovereignHeader primaryCta={{ label: 'Decompile an Ad', href: '/ingest' }} />
+            <UnifiedSovereignHeader primaryCta={{ label: 'Start Free', href: '/ingest' }} />
             <ContainerScrollHero />
             <PremiumDossierShowcase />
             <NeuralParticleHero />

@@ -29,9 +29,9 @@ function DecisionRadarCard() {
             <svg viewBox="0 0 320 250" className="mt-6 h-[220px] w-full" aria-hidden="true">
                 <defs>
                     <linearGradient id="vdDecisionStroke" x1="0%" y1="100%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#F28C28" />
-                        <stop offset="52%" stopColor="#F7B43A" />
-                        <stop offset="100%" stopColor="#FFD600" />
+                        <stop offset="0%" stopColor="#8B6A3D" />
+                        <stop offset="52%" stopColor="#D4A574" />
+                        <stop offset="100%" stopColor="#E0B882" />
                     </linearGradient>
                     <radialGradient id="vdDecisionFill" cx="50%" cy="45%" r="65%">
                         <stop offset="0%" stopColor="rgba(247,180,58,0.16)" />
@@ -47,7 +47,7 @@ function DecisionRadarCard() {
 
                 <line x1="160" y1="122" x2="160" y2="34" stroke="url(#vdDecisionStroke)" strokeWidth="1.8" />
 
-                <circle cx="160" cy="34" r="6.5" fill="#FFD600" />
+                <circle cx="160" cy="34" r="6.5" fill="#D4A574" />
                 <circle cx="84" cy="167" r="4.5" fill="rgba(251,247,239,0.75)" />
                 <circle cx="236" cy="167" r="4.5" fill="rgba(251,247,239,0.75)" />
 

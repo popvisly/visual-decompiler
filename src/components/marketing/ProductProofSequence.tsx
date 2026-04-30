@@ -84,7 +84,7 @@ function SingleAssetDeconstruction() {
                         href="/share/sample-dossier"
                         className="mt-10 inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-8 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#0E0C0A] transition hover:bg-[#E0B882]"
                     >
-                        Open Sample Read
+                        View Sample Dossier
                         <ArrowUpRight size={14} />
                     </a>
                 </motion.div>
@@ -519,7 +519,7 @@ function TrustBoundaryPanel() {
                         href="/share/sample-dossier"
                         className="inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-8 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#141414] transition hover:bg-[#E0B882] hover:-translate-y-0.5"
                     >
-                        Open Sample Read
+                        View Sample Dossier
                         <ArrowUpRight size={14} />
                     </a>
                 </motion.div>

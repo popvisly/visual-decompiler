@@ -205,7 +205,7 @@ export default function AnalyticalHero() {
 
                         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
                             <a href="/ingest" className={`${HOMEPAGE_PRIMARY_CTA} w-full sm:w-auto`}>
-                                <span>Start Decompiling Free</span>
+                                <span>Start Free</span>
                                 <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                             </a>
                             <a href={SAMPLE_DOSSIER_HREF} className={`${HOMEPAGE_SECONDARY_CTA} w-full sm:w-auto !bg-transparent !border-[#D4A574]/30 !text-[#D4A574]`}>

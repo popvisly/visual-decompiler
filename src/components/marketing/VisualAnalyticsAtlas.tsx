@@ -307,7 +307,7 @@ function CircularMazeGlyph({ active }: { active: boolean }) {
                 cx="138"
                 cy="122"
                 r="7"
-                fill="#00E5FF"
+                fill="#D4A574"
                 initial={false}
                 animate={
                     reduceMotion
@@ -339,7 +339,7 @@ function SquareMazeGlyph({ active }: { active: boolean }) {
             <motion.path
                 d="M30 70 H90 V50 H130 V90 H170 V50 H210"
                 fill="none"
-                stroke="#00E5FF"
+                stroke="#D4A574"
                 strokeWidth="4"
                 strokeLinecap="round"
                 initial={false}
@@ -365,7 +365,7 @@ function RouteGlyph({ active }: { active: boolean }) {
             </g>
             <motion.g
                 fill="none"
-                stroke="#00E5FF"
+                stroke="#D4A574"
                 strokeWidth="4.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -392,12 +392,12 @@ function RouteGlyph({ active }: { active: boolean }) {
                     transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                 />
             </motion.g>
-            <circle cx="32" cy="118" r="4.5" fill="#00FF66" />
+            <circle cx="32" cy="118" r="4.5" fill="#D4A574" />
             <motion.circle
                 cx="188"
                 cy="88"
                 r="4.5"
-                fill="#FF003C"
+                fill="#8B6A3D"
                 initial={false}
                 animate={reduceMotion ? { scale: 1, opacity: active ? 1 : 0.65 } : { scale: active ? [1, 1.3, 1] : 1, opacity: active ? 1 : 0.65 }}
                 transition={{ duration: 1.6, repeat: active && !reduceMotion ? Number.POSITIVE_INFINITY : 0, ease: 'easeInOut' }}
@@ -422,8 +422,8 @@ function RouteDivider() {
                         transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
                     />
                 </g>
-                <circle cx="10" cy="40" r="3.5" fill="#00FF66" />
-                <circle cx="410" cy="42" r="3.5" fill="#FF003C" />
+                <circle cx="10" cy="40" r="3.5" fill="#D4A574" />
+                <circle cx="410" cy="42" r="3.5" fill="#8B6A3D" />
             </svg>
         </div>
     );
@@ -462,17 +462,17 @@ function DiagramCard({
             whileHover={{ y: -6 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className={`group relative border p-6 shadow-[0_20px_40px_rgba(0,0,0,0.8)] transition-colors duration-300 ${
-                active ? 'border-[#00E5FF] bg-[#00E5FF]/10 text-white' : 'border-[#8B6A3D]/10 bg-[#0A0A0A] text-white'
+                active ? 'border-[#D4A574]/70 bg-[#D4A574]/10 text-white' : 'border-[#8B6A3D]/10 bg-[#0A0A0A] text-white'
             }`}
         >
             <motion.div
                 initial={false}
                 animate={{ opacity: active ? 1 : 0, scaleX: active ? 1 : 0.65 }}
-                className="absolute inset-x-0 top-0 h-px origin-left bg-[#00E5FF]"
+                className="absolute inset-x-0 top-0 h-px origin-left bg-[#D4A574]"
             />
             <div className="flex items-start justify-between gap-4 border-b border-[#8B6A3D]/10 pb-4">
                 <div>
-                    <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#00E5FF]">{card.eyebrow}</p>
+                    <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#D4A574]">{card.eyebrow}</p>
                     <h3 className="mt-3 max-w-[16ch] text-[24px] font-black leading-[1.02] tracking-[-0.04em] text-white">
                         {card.title}
                     </h3>
@@ -487,7 +487,7 @@ function DiagramCard({
             </div>
 
             <p className="mt-8 text-[14px] leading-[1.7] text-white/60">{card.body}</p>
-            <p className="mt-4 border-t border-[#8B6A3D]/10 pt-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#00E5FF]">
+            <p className="mt-4 border-t border-[#8B6A3D]/10 pt-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#D4A574]">
                 {card.detail}
             </p>
         </motion.article>
@@ -509,7 +509,7 @@ export default function VisualAnalyticsAtlas() {
     return (
         <section className="relative overflow-hidden bg-[#050505] text-white py-28 lg:py-40" data-presence-tone="dark">
             <div className="pointer-events-none absolute inset-0 opacity-[0.55]" aria-hidden="true">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(0,229,255,0.08)_0%,rgba(0,229,255,0)_26%),radial-gradient(circle_at_84%_74%,rgba(255,0,60,0.08)_0%,rgba(255,0,60,0)_28%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(212,165,116,0.08)_0%,rgba(212,165,116,0)_26%),radial-gradient(circle_at_84%_74%,rgba(139,106,61,0.08)_0%,rgba(139,106,61,0)_28%)]" />
             </div>
 
             <div className="relative mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-10">
@@ -527,14 +527,14 @@ export default function VisualAnalyticsAtlas() {
                                     whileTap={{ scale: 0.985 }}
                                     className={`relative overflow-hidden border px-3 py-2 text-[10px] font-black uppercase tracking-[0.24em] transition-colors duration-300 ${
                                         active
-                                            ? 'border-[#00E5FF] bg-[#00E5FF]/10 text-white text-[#00E5FF]'
+                                            ? 'border-[#D4A574]/70 bg-[#D4A574]/10 text-[#D4A574]'
                                             : 'border-transparent text-white/40 hover:border-[#D4A574]/10 hover:bg-[#0A0A0A] text-white'
                                     }`}
                                 >
                                     {active ? (
                                         <motion.span
                                             layoutId="atlas-tab-highlight"
-                                            className="absolute inset-0 border border-[#FF003C] mix-blend-multiply"
+                                            className="absolute inset-0 border border-[#8B6A3D]/70 mix-blend-multiply"
                                             transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                                         />
                                     ) : null}
@@ -548,7 +548,7 @@ export default function VisualAnalyticsAtlas() {
                 <div className="mt-10 grid gap-12 lg:grid-cols-[0.34fr_0.66fr] lg:gap-16">
                     <div className="flex flex-col justify-between">
                         <div>
-                            <p className="text-[10px] font-black uppercase tracking-[0.46em] text-[#FF003C]">
+                            <p className="text-[10px] font-black uppercase tracking-[0.46em] text-[#D4A574]">
                                 The Visual Side Of Analytics
                             </p>
 
@@ -560,7 +560,7 @@ export default function VisualAnalyticsAtlas() {
                                     exit={{ opacity: 0, y: -12 }}
                                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                                 >
-                                    <p className="mt-7 text-[10px] font-black uppercase tracking-[0.28em] text-[#00FF66]">
+                                    <p className="mt-7 text-[10px] font-black uppercase tracking-[0.28em] text-[#D4A574]">
                                         {activeContent.eyebrow}
                                     </p>
                                     <h2 className="mt-5 max-w-[11ch] text-[40px] font-black leading-[0.92] tracking-[-0.05em] text-white sm:text-[56px] lg:text-[82px]">
@@ -569,7 +569,7 @@ export default function VisualAnalyticsAtlas() {
                                     <p className="mt-8 max-w-[34rem] text-[16px] leading-[1.8] text-[#A0A0A0]">
                                         {activeContent.body}
                                     </p>
-                                    <p className="mt-5 max-w-[31rem] text-[11px] font-black uppercase tracking-[0.22em] text-[#00FF66]">
+                                    <p className="mt-5 max-w-[31rem] text-[11px] font-black uppercase tracking-[0.22em] text-[#D4A574]">
                                         {activeContent.note}
                                     </p>
                                 </motion.div>
@@ -577,13 +577,13 @@ export default function VisualAnalyticsAtlas() {
                         </div>
 
                         <div className="mt-10 border-t border-[#8B6A3D]/10 pt-5">
-                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#00E5FF]">Interaction note</p>
+                            <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#D4A574]">Interaction note</p>
                             <p className="mt-3 max-w-[28rem] text-[14px] leading-[1.75] text-white/60">
                                 Click through the analytical modes, then hover a card to trace its route. The motion is there to explain the system, not decorate it.
                             </p>
                             <a
                                 href="/trust-method"
-                                className="mt-7 inline-flex items-center gap-2 border-b border-transparent pb-1 text-[10px] font-black uppercase tracking-[0.28em] text-white transition hover:border-[#D4A574]/30 hover:text-[#00E5FF]"
+                                className="mt-7 inline-flex items-center gap-2 border-b border-transparent pb-1 text-[10px] font-black uppercase tracking-[0.28em] text-white transition hover:border-[#D4A574]/30 hover:text-[#D4A574]"
                             >
                                 {activeContent.cta}
                                 <ArrowUpRight size={14} />

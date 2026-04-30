@@ -2932,7 +2932,7 @@ export default function AssetWorkspace({
                                 href="/ingest"
                                 className="inline-flex items-center rounded-full bg-[#1a1a1a] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#faf7f2] transition-colors hover:bg-[#2a2a2a]"
                             >
-                                Start Decompiling Free
+                                Start Free
                             </a>
                         </div>
                     )}

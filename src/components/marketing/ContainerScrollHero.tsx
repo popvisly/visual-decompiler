@@ -69,14 +69,14 @@ export default function ContainerScrollHero() {
                                     href="/ingest"
                                     className="inline-flex items-center justify-center gap-3 rounded-full bg-[#141414] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.26em] text-[#FBF7EF] shadow-sm transition-all hover:bg-black active:scale-[0.99]"
                                 >
-                                    Decompile an ad
+                                    Start Free
                                     <ArrowUpRight className="h-4 w-4" />
                                 </Link>
                                 <Link
                                     href="/share/sample-dossier"
                                     className="inline-flex items-center justify-center gap-3 rounded-full border border-black/10 bg-white px-8 py-4 text-[11px] font-bold uppercase tracking-[0.26em] text-[#141414] shadow-sm transition-all hover:bg-[#FBFBF6] active:scale-[0.99]"
                                 >
-                                    Sample read
+                                    View Sample Dossier
                                     <ArrowUpRight className="h-4 w-4 text-[#8B6A3D]" />
                                 </Link>
                             </div>

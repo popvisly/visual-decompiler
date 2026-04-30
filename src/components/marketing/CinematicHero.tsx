@@ -95,9 +95,9 @@ export default function CinematicHero() {
                         <span>Advertising </span>
                         <span className="font-serif italic font-medium tracking-[-0.02em] text-[#F6F1E7]/96">intelligence.</span>{" "}
                         <span className="inline-flex min-w-[14ch] items-baseline justify-center whitespace-nowrap text-center align-baseline">
-                            <span className="bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent">{typedWord}</span>
+                            <span className="bg-gradient-to-r from-[#E0B882] to-[#D4A574] bg-clip-text text-transparent">{typedWord}</span>
                             {!isComplete && (
-                                <span className="ml-[0.02em] inline-block bg-gradient-to-r from-[#FFD600] to-[#F28C28] bg-clip-text text-transparent animate-pulse">
+                                <span className="ml-[0.02em] inline-block bg-gradient-to-r from-[#E0B882] to-[#D4A574] bg-clip-text text-transparent animate-pulse">
                                     |
                                 </span>
                             )}
@@ -122,7 +122,7 @@ export default function CinematicHero() {
                                 <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
                                     <Link
                                         href="/ingest"
-                                        className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-2xl border border-[#8B6A3D]/20 bg-white px-8 text-[15px] font-medium tracking-[0.01em] text-black shadow-[0_8px_24px_rgba(255,255,255,0.08)] transition-all duration-500 hover:-translate-y-[1px] hover:border-[#F7B43A]/70 hover:bg-gradient-to-r hover:from-[#FFD600] hover:to-[#F28C28] hover:shadow-[0_14px_34px_rgba(242,140,40,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F7B43A]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0B0B] active:translate-y-0"
+                                        className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full border border-[#8B6A3D]/20 bg-white px-8 text-[15px] font-medium tracking-[0.01em] text-black shadow-[0_8px_24px_rgba(255,255,255,0.08)] transition-all duration-500 hover:-translate-y-[1px] hover:border-[#D4A574]/70 hover:bg-[#FBF7EF] hover:shadow-[0_14px_34px_rgba(20,20,20,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0B0B] active:translate-y-0"
                                     >
                                         <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.45),transparent_38%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                                         Decompile an Ad

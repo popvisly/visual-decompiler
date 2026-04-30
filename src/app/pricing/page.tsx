@@ -69,7 +69,7 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: EASE }}
-                            className="rounded-[3rem] border border-black/5 bg-white p-10 shadow-sm flex flex-col justify-between"
+                            className="flex flex-col justify-between rounded-[28px] border border-black/5 bg-white p-10 shadow-sm"
                         >
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.observer.name}</p>
@@ -88,7 +88,7 @@ export default function PricingPage() {
                             
                                 <a
                                     href={PRICING.observer.ctaHref}
-                                    className="inline-flex w-full items-center justify-center rounded-[999px] border border-black/10 bg-[#141414] px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-[#FBF7EF] transition hover:bg-black"
+                                    className="inline-flex w-full items-center justify-center rounded-full border border-black/10 bg-[#141414] px-8 py-5 text-[11px] font-black uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black"
                                 >
                                     {PRICING.observer.ctaLabel}
                                 </a>
@@ -100,7 +100,7 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-                            className="rounded-[3rem] border border-black/5 bg-white p-10 shadow-sm flex flex-col justify-between"
+                            className="flex flex-col justify-between rounded-[28px] border border-black/5 bg-white p-10 shadow-sm"
                         >
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.strategic.name}</p>
@@ -120,7 +120,7 @@ export default function PricingPage() {
                             <button
                                 onClick={() => handleCheckout(PRICING.strategic.checkoutPlanKey)}
                                 disabled={loading !== null}
-                                className="inline-flex w-full items-center justify-center bg-white px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-black transition hover:bg-[#C1A674] disabled:opacity-50"
+                                className="inline-flex w-full items-center justify-center rounded-full border border-black/10 bg-white px-8 py-5 text-[11px] font-black uppercase tracking-[0.24em] text-black transition hover:border-black/20 hover:bg-[#FBFBF6] disabled:opacity-50"
                             >
                                 {loading === PRICING.strategic.checkoutPlanKey ? 'Processing...' : PRICING.strategic.ctaLabel}
                             </button>
@@ -132,7 +132,7 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-                            className="rounded-[3.5rem] border border-[#8B6A3D]/25 bg-[#FBFBF6] p-10 shadow-sm flex flex-col justify-between relative"
+                            className="relative flex flex-col justify-between rounded-[28px] border border-[#8B6A3D]/25 bg-[#FBFBF6] p-10 shadow-sm"
                         >
                             <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-[#141414] px-6 py-1.5 text-[9px] font-black uppercase tracking-[0.3em] text-[#FBF7EF] whitespace-nowrap">
                                 Highly Recommended
@@ -155,7 +155,7 @@ export default function PricingPage() {
                             <button
                                 onClick={() => handleCheckout(PRICING.professional.checkoutPlanKey)}
                                 disabled={loading !== null}
-                                className="inline-flex w-full items-center justify-center rounded-[999px] bg-[#141414] px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-[#FBF7EF] transition hover:bg-black disabled:opacity-50"
+                                className="inline-flex w-full items-center justify-center rounded-full bg-[#141414] px-8 py-5 text-[11px] font-black uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black disabled:opacity-50"
                             >
                                 {loading === PRICING.professional.checkoutPlanKey ? 'Processing...' : PRICING.professional.ctaLabel}
                             </button>
@@ -167,7 +167,7 @@ export default function PricingPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: EASE, delay: 0.3 }}
-                            className="rounded-[3rem] border border-[#8B6A3D]/15 bg-[#141414] p-10 shadow-[0_20px_60px_rgba(0,0,0,0.18)] flex flex-col justify-between text-[#FBF7EF]"
+                            className="flex flex-col justify-between rounded-[28px] border border-[#8B6A3D]/15 bg-[#141414] p-10 text-[#FBF7EF] shadow-[0_20px_60px_rgba(0,0,0,0.18)]"
                         >
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#D4A574] mb-4">{PRICING.agency.name}</p>
@@ -189,7 +189,7 @@ export default function PricingPage() {
                             
                             <a
                                 href={PRICING.agency.ctaHref}
-                                className="inline-flex w-full items-center justify-center rounded-[999px] border border-[#D4A574]/60 px-8 pt-6 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-[#D4A574] transition hover:bg-[#D4A574] hover:text-[#141414]"
+                                className="inline-flex w-full items-center justify-center rounded-full border border-[#D4A574]/60 px-8 py-5 text-[11px] font-black uppercase tracking-[0.24em] text-[#D4A574] transition hover:bg-[#D4A574] hover:text-[#141414]"
                             >
                                 {PRICING.agency.ctaLabel}
                             </a>
@@ -215,7 +215,7 @@ export default function PricingPage() {
                     </div>
 
                     <div className="overflow-x-auto">
-                        <table className="min-w-[1000px] w-full border-separate border-spacing-0 rounded-[3rem] border border-black/5 overflow-hidden bg-white shadow-sm">
+                        <table className="min-w-[1000px] w-full overflow-hidden rounded-[28px] border border-black/5 bg-white shadow-sm border-separate border-spacing-0">
                             <thead className="bg-[#FBFBF6]">
                                 <tr>
                                     <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80">System Feature</th>
