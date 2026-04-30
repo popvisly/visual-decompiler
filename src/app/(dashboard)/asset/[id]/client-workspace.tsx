@@ -239,6 +239,13 @@ const DOSSIER_TAB_LABELS: Record<DossierTab, string> = {
     'DECISION LOG': 'DECISION LOG',
 };
 
+const DOSSIER_TAB_PHASES: readonly { label: string; tabs: readonly DossierTab[] }[] = [
+    { label: 'Input', tabs: ['ASSET CONTEXT', 'QUALITY GATE'] },
+    { label: 'Read', tabs: ['INTELLIGENCE', 'SIGNALS', 'PSYCHOLOGY'] },
+    { label: 'Context', tabs: ['SOCIAL CONTEXT', 'CONSTRAINT MAP', 'BLUEPRINT'] },
+    { label: 'Decision', tabs: ['STRESS LAB', 'MARKET PULSE', 'DECISION LOG'] },
+] as const;
+
 const SOCIAL_PLATFORM_GLYPHS: Record<SocialPlatformKey, string> = {
     'Meta Feed': 'MF',
     'Instagram Reels': 'IR',
@@ -1434,6 +1441,66 @@ const InfoButton = ({ section }: { section: keyof typeof INTELLIGENCE_DEFINITION
         </div>
     );
 };
+
+type WorkspaceDecisionSummaryProps = {
+    eyebrow: string;
+    title: string;
+    body: string;
+    metrics?: readonly { label: string; value: React.ReactNode }[];
+    actions?: readonly string[];
+};
+
+function WorkspaceDecisionSummary({
+    eyebrow,
+    title,
+    body,
+    metrics = [],
+    actions = [],
+}: WorkspaceDecisionSummaryProps) {
+    return (
+        <section className="mb-4 rounded-2xl border border-black/5 bg-[#141414] p-6 text-[#FBF7EF] shadow-[0_18px_50px_rgba(20,20,20,0.14)]">
+            <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(280px,0.72fr)] xl:items-start">
+                <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">{eyebrow}</p>
+                    <h3 className="mt-4 max-w-[28ch] text-[24px] font-semibold uppercase leading-[0.98] tracking-[-0.02em] text-[#FBF7EF] md:text-[30px]">
+                        {title}
+                    </h3>
+                    <p className="mt-5 max-w-[72ch] text-[14px] font-medium leading-relaxed text-[#FBF7EF]/70">{body}</p>
+                </div>
+
+                <div className="grid gap-4">
+                    {metrics.length > 0 ? (
+                        <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
+                            {metrics.map((metric) => (
+                                <div key={metric.label} className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/85">{metric.label}</p>
+                                    <div className="mt-2 text-[16px] font-semibold leading-tight text-[#FBF7EF]">{metric.value}</div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : null}
+
+                    {actions.length > 0 ? (
+                        <div className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4">
+                            <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/85">Next Actions</p>
+                            <div className="mt-4 space-y-3">
+                                {actions.map((action, index) => (
+                                    <div key={`${action}-${index}`} className="flex items-start gap-3">
+                                        <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#D4A574]/30 text-[10px] font-bold text-[#D4A574]">
+                                            {index + 1}
+                                        </span>
+                                        <p className="text-[12px] font-medium leading-relaxed text-[#FBF7EF]/72">{action}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : null}
+                </div>
+            </div>
+        </section>
+    );
+}
+
 const AnalyticWaveMap = ({ index, isActive }: { index: number, isActive?: boolean }) => {
     // Multi-layered "Neural Frequency" waves for each act
     const waves = [
@@ -1927,11 +1994,12 @@ export default function AssetWorkspace({
     const { lead: cloneIntroLead, remainder: cloneIntroRemainder } = splitLeadSentence(cloneIntroSource);
     const marketPulseBelowThreshold = (marketPulseData?.assetCount ?? 0) > 0 && (marketPulseData?.assetCount ?? 0) < 20;
     const dossierTabs = sampleMode ? SAMPLE_DOSSIER_TABS : FULL_DOSSIER_TABS;
-		type PrimaryNavTab = Extract<DossierTab, 'ASSET CONTEXT' | 'QUALITY GATE' | 'INTELLIGENCE' | 'SIGNALS' | 'PSYCHOLOGY'>;
-		const isPrimaryNavTab = (tab: DossierTab): tab is PrimaryNavTab =>
-			tab === 'ASSET CONTEXT' || tab === 'QUALITY GATE' || tab === 'INTELLIGENCE' || tab === 'SIGNALS' || tab === 'PSYCHOLOGY';
-		const primaryNavTabs = dossierTabs.filter(isPrimaryNavTab);
-		const secondaryNavTabs = dossierTabs.filter((tab) => !isPrimaryNavTab(tab));
+    const tabPhaseGroups = DOSSIER_TAB_PHASES
+        .map((phase) => ({
+            ...phase,
+            tabs: phase.tabs.filter((tab) => dossierTabs.includes(tab)),
+        }))
+        .filter((phase) => phase.tabs.length > 0);
     const confidenceScore = normalizeConfidenceScore(extraction?.confidence_score);
     const frictionScore =
         typeof dossier?.persuasion_metrics?.cognitive_friction === 'number'
@@ -2939,67 +3007,59 @@ export default function AssetWorkspace({
                     <div ref={assetContextTopRef} className="vault-analysis-frame scroll-mt-[250px] md:scroll-mt-[210px]">
                     {/* Top Workspace Navigation */}
                     <div className={`vault-analysis-tabbar sticky ${sampleMode ? 'top-[65px]' : 'top-0'} z-30 bg-transparent px-[clamp(12px,1.6vw,24px)] pt-4 pb-4 md:pt-6`}>
-                        <div className="mx-auto max-w-[100%] rounded-2xl border border-black/5 bg-[#FCFBF9] p-2 shadow-sm backdrop-blur-xl md:p-2">
+                        <div className="mx-auto max-w-[100%] rounded-2xl border border-black/5 bg-[#FCFBF9]/96 p-2 shadow-sm backdrop-blur-xl md:p-3">
                             <div className="relative md:hidden">
-                                <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                                    {dossierTabs.map((tab) => (
-                                        <button
-                                            key={tab}
-                                            type="button"
-                                            onClick={() => handleTabChange(tab)}
-                                            aria-current={activeTab === tab ? 'page' : undefined}
-                                            className={`inline-flex min-h-[38px] items-center justify-center whitespace-nowrap rounded-xl px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.24em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
-                                                activeTab === tab
-                                                    ? 'bg-[#1A1A1A] text-white shadow-sm'
-                                                    : 'bg-transparent text-[#1A1A1A]/30 hover:text-[#1A1A1A] hover:bg-black/5'
-                                            }`}
-                                        >
-                                            {DOSSIER_TAB_LABELS[tab]}
-                                        </button>
+                                <div className="flex gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                                    {tabPhaseGroups.map((phase) => (
+                                        <div key={phase.label} className="min-w-max rounded-xl border border-black/5 bg-white/70 p-2">
+                                            <p className="px-2 pb-2 text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/70">{phase.label}</p>
+                                            <div className="flex gap-1">
+                                                {phase.tabs.map((tab) => (
+                                                    <button
+                                                        key={tab}
+                                                        type="button"
+                                                        onClick={() => handleTabChange(tab)}
+                                                        aria-current={activeTab === tab ? 'page' : undefined}
+                                                        className={`inline-flex min-h-[38px] items-center justify-center whitespace-nowrap rounded-lg px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A574]/25 ${
+                                                            activeTab === tab
+                                                                ? 'bg-[#1A1A1A] text-white shadow-sm'
+                                                                : 'bg-transparent text-[#1A1A1A]/35 hover:bg-black/5 hover:text-[#1A1A1A]'
+                                                        }`}
+                                                    >
+                                                        {DOSSIER_TAB_LABELS[tab]}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
                                     ))}
                                 </div>
                             </div>
 
                             <div className="hidden md:block">
-                                <div className="grid grid-cols-5 gap-1">
-                                    {primaryNavTabs.map((tab) => (
-                                        <button
-                                            key={tab}
-                                            type="button"
-                                            onClick={() => handleTabChange(tab)}
-                                            aria-current={activeTab === tab ? 'page' : undefined}
-                                            className={`inline-flex min-h-[40px] w-full items-center justify-center text-center rounded-xl px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.26em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/10 ${
-                                                activeTab === tab
-                                                    ? 'bg-[#1A1A1A] text-white shadow-sm'
-                                                    : 'bg-transparent text-[#1A1A1A]/30 hover:text-[#1A1A1A] hover:bg-black/5'
-                                            }`}
-                                        >
-                                            {DOSSIER_TAB_LABELS[tab]}
-                                        </button>
+                                <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-4">
+                                    {tabPhaseGroups.map((phase) => (
+                                        <div key={phase.label} className="rounded-xl border border-black/5 bg-white/70 p-2">
+                                            <p className="px-2 pb-2 text-[9px] font-bold uppercase tracking-[0.26em] text-[#8B6A3D]/70">{phase.label}</p>
+                                            <div className={`grid gap-1 ${phase.tabs.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+                                                {phase.tabs.map((tab) => (
+                                                    <button
+                                                        key={tab}
+                                                        type="button"
+                                                        onClick={() => handleTabChange(tab)}
+                                                        aria-current={activeTab === tab ? 'page' : undefined}
+                                                        className={`inline-flex min-h-[38px] w-full items-center justify-center rounded-lg px-2 py-2 text-center text-[9px] font-semibold uppercase tracking-[0.18em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/10 xl:text-[10px] ${
+                                                            activeTab === tab
+                                                                ? 'bg-[#1A1A1A] text-white shadow-sm'
+                                                                : 'bg-transparent text-[#1A1A1A]/34 hover:bg-black/5 hover:text-[#1A1A1A]'
+                                                        }`}
+                                                    >
+                                                        {DOSSIER_TAB_LABELS[tab]}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
                                     ))}
                                 </div>
-
-                                {secondaryNavTabs.length > 0 && (
-                                    <div className="mt-2 border-t border-black/5 pt-2">
-                                        <div className="grid grid-cols-3 gap-1 lg:grid-cols-6">
-                                            {secondaryNavTabs.map((tab) => (
-                                                <button
-                                                    key={tab}
-                                                    type="button"
-                                                    onClick={() => handleTabChange(tab)}
-                                                    aria-current={activeTab === tab ? 'page' : undefined}
-                                                    className={`inline-flex min-h-[40px] w-full items-center justify-center text-center rounded-xl px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.26em] leading-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/10 ${
-                                                        activeTab === tab
-                                                            ? 'bg-[#1A1A1A] text-white shadow-sm'
-                                                            : 'bg-transparent text-[#1A1A1A]/30 hover:text-[#1A1A1A] hover:bg-black/5'
-                                                    }`}
-                                                >
-                                                    {DOSSIER_TAB_LABELS[tab]}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
                             </div>
                         </div>
                     </div>
@@ -3014,6 +3074,21 @@ export default function AssetWorkspace({
                                             kicker="Asset"
                                             title="Source Asset Workspace"
                                             intro="Review the live source ad, campaign metadata, and export actions before moving into analysis modules."
+                                        />
+                                        <WorkspaceDecisionSummary
+                                            eyebrow="Case File"
+                                            title="Start from the source asset, then move into the read."
+                                            body="This workspace is the control layer for the live creative, metadata, export actions, and retrieval context. Resolve the basic asset record here before treating the analysis as presentation-ready."
+                                            metrics={[
+                                                { label: 'Status', value: extraction ? 'Processed' : 'Processing' },
+                                                { label: 'Format', value: asset.type || 'Single Frame' },
+                                                { label: 'Tags', value: `${asset.tags?.length || 0}/12 Applied` },
+                                            ]}
+                                            actions={[
+                                                'Confirm the source asset and campaign metadata are correct.',
+                                                'Add campaign, market, format, or audience tags for Vault retrieval.',
+                                                'Export or compare only after Quality Gate confirms decision confidence.',
+                                            ]}
                                         />
                                     </div>
 
@@ -3126,6 +3201,17 @@ export default function AssetWorkspace({
                                                 kicker="Quality Gate"
                                                 title="Creative Decision Analysis"
                                                 intro="A structured read of decision quality based on evidence strength, strategic fit, and execution risk."
+                                            />
+                                            <WorkspaceDecisionSummary
+                                                eyebrow="Decision Checkpoint"
+                                                title={`${qualityVerdict} is the current system verdict.`}
+                                                body={integratedRecommendation.rationale}
+                                                metrics={[
+                                                    { label: 'Integrity', value: confidenceScore != null ? `${confidenceScore}/100` : 'Pending' },
+                                                    { label: 'Confidence', value: integratedRecommendation.confidence },
+                                                    { label: 'Evidence', value: integratedRecommendation.evidenceStrength },
+                                                ]}
+                                                actions={integratedRecommendation.executionNext3}
                                             />
                                         </div>
 
@@ -3303,6 +3389,21 @@ export default function AssetWorkspace({
                                                 kicker="INTELLIGENCE"
                                                 title="Strategic Insight Overview"
                                                 intro="A structured read organized into Primary Scores, Attention Path, Structural Signals, Strategic Read, and Confidence Index."
+                                            />
+                                            <WorkspaceDecisionSummary
+                                                eyebrow="Executive Read"
+                                                title={integratedRecommendation.recommendedDirection}
+                                                body={analysisLanguage.strategicRead.thesis}
+                                                metrics={[
+                                                    { label: 'Mechanic', value: extraction.primary_mechanic || 'Pending' },
+                                                    { label: 'Confidence', value: `${analysisLanguage.confidenceIndex}/100` },
+                                                    { label: 'Decision', value: integratedRecommendation.decision },
+                                                ]}
+                                                actions={[
+                                                    firstSentence(analysisLanguage.strategicRead.triggerMechanic),
+                                                    firstSentence(analysisLanguage.strategicRead.frictionPoints),
+                                                    integratedRecommendation.executionNext3[0],
+                                                ].filter(Boolean)}
                                             />
                                         </div>
                                         {(!extraction.primary_mechanic || !extraction.full_dossier) && <SovereignProcessingView assetId={asset.id} agency={agency} />}
