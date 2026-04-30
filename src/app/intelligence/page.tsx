@@ -15,14 +15,8 @@ export default async function IntelligenceIndex() {
     return (
         <>
             <MarketingPageHeader
-                sectionClassName="pb-20"
                 kicker="Intelligence Hub"
-                title={
-                    <>
-                        Intelligence <br />
-                        <span className="text-[#141414]/30">Briefings.</span>
-                    </>
-                }
+                title="Intelligence Briefings."
                 description="Decision-ready briefings on advertising structure, strategic signals, and approval-critical execution patterns."
             />
 

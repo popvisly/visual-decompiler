@@ -76,14 +76,8 @@ export default function AgencyOverviewPage() {
 
             <MarketingPageHeader
                 kicker="Help Center"
-                title={
-                    <>
-                        Visual Decompiler <br />
-                        <span className="text-[#8B6A3D]">v2.0 Overview</span>
-                    </>
-                }
+                title="Visual Decompiler v2.0 Overview"
                 description="A high-level operating overview of Sovereign Intelligence: receipts, diagnostics, risk flags, and actionable sprint outputs."
-                size="compact"
             />
 
             <section className="pb-32 px-6">

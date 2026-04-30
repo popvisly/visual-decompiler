@@ -118,12 +118,7 @@ export default function HelpPage() {
 
             <MarketingPageHeader
                 kicker="Operational Manual"
-                title={
-                    <>
-                        Support <br />
-                        <span className="text-[#8B6A3D]">for Decision Workflows.</span>
-                    </>
-                }
+                title="Support for decision workflows."
                 description="Use this centre to help agency teams defend decisions, align faster, and get work approved with less back-and-forth."
             />
 

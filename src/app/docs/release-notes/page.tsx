@@ -43,14 +43,8 @@ export default function ReleaseNotesPage() {
             <UnifiedSovereignHeader />
             <MarketingPageHeader
                 kicker="Help Center"
-                title={
-                    <>
-                        Release Notes <br />
-                        <span className="text-[#8B6A3D]">Sovereign Intelligence</span>
-                    </>
-                }
+                title="Release Notes: Sovereign Intelligence"
                 description="Milestone updates and capability shifts across the Visual Decompiler operating system."
-                size="compact"
             />
 
             <section className="pb-32 px-6">

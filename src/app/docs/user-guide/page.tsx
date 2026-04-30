@@ -368,8 +368,7 @@ export default function UserGuidePage() {
                 kicker="User Guide"
                 title="Using Visual Decompiler"
                 description="A practical operator guide: run reads consistently, defend decisions, and export work that travels into review rooms."
-                size="compact"
-                sectionClassName="pt-24 pb-10 lg:pt-28 lg:pb-12"
+                sectionClassName="pt-40 pb-24 lg:pt-44 lg:pb-28"
             />
 
             <section className="pb-28 lg:pb-36">

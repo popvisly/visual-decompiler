@@ -58,14 +58,8 @@ export default function QAChecklistPage() {
             <UnifiedSovereignHeader />
             <MarketingPageHeader
                 kicker="Help Center"
-                title={
-                    <>
-                        QA Checklist <br />
-                        <span className="text-[#8B6A3D]">Sovereign Rigor</span>
-                    </>
-                }
+                title="QA Checklist: Sovereign Rigor"
                 description="A practical validation protocol to keep outputs defensible under agency pressure."
-                size="compact"
             />
 
             <section className="pb-32 px-6">

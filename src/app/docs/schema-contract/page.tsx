@@ -28,14 +28,8 @@ export default function SchemaContractPage() {
             <UnifiedSovereignHeader />
             <MarketingPageHeader
                 kicker="Help Center"
-                title={
-                    <>
-                        Schema Contract <br />
-                        <span className="text-[#8B6A3D]">v2.0</span>
-                    </>
-                }
+                title="Schema Contract v2.0"
                 description="A formal specification for the v2 forensic engine: invariants, layers, and integration requirements."
-                size="compact"
             />
             <section className="pb-32 px-6">
                 <div className="max-w-4xl mx-auto">

@@ -9,6 +9,8 @@ type MarketingPageHeaderProps = {
     align?: 'left' | 'center';
     sectionClassName?: string;
     size?: 'hero' | 'compact';
+    frame?: boolean;
+    frameFooter?: React.ReactNode;
 };
 
 export default function MarketingPageHeader({
@@ -18,6 +20,8 @@ export default function MarketingPageHeader({
     align = 'left',
     sectionClassName,
     size = 'hero',
+    frame = true,
+    frameFooter,
 }: MarketingPageHeaderProps) {
     const isCentered = align === 'center';
 
@@ -35,6 +39,8 @@ export default function MarketingPageHeader({
             ? 'mt-6 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]'
             : 'mt-10 max-w-[760px] text-[16px] leading-[1.7] text-[#6B6B6B]';
 
+    const shouldFrame = Boolean(description) && frame && size !== 'compact';
+
     return (
         <section className={sectionSpacing}>
             <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
@@ -49,9 +55,18 @@ export default function MarketingPageHeader({
                         {title}
                     </h1>
                     {description ? (
-                        <p className={descriptionClassName}>
-                            {description}
-                        </p>
+                        shouldFrame ? (
+                            <div className="mt-10 max-w-[840px] rounded-[1.75rem] border border-black/5 bg-white px-8 py-8 shadow-sm">
+                                <div className="space-y-6 text-[17px] leading-[1.85] text-[#6B6B6B]">
+                                    <div>{description}</div>
+                                </div>
+                                {frameFooter ? <div className="mt-8">{frameFooter}</div> : null}
+                            </div>
+                        ) : (
+                            <p className={descriptionClassName}>
+                                {description}
+                            </p>
+                        )
                     ) : null}
                 </motion.div>
             </div>

@@ -190,7 +190,6 @@ export default function DocsLexiconPage() {
                     </>
                 }
                 description="Definitions, modules, and reference terms used across the operating system."
-                size="compact"
             />
 
             <section className="px-6 pb-32">

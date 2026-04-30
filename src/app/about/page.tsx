@@ -13,7 +13,6 @@ export default function AboutPage() {
                 kicker="Transforming Creative Intelligence"
                 title="Creative decisions deserve better tools."
                 description="Visual Decompiler simplifies the defense of creative work, accelerates alignment, and speeds up approval processes."
-                size="compact"
             />
 
             {/* Problem + Why + What + Commercial + Positioning + Vision */}
