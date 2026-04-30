@@ -57,7 +57,7 @@ export default function AnalysisSurfaces() {
                                 alt="Visual Decompiler product interface screenshot"
                                 width={1600}
                                 height={900}
-                                className="h-auto w-full bg-[#FBFBF6] object-contain"
+                                className="h-auto w-full origin-left scale-[1.01] bg-[#FBFBF6] object-contain"
                                 priority
                             />
                         </div>
