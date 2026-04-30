@@ -55,7 +55,7 @@ export default function ContainerScrollHero() {
                                 Forensic Creative Intelligence
                             </div>
 
-                            <h1 className="mt-8 text-[clamp(32px,4.6vw,54px)] font-semibold uppercase leading-[0.95] tracking-tight text-[#141414]">
+                            <h1 className="mt-8 max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]">
                                 Turn ads into
                                 <span className="block text-[#D4A574]">decision-grade intelligence.</span>
                             </h1>
