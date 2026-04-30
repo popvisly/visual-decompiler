@@ -11,6 +11,7 @@ type MarketingPageHeaderProps = {
     size?: 'hero' | 'compact';
     frame?: boolean;
     frameFooter?: React.ReactNode;
+    grid?: boolean;
 };
 
 export default function MarketingPageHeader({
@@ -22,8 +23,10 @@ export default function MarketingPageHeader({
     size = 'hero',
     frame = true,
     frameFooter,
+    grid,
 }: MarketingPageHeaderProps) {
     const isCentered = align === 'center';
+    const showGrid = grid ?? size === 'hero';
 
     const sectionSpacing =
         sectionClassName ??
@@ -42,8 +45,14 @@ export default function MarketingPageHeader({
     const shouldFrame = Boolean(description) && frame && size !== 'compact';
 
     return (
-        <section className={sectionSpacing}>
-            <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
+        <section className={`relative overflow-hidden ${sectionSpacing}`}>
+            {showGrid ? (
+                <div
+                    className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]"
+                    aria-hidden="true"
+                />
+            ) : null}
+            <div className="relative z-10 mx-auto w-full max-w-[1120px] px-6 lg:px-12">
                 <motion.div
                     initial={{ opacity: 0, y: size === 'compact' ? 12 : 16 }}
                     animate={{ opacity: 1, y: 0 }}
