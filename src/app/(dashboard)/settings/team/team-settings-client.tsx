@@ -215,7 +215,7 @@ export default function TeamSettingsClient() {
                     <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
                         Invite strategists, control seat roles, and manage who can operate inside the Intelligence Vault as owner, admin, or analyst.
                     </p>
-                    <div className="mt-6 inline-flex flex-col gap-3 rounded-[1.5rem] border border-[#D4A574]/16 bg-white/80 px-6 py-4 shadow-sm backdrop-blur-sm">
+                    <div className="mt-6 inline-flex flex-col gap-3 rounded-xl border border-[#D4A574]/16 bg-white/80 px-6 py-4 shadow-sm backdrop-blur-sm">
                         <div className="flex items-center gap-3">
                             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Current Plan</p>
                             <span className={`rounded-full border px-3 py-1 text-[9px] font-bold uppercase tracking-[0.24em] ${
@@ -234,7 +234,7 @@ export default function TeamSettingsClient() {
 
                 <div className="grid gap-8 xl:grid-cols-[minmax(0,1.1fr)_380px]">
                     <div className="space-y-8">
-                        <section className="rounded-[2rem] border border-[#D4A574]/20 bg-white p-8 shadow-sm">
+                        <section className="rounded-2xl border border-[#D4A574]/20 bg-white p-8 shadow-sm">
                             <div className="flex flex-col gap-4 border-b border-[#D4A574]/12 pb-6 md:flex-row md:items-end md:justify-between">
                                 <div>
                                     <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B4513]">Seat Directory</p>
@@ -247,7 +247,7 @@ export default function TeamSettingsClient() {
 
                             <div className="mt-6 space-y-4">
                                 {payload.members.map((member) => (
-                                    <div key={member.id} className="grid gap-4 rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-5 md:grid-cols-[1.3fr_auto_auto] md:items-center">
+                                    <div key={member.id} className="grid gap-4 rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-5 md:grid-cols-[1.3fr_auto_auto] md:items-center">
                                         <div>
                                             <p className="text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A]">
                                                 {member.name || member.email}
@@ -277,7 +277,7 @@ export default function TeamSettingsClient() {
                             </div>
                         </section>
 
-                        <section className="rounded-[2rem] border border-[#D4A574]/20 bg-white p-8 shadow-sm">
+                        <section className="rounded-2xl border border-[#D4A574]/20 bg-white p-8 shadow-sm">
                             <div className="flex items-center gap-3">
                                 <Shield className="h-5 w-5 text-[#C1A67B]" />
                                 <div>
@@ -288,7 +288,7 @@ export default function TeamSettingsClient() {
 
                             <div className="mt-6 space-y-4">
                                 {payload.invitations.length > 0 ? payload.invitations.map((invitation) => (
-                                    <div key={invitation.id} className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-5">
+                                    <div key={invitation.id} className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-5">
                                         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                                             <div>
                                                 <p className="text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A]">{invitation.email}</p>
@@ -321,7 +321,7 @@ export default function TeamSettingsClient() {
                                         </div>
                                     </div>
                                 )) : (
-                                    <div className="rounded-[1.5rem] border border-dashed border-[#D4A574]/18 bg-[#FBFBF6] p-6 text-[11px] uppercase tracking-[0.18em] text-[#6B6B6B]">
+                                    <div className="rounded-xl border border-dashed border-[#D4A574]/18 bg-[#FBFBF6] p-6 text-[11px] uppercase tracking-[0.18em] text-[#6B6B6B]">
                                         No pending invitations.
                                     </div>
                                 )}
@@ -330,7 +330,7 @@ export default function TeamSettingsClient() {
                     </div>
 
                     <aside className="space-y-8">
-                        <section className="rounded-[2rem] border border-[#D4A574]/20 bg-[#141414] p-8 text-white shadow-2xl">
+                        <section className="rounded-2xl border border-[#D4A574]/20 bg-[#141414] p-8 text-white shadow-2xl">
                             <div className="flex items-center gap-3">
                                 <MailPlus className="h-5 w-5 text-[#D4A574]" />
                                 <div>
@@ -373,7 +373,7 @@ export default function TeamSettingsClient() {
                                         onChange={(event) => setMessage(event.target.value)}
                                         rows={4}
                                         placeholder="Optional context for the person joining the agency workspace"
-                                        className="mt-3 w-full resize-none rounded-[1.5rem] border border-[#8B6A3D]/10 bg-white/5 px-5 py-4 text-sm text-white outline-none placeholder:text-white/25"
+                                        className="mt-3 w-full resize-none rounded-xl border border-[#8B6A3D]/10 bg-white/5 px-5 py-4 text-sm text-white outline-none placeholder:text-white/25"
                                     />
                                 </div>
 
@@ -381,7 +381,7 @@ export default function TeamSettingsClient() {
                                     type="button"
                                     onClick={() => void handleInvite()}
                                     disabled={saving || !email.trim()}
-                                    className="w-full rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition-colors hover:bg-[#c8955b] disabled:opacity-50"
+                                    className="w-full rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition-colors hover:bg-[#F5F5DC] disabled:opacity-50"
                                 >
                                     <span className="inline-flex items-center gap-2">
                                         {saving && <Loader2 className="h-4 w-4 animate-spin" />}
@@ -391,7 +391,7 @@ export default function TeamSettingsClient() {
                             </div>
                         </section>
 
-                        <section className="rounded-[2rem] border border-[#D4A574]/20 bg-white p-8 shadow-sm">
+                        <section className="rounded-2xl border border-[#D4A574]/20 bg-white p-8 shadow-sm">
                             <div className="flex items-center gap-3">
                                 <Users className="h-5 w-5 text-[#C1A67B]" />
                                 <div>
@@ -408,7 +408,7 @@ export default function TeamSettingsClient() {
                         </section>
 
                         {statusMessage && (
-                            <section className="rounded-[1.5rem] border border-[#D4A574]/20 bg-white px-5 py-4 text-[11px] uppercase tracking-[0.16em] text-[#8B4513] shadow-sm">
+                            <section className="rounded-xl border border-[#D4A574]/20 bg-white px-5 py-4 text-[11px] uppercase tracking-[0.16em] text-[#8B4513] shadow-sm">
                                 {statusMessage}
                             </section>
                         )}

@@ -86,7 +86,7 @@ export default async function BoardsPage() {
             </header>
 
             {safeBoards.length === 0 ? (
-                <div className="w-full rounded-[2.5rem] border border-[#D4A574]/15 bg-white px-6 py-12 md:px-10 md:py-14">
+                <div className="w-full rounded-2xl border border-[#D4A574]/15 bg-white px-6 py-12 md:px-10 md:py-14">
                     <div className="mx-auto max-w-4xl text-center">
                         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#C1A67B]">Boards</p>
                         <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[#1A1A1A] md:text-5xl">

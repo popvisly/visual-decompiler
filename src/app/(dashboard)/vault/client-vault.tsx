@@ -191,7 +191,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                                     onClick={clearSelection}
                                     className="text-[9px] font-semibold uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors"
                                 >
-                                    [ ABORT ]
+                                    Cancel
                                 </button>
                             </div>
 
@@ -201,7 +201,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                                         onClick={() => setShowConfirm(true)}
                                         className="px-8 py-3 bg-[#C1A674] text-[#141414] text-[10px] font-semibold uppercase tracking-[0.4em] hover:bg-white transition-all"
                                     >
-                                        [ REMOVE ]
+                                        Remove
                                     </button>
                                 ) : (
                                     <div className="flex items-center gap-6">
@@ -212,13 +212,13 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                                                 onClick={handleDelete}
                                                 className="px-6 py-2 border border-[#C1A674] text-[#C1A674] text-[9px] font-semibold uppercase tracking-[0.3em] hover:bg-[#C1A674] hover:text-black transition-all"
                                             >
-                                                {isDeleting ? 'REMOVING...' : '[ YES ]'}
+                                                {isDeleting ? 'Removing...' : 'Yes'}
                                             </button>
                                             <button 
                                                 onClick={() => setShowConfirm(false)}
                                                 className="px-6 py-2 bg-white/10 text-white text-[9px] font-semibold uppercase tracking-[0.3em] hover:bg-white/20 transition-all"
                                             >
-                                                [ NO ]
+                                                No
                                             </button>
                                         </div>
                                     </div>
@@ -300,7 +300,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                         onClick={clearFilters}
                         className="h-full border border-[#141414]/10 flex items-center justify-center text-[9px] font-semibold uppercase tracking-[0.3em] text-[#141414]/40 hover:bg-[#141414]/5 hover:text-[#C1A674] transition-all"
                     >
-                        [ RESET ]
+                        Reset
                     </button>
                 </div>
             </motion.div>
@@ -329,14 +329,14 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                                 animate={{ scale: 1, opacity: 1 }}
                             >
                                 <p className="text-[12px] font-semibold uppercase tracking-[0.5em] text-[#C1A674] mb-6">No Results</p>
-                                <h3 className="text-5xl lg:text-7xl font-semibold uppercase tracking-tightest mb-12 text-[#141414]">No data found in <br />this partition.</h3>
+                                <h3 className="text-5xl lg:text-7xl font-semibold uppercase tracking-tight mb-12 text-[#141414]">No data found in <br />this partition.</h3>
                                 {assets.length > 0 ? (
                                     <button onClick={clearFilters} className="px-12 py-5 bg-[#141414] text-white text-[11px] font-semibold uppercase tracking-[0.4em] hover:bg-[#C1A674] hover:text-black transition-all">
-                                        [ CLEAR ACTIVE FILTERS ]
+                                        Clear Active Filters
                                     </button>
                                 ) : (
                                     <Link href="/ingest" className="px-12 py-5 bg-[#C1A674] text-black text-[11px] font-semibold uppercase tracking-[0.4em] hover:bg-[#141414] hover:text-white transition-all">
-                                        [ INITIATE FIRST EXTRACTION ]
+                                        Initiate First Extraction
                                     </Link>
                                 )}
                             </motion.div>
@@ -401,7 +401,7 @@ function VaultCard({ asset, isSelected, onToggle, index }: { asset: VaultAsset, 
                 <div className="mt-8 space-y-4">
                     <div className="flex items-start justify-between">
                         <div>
-                            <h3 className="text-3xl font-semibold uppercase tracking-tightest leading-none mb-2 text-[#141414] group-hover:text-[#C1A674] transition-colors">
+                            <h3 className="text-3xl font-semibold uppercase tracking-tight leading-none mb-2 text-[#141414] group-hover:text-[#C1A674] transition-colors">
                                 {asset.brand?.name || 'Unknown'}
                             </h3>
                             <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#9a9a94]">{asset.brand?.market_sector || 'General Sector'}</p>

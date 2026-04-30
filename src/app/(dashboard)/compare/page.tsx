@@ -263,7 +263,7 @@ export default function DifferentialDiagnosticsPage() {
     };
 
     const handleReset = () => {
-        if (confirm("CLEAR ALL ACTIVE DIAGNOSTICS? [ YES ]")) {
+        if (confirm("Clear all active diagnostics?")) {
             setAssetA(null);
             setAssetB(null);
             setResult(null);
@@ -463,7 +463,7 @@ export default function DifferentialDiagnosticsPage() {
                     </div>
 
                     {status === 'analysing' && (
-                        <div className="rounded-[2rem] border border-[#D4A574]/20 bg-white/70 px-6 py-6 shadow-sm">
+                        <div className="rounded-2xl border border-[#D4A574]/20 bg-white/70 px-6 py-6 shadow-sm">
                             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                                 <div>
                                     <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#D4A574]">
@@ -501,7 +501,7 @@ export default function DifferentialDiagnosticsPage() {
                             <button
                                 onClick={handleAnalyse}
                                 disabled={status === 'analysing'}
-                                className={`group relative px-8 py-5 bg-[#1A1A1A] text-[#FBF7EF] text-[11px] font-bold tracking-[0.34em] uppercase rounded-[14px] border border-[#F2E8D8]/80 shadow-[0_12px_24px_rgba(20,20,20,0.28)] transition-all hover:bg-[#C86422] hover:border-[#F1D1AE] hover:shadow-[0_16px_30px_rgba(20,20,20,0.34)] disabled:opacity-50 ${isReady ? 'hover:scale-[1.02] active:scale-[0.98] cursor-pointer' : 'opacity-70 cursor-not-allowed'}`}
+                                className={`group relative px-8 py-5 bg-[#1A1A1A] text-[#FBF7EF] text-[11px] font-bold tracking-[0.34em] uppercase rounded-[14px] border border-[#F2E8D8]/80 shadow-[0_12px_24px_rgba(20,20,20,0.28)] transition-all hover:bg-black hover:border-[#F1D1AE] hover:shadow-[0_16px_30px_rgba(20,20,20,0.34)] disabled:opacity-50 ${isReady ? 'hover:scale-[1.02] active:scale-[0.98] cursor-pointer' : 'opacity-70 cursor-not-allowed'}`}
                             >
                                 <span className="relative z-10">
                                     {buttonLabel}
@@ -530,7 +530,7 @@ export default function DifferentialDiagnosticsPage() {
                 </div>
 
                 <div className="mb-12 grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
-                    <div className="rounded-[2.2rem] border border-[#E7DED1] bg-[#FCFAF5] px-6 py-6 border-l-[3px] border-[#D4A574]">
+                    <div className="rounded-2xl border border-[#E7DED1] bg-[#FCFAF5] px-6 py-6 border-l-[3px] border-[#D4A574]">
                         <button
                             type="button"
                             onClick={handleUseLatestResultAsAssetA}
@@ -543,7 +543,7 @@ export default function DifferentialDiagnosticsPage() {
                         </p>
                     </div>
 
-                    <div className="rounded-[2.2rem] border border-[#D4A574]/20 bg-[#141414] px-7 py-7 text-[#FBF7EF] shadow-xl">
+                    <div className="rounded-2xl border border-[#D4A574]/20 bg-[#141414] px-7 py-7 text-[#FBF7EF] shadow-xl">
                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Ready</p>
                         <p className="mt-4 text-3xl font-bold uppercase tracking-tight">{compareProgressLabel}</p>
                         <p className="mt-3 text-[11px] uppercase tracking-[0.2em] text-white/40 font-medium">
@@ -578,7 +578,7 @@ export default function DifferentialDiagnosticsPage() {
                     )}
 
                     {status === 'error' && (
-                        <div className="flex flex-col items-center justify-center py-24 space-y-8 animate-in fade-in duration-500 bg-white/60 rounded-[2.5rem] border border-dashed border-[#D4A574]/20">
+                        <div className="flex flex-col items-center justify-center py-24 space-y-8 animate-in fade-in duration-500 bg-white/60 rounded-2xl border border-dashed border-[#D4A574]/20">
                             <div className="w-16 h-16 rounded-full border border-[#D4A574]/20 bg-[#1A1A1A] flex items-center justify-center text-[#D4A574] text-2xl">
                                 !
                             </div>
@@ -600,11 +600,11 @@ export default function DifferentialDiagnosticsPage() {
 
                     {status === 'success' && result && (
                         <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-1000">
-    <div className="mb-8 rounded-[1.6rem] border border-[#D4A574]/20 bg-[#FCFAF5] px-6 py-5">
+    <div className="mb-8 rounded-2xl border border-[#D4A574]/20 bg-[#FCFAF5] px-6 py-5">
         <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B4513]">Verdict</p>
         <p className="mt-2 text-[15px] leading-relaxed text-[#1A1A1A]/80">{comparisonVerdict}</p>
     </div>
-                            <div className="mb-8 flex flex-col gap-4 rounded-[2rem] border border-[#D4A574]/15 bg-white/70 p-6 md:flex-row md:items-end md:justify-between">
+                            <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-[#D4A574]/15 bg-white/70 p-6 md:flex-row md:items-end md:justify-between">
                                 <div>
                                     <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574]">Export Report</p>
                                     <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#1A1A1A]/60">
@@ -664,7 +664,7 @@ export default function DifferentialDiagnosticsPage() {
                             </div>
 
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                                <div className="bg-[#1A1A1A] p-8 rounded-[2rem] border border-[#D4A574]/20 shadow-xl">
+                                <div className="bg-[#1A1A1A] p-8 rounded-2xl border border-[#D4A574]/20 shadow-xl">
                                     <h3 className="text-[10px] font-bold tracking-[0.4em] uppercase text-[#D4A574] mb-8 border-b border-[#D4A574]/10 pb-4">
                                         Winner
                                     </h3>
@@ -700,7 +700,7 @@ export default function DifferentialDiagnosticsPage() {
                                     </h3>
 
                                     {result.semiotic_shifts.map((shift, idx) => (
-                                        <div key={idx} className="bg-white border border-[#D4A574]/20 p-8 rounded-[1.5rem] shadow-sm flex flex-col gap-6 hover:border-[#D4A574]/50 transition-all">
+                                        <div key={idx} className="bg-white border border-[#D4A574]/20 p-8 rounded-xl shadow-sm flex flex-col gap-6 hover:border-[#D4A574]/50 transition-all">
                                             <div className="flex justify-between items-center">
                                                 <h4 className="text-[12px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]">
                                                     {shift.variable_isolated}
@@ -715,7 +715,7 @@ export default function DifferentialDiagnosticsPage() {
                                                 </div>
                                                 <div className="space-y-2">
                                                     <span className="block text-[9px] uppercase tracking-widest text-[#D4A574] font-bold">State B</span>
-                                                    <span className="text-[#1A1A1A] text-xs font-bold font-serif italic">{shift.asset_b_state}</span>
+                                                    <span className="text-[#1A1A1A] text-xs font-bold font-medium">{shift.asset_b_state}</span>
                                                 </div>
                                             </div>
 
@@ -734,7 +734,7 @@ export default function DifferentialDiagnosticsPage() {
                                     
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                         {/* Winning Variant Cube */}
-                                        <div className="bg-[#1A1A1A] p-8 rounded-[2rem] border border-[#D4A574]/30 shadow-2xl relative overflow-hidden group">
+                                        <div className="bg-[#1A1A1A] p-8 rounded-2xl border border-[#D4A574]/30 shadow-2xl relative overflow-hidden group">
                                             <div className="absolute top-0 right-0 p-4">
                                                 <div className="w-2 h-2 bg-[#D4A574] rounded-full animate-pulse" />
                                             </div>
@@ -759,7 +759,7 @@ export default function DifferentialDiagnosticsPage() {
                                         </div>
 
                                         {/* Psychological Edge Cube */}
-                                        <div className="bg-[#1A1A1A] p-8 rounded-[2rem] border border-[#D4A574]/10 shadow-xl">
+                                        <div className="bg-[#1A1A1A] p-8 rounded-2xl border border-[#D4A574]/10 shadow-xl">
                                             <h4 className="text-[9px] font-bold tracking-[0.3em] uppercase text-[#D4A574]/60 mb-6">Psychological Edge</h4>
                                             <div className="text-xl font-bold tracking-widest text-[#D4A574] mb-2 uppercase">
                                                 {result.matrix_cubes.psychological_edge.trigger}
@@ -770,7 +770,7 @@ export default function DifferentialDiagnosticsPage() {
                                         </div>
 
                                         {/* Fatigue Differential Cube */}
-                                        <div className="bg-[#1A1A1A] p-8 rounded-[2rem] border border-[#D4A574]/10 shadow-xl">
+                                        <div className="bg-[#1A1A1A] p-8 rounded-2xl border border-[#D4A574]/10 shadow-xl">
                                             <h4 className="text-[9px] font-bold tracking-[0.3em] uppercase text-[#D4A574]/60 mb-6">Fatigue Differential</h4>
                                             <div className="text-3xl font-light tracking-tighter text-white mb-2 uppercase">
                                                 {result.matrix_cubes.fatigue_differential.longevity_delta}
@@ -1050,7 +1050,7 @@ function AssetSelectorPanel({
     onOpenDrawer: () => void
 }) {
     return (
-        <div className="flex-1 bg-white/80 border border-[#E7DED1] rounded-[2.2rem] overflow-hidden min-h-[480px] relative transition-all duration-500 hover:border-[#D4A574]/45 group shadow-sm">
+        <div className="flex-1 bg-white/80 border border-[#E7DED1] rounded-2xl overflow-hidden min-h-[480px] relative transition-all duration-500 hover:border-[#D4A574]/45 group shadow-sm">
             {/* Background Media View */}
             {selected && (
                 <div className="absolute inset-0">
@@ -1064,7 +1064,7 @@ function AssetSelectorPanel({
 
             {/* Panel UI Layer */}
             <div className="relative z-10 w-full h-full p-12 flex flex-col justify-between">
-                <div className="inline-flex max-w-[300px] flex-col gap-3 rounded-[1.2rem] border border-[#D4A574]/35 bg-[#FBF7EF]/62 px-4 py-3 shadow-[0_10px_30px_rgba(20,20,20,0.16)] backdrop-blur-md">
+                <div className="inline-flex max-w-[300px] flex-col gap-3 rounded-xl border border-[#D4A574]/35 bg-[#FBF7EF]/62 px-4 py-3 shadow-[0_10px_30px_rgba(20,20,20,0.16)] backdrop-blur-md">
                     <h3 className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]">
                         {label}
                     </h3>

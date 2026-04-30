@@ -316,7 +316,7 @@ export default function MechanicIntelligenceClient({
                     </p>
                 </div>
 
-                <div className="mt-8 flex flex-col gap-4 rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm md:flex-row md:items-end md:justify-between">
+                <div className="mt-8 flex flex-col gap-4 rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm md:flex-row md:items-end md:justify-between">
                     <div className="space-y-3">
                         <div className="grid gap-4 md:grid-cols-2">
                             <label className="min-w-[190px]">
@@ -369,7 +369,7 @@ export default function MechanicIntelligenceClient({
 
                 {!hasAccess ? (
                     <div className="mt-8 space-y-8">
-                        <div className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-8 shadow-sm">
+                        <div className="rounded-2xl border border-[#D4A574]/18 bg-white p-8 shadow-sm">
                             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Premium Intelligence Preview</p>
                             <h2 className="mt-4 text-3xl font-light uppercase tracking-tight text-[#1A1A1A]">Market Pulse is reserved for Agency Sovereignty and Enterprise</h2>
                             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
@@ -396,44 +396,44 @@ export default function MechanicIntelligenceClient({
                                 </a>
                             </div>
                             <div className="mt-6 grid gap-3 md:grid-cols-3">
-                                <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                <div className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                     <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">Unlock at 20 assets</p>
                                     <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">Mechanic velocity becomes directionally reliable instead of anecdotal.</p>
                                 </div>
-                                <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                <div className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                     <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">What changes</p>
                                     <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">Audit trails, anomaly flags, and category-level signal mapping come online.</p>
                                 </div>
-                                <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                <div className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                     <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">Why it matters</p>
                                     <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">You stop reading isolated ads and start reading category movement.</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="relative overflow-hidden rounded-[2rem] border border-[#D4A574]/18 bg-white p-8 shadow-sm">
+                        <div className="relative overflow-hidden rounded-2xl border border-[#D4A574]/18 bg-white p-8 shadow-sm">
                             <div className="pointer-events-none select-none blur-[2.5px] opacity-70">
                                 <div className="grid gap-6 md:grid-cols-3">
-                                    <div className="rounded-[2rem] border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
+                                    <div className="rounded-2xl border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
                                         <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Assets Sampled</p>
                                         <p className="mt-4 text-4xl font-light text-[#1A1A1A]">{LOCKED_PREVIEW.assetCount}</p>
                                     </div>
-                                    <div className="rounded-[2rem] border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
+                                    <div className="rounded-2xl border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
                                         <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Avg Persuasion Density</p>
                                         <p className="mt-4 text-4xl font-light text-[#1A1A1A]">{LOCKED_PREVIEW.category_persuasion_benchmark.avg_density}%</p>
                                     </div>
-                                    <div className="rounded-[2rem] border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
+                                    <div className="rounded-2xl border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
                                         <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Avg Cognitive Friction</p>
                                         <p className="mt-4 text-4xl font-light text-[#1A1A1A]">{LOCKED_PREVIEW.category_persuasion_benchmark.avg_friction}%</p>
                                     </div>
                                 </div>
 
                                 <div className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-                                    <section className="rounded-[2rem] border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
+                                    <section className="rounded-2xl border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
                                         <p className="border-b border-[#D4A574]/12 pb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Mechanic Velocity</p>
                                         <div className="mt-6 space-y-4">
                                             {LOCKED_PREVIEW.mechanic_velocity.map((item) => (
-                                                <div key={item.mechanic} className="rounded-[1.5rem] border border-[#D4A574]/12 bg-white p-4">
+                                                <div key={item.mechanic} className="rounded-xl border border-[#D4A574]/12 bg-white p-4">
                                                     <div className="flex items-start justify-between gap-4">
                                                         <div>
                                                             <p className="text-sm font-semibold uppercase tracking-[0.06em] text-[#1A1A1A]">{item.mechanic}</p>
@@ -451,11 +451,11 @@ export default function MechanicIntelligenceClient({
                                         </div>
                                     </section>
 
-                                    <section className="rounded-[2rem] border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
+                                    <section className="rounded-2xl border border-[#D4A574]/18 bg-[#FBFBF6] p-6">
                                         <p className="border-b border-[#D4A574]/12 pb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Anomaly & Gap Intelligence</p>
                                         <div className="mt-6 space-y-4">
                                             {LOCKED_PREVIEW.intelligence_flags.map((flag, index) => (
-                                                <div key={`${flag.type}-${index}`} className="rounded-[1.5rem] border border-[#D4A574]/12 bg-white p-4">
+                                                <div key={`${flag.type}-${index}`} className="rounded-xl border border-[#D4A574]/12 bg-white p-4">
                                                     <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B4513]/70">{flag.type}</p>
                                                     <p className="mt-3 text-sm leading-relaxed text-[#1A1A1A]">{flag.finding}</p>
                                                 </div>
@@ -466,7 +466,7 @@ export default function MechanicIntelligenceClient({
                             </div>
 
                             <div className="absolute inset-0 flex items-center justify-center bg-[#FBFBF6]/55">
-                                <div className="max-w-md rounded-[2rem] border border-[#D4A574]/30 bg-[#1A1A1A] p-8 text-center text-white shadow-2xl">
+                                <div className="max-w-md rounded-2xl border border-[#D4A574]/30 bg-[#1A1A1A] p-8 text-center text-white shadow-2xl">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Locked Preview</p>
                                     <h3 className="mt-4 text-2xl font-light uppercase tracking-tight">See the intelligence layer before you upgrade</h3>
                                     <p className="mt-4 text-sm leading-relaxed text-white/70">
@@ -477,17 +477,17 @@ export default function MechanicIntelligenceClient({
                         </div>
                     </div>
                 ) : loading ? (
-                    <div className="mt-8 rounded-[2rem] border border-[#D4A574]/18 bg-white px-8 py-16 text-center shadow-sm">
+                    <div className="mt-8 rounded-2xl border border-[#D4A574]/18 bg-white px-8 py-16 text-center shadow-sm">
                         <Loader2 className="mx-auto h-8 w-8 animate-spin text-[#D4A574]" />
                         <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.32em] text-[#8B4513]">Synthesising category motion</p>
                     </div>
                 ) : error ? (
-                    <div className="mt-8 rounded-[2rem] border border-[#D4A574]/18 bg-white px-8 py-10 shadow-sm">
+                    <div className="mt-8 rounded-2xl border border-[#D4A574]/18 bg-white px-8 py-10 shadow-sm">
                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Market Pulse Interrupted</p>
                         <p className="mt-4 text-sm leading-relaxed text-[#6B6B6B]">{error}</p>
                     </div>
                 ) : belowVolumeThreshold && data ? (
-                    <div className="mt-8 rounded-[2rem] border border-[#D4A574]/18 bg-white px-8 py-14 text-center shadow-sm">
+                    <div className="mt-8 rounded-2xl border border-[#D4A574]/18 bg-white px-8 py-14 text-center shadow-sm">
                         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Intelligence Dashboard</p>
                         <h2 className="mt-4 text-3xl font-light uppercase tracking-tight text-[#1A1A1A]">Trend analysis unlocks at 20 assets</h2>
                         <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-[#6B6B6B]">
@@ -505,7 +505,7 @@ export default function MechanicIntelligenceClient({
                                 {GATE_PREVIEW_CARDS.map((card) => (
                                     <div
                                         key={card.label}
-                                        className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4 opacity-75"
+                                        className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4 opacity-75"
                                     >
                                         <div className="pointer-events-none select-none blur-[0.8px]">
                                             <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">
@@ -548,15 +548,15 @@ export default function MechanicIntelligenceClient({
                             </a>
                         </div>
                         <div className="mx-auto mt-8 grid max-w-4xl gap-3 text-left md:grid-cols-3">
-                            <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                            <div className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                 <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">Unlock at 20 assets</p>
                                 <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">Reliable mechanic velocity, category trigger pressure, and stronger comparative benchmarks.</p>
                             </div>
-                            <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                            <div className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                 <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">Next action</p>
                                 <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">Feed the vault with more competitive assets so the signal field becomes usable for real decisions.</p>
                             </div>
-                            <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                            <div className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                 <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#8B4513]/70">Why threshold exists</p>
                                 <p className="mt-2 text-[13px] leading-relaxed text-[#5E5A53]">Below 20 assets, pattern shifts are too thin to separate emerging mechanics from noise.</p>
                             </div>
@@ -565,18 +565,18 @@ export default function MechanicIntelligenceClient({
                 ) : data ? (
                     <div className="mt-8 space-y-8">
                         <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-                            <section className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                            <section className="rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Executive Readout</p>
                                 <div className="mt-5 grid gap-4 md:grid-cols-3">
-                                    <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                    <div className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                         <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Scope</p>
                                         <p className="mt-3 text-lg font-semibold uppercase tracking-[0.04em] text-[#1A1A1A]">{reportSectorLabel}</p>
                                     </div>
-                                    <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                    <div className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                         <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Signal Depth</p>
                                         <p className="mt-3 text-lg font-semibold uppercase tracking-[0.04em] text-[#1A1A1A]">{reportDepthLabel}</p>
                                     </div>
-                                    <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                    <div className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                         <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Export Snapshot</p>
                                         <p className="mt-3 text-lg font-semibold uppercase tracking-[0.04em] text-[#1A1A1A]">{reportDate}</p>
                                     </div>
@@ -601,7 +601,7 @@ export default function MechanicIntelligenceClient({
 
                         <div className="grid gap-4 md:grid-cols-3">
                             {data.dominant_mechanics.slice(0, 3).map((mechanic, index) => (
-                                <div key={mechanic.mechanic} className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-5 shadow-sm">
+                                <div key={mechanic.mechanic} className="rounded-2xl border border-[#D4A574]/18 bg-white p-5 shadow-sm">
                                     <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Dominant Mechanic {(index + 1).toString().padStart(2, '0')}</p>
                                     <p className="mt-4 text-lg font-semibold uppercase tracking-[0.04em] text-[#1A1A1A]">{mechanic.mechanic}</p>
                                     <p className="mt-3 text-[11px] uppercase tracking-[0.18em] text-[#6B6B6B]">{mechanic.share}% vault share · {mechanic.count} source assets</p>
@@ -610,15 +610,15 @@ export default function MechanicIntelligenceClient({
                         </div>
 
                         <div className="grid gap-6 md:grid-cols-3">
-                            <div className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                            <div className="rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm">
                                 <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Assets Sampled</p>
                                 <p className="mt-4 text-4xl font-light text-[#1A1A1A]">{data.assetCount}</p>
                             </div>
-                            <div className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                            <div className="rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm">
                                 <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Avg Persuasion Density</p>
                                 <p className="mt-4 text-4xl font-light text-[#1A1A1A]">{data.category_persuasion_benchmark.avg_density}%</p>
                             </div>
-                            <div className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                            <div className="rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm">
                                 <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Avg Cognitive Friction</p>
                                 <p className="mt-4 text-4xl font-light text-[#1A1A1A]">{data.category_persuasion_benchmark.avg_friction}%</p>
                                 <p className="mt-3 text-[10px] uppercase tracking-[0.16em] text-[#6B6B6B]">{data.category_persuasion_benchmark.your_rank}</p>
@@ -626,7 +626,7 @@ export default function MechanicIntelligenceClient({
                         </div>
 
                         <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-                            <section className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                            <section className="rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm">
                                 <div className="flex items-center justify-between gap-4 border-b border-[#D4A574]/12 pb-4">
                                     <div>
                                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Mechanic Velocity</p>
@@ -655,7 +655,7 @@ export default function MechanicIntelligenceClient({
 
                                 <div className="mt-6 space-y-4">
                                     {data.mechanic_velocity.length > 0 ? data.mechanic_velocity.map((item) => (
-                                        <div key={item.mechanic} className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                        <div key={item.mechanic} className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                             <div className="flex items-start justify-between gap-4">
                                                 <div>
                                                     <p className="text-sm font-semibold uppercase tracking-[0.06em] text-[#1A1A1A]">{item.mechanic}</p>
@@ -689,14 +689,14 @@ export default function MechanicIntelligenceClient({
                                             </div>
                                         </div>
                                     )) : (
-                                        <div className="rounded-[1.5rem] border border-dashed border-[#D4A574]/18 bg-[#FBFBF6] p-6 text-[11px] uppercase tracking-[0.16em] text-[#6B6B6B]">
+                                        <div className="rounded-xl border border-dashed border-[#D4A574]/18 bg-[#FBFBF6] p-6 text-[11px] uppercase tracking-[0.16em] text-[#6B6B6B]">
                                             Not enough recent assets to show mechanic velocity yet.
                                         </div>
                                     )}
                                 </div>
                             </section>
 
-                            <section className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                            <section className="rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm">
                                 <div className="border-b border-[#D4A574]/12 pb-4">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Trigger Distribution Radar</p>
                                     <p className="mt-2 text-sm leading-relaxed text-[#6B6B6B]">
@@ -769,7 +769,7 @@ export default function MechanicIntelligenceClient({
                                             const delta = trigger.value - baseline;
 
                                             return (
-                                                <div key={trigger.label} className="rounded-[1.25rem] border border-[#D4A574]/12 bg-[#FBFBF6] px-4 py-3">
+                                                <div key={trigger.label} className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] px-4 py-3">
                                                     <div className="flex items-center justify-between gap-4">
                                                         <button
                                                             onClick={() => setActiveTrigger(trigger.label)}
@@ -787,7 +787,7 @@ export default function MechanicIntelligenceClient({
                                     </div>
 
                                     {activeTrigger ? (
-                                        <div className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                        <div className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                             <div className="flex items-end justify-between gap-4 border-b border-[#D4A574]/12 pb-3">
                                                 <div>
                                                     <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Trigger Drivers</p>
@@ -801,7 +801,7 @@ export default function MechanicIntelligenceClient({
                                                     <a
                                                         key={`${activeTrigger}-${asset.id}`}
                                                         href={`/asset/${asset.id}`}
-                                                        className="rounded-[1.25rem] border border-[#D4A574]/12 bg-white px-4 py-3 transition-transform hover:-translate-y-0.5"
+                                                        className="rounded-xl border border-[#D4A574]/12 bg-white px-4 py-3 transition-transform hover:-translate-y-0.5"
                                                     >
                                                         <div className="flex items-center justify-between gap-4">
                                                             <div>
@@ -815,7 +815,7 @@ export default function MechanicIntelligenceClient({
                                                         </div>
                                                     </a>
                                                 )) : (
-                                                    <div className="rounded-[1.25rem] border border-dashed border-[#D4A574]/18 bg-white px-4 py-5 text-[11px] uppercase tracking-[0.16em] text-[#6B6B6B]">
+                                                    <div className="rounded-xl border border-dashed border-[#D4A574]/18 bg-white px-4 py-5 text-[11px] uppercase tracking-[0.16em] text-[#6B6B6B]">
                                                         Trigger-driver sources will appear here as more dossiers accumulate.
                                                     </div>
                                                 )}
@@ -827,7 +827,7 @@ export default function MechanicIntelligenceClient({
                         </div>
 
                         {activeMechanicData ? (
-                            <section id="mechanic-audit-trail" className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                            <section id="mechanic-audit-trail" className="rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm">
                                 <div className="flex flex-col gap-3 border-b border-[#D4A574]/12 pb-4 md:flex-row md:items-end md:justify-between">
                                     <div>
                                         <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Mechanic Audit Trail</p>
@@ -846,7 +846,7 @@ export default function MechanicIntelligenceClient({
                                         <a
                                             key={asset.id}
                                             href={`/asset/${asset.id}`}
-                                            className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-5 transition-transform hover:-translate-y-0.5"
+                                            className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-5 transition-transform hover:-translate-y-0.5"
                                         >
                                             <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">{asset.sector}</p>
                                             <p className="mt-4 text-lg font-semibold uppercase tracking-[0.04em] text-[#1A1A1A]">{asset.brand}</p>
@@ -861,11 +861,11 @@ export default function MechanicIntelligenceClient({
                         ) : null}
 
                         <div className="grid gap-6 xl:grid-cols-[1fr_1fr]">
-                            <section className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm xl:col-span-2">
+                            <section className="rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm xl:col-span-2">
                                 <p className="border-b border-[#D4A574]/12 pb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Anomaly & Gap Intelligence</p>
                                 <div className="mt-6 grid gap-4 md:grid-cols-3">
                                     {data.intelligence_flags.map((flag, index) => (
-                                        <div key={`${flag.type}-${index}`} className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-5">
+                                        <div key={`${flag.type}-${index}`} className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-5">
                                             <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B4513]/70">{flag.type}</p>
                                             <p className="mt-4 text-sm leading-relaxed text-[#1A1A1A]">{flag.finding}</p>
                                             <p className="mt-4 text-[11px] leading-relaxed text-[#6B6B6B]">{flag.recommendation}</p>
@@ -883,11 +883,11 @@ export default function MechanicIntelligenceClient({
                                 </div>
                             </section>
 
-                            <section className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                            <section className="rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm">
                                 <p className="border-b border-[#D4A574]/12 pb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Whitespace Opportunities</p>
                                 <div className="mt-6 space-y-4">
                                     {data.opportunity_gaps.map((gap, index) => (
-                                        <div key={`${gap}-${index}`} className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                        <div key={`${gap}-${index}`} className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                             <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/70">Gap {(index + 1).toString().padStart(2, '0')}</p>
                                             <p className="mt-3 text-sm leading-relaxed text-[#4A4A4A]">{gap}</p>
                                         </div>
@@ -895,11 +895,11 @@ export default function MechanicIntelligenceClient({
                                 </div>
                             </section>
 
-                            <section className="rounded-[2rem] border border-[#D4A574]/18 bg-white p-6 shadow-sm">
+                            <section className="rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm">
                                 <p className="border-b border-[#D4A574]/12 pb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B4513]">Chromatic Saturation</p>
                                 <div className="mt-6 grid grid-cols-2 gap-4">
                                     {data.chromatic_saturation.map((color) => (
-                                        <div key={color.hex} className="rounded-[1.5rem] border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
+                                        <div key={color.hex} className="rounded-xl border border-[#D4A574]/12 bg-[#FBFBF6] p-4">
                                             <div className="h-16 rounded-xl border border-black/5" style={{ backgroundColor: color.hex }} />
                                             <div className="mt-3 flex items-center justify-between gap-3">
                                                 <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#1A1A1A]">{color.hex}</span>

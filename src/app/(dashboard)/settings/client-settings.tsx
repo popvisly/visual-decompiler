@@ -93,9 +93,9 @@ function DossierCoverPreview({
         : 'Forensic Intelligence System';
 
     return (
-        <div className="rounded-[2rem] border border-[#D4A574]/20 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-[#D4A574]/20 bg-white p-5 shadow-sm">
             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574] mb-4">Live Dossier Preview</p>
-            <div className="relative overflow-hidden rounded-[1.75rem] border border-[#D4A574]/18 bg-[#F6F1E8] p-6 min-h-[520px] shadow-inner">
+            <div className="relative overflow-hidden rounded-2xl border border-[#D4A574]/18 bg-[#F6F1E8] p-6 min-h-[520px] shadow-inner">
                 <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(#D4A574_1px,transparent_1px),linear-gradient(90deg,#D4A574_1px,transparent_1px)] [background-size:28px_28px]" />
                 <div className="relative z-10 flex h-full flex-col">
                     <div className="flex items-start justify-between">
@@ -136,7 +136,7 @@ function DossierCoverPreview({
                         </p>
                     </div>
 
-                    <div className="mt-auto rounded-[1.5rem] border border-[#D4A574]/18 bg-white/55 p-5">
+                    <div className="mt-auto rounded-xl border border-[#D4A574]/18 bg-white/55 p-5">
                         <div className="h-1 w-24 rounded-full" style={{ backgroundColor: accent }} />
                         <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B7B62]">
                             Cover Accent
@@ -263,7 +263,7 @@ export default function SettingsClient({
                     <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
                         Configure the identity, logo, descriptor, and confidentiality language that appear across your white-labelled dossiers and premium client-facing exports.
                     </p>
-                    <div className="mt-6 inline-flex flex-col gap-3 rounded-[1.5rem] border border-[#D4A574]/16 bg-white/80 px-6 py-4 shadow-sm backdrop-blur-sm">
+                    <div className="mt-6 inline-flex flex-col gap-3 rounded-xl border border-[#D4A574]/16 bg-white/80 px-6 py-4 shadow-sm backdrop-blur-sm">
                         <div className="flex items-center gap-3">
                             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B7B62]">Current Plan</p>
                             <span className={`rounded-full border px-3 py-1 text-[9px] font-bold uppercase tracking-[0.24em] ${
@@ -282,7 +282,7 @@ export default function SettingsClient({
 
                 <form onSubmit={handleSave} className="grid gap-8 xl:grid-cols-[minmax(0,1.15fr)_420px]">
                     <div className="space-y-8">
-                        <div className="rounded-[2rem] border border-[#D4A574]/20 bg-[#141414] p-8 shadow-2xl">
+                        <div className="rounded-2xl border border-[#D4A574]/20 bg-[#141414] p-8 shadow-2xl">
                             <div className="grid gap-8 md:grid-cols-[1fr_132px] md:items-start">
                                 <div className="space-y-6">
                                     <SettingsField label="Agency Identity String">
@@ -290,7 +290,7 @@ export default function SettingsClient({
                                             type="text"
                                             value={agencyName}
                                             onChange={(e) => setAgencyName(e.target.value)}
-                                            className="w-full rounded-[1.5rem] border border-[#8B6A3D]/10 bg-transparent px-6 py-5 text-2xl font-light text-white outline-none transition-all placeholder:text-white/20 focus:border-[#D4A574]/60"
+                                            className="w-full rounded-xl border border-[#8B6A3D]/10 bg-transparent px-6 py-5 text-2xl font-light text-white outline-none transition-all placeholder:text-white/20 focus:border-[#D4A574]/60"
                                             placeholder="e.g., OMNI GLOBAL"
                                             required
                                         />
@@ -359,7 +359,7 @@ export default function SettingsClient({
                         </div>
 
                         <div className="grid gap-8 md:grid-cols-2">
-                            <div className="rounded-[2rem] border border-[#D4A574]/20 bg-white p-8 shadow-sm">
+                            <div className="rounded-2xl border border-[#D4A574]/20 bg-white p-8 shadow-sm">
                                 <SettingsField label="Absolute Primary Hex">
                                     <div className="flex items-center gap-5">
                                         <input
@@ -374,7 +374,7 @@ export default function SettingsClient({
                                 </SettingsField>
                             </div>
 
-                            <div className="rounded-[2rem] border border-[#D4A574]/20 bg-white p-8 shadow-sm">
+                            <div className="rounded-2xl border border-[#D4A574]/20 bg-white p-8 shadow-sm">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Sovereign Whitelabel Mode</p>
                                 <p className="mt-4 whitespace-pre-line text-[13px] leading-relaxed text-[#6B6B6B]">
                                     {`When enabled:
@@ -397,7 +397,7 @@ Your agency identity and logo must be configured above before enabling.`}
                             </div>
                         </div>
 
-                        <div className="rounded-[2rem] border border-[#D4A574]/20 bg-white p-8 shadow-sm">
+                        <div className="rounded-2xl border border-[#D4A574]/20 bg-white p-8 shadow-sm">
                             <div className="mb-8 border-b border-[#D4A574]/10 pb-5">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Dossier Identity</p>
                                 <p className="mt-3 text-sm leading-relaxed text-[#6B6B6B]">
@@ -414,7 +414,7 @@ Your agency identity and logo must be configured above before enabling.`}
                                         type="text"
                                         value={descriptor}
                                         onChange={(e) => setDescriptor(e.target.value)}
-                                        className="w-full rounded-[1.25rem] border border-[#E5E5E1] bg-[#FBFBF6] px-6 py-4 text-sm text-[#1A1A1A] outline-none transition-all focus:border-[#D4A574]"
+                                        className="w-full rounded-xl border border-[#E5E5E1] bg-[#FBFBF6] px-6 py-4 text-sm text-[#1A1A1A] outline-none transition-all focus:border-[#D4A574]"
                                         placeholder="e.g., Strategic Intelligence & Creative Consulting"
                                     />
                                 </SettingsField>
@@ -427,7 +427,7 @@ Your agency identity and logo must be configured above before enabling.`}
                                         type="email"
                                         value={contactEmail}
                                         onChange={(e) => setContactEmail(e.target.value)}
-                                        className="w-full rounded-[1.25rem] border border-[#E5E5E1] bg-[#FBFBF6] px-6 py-4 text-sm text-[#1A1A1A] outline-none transition-all focus:border-[#D4A574]"
+                                        className="w-full rounded-xl border border-[#E5E5E1] bg-[#FBFBF6] px-6 py-4 text-sm text-[#1A1A1A] outline-none transition-all focus:border-[#D4A574]"
                                         placeholder="hello@youragency.com"
                                     />
                                 </SettingsField>
@@ -439,13 +439,13 @@ Your agency identity and logo must be configured above before enabling.`}
                                     <textarea
                                         value={confidentialityNotice}
                                         onChange={(e) => setConfidentialityNotice(e.target.value)}
-                                        className="min-h-[150px] w-full rounded-[1.5rem] border border-[#E5E5E1] bg-[#FBFBF6] px-6 py-4 text-sm leading-relaxed text-[#1A1A1A] outline-none transition-all focus:border-[#D4A574]"
+                                        className="min-h-[150px] w-full rounded-xl border border-[#E5E5E1] bg-[#FBFBF6] px-6 py-4 text-sm leading-relaxed text-[#1A1A1A] outline-none transition-all focus:border-[#D4A574]"
                                     />
                                 </SettingsField>
                             </div>
                         </div>
 
-                        <div className="flex items-center justify-between gap-4 rounded-[1.5rem] border border-[#D4A574]/15 bg-white/70 px-6 py-5">
+                        <div className="flex items-center justify-between gap-4 rounded-xl border border-[#D4A574]/15 bg-white/70 px-6 py-5">
                             <div className="min-h-[20px]">
                                 {status === 'success' && (
                                     <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.24em] text-[#8B4513]">

@@ -252,7 +252,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                     <div className="w-full border-b border-[#D4A574]/15 pb-8 text-center md:pb-10">
                         <p className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#C1A67B]">Forensic Extraction System</p>
                         <h1 className="mt-4 text-[40px] font-semibold uppercase tracking-tight text-[#1A1A1A] md:text-[64px] md:leading-[0.94]">
-                            Analyse Ad Asset
+                            Analyze Ad Asset
                         </h1>
                         <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.24em] text-[#4A4A4A] md:text-[13px]">
                             Neural Ingestion &amp; Extraction Protocol v2.5
@@ -261,7 +261,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
 
                     <div className="mt-12 w-full max-w-4xl">
                         {observerLimitReached ? (
-                            <div className="rounded-[2rem] border border-[#D4A574]/20 bg-[#1A1A1A] p-10 text-center text-white shadow-2xl">
+                            <div className="rounded-2xl border border-[#D4A574]/20 bg-[#1A1A1A] p-10 text-center text-white shadow-2xl">
                                 <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Observer Limit Reached</p>
                                 <h2 className="mt-4 text-3xl font-light uppercase tracking-tight text-[#F5F5DC]">No further extractions this cycle</h2>
                                 <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-white/70">
@@ -280,7 +280,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                         ) : (
                             <>
                                 <div
-                                    className={`relative overflow-hidden rounded-[2.5rem] border-2 bg-[#1A1A1A] p-8 shadow-2xl transition-all duration-500 md:p-10 ${
+                                    className={`relative overflow-hidden rounded-2xl border-2 bg-[#1A1A1A] p-8 shadow-2xl transition-all duration-500 md:p-10 ${
                                         isDragging
                                             ? 'border-[#D4A574] shadow-[0_0_50px_rgba(212,165,116,0.15)]'
                                             : 'border-[#D4A574]/25'
@@ -321,7 +321,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
 
                                     {!isProcessing && stagedFile && (
                                         <div className="grid gap-8 md:grid-cols-[220px_1fr] md:items-center">
-                                            <div className="relative mx-auto aspect-[4/5] w-full max-w-[220px] overflow-hidden rounded-[1.75rem] border border-[#D4A574]/20 bg-white/5">
+                                            <div className="relative mx-auto aspect-[4/5] w-full max-w-[220px] overflow-hidden rounded-2xl border border-[#D4A574]/20 bg-white/5">
                                                 <Image
                                                     src={stagedFile.previewUrl}
                                                     alt={stagedFile.file.name}
@@ -424,7 +424,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                         )}
 
                         {error && (
-                            <div className="mt-5 flex items-start gap-3 rounded-[1.5rem] border border-red-500/20 bg-red-500/8 px-5 py-4 text-sm text-red-700">
+                            <div className="mt-5 flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/8 px-5 py-4 text-sm text-red-700">
                                 <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                                 <span>{error}</span>
                             </div>
@@ -437,7 +437,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                             {PROCESS_STEPS.map((step) => (
                                 <div
                                     key={step.number}
-                                    className="rounded-[1.6rem] border border-[rgba(212,165,116,0.16)] bg-[#1F1F1F] px-5 py-5"
+                                    className="rounded-2xl border border-[rgba(212,165,116,0.16)] bg-[#1F1F1F] px-5 py-5"
                                 >
                                     <div className="flex items-center gap-3">
                                         <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#4E3D2A] bg-[#171512] text-[18px] font-semibold leading-none text-[#D4A574]">
