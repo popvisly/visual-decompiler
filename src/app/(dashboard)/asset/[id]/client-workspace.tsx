@@ -1457,6 +1457,21 @@ function WorkspaceDecisionSummary({
     metrics = [],
     actions = [],
 }: WorkspaceDecisionSummaryProps) {
+    const metricsWithNextStep =
+        metrics.length > 0 && actions.length > 0
+            ? [
+                  ...metrics,
+                  {
+                      label: 'Next Step',
+                      value: (
+                          <span className="text-[13px] font-medium leading-relaxed text-[#141414]/80">
+                              {firstSentence(normalizeProseText(actions[0] || '')) || '—'}
+                          </span>
+                      ),
+                  },
+              ]
+            : metrics;
+
     return (
         <section className="mb-4 rounded-2xl border border-black/5 bg-white p-6 text-[#141414] shadow-sm">
             <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(240px,0.5fr)] xl:items-start">
@@ -1484,9 +1499,9 @@ function WorkspaceDecisionSummary({
                     ) : null}
                 </div>
 
-                {metrics.length > 0 ? (
+                {metricsWithNextStep.length > 0 ? (
                     <div className="grid gap-3 sm:grid-cols-3 xl:mt-1 xl:grid-cols-1">
-                        {metrics.map((metric) => (
+                        {metricsWithNextStep.map((metric) => (
                             <div key={metric.label} className="rounded-xl border border-black/5 bg-[#FCFBF9] px-4 py-4">
                                 <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/70">{metric.label}</p>
                                 <div className="mt-2 text-[15px] font-semibold leading-tight text-[#141414]">{metric.value}</div>
