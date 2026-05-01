@@ -76,6 +76,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
     const displayBrandName = agency?.is_whitelabel_active ? (agency.name || 'Decompiler') : 'Decompiler';
     const groups = ['Core', 'Intelligence', 'Settings'] as const;
+    const workflowSteps = ['Import', 'Diagnose', 'Compare', 'Decide'];
 
     return (
         <div className="flex min-h-screen bg-[#FBFBF6] text-[#1a1a1a]">
@@ -128,6 +129,32 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                             </div>
                         ))}
                     </nav>
+
+                    <details className="group mt-8 rounded-[1.25rem] border border-black/5 bg-[#FBFBF6] px-4 py-4">
+                        <summary className="flex cursor-pointer list-none items-center justify-between gap-3">
+                            <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/80">
+                                System Map
+                            </span>
+                            <span className="text-[13px] leading-none text-[#8B6A3D]/60 transition-transform group-open:rotate-45">
+                                +
+                            </span>
+                        </summary>
+                        <div className="mt-4 space-y-3">
+                            <div className="flex flex-wrap gap-2">
+                                {workflowSteps.map((step, index) => (
+                                    <span
+                                        key={step}
+                                        className="rounded-full border border-black/5 bg-white px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.16em] text-[#1A1A1A]/65"
+                                    >
+                                        {(index + 1).toString().padStart(2, '0')} {step}
+                                    </span>
+                                ))}
+                            </div>
+                            <p className="text-[10px] leading-5 text-[#6B6B6B]">
+                                Saved reads compound into Vault memory, route comparison, boards, and Market Pulse.
+                            </p>
+                        </div>
+                    </details>
                 </div>
 
                 {/* Footer / User Session */}

@@ -77,21 +77,6 @@ const GATE_PREVIEW_CARDS = [
     },
 ] as const;
 
-const MARKET_LAYER_CUES = [
-    {
-        label: 'Aggregate',
-        copy: 'Reads from the vault, not from isolated prompts.',
-    },
-    {
-        label: 'Detect',
-        copy: 'Shows which mechanics are gaining force, fatiguing, or leaving whitespace.',
-    },
-    {
-        label: 'Act',
-        copy: 'Packages category motion into boardroom-grade direction.',
-    },
-] as const;
-
 const LOCKED_PREVIEW: PulseResponse = {
     status: 'success',
     scope: 'Luxury Fragrance',
@@ -327,27 +312,8 @@ export default function MechanicIntelligenceClient({
                         Market Pulse Dashboard
                     </h1>
                     <p className="mt-4 max-w-4xl text-sm leading-relaxed text-[#6B6B6B]">
-                        Turn accumulated vault memory into category motion: what is accelerating, what is fatiguing, and where strategic whitespace is still open.
+                        Track which persuasion mechanics are accelerating or fading across your vault, where category saturation is building, and where strategic whitespace is still open.
                     </p>
-                </div>
-
-                <div className="mt-8 rounded-2xl border border-[#D4A574]/18 bg-[#141414] p-5 text-[#FBF7EF] shadow-xl">
-                    <div className="grid gap-4 md:grid-cols-[0.8fr_1fr_1fr_1fr]">
-                        <div className="border-b border-white/10 pb-4 md:border-b-0 md:border-r md:pb-0 md:pr-5">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Market Layer</p>
-                            <p className="mt-3 text-[13px] leading-relaxed text-white/60">
-                                This is where repeated analysis compounds into sector intelligence.
-                            </p>
-                        </div>
-                        {MARKET_LAYER_CUES.map((cue, index) => (
-                            <div key={cue.label} className="rounded-xl border border-white/8 bg-white/[0.035] p-4">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">
-                                    {(index + 1).toString().padStart(2, '0')} {cue.label}
-                                </p>
-                                <p className="mt-3 text-[13px] leading-relaxed text-white/68">{cue.copy}</p>
-                            </div>
-                        ))}
-                    </div>
                 </div>
 
                 <div className="mt-8 flex flex-col gap-4 rounded-2xl border border-[#D4A574]/18 bg-white p-6 shadow-sm md:flex-row md:items-end md:justify-between">

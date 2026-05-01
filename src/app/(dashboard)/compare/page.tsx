@@ -102,21 +102,6 @@ export default function DifferentialDiagnosticsPage() {
         'Synthesizing conversion impact',
     ];
 
-    const differentialSteps = [
-        {
-            label: 'Baseline',
-            copy: 'Load the control route from a completed dossier.',
-        },
-        {
-            label: 'Challenger',
-            copy: 'Place the competing direction beside it with the same diagnostic frame.',
-        },
-        {
-            label: 'Decision',
-            copy: 'Surface the stronger route, the tradeoffs, and the client-ready rationale.',
-        },
-    ];
-
     useEffect(() => {
         async function fetchWorkspaceContext() {
             const {
@@ -460,7 +445,7 @@ export default function DifferentialDiagnosticsPage() {
                                 Compare Routes
                             </h1>
                             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]">
-                                Put two saved dossiers through the same frame to see which route is stronger, where the tradeoffs sit, and what recommendation your team can defend.
+                                Pick two assets to see which route is stronger and why. Choose a clearly different Asset B so the comparison is useful.
                             </p>
                         </div>
 
@@ -500,29 +485,6 @@ export default function DifferentialDiagnosticsPage() {
                             </div>
                         </div>
                     )}
-                </div>
-
-                <div className="mb-12 rounded-2xl border border-[#D4A574]/18 bg-white/75 p-5 shadow-sm">
-                    <div className="grid gap-4 lg:grid-cols-[0.75fr_1fr_1fr_1fr]">
-                        <div className="rounded-xl bg-[#141414] p-5 text-[#FBF7EF]">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Differential Diagnostic</p>
-                            <p className="mt-3 text-[13px] leading-relaxed text-white/62">
-                                Comparison is the decision layer, not a loose second opinion.
-                            </p>
-                        </div>
-                        {differentialSteps.map((step, index) => (
-                            <div key={step.label} className="relative rounded-xl border border-[#D4A574]/14 bg-[#FBFBF6] p-5">
-                                {index < differentialSteps.length - 1 && (
-                                    <div className="pointer-events-none absolute left-[calc(100%+0.5rem)] top-1/2 hidden h-px w-3 -translate-y-1/2 bg-[#D4A574]/30 lg:block" />
-                                )}
-                                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#8B4513]/80">
-                                    {(index + 1).toString().padStart(2, '0')}
-                                </p>
-                                <h2 className="mt-3 text-lg font-semibold uppercase tracking-tight text-[#1A1A1A]">{step.label}</h2>
-                                <p className="mt-2 text-[13px] leading-relaxed text-[#6B6B6B]">{step.copy}</p>
-                            </div>
-                        ))}
-                    </div>
                 </div>
 
                 {/* Lab Panels Section */}

@@ -19,21 +19,6 @@ interface VaultAsset {
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-const MEMORY_CUES = [
-    {
-        label: 'Saved Dossier',
-        copy: 'Every completed extraction keeps its mechanic, sector, tags, and source asset attached.',
-    },
-    {
-        label: 'Reusable Evidence',
-        copy: 'Filter by brand, sector, mechanic, or tag when a future brief needs precedent.',
-    },
-    {
-        label: 'Compare Ready',
-        copy: 'Vault records are the inputs for route comparison, boards, and client-facing exports.',
-    },
-];
-
 const safeTrim = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
 
 const asStringArray = (value: unknown): string[] =>
@@ -273,7 +258,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                     transition={{ delay: 0.3 }}
                     className="mt-4 max-w-3xl text-sm leading-relaxed text-[#6B6B6B]"
                 >
-                    Every completed read becomes reusable memory for future comparisons, boards, and client decisions.
+                    Your ad analysis vault.
                 </motion.p>
                 <motion.p
                     initial={{ opacity: 0 }}
@@ -321,25 +306,6 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
             </motion.div>
         </div>
     </header>
-
-                <div className="mb-12 rounded-2xl border border-[#D4A574]/16 bg-[#141414] p-6 text-[#FBF7EF] shadow-xl">
-                    <div className="grid gap-5 md:grid-cols-[0.8fr_1fr_1fr_1fr] md:items-stretch">
-                        <div className="border-b border-white/10 pb-4 md:border-b-0 md:border-r md:pb-0 md:pr-5">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Vault Memory</p>
-                            <p className="mt-3 text-sm leading-relaxed text-white/58">
-                                The archive turns one-off analysis into a searchable evidence layer.
-                            </p>
-                        </div>
-                        {MEMORY_CUES.map((cue, index) => (
-                            <div key={cue.label} className="relative rounded-xl border border-white/8 bg-white/[0.035] p-4">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">
-                                    {(index + 1).toString().padStart(2, '0')} {cue.label}
-                                </p>
-                                <p className="mt-3 text-[13px] leading-relaxed text-white/68">{cue.copy}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
 
 
                 {/* Grid */}

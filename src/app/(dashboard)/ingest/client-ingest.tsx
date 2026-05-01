@@ -18,18 +18,18 @@ type StageFile = {
 const PROCESS_STEPS = [
     {
         number: '01',
-        label: 'Import',
-        description: 'Start with the live asset your team is actually judging.',
+        label: 'Drop Your Ad',
+        description: 'Upload the live asset your team actually needs to read.',
     },
     {
         number: '02',
-        label: 'Diagnose',
-        description: 'Mechanics, signals, and pressure points resolve into one dossier.',
+        label: 'Forensic Extraction',
+        description: 'Mechanics, signals, and pressure points land in one dossier.',
     },
     {
         number: '03',
-        label: 'Archive',
-        description: 'The completed read becomes reusable evidence for compare, boards, and client review.',
+        label: 'Retrieve From Vault',
+        description: 'Completed output is ready for compare, boards, and client review.',
     },
 ];
 
@@ -255,7 +255,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                             Analyze Ad Asset
                         </h1>
                         <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.24em] text-[#4A4A4A] md:text-[13px]">
-                            Import a source asset, diagnose the route, then archive the evidence.
+                            Neural Ingestion &amp; Extraction Protocol v2.5
                         </p>
                     </div>
 
@@ -434,19 +434,16 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
 
                     <div className="mt-10 w-full max-w-4xl">
                         <div className="grid gap-4 md:grid-cols-3">
-                            {PROCESS_STEPS.map((step, index) => (
+                            {PROCESS_STEPS.map((step) => (
                                 <div
                                     key={step.number}
-                                    className="relative rounded-2xl border border-[rgba(212,165,116,0.16)] bg-[#1F1F1F] px-5 py-5"
+                                    className="rounded-2xl border border-[rgba(212,165,116,0.16)] bg-[#1F1F1F] px-5 py-5"
                                 >
-                                    {index < PROCESS_STEPS.length - 1 && (
-                                        <div className="pointer-events-none absolute left-[calc(100%+0.5rem)] top-1/2 hidden h-px w-3 -translate-y-1/2 bg-[#D4A574]/30 md:block" />
-                                    )}
                                     <div className="flex items-center gap-3">
                                         <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#4E3D2A] bg-[#171512] text-[18px] font-semibold leading-none text-[#D4A574]">
                                             {step.number}
                                         </span>
-                                        <p className="text-[12px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">{step.label}</p>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#D4A574]">{step.label}</p>
                                     </div>
                                     <p className="mt-4 text-sm leading-6 text-[#D6D0C6]">{step.description}</p>
                                 </div>
