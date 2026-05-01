@@ -1458,44 +1458,42 @@ function WorkspaceDecisionSummary({
     actions = [],
 }: WorkspaceDecisionSummaryProps) {
     return (
-        <section className="mb-4 rounded-2xl border border-black/5 bg-[#141414] p-6 text-[#FBF7EF] shadow-[0_18px_50px_rgba(20,20,20,0.14)]">
-            <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(280px,0.72fr)] xl:items-start">
+        <section className="mb-4 rounded-2xl border border-black/5 bg-white p-6 text-[#141414] shadow-sm">
+            <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(240px,0.5fr)] xl:items-start">
                 <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">{eyebrow}</p>
-                    <h3 className="mt-4 max-w-[28ch] text-[24px] font-semibold uppercase leading-[0.98] tracking-[-0.02em] text-[#FBF7EF] md:text-[30px]">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#8B6A3D]/70">{eyebrow}</p>
+                    <h3 className="mt-4 max-w-[40ch] text-[22px] font-semibold uppercase leading-[0.98] tracking-[-0.02em] text-[#141414] md:text-[28px]">
                         {title}
                     </h3>
-                    <p className="mt-5 max-w-[72ch] text-[14px] font-medium leading-relaxed text-[#FBF7EF]/70">{body}</p>
-                </div>
-
-                <div className="grid gap-4">
-                    {metrics.length > 0 ? (
-                        <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
-                            {metrics.map((metric) => (
-                                <div key={metric.label} className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4">
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/85">{metric.label}</p>
-                                    <div className="mt-2 text-[16px] font-semibold leading-tight text-[#FBF7EF]">{metric.value}</div>
-                                </div>
-                            ))}
-                        </div>
-                    ) : null}
+                    <p className="mt-5 max-w-[76ch] text-[14px] font-medium leading-relaxed text-[#6B6B6B]">{body}</p>
 
                     {actions.length > 0 ? (
-                        <div className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4">
-                            <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D4A574]/85">Next Actions</p>
+                        <div className="mt-6 rounded-2xl border border-black/5 bg-[#FBFBF6] px-5 py-5">
+                            <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/70">Next Actions</p>
                             <div className="mt-4 space-y-3">
                                 {actions.map((action, index) => (
                                     <div key={`${action}-${index}`} className="flex items-start gap-3">
-                                        <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#D4A574]/30 text-[10px] font-bold text-[#D4A574]">
+                                        <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-black/10 text-[10px] font-bold text-[#8B6A3D]">
                                             {index + 1}
                                         </span>
-                                        <p className="text-[12px] font-medium leading-relaxed text-[#FBF7EF]/72">{action}</p>
+                                        <p className="text-[12px] font-medium leading-relaxed text-[#5E5A53]">{action}</p>
                                     </div>
                                 ))}
                             </div>
                         </div>
                     ) : null}
                 </div>
+
+                {metrics.length > 0 ? (
+                    <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
+                        {metrics.map((metric) => (
+                            <div key={metric.label} className="rounded-xl border border-black/5 bg-[#FCFBF9] px-4 py-4">
+                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/70">{metric.label}</p>
+                                <div className="mt-2 text-[15px] font-semibold leading-tight text-[#141414]">{metric.value}</div>
+                            </div>
+                        ))}
+                    </div>
+                ) : null}
             </div>
         </section>
     );
