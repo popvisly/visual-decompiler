@@ -2126,28 +2126,18 @@ export default function AssetWorkspace({
         blueprintData,
         decisionLogEntries,
     });
-    const sampleProofCards = [
-        {
-            label: 'Decision',
-            value: integratedRecommendation.decision,
-            body: firstSentence(integratedRecommendation.whyNow) || 'Recommendation resolved from evidence strength, strategic fit, and execution risk.',
-        },
-        {
-            label: 'Primary Mechanic',
-            value: extraction?.primary_mechanic || 'Mechanic pending',
-            body: 'The read names the persuasion system, then anchors every recommendation back to it.',
-        },
-        {
-            label: 'Evidence Index',
-            value: confidenceScore != null ? `${confidenceScore}/100` : integratedRecommendation.evidenceStrength,
-            body: 'Claims are tied to source-frame evidence, not a freeform opinion or one-off prompt.',
-        },
-    ];
     const sampleDifferenceItems = [
         'Fixed diagnostic modules',
         'Evidence anchors',
         'Decision rationale',
         'Exportable artifact',
+    ];
+    const sampleDecisionLead = firstSentence(integratedRecommendation.thesis) || integratedRecommendation.rationale;
+    const sampleDecisionBody = firstSentence(integratedRecommendation.whyNow) || 'Recommendation resolved from evidence strength, strategic fit, and execution risk.';
+    const sampleEvidenceRows = [
+        { label: 'Primary Mechanic', value: extraction?.primary_mechanic || 'Mechanic pending' },
+        { label: 'Evidence Index', value: confidenceScore != null ? `${confidenceScore}/100` : integratedRecommendation.evidenceStrength },
+        { label: 'Format', value: asset.type || 'Single Frame' },
     ];
     const marketPulseInterpretation = marketPulseData
         ? marketPulseBelowThreshold
@@ -3037,8 +3027,8 @@ export default function AssetWorkspace({
                     )}
                     {sampleMode && (
                         <section className="px-[clamp(16px,3vw,48px)] pt-8 md:pt-12">
-                            <div className="mx-auto grid max-w-[1500px] gap-5 rounded-[1.5rem] border border-black/5 bg-white/78 p-5 shadow-sm backdrop-blur-xl md:p-7 xl:grid-cols-[0.9fr_1.1fr]">
-                                <div className="rounded-[1.25rem] bg-[#141414] p-6 text-[#FBF7EF] md:p-8">
+                            <div className="mx-auto grid max-w-[1500px] overflow-hidden rounded-[1.5rem] border border-black/5 bg-white/78 shadow-sm backdrop-blur-xl xl:grid-cols-[0.88fr_1.12fr]">
+                                <div className="bg-[#141414] p-6 text-[#FBF7EF] md:p-8 xl:min-h-[440px]">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Sample Dossier</p>
                                     <h1 className="mt-5 max-w-[11ch] text-[42px] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-white md:text-[64px]">
                                         Proof Artifact
@@ -3063,28 +3053,34 @@ export default function AssetWorkspace({
                                     </div>
                                 </div>
 
-                                <div className="grid gap-4">
-                                    <div className="grid gap-3 md:grid-cols-3">
-                                        {sampleProofCards.map((card) => (
-                                            <div key={card.label} className="rounded-[1.1rem] border border-black/5 bg-[#FCFBF9] p-5">
-                                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/72">{card.label}</p>
-                                                <p className="mt-4 line-clamp-3 text-[20px] font-semibold uppercase leading-[0.98] tracking-tight text-[#141414]">
-                                                    {card.value}
-                                                </p>
-                                                <p className="mt-4 text-[12px] font-medium leading-5 text-[#6B6B6B]">{card.body}</p>
+                                <div className="grid gap-0 p-5 md:p-7 xl:grid-cols-[minmax(0,1fr)_280px]">
+                                    <div className="flex flex-col justify-between rounded-[1.1rem] bg-[#FBFBF6] p-6 md:p-8">
+                                        <div>
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B6A3D]/72">Executive Read</p>
+                                            <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+                                                <div>
+                                                    <p className="text-[13px] font-bold uppercase tracking-[0.24em] text-[#6B6B6B]">Recommended Decision</p>
+                                                    <p className="mt-3 text-[48px] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-[#141414] md:text-[72px]">
+                                                        {integratedRecommendation.decision}
+                                                    </p>
+                                                </div>
+                                                <div className="max-w-[38rem]">
+                                                    <p className="text-[20px] font-semibold leading-[1.22] tracking-tight text-[#141414] md:text-[24px]">
+                                                        {sampleDecisionLead}
+                                                    </p>
+                                                    <p className="mt-5 text-[14px] font-medium leading-7 text-[#6B6B6B]">
+                                                        {sampleDecisionBody}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        ))}
-                                    </div>
+                                        </div>
 
-                                    <div className="rounded-[1.1rem] border border-black/5 bg-[#FBFBF6] p-5">
-                                        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                                            <div>
-                                                <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#8B6A3D]/72">Why this is not generic AI chat</p>
-                                                <p className="mt-3 max-w-2xl text-[13px] font-medium leading-6 text-[#6B6B6B]">
-                                                    The output is organised into repeatable modules, evidence-backed recommendations, and an exportable dossier rather than a disposable response.
-                                                </p>
-                                            </div>
-                                            <div className="flex flex-wrap gap-2 md:justify-end">
+                                        <div className="mt-10 border-t border-black/5 pt-6">
+                                            <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#8B6A3D]/72">Why this is not generic AI chat</p>
+                                            <p className="mt-3 max-w-3xl text-[13px] font-medium leading-6 text-[#6B6B6B]">
+                                                The output is organised into repeatable modules, evidence-backed recommendations, and an exportable dossier rather than a disposable response.
+                                            </p>
+                                            <div className="mt-5 flex flex-wrap gap-2">
                                                 {sampleDifferenceItems.map((item) => (
                                                     <span
                                                         key={item}
@@ -3094,6 +3090,20 @@ export default function AssetWorkspace({
                                                     </span>
                                                 ))}
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-4 rounded-[1.1rem] border border-black/5 bg-white p-5 xl:ml-4 xl:mt-0">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B6A3D]/72">Evidence Rail</p>
+                                        <div className="mt-5 divide-y divide-black/5">
+                                            {sampleEvidenceRows.map((row) => (
+                                                <div key={row.label} className="py-4 first:pt-0 last:pb-0">
+                                                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#6B6B6B]/70">{row.label}</p>
+                                                    <p className="mt-2 text-[16px] font-semibold uppercase leading-[1.05] tracking-tight text-[#141414]">
+                                                        {row.value}
+                                                    </p>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
