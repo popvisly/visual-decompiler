@@ -1930,7 +1930,7 @@ export default function AssetWorkspace({
     sampleMode?: boolean,
 }) {
     const [asset, setAsset] = useState(initialAsset);
-    const [activeTab, setActiveTab] = useState<DossierTab>('ASSET CONTEXT');
+    const [activeTab, setActiveTab] = useState<DossierTab>(sampleMode ? 'QUALITY GATE' : 'ASSET CONTEXT');
     const [isGeneratingPacing, setIsGeneratingPacing] = useState(false);
     const [isGeneratingBlueprint, setIsGeneratingBlueprint] = useState(false);
     const [isGeneratingClone, setIsGeneratingClone] = useState(false);
@@ -2126,6 +2126,29 @@ export default function AssetWorkspace({
         blueprintData,
         decisionLogEntries,
     });
+    const sampleProofCards = [
+        {
+            label: 'Decision',
+            value: integratedRecommendation.decision,
+            body: firstSentence(integratedRecommendation.whyNow) || 'Recommendation resolved from evidence strength, strategic fit, and execution risk.',
+        },
+        {
+            label: 'Primary Mechanic',
+            value: extraction?.primary_mechanic || 'Mechanic pending',
+            body: 'The read names the persuasion system, then anchors every recommendation back to it.',
+        },
+        {
+            label: 'Evidence Index',
+            value: confidenceScore != null ? `${confidenceScore}/100` : integratedRecommendation.evidenceStrength,
+            body: 'Claims are tied to source-frame evidence, not a freeform opinion or one-off prompt.',
+        },
+    ];
+    const sampleDifferenceItems = [
+        'Fixed diagnostic modules',
+        'Evidence anchors',
+        'Decision rationale',
+        'Exportable artifact',
+    ];
     const marketPulseInterpretation = marketPulseData
         ? marketPulseBelowThreshold
             ? `This route has signal, but category context is still directional at ${marketPulseData.assetCount}/20 sampled assets. Use the read to guide action, not overclaim precision.`
@@ -3011,6 +3034,71 @@ export default function AssetWorkspace({
                                 Start Free
                             </a>
                         </div>
+                    )}
+                    {sampleMode && (
+                        <section className="px-[clamp(16px,3vw,48px)] pt-8 md:pt-12">
+                            <div className="mx-auto grid max-w-[1500px] gap-5 rounded-[1.5rem] border border-black/5 bg-white/78 p-5 shadow-sm backdrop-blur-xl md:p-7 xl:grid-cols-[0.9fr_1.1fr]">
+                                <div className="rounded-[1.25rem] bg-[#141414] p-6 text-[#FBF7EF] md:p-8">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">Sample Dossier</p>
+                                    <h1 className="mt-5 max-w-[11ch] text-[42px] font-semibold uppercase leading-[0.9] tracking-[-0.04em] text-white md:text-[64px]">
+                                        Proof Artifact
+                                    </h1>
+                                    <p className="mt-6 max-w-xl text-[15px] font-medium leading-7 text-white/66">
+                                        A live example of how Visual Decompiler turns a source ad into a structured, reviewable decision record your team can defend.
+                                    </p>
+                                    <div className="mt-7 flex flex-wrap gap-3">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleTabChange('QUALITY GATE')}
+                                            className="rounded-full bg-[#D4A574] px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#141414] transition-colors hover:bg-[#F5F5DC]"
+                                        >
+                                            Read Decision
+                                        </button>
+                                        <a
+                                            href="/ingest"
+                                            className="rounded-full border border-white/12 px-5 py-3 text-[10px] font-bold uppercase tracking-[0.22em] text-white/78 transition-colors hover:border-white/28 hover:bg-white/6"
+                                        >
+                                            Create Your Own
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div className="grid gap-4">
+                                    <div className="grid gap-3 md:grid-cols-3">
+                                        {sampleProofCards.map((card) => (
+                                            <div key={card.label} className="rounded-[1.1rem] border border-black/5 bg-[#FCFBF9] p-5">
+                                                <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/72">{card.label}</p>
+                                                <p className="mt-4 line-clamp-3 text-[20px] font-semibold uppercase leading-[0.98] tracking-tight text-[#141414]">
+                                                    {card.value}
+                                                </p>
+                                                <p className="mt-4 text-[12px] font-medium leading-5 text-[#6B6B6B]">{card.body}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="rounded-[1.1rem] border border-black/5 bg-[#FBFBF6] p-5">
+                                        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                            <div>
+                                                <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#8B6A3D]/72">Why this is not generic AI chat</p>
+                                                <p className="mt-3 max-w-2xl text-[13px] font-medium leading-6 text-[#6B6B6B]">
+                                                    The output is organised into repeatable modules, evidence-backed recommendations, and an exportable dossier rather than a disposable response.
+                                                </p>
+                                            </div>
+                                            <div className="flex flex-wrap gap-2 md:justify-end">
+                                                {sampleDifferenceItems.map((item) => (
+                                                    <span
+                                                        key={item}
+                                                        className="rounded-full border border-black/5 bg-white px-3 py-2 text-[9px] font-bold uppercase tracking-[0.16em] text-[#141414]/60"
+                                                    >
+                                                        {item}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     )}
                     <div ref={assetContextTopRef} className="vault-analysis-frame scroll-mt-[250px] md:scroll-mt-[210px]">
                     {/* Top Workspace Navigation */}
