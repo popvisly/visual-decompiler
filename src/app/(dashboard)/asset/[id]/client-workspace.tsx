@@ -3083,21 +3083,23 @@ export default function AssetWorkspace({
                                             title="Source Asset Workspace"
                                             intro="Review the live source ad, campaign metadata, and export actions before moving into analysis modules."
                                         />
-                                        <WorkspaceDecisionSummary
-                                            eyebrow="Case File"
-                                            title="Start from the source asset, then move into the read."
-                                            body="This workspace is the control layer for the live creative, metadata, export actions, and retrieval context. Resolve the basic asset record here before treating the analysis as presentation-ready."
-                                            metrics={[
-                                                { label: 'Status', value: extraction ? 'Processed' : 'Processing' },
-                                                { label: 'Format', value: asset.type || 'Single Frame' },
-                                                { label: 'Tags', value: `${asset.tags?.length || 0}/12 Applied` },
-                                            ]}
-                                            actions={[
-                                                'Confirm the source asset and campaign metadata are correct.',
-                                                'Add campaign, market, format, or audience tags for Vault retrieval.',
-                                                'Export or compare only after Quality Gate confirms decision confidence.',
-                                            ]}
-                                        />
+                                        {!sampleMode && (
+                                            <WorkspaceDecisionSummary
+                                                eyebrow="Case File"
+                                                title="Start from the source asset, then move into the read."
+                                                body="This workspace is the control layer for the live creative, metadata, export actions, and retrieval context. Resolve the basic asset record here before treating the analysis as presentation-ready."
+                                                metrics={[
+                                                    { label: 'Status', value: extraction ? 'Processed' : 'Processing' },
+                                                    { label: 'Format', value: asset.type || 'Single Frame' },
+                                                    { label: 'Tags', value: `${asset.tags?.length || 0}/12 Applied` },
+                                                ]}
+                                                actions={[
+                                                    'Confirm the source asset and campaign metadata are correct.',
+                                                    'Add campaign, market, format, or audience tags for Vault retrieval.',
+                                                    'Export or compare only after Quality Gate confirms decision confidence.',
+                                                ]}
+                                            />
+                                        )}
                                     </div>
 
                                     <div className="grid gap-4 items-start xl:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
