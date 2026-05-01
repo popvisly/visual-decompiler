@@ -132,7 +132,7 @@ export default function RepeatableWorkflowSection() {
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-4">
-                                            <p className="text-[15px] font-black uppercase tracking-[0.22em] text-[#8B6A3D]">
+                                            <p className="pt-0.5 text-[15px] font-black uppercase leading-[1.35] tracking-[0.22em] text-[#8B6A3D]">
                                                 {step.label}
                                             </p>
                                             <span className="h-px flex-1 bg-black/10" />
@@ -154,7 +154,7 @@ export default function RepeatableWorkflowSection() {
                         <div className="rounded-[24px] border border-black/5 bg-white p-6 shadow-sm">
                             <div className="flex items-center gap-3">
                                 <GitCompare className="h-5 w-5 text-[#8B6A3D]" />
-                                <p className="text-[15px] font-black uppercase tracking-[0.22em] text-[#8B6A3D]">Compounding advantage</p>
+                                <p className="pt-0.5 text-[15px] font-black uppercase leading-[1.35] tracking-[0.22em] text-[#8B6A3D]">Compounding advantage</p>
                             </div>
                             <p className="mt-5 text-[20px] font-semibold leading-tight tracking-tight text-[#141414]">
                                 Every analysis makes the next one easier to compare, defend, and turn into action.
