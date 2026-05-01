@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { Check, FileText, GitCompare, Library, Users } from 'lucide-react';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
@@ -11,11 +11,34 @@ import { PRICING, PRICING_COMPARISON_ROWS, PRICING_POSITIONING_LINES } from '@/l
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const PLAN_SUMMARIES = {
-    observer: ['5 analyses', '1 private workspace', 'No card required'],
-    strategic: ['250 analyses / cycle', '1 seat', 'Weekly creative work'],
-    professional: ['250 analyses / cycle', '3-5 seats', 'Shared Vault + Boards'],
-    agency: ['Custom volume', 'Up to 10 seats', 'White-label delivery'],
+    observer: ['5 full dossiers', 'Private vault memory', 'No card required'],
+    strategic: ['250 dossiers / cycle', 'Compare routes', 'Export decision artifacts'],
+    professional: ['250 dossiers / cycle', '3-5 seats', 'Shared Vault + Boards'],
+    agency: ['Custom volume', 'Up to 10 seats', 'White-label intelligence OS'],
 } as const;
+
+const WORKFLOW_VALUE = [
+    {
+        title: 'Structured Artifact',
+        body: 'Every analysis resolves into a dossier with evidence anchors, caveats, and decision language.',
+        icon: FileText,
+    },
+    {
+        title: 'Vault Memory',
+        body: 'Each saved read becomes reusable context for future work instead of disappearing into chat history.',
+        icon: Library,
+    },
+    {
+        title: 'Comparison Workflow',
+        body: 'Move from one-off critique to route comparison, stress testing, and clearer recommendation logic.',
+        icon: GitCompare,
+    },
+    {
+        title: 'Team Delivery',
+        body: 'Higher tiers turn the system into shared agency infrastructure: seats, boards, white-label exports, and client-ready output.',
+        icon: Users,
+    },
+] as const;
 
 function CheckItem({ children, tone = 'light' }: { children: React.ReactNode; tone?: 'light' | 'dark' }) {
     return (
@@ -86,6 +109,35 @@ export default function PricingPage() {
                                 {line}
                             </p>
                         ))}
+                    </div>
+
+                    <div className="mb-12 rounded-[28px] border border-black/5 bg-[#141414] p-6 text-[#FBF7EF] shadow-[0_24px_70px_rgba(20,20,20,0.14)] md:p-8">
+                        <div className="flex flex-col gap-5 border-b border-white/10 pb-6 md:flex-row md:items-end md:justify-between">
+                            <div>
+                                <p className="text-[10px] font-black uppercase tracking-[0.32em] text-[#D4A574]">What scales by tier</p>
+                                <h2 className="mt-4 max-w-[760px] text-[32px] font-black uppercase leading-[0.95] tracking-tight md:text-[46px]">
+                                    More workflow depth, not just more credits.
+                                </h2>
+                            </div>
+                            <p className="max-w-[390px] text-[13px] leading-relaxed text-white/60">
+                                The upgrade path follows the real operating model: artifact, memory, comparison, collaboration, and agency delivery.
+                            </p>
+                        </div>
+
+                        <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                            {WORKFLOW_VALUE.map((item) => {
+                                const Icon = item.icon;
+                                return (
+                                    <article key={item.title} className="rounded-[20px] border border-white/10 bg-white/[0.04] p-5">
+                                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-[#D4A574]">
+                                            <Icon className="h-4 w-4" />
+                                        </div>
+                                        <h3 className="mt-5 text-[13px] font-black uppercase tracking-[0.18em] text-[#D4A574]">{item.title}</h3>
+                                        <p className="mt-4 text-[13px] leading-[1.65] text-white/68">{item.body}</p>
+                                    </article>
+                                );
+                            })}
+                        </div>
                     </div>
 
                     <div className="grid gap-8 lg:grid-cols-4">

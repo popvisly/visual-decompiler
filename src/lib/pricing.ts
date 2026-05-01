@@ -10,11 +10,11 @@ export const PRICING = {
         whoItsFor: 'For practitioners who want to see real output before committing.',
         features: [
             '5 full analyses each cycle',
-            'All five intelligence surfaces',
+            'Full structured dossier workflow',
             'Primary mechanic read + Recommended Move',
             'Trigger distribution map',
             'Persuasion density score',
-            'Intelligence Vault (read-only, your 5 analyses)',
+            'Private Intelligence Vault memory',
             'Standard export (PDF dossier)',
         ],
     },
@@ -33,7 +33,7 @@ export const PRICING = {
         features: [
             '250 analyses each cycle',
             'Full Intelligence Vault access',
-            'Differential Diagnosis',
+            'Differential Diagnosis for route comparison',
             'Clone Engine',
             'Blueprint Tab',
             'Audience Tab',
@@ -60,6 +60,7 @@ export const PRICING = {
             '3-5 team seats',
             'Shared Intelligence Vault',
             'Shared Boards',
+            'Shared decision artifacts',
             'Team & Seats management',
             'Priority support',
         ],
@@ -104,7 +105,7 @@ export const PRICING_COMPARISON_ROWS = [
 ] as const;
 
 export const PRICING_POSITIONING_LINES = [
-    'Ad libraries show you what ads exist.',
-    'Social intelligence platforms show you what people say about brands.',
-    'Visual Decompiler tells you why the ad is working — and how to use that in the room.',
+    'AI chat can critique an ad once. Visual Decompiler turns the read into a structured workflow your team can reuse.',
+    'Each tier increases the depth of the artifact: dossier quality, vault memory, comparison, collaboration, and delivery.',
+    'You are not just buying more analyses. You are buying a clearer path from asset to evidence to decision.',
 ] as const;
