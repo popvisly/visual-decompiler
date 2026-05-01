@@ -3071,11 +3071,14 @@ export default function AssetWorkspace({
                     </div>
 
 
-                    <div ref={tabContentTopRef} className="scroll-mt-[250px] md:scroll-mt-[210px] pb-24 lg:pb-32">
+                    <div
+                        ref={tabContentTopRef}
+                        className="scroll-mt-[250px] px-[clamp(12px,1.6vw,24px)] md:scroll-mt-[210px] pb-24 lg:pb-32"
+                    >
                         {activeTab === 'ASSET CONTEXT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="flex flex-col gap-4">
-                                    <div className="px-6">
+                                    <div className="px-0">
                                         <WorkspaceTabHeader
                                             kicker="Asset"
                                             title="Source Asset Workspace"
@@ -3200,16 +3203,16 @@ export default function AssetWorkspace({
                         )}
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-                        {activeTab === 'QUALITY GATE' && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                {extraction ? (
-                                    <div className="flex flex-col gap-4">
-                                        <div className="px-6">
-                                            <WorkspaceTabHeader
-                                                kicker="Quality Gate"
-                                                title="Creative Decision Analysis"
-                                                intro="A structured read of decision quality based on evidence strength, strategic fit, and execution risk."
-                                            />
+	                        {activeTab === 'QUALITY GATE' && (
+	                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+	                                {extraction ? (
+	                                    <div className="flex flex-col gap-4">
+	                                        <div className="px-0">
+	                                            <WorkspaceTabHeader
+	                                                kicker="Quality Gate"
+	                                                title="Creative Decision Analysis"
+	                                                intro="A structured read of decision quality based on evidence strength, strategic fit, and execution risk."
+	                                            />
                                             {sampleMode && (
                                                 <div className="mt-4 rounded-2xl border border-black/5 bg-white/80 px-6 py-5 shadow-sm backdrop-blur">
                                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B6A3D]/75">Sample Context</p>
@@ -3415,7 +3418,7 @@ export default function AssetWorkspace({
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {extraction ? (
                                     <div className="flex flex-col gap-4">
-                                        <div className="px-6">
+                                        <div className="px-0">
                                             <WorkspaceTabHeader
                                                 kicker="INTELLIGENCE"
                                                 title="Strategic Insight Overview"
@@ -3559,16 +3562,16 @@ export default function AssetWorkspace({
                         )}
 
                         {/* TAB 2: SIGNALS (Technical Autopsy) */}
-                        {activeTab === 'SIGNALS' && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                {extraction?.full_dossier ? (
-                                    <div className="flex flex-col gap-4">
-                                        <div className="px-6">
-                                            <WorkspaceTabHeader
-                                                kicker="Pattern Extraction"
-                                                title="Mechanics"
-                                                intro="A structural decomposition of the signal stack and mechanic architecture—hooks, pacing, contrast, and attention-routing cues that drive response."
-                                            />
+	                        {activeTab === 'SIGNALS' && (
+	                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+	                                {extraction?.full_dossier ? (
+	                                    <div className="flex flex-col gap-4">
+	                                        <div className="px-0">
+	                                            <WorkspaceTabHeader
+	                                                kicker="Pattern Extraction"
+	                                                title="Mechanics"
+	                                                intro="A structural decomposition of the signal stack and mechanic architecture—hooks, pacing, contrast, and attention-routing cues that drive response."
+	                                            />
                                             <WorkspaceDecisionSummary
                                                 eyebrow="Mechanic Read"
                                                 title={extraction.primary_mechanic || 'Mechanic extraction is still resolving.'}
@@ -3690,7 +3693,7 @@ export default function AssetWorkspace({
                         {activeTab === 'SOCIAL CONTEXT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="flex flex-col gap-4">
-                                    <div className="px-6">
+                                    <div className="px-0">
                                         <WorkspaceTabHeader
                                             kicker="Social Context"
                                             title="Social-First Execution"
@@ -3794,7 +3797,7 @@ export default function AssetWorkspace({
                         {activeTab === 'CONSTRAINT MAP' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="flex flex-col gap-4">
-                                    <div className="px-6">
+                                    <div className="px-0">
                                         <WorkspaceTabHeader
                                             kicker="Operational Guardrails"
                                             title="Operational Guardrails & Constraint Map"
@@ -4019,7 +4022,7 @@ export default function AssetWorkspace({
                         {activeTab === 'MARKET PULSE' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="flex flex-col gap-4">
-                                    <div className="px-6">
+                                    <div className="px-0">
                                         <WorkspaceTabHeader
                                             kicker="Competitive Context"
                                             title="Market Pulse: Competitive Context"
@@ -4041,7 +4044,7 @@ export default function AssetWorkspace({
                                             ]}
                                         />
                                     </div>
-                                    <div className="space-y-6 px-6">
+                                    <div className="space-y-6">
                                         {!isSovereign ? (
                                             <div className="relative rounded-2xl border border-black/5 bg-white overflow-hidden shadow-sm">
                                                 <div className="absolute inset-0 z-10 backdrop-blur-sm bg-white/70 flex items-center justify-center">
@@ -4164,7 +4167,7 @@ export default function AssetWorkspace({
                         {activeTab === 'PSYCHOLOGY' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="flex flex-col gap-4">
-                                    <div className="px-6">
+                                    <div className="px-0">
                                         <WorkspaceTabHeader
                                             kicker="Cognitive Dynamics"
                                             title="Semiotic Channel Interceptions"
@@ -4497,7 +4500,7 @@ export default function AssetWorkspace({
                         {activeTab === 'BLUEPRINT' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="flex flex-col gap-4">
-                                    <div className="px-6">
+                                    <div className="px-0">
                                         <WorkspaceTabHeader
                                             kicker="Blueprint Logic"
                                             title="Blueprint Logic: Audit & Reproducibility"
@@ -4520,7 +4523,7 @@ export default function AssetWorkspace({
                                         />
                                     </div>
                                     {!blueprintData ? (
-                                        <div className="px-6">
+                                        <div className="px-0">
                                             <div className="flex flex-col items-center justify-center rounded-2xl border border-black/5 bg-white p-12 text-center text-[#1a1a1a] shadow-sm">
                                                 <div className="w-16 h-16 flex items-center justify-center border border-black/10 bg-[#D4A574]/10 mb-8 rounded-2xl">
                                                     <Sparkles className="w-6 h-6 text-[#8B6A3D]" />
@@ -4555,7 +4558,7 @@ export default function AssetWorkspace({
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="space-y-6 px-6">
+                                        <div className="space-y-6">
                                             <div className="flex flex-col gap-8 rounded-2xl border border-black/5 bg-white p-8 text-[#1a1a1a] md:flex-row md:items-center md:justify-between shadow-sm">
                                                 <div>
                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#8B6A3D]/80">Blueprint Trace Active · Vault Index</p>
@@ -4712,7 +4715,7 @@ export default function AssetWorkspace({
                         {activeTab === 'STRESS LAB' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="flex flex-col gap-4">
-                                    <div className="px-6">
+                                    <div className="px-0">
                                         <WorkspaceTabHeader
                                             kicker="Causal Intelligence"
                                             title="Stress Lab: Causal Intelligence"
@@ -4734,7 +4737,7 @@ export default function AssetWorkspace({
                                             ].filter(Boolean)}
                                         />
                                     </div>
-                                    <div className="space-y-6 px-6">
+                                    <div className="space-y-6">
                                         <div className="rounded-2xl border border-black/5 bg-white overflow-hidden shadow-sm">
                                             <div className="overflow-x-auto">
                                                 <table className="min-w-[960px] w-full table-fixed border-collapse">
@@ -4860,7 +4863,7 @@ export default function AssetWorkspace({
                         {activeTab === 'DECISION LOG' && (
                             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 <div className="flex flex-col gap-4">
-                                    <div className="px-6">
+                                    <div className="px-0">
                                         <WorkspaceTabHeader
                                             kicker="Audit Trail"
                                             title="Decision Log: Audit Trail"
@@ -4882,7 +4885,7 @@ export default function AssetWorkspace({
                                             ]}
                                         />
                                     </div>
-                                    <div className="grid gap-6 px-6 xl:grid-cols-[1.2fr_0.8fr]">
+                                    <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
                                         <div className="space-y-6">
                                             <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
                                                 <p className="mb-8 border-b border-black/5 pb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80">
