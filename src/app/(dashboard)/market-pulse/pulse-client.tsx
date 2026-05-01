@@ -306,7 +306,7 @@ export default function MechanicIntelligenceClient({
         <div className="relative min-h-screen bg-[#FBFBF6] px-8 py-10 md:px-12 md:py-14">
             <div className="pointer-events-none absolute inset-0 opacity-[0.02] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]" />
             <div className="relative z-10 mx-auto max-w-7xl">
-                <div className="border-b border-[#D4A574]/18 pb-8">
+                <div className="pb-8">
                     <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Mechanic Intelligence</p>
                     <h1 className="mt-4 text-4xl font-semibold uppercase tracking-tight text-[#1A1A1A] md:text-6xl">
                         Market Pulse Dashboard
