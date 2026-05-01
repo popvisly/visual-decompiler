@@ -1485,7 +1485,7 @@ function WorkspaceDecisionSummary({
                 </div>
 
                 {metrics.length > 0 ? (
-                    <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
+                    <div className="grid gap-3 sm:grid-cols-3 xl:mt-1 xl:grid-cols-1">
                         {metrics.map((metric) => (
                             <div key={metric.label} className="rounded-xl border border-black/5 bg-[#FCFBF9] px-4 py-4">
                                 <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/70">{metric.label}</p>
