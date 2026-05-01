@@ -438,7 +438,7 @@ export default function DifferentialDiagnosticsPage() {
             <div className="relative z-10 mx-auto max-w-[1600px] p-8 md:p-12 lg:p-16">
                 {/* Header Actions */}
                 <div className="flex flex-col gap-8 mb-8">
-                    <div className="flex flex-col gap-6 pb-8 md:flex-row md:items-end md:justify-between">
+                    <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                         <div>
                             <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Compare</p>
                             <h1 className="mt-4 text-4xl font-semibold uppercase tracking-tight text-[#1A1A1A] md:text-6xl">

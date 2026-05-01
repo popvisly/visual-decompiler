@@ -249,7 +249,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                 <div className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:40px_40px]" />
 
                 <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center">
-                    <div className="w-full pb-8 text-center md:pb-10">
+                    <div className="w-full text-center">
                         <p className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#C1A67B]">Forensic Extraction System</p>
                         <h1 className="mt-4 text-[40px] font-semibold uppercase tracking-tight text-[#1A1A1A] md:text-[64px] md:leading-[0.94]">
                             Analyze Ad Asset
@@ -259,7 +259,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                         </p>
                     </div>
 
-                    <div className="mt-12 w-full max-w-4xl">
+                    <div className="mt-10 w-full max-w-4xl">
                         {observerLimitReached ? (
                             <div className="rounded-2xl border border-[#D4A574]/20 bg-[#1A1A1A] p-10 text-center text-white shadow-2xl">
                                 <p className="text-[11px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">Observer Limit Reached</p>

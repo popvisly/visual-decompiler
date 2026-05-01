@@ -232,7 +232,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
 <div className="relative z-10 mx-auto max-w-7xl px-8 py-10 md:px-12 md:py-14">
     
     {/* Header */}
-    <header className="mb-12 pb-8">
+    <header className="mb-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-4xl">
                 <motion.p
