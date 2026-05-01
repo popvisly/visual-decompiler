@@ -84,7 +84,7 @@ export default function RepeatableWorkflowSection() {
 
                         <div className="mt-10 rounded-[24px] border border-black/5 bg-white p-5 shadow-sm">
                             <h3 className="text-[18px] font-semibold uppercase leading-tight tracking-tight text-[#141414]">
-                                Why this is not generic AI chat
+                                Visual Decompiler: superior to AI chat or agents
                             </h3>
 
                             <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-1">
