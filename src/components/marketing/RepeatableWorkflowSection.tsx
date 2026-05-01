@@ -82,9 +82,14 @@ export default function RepeatableWorkflowSection() {
                             </Link>
                         </div>
 
-                        <div className="mt-10 grid gap-4 rounded-[24px] border border-black/5 bg-white p-5 shadow-sm md:grid-cols-2 lg:grid-cols-1">
-                            <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#8B6A3D]/80">Generic AI chat</p>
+                        <div className="mt-10 rounded-[24px] border border-black/5 bg-white p-5 shadow-sm">
+                            <h3 className="text-[18px] font-semibold uppercase leading-tight tracking-tight text-[#141414]">
+                                Why this is not generic AI chat
+                            </h3>
+
+                            <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-1">
+                            <div className="rounded-[18px] border border-black/5 bg-[#FBFBF6] p-5">
+                                <p className="text-[13px] font-black uppercase tracking-[0.22em] text-[#8B6A3D]">Generic AI chat</p>
                                 <div className="mt-4 space-y-3">
                                     {CHAT_BOX_LIMITS.map((item) => (
                                         <p key={item} className="flex items-center gap-3 text-[13px] leading-relaxed text-[#6B6B6B]">
@@ -96,7 +101,7 @@ export default function RepeatableWorkflowSection() {
                             </div>
 
                             <div className="rounded-[18px] border border-black/5 bg-[#141414] p-5 text-[#FBF7EF]">
-                                <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#D4A574]">Visual Decompiler</p>
+                                <p className="text-[13px] font-black uppercase tracking-[0.22em] text-[#D4A574]">Visual Decompiler</p>
                                 <div className="mt-4 space-y-3">
                                     {VD_ADVANTAGES.map((item) => (
                                         <p key={item} className="flex items-center gap-3 text-[13px] leading-relaxed text-white/75">
@@ -106,10 +111,11 @@ export default function RepeatableWorkflowSection() {
                                     ))}
                                 </div>
                             </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="grid gap-5">
+                    <div className="relative grid gap-5 md:before:absolute md:before:left-[52px] md:before:top-8 md:before:bottom-[132px] md:before:w-px md:before:bg-[#D8CCB5]">
                         {WORKFLOW_STEPS.map((step, index) => {
                             const Icon = step.icon;
                             return (
@@ -119,35 +125,25 @@ export default function RepeatableWorkflowSection() {
                                     whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                                     viewport={{ once: true, margin: '-70px' }}
                                     transition={prefersReducedMotion ? undefined : { duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                                    className={`grid gap-5 rounded-[24px] border p-6 shadow-sm md:grid-cols-[auto_minmax(0,1fr)] ${
-                                        index === 1
-                                            ? 'border-[#8B6A3D]/18 bg-[#141414] text-[#FBF7EF] shadow-[0_24px_70px_rgba(20,20,20,0.16)]'
-                                            : 'border-black/5 bg-white'
-                                    }`}
+                                    className="relative z-10 grid gap-5 rounded-[24px] border border-black/5 bg-white p-6 shadow-sm md:grid-cols-[auto_minmax(0,1fr)]"
                                 >
-                                    <div
-                                        className={`flex h-14 w-14 items-center justify-center rounded-2xl border ${
-                                            index === 1
-                                                ? 'border-white/10 bg-white/5 text-[#D4A574]'
-                                                : 'border-black/5 bg-[#FBFBF6] text-[#8B6A3D]'
-                                        }`}
-                                    >
+                                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-black/5 bg-[#FBFBF6] text-[#8B6A3D]">
                                         <Icon className="h-5 w-5" />
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-4">
-                                            <p className={`text-[10px] font-black uppercase tracking-[0.3em] ${index === 1 ? 'text-[#D4A574]' : 'text-[#8B6A3D]/80'}`}>
+                                            <p className="text-[15px] font-black uppercase tracking-[0.22em] text-[#8B6A3D]">
                                                 {step.label}
                                             </p>
-                                            <span className={`h-px flex-1 ${index === 1 ? 'bg-white/10' : 'bg-black/5'}`} />
-                                            <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${index === 1 ? 'text-white/35' : 'text-black/25'}`}>
+                                            <span className="h-px flex-1 bg-black/10" />
+                                            <span className="rounded-full border border-[#D8CCB5] bg-[#FBFBF6] px-3 py-1 text-[13px] font-black uppercase tracking-[0.18em] text-[#8B6A3D]">
                                                 0{index + 1}
                                             </span>
                                         </div>
-                                        <h3 className={`mt-4 text-[24px] font-semibold uppercase leading-none tracking-tight ${index === 1 ? 'text-white' : 'text-[#141414]'}`}>
+                                        <h3 className="mt-4 text-[24px] font-semibold uppercase leading-none tracking-tight text-[#141414]">
                                             {step.title}
                                         </h3>
-                                        <p className={`mt-4 max-w-[62ch] text-[15px] leading-[1.72] ${index === 1 ? 'text-white/68' : 'text-[#6B6B6B]'}`}>
+                                        <p className="mt-4 max-w-[62ch] text-[15px] leading-[1.72] text-[#6B6B6B]">
                                             {step.body}
                                         </p>
                                     </div>
@@ -158,7 +154,7 @@ export default function RepeatableWorkflowSection() {
                         <div className="rounded-[24px] border border-black/5 bg-white p-6 shadow-sm">
                             <div className="flex items-center gap-3">
                                 <GitCompare className="h-5 w-5 text-[#8B6A3D]" />
-                                <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#8B6A3D]/80">Compounding advantage</p>
+                                <p className="text-[15px] font-black uppercase tracking-[0.22em] text-[#8B6A3D]">Compounding advantage</p>
                             </div>
                             <p className="mt-5 text-[20px] font-semibold leading-tight tracking-tight text-[#141414]">
                                 Every analysis makes the next one easier to compare, defend, and turn into action.
