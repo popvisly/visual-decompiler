@@ -1457,15 +1457,22 @@ function WorkspaceDecisionSummary({
     metrics = [],
     actions = [],
 }: WorkspaceDecisionSummaryProps) {
+    const cleanedNextStep = (() => {
+        const raw = firstSentence(normalizeProseText(actions[0] || '')) || '';
+        // Many of our action strings are written as imperative stack cues like "Lock Protect...".
+        // This trims repeated leading verbs so the quick-glance rail reads cleanly.
+        return raw.replace(/^(lock\s+protect|protect\s+lock|lock|protect)\s+/i, '');
+    })();
+
     const metricsWithNextStep =
         metrics.length > 0 && actions.length > 0
             ? [
                   ...metrics,
                   {
-                      label: 'Next Step',
+                      label: 'Priority Keep',
                       value: (
                           <span className="text-[13px] font-medium leading-relaxed text-[#141414]/80">
-                              {firstSentence(normalizeProseText(actions[0] || '')) || '—'}
+                              {cleanedNextStep ? `Protect ${cleanedNextStep.charAt(0).toLowerCase()}${cleanedNextStep.slice(1)}` : '—'}
                           </span>
                       ),
                   },
