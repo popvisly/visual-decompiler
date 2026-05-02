@@ -223,6 +223,7 @@ const SAMPLE_DOSSIER_TABS: readonly DossierTab[] = [
     'SOCIAL CONTEXT',
     'CONSTRAINT MAP',
     'BLUEPRINT',
+    'DECISION LOG',
 ] as const;
 
 const DOSSIER_TAB_LABELS: Record<DossierTab, string> = {
