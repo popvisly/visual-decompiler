@@ -149,8 +149,8 @@ export default async function SharedPortalPage({
                                 <div className="aspect-[3/4] relative rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-[#E7DED1] bg-white shadow-xl shadow-black/[0.02] transition-all group-hover:shadow-2xl group-hover:scale-[1.02]">
                                     <img src={ad.media_url} className="absolute inset-0 w-full h-full object-cover" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent pt-[50%] px-4 md:px-6 pb-6 flex flex-col justify-end">
-                                        <p className="text-[9px] md:text-[10px] font-bold text-accent uppercase tracking-widest mb-1 md:mb-2">{ad.brand || ad.brand_guess}</p>
-                                        <h3 className="text-lg md:text-xl font-light text-white uppercase leading-tight">{ad.digest?.extraction?.on_screen_copy?.primary_headline || 'Untitled'}</h3>
+                                        <p className="text-[9px] md:text-[10px] font-bold text-accent uppercase tracking-[0.24em] mb-1 md:mb-2">{ad.brand || ad.brand_guess}</p>
+                                        <h3 className="text-lg md:text-xl font-medium text-white uppercase leading-tight">{ad.digest?.extraction?.on_screen_copy?.primary_headline || 'Untitled'}</h3>
                                     </div>
                                 </div>
                             </div>

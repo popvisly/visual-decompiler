@@ -106,15 +106,15 @@ export default function UnifiedSovereignHeader({
                                 {navItems.map((p) => {
                                     const active = p.href === '/' ? pathname === '/' : pathname.startsWith(p.href);
                                     return (
-                                        <Link
-                                            key={p.key}
-                                            href={p.href}
-                                            className={`
-                                                relative px-2 py-2 text-[10px] font-black uppercase tracking-[0.25em]
-                                                transition-colors duration-500
-                                                ${active
-                                                    ? forceDark ? 'text-white' : 'text-[#141414]'
-                                                    : forceDark ? 'text-white/40 hover:text-white' : 'text-[#8A8A84] hover:text-[#141414]'
+	                                        <Link
+	                                            key={p.key}
+	                                            href={p.href}
+	                                            className={`
+	                                                relative px-2 py-2 text-[10px] font-bold uppercase tracking-[0.24em]
+	                                                transition-colors duration-500
+	                                                ${active
+	                                                    ? forceDark ? 'text-white' : 'text-[#141414]'
+	                                                    : forceDark ? 'text-white/40 hover:text-white' : 'text-[#8A8A84] hover:text-[#141414]'
                                                 }
                                             `}
                                         >
@@ -132,50 +132,50 @@ export default function UnifiedSovereignHeader({
                     {/* ── Right: Utility Bar ── */}
                     <div className="flex flex-1 items-center justify-end gap-4">
                         <div className="hidden lg:flex items-center gap-3">
-                            {isAuthenticated ? (
-                                <Link
-                                    href="/vault"
-                                    className={`group relative overflow-hidden rounded-full px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.24em] transition-colors duration-500 ${
-                                        forceDark
-                                            ? 'border border-white/10 bg-white/5 text-white/75 hover:bg-white/10 hover:text-white'
-                                            : 'border border-black/10 bg-white/50 text-black/70 hover:bg-white hover:text-black'
-                                    }`}
+	                            {isAuthenticated ? (
+	                                <Link
+	                                    href="/vault"
+	                                    className={`group relative overflow-hidden rounded-full px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.22em] transition-colors duration-500 ${
+	                                        forceDark
+	                                            ? 'border border-white/10 bg-white/5 text-white/75 hover:bg-white/10 hover:text-white'
+	                                            : 'border border-black/10 bg-white/50 text-black/70 hover:bg-white hover:text-black'
+	                                    }`}
                                 >
                                     Vault
                                 </Link>
                             ) : null}
-                            {primaryCta ? (
-                                <Link
-                                    href={primaryCta.href}
-                                    className={`group relative overflow-hidden rounded-full px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.24em] transition-colors duration-500 ${
-                                        forceDark 
-                                        ? 'border border-white/10 bg-white text-black hover:bg-[#FBF7EF]'
-                                        : 'border border-black/10 bg-[#141414] text-[#FBF7EF] hover:bg-black'
-                                    }`}
+	                            {primaryCta ? (
+	                                <Link
+	                                    href={primaryCta.href}
+	                                    className={`group relative overflow-hidden rounded-full px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.22em] transition-colors duration-500 ${
+	                                        forceDark 
+	                                        ? 'border border-white/10 bg-white text-black hover:bg-[#FBF7EF]'
+	                                        : 'border border-black/10 bg-[#141414] text-[#FBF7EF] hover:bg-black'
+	                                    }`}
                                 >
                                     {primaryCta.label}
                                 </Link>
                             ) : isAuthenticated === null ? (
                                 <div className={`h-[40px] w-[140px] border ${forceDark ? 'border-[#8B6A3D]/10' : 'border-[#8B6A3D]/10'}`} />
-                            ) : isAuthenticated ? (
-                                <Link
-                                    href="/ingest"
-                                    className={`group relative overflow-hidden rounded-full px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.24em] transition-colors duration-500 ${
-                                        forceDark 
-                                        ? 'border border-white/10 bg-white text-black hover:bg-[#FBF7EF]'
-                                        : 'border border-black/10 bg-[#141414] text-[#FBF7EF] hover:bg-black'
-                                    }`}
+	                            ) : isAuthenticated ? (
+	                                <Link
+	                                    href="/ingest"
+	                                    className={`group relative overflow-hidden rounded-full px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.22em] transition-colors duration-500 ${
+	                                        forceDark 
+	                                        ? 'border border-white/10 bg-white text-black hover:bg-[#FBF7EF]'
+	                                        : 'border border-black/10 bg-[#141414] text-[#FBF7EF] hover:bg-black'
+	                                    }`}
                                 >
                                     Decompile an Ad
                                 </Link>
-                            ) : (
-                                <Link
-                                    href="/login"
-                                    className={`px-3 py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${
-                                        forceDark ? 'text-white/60 hover:text-white' : 'text-black/60 hover:text-black'
-                                    }`}
-                                >
-                                    Login
+	                            ) : (
+	                                <Link
+	                                    href="/login"
+	                                    className={`px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] transition-colors ${
+	                                        forceDark ? 'text-white/60 hover:text-white' : 'text-black/60 hover:text-black'
+	                                    }`}
+	                                >
+	                                    Login
                                 </Link>
                             )}
                         </div>
@@ -199,63 +199,63 @@ export default function UnifiedSovereignHeader({
                         </button>
                         
                         <div className="flex flex-col gap-8 text-center">
-                            {navItems.map((p) => (
-                                <Link
-                                    key={p.key}
-                                    href={p.href}
-                                    onClick={() => setMobileOpen(false)}
-                                    className={`text-[20px] font-black uppercase tracking-[0.2em] transition-colors ${
-                                        forceDark ? 'hover:text-[#D4A574]' : 'hover:text-[#8B6A3D]'
-                                    }`}
-                                >
-                                    {p.label}
-                                </Link>
+	                            {navItems.map((p) => (
+	                                <Link
+	                                    key={p.key}
+	                                    href={p.href}
+	                                    onClick={() => setMobileOpen(false)}
+	                                    className={`text-[20px] font-semibold uppercase tracking-[0.18em] transition-colors ${
+	                                        forceDark ? 'hover:text-[#D4A574]' : 'hover:text-[#8B6A3D]'
+	                                    }`}
+	                                >
+	                                    {p.label}
+	                                </Link>
                             ))}
 
                             <div className="mt-12 flex flex-col items-center gap-6">
-                                {isAuthenticated ? (
-                                    <Link
-                                        href="/vault"
-                                        onClick={() => setMobileOpen(false)}
-                                        className={`rounded-full px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] transition-colors ${
-                                            forceDark
-                                                ? 'border border-white/10 text-white hover:bg-white/10'
-                                                : 'border border-black/20 text-black hover:bg-black/5'
-                                        }`}
+	                                {isAuthenticated ? (
+	                                    <Link
+	                                        href="/vault"
+	                                        onClick={() => setMobileOpen(false)}
+	                                        className={`rounded-full px-10 py-5 text-[12px] font-bold uppercase tracking-[0.22em] transition-colors ${
+	                                            forceDark
+	                                                ? 'border border-white/10 text-white hover:bg-white/10'
+	                                                : 'border border-black/20 text-black hover:bg-black/5'
+	                                        }`}
                                     >
                                         Vault
                                     </Link>
                                 ) : null}
-                                {primaryCta ? (
-                                    <Link
-                                        href={primaryCta.href}
-                                        onClick={() => setMobileOpen(false)}
-                                        className={`rounded-full px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] ${
-                                            forceDark ? 'bg-white text-black' : 'bg-black text-white'
-                                        }`}
-                                    >
-                                        {primaryCta.label}
+	                                {primaryCta ? (
+	                                    <Link
+	                                        href={primaryCta.href}
+	                                        onClick={() => setMobileOpen(false)}
+	                                        className={`rounded-full px-10 py-5 text-[12px] font-bold uppercase tracking-[0.22em] ${
+	                                            forceDark ? 'bg-white text-black' : 'bg-black text-white'
+	                                        }`}
+	                                    >
+	                                        {primaryCta.label}
                                     </Link>
-                                ) : isAuthenticated ? (
-                                    <Link
-                                        href="/ingest"
-                                        onClick={() => setMobileOpen(false)}
-                                        className={`rounded-full px-10 py-5 text-[12px] font-black uppercase tracking-[0.2em] ${
-                                            forceDark ? 'bg-white text-black' : 'bg-black text-white'
-                                        }`}
-                                    >
-                                        Decompile an Ad
+	                                ) : isAuthenticated ? (
+	                                    <Link
+	                                        href="/ingest"
+	                                        onClick={() => setMobileOpen(false)}
+	                                        className={`rounded-full px-10 py-5 text-[12px] font-bold uppercase tracking-[0.22em] ${
+	                                            forceDark ? 'bg-white text-black' : 'bg-black text-white'
+	                                        }`}
+	                                    >
+	                                        Decompile an Ad
                                     </Link>
-                                ) : (
-                                    <Link
-                                        href="/login"
-                                        onClick={() => setMobileOpen(false)}
-                                        className="text-[12px] font-black uppercase tracking-[0.2em] underline underline-offset-8"
-                                    >
-                                        Login
-                                    </Link>
-                                )}
-                            </div>
+	                                ) : (
+	                                    <Link
+	                                        href="/login"
+	                                        onClick={() => setMobileOpen(false)}
+	                                        className="text-[12px] font-bold uppercase tracking-[0.22em] underline underline-offset-8"
+	                                    >
+	                                        Login
+	                                    </Link>
+	                                )}
+	                            </div>
                         </div>
                     </div>
                 )}
