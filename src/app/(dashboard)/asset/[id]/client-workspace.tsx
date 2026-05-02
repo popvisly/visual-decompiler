@@ -1458,31 +1458,9 @@ function WorkspaceDecisionSummary({
     metrics = [],
     actions = [],
 }: WorkspaceDecisionSummaryProps) {
-    const cleanedNextStep = (() => {
-        const raw = firstSentence(normalizeProseText(actions[0] || '')) || '';
-        // Many of our action strings are written as imperative stack cues like "Lock Protect...".
-        // This trims repeated leading verbs so the quick-glance rail reads cleanly.
-        return raw.replace(/^(lock\s+protect|protect\s+lock|lock|protect)\s+/i, '');
-    })();
-
-    const metricsWithNextStep =
-        metrics.length > 0 && actions.length > 0
-            ? [
-                  ...metrics,
-                  {
-                      label: 'Priority Keep',
-                      value: (
-                          <span className="text-[13px] font-medium leading-relaxed text-[#141414]/80">
-                              {cleanedNextStep ? `Protect ${cleanedNextStep.charAt(0).toLowerCase()}${cleanedNextStep.slice(1)}` : '—'}
-                          </span>
-                      ),
-                  },
-              ]
-            : metrics;
-
     return (
         <section className="mb-4 rounded-2xl border border-black/5 bg-white p-6 text-[#141414] shadow-sm">
-            <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(240px,0.5fr)] xl:items-start">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.52fr)] lg:items-start">
                 <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#8B6A3D]/70">{eyebrow}</p>
                     <h3 className="mt-4 max-w-[40ch] text-[22px] font-semibold uppercase leading-[0.98] tracking-[-0.02em] text-[#141414] md:text-[28px]">
@@ -1507,9 +1485,9 @@ function WorkspaceDecisionSummary({
                     ) : null}
                 </div>
 
-                {metricsWithNextStep.length > 0 ? (
-                    <div className="grid gap-3 sm:grid-cols-3 xl:mt-1 xl:grid-cols-1">
-                        {metricsWithNextStep.map((metric) => (
+                {metrics.length > 0 ? (
+                    <div className="grid gap-3 lg:mt-1">
+                        {metrics.map((metric) => (
                             <div key={metric.label} className="rounded-xl border border-black/5 bg-[#FCFBF9] px-4 py-4">
                                 <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/70">{metric.label}</p>
                                 <div className="mt-2 text-[15px] font-semibold leading-tight text-[#141414]">{metric.value}</div>
