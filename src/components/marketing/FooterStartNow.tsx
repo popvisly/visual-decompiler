@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, Plus, Minus } from 'lucide-react';
 import Logo from '@/components/Logo';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
+import { HOMEPAGE_CTA_ICON, MARKETING_PRIMARY_CTA_LG, MARKETING_SECONDARY_CTA_LG } from '@/components/marketing/ctaStyles';
 
 const FAQS = [
     {
@@ -108,14 +109,14 @@ export default function FooterStartNow() {
                 >
                     <a
                         href="/ingest"
-                        className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-[#141414] px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#FBF7EF] transition-all duration-300 ease-out hover:bg-black"
+                        className={MARKETING_PRIMARY_CTA_LG}
                     >
                         Start Free
-                        <ArrowUpRight size={16} />
+                        <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                     </a>
                     <a
                         href={SAMPLE_DOSSIER_HREF}
-                        className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-white px-8 py-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#141414] transition-all duration-300 ease-out hover:bg-[#F6F1E7]"
+                        className={MARKETING_SECONDARY_CTA_LG}
                     >
                         View Sample Dossier
                     </a>

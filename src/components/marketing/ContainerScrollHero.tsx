@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ContainerScroll } from '@/components/marketing/ContainerScroll';
+import { HOMEPAGE_CTA_ICON, MARKETING_PRIMARY_CTA_LG, MARKETING_SECONDARY_CTA_LG } from '@/components/marketing/ctaStyles';
 
 const STEPS = [
     {
@@ -62,17 +63,17 @@ export default function ContainerScrollHero() {
                             <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:items-center">
                                 <Link
                                     href="/ingest"
-                                    className="inline-flex items-center justify-center gap-3 rounded-full bg-[#141414] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.26em] text-[#FBF7EF] shadow-sm transition-all hover:bg-black active:scale-[0.99]"
+                                    className={MARKETING_PRIMARY_CTA_LG}
                                 >
                                     Start Free
-                                    <ArrowUpRight className="h-4 w-4" />
+                                    <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                                 </Link>
                                 <Link
                                     href="/share/sample-dossier"
-                                    className="inline-flex items-center justify-center gap-3 rounded-full border border-black/10 bg-white px-8 py-4 text-[11px] font-bold uppercase tracking-[0.26em] text-[#141414] shadow-sm transition-all hover:bg-[#FBFBF6] active:scale-[0.99]"
+                                    className={MARKETING_SECONDARY_CTA_LG}
                                 >
                                     View Sample Dossier
-                                    <ArrowUpRight className="h-4 w-4 text-[#8B6A3D]" />
+                                    <ArrowUpRight className={HOMEPAGE_CTA_ICON + ' text-[#8B6A3D]'} />
                                 </Link>
                             </div>
 

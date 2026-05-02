@@ -12,3 +12,11 @@ export const HOMEPAGE_TEXT_CTA =
 
 export const HOMEPAGE_CTA_ICON =
     'h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5';
+
+// Canonical marketing button styles (use these instead of bespoke inline classes).
+export const MARKETING_PRIMARY_CTA = HOMEPAGE_PRIMARY_CTA;
+export const MARKETING_SECONDARY_CTA = HOMEPAGE_SECONDARY_CTA;
+export const MARKETING_PRIMARY_CTA_LG =
+    'group inline-flex items-center justify-center gap-2 rounded-full border border-[#141414] bg-[#141414] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] shadow-sm transition-all duration-300 hover:bg-[#D4A574] hover:border-[#D4A574] hover:text-[#141414] active:scale-[0.99]';
+export const MARKETING_SECONDARY_CTA_LG =
+    'group inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-white px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-[#141414] shadow-sm transition-all duration-300 hover:bg-[#FBFBF6] active:scale-[0.99]';
