@@ -3237,18 +3237,20 @@ export default function AssetWorkspace({
                                                     </div>
                                                 </div>
                                             )}
-		                                            <WorkspaceDecisionSummary
-		                                                eyebrow="Decision Checkpoint"
-		                                                title={`${qualityVerdict} is the current system verdict.`}
-		                                                body={integratedRecommendation.rationale}
-		                                                metrics={[
-		                                                    { label: 'Integrity', value: confidenceScore != null ? `${confidenceScore}/100` : 'Pending' },
-		                                                    { label: 'Confidence', value: integratedRecommendation.confidence },
-		                                                    { label: 'Evidence', value: integratedRecommendation.evidenceStrength },
-		                                                ]}
-		                                                actions={integratedRecommendation.executionNext3}
-		                                            />
-		                                        </div>
+			                                            <WorkspaceDecisionSummary
+			                                                eyebrow="Decision Checkpoint"
+			                                                title={`${qualityVerdict} is the current system verdict.`}
+			                                                body={integratedRecommendation.rationale}
+			                                                metrics={[
+			                                                    { label: 'Integrity', value: confidenceScore != null ? `${confidenceScore}/100` : 'Pending' },
+			                                                    { label: 'Confidence', value: integratedRecommendation.confidence },
+			                                                    { label: 'Evidence', value: integratedRecommendation.evidenceStrength },
+			                                                ]}
+			                                                actions={integratedRecommendation.executionNext3.filter(
+			                                                    (step) => !/^(lock\s+)?protect\s+the\s+primary\s+mechanic:/i.test(step.trim()),
+			                                                )}
+			                                            />
+			                                        </div>
 
 		                                        {!sampleMode && (
 		                                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
