@@ -63,14 +63,14 @@ const MAX_TRANSITIONS = 6;
 
 function badgeClasses(value: string) {
     if (value === 'High') {
-        return 'border border-red-200 bg-red-50 text-red-700';
+        return 'border border-[#8B6A3D]/20 bg-[#FBF7EF] text-[#8B6A3D]';
     }
 
     if (value === 'Medium') {
-        return 'border border-amber-200 bg-amber-50 text-amber-700';
+        return 'border border-[#8B6A3D]/16 bg-white text-[#6B6B6B]';
     }
 
-    return 'border border-emerald-200 bg-emerald-50 text-emerald-700';
+    return 'border border-black/10 bg-[#FBFBF6] text-[#141414]/70';
 }
 
 function useDesktopAnimationEnabled(shouldReduceMotion: boolean) {
