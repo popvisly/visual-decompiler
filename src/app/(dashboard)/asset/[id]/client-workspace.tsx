@@ -4595,7 +4595,7 @@ export default function AssetWorkspace({
                                                 </button>
                                             </div>
 
-                                            <div className="grid grid-cols-1 gap-12">
+	                                            <div className="grid grid-cols-1 gap-6">
                                                 <div className="rounded-2xl border border-black/5 bg-white p-8 text-[#1a1a1a] shadow-sm">
                                                     <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#8B6A3D]/80 mb-6 border-b border-black/5 pb-6">Blueprint Trace Active</p>
                                                     <p className="mb-8 max-w-[70ch] text-[13px] leading-relaxed text-[#6B6B6B]">
@@ -4645,9 +4645,9 @@ export default function AssetWorkspace({
                                                     </div>
                                                 </div>
 
-                                                <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                                        <div className="space-y-8">
+	                                                <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
+	                                                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+	                                                        <div className="space-y-6">
                                                             <div className="flex items-center gap-4">
                                                                 <div className="w-8 h-8 flex items-center justify-center rounded-xl border border-black/10 bg-[#141414] text-[#FBF7EF]">
                                                                     <Check className="w-4 h-4" />
@@ -4663,7 +4663,7 @@ export default function AssetWorkspace({
                                                             </div>
                                                         </div>
 
-                                                        <div className="space-y-8">
+	                                                        <div className="space-y-6">
                                                             <div className="flex items-center gap-4">
                                                                 <div className="w-8 h-8 flex items-center justify-center rounded-xl border border-black/10 bg-[#FBFBF6] text-[#6B6B6B]">
                                                                     <X className="w-4 h-4" />
@@ -4682,8 +4682,8 @@ export default function AssetWorkspace({
                                                 </div>
 
                                                 {/* REMIXES AND VARIANTS */}
-                                                {blueprintData.ad_copy_remixes && blueprintData.ad_copy_remixes.length > 0 && (
-                                                    <div className="space-y-10">
+	                                                {blueprintData.ad_copy_remixes && blueprintData.ad_copy_remixes.length > 0 && (
+	                                                    <div className="space-y-8">
                                                         <div className="flex items-center gap-6">
                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#8B6A3D]/80">Forensic Copy Remixes</p>
                                                             <div className="h-px flex-1 bg-black/5"></div>
@@ -4702,13 +4702,13 @@ export default function AssetWorkspace({
                                                     </div>
                                                 )}
 
-                                                {blueprintData.visual_variant_prompts && blueprintData.visual_variant_prompts.length > 0 && (
-                                                    <div className="space-y-10">
+	                                                {blueprintData.visual_variant_prompts && blueprintData.visual_variant_prompts.length > 0 && (
+	                                                    <div className="space-y-8">
                                                         <div className="flex items-center gap-6">
                                                             <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-[#6B6B6B]">Adaptation Trace Variants</p>
                                                             <div className="h-px flex-1 bg-black/5"></div>
                                                         </div>
-                                                        <div className="grid grid-cols-1 gap-10">
+	                                                        <div className="grid grid-cols-1 gap-6">
                                                             {blueprintData.visual_variant_prompts.map((variant: any, i: number) => (
                                                                 <div key={i} className="rounded-2xl border border-black/5 bg-white p-8 transition-all hover:bg-[#FBFBF6] shadow-sm">
                                                                     <div className="flex items-center justify-between mb-8 border-b border-black/5 pb-6">
@@ -4913,7 +4913,7 @@ export default function AssetWorkspace({
                                                 <p className="mb-8 border-b border-black/5 pb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80">
                                                     Capture Decision
                                                 </p>
-                                                <div className="space-y-8">
+	                                                <div className="space-y-6">
                                                     <div className="grid grid-cols-3 gap-4">
                                                         {(['Ship', 'Revise', 'Kill'] as const).map((v) => (
                                                             <button
@@ -5063,7 +5063,7 @@ export default function AssetWorkspace({
                     />
                     <div className="absolute inset-y-0 right-0 w-full max-w-3xl overflow-y-auto border-l border-[#d4c9b8] bg-[#ECE4D6] text-[#1a1a1a] shadow-2xl">
                         <div className="sticky top-0 z-10 border-b border-[#D4A574]/16 bg-[#ECE4D6]/95 px-8 py-10 backdrop-blur-xl md:px-12">
-                            <div className="flex items-start justify-between gap-12">
+	                            <div className="flex items-start justify-between gap-8">
                                 <div>
                                     <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#D4A574] font-mono">Clone Engine // Vault_Transfer</p>
                                     <h2 className="mt-6 text-[32px] font-semibold uppercase tracking-tightest leading-[1.1] text-[#1a1a1a] md:text-[42px]">
@@ -5085,7 +5085,7 @@ export default function AssetWorkspace({
 
                         <div className="px-8 py-12 md:px-12">
                             <div className="rounded-2xl border border-[#D4A574]/16 bg-[#FBF7EF] p-10 shadow-2xl">
-                                <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+	                                <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
                                     <div>
                                         <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono mb-4">Source Asset // Forensic Read</p>
                                         <p className="text-3xl font-semibold uppercase tracking-tightest text-[#1a1a1a] leading-none">{asset?.brand?.name || 'Unknown'}</p>
@@ -5121,7 +5121,7 @@ export default function AssetWorkspace({
                             </div>
 
                             {cloneData ? (
-                                <div className="mt-12 space-y-8">
+	                                <div className="mt-12 space-y-6">
                                     <div className="grid gap-4 md:grid-cols-2">
                                         <div className="rounded-2xl border border-[#8B6A3D]/8 bg-[#151310] p-8">
                                             <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4A574] font-mono mb-4 border-b border-[#e8ddd0] pb-3">Extracted Mechanism</p>
@@ -5133,7 +5133,7 @@ export default function AssetWorkspace({
                                         </div>
                                     </div>
 
-                                    <div className="space-y-8">
+	                                    <div className="space-y-6">
                                         {(cloneData?.concepts || []).map((concept, index) => (
                                             <article key={`${concept.title}-${index}`} className="rounded-2xl border border-[#D4A574]/16 bg-[#FBF7EF] p-10 shadow-2xl transition-all hover:bg-white/[0.07]">
                                                 <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between mb-8">
