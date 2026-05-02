@@ -3226,15 +3226,15 @@ export default function AssetWorkspace({
                         )}
 
                     {/* LEFT COLUMN: Sticky Media Viewer (45%) */}
-	                        {activeTab === 'QUALITY GATE' && (
-	                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-	                                {extraction ? (
-	                                    <div className="flex flex-col gap-4">
-	                                        <div className="px-0">
-	                                            <WorkspaceTabHeader
-	                                                kicker="Quality Gate"
-	                                                title="Creative Decision Analysis"
-	                                                intro="A structured read of decision quality based on evidence strength, strategic fit, and execution risk."
+		                        {activeTab === 'QUALITY GATE' && (
+		                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+		                                {extraction ? (
+		                                    <div className="flex flex-col gap-6">
+		                                        <div className="px-0">
+		                                            <WorkspaceTabHeader
+		                                                kicker="Quality Gate"
+		                                                title="Creative Decision Analysis"
+		                                                intro="A structured read of decision quality based on evidence strength, strategic fit, and execution risk."
 	                                            />
                                             {sampleMode && (
                                                 <div className="mt-4 rounded-2xl border border-black/5 bg-white/80 px-6 py-5 shadow-sm backdrop-blur">
@@ -3259,47 +3259,49 @@ export default function AssetWorkspace({
                                                     </div>
                                                 </div>
                                             )}
-                                            <WorkspaceDecisionSummary
-                                                eyebrow="Decision Checkpoint"
-                                                title={`${qualityVerdict} is the current system verdict.`}
-                                                body={integratedRecommendation.rationale}
-                                                metrics={[
-                                                    { label: 'Integrity', value: confidenceScore != null ? `${confidenceScore}/100` : 'Pending' },
-                                                    { label: 'Confidence', value: integratedRecommendation.confidence },
-                                                    { label: 'Evidence', value: integratedRecommendation.evidenceStrength },
-                                                ]}
-                                                actions={integratedRecommendation.executionNext3}
-                                            />
-                                        </div>
+		                                            <WorkspaceDecisionSummary
+		                                                eyebrow="Decision Checkpoint"
+		                                                title={`${qualityVerdict} is the current system verdict.`}
+		                                                body={integratedRecommendation.rationale}
+		                                                metrics={[
+		                                                    { label: 'Integrity', value: confidenceScore != null ? `${confidenceScore}/100` : 'Pending' },
+		                                                    { label: 'Confidence', value: integratedRecommendation.confidence },
+		                                                    { label: 'Evidence', value: integratedRecommendation.evidenceStrength },
+		                                                ]}
+		                                                actions={integratedRecommendation.executionNext3}
+		                                            />
+		                                        </div>
 
-                                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                                            {/* Metrics Row */}
-                                            <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">System Verdict</p>
-                                                <div className="flex items-end gap-2">
-                                                    <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{qualityVerdict}</span>
-                                                </div>
-                                            </div>
-                                            <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">Integrity Index</p>
-                                                <div className="flex items-end gap-1">
-                                                    <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{confidenceScore ?? '—'}</span>
-                                                    <span className="mb-1 text-xs font-semibold uppercase tracking-wider text-[#8B6A3D]/80">/100</span>
-                                                </div>
-                                            </div>
-                                            <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">Confidence Match</p>
-                                                <div className="flex items-end gap-2">
-                                                    <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{integratedRecommendation.confidence}</span>
-                                                </div>
-                                            </div>
-                                            <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
-                                                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">Evidence Signal</p>
-                                                <div className="flex items-end gap-2">
-                                                    <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{integratedRecommendation.evidenceStrength}</span>
-                                                </div>
-                                            </div>
-                                        </div>
+		                                        {!sampleMode && (
+		                                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+		                                                {/* Metrics Row */}
+		                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
+		                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">System Verdict</p>
+		                                                    <div className="flex items-end gap-2">
+		                                                        <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{qualityVerdict}</span>
+		                                                    </div>
+		                                                </div>
+		                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
+		                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">Integrity Index</p>
+		                                                    <div className="flex items-end gap-1">
+		                                                        <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{confidenceScore ?? '—'}</span>
+		                                                        <span className="mb-1 text-xs font-semibold uppercase tracking-wider text-[#8B6A3D]/80">/100</span>
+		                                                    </div>
+		                                                </div>
+		                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
+		                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">Confidence Match</p>
+		                                                    <div className="flex items-end gap-2">
+		                                                        <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{integratedRecommendation.confidence}</span>
+		                                                    </div>
+		                                                </div>
+		                                                <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
+		                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6A3D]/60 mb-2">Evidence Signal</p>
+		                                                    <div className="flex items-end gap-2">
+		                                                        <span className="text-3xl font-semibold tracking-tight text-[#1a1a1a]">{integratedRecommendation.evidenceStrength}</span>
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                        )}
 
                                         <div className="grid gap-4 xl:grid-cols-3 items-start">
                                             {/* Left Column Stack (2 columns wide) */}
@@ -4883,11 +4885,11 @@ export default function AssetWorkspace({
                             </div>
                         )}
 
-                        {activeTab === 'DECISION LOG' && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                                <div className="flex flex-col gap-4">
-                                    <div className="px-0">
-                                        <WorkspaceTabHeader
+	                        {activeTab === 'DECISION LOG' && (
+	                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+	                                <div className="flex flex-col gap-4">
+	                                    <div className="px-0">
+	                                        <WorkspaceTabHeader
                                             kicker="Audit Trail"
                                             title="Decision Log: Audit Trail"
                                             intro="A concise record of all decisions made, providing transparency and accountability in the creative direction process."
@@ -4901,155 +4903,243 @@ export default function AssetWorkspace({
                                                 { label: 'Log State', value: decisionLogStatus },
                                                 { label: 'Last Updated', value: decisionSummaryTimestamp },
                                             ]}
-                                            actions={[
-                                                integratedRecommendation.recommendedDirection,
-                                                'Record the rationale before exporting the dossier.',
-                                                'Use the log as the approval trail for the next review.',
-                                            ]}
-                                        />
-                                    </div>
-                                    <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-                                        <div className="space-y-6">
-                                            <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
-                                                <p className="mb-8 border-b border-black/5 pb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80">
-                                                    Capture Decision
-                                                </p>
-	                                                <div className="space-y-6">
-                                                    <div className="grid grid-cols-3 gap-4">
-                                                        {(['Ship', 'Revise', 'Kill'] as const).map((v) => (
-                                                            <button
-                                                                key={v}
-                                                                onClick={() => setDecisionVerdict(v)}
-                                                                className={`flex items-center justify-center border px-6 py-5 text-[13px] font-semibold uppercase tracking-[0.26em] transition-all ${
-                                                                    decisionVerdict === v
-                                                                        ? 'border-black/10 bg-[#141414] text-[#FBF7EF] shadow-sm'
-                                                                        : 'border-black/10 bg-[#FBFBF6] text-[#6B6B6B] hover:border-black/20 hover:bg-white'
-                                                                }`}
-                                                            >
-                                                                <span className="inline-flex w-full items-center justify-center gap-2">
-                                                                    <span aria-hidden>{v === 'Ship' ? '✔' : v === 'Revise' ? '✎' : '✕'}</span>
-                                                                    <span>{v}</span>
-                                                                </span>
-                                                            </button>
-                                                        ))}
-                                                    </div>
-                                                    <div className="space-y-4">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#6B6B6B]">Rationale for Decision</p>
-                                                        <textarea
-                                                            value={decisionNote}
-                                                            onChange={(e) => setDecisionNote(e.target.value)}
-                                                            rows={6}
-                                                            className="w-full border border-black/10 bg-white p-6 text-[13px] leading-relaxed text-[#1a1a1a] outline-none placeholder:text-[#999] focus:border-[#D4A574]/40 transition-colors"
-                                                            placeholder="Enter reasoning for this decision..."
-                                                        />
-                                                    </div>
-                                                    <button
-                                                        onClick={handleLogDecision}
-                                                        className="w-full rounded-full bg-[#141414] py-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#FBF7EF] transition-all hover:bg-black active:scale-[0.98]"
-                                                    >
-                                                        Commit to Audit Log
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
-                                                <div className="mb-8 flex items-center justify-between gap-6 border-b border-black/5 pb-5">
-                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80">Decision Shorthand Summary</p>
-                                                    <button
-                                                        onClick={() => navigator.clipboard.writeText(decisionSummaryText)}
-                                                        className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#6B6B6B] hover:text-[#1a1a1a] transition-colors"
-                                                    >
-                                                        Copy Summary
-                                                    </button>
-                                                </div>
-                                                <div className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-8">
-                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-black/5 pb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6B6B6B]">
-                                                        <p>Field</p>
-                                                        <p>Value</p>
-                                                    </div>
-                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-black/5 py-4 text-[13px]">
-                                                        <p className="font-semibold uppercase tracking-[0.2em] text-[#6B6B6B]">Timestamp</p>
-                                                        <p className="text-[#1a1a1a]/80">{decisionSummaryTimestamp}</p>
-                                                    </div>
-                                                    <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-black/5 py-4 text-[13px]">
-                                                        <p className="font-semibold uppercase tracking-[0.2em] text-[#6B6B6B]">Verdict</p>
-                                                        <p className="font-semibold uppercase text-[#8B6A3D]">{decisionVerdict || 'Pending'}</p>
-                                                    </div>
-                                                    <div className="pt-4">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6B6B6B]">Operating Status</p>
-                                                        <div className="mt-3 space-y-2">
-                                                            {proseParagraphs(integratedRecommendation.recommendedDirection, 2).map((paragraph, idx) => (
-                                                                <p key={idx} className="text-[15px] font-medium leading-[1.55] text-[#1a1a1a]/85">
-                                                                    {paragraph}
-                                                                </p>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="self-start rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
-                                            <p className="mb-8 border-b border-black/5 pb-5 text-[10px] font-semibold uppercase tracking-[0.5em] text-[#8B6A3D]/80">Decision History</p>
-                                            <div className="custom-scrollbar max-h-[800px] space-y-4 overflow-y-auto pr-4">
-                                                {decisionLogEntries.length > 0 ? (
-                                                    decisionLogEntries.map((entry) => (
-                                                        <div key={entry.id} className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-8 transition-all hover:bg-white">
-                                                            <div className="mb-6 flex items-center justify-between">
-                                                                <span
-                                                                    className={`inline-block border px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.3em] ${
-                                                                        entry.verdict === 'Ship'
-                                                                            ? 'border-[#8B6A3D]/30 text-[#8B6A3D] bg-[#8B6A3D]/5'
-                                                                            : entry.verdict === 'Revise'
-                                                                                ? 'border-black/10 text-[#6B6B6B] bg-white'
-                                                                                : 'border-red-500/30 text-red-600 bg-red-50'
-                                                                    }`}
-                                                                >
-                                                                    {entry.verdict}
-                                                                </span>
-                                                                <span className="text-[10px] font-semibold text-[#999]">
-                                                                    {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} //{' '}
-                                                                    {new Date(entry.timestamp).toLocaleDateString([], { day: '2-digit', month: 'short' })}
-                                                                </span>
-                                                            </div>
-                                                            <div className="space-y-2">
-                                                                {proseParagraphs(entry.rationale, 2).map((paragraph, idx) => (
-                                                                    <p key={idx} className="text-[13px] font-normal leading-relaxed text-[#6B6B6B]">
-                                                                        {paragraph}
-                                                                    </p>
-                                                                ))}
-                                                            </div>
-                                                            <div className="mt-6 border-t border-black/5 pt-5">
-                                                                <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/70">P1 Fix</p>
-                                                                <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B]">{normalizeProseText(entry.p1Fix)}</p>
-                                                            </div>
-                                                        </div>
-                                                    ))
-                                                ) : (
-                                                    <div className="rounded-2xl border border-dashed border-black/10 bg-[#FCFBF9] p-12 text-center">
-                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#999]">Log Empty</p>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-
-                                        <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm xl:col-span-2">
-                                            <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/70">Audit Purpose</p>
-                                            <div className="max-w-[78ch] space-y-3">
-                                                {proseParagraphs(
-                                                    'This log ensures every decision is documented for future reference and accountability, supporting a transparent creative process.',
-                                                    2,
-                                                ).map((paragraph, idx) => (
-                                                    <p key={idx} className="text-[13px] leading-relaxed text-[#6B6B6B]">
-                                                        {paragraph}
-                                                    </p>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
+	                                            actions={[
+	                                                integratedRecommendation.recommendedDirection,
+	                                                'Record the rationale before exporting the dossier.',
+	                                                'Use the log as the approval trail for the next review.',
+	                                            ]}
+	                                        />
+	                                    </div>
+	                                    {sampleMode ? (
+	                                        <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+	                                            <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
+	                                                <p className="mb-6 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80">Decision Snapshot</p>
+	                                                <div className="grid gap-4 md:grid-cols-2">
+	                                                    {[
+	                                                        { label: 'Verdict', value: qualityVerdict },
+	                                                        { label: 'Integrity', value: confidenceScore != null ? `${confidenceScore}/100` : 'Pending' },
+	                                                        { label: 'Confidence', value: integratedRecommendation.confidence },
+	                                                        { label: 'Evidence', value: integratedRecommendation.evidenceStrength },
+	                                                    ].map((item) => (
+	                                                        <div key={item.label} className="rounded-2xl border border-black/5 bg-[#FCFBF9] p-6">
+	                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/70">{item.label}</p>
+	                                                            <p className="mt-3 text-[18px] font-semibold tracking-tight text-[#1a1a1a]">{item.value}</p>
+	                                                        </div>
+	                                                    ))}
+	                                                </div>
+	                                                <div className="mt-6 rounded-2xl border border-black/5 bg-[#FBFBF6] p-6">
+	                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/70">Recorded Direction</p>
+	                                                    <div className="mt-3 space-y-2">
+	                                                        {proseParagraphs(integratedRecommendation.recommendedDirection, 2).map((paragraph, idx) => (
+	                                                            <p key={idx} className="text-[14px] font-medium leading-relaxed text-[#1a1a1a]/80">
+	                                                                {paragraph}
+	                                                            </p>
+	                                                        ))}
+	                                                    </div>
+	                                                    <p className="mt-5 text-[11px] font-medium leading-relaxed text-[#6B6B6B]">{decisionSummaryTimestamp}</p>
+	                                                </div>
+	                                            </div>
+	
+	                                            <div className="self-start rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
+	                                                <p className="mb-6 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80">Decision History</p>
+	                                                <div className="custom-scrollbar max-h-[800px] space-y-4 overflow-y-auto pr-4">
+	                                                    {decisionLogEntries.length > 0 ? (
+	                                                        decisionLogEntries.map((entry) => (
+	                                                            <div key={entry.id} className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-8 transition-colors hover:bg-white">
+	                                                                <div className="mb-6 flex items-center justify-between gap-4">
+	                                                                    <span
+	                                                                        className={`inline-block rounded-full border px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.3em] ${
+	                                                                            entry.verdict === 'Ship'
+	                                                                                ? 'border-[#8B6A3D]/30 text-[#8B6A3D] bg-[#8B6A3D]/5'
+	                                                                                : entry.verdict === 'Revise'
+	                                                                                    ? 'border-black/10 text-[#6B6B6B] bg-white'
+	                                                                                    : 'border-red-500/30 text-red-600 bg-red-50'
+	                                                                        }`}
+	                                                                    >
+	                                                                        {entry.verdict}
+	                                                                    </span>
+	                                                                    <span className="text-[10px] font-semibold text-[#999] whitespace-nowrap">
+	                                                                        {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} //{' '}
+	                                                                        {new Date(entry.timestamp).toLocaleDateString([], { day: '2-digit', month: 'short' })}
+	                                                                    </span>
+	                                                                </div>
+	                                                                <div className="space-y-2">
+	                                                                    {proseParagraphs(entry.rationale, 2).map((paragraph, idx) => (
+	                                                                        <p key={idx} className="text-[13px] font-normal leading-relaxed text-[#6B6B6B]">
+	                                                                            {paragraph}
+	                                                                        </p>
+	                                                                    ))}
+	                                                                </div>
+	                                                                <div className="mt-6 border-t border-black/5 pt-5">
+	                                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/70">P1 Fix</p>
+	                                                                    <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B]">{normalizeProseText(entry.p1Fix)}</p>
+	                                                                </div>
+	                                                            </div>
+	                                                        ))
+	                                                    ) : (
+	                                                        <div className="rounded-2xl border border-dashed border-black/10 bg-[#FCFBF9] p-12 text-center">
+	                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#999]">Log Empty</p>
+	                                                        </div>
+	                                                    )}
+	                                                </div>
+	                                            </div>
+	
+	                                            <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm xl:col-span-2">
+	                                                <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/70">Audit Purpose</p>
+	                                                <div className="max-w-[78ch] space-y-3">
+	                                                    {proseParagraphs(
+	                                                        'This log ensures every decision is documented for future reference and accountability, supporting a transparent creative process.',
+	                                                        2,
+	                                                    ).map((paragraph, idx) => (
+	                                                        <p key={idx} className="text-[13px] leading-relaxed text-[#6B6B6B]">
+	                                                            {paragraph}
+	                                                        </p>
+	                                                    ))}
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    ) : (
+	                                        <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
+	                                            <div className="space-y-6">
+	                                                <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
+	                                                    <p className="mb-6 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80">Capture Decision</p>
+	                                                    <div className="space-y-6">
+	                                                        <div className="grid grid-cols-3 gap-4">
+	                                                            {(['Ship', 'Revise', 'Kill'] as const).map((v) => (
+	                                                                <button
+	                                                                    key={v}
+	                                                                    onClick={() => setDecisionVerdict(v)}
+	                                                                    className={`flex items-center justify-center rounded-xl border border-black/10 px-6 py-5 text-[13px] font-semibold uppercase tracking-[0.26em] transition-all ${
+	                                                                        decisionVerdict === v
+	                                                                            ? 'bg-[#141414] text-[#FBF7EF] shadow-sm'
+	                                                                            : 'bg-[#FBFBF6] text-[#6B6B6B] hover:border-black/20 hover:bg-white'
+	                                                                    }`}
+	                                                                >
+	                                                                    <span className="inline-flex w-full items-center justify-center gap-2">
+	                                                                        <span aria-hidden>{v === 'Ship' ? '✔' : v === 'Revise' ? '✎' : '✕'}</span>
+	                                                                        <span>{v}</span>
+	                                                                    </span>
+	                                                                </button>
+	                                                            ))}
+	                                                        </div>
+	                                                        <div className="space-y-4">
+	                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#6B6B6B]">Rationale for Decision</p>
+	                                                            <textarea
+	                                                                value={decisionNote}
+	                                                                onChange={(e) => setDecisionNote(e.target.value)}
+	                                                                rows={6}
+	                                                                className="w-full rounded-2xl border border-black/10 bg-white p-6 text-[13px] leading-relaxed text-[#1a1a1a] outline-none placeholder:text-[#999] focus:border-[#D4A574]/40 transition-colors"
+	                                                                placeholder="Enter reasoning for this decision..."
+	                                                            />
+	                                                        </div>
+	                                                        <button
+	                                                            onClick={handleLogDecision}
+	                                                            className="w-full rounded-full bg-[#141414] py-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#FBF7EF] transition-all hover:bg-black active:scale-[0.98]"
+	                                                        >
+	                                                            Commit to Audit Log
+	                                                        </button>
+	                                                    </div>
+	                                                </div>
+	
+	                                                <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
+	                                                    <div className="mb-6 flex items-center justify-between gap-6">
+	                                                        <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/80">Decision Shorthand Summary</p>
+	                                                        <button
+	                                                            onClick={() => navigator.clipboard.writeText(decisionSummaryText)}
+	                                                            className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#6B6B6B] hover:text-[#1a1a1a] transition-colors"
+	                                                        >
+	                                                            Copy Summary
+	                                                        </button>
+	                                                    </div>
+	                                                    <div className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-8">
+	                                                        <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-black/5 pb-4 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6B6B6B]">
+	                                                            <p>Field</p>
+	                                                            <p>Value</p>
+	                                                        </div>
+	                                                        <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-black/5 py-4 text-[13px]">
+	                                                            <p className="font-semibold uppercase tracking-[0.2em] text-[#6B6B6B]">Timestamp</p>
+	                                                            <p className="text-[#1a1a1a]/80">{decisionSummaryTimestamp}</p>
+	                                                        </div>
+	                                                        <div className="grid grid-cols-[180px_minmax(0,1fr)] items-start gap-x-8 border-b border-black/5 py-4 text-[13px]">
+	                                                            <p className="font-semibold uppercase tracking-[0.2em] text-[#6B6B6B]">Verdict</p>
+	                                                            <p className="font-semibold uppercase text-[#8B6A3D]">{decisionVerdict || 'Pending'}</p>
+	                                                        </div>
+	                                                        <div className="pt-4">
+	                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#6B6B6B]">Operating Status</p>
+	                                                            <div className="mt-3 space-y-2">
+	                                                                {proseParagraphs(integratedRecommendation.recommendedDirection, 2).map((paragraph, idx) => (
+	                                                                    <p key={idx} className="text-[15px] font-medium leading-[1.55] text-[#1a1a1a]/85">
+	                                                                        {paragraph}
+	                                                                    </p>
+	                                                                ))}
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+	
+	                                            <div className="self-start rounded-2xl border border-black/5 bg-white p-8 shadow-sm">
+	                                                <p className="mb-6 text-[10px] font-semibold uppercase tracking-[0.5em] text-[#8B6A3D]/80">Decision History</p>
+	                                                <div className="custom-scrollbar max-h-[800px] space-y-4 overflow-y-auto pr-4">
+	                                                    {decisionLogEntries.length > 0 ? (
+	                                                        decisionLogEntries.map((entry) => (
+	                                                            <div key={entry.id} className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-8 transition-colors hover:bg-white">
+	                                                                <div className="mb-6 flex items-center justify-between gap-4">
+	                                                                    <span
+	                                                                        className={`inline-block rounded-full border px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.3em] ${
+	                                                                            entry.verdict === 'Ship'
+	                                                                                ? 'border-[#8B6A3D]/30 text-[#8B6A3D] bg-[#8B6A3D]/5'
+	                                                                                : entry.verdict === 'Revise'
+	                                                                                    ? 'border-black/10 text-[#6B6B6B] bg-white'
+	                                                                                    : 'border-red-500/30 text-red-600 bg-red-50'
+	                                                                        }`}
+	                                                                    >
+	                                                                        {entry.verdict}
+	                                                                    </span>
+	                                                                    <span className="text-[10px] font-semibold text-[#999] whitespace-nowrap">
+	                                                                        {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} //{' '}
+	                                                                        {new Date(entry.timestamp).toLocaleDateString([], { day: '2-digit', month: 'short' })}
+	                                                                    </span>
+	                                                                </div>
+	                                                                <div className="space-y-2">
+	                                                                    {proseParagraphs(entry.rationale, 2).map((paragraph, idx) => (
+	                                                                        <p key={idx} className="text-[13px] font-normal leading-relaxed text-[#6B6B6B]">
+	                                                                            {paragraph}
+	                                                                        </p>
+	                                                                    ))}
+	                                                                </div>
+	                                                                <div className="mt-6 border-t border-black/5 pt-5">
+	                                                                    <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/70">P1 Fix</p>
+	                                                                    <p className="mt-2 text-[12px] leading-relaxed text-[#6B6B6B]">{normalizeProseText(entry.p1Fix)}</p>
+	                                                                </div>
+	                                                            </div>
+	                                                        ))
+	                                                    ) : (
+	                                                        <div className="rounded-2xl border border-dashed border-black/10 bg-[#FCFBF9] p-12 text-center">
+	                                                            <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-[#999]">Log Empty</p>
+	                                                        </div>
+	                                                    )}
+	                                                </div>
+	                                            </div>
+	
+	                                            <div className="rounded-2xl border border-black/5 bg-white p-8 shadow-sm xl:col-span-2">
+	                                                <p className="mb-4 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#8B6A3D]/70">Audit Purpose</p>
+	                                                <div className="max-w-[78ch] space-y-3">
+	                                                    {proseParagraphs(
+	                                                        'This log ensures every decision is documented for future reference and accountability, supporting a transparent creative process.',
+	                                                        2,
+	                                                    ).map((paragraph, idx) => (
+	                                                        <p key={idx} className="text-[13px] leading-relaxed text-[#6B6B6B]">
+	                                                            {paragraph}
+	                                                        </p>
+	                                                    ))}
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    )}
+	                                </div>
+	                            </div>
+	                        )}
                     </div>
                 </div>
             </div>
