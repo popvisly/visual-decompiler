@@ -114,7 +114,7 @@ export default function PricingPage() {
                     <div className="mb-12 rounded-[28px] border border-black/5 bg-[#141414] p-6 text-[#FBF7EF] shadow-[0_24px_70px_rgba(20,20,20,0.14)] md:p-8">
                         <div className="flex flex-col gap-5 border-b border-white/10 pb-6 md:flex-row md:items-end md:justify-between">
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.32em] text-[#D4A574]">What scales by tier</p>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#D4A574]">What scales by tier</p>
                                 <h2 className="mt-4 max-w-[760px] text-[32px] font-black uppercase leading-[0.95] tracking-tight md:text-[46px]">
                                     More workflow depth, not just more credits.
                                 </h2>
@@ -132,7 +132,7 @@ export default function PricingPage() {
                                         <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-[#D4A574]">
                                             <Icon className="h-4 w-4" />
                                         </div>
-                                        <h3 className="mt-5 text-[13px] font-black uppercase tracking-[0.18em] text-[#D4A574]">{item.title}</h3>
+                                        <h3 className="mt-5 text-[13px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">{item.title}</h3>
                                         <p className="mt-4 text-[13px] leading-[1.65] text-white/68">{item.body}</p>
                                     </article>
                                 );
@@ -151,11 +151,11 @@ export default function PricingPage() {
                             className="flex flex-col justify-between rounded-[28px] border border-black/5 bg-white p-10 shadow-sm"
                         >
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.observer.name}</p>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.observer.name}</p>
                                 <h3 className="text-6xl font-medium tracking-tightest mb-4">{PRICING.observer.priceLabel}</h3>
-                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#8A8A84] mb-10">{PRICING.observer.cadenceLabel}</p>
+                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#8A8A84] mb-10">{PRICING.observer.cadenceLabel}</p>
                                 
-                                <p className="text-xl font-black uppercase leading-tight mb-4">Try the full dossier.</p>
+                                <p className="text-xl font-bold uppercase leading-tight mb-4">Try the full dossier.</p>
                                 <p className="text-[#6B6B6B] mb-6 leading-relaxed">{PRICING.observer.whoItsFor}</p>
                                 <PlanSummary items={PLAN_SUMMARIES.observer} />
                                 
@@ -168,7 +168,7 @@ export default function PricingPage() {
                             
                                 <a
                                     href={PRICING.observer.ctaHref}
-                                    className="inline-flex w-full items-center justify-center rounded-full border border-black/10 bg-[#141414] px-8 py-5 text-[11px] font-black uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black"
+                                    className="inline-flex w-full items-center justify-center rounded-full border border-black/10 bg-[#141414] px-8 py-5 text-[11px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black"
                                 >
                                     {PRICING.observer.ctaLabel}
                                 </a>
@@ -183,11 +183,11 @@ export default function PricingPage() {
                             className="flex flex-col justify-between rounded-[28px] border border-black/5 bg-white p-10 shadow-sm"
                         >
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.strategic.name}</p>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.strategic.name}</p>
                                 <h3 className="text-6xl font-medium tracking-tightest mb-2">${PRICING.strategic.monthlyPrice}</h3>
-                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Per month</p>
+                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Per month</p>
                                 
-                                <p className="text-xl font-black uppercase leading-tight mb-4">For weekly operators.</p>
+                                <p className="text-xl font-bold uppercase leading-tight mb-4">For weekly operators.</p>
                                 <p className="text-[#6B6B6B] mb-6 leading-relaxed">{PRICING.strategic.whoItsFor}</p>
                                 <PlanSummary items={PLAN_SUMMARIES.strategic} />
                                 <p className="text-[#6B6B6B] mb-8 leading-relaxed italic border-l border-black/10 pl-4">Everything in Observer, plus:</p>
@@ -202,7 +202,7 @@ export default function PricingPage() {
                             <button
                                 onClick={() => handleCheckout(PRICING.strategic.checkoutPlanKey)}
                                 disabled={loading !== null}
-                                className="inline-flex w-full items-center justify-center rounded-full border border-black/10 bg-white px-8 py-5 text-[11px] font-black uppercase tracking-[0.24em] text-black transition hover:border-black/20 hover:bg-[#FBFBF6] disabled:opacity-50"
+                                className="inline-flex w-full items-center justify-center rounded-full border border-black/10 bg-white px-8 py-5 text-[11px] font-bold uppercase tracking-[0.24em] text-black transition hover:border-black/20 hover:bg-[#FBFBF6] disabled:opacity-50"
                             >
                                 {loading === PRICING.strategic.checkoutPlanKey ? 'Processing...' : PRICING.strategic.ctaLabel}
                             </button>
@@ -216,15 +216,15 @@ export default function PricingPage() {
                             transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
                             className="relative flex flex-col justify-between rounded-[28px] border border-[#8B6A3D]/25 bg-[#FBFBF6] p-10 shadow-sm"
                         >
-                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-[#141414] px-6 py-1.5 text-[9px] font-black uppercase tracking-[0.3em] text-[#FBF7EF] whitespace-nowrap">
+                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-[#141414] px-6 py-1.5 text-[9px] font-bold uppercase tracking-[0.3em] text-[#FBF7EF] whitespace-nowrap">
                                 Highly Recommended
                             </div>
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.professional.name}</p>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-4">{PRICING.professional.name}</p>
                                 <h3 className="text-6xl font-medium tracking-tightest mb-2">${PRICING.professional.monthlyPrice}</h3>
-                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Per month</p>
+                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Per month</p>
                                 
-                                <p className="text-xl font-black uppercase leading-tight mb-4">For small teams.</p>
+                                <p className="text-xl font-bold uppercase leading-tight mb-4">For small teams.</p>
                                 <p className="text-[#6B6B6B] mb-6 leading-relaxed">{PRICING.professional.whoItsFor}</p>
                                 <PlanSummary items={PLAN_SUMMARIES.professional} />
                                 <p className="text-[#6B6B6B] mb-8 leading-relaxed italic border-l border-black/10 pl-4">Everything in Strategic, plus:</p>
@@ -239,7 +239,7 @@ export default function PricingPage() {
                             <button
                                 onClick={() => handleCheckout(PRICING.professional.checkoutPlanKey)}
                                 disabled={loading !== null}
-                                className="inline-flex w-full items-center justify-center rounded-full bg-[#141414] px-8 py-5 text-[11px] font-black uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black disabled:opacity-50"
+                                className="inline-flex w-full items-center justify-center rounded-full bg-[#141414] px-8 py-5 text-[11px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black disabled:opacity-50"
                             >
                                 {loading === PRICING.professional.checkoutPlanKey ? 'Processing...' : PRICING.professional.ctaLabel}
                             </button>
@@ -254,11 +254,11 @@ export default function PricingPage() {
                             className="flex flex-col justify-between rounded-[28px] border border-[#8B6A3D]/15 bg-[#141414] p-10 text-[#FBF7EF] shadow-[0_20px_60px_rgba(0,0,0,0.18)]"
                         >
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#D4A574] mb-4">{PRICING.agency.name}</p>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#D4A574] mb-4">{PRICING.agency.name}</p>
                                 <h3 className="text-5xl font-medium tracking-tightest mb-2">Custom</h3>
-                                <p className="text-[11px] font-black uppercase tracking-[0.2em] text-white/40 mb-10">Annual contract</p>
+                                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/40 mb-10">Annual contract</p>
                                 
-                                <p className="text-xl font-black uppercase leading-tight mb-4">For agency infrastructure.</p>
+                                <p className="text-xl font-bold uppercase leading-tight mb-4">For agency infrastructure.</p>
                                 <p className="text-white/72 mb-6 leading-relaxed">{PRICING.agency.whoItsFor}</p>
                                 <PlanSummary items={PLAN_SUMMARIES.agency} tone="dark" />
                                 
@@ -275,7 +275,7 @@ export default function PricingPage() {
                             
                             <a
                                 href={PRICING.agency.ctaHref}
-                                className="inline-flex w-full items-center justify-center rounded-full border border-[#D4A574]/60 px-8 py-5 text-[11px] font-black uppercase tracking-[0.24em] text-[#D4A574] transition hover:bg-[#D4A574] hover:text-[#141414]"
+                                className="inline-flex w-full items-center justify-center rounded-full border border-[#D4A574]/60 px-8 py-5 text-[11px] font-bold uppercase tracking-[0.24em] text-[#D4A574] transition hover:bg-[#D4A574] hover:text-[#141414]"
                             >
                                 {PRICING.agency.ctaLabel}
                             </a>
@@ -304,11 +304,11 @@ export default function PricingPage() {
                         <table className="min-w-[1000px] w-full overflow-hidden rounded-[28px] border border-black/5 bg-white shadow-sm border-separate border-spacing-0">
                             <thead className="bg-[#FBFBF6]">
                                 <tr>
-                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]/80">System Feature</th>
-                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#8A8A84]">Observer</th>
-                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#8A8A84]">Strategic</th>
-                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#8A8A84]">Professional</th>
-                                    <th className="px-10 py-8 text-left text-[10px] font-black uppercase tracking-[0.4em] text-[#8A8A84]">Sovereignty</th>
+                                    <th className="px-10 py-8 text-left text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80">System Feature</th>
+                                    <th className="px-10 py-8 text-left text-[10px] font-bold uppercase tracking-[0.4em] text-[#8A8A84]">Observer</th>
+                                    <th className="px-10 py-8 text-left text-[10px] font-bold uppercase tracking-[0.4em] text-[#8A8A84]">Strategic</th>
+                                    <th className="px-10 py-8 text-left text-[10px] font-bold uppercase tracking-[0.4em] text-[#8A8A84]">Professional</th>
+                                    <th className="px-10 py-8 text-left text-[10px] font-bold uppercase tracking-[0.4em] text-[#8A8A84]">Sovereignty</th>
                                 </tr>
                             </thead>
                             <tbody>

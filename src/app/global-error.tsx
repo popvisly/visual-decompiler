@@ -19,7 +19,7 @@ export default function GlobalError({
                     <h2 className="text-2xl font-bold text-[#141414] mb-4 uppercase tracking-tighter">
                         Something went wrong
                     </h2>
-                    <p className="text-sm text-[#6B6B6B] mb-8 max-w-md uppercase tracking-widest leading-loose">
+                    <p className="text-sm text-[#6B6B6B] mb-8 max-w-md uppercase tracking-[0.22em] leading-relaxed">
                         A critical error occurred in the application. Our engineers have been notified.
                     </p>
                     <button

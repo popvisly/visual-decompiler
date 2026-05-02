@@ -44,14 +44,14 @@ export default function RootErrorBoundary({
 
                 <div className="flex gap-4 justify-center">
                     <button
-                        className="px-6 py-3 bg-[#141414] text-[#FBF7EF] text-[12px] font-bold uppercase tracking-widest rounded-full hover:scale-105 transition-all"
+                        className="px-6 py-3 bg-[#141414] text-[#FBF7EF] text-[12px] font-bold uppercase tracking-[0.22em] rounded-full hover:scale-105 transition-all"
                         onClick={() => reset()}
                     >
                         Try again
                     </button>
                     <a
                         href="/"
-                        className="px-6 py-3 bg-white text-[#141414] text-[12px] font-bold uppercase tracking-widest rounded-full border border-[#E7DED1] hover:scale-105 transition-all"
+                        className="px-6 py-3 bg-white text-[#141414] text-[12px] font-bold uppercase tracking-[0.22em] rounded-full border border-[#E7DED1] hover:scale-105 transition-all"
                     >
                         Go Home
                     </a>
