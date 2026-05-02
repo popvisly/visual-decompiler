@@ -90,10 +90,10 @@ export default function CinematicHero() {
                     <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.5),rgba(0,0,0,0.62))]" aria-hidden="true" />
 
                     <h1
-                        className={`relative z-10 mx-auto w-full text-center text-[clamp(52px,8.8vw,132px)] font-black leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] transition-all duration-[1400ms] ease-out ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
+                        className={`relative z-10 mx-auto w-full text-center text-[clamp(52px,8.8vw,132px)] font-semibold leading-[0.9] tracking-[-0.04em] text-[#F6F1E7] transition-all duration-[1400ms] ease-out ${heroVisible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
                     >
                         <span>Advertising </span>
-                        <span className="font-serif italic font-medium tracking-[-0.02em] text-[#F6F1E7]/96">intelligence.</span>{" "}
+                        <span className="font-medium tracking-[-0.02em] text-[#F6F1E7]/96">intelligence.</span>{" "}
                         <span className="inline-flex min-w-[14ch] items-baseline justify-center whitespace-nowrap text-center align-baseline">
                             <span className="bg-gradient-to-r from-[#E0B882] to-[#D4A574] bg-clip-text text-transparent">{typedWord}</span>
                             {!isComplete && (

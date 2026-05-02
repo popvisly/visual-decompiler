@@ -59,12 +59,12 @@ export default function HeroNodeGraph({ stageImage }: Props) {
                         <div className="absolute top-0 left-0 w-4 h-4 border-l border-t border-[#00F0FF]/50 m-2 z-20 pointer-events-none" />
                         <div className="absolute top-0 right-0 w-4 h-4 border-r border-t border-[#00F0FF]/50 m-2 z-20 pointer-events-none" />
 
-                        <div className="bg-[#00F0FF]/5 border-b border-[#00F0FF]/10 text-[#00F0FF] text-[9px] font-bold tracking-[0.2em] px-4 py-3 uppercase flex justify-between items-center z-10 relative">
+                        <div className="bg-[#00F0FF]/5 border-b border-[#00F0FF]/10 text-[#00F0FF] text-[9px] font-bold tracking-[0.24em] px-4 py-3 uppercase flex justify-between items-center z-10 relative">
                             <span className="flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 bg-[#00F0FF] rounded-full animate-pulse shadow-[0_0_8px_#00F0FF]" />
                                 Input Target
                             </span>
-                            <span className="text-white/30 tracking-widest font-mono">ASSET_01</span>
+                            <span className="text-white/30 tracking-[0.24em] font-mono">ASSET_01</span>
                         </div>
                         <img src={stageImage.src} alt="Main Ad" className="w-full h-full object-cover absolute inset-0 pt-10" style={{ filter: 'brightness(0.85) contrast(1.1)' }} />
                     </motion.div>
@@ -86,7 +86,7 @@ export default function HeroNodeGraph({ stageImage }: Props) {
                             <div className="w-1/4 bg-[#AF8D9E]" />
                             <div className="w-1/6 bg-[#E6D4D3]" />
                         </div>
-                        <p className="text-[11px] text-white/60 leading-relaxed font-light">Muted deep tones trigger associations with mystery, elegance, and high-status exclusivity.</p>
+                        <p className="text-[11px] text-white/60 leading-relaxed font-medium">Muted deep tones trigger associations with mystery, elegance, and high-status exclusivity.</p>
                     </motion.div>
 
                     {/* Node 2: Trigger Mechanic */}
@@ -98,7 +98,7 @@ export default function HeroNodeGraph({ stageImage }: Props) {
                         <div className="bg-[#00F0FF]/5 border border-[#00F0FF]/20 rounded px-4 py-2 text-[12px] text-white font-medium mb-3 shadow-[0_0_10px_rgba(0,240,255,0.1)_inset]">
                             Status Signaling
                         </div>
-                        <p className="text-[11px] text-white/60 leading-relaxed font-light mt-1">
+                        <p className="text-[11px] text-white/60 leading-relaxed font-medium mt-1">
                             Viewer elevates perceived self-worth through subliminal association with austere aesthetics.
                         </p>
                     </motion.div>
@@ -109,11 +109,11 @@ export default function HeroNodeGraph({ stageImage }: Props) {
                     >
                         <div className="absolute top-3 right-3 text-[8px] font-mono text-white/20">[SUBTEXT]</div>
                         <div className="text-[10px] font-bold tracking-[0.2em] text-[#00F0FF]/70 uppercase mb-3">Semiotics</div>
-                        <p className="text-[11px] text-white/90 leading-relaxed font-light mb-2 border-l-2 border-[#00F0FF]/40 pl-3">
+                        <p className="text-[11px] text-white/90 leading-relaxed font-medium mb-2 border-l-2 border-[#00F0FF]/40 pl-3">
                             <strong>Restraint as Status.</strong><br />
                             <span className="text-white/50">The absence of aggressive claims implies undeniable legacy power.</span>
                         </p>
-                        <p className="text-[11px] text-white/90 leading-relaxed font-light border-l-2 border-[#00F0FF]/40 pl-3">
+                        <p className="text-[11px] text-white/90 leading-relaxed font-medium border-l-2 border-[#00F0FF]/40 pl-3">
                             <strong>Physical Prominence.</strong><br />
                             <span className="text-white/50">Glass intersection highlights product tangibility over subject identity.</span>
                         </p>
@@ -139,20 +139,20 @@ export default function HeroNodeGraph({ stageImage }: Props) {
 
                         <div className="flex items-center gap-3 mb-8 justify-center relative z-10">
                             <span className="w-2 h-2 rounded-sm bg-[#00F0FF] shadow-[0_0_12px_#00F0FF]" />
-                            <span className="text-[11px] font-bold tracking-[0.3em] text-white uppercase">Neural Extraction</span>
+                            <span className="text-[11px] font-bold tracking-[0.26em] text-white uppercase">Neural Extraction</span>
                         </div>
 
                         <div className="space-y-10 text-center relative z-10">
                             <div>
-                                <div className="text-[9px] text-[#00F0FF]/60 uppercase tracking-widest mb-2 font-mono">[CERTAINTY_INDEX]</div>
-                                <div className="text-[54px] tracking-tight font-light text-white leading-none drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">94%</div>
-                                <div className="text-[10px] text-[#00F0FF] mt-3 uppercase tracking-widest py-1.5 border border-[#00F0FF]/30 rounded bg-[#00F0FF]/5 w-fit mx-auto px-4">High Confidence</div>
+                                <div className="text-[9px] text-[#00F0FF]/60 uppercase tracking-[0.24em] mb-2 font-mono">[CERTAINTY_INDEX]</div>
+                                <div className="text-[54px] tracking-tight font-semibold text-white leading-none drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">94%</div>
+                                <div className="text-[10px] text-[#00F0FF] mt-3 uppercase tracking-[0.24em] py-1.5 border border-[#00F0FF]/30 rounded bg-[#00F0FF]/5 w-fit mx-auto px-4">High Confidence</div>
                             </div>
 
                             <div className="h-px w-full bg-gradient-to-r from-transparent via-[#00F0FF]/30 to-transparent" />
 
                             <div>
-                                <div className="text-[9px] text-[#00F0FF]/60 uppercase tracking-widest mb-2 font-mono">[DOMINANT_VECTOR]</div>
+                                <div className="text-[9px] text-[#00F0FF]/60 uppercase tracking-[0.24em] mb-2 font-mono">[DOMINANT_VECTOR]</div>
                                 <div className="text-[16px] text-white font-medium tracking-wide">Aesthetic Authority</div>
                             </div>
                         </div>

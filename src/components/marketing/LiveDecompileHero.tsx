@@ -124,21 +124,21 @@ export default function LiveDecompileHero() {
                         <AnimatePresence mode="wait">
                             {phase === 'scanning' && (
                                 <motion.span key="scan" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                                    className="flex items-center gap-1.5 text-[10px] font-mono text-[#C1A67B] uppercase tracking-widest">
+                                    className="flex items-center gap-1.5 text-[10px] font-mono text-[#C1A67B] uppercase tracking-[0.24em]">
                                     <span className="w-1.5 h-1.5 rounded-full bg-[#C1A67B] animate-pulse" />
                                     Scanning
                                 </motion.span>
                             )}
                             {phase === 'cards' && (
                                 <motion.span key="proc" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                                    className="flex items-center gap-1.5 text-[10px] font-mono text-amber-600 uppercase tracking-widest">
+                                    className="flex items-center gap-1.5 text-[10px] font-mono text-amber-600 uppercase tracking-[0.24em]">
                                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                                     Processing
                                 </motion.span>
                             )}
                             {phase === 'complete' && (
                                 <motion.span key="done" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                                    className="flex items-center gap-1.5 text-[10px] font-mono text-green-600 uppercase tracking-widest">
+                                    className="flex items-center gap-1.5 text-[10px] font-mono text-green-600 uppercase tracking-[0.24em]">
                                     <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                                     Complete
                                 </motion.span>
@@ -271,8 +271,8 @@ export default function LiveDecompileHero() {
 
                                                 {card.isScore ? (
                                                     <div className="flex items-baseline gap-3">
-                                                        <span className="text-[26px] font-light text-white leading-none">{card.value}</span>
-                                                        <span className="text-[9px] font-bold text-green-400 uppercase tracking-widest">{card.detail}</span>
+                                                        <span className="text-[26px] font-semibold text-white leading-none">{card.value}</span>
+                                                        <span className="text-[9px] font-bold text-green-400 uppercase tracking-[0.26em]">{card.detail}</span>
                                                     </div>
                                                 ) : (
                                                     <>

@@ -86,7 +86,7 @@ export default function PersonaGrid() {
 
                             {/* Text */}
                             <div className="flex flex-col gap-3">
-                                <h3 className="text-[11px] font-bold text-[#FBF7EF]/70 tracking-widest uppercase">
+                                <h3 className="text-[11px] font-bold text-[#FBF7EF]/70 tracking-[0.24em] uppercase">
                                     Objective: {persona.objective}
                                 </h3>
                                 <p className="text-[13px] text-[#FBF7EF]/35 leading-relaxed max-w-[320px] mx-auto font-medium tracking-tight group-hover:text-[#FBF7EF]/55 transition-colors duration-500">

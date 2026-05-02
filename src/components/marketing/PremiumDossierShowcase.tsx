@@ -55,14 +55,14 @@ export default function PremiumDossierShowcase() {
                         <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                             <Link
                                 href={SAMPLE_DOSSIER_HREF}
-                                className="inline-flex items-center justify-center gap-3 rounded-full bg-[#141414] px-7 py-4 text-[10px] font-black uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black"
+                                className="inline-flex items-center justify-center gap-3 rounded-full bg-[#141414] px-7 py-4 text-[10px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black"
                             >
                                 View Sample Dossier
                                 <ArrowUpRight className="h-4 w-4" />
                             </Link>
                             <Link
                                 href="/ingest"
-                                className="inline-flex items-center justify-center gap-3 rounded-full border border-black/10 bg-white px-7 py-4 text-[10px] font-black uppercase tracking-[0.24em] text-[#141414] transition hover:bg-[#FBFBF6]"
+                                className="inline-flex items-center justify-center gap-3 rounded-full border border-black/10 bg-white px-7 py-4 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition hover:bg-[#FBFBF6]"
                             >
                                 Start Free
                             </Link>
@@ -71,7 +71,7 @@ export default function PremiumDossierShowcase() {
                         <div className="mt-10 grid gap-3">
                             {PROOF_POINTS.map(([title, body]) => (
                                 <div key={title} className="rounded-[20px] border border-black/5 bg-white px-5 py-5 shadow-sm">
-                                    <p className="text-[10px] font-black uppercase tracking-[0.26em] text-[#8B6A3D]/80">{title}</p>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#8B6A3D]/80">{title}</p>
                                     <p className="mt-3 text-[14px] leading-[1.65] text-[#6B6B6B]">{body}</p>
                                 </div>
                             ))}
@@ -99,7 +99,7 @@ export default function PremiumDossierShowcase() {
                                     transition={prefersReducedMotion ? undefined : { duration: 0.7, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] }}
                                     className="rounded-[24px] border border-black/5 bg-white p-5 shadow-sm"
                                 >
-                                    <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#8B6A3D]/80">{layer.label}</p>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B6A3D]/80">{layer.label}</p>
                                     <h3 className="mt-3 text-[18px] font-semibold uppercase leading-tight tracking-[-0.01em] text-[#141414]">{layer.title}</h3>
                                     <p className="mt-3 text-[13px] leading-[1.65] text-[#6B6B6B]">{layer.body}</p>
                                 </motion.article>

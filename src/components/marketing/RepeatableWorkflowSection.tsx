@@ -69,14 +69,14 @@ export default function RepeatableWorkflowSection() {
                         <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                             <Link
                                 href="/product"
-                                className="inline-flex items-center justify-center gap-3 rounded-full bg-[#141414] px-7 py-4 text-[10px] font-black uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black"
+                                className="inline-flex items-center justify-center gap-3 rounded-full bg-[#141414] px-7 py-4 text-[10px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black"
                             >
                                 See Product Workflow
                                 <ArrowUpRight className="h-4 w-4" />
                             </Link>
                             <Link
                                 href={SAMPLE_DOSSIER_HREF}
-                                className="inline-flex items-center justify-center gap-3 rounded-full border border-black/10 bg-white px-7 py-4 text-[10px] font-black uppercase tracking-[0.24em] text-[#141414] transition hover:bg-[#FBFBF6]"
+                                className="inline-flex items-center justify-center gap-3 rounded-full border border-black/10 bg-white px-7 py-4 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition hover:bg-[#FBFBF6]"
                             >
                                 View Artifact
                             </Link>
@@ -89,7 +89,7 @@ export default function RepeatableWorkflowSection() {
 
                             <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-1">
                             <div className="rounded-[18px] border border-black/5 bg-[#FBFBF6] p-5">
-                                <p className="text-[13px] font-black uppercase tracking-[0.22em] text-[#8B6A3D]">Generic AI chat</p>
+                                <p className="text-[13px] font-bold uppercase tracking-[0.22em] text-[#8B6A3D]">Generic AI chat</p>
                                 <div className="mt-4 space-y-3">
                                     {CHAT_BOX_LIMITS.map((item) => (
                                         <p key={item} className="flex items-center gap-3 text-[13px] leading-relaxed text-[#6B6B6B]">
@@ -101,7 +101,7 @@ export default function RepeatableWorkflowSection() {
                             </div>
 
                             <div className="rounded-[18px] border border-black/5 bg-[#141414] p-5 text-[#FBF7EF]">
-                                <p className="text-[13px] font-black uppercase tracking-[0.22em] text-[#D4A574]">Visual Decompiler</p>
+                                <p className="text-[13px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">Visual Decompiler</p>
                                 <div className="mt-4 space-y-3">
                                     {VD_ADVANTAGES.map((item) => (
                                         <p key={item} className="flex items-center gap-3 text-[13px] leading-relaxed text-white/75">
@@ -132,11 +132,11 @@ export default function RepeatableWorkflowSection() {
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-4">
-                                            <p className="pt-0.5 text-[15px] font-black uppercase leading-[1.35] tracking-[0.22em] text-[#8B6A3D]">
+                                            <p className="pt-0.5 text-[15px] font-bold uppercase leading-[1.35] tracking-[0.22em] text-[#8B6A3D]">
                                                 {step.label}
                                             </p>
                                             <span className="h-px flex-1 bg-black/10" />
-                                            <span className="rounded-full border border-[#D8CCB5] bg-[#FBFBF6] px-3 py-1 text-[13px] font-black uppercase tracking-[0.18em] text-[#8B6A3D]">
+                                            <span className="rounded-full border border-[#D8CCB5] bg-[#FBFBF6] px-3 py-1 text-[13px] font-bold uppercase tracking-[0.18em] text-[#8B6A3D]">
                                                 0{index + 1}
                                             </span>
                                         </div>
@@ -154,7 +154,7 @@ export default function RepeatableWorkflowSection() {
                         <div className="rounded-[24px] border border-black/5 bg-white p-6 shadow-sm">
                             <div className="flex items-center gap-3">
                                 <GitCompare className="h-5 w-5 text-[#8B6A3D]" />
-                                <p className="pt-0.5 text-[15px] font-black uppercase leading-[1.35] tracking-[0.22em] text-[#8B6A3D]">Compounding advantage</p>
+                                <p className="pt-0.5 text-[15px] font-bold uppercase leading-[1.35] tracking-[0.22em] text-[#8B6A3D]">Compounding advantage</p>
                             </div>
                             <p className="mt-5 text-[20px] font-semibold leading-tight tracking-tight text-[#141414]">
                                 Every analysis makes the next one easier to compare, defend, and turn into action.

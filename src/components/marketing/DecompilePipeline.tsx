@@ -198,7 +198,7 @@ export default function DecompilePipeline({ id = 'how', stageImage, pills, repor
 
                 {/* Confidence Score — PROMINENT */}
                 <div className="text-center pt-8 pb-4 border-t border-[#E7DED1]">
-                  <div className="text-[8px] text-[#9a9a94] uppercase tracking-widest mb-3 font-mono">[CERTAINTY_INDEX]</div>
+	                  <div className="text-[8px] text-[#9a9a94] uppercase tracking-[0.24em] mb-3 font-mono">[CERTAINTY_INDEX]</div>
                   <div className="text-[#9a9a94]xl md:text-7xl font-bold text-[#141414] leading-none mb-3 tracking-tight">94%</div>
                   <div className="inline-flex items-center gap-2 text-sm font-semibold text-[#C1A67B] uppercase tracking-wide py-2 px-5 border-0 rounded-full bg-[#C1A67B]/10">
                     High Confidence

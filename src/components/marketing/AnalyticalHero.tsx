@@ -160,21 +160,21 @@ export default function AnalyticalHero() {
                 <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
                     <div className="flex flex-col text-center lg:text-left">
                         <div className="mb-8 flex flex-col gap-4 items-center lg:items-start">
-                            <span className="text-[11px] font-bold uppercase tracking-[0.5em] text-[#D4A574]/80">Credibility With Creatives Wins</span>
+	                            <span className="text-[11px] font-bold uppercase tracking-[0.32em] text-[#D4A574]/80">Credibility With Creatives Wins</span>
                             <div className="h-px w-12 bg-[#D4A574]/30" />
                         </div>
 
-                        <h1 className="text-[44px] font-bold leading-[1.0] tracking-tight text-[#141414] sm:text-[56px] md:text-[68px] lg:text-[80px]">
-                            Craft Intelligence
-                            <br />
-                            <span className="inline-flex items-baseline gap-3 mt-2">
-                                <span className="font-serif text-[#D4A574]/82 italic tracking-[-0.03em]">for</span>
-                                <span
-                                    className={`font-serif tracking-[-0.02em] ${persona.weightClass || 'font-medium'}`}
-                                    style={{
-                                        color: persona.color,
-                                        opacity: personaVisible ? 1 : 0,
-                                        transition: 'opacity 0.6s ease-in-out, color 0.6s ease-in-out',
+	                        <h1 className="text-[44px] font-bold leading-[1.0] tracking-tight text-[#141414] sm:text-[56px] md:text-[68px] lg:text-[80px]">
+	                            Craft Intelligence
+	                            <br />
+	                            <span className="inline-flex items-baseline gap-3 mt-2">
+	                                <span className="text-[#D4A574]/82 tracking-[-0.03em]">for</span>
+	                                <span
+	                                    className={`tracking-[-0.02em] ${persona.weightClass || 'font-medium'}`}
+	                                    style={{
+	                                        color: persona.color,
+	                                        opacity: personaVisible ? 1 : 0,
+	                                        transition: 'opacity 0.6s ease-in-out, color 0.6s ease-in-out',
                                     }}
                                 >
                                     {persona.role}

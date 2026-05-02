@@ -62,7 +62,7 @@ export default function PromptShowcase() {
                         <div className="space-y-6">
                             <div className="flex items-center gap-3">
                                 <Wand2 className="w-5 h-5 text-[#BB9E7B]" />
-                                <h2 className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#BB9E7B]">Prompt Synthesis</h2>
+                                <h2 className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#BB9E7B]">Prompt Synthesis</h2>
                             </div>
                             <h3 className="text-[#F6F1E7]xl md:text-5xl lg:text-[#9a9a94]xl font-semibold text-[#1A1A18] tracking-tightest uppercase leading-[1]">
                                 From Analysis<br />
@@ -87,7 +87,7 @@ export default function PromptShowcase() {
                                     className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#F6F1E7] border border-[#E7DED1] hover:bg-white transition-all group/btn"
                                 >
                                     <Copy className={`w-3 h-3 transition-colors ${copied ? 'text-[#BB9E7B]' : 'text-[#6B6B6B]/40 group-hover/btn:text-[#BB9E7B]'}`} />
-                                    <span className="text-[9px] font-bold uppercase tracking-widest text-[#6B6B6B]/60 group-hover/btn:text-[#1A1A18]">
+                                    <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#6B6B6B]/60 group-hover/btn:text-[#1A1A18]">
                                         {copied ? 'Copied' : 'Copy Prompt'}
                                     </span>
                                 </button>
@@ -99,15 +99,15 @@ export default function PromptShowcase() {
 
                             <div className="mt-8 pt-8 border-t border-[#E7DED1] flex flex-wrap gap-x-12 gap-y-4">
                                 <div>
-                                    <p className="text-[9px] font-bold uppercase tracking-widest text-[#BB9E7B] mb-1.5">Visual Anchor</p>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.28em] text-[#BB9E7B] mb-1.5">Visual Anchor</p>
                                     <p className="text-[13px] font-medium text-[#6B6B6B] font-mono tracking-tight">Edge-to-Edge Display</p>
                                 </div>
                                 <div>
-                                    <p className="text-[9px] font-bold uppercase tracking-widest text-[#BB9E7B] mb-1.5">Lighting</p>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.28em] text-[#BB9E7B] mb-1.5">Lighting</p>
                                     <p className="text-[13px] font-medium text-[#6B6B6B] font-mono tracking-tight">Vivid Studio Brightness</p>
                                 </div>
                                 <div>
-                                    <p className="text-[9px] font-bold uppercase tracking-widest text-[#BB9E7B] mb-1.5">Aesthetic</p>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.28em] text-[#BB9E7B] mb-1.5">Aesthetic</p>
                                     <p className="text-[13px] font-medium text-[#6B6B6B] font-mono tracking-tight">Immersive Luxury Tech</p>
                                 </div>
                             </div>
