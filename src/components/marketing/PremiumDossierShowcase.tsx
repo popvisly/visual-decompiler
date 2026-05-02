@@ -6,6 +6,7 @@ import { ArrowUpRight } from 'lucide-react';
 import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArtifact';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
+import { MARKETING_CARD_PADDED_SM } from '@/components/marketing/cardStyles';
 
 const PROOF_POINTS = [
     ['Decision read', 'A clear recommendation, confidence signal, and risk/reward tension.'],
@@ -97,7 +98,7 @@ export default function PremiumDossierShowcase() {
                                     whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                                     viewport={{ once: true, margin: '-60px' }}
                                     transition={prefersReducedMotion ? undefined : { duration: 0.7, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                                    className="rounded-[24px] border border-black/5 bg-white p-5 shadow-sm"
+                                    className={MARKETING_CARD_PADDED_SM}
                                 >
                                     <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#8B6A3D]/80">{layer.label}</p>
                                     <h3 className="mt-3 text-[18px] font-semibold uppercase leading-tight tracking-[-0.01em] text-[#141414]">{layer.title}</h3>

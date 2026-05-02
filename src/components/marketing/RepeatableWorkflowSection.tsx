@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, CheckCircle2, FileText, GitCompare, Layers3, Library, ShieldCheck } from 'lucide-react';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
+import { MARKETING_CARD_PADDED, MARKETING_CARD_PADDED_SM } from '@/components/marketing/cardStyles';
 
 const WORKFLOW_STEPS = [
     {
@@ -82,7 +83,7 @@ export default function RepeatableWorkflowSection() {
                             </Link>
                         </div>
 
-                        <div className="mt-10 rounded-[24px] border border-black/5 bg-white p-5 shadow-sm">
+                        <div className={`mt-10 ${MARKETING_CARD_PADDED_SM}`}>
                             <h3 className="text-[18px] font-semibold uppercase leading-tight tracking-tight text-[#141414]">
                                 Visual Decompiler: superior to AI chat or agents
                             </h3>
@@ -125,7 +126,7 @@ export default function RepeatableWorkflowSection() {
                                     whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                                     viewport={{ once: true, margin: '-70px' }}
                                     transition={prefersReducedMotion ? undefined : { duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                                    className="relative z-10 grid gap-5 rounded-[24px] border border-black/5 bg-white p-6 shadow-sm md:grid-cols-[auto_minmax(0,1fr)]"
+                                    className={`relative z-10 grid gap-5 md:grid-cols-[auto_minmax(0,1fr)] ${MARKETING_CARD_PADDED}`}
                                 >
                                     <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-black/5 bg-[#FBFBF6] text-[#8B6A3D]">
                                         <Icon className="h-5 w-5" />
@@ -151,7 +152,7 @@ export default function RepeatableWorkflowSection() {
                             );
                         })}
 
-                        <div className="rounded-[24px] border border-black/5 bg-white p-6 shadow-sm">
+                        <div className={MARKETING_CARD_PADDED}>
                             <div className="flex items-center gap-3">
                                 <GitCompare className="h-5 w-5 text-[#8B6A3D]" />
                                 <p className="pt-0.5 text-[15px] font-bold uppercase leading-[1.35] tracking-[0.22em] text-[#8B6A3D]">Compounding advantage</p>

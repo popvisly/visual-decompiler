@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
+import { MARKETING_CARD_MUTED_PADDED, MARKETING_CARD_PADDED } from '@/components/marketing/cardStyles';
 
 type Props = {
     compact?: boolean;
@@ -27,7 +28,7 @@ export default function BeforeAfterContrast({ compact = false }: Props) {
                         whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-50px' }}
                         transition={prefersReducedMotion ? undefined : { duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                        className="rounded-[24px] border border-black/5 bg-white p-6 shadow-sm"
+                        className={MARKETING_CARD_PADDED}
                     >
                         <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6B6B6B]">Without Visual Decompiler</p>
                         <ul className="mt-4 space-y-2 text-[16px] leading-[1.7] text-[#6B6B6B]">
@@ -44,7 +45,7 @@ export default function BeforeAfterContrast({ compact = false }: Props) {
                         whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-50px' }}
                         transition={prefersReducedMotion ? undefined : { duration: 0.65, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-                        className="rounded-[24px] border border-black/5 bg-[#FBFBF6] p-6 shadow-sm"
+                        className={MARKETING_CARD_MUTED_PADDED}
                     >
                         <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#8B6A3D]/80">With Visual Decompiler</p>
                         <ul className="mt-4 space-y-2 text-[16px] leading-[1.7] text-[#6B6B6B]">

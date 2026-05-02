@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
+import { MARKETING_CARD_PADDED } from '@/components/marketing/cardStyles';
 
 const FIT_BLOCKS = [
     {
@@ -38,7 +39,7 @@ export default function WhyDifferent() {
                             whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
                             transition={prefersReducedMotion ? undefined : { duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                            className="rounded-[24px] border border-black/5 bg-white p-6 shadow-sm"
+                            className={MARKETING_CARD_PADDED}
                         >
                             <h3 className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/80">{block.title}</h3>
                             <p className="mt-4 text-[16px] leading-[1.65] text-[#6B6B6B]">{block.body}</p>

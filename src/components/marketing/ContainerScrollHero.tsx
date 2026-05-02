@@ -7,6 +7,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ContainerScroll } from '@/components/marketing/ContainerScroll';
 import { HOMEPAGE_CTA_ICON, MARKETING_PRIMARY_CTA_LG, MARKETING_SECONDARY_CTA_LG } from '@/components/marketing/ctaStyles';
+import { MARKETING_CARD_PADDED } from '@/components/marketing/cardStyles';
 
 const STEPS = [
     {
@@ -79,7 +80,7 @@ export default function ContainerScrollHero() {
 
                             <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
                                 {STEPS.map((item) => (
-                                    <div key={item.kicker} className="rounded-[24px] border border-black/5 bg-white p-6 shadow-sm">
+                                    <div key={item.kicker} className={MARKETING_CARD_PADDED}>
                                         <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">{item.kicker}</p>
                                         <p className="mt-3 text-[13px] font-semibold leading-snug text-[#141414]">{item.title}</p>
                                         <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{item.body}</p>
