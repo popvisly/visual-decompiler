@@ -2576,12 +2576,12 @@ export default function AssetWorkspace({
                                 case 'PSYCHOLOGY':
                                     return (
                                         <PsychologyTab
-                                            asset={asset}
-                                            extraction={extraction}
                                             dossier={dossier}
+                                            extraction={extraction}
                                             analysisLanguage={analysisLanguage}
+                                            persuasionDensity={persuasionDensity ?? 0}
+                                            frictionScore={frictionScore ?? 0}
                                             scoreByLabel={scoreByLabel}
-                                            integratedRecommendation={integratedRecommendation}
                                         />
                                     );
                                 case 'BLUEPRINT':
@@ -2589,30 +2589,34 @@ export default function AssetWorkspace({
                                         <BlueprintTab
                                             extraction={extraction}
                                             blueprintData={blueprintData}
-                                            analysisLanguage={analysisLanguage}
+                                            blueprintStatusLabel={blueprintStatusLabel}
+                                            isGeneratingBlueprint={isGeneratingBlueprint}
+                                            blueprintStep={blueprintStep}
+                                            blueprintProgress={blueprintProgress}
+                                            handleGenerateBlueprint={handleGenerateBlueprint}
                                         />
                                     );
                                 case 'STRESS LAB':
                                     return (
                                         <StressLabTab
-                                            extraction={extraction}
-                                            analysisLanguage={analysisLanguage}
-                                            stressLabInterpretation={stressLabInterpretation}
+                                            integratedRecommendation={integratedRecommendation}
+                                            stressLabRows={stressLabRows}
+                                            primaryStressTest={primaryStressTest}
+                                            stressTestCount={stressTestCount}
+                                            blueprintData={blueprintData}
+                                            dossier={dossier}
                                         />
                                     );
                                 case 'DECISION LOG':
                                     return (
                                         <DecisionLogTab
                                             decisionLogEntries={decisionLogEntries}
-                                            decisionVerdict={decisionVerdict}
-                                            setDecisionVerdict={setDecisionVerdict}
-                                            decisionNote={decisionNote}
-                                            setDecisionNote={setDecisionNote}
-                                            handleLogDecision={handleLogDecision}
+                                            extraction={extraction}
+                                            handleClearDecisionLog={() => setDecisionLogEntries([])}
                                             decisionSummaryText={decisionSummaryText}
                                             decisionSummaryTimestamp={decisionSummaryTimestamp}
                                             integratedRecommendation={integratedRecommendation}
-                                            isExecutiveSummary={isExecutiveSummary}
+                                            decisionVerdict={decisionVerdict}
                                         />
                                     );
                                 default:
