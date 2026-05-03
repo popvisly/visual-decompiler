@@ -47,6 +47,42 @@ export default function AssetContextTab({
                     />
                 </div>
 
+                {/* ── Asset Cover Image ── */}
+                {(firstFrameUrl || asset.file_url) && (
+                    <div className="relative w-full overflow-hidden rounded-[2.5rem] border border-black/5 bg-[#0a0a0a] shadow-sm">
+                        <img
+                            src={firstFrameUrl || asset.file_url}
+                            alt={asset.brand?.name ? `${asset.brand.name} creative asset` : 'Creative asset'}
+                            className="w-full object-cover max-h-[540px] opacity-95"
+                            style={{ objectPosition: 'center top' }}
+                        />
+                        {/* Forensic metadata overlay */}
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-10 pb-10 pt-20">
+                            <div className="flex items-end justify-between gap-6">
+                                <div>
+                                    <p className="text-[9px] font-mono font-bold uppercase tracking-[0.45em] text-[#D4A574]/70 mb-2">
+                                        Asset Context // Source Material
+                                    </p>
+                                    <p className="text-[22px] font-black uppercase tracking-tight text-white leading-tight">
+                                        {extraction?.primary_mechanic || 'Mechanic Resolving'}
+                                    </p>
+                                    {asset.brand?.name && (
+                                        <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-white/50 mt-1">
+                                            {asset.brand.name}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="flex items-center gap-2 shrink-0">
+                                    <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574] animate-pulse" />
+                                    <span className="text-[9px] font-mono font-bold uppercase tracking-[0.3em] text-white/40">
+                                        {asset.type || 'Single Frame'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 <div className="grid gap-6 xl:grid-cols-[1fr_minmax(340px,0.38fr)]">
                     {/* Left Column Stack (2 columns wide in spirit) */}
                     <div className="flex flex-col gap-6">
