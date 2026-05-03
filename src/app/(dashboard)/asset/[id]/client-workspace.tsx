@@ -25,6 +25,12 @@ import IntelligenceTab from '@/components/dashboard/tabs/IntelligenceTab';
 import SignalsTab from '@/components/dashboard/tabs/SignalsTab';
 import SocialContextTab from '@/components/dashboard/tabs/SocialContextTab';
 import ConstraintMapTab from '@/components/dashboard/tabs/ConstraintMapTab';
+import { 
+    ANALYSIS_STEPS, 
+    BLUEPRINT_STEPS, 
+    CLONE_STEPS, 
+    SIGNAL_NODES 
+} from '@/lib/constants';
 
 
 

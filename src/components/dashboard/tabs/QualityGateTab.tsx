@@ -7,7 +7,8 @@ import SovereignProcessingView from '@/components/SovereignProcessingView';
 import CountUpPercent from '@/components/CountUpPercent';
 import { motion } from 'framer-motion';
 import { IntegratedRecommendationData, AnalysisLanguageSystem } from '@/types/dashboard';
-import { firstSentence, PRIMARY_SCORE_DISPLAY_LABELS } from '@/lib/utils';
+import { firstSentence } from '@/lib/utils';
+import { PRIMARY_SCORE_DISPLAY_LABELS } from '@/lib/constants';
 
 interface QualityGateTabProps {
     asset: any;

@@ -3,14 +3,7 @@
 import React from 'react';
 import CountUpPercent from '@/components/CountUpPercent';
 import { firstSentence } from '@/lib/utils';
-
-const PRIMARY_SCORE_DISPLAY_LABELS: Record<string, string> = {
-    clarity: 'Visual Clarity',
-    attention: 'Attention Grab',
-    cohesion: 'Brand Cohesion',
-    intent: 'Purchase Intent',
-    distinction: 'Category Distinction',
-};
+import { PRIMARY_SCORE_DISPLAY_LABELS } from '@/lib/constants';
 
 interface IntelligenceTabProps {
     dossier: any;
