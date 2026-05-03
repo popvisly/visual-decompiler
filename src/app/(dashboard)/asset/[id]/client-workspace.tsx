@@ -2533,14 +2533,18 @@ export default function AssetWorkspace({
                                 case 'SIGNALS':
                                     return (
                                         <SignalsTab
+                                            dossier={dossier}
                                             extraction={extraction}
                                             analysisLanguage={analysisLanguage}
+                                            signalByLabel={signalByLabel}
+                                            scoreByLabel={scoreByLabel}
+                                            showRadiant={showRadiant}
+                                            setShowRadiant={setShowRadiant}
                                         />
                                     );
                                 case 'SOCIAL CONTEXT':
                                     return (
                                         <SocialContextTab
-                                            extraction={extraction}
                                             socialContext={socialContext}
                                             strongestSocialPlatform={strongestSocialPlatform}
                                             socialRiskCount={socialRiskCount}
@@ -2549,7 +2553,6 @@ export default function AssetWorkspace({
                                 case 'CONSTRAINT MAP':
                                     return (
                                         <ConstraintMapTab
-                                            extraction={extraction}
                                             mustKeepConstraints={mustKeepConstraints}
                                             mustAvoidConstraints={mustAvoidConstraints}
                                             safeAdaptationZone={safeAdaptationZone}
