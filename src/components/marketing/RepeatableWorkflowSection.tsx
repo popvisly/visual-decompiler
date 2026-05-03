@@ -48,6 +48,53 @@ const VD_ADVANTAGES = [
     'Exportable review artifact',
 ] as const;
 
+const CompoundingVaultCard = () => (
+    <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        className="mt-12 overflow-hidden rounded-[2.5rem] border border-[#D4A574]/20 bg-[#141414] shadow-2xl"
+    >
+        <div className="border-b border-white/5 px-8 py-5">
+            <div className="flex items-center justify-between">
+                <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#D4A574]">Intelligence Vault</p>
+                <div className="flex gap-1.5">
+                    {[1, 2, 3].map(i => <div key={i} className="h-1 w-4 rounded-full bg-white/10" />)}
+                </div>
+            </div>
+        </div>
+        <div className="p-8">
+            <div className="space-y-4">
+                {[
+                    { label: 'Asset 882-B', score: 92, date: '2h ago' },
+                    { label: 'Asset 879-C', score: 84, date: '5h ago' },
+                    { label: 'Asset 875-A', score: 76, date: '1d ago' },
+                ].map((item, i) => (
+                    <motion.div 
+                        key={i}
+                        initial={{ x: -20, opacity: 0 }}
+                        whileInView={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 + (i * 0.1) }}
+                        className="flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.03] p-4"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="h-2 w-2 rounded-full bg-[#D4A574]" />
+                            <p className="text-[12px] font-mono font-bold text-white/60">{item.label}</p>
+                        </div>
+                        <div className="flex items-center gap-6">
+                            <span className="text-[11px] font-bold text-[#D4A574]">{item.score}%</span>
+                            <span className="text-[10px] font-medium text-white/20 uppercase tracking-widest">{item.date}</span>
+                        </div>
+                    </motion.div>
+                ))}
+                <div className="pt-4 text-center">
+                    <p className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/30 italic">+ 1,248 assets archived</p>
+                </div>
+            </div>
+        </div>
+    </motion.div>
+);
+
 export default function RepeatableWorkflowSection() {
     const prefersReducedMotion = useReducedMotion();
 
@@ -85,6 +132,9 @@ export default function RepeatableWorkflowSection() {
                                 View Sample
                             </Link>
                         </div>
+
+                        {/* New Visual Component */}
+                        <CompoundingVaultCard />
                     </div>
 
                     {/* Sequential Workflow (Right) */}

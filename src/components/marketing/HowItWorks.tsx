@@ -34,30 +34,62 @@ function DecisionRadarCard() {
                         <stop offset="100%" stopColor="#E0B882" />
                     </linearGradient>
                     <radialGradient id="vdDecisionFill" cx="50%" cy="45%" r="65%">
-                        <stop offset="0%" stopColor="rgba(247,180,58,0.16)" />
+                        <stop offset="0%" stopColor="rgba(247,180,58,0.2)" />
                         <stop offset="100%" stopColor="rgba(247,180,58,0.02)" />
                     </radialGradient>
                 </defs>
 
-                <circle cx="160" cy="122" r="88" stroke="rgba(251,247,239,0.14)" fill="none" />
+                {/* Concentric Grid */}
+                <circle cx="160" cy="122" r="88" stroke="rgba(251,247,239,0.14)" fill="none" strokeDasharray="4 4" />
                 <circle cx="160" cy="122" r="60" stroke="rgba(251,247,239,0.11)" fill="none" />
                 <circle cx="160" cy="122" r="32" stroke="rgba(251,247,239,0.09)" fill="none" />
 
-                <polygon points="160,34 84,167 236,167" fill="url(#vdDecisionFill)" stroke="url(#vdDecisionStroke)" strokeWidth="1.4" />
+                {/* Animated Radar Polygon */}
+                <motion.polygon 
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    animate={{ 
+                        scale: [1, 1.02, 1],
+                    }}
+                    transition={{ 
+                        duration: 4, 
+                        repeat: Infinity, 
+                        ease: "easeInOut" 
+                    }}
+                    points="160,34 84,167 236,167" 
+                    fill="url(#vdDecisionFill)" 
+                    stroke="url(#vdDecisionStroke)" 
+                    strokeWidth="1.6" 
+                    style={{ transformOrigin: '160px 122px' }}
+                />
 
-                <line x1="160" y1="122" x2="160" y2="34" stroke="url(#vdDecisionStroke)" strokeWidth="1.8" />
+                <motion.line 
+                    initial={{ pathLength: 0 }}
+                    whileInView={{ pathLength: 1 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    x1="160" y1="122" x2="160" y2="34" 
+                    stroke="url(#vdDecisionStroke)" 
+                    strokeWidth="1.8" 
+                    strokeDasharray="4 2"
+                />
 
-                <circle cx="160" cy="34" r="6.5" fill="#D4A574" />
+                {/* Points */}
+                <motion.circle 
+                    animate={{ r: [6.5, 8, 6.5] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    cx="160" cy="34" r="6.5" fill="#D4A574" 
+                />
                 <circle cx="84" cy="167" r="4.5" fill="rgba(251,247,239,0.75)" />
                 <circle cx="236" cy="167" r="4.5" fill="rgba(251,247,239,0.75)" />
 
-                <text x="160" y="14" textAnchor="middle" style={{ fill: 'rgba(251,247,239,0.86)', fontSize: '10px', letterSpacing: '0.2em' }}>
+                {/* Labels */}
+                <text x="160" y="14" textAnchor="middle" style={{ fill: 'rgba(251,247,239,0.86)', fontSize: '9px', fontWeight: 'bold', letterSpacing: '0.25em' }}>
                     UNDERSTAND
                 </text>
-                <text x="74" y="186" textAnchor="middle" style={{ fill: 'rgba(251,247,239,0.74)', fontSize: '10px', letterSpacing: '0.2em' }}>
+                <text x="74" y="186" textAnchor="middle" style={{ fill: 'rgba(251,247,239,0.74)', fontSize: '9px', fontWeight: 'bold', letterSpacing: '0.25em' }}>
                     APPROVE
                 </text>
-                <text x="246" y="186" textAnchor="middle" style={{ fill: 'rgba(251,247,239,0.74)', fontSize: '10px', letterSpacing: '0.2em' }}>
+                <text x="246" y="186" textAnchor="middle" style={{ fill: 'rgba(251,247,239,0.74)', fontSize: '9px', fontWeight: 'bold', letterSpacing: '0.25em' }}>
                     ALIGN
                 </text>
             </svg>
