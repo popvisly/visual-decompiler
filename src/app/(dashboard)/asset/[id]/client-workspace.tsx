@@ -2616,7 +2616,7 @@ export default function AssetWorkspace({
                                             decisionSummaryText={decisionSummaryText}
                                             decisionSummaryTimestamp={decisionSummaryTimestamp}
                                             integratedRecommendation={integratedRecommendation}
-                                            decisionVerdict={decisionVerdict}
+                                            decisionVerdict={decisionVerdict ?? ''}
                                         />
                                     );
                                 default:
