@@ -8,6 +8,7 @@ import DossierPreview from '@/components/marketing/DossierPreview';
 import NeuralParticleHero from '@/components/marketing/NeuralParticleHero';
 import WhyDifferent from '@/components/marketing/WhyDifferent';
 import MarketLimitationSection from '@/components/marketing/MarketLimitationSection';
+import AppFeaturesSection from '@/components/marketing/AppFeaturesSection';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 
 export default function HomePage() {
@@ -16,6 +17,7 @@ export default function HomePage() {
             <UnifiedSovereignHeader primaryCta={{ label: 'Start Free', href: '/ingest' }} />
             <ContainerScrollHero />
             <PremiumDossierShowcase />
+            <AppFeaturesSection />
             <RepeatableWorkflowSection />
             <MarketLimitationSection />
             <NeuralParticleHero />
