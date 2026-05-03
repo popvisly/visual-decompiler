@@ -47,38 +47,88 @@ export default function AssetContextTab({
                     />
                 </div>
 
-                {/* ── Asset Cover Image ── */}
+                {/* ── Asset Dossier Panel ── */}
                 {(firstFrameUrl || asset.file_url) && (
-                    <div className="relative w-full overflow-hidden rounded-[2.5rem] border border-black/5 bg-[#0a0a0a] shadow-sm">
-                        <img
-                            src={firstFrameUrl || asset.file_url}
-                            alt={asset.brand?.name ? `${asset.brand.name} creative asset` : 'Creative asset'}
-                            className="w-full object-cover max-h-[540px] opacity-95"
-                            style={{ objectPosition: 'center top' }}
-                        />
-                        {/* Forensic metadata overlay */}
-                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-10 pb-10 pt-20">
-                            <div className="flex items-end justify-between gap-6">
-                                <div>
-                                    <p className="text-[9px] font-mono font-bold uppercase tracking-[0.45em] text-[#D4A574]/70 mb-2">
-                                        Asset Context // Source Material
-                                    </p>
-                                    <p className="text-[22px] font-black uppercase tracking-tight text-white leading-tight">
-                                        {extraction?.primary_mechanic || 'Mechanic Resolving'}
-                                    </p>
-                                    {asset.brand?.name && (
-                                        <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-white/50 mt-1">
-                                            {asset.brand.name}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="flex items-center gap-2 shrink-0">
+                    <div className="overflow-hidden rounded-[2.5rem] border border-black/5 bg-[#0d0d0d] shadow-sm">
+                        <div className="flex flex-col lg:flex-row min-h-[480px]">
+
+                            {/* Left — Full Ad, uncropped */}
+                            <div className="relative flex-shrink-0 lg:w-[55%] flex items-center justify-center bg-[#0d0d0d] p-6 lg:p-10">
+                                <img
+                                    src={firstFrameUrl || asset.file_url}
+                                    alt={asset.brand?.name ? `${asset.brand.name} creative asset` : 'Creative asset'}
+                                    className="max-w-full max-h-[560px] w-auto h-auto object-contain rounded-[1.2rem]"
+                                />
+                                {/* Subtle corner pin */}
+                                <div className="absolute top-6 left-6 flex items-center gap-2">
                                     <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574] animate-pulse" />
-                                    <span className="text-[9px] font-mono font-bold uppercase tracking-[0.3em] text-white/40">
-                                        {asset.type || 'Single Frame'}
+                                    <span className="text-[8px] font-mono font-bold uppercase tracking-[0.4em] text-[#D4A574]/50">
+                                        Source Material
                                     </span>
                                 </div>
                             </div>
+
+                            {/* Right — Forensic metadata */}
+                            <div className="flex-1 flex flex-col justify-between border-t border-white/5 lg:border-t-0 lg:border-l lg:border-white/5 p-10 lg:p-12">
+                                <div className="space-y-10">
+                                    {/* Eyebrow */}
+                                    <div>
+                                        <p className="text-[9px] font-mono font-bold uppercase tracking-[0.5em] text-[#D4A574]/60 mb-4">
+                                            Asset Context // Forensic Dossier
+                                        </p>
+                                        <h2 className="text-[26px] font-black uppercase tracking-tight text-white leading-[1.05]">
+                                            {extraction?.primary_mechanic || 'Mechanic Resolving'}
+                                        </h2>
+                                        {asset.brand?.name && (
+                                            <p className="text-[12px] font-bold uppercase tracking-[0.3em] text-white/35 mt-3">
+                                                {asset.brand.name}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* Metadata grid */}
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {[
+                                            { label: 'Format', value: asset.type || 'Single Frame' },
+                                            { label: 'Visual Style', value: extraction?.visual_style || '—' },
+                                            { label: 'Confidence', value: extraction?.confidence_score != null ? `${Math.round(extraction.confidence_score <= 1 ? extraction.confidence_score * 100 : extraction.confidence_score)}%` : '—' },
+                                            { label: 'Sector', value: asset.brand?.market_sector || '—' },
+                                        ].map(({ label, value }) => (
+                                            <div key={label} className="rounded-2xl border border-white/6 bg-white/4 px-6 py-5">
+                                                <p className="text-[9px] font-mono font-bold uppercase tracking-[0.35em] text-[#D4A574]/50 mb-2">{label}</p>
+                                                <p className="text-[13px] font-black uppercase tracking-tight text-white/80 leading-tight">{value}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Colour palette */}
+                                    {extraction?.color_palette?.length > 0 && (
+                                        <div>
+                                            <p className="text-[9px] font-mono font-bold uppercase tracking-[0.4em] text-[#D4A574]/50 mb-4">
+                                                Chromatic Palette
+                                            </p>
+                                            <div className="flex gap-2 flex-wrap">
+                                                {extraction.color_palette.slice(0, 8).map((hex: string, i: number) => (
+                                                    <div
+                                                        key={i}
+                                                        className="h-8 w-8 rounded-xl border border-white/10 shadow-sm"
+                                                        style={{ backgroundColor: hex }}
+                                                        title={hex}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Bottom asset ID */}
+                                <div className="pt-10 border-t border-white/5 mt-10">
+                                    <p className="text-[8px] font-mono uppercase tracking-[0.5em] text-white/20">
+                                        Asset ID // {asset.id}
+                                    </p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 )}
