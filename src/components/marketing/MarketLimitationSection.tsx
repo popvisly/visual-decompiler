@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { CheckCircle2, Minus, Zap, Database, Shield, LayoutGrid } from 'lucide-react';
-import MarketingSectionHeading from '@/components/MarketingSectionHeading';
+import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 const LIMITATIONS = [
     { title: 'One-off answer', desc: 'Insight exists for 30 seconds, then vanishes into a chat history graveyard.' },
