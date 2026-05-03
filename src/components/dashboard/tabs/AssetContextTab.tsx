@@ -17,6 +17,7 @@ interface AssetContextTabProps {
     isExecutiveSummary: boolean;
     setIsExecutiveSummary: (val: boolean) => void;
     agency?: any;
+    firstFrameUrl?: string | null;
 }
 
 export default function AssetContextTab({
@@ -28,7 +29,8 @@ export default function AssetContextTab({
     fixPriorities,
     isExecutiveSummary,
     setIsExecutiveSummary,
-    agency
+    agency,
+    firstFrameUrl
 }: AssetContextTabProps) {
     if (!extraction) {
         return <SovereignProcessingView assetId={asset.id} agency={agency} />;
