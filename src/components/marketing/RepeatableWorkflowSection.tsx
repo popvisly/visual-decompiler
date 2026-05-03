@@ -52,99 +52,70 @@ export default function RepeatableWorkflowSection() {
     const prefersReducedMotion = useReducedMotion();
 
     return (
-        <section className="relative overflow-hidden border-y border-black/5 bg-[#F6F1E7] py-24 text-[#141414] lg:py-32">
+        <section className="relative overflow-hidden border-y border-black/5 bg-[#FBFBF6] py-24 text-[#141414] lg:py-32">
+            {/* Subtler forensic grid */}
             <div
-                className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(#1A1A1A_1px,transparent_1px),linear-gradient(90deg,#1A1A1A_1px,transparent_1px)] [background-size:48px_48px]"
+                className="pointer-events-none absolute inset-0 opacity-[0.02] [background-image:linear-gradient(#1A1A1A_1px,transparent_1px),linear-gradient(90deg,#1A1A1A_1px,transparent_1px)] [background-size:48px_48px]"
                 aria-hidden="true"
             />
 
-            <div className="relative z-10 mx-auto w-full max-w-[1240px] px-6 lg:px-12">
-                <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-                    <div className="lg:sticky lg:top-28">
+            <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 lg:px-12">
+                <div className="grid gap-20 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+                    
+                    {/* Sticky Control Panel (Left) */}
+                    <div className="lg:sticky lg:top-32">
                         <MarketingSectionHeading
-                            kicker="Workflow Moat"
-                            title="Not a prompt. A repeatable intelligence loop."
-                            description="Chat can critique an ad once. Visual Decompiler turns that read into a saved, comparable, reviewable workflow your team can rerun across campaigns, competitors, and client conversations."
+                            kicker="Strategic Moat"
+                            title="Built for repeatability, not one-off chats."
+                            description="AI chat is a vacuum. Visual Decompiler is an operating system for creative intelligence—turning every analysis into reusable memory that compounds over time."
                         />
 
-                        <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
                             <Link
                                 href="/product"
-                                className="inline-flex items-center justify-center gap-3 rounded-full bg-[#141414] px-7 py-4 text-[10px] font-bold uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black"
+                                className="inline-flex items-center justify-center gap-3 rounded-full bg-[#141414] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.2em] text-[#FBF7EF] transition hover:bg-black"
                             >
-                                See Product Workflow
+                                Product Tour
                                 <ArrowUpRight className="h-4 w-4" />
                             </Link>
                             <Link
                                 href={SAMPLE_DOSSIER_HREF}
-                                className="inline-flex items-center justify-center gap-3 rounded-full border border-black/10 bg-white px-7 py-4 text-[10px] font-bold uppercase tracking-[0.24em] text-[#141414] transition hover:bg-[#FBFBF6]"
+                                className="inline-flex items-center justify-center gap-3 rounded-full border border-black/10 bg-white px-8 py-4 text-[11px] font-bold uppercase tracking-[0.2em] text-[#141414] transition hover:bg-[#FBFBF6]"
                             >
-                                View Artifact
+                                View Sample
                             </Link>
-                        </div>
-
-                        <div className={`mt-10 ${MARKETING_CARD_PADDED_SM}`}>
-                            <h3 className="text-[18px] font-semibold uppercase leading-tight tracking-tight text-[#141414]">
-                                Visual Decompiler: superior to AI chat or agents
-                            </h3>
-
-                            <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-                            <div className="rounded-[18px] border border-black/5 bg-[#FBFBF6] p-5">
-                                <p className="text-[13px] font-bold uppercase tracking-[0.22em] text-[#8B6A3D]">Generic AI chat</p>
-                                <div className="mt-4 space-y-3">
-                                    {CHAT_BOX_LIMITS.map((item) => (
-                                        <p key={item} className="flex items-center gap-3 text-[13px] leading-relaxed text-[#6B6B6B]">
-                                            <span className="h-px w-4 bg-black/20" />
-                                            {item}
-                                        </p>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="rounded-[18px] border border-black/5 bg-[#141414] p-5 text-[#FBF7EF]">
-                                <p className="text-[13px] font-bold uppercase tracking-[0.22em] text-[#D4A574]">Visual Decompiler</p>
-                                <div className="mt-4 space-y-3">
-                                    {VD_ADVANTAGES.map((item) => (
-                                        <p key={item} className="flex items-center gap-3 text-[13px] leading-relaxed text-white/75">
-                                            <CheckCircle2 className="h-4 w-4 shrink-0 text-[#D4A574]" />
-                                            {item}
-                                        </p>
-                                    ))}
-                                </div>
-                            </div>
-                            </div>
                         </div>
                     </div>
 
-                    <div className="relative grid gap-5 md:before:absolute md:before:left-[52px] md:before:top-8 md:before:bottom-[132px] md:before:w-px md:before:bg-[#D8CCB5]">
+                    {/* Sequential Workflow (Right) */}
+                    <div className="space-y-4">
                         {WORKFLOW_STEPS.map((step, index) => {
                             const Icon = step.icon;
                             return (
                                 <motion.article
                                     key={step.label}
-                                    initial={prefersReducedMotion ? false : { opacity: 0, y: 22 }}
-                                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: '-70px' }}
-                                    transition={prefersReducedMotion ? undefined : { duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                                    className={`relative z-10 grid gap-5 md:grid-cols-[auto_minmax(0,1fr)] ${MARKETING_CARD_PADDED}`}
+                                    initial={prefersReducedMotion ? false : { opacity: 0, x: 20 }}
+                                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
+                                    viewport={{ once: true, margin: '-100px' }}
+                                    transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                                    className="group relative grid gap-8 rounded-[2.5rem] border border-black/5 bg-white p-8 transition-all hover:border-[#D4A574]/30 hover:shadow-xl hover:shadow-[#D4A574]/5 md:grid-cols-[auto_minmax(0,1fr)]"
                                 >
-                                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-black/5 bg-[#FBFBF6] text-[#8B6A3D]">
-                                        <Icon className="h-5 w-5" />
+                                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FBFBF6] text-[#8B6A3D] transition-colors group-hover:bg-[#8B6A3D] group-hover:text-white">
+                                        <Icon className="h-6 w-6" />
                                     </div>
                                     <div>
-                                        <div className="flex items-center gap-4">
-                                            <p className="pt-0.5 text-[15px] font-bold uppercase leading-[1.35] tracking-[0.22em] text-[#8B6A3D]">
+                                        <div className="flex items-center justify-between">
+                                            <p className="text-[12px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">
                                                 {step.label}
                                             </p>
-                                            <span className="h-px flex-1 bg-black/10" />
-                                            <span className="rounded-full border border-[#D8CCB5] bg-[#FBFBF6] px-3 py-1 text-[13px] font-bold uppercase tracking-[0.18em] text-[#8B6A3D]">
-                                                0{index + 1}
+                                            <span className="text-[11px] font-mono font-bold text-[#141414]/20 uppercase tracking-widest">
+                                                Sequence 0{index + 1}
                                             </span>
                                         </div>
-                                        <h3 className="mt-4 text-[24px] font-semibold uppercase leading-none tracking-tight text-[#141414]">
+                                        <h3 className="mt-4 text-[22px] font-semibold uppercase leading-tight tracking-tight text-[#141414]">
                                             {step.title}
                                         </h3>
-                                        <p className="mt-4 max-w-[62ch] text-[15px] leading-[1.72] text-[#6B6B6B]">
+                                        <p className="mt-4 max-w-[54ch] text-[15px] leading-[1.6] text-[#6B6B6B]">
                                             {step.body}
                                         </p>
                                     </div>
@@ -152,14 +123,43 @@ export default function RepeatableWorkflowSection() {
                             );
                         })}
 
-                        <div className={MARKETING_CARD_PADDED}>
-                            <div className="flex items-center gap-3">
-                                <GitCompare className="h-5 w-5 text-[#8B6A3D]" />
-                                <p className="pt-0.5 text-[15px] font-bold uppercase leading-[1.35] tracking-[0.22em] text-[#8B6A3D]">Compounding advantage</p>
+                        {/* Summary / Advantage Card */}
+                        <div className="rounded-[2.5rem] bg-[#141414] p-10 text-white shadow-2xl">
+                            <div className="flex items-center gap-3 text-[#D4A574]">
+                                <GitCompare className="h-5 w-5" />
+                                <p className="text-[11px] font-bold uppercase tracking-[0.3em]">The Compounding Moat</p>
                             </div>
-                            <p className="mt-5 text-[20px] font-semibold leading-tight tracking-tight text-[#141414]">
-                                Every analysis makes the next one easier to compare, defend, and turn into action.
+                            <p className="mt-6 text-[20px] font-light leading-relaxed text-white/90">
+                                Every análisis you run saves to your <span className="font-bold text-[#D4A574]">Vault</span>, creating a persistent memory of what works—something a one-off AI chat or agent will never provide.
                             </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Comparison Footer - Clean & Visual */}
+                <div className="mt-32 grid gap-8 border-t border-black/5 pt-20 md:grid-cols-2">
+                    <div className="space-y-6">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]/60 italic">Market Limitation</p>
+                        <h4 className="text-3xl font-light leading-tight tracking-tight">Generic AI Chat</h4>
+                        <div className="space-y-3">
+                            {CHAT_BOX_LIMITS.map((item) => (
+                                <p key={item} className="flex items-center gap-3 text-[14px] text-[#6B6B6B]">
+                                    <span className="h-px w-6 bg-black/10" />
+                                    {item}
+                                </p>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="rounded-[3rem] bg-[#F6F1E7] p-10 shadow-inner">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">Forensic Advantage</p>
+                        <h4 className="mt-6 text-3xl font-light leading-tight tracking-tight">Visual Decompiler</h4>
+                        <div className="mt-8 space-y-4">
+                            {VD_ADVANTAGES.map((item) => (
+                                <p key={item} className="flex items-center gap-4 text-[15px] font-medium text-[#141414]">
+                                    <CheckCircle2 className="h-5 w-5 shrink-0 text-[#8B6A3D]" />
+                                    {item}
+                                </p>
+                            ))}
                         </div>
                     </div>
                 </div>
