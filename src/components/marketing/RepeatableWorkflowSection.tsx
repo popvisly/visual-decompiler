@@ -136,33 +136,6 @@ export default function RepeatableWorkflowSection() {
                     </div>
                 </div>
 
-                {/* Comparison Footer - Clean & Visual */}
-                <div className="mt-32 grid gap-8 border-t border-black/5 pt-20 md:grid-cols-2">
-                    <div className="space-y-6">
-                        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]/60 italic">Market Limitation</p>
-                        <h4 className="text-3xl font-light leading-tight tracking-tight">Generic AI Chat</h4>
-                        <div className="space-y-3">
-                            {CHAT_BOX_LIMITS.map((item) => (
-                                <p key={item} className="flex items-center gap-3 text-[14px] text-[#6B6B6B]">
-                                    <span className="h-px w-6 bg-black/10" />
-                                    {item}
-                                </p>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="rounded-[3rem] bg-[#F6F1E7] p-10 shadow-inner">
-                        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">Forensic Advantage</p>
-                        <h4 className="mt-6 text-3xl font-light leading-tight tracking-tight">Visual Decompiler</h4>
-                        <div className="mt-8 space-y-4">
-                            {VD_ADVANTAGES.map((item) => (
-                                <p key={item} className="flex items-center gap-4 text-[15px] font-medium text-[#141414]">
-                                    <CheckCircle2 className="h-5 w-5 shrink-0 text-[#8B6A3D]" />
-                                    {item}
-                                </p>
-                            ))}
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
     );

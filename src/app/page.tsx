@@ -7,6 +7,7 @@ import BeforeAfterContrast from '@/components/marketing/BeforeAfterContrast';
 import DossierPreview from '@/components/marketing/DossierPreview';
 import NeuralParticleHero from '@/components/marketing/NeuralParticleHero';
 import WhyDifferent from '@/components/marketing/WhyDifferent';
+import MarketLimitationSection from '@/components/marketing/MarketLimitationSection';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 
 export default function HomePage() {
@@ -16,6 +17,7 @@ export default function HomePage() {
             <ContainerScrollHero />
             <PremiumDossierShowcase />
             <RepeatableWorkflowSection />
+            <MarketLimitationSection />
             <NeuralParticleHero />
             <HowItWorks />
             <BeforeAfterContrast />
