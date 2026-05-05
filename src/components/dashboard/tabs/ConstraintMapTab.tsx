@@ -54,20 +54,16 @@ export default function ConstraintMapTab({
                 </div>
 
                 <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 text-[#141414] shadow-sm flex flex-col">
-                    <p className="mb-8 text-[11px] font-black uppercase tracking-[0.3em] text-[#8B6A3D] border-b border-black/5 pb-6">Constraint Priority Legend</p>
-                    <div className="overflow-hidden border border-black/5 bg-[#FBFBF6] rounded-[1.8rem]">
-                        <div className="grid grid-cols-12 border-b border-black/5 px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-[#141414]/60">
-                            <span className="col-span-4">Priority Level</span>
-                            <span className="col-span-8">Description</span>
-                        </div>
+                    <p className="mb-8 border-b border-black/5 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-[#8B6A3D]">Constraint Priority Legend</p>
+                    <div className="grid gap-4 xl:grid-cols-3">
                         {[
                             ['Critical', 'Must be preserved'],
                             ['High', 'Important but not critical'],
                             ['Optional', 'Enhancements that can vary'],
                         ].map(([level, description]) => (
-                            <div key={level} className="grid grid-cols-12 border-b border-black/5 px-8 py-6 text-[15px] last:border-b-0 bg-white transition-colors hover:bg-[#FBFBF6]">
+                            <div key={level} className="rounded-[1.8rem] border border-black/5 bg-[#FBFBF6] p-6 transition-colors hover:bg-white hover:shadow-md">
                                 <span
-                                    className={`col-span-4 inline-flex items-center gap-3 font-black uppercase tracking-tight ${
+                                    className={`inline-flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.12em] ${
                                         level === 'Critical'
                                             ? 'text-[#141414]'
                                             : level === 'High'
@@ -86,13 +82,13 @@ export default function ConstraintMapTab({
                                     />
                                     {level}
                                 </span>
-                                <span className="col-span-8 text-[#515151] font-medium">{description}</span>
+                                <p className="mt-4 text-[14px] font-medium leading-relaxed text-[#515151]">{description}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="grid items-start gap-6 xl:grid-cols-2">
+                <div className="flex flex-col gap-6">
                     {[
                         {
                             title: 'Retention Protocol',
@@ -115,7 +111,7 @@ export default function ConstraintMapTab({
                     ].map((group, index) => (
                         <div
                             key={group.title}
-                            className={`self-start h-fit rounded-[2.5rem] border border-black/5 bg-white p-10 text-[#141414] shadow-sm flex flex-col ${index === 2 ? 'xl:col-span-2' : ''}`}
+                            className="self-start h-fit rounded-[2.5rem] border border-black/5 bg-white p-10 text-[#141414] shadow-sm flex flex-col w-full"
                         >
                             <p className={`text-[11px] font-black uppercase tracking-[0.3em] mb-8 border-b border-black/5 pb-6 ${group.accent}`}>{group.title}</p>
                             <p className="mb-8 max-w-[66ch] text-[15px] font-medium leading-relaxed text-[#515151]">{normalizeProseText(group.guidance)}</p>

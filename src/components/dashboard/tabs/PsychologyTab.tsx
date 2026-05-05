@@ -50,13 +50,13 @@ export default function PsychologyTab({
                         ].filter(Boolean)}
                     />
                 </div>
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
                     {/* Trigger Distribution Map */}
-                    <div className="flex h-full flex-col rounded-[2.5rem] border border-black/5 bg-[#141414] p-10 text-[#FBFBF6] shadow-xl overflow-hidden relative">
+                    <div className="relative flex h-full flex-col overflow-hidden rounded-[2.5rem] border border-black/5 bg-[#141414] p-10 text-[#FBFBF6] shadow-xl">
                         <div className="absolute top-0 right-0 p-10 opacity-5">
                             <Target className="h-32 w-32" />
                         </div>
-                        <div className="mb-10 flex min-h-[68px] items-start justify-between border-b border-white/10 pb-6 relative z-10">
+                        <div className="relative z-10 mb-10 flex min-h-[68px] items-start justify-between border-b border-white/10 pb-6">
                             <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#D4A574]">
                                 <span className="block">Trigger Distribution</span>
                                 <span className="block">Surface Map</span>
@@ -64,7 +64,7 @@ export default function PsychologyTab({
                             <span className="text-[9px] font-mono font-black uppercase tracking-[0.2em] text-white/30">Optical Diagnostic v4.0</span>
                         </div>
 
-                        <div className="flex h-[360px] items-center justify-center relative z-10">
+                        <div className="relative z-10 flex h-[340px] items-center justify-center">
                             {(() => {
                                 const axes = [
                                     { key: 'STATUS', label: 'STATUS' },
@@ -234,14 +234,14 @@ export default function PsychologyTab({
                             })()}
                         </div>
 
-                        <p className="mt-auto pt-6 text-[13px] leading-relaxed text-[#D6D0C6]/70">
+                        <p className="mt-auto max-w-[64ch] pt-6 text-[13px] leading-relaxed text-[#D6D0C6]/70">
                             This distribution quantifies the creative's psychological surface area, identifying which aspiration levers are being engaged to command consumer compliance.
                         </p>
                     </div>
 
                     {/* Strategic Posture */}
-                    <div className="flex h-full flex-col rounded-[2.5rem] border border-black/5 bg-[#141414] p-10 text-[#FBFBF6] shadow-xl overflow-hidden relative">
-                        <div className="mb-10 flex min-h-[68px] items-start justify-between border-b border-white/10 pb-6 relative z-10">
+                    <div className="relative flex h-full flex-col overflow-hidden rounded-[2.5rem] border border-black/5 bg-[#141414] p-10 text-[#FBFBF6] shadow-xl">
+                        <div className="relative z-10 mb-10 flex min-h-[68px] items-start justify-between border-b border-white/10 pb-6">
                             <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#D4A574]">
                                 <span className="block">Strategic Posture</span>
                                 <span className="block">Field Map</span>
@@ -249,7 +249,7 @@ export default function PsychologyTab({
                             <span className="text-[9px] font-mono font-black uppercase tracking-[0.2em] text-white/30">Vector Diagnostic v1.2</span>
                         </div>
 
-                        <div className="flex h-[320px] items-center justify-center">
+                        <div className="flex h-[280px] items-center justify-center">
                             {(() => {
                                 const size = 280;
                                 const cx = size / 2;
@@ -296,7 +296,7 @@ export default function PsychologyTab({
                             })()}
                         </div>
 
-                        <div className="mt-auto pt-6 space-y-3">
+                        <div className="mt-auto max-w-[64ch] pt-6 space-y-3">
                             {proseParagraphs((dossier as any)?.archetype_mapping?.target_posture, 2)
                                 .slice(0, 2)
                                 .map((paragraph: string, index: number) => (
@@ -311,7 +311,9 @@ export default function PsychologyTab({
                             )}
                         </div>
                     </div>
+                </div>
 
+                <div className="grid grid-cols-1 gap-6 2xl:grid-cols-2">
                     {/* Persuasion Density */}
                     <div className="flex h-full flex-col rounded-[2.5rem] border border-black/5 bg-white p-10 text-[#141414] shadow-sm">
                         <div className="mb-10 flex min-h-[68px] items-start justify-between border-b border-black/5 pb-6">

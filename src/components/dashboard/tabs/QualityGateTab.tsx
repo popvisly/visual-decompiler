@@ -45,6 +45,13 @@ export default function QualityGateTab({
     persuasionDensity,
     frictionScore
 }: QualityGateTabProps) {
+    const confidenceValue =
+        analysisLanguage.confidenceIndex === 'High'
+            ? 90
+            : analysisLanguage.confidenceIndex === 'Medium'
+                ? 65
+                : 45;
+
     return (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex flex-col gap-8">
@@ -79,44 +86,67 @@ export default function QualityGateTab({
                     <div className="flex flex-col gap-8">
                         {/* Campaign Identity & Primary Scores */}
                         <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
-                            <div className="grid gap-10 lg:grid-cols-[1fr_minmax(0,1.2fr)]">
-                                <div className="space-y-8">
-                                    <div className="flex items-center gap-3">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Campaign Identity</p>
-                                        <div className="h-px w-8 bg-black/10" />
-                                    </div>
-                                    <div className="grid gap-6 md:grid-cols-2">
-                                        <div className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-8">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D] mb-4">Brand</p>
-                                            <h2 className="text-[26px] font-black tracking-tight text-[#141414] leading-none mb-2 uppercase">{dossierCampaignBrand}</h2>
-                                            <p className="text-[14px] font-bold tracking-widest text-[#6B6B6B] leading-none uppercase">{dossierCampaignCode}</p>
-                                        </div>
-                                        <div className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-8">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D] mb-4">Meta</p>
-                                            <p className="text-[15px] font-black tracking-tight text-[#141414] uppercase leading-tight mb-2">{dossierPreparedFor}</p>
-                                            <p className="text-[12px] font-bold tracking-[0.1em] text-[#6B6B6B] uppercase">{dossierModeLabel} // {dossierReportDate}</p>
-                                        </div>
-                                    </div>
+                            <div className="space-y-8">
+                                <div className="flex items-center gap-3">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Campaign Identity</p>
+                                    <div className="h-px w-8 bg-black/10" />
+                                </div>
+                                <div className="grid gap-6 md:grid-cols-2">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 22 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, amount: 0.45 }}
+                                        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                                        className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-8"
+                                    >
+                                        <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">Brand</p>
+                                        <h2 className="mb-2 text-[26px] font-black tracking-tight text-[#141414] leading-none uppercase">{dossierCampaignBrand}</h2>
+                                        <p className="text-[14px] font-bold tracking-widest text-[#6B6B6B] leading-none uppercase">{dossierCampaignCode}</p>
+                                    </motion.div>
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 22 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, amount: 0.45 }}
+                                        transition={{ duration: 0.55, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                                        className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-8"
+                                    >
+                                        <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">Meta</p>
+                                        <p className="mb-2 text-[15px] font-black tracking-tight text-[#141414] uppercase leading-tight">{dossierPreparedFor}</p>
+                                        <p className="text-[12px] font-bold tracking-[0.1em] text-[#6B6B6B] uppercase">{dossierModeLabel} // {dossierReportDate}</p>
+                                    </motion.div>
                                 </div>
 
-                                <div className="space-y-8">
-                                    <div className="flex items-center gap-3">
+                                <div className="border-t border-black/5 pt-8">
+                                    <div className="flex items-center gap-3 mb-8">
                                         <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Primary Scores</p>
                                         <div className="h-px w-8 bg-black/10" />
                                     </div>
-                                    <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
-                                        {analysisLanguage.primaryScores.map((score) => (
-                                            <div
+                                    <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
+                                        {analysisLanguage.primaryScores.map((score, index) => (
+                                            <motion.div
                                                 key={score.label}
-                                                className="group rounded-2xl border border-black/5 bg-[#FBFBF6] p-6 text-center transition-all hover:bg-white hover:shadow-xl hover:border-[#D4A574]/30"
+                                                initial={{ opacity: 0, y: 18 }}
+                                                whileInView={{ opacity: 1, y: 0 }}
+                                                viewport={{ once: true, amount: 0.45 }}
+                                                transition={{ duration: 0.45, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                                                className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-6 transition-all hover:bg-white hover:shadow-md hover:border-[#D4A574]/20"
                                             >
-                                                <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#8B6A3D] mb-4 group-hover:text-[#141414] transition-colors">
+                                                <p className="mb-4 text-[9px] font-black uppercase tracking-[0.24em] text-[#8B6A3D]">
                                                     {(PRIMARY_SCORE_DISPLAY_LABELS as any)[score.label.toLowerCase()] || score.label}
                                                 </p>
-                                                <p className="text-[32px] font-black tracking-tighter text-[#141414] tabular-nums leading-none">
-                                                    {score.value}
+                                                <p className="text-[30px] font-black tracking-tighter text-[#141414] tabular-nums leading-none">
+                                                    <CountUpPercent value={score.value} />
                                                 </p>
-                                            </div>
+                                                <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-black/5">
+                                                    <motion.div
+                                                        className="h-full bg-[#8B6A3D]"
+                                                        initial={{ width: 0 }}
+                                                        whileInView={{ width: `${Math.max(0, Math.min(100, score.value))}%` }}
+                                                        viewport={{ once: true }}
+                                                        transition={{ duration: 1.1, delay: 0.12 + index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                                                    />
+                                                </div>
+                                            </motion.div>
                                         ))}
                                     </div>
                                 </div>
@@ -124,38 +154,47 @@ export default function QualityGateTab({
                         </div>
 
                         {/* Attention Path & Strategic Read */}
-                        <div className="grid gap-8 xl:grid-cols-[1.1fr_0.9fr]">
+                        <div className="grid gap-8">
                             <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D] mb-10">Attention Path Analysis</p>
-                                <div className="grid gap-8 md:grid-cols-3">
+                                <div className="grid gap-5">
                                     {[
                                         ['Primary Focus', analysisLanguage.attentionPath.primaryFocus],
                                         ['Secondary Focus', analysisLanguage.attentionPath.secondaryFocus],
                                         ['Drop-off Point', supportingCopyPath],
                                     ].map(([title, detail], index) => (
-                                        <div key={title as string} className="flex flex-col gap-6 relative">
-                                            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border border-black/10 text-[14px] font-black text-[#141414] shadow-sm group-hover:bg-[#141414] group-hover:text-white transition-colors">
-                                                {index + 1}
-                                            </span>
-                                            <div>
-                                                <p className="text-[11px] font-black uppercase tracking-widest text-[#141414] mb-3 leading-none">{title as string}</p>
+                                        <motion.div
+                                            key={title as string}
+                                            initial={{ opacity: 0, x: -18 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            viewport={{ once: true, amount: 0.4 }}
+                                            transition={{ duration: 0.45, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                                            className="relative rounded-2xl border border-black/5 bg-[#FBFBF6] p-6"
+                                        >
+                                            <div className="flex items-start gap-4">
+                                                <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white border border-black/10 text-[13px] font-black text-[#141414] shadow-sm">
+                                                    {index + 1}
+                                                </span>
+                                                <div>
+                                                <p className="text-[11px] font-black uppercase tracking-widest text-[#141414] mb-2 leading-none">{title as string}</p>
                                                 <p className="text-[13px] leading-relaxed text-[#515151] font-medium">{detail as string}</p>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </motion.div>
                                     ))}
                                 </div>
 
                                 <div className="mt-12 pt-10 border-t border-black/5">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D] mb-10">Strategic Read</p>
-                                    <div className="grid gap-10 md:grid-cols-2">
+                                    <div className="grid gap-8">
                                         {[
                                             ['Strategic Thesis', firstSentence(analysisLanguage.strategicRead.thesis)],
                                             ['Trigger Mechanic', firstSentence(analysisLanguage.strategicRead.triggerMechanic)],
                                             ['Friction Points', firstSentence(analysisLanguage.strategicRead.frictionPoints)],
                                             ['Category Positioning', firstSentence(analysisLanguage.strategicRead.categoryPositioning)],
                                         ].map(([label, value]) => (
-                                            <div key={label as string} className="group">
-                                                <p className="text-[11px] font-black uppercase tracking-widest text-[#141414] mb-3 group-hover:text-[#8B6A3D] transition-colors">{label as string}</p>
+                                            <div key={label as string} className="border-l-2 border-[#D4A574]/25 pl-5">
+                                                <p className="text-[11px] font-black uppercase tracking-widest text-[#141414] mb-3">{label as string}</p>
                                                 <p className="text-[14px] leading-relaxed text-[#515151] font-medium">{value as string}</p>
                                             </div>
                                         ))}
@@ -163,20 +202,54 @@ export default function QualityGateTab({
                                 </div>
                             </div>
 
-                            <div className="flex flex-col gap-8">
+                            <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D] mb-10">Structural Signals</p>
+                                <div className="grid gap-4 xl:grid-cols-2">
+                                    {analysisLanguage.structuralSignals.map((signal) => (
+                                        <div key={signal.label} className="flex flex-col justify-between rounded-2xl border border-black/5 bg-[#FBFBF6] p-6 hover:bg-white transition-all hover:shadow-md">
+                                            <span className="text-[9px] font-black uppercase tracking-widest text-[#8B6A3D] mb-4">{signal.label}</span>
+                                            <span className="text-[14px] font-black uppercase tracking-widest text-[#141414]">{signal.value}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="mt-10 border-t border-black/5 pt-10">
+                                    <p className="mb-4 text-[11px] font-black uppercase tracking-widest text-[#141414]">Overall Structure</p>
+                                    <p className="max-w-[72ch] text-[13px] leading-relaxed text-[#515151] font-medium">{structuralSummary}</p>
+                                </div>
+                            </div>
+
+                            <div className="grid gap-8 2xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.7fr)]">
                                 <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D] mb-10">Structural Signals</p>
-                                    <div className="grid gap-4 md:grid-cols-2">
-                                        {analysisLanguage.structuralSignals.map((signal) => (
-                                            <div key={signal.label} className="flex flex-col justify-between rounded-2xl border border-black/5 bg-[#FBFBF6] p-6 hover:bg-white transition-all hover:shadow-md">
-                                                <span className="text-[9px] font-black uppercase tracking-widest text-[#8B6A3D] mb-4">{signal.label}</span>
-                                                <span className="text-[14px] font-black uppercase tracking-widest text-[#141414]">{signal.value}</span>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D] mb-10">Persuasion Density</p>
+                                    <div className="flex h-full flex-col justify-center">
+                                        <p className="max-w-[72ch] text-[14px] leading-relaxed text-[#515151] font-medium">
+                                            Measures informational compression: how efficiently the creative transfers brand signal into consumer memory structures.
+                                        </p>
+
+                                        <div className="mt-12 flex flex-col items-center">
+                                            <div className="text-[84px] font-black leading-none tracking-tight text-[#141414] tabular-nums">
+                                                {typeof persuasionDensity === 'number' ? (
+                                                    <>
+                                                        <CountUpPercent value={Math.round(persuasionDensity)} />%
+                                                    </>
+                                                ) : (
+                                                    '—'
+                                                )}
                                             </div>
-                                        ))}
-                                    </div>
-                                    <div className="mt-10 pt-10 border-t border-black/5">
-                                        <p className="text-[11px] font-black uppercase tracking-widest text-[#141414] mb-4">Overall Structure</p>
-                                        <p className="text-[13px] leading-relaxed text-[#515151] font-medium">{structuralSummary}</p>
+                                            <p className="mt-4 text-[10px] font-black uppercase tracking-[0.3em] text-[#8B6A3D]">Efficiency Index</p>
+                                        </div>
+
+                                        <div className="mt-10">
+                                            <div className="h-2 w-full overflow-hidden rounded-full bg-black/5">
+                                                <motion.div
+                                                    className="h-full bg-[#8B6A3D]"
+                                                    initial={{ width: 0 }}
+                                                    whileInView={{ width: `${typeof persuasionDensity === 'number' ? Math.max(0, Math.min(100, Math.round(persuasionDensity))) : 0}%` }}
+                                                    viewport={{ once: true }}
+                                                    transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -187,54 +260,24 @@ export default function QualityGateTab({
                                     </div>
                                     <div className="flex items-baseline gap-4">
                                         <p className="text-[64px] font-black tracking-tighter text-[#141414] tabular-nums leading-none">
-                                            {analysisLanguage.confidenceIndex === 'High' ? '090+' : analysisLanguage.confidenceIndex === 'Medium' ? '065+' : '045+'}
+                                            <CountUpPercent value={confidenceValue} />
+                                            +
                                         </p>
                                         <p className="text-[14px] font-black tracking-[0.2em] uppercase text-[#8B6A3D]">/ 100</p>
                                     </div>
                                     <p className="mt-8 text-[12px] font-medium leading-relaxed text-[#6B6B6B]">
                                         Mathematical certainty of the extraction based on architectural alignment and semantic consistency.
                                     </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Persuasion Density & Cognitive Friction */}
-                        <div className="grid gap-8 lg:grid-cols-2">
-                            <div className="flex h-full flex-col rounded-[2.5rem] border border-black/5 bg-white p-10 text-[#141414] shadow-sm">
-                                <div className="mb-10 flex min-h-[68px] items-start justify-between border-b border-black/5 pb-6">
-                                    <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]">
-                                        <span className="block">Persuasion Density</span>
-                                        <span className="block">Compression</span>
-                                    </p>
-                                    <span className="text-[9px] font-mono font-black uppercase tracking-[0.2em] text-[#141414]/30">Data Load v2.0</span>
-                                </div>
-
-                                <p className="text-[14px] font-medium leading-relaxed text-[#515151]">
-                                    Measures informational compression: how efficiently the creative transfers brand signal into consumer memory structures.
-                                </p>
-
-                                <div className="mt-12 flex flex-col items-center">
-                                    <div className="text-[84px] font-black leading-none tracking-tight text-[#141414] tabular-nums">
-                                        {typeof persuasionDensity === 'number' ? (
-                                            <>
-                                                <CountUpPercent value={Math.round(persuasionDensity)} />%
-                                            </>
-                                        ) : (
-                                            '—'
-                                        )}
-                                    </div>
-                                    <p className="mt-4 text-[10px] font-black uppercase tracking-[0.3em] text-[#8B6A3D]">Efficiency Index</p>
-                                </div>
-
-                                <div className="mt-auto pt-10">
-                                    <div className="h-2 w-full rounded-full bg-black/5 overflow-hidden">
-                                        <motion.div
-                                            className="h-full bg-[#8B6A3D]"
-                                            initial={{ width: 0 }}
-                                            whileInView={{ width: `${typeof persuasionDensity === 'number' ? Math.max(0, Math.min(100, Math.round(persuasionDensity))) : 0}%` }}
-                                            viewport={{ once: true }}
-                                            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                                        />
+                                    <div className="mt-10">
+                                        <div className="h-2 w-full overflow-hidden rounded-full bg-black/5">
+                                            <motion.div
+                                                className="h-full bg-[#141414]"
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: `${confidenceValue}%` }}
+                                                viewport={{ once: true }}
+                                                transition={{ duration: 1.4, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

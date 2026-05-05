@@ -55,7 +55,7 @@ export default function SignalsTab({
                 {/* UNIFIED TECHNICAL AUTOPSY CONTAINER */}
                 <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm flex flex-col gap-10">
                     {/* Top: Radiant Architecture Toggle */}
-                    <div className="flex flex-col gap-8 md:flex-row md:items-center justify-between pb-10 border-b border-black/5">
+                    <div className="flex flex-col justify-between gap-8 border-b border-black/5 pb-10 md:flex-row md:items-center">
                         <div className="flex items-center gap-8">
                             <div className="h-16 w-16 rounded-[1.2rem] bg-[#FBFBF6] flex items-center justify-center border border-black/5 text-[#8B6A3D] shadow-sm">
                                 <Sparkles className="h-7 w-7" />
@@ -92,18 +92,18 @@ export default function SignalsTab({
                             <p className="text-[15px] leading-relaxed text-[#515151] font-medium">Mode of Address and Viewer Positioning analysis.</p>
                         </div>
 
-                        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
+                        <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-3">
                             {[
                                 { label: 'Mode of Address', value: (extraction.full_dossier as any).gaze_topology.mode_of_address },
                                 { label: 'Viewer Position', value: (extraction.full_dossier as any).gaze_topology.viewer_position },
                                 { label: 'Power Holder', value: (extraction.full_dossier as any).gaze_topology.power_holder },
                             ].map((item, i) => (
-                                <div key={i} className="flex min-h-[160px] flex-col justify-between rounded-[1.8rem] border border-black/5 bg-[#FBFBF6] p-8 text-[#141414] transition-all hover:bg-white hover:shadow-md hover:border-[#D4A574]/30">
-                                    <h3 className="mb-6 w-full border-b border-black/5 pb-6 text-[10px] font-black uppercase tracking-[0.2em] text-[#8B6A3D]">
+                                <div key={i} className="flex min-h-[132px] flex-col justify-between rounded-[1.8rem] border border-black/5 bg-[#FBFBF6] p-7 text-[#141414] transition-all hover:bg-white hover:shadow-md hover:border-[#D4A574]/30">
+                                    <h3 className="mb-5 w-full border-b border-black/5 pb-5 text-[10px] font-black uppercase tracking-[0.18em] text-[#8B6A3D]">
                                         {item.label}
                                     </h3>
-                                    <div className="flex-1 flex items-center">
-                                        <span className="text-[22px] font-black uppercase tracking-tight text-[#141414] leading-tight">{item.value}</span>
+                                    <div className="flex flex-1 items-center">
+                                        <span className="text-[18px] font-black uppercase tracking-tight text-[#141414] leading-tight">{item.value}</span>
                                     </div>
                                 </div>
                             ))}
@@ -130,7 +130,7 @@ export default function SignalsTab({
                             <h2 className="text-[11px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]">Counter-Reading Matrix</h2>
                             <p className="text-[15px] leading-relaxed text-[#515151] font-medium">Polysemic deconstruction via critical theory.</p>
                         </div>
-                        <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-2">
+                        <div className="grid grid-cols-1 items-start gap-5 2xl:grid-cols-2">
                             {((extraction.full_dossier as any).counter_reading_matrix as { lens: string; reading: string }[]).map((item, i) => (
                                 <div key={i} className="flex min-h-[160px] flex-col rounded-[1.8rem] border border-black/5 bg-[#FBFBF6] p-8 text-[#141414] transition-all hover:bg-white hover:shadow-md hover:border-[#D4A574]/30">
                                     <h3 className="mb-6 w-full border-b border-black/5 pb-6 text-[10px] font-black uppercase tracking-[0.2em] text-[#8B6A3D]">
