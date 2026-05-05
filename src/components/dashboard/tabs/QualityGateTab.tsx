@@ -65,10 +65,11 @@ export default function QualityGateTab({
                         eyebrow="Executive Read"
                         title={integratedRecommendation.recommendedDirection}
                         body={analysisLanguage.strategicRead.thesis}
+                        metricStyle="executive"
                         metrics={[
                             { label: 'Mechanic', value: extraction?.primary_mechanic || 'Pending' },
-                            { label: 'Confidence', value: `${analysisLanguage.confidenceIndex}/100` },
-                            { label: 'Decision', value: integratedRecommendation.decision },
+                            { label: 'Confidence', value: `${analysisLanguage.confidenceIndex} / 100` },
+                            { label: 'Decision', value: integratedRecommendation.decision.toUpperCase() },
                         ]}
                         actions={[
                             firstSentence(analysisLanguage.strategicRead.triggerMechanic),
