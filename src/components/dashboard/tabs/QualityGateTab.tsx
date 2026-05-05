@@ -192,11 +192,18 @@ export default function QualityGateTab({
                                             ['Trigger Mechanic', firstSentence(analysisLanguage.strategicRead.triggerMechanic)],
                                             ['Friction Points', firstSentence(analysisLanguage.strategicRead.frictionPoints)],
                                             ['Category Positioning', firstSentence(analysisLanguage.strategicRead.categoryPositioning)],
-                                        ].map(([label, value]) => (
-                                            <div key={label as string} className="border-l-2 border-[#D4A574]/25 pl-5">
+                                        ].map(([label, value], index) => (
+                                            <motion.div
+                                                key={label as string}
+                                                initial={{ opacity: 0, y: 16 }}
+                                                whileInView={{ opacity: 1, y: 0 }}
+                                                viewport={{ once: true, amount: 0.35 }}
+                                                transition={{ duration: 0.45, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                                                className="border-l-2 border-[#D4A574]/25 pl-5"
+                                            >
                                                 <p className="text-[11px] font-black uppercase tracking-widest text-[#141414] mb-3">{label as string}</p>
                                                 <p className="text-[14px] leading-relaxed text-[#515151] font-medium">{value as string}</p>
-                                            </div>
+                                            </motion.div>
                                         ))}
                                     </div>
                                 </div>
@@ -205,11 +212,18 @@ export default function QualityGateTab({
                             <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
                                 <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D] mb-10">Structural Signals</p>
                                 <div className="grid gap-4 xl:grid-cols-2">
-                                    {analysisLanguage.structuralSignals.map((signal) => (
-                                        <div key={signal.label} className="flex flex-col justify-between rounded-2xl border border-black/5 bg-[#FBFBF6] p-6 hover:bg-white transition-all hover:shadow-md">
+                                    {analysisLanguage.structuralSignals.map((signal, index) => (
+                                        <motion.div
+                                            key={signal.label}
+                                            initial={{ opacity: 0, y: 18 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true, amount: 0.35 }}
+                                            transition={{ duration: 0.45, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                                            className="flex flex-col justify-between rounded-2xl border border-black/5 bg-[#FBFBF6] p-6 hover:bg-white transition-all hover:shadow-md"
+                                        >
                                             <span className="text-[9px] font-black uppercase tracking-widest text-[#8B6A3D] mb-4">{signal.label}</span>
                                             <span className="text-[14px] font-black uppercase tracking-widest text-[#141414]">{signal.value}</span>
-                                        </div>
+                                        </motion.div>
                                     ))}
                                 </div>
                                 <div className="mt-10 border-t border-black/5 pt-10">
@@ -297,7 +311,13 @@ export default function QualityGateTab({
 
                                 <div className="mt-12 flex flex-col items-center">
                                     <div className="text-[84px] font-black leading-none tracking-tight text-[#141414] tabular-nums">
-                                        {typeof frictionScore === 'number' ? Math.round(frictionScore) : '—'}%
+                                        {typeof frictionScore === 'number' ? (
+                                            <>
+                                                <CountUpPercent value={Math.round(frictionScore)} />%
+                                            </>
+                                        ) : (
+                                            '—'
+                                        )}
                                     </div>
                                     <p className="mt-4 text-[10px] font-black uppercase tracking-[0.3em] text-[#8B6A3D]">Resistance Score</p>
                                 </div>
