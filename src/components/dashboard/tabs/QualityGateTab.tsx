@@ -86,70 +86,72 @@ export default function QualityGateTab({
                 {extraction?.primary_mechanic && extraction?.full_dossier && (
                     <div className="flex flex-col gap-8">
                         {/* Campaign Identity & Primary Scores */}
-                        <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
-                            <div className="space-y-8">
-                                <div className="flex items-center gap-3">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Campaign Identity</p>
+                        <div className="grid gap-6">
+                            <div className="rounded-[2.5rem] border border-black/5 bg-[#1B1B19] p-10 text-white shadow-[0_18px_40px_rgba(20,20,20,0.12)]">
+                                <div className="space-y-8">
+                                    <div className="flex items-center gap-3">
+                                        <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-[#D9B07A]">Campaign Identity</p>
+                                        <div className="h-px w-8 bg-white/12" />
+                                    </div>
+                                    <div className="grid gap-6 md:grid-cols-2">
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 22 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true, amount: 0.45 }}
+                                            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                                            className="rounded-[1.8rem] border border-white/8 bg-white/[0.03] p-8"
+                                        >
+                                            <p className="mb-4 text-[10px] font-medium uppercase tracking-[0.3em] text-[#D9B07A]">Brand</p>
+                                            <h2 className="mb-2 text-[28px] font-black leading-none tracking-tight text-white uppercase">{dossierCampaignBrand}</h2>
+                                            <p className="text-[14px] font-semibold leading-none tracking-[0.14em] text-white/55 uppercase">{dossierCampaignCode}</p>
+                                        </motion.div>
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 22 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true, amount: 0.45 }}
+                                            transition={{ duration: 0.55, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                                            className="rounded-[1.8rem] border border-white/8 bg-white/[0.03] p-8"
+                                        >
+                                            <p className="mb-4 text-[10px] font-medium uppercase tracking-[0.3em] text-[#D9B07A]">Meta</p>
+                                            <p className="mb-2 text-[15px] font-semibold leading-tight tracking-[-0.01em] text-white uppercase">{dossierPreparedFor}</p>
+                                            <p className="text-[12px] font-medium tracking-[0.12em] text-white/55 uppercase">{dossierModeLabel} // {dossierReportDate}</p>
+                                        </motion.div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
+                                <div className="flex items-center gap-3 mb-8">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Primary Scores</p>
                                     <div className="h-px w-8 bg-black/10" />
                                 </div>
-                                <div className="grid gap-6 md:grid-cols-2">
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 22 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true, amount: 0.45 }}
-                                        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                                        className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-8"
-                                    >
-                                        <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">Brand</p>
-                                        <h2 className="mb-2 text-[26px] font-black tracking-tight text-[#141414] leading-none uppercase">{dossierCampaignBrand}</h2>
-                                        <p className="text-[14px] font-bold tracking-widest text-[#6B6B6B] leading-none uppercase">{dossierCampaignCode}</p>
-                                    </motion.div>
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 22 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true, amount: 0.45 }}
-                                        transition={{ duration: 0.55, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                                        className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-8"
-                                    >
-                                        <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">Meta</p>
-                                        <p className="mb-2 text-[15px] font-black tracking-tight text-[#141414] uppercase leading-tight">{dossierPreparedFor}</p>
-                                        <p className="text-[12px] font-bold tracking-[0.1em] text-[#6B6B6B] uppercase">{dossierModeLabel} // {dossierReportDate}</p>
-                                    </motion.div>
-                                </div>
-
-                                <div className="border-t border-black/5 pt-8">
-                                    <div className="flex items-center gap-3 mb-8">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Primary Scores</p>
-                                        <div className="h-px w-8 bg-black/10" />
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
-                                        {analysisLanguage.primaryScores.map((score, index) => (
-                                            <motion.div
-                                                key={score.label}
-                                                initial={{ opacity: 0, y: 18 }}
-                                                whileInView={{ opacity: 1, y: 0 }}
-                                                viewport={{ once: true, amount: 0.45 }}
-                                                transition={{ duration: 0.45, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                                                className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-6 transition-all hover:bg-white hover:shadow-md hover:border-[#D4A574]/20"
-                                            >
-                                                <p className="mb-4 text-[9px] font-black uppercase tracking-[0.24em] text-[#8B6A3D]">
-                                                    {(PRIMARY_SCORE_DISPLAY_LABELS as any)[score.label.toLowerCase()] || score.label}
-                                                </p>
-                                                <p className="text-[30px] font-black tracking-tighter text-[#141414] tabular-nums leading-none">
-                                                    <CountUpPercent value={score.value} />
-                                                </p>
-                                                <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-black/5">
-                                                    <motion.div
-                                                        className="h-full bg-[#8B6A3D]"
-                                                        initial={{ width: 0 }}
-                                                        whileInView={{ width: `${Math.max(0, Math.min(100, score.value))}%` }}
-                                                        viewport={{ once: true }}
-                                                        transition={{ duration: 1.1, delay: 0.12 + index * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                                                    />
-                                                </div>
-                                            </motion.div>
-                                        ))}
-                                    </div>
+                                <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
+                                    {analysisLanguage.primaryScores.map((score, index) => (
+                                        <motion.div
+                                            key={score.label}
+                                            initial={{ opacity: 0, y: 18 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true, amount: 0.45 }}
+                                            transition={{ duration: 0.45, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                                            className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-6 transition-all hover:bg-white hover:shadow-md hover:border-[#D4A574]/20"
+                                        >
+                                            <p className="mb-4 text-[9px] font-black uppercase tracking-[0.24em] text-[#8B6A3D]">
+                                                {(PRIMARY_SCORE_DISPLAY_LABELS as any)[score.label.toLowerCase()] || score.label}
+                                            </p>
+                                            <p className="text-[30px] font-black tracking-tighter text-[#141414] tabular-nums leading-none">
+                                                <CountUpPercent value={score.value} />
+                                            </p>
+                                            <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-black/5">
+                                                <motion.div
+                                                    className="h-full bg-[#8B6A3D]"
+                                                    initial={{ width: 0 }}
+                                                    whileInView={{ width: `${Math.max(0, Math.min(100, score.value))}%` }}
+                                                    viewport={{ once: true }}
+                                                    transition={{ duration: 1.1, delay: 0.12 + index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                                                />
+                                            </div>
+                                        </motion.div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
