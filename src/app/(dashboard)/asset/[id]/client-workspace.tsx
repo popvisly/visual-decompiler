@@ -850,29 +850,11 @@ const deriveContentSystemContext = ({
                 ? 'Weekly'
                 : 'Campaign-only';
 
-    if (friction > 0) {
-        const candidateScores = [
-            ['Series Potential', seriesPotentialScore],
-            ['Creator Fit', creatorFitScore],
-            ['Audience Conditioning', audienceConditioningScore],
-            ['Frequency Viability', frequencyViabilityScore],
-            ['Sequence Utility', sequenceUtilityScore],
-        ] as const;
-        const strongCount = candidateScores.filter(([, score]) => score >= 80).length;
-
-        if (strongCount >= 5) {
-            frequencyViabilityScore = Math.min(frequencyViabilityScore, 78);
-            overallScore = clamp(overallScore - 3);
-        } else if (strongCount >= 4) {
-            frequencyViabilityScore = Math.min(frequencyViabilityScore, 79);
-        }
-    }
-
     const systemInterpretationByRole: Record<ContentRole, string> = {
-        'Hook Asset': 'This asset should open the system, then hand off to a second asset that explains or converts.',
-        'Authority Asset': 'This asset should sit mid-sequence, where it stabilizes trust and makes the next ask feel earned.',
-        'Conversion Asset': 'This asset should appear late in sequence, after interest is already established and the audience is ready to act.',
-        'Retention Asset': 'This asset should maintain continuity between larger campaign beats rather than carry the first decision moment.',
+        'Hook Asset': 'This belongs at the front of the sequence. Its job is to create entry, then hand off quickly to proof.',
+        'Authority Asset': 'This belongs in the middle of the sequence. Its job is to organize belief before the ask arrives.',
+        'Conversion Asset': 'This belongs near the end of the sequence. Its job is to convert existing intent, not create interest from zero.',
+        'Retention Asset': 'This belongs between larger campaign beats. Its job is to maintain continuity, not carry the main decision.',
     };
 
     const creatorFitHeadingByMode: Record<CreatorFitMode, string> = {
@@ -889,43 +871,68 @@ const deriveContentSystemContext = ({
 
     const audienceConditioningSummary =
         audienceConditioningScore >= 82
-            ? 'Trains the audience to expect a recurring value exchange rather than a one-off post.'
+            ? 'Trains return behavior by setting a repeatable payoff expectation.'
             : audienceConditioningScore >= 68
-                ? 'Creates some continuity, but not enough to teach a reliable repeat behavior on its own.'
-                : 'Does not yet train a clear audience expectation across multiple posts.';
+                ? 'Creates expectation, but not enough to lock a repeat habit on its own.'
+                : 'Does not establish a reliable reason to return for the next post.';
 
     const sequenceRecommendation =
         primaryRole === 'Hook Asset'
             ? {
                   sequence: 'Hook -> Value -> Conversion',
                   bestFit: 'Hook Post',
-                  why: 'Use it first when the job is to trigger entry. It should be followed quickly by a post that deepens proof or carries the ask.',
+                  why: 'Put this first when the system needs entry. Do not ask it to carry proof and conversion in the same slot.',
               }
             : primaryRole === 'Authority Asset'
                 ? {
                       sequence: 'Hook -> Value -> Conversion',
                       bestFit: 'Value / Authority Post',
-                      why: 'Use it after the hook, once attention already exists. Its value is in organizing belief before the conversion move arrives.',
+                      why: 'Put this second when belief needs to be organized before the ask. It loses force if used as the opener.',
                   }
                 : primaryRole === 'Conversion Asset'
                     ? {
                           sequence: 'Hook -> Value -> Conversion',
                           bestFit: 'Conversion Post',
-                          why: 'Use it when the audience is already warmed. It closes the sequence better than it opens it.',
+                          why: 'Put this last when intent already exists. It underperforms if asked to generate demand from cold traffic.',
                       }
                     : {
                           sequence: 'Hook -> Value -> Conversion',
                           bestFit: 'Retention / Follow-up Post',
-                          why: 'Use it to keep the system coherent between bigger campaign beats, not to carry the main pitch alone.',
+                          why: 'Put this after the main beat to keep the sequence coherent. It should not replace the hook or the ask.',
                       };
 
-    const breakdown: ContentSystemModel['breakdown'] = [
-        { label: 'Series Potential', score: seriesPotentialScore, signal: toSignal(seriesPotentialScore) },
-        { label: 'Creator Fit', score: creatorFitScore, signal: toSignal(creatorFitScore) },
-        { label: 'Audience Conditioning', score: audienceConditioningScore, signal: toSignal(audienceConditioningScore) },
-        { label: 'Frequency Viability', score: frequencyViabilityScore, signal: toSignal(frequencyViabilityScore) },
-        { label: 'Sequence Utility', score: sequenceUtilityScore, signal: toSignal(sequenceUtilityScore) },
+    const breakdownEntries = [
+        { label: 'Series Potential' as const, score: seriesPotentialScore },
+        { label: 'Creator Fit' as const, score: creatorFitScore },
+        { label: 'Audience Conditioning' as const, score: audienceConditioningScore },
+        { label: 'Frequency Viability' as const, score: frequencyViabilityScore },
+        { label: 'Sequence Utility' as const, score: sequenceUtilityScore },
     ];
+
+    const strongEntries = breakdownEntries.filter((entry) => entry.score >= 80);
+    if (strongEntries.length === breakdownEntries.length) {
+        let weakestIndex = 0;
+        for (let i = 1; i < breakdownEntries.length; i += 1) {
+            if (breakdownEntries[i].score < breakdownEntries[weakestIndex].score) weakestIndex = i;
+        }
+        breakdownEntries[weakestIndex].score = Math.min(breakdownEntries[weakestIndex].score, 79);
+        overallScore = clamp(overallScore - 2);
+    } else if (friction > 0 && strongEntries.length >= 4) {
+        let weakestStrongIndex = -1;
+        breakdownEntries.forEach((entry, index) => {
+            if (entry.score >= 80 && (weakestStrongIndex === -1 || entry.score < breakdownEntries[weakestStrongIndex].score)) {
+                weakestStrongIndex = index;
+            }
+        });
+        if (weakestStrongIndex !== -1) {
+            breakdownEntries[weakestStrongIndex].score = Math.min(breakdownEntries[weakestStrongIndex].score, 79);
+        }
+    }
+
+    const breakdown: ContentSystemModel['breakdown'] = breakdownEntries.map((entry) => ({
+        ...entry,
+        signal: toSignal(entry.score),
+    }));
 
     const diagnostics: ContentSystemModel['diagnostics'] = [
         {
@@ -934,16 +941,21 @@ const deriveContentSystemContext = ({
             heading: seriesPotentialScore >= 80 ? 'Strong' : seriesPotentialScore >= 65 ? 'Moderate' : 'Limited',
             detail:
                 seriesPotentialScore >= 80
-                    ? 'The logic survives repetition, so the format can scale without needing a full creative reset each time.'
+                    ? 'The format can repeat without rebuilding the entire sequence logic each time.'
                     : seriesPotentialScore >= 65
-                        ? 'The format can repeat, but only if each iteration introduces a new opening angle.'
-                        : 'The asset behaves like a one-off. Repetition would expose the lack of format depth.',
+                        ? 'The format can repeat, but each iteration needs a different entry claim.'
+                        : 'The format breaks under repetition and should be treated as a one-off.',
         },
         {
             title: 'Creator Fit',
             signal: toSignal(creatorFitScore),
             heading: creatorFitHeadingByMode[creatorFitMode],
-            detail: creatorFitDetailByMode[creatorFitMode],
+            detail:
+                creatorFitMode === 'Personal'
+                    ? 'Fits creator distribution without major adaptation.'
+                    : creatorFitMode === 'Produced'
+                        ? 'Needs a looser entry before creator-led distribution.'
+                        : 'Can cross into creator channels, but not without calibration.',
         },
         {
             title: 'Audience Conditioning',
@@ -951,10 +963,10 @@ const deriveContentSystemContext = ({
             heading: audienceConditioningScore >= 80 ? 'Strong' : audienceConditioningScore >= 65 ? 'Moderate' : 'Weak',
             detail:
                 audienceConditioningScore >= 80
-                    ? 'It teaches the audience to return expecting a specific kind of value, which supports sequence memory.'
+                    ? 'Builds a reason to return because the payoff pattern is legible.'
                     : audienceConditioningScore >= 65
-                        ? 'It sets partial expectation, but not a strong enough ritual to carry habitual return on its own.'
-                        : 'It does not yet teach the audience what recurring payoff to expect next.',
+                        ? 'Sets expectation, but not enough to create habit by itself.'
+                        : 'Leaves the next expected payoff too unclear to create return behavior.',
         },
         {
             title: 'Frequency Viability',
@@ -962,10 +974,10 @@ const deriveContentSystemContext = ({
             heading: frequencyCadence,
             detail:
                 frequencyCadence === 'Daily'
-                    ? 'The system can support frequent use, provided the first claim changes each time.'
+                    ? 'Can run frequently if the opening proposition changes each time.'
                     : frequencyCadence === 'Weekly'
-                        ? 'Run it as a recurring anchor, not as a daily repetition unit.'
-                        : 'Reserve it for campaign moments or planned sequence beats, not steady-state posting.',
+                        ? 'Best used as a recurring anchor, not daily inventory.'
+                        : 'Best reserved for campaign beats, not ongoing cadence.',
         },
         {
             title: 'Sequence Utility',
@@ -973,27 +985,27 @@ const deriveContentSystemContext = ({
             heading: sequenceRecommendation.bestFit,
             detail:
                 primaryRole === 'Hook Asset'
-                    ? 'It is useful only if the next post resolves the curiosity it creates.'
+                    ? 'Useful only when the next asset resolves the entry claim.'
                     : primaryRole === 'Authority Asset'
-                        ? 'It works when attention already exists and the system needs proof, not novelty.'
+                        ? 'Useful when the system needs proof, not novelty.'
                         : primaryRole === 'Conversion Asset'
-                            ? 'It should arrive after the premise is already accepted.'
-                            : 'It keeps the system coherent after the main decision moment has passed.',
+                            ? 'Useful after the premise is already accepted.'
+                            : 'Useful once the main decision moment has already passed.',
         },
     ];
 
     const riskFlags: string[] = [];
     if (creatorFitMode === 'Produced') {
-        riskFlags.push('Creator-led distribution may reject it before the value lands if the tone stays too controlled.');
+        riskFlags.push('Creator-led distribution can reject the post before the core claim lands.');
     }
     if (seriesPotentialScore < 80 || frequencyCadence !== 'Daily') {
-        riskFlags.push('Repeat use will decay quickly if the opening claim stays fixed across iterations.');
+        riskFlags.push('Repeated use will decay fast if the entry proposition does not change across iterations.');
     }
     if (primaryRole !== 'Conversion Asset') {
-        riskFlags.push('Used alone, it can create attention or trust without advancing the audience to the next step.');
+        riskFlags.push('Used in isolation, it can create movement without advancing the audience to the next decision.');
     }
     if (riskFlags.length < 3 && attention < 70) {
-        riskFlags.push('If it is forced into the first slot, the sequence may stall before it establishes momentum.');
+        riskFlags.push('If forced into slot one, the sequence can stall before momentum forms.');
     }
 
     const operationalNextActions: string[] = [
@@ -1002,10 +1014,10 @@ const deriveContentSystemContext = ({
             ? `Place this in the ${sequenceRecommendation.bestFit.toLowerCase()} slot, not in daily rotation.`
             : `Lock its sequence role before rollout: ${sequenceRecommendation.sequence}.`,
         creatorFitMode === 'Produced'
-            ? 'Introduce one creator-native cue before adapting it for influencer-led distribution.'
+            ? 'Add one creator-native cue before adapting it for influencer-led distribution.'
             : creatorFitMode === 'Hybrid'
-                ? 'Reduce polish at the entry point without changing the core content logic.'
-                : 'Keep the human tone, but add one clearer payoff signal in frame one.',
+                ? 'Loosen the entry without changing the role it plays in sequence.'
+                : 'Keep the human tone, but make the payoff clearer in the first slot.',
     ];
 
     return {
