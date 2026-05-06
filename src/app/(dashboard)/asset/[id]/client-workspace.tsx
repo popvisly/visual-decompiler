@@ -390,6 +390,7 @@ type SocialContextModel = {
     platformScores: SocialPlatformScore[];
     socialInterpretation: string;
     tradeOff: string;
+    executionVerdict: string;
     feedMechanics: {
         title: 'First-Frame Clarity' | 'Scroll Stop Power' | 'Retention Stability' | 'Readability at Speed';
         signal: 'Strong' | 'Moderate' | 'Weak';
@@ -731,6 +732,11 @@ const deriveSocialContext = ({
                 ? 'Higher stop power improves entry, but can weaken message retention if the reveal comes too late.'
                 : 'The asset can either protect clarity or increase stop power, but not both without adaptation.';
 
+    const executionVerdict =
+        reelsScore < 80 || tiktokScore < 80
+            ? 'Feed-ready with minor adaptation required for short-form platforms.'
+            : 'Feed-ready across primary lanes with limited adaptation required.';
+
     const feedMechanics: SocialContextModel['feedMechanics'] = [
         {
             title: 'First-Frame Clarity',
@@ -754,13 +760,11 @@ const deriveSocialContext = ({
         },
         {
             title: 'Retention Stability',
-            signal: intent >= 80 && friction <= 20 ? 'Strong' : intent >= 65 ? 'Moderate' : 'Weak',
+            signal: intent >= 65 ? 'Moderate' : 'Weak',
             detail:
-                intent >= 80 && friction <= 20
-                    ? 'The message holds once the user stops.'
-                    : intent >= 65
-                        ? 'Clarity holds attention, but lacks enough tension to deepen engagement.'
-                        : 'The asset loses momentum before the message fully settles.',
+                intent >= 65
+                    ? 'Clarity holds attention, but lacks tension to deepen engagement.'
+                    : 'The asset loses momentum before the message fully settles.',
         },
         {
             title: 'Readability at Speed',
@@ -775,9 +779,9 @@ const deriveSocialContext = ({
     ];
 
     const riskFlags: string[] = [];
-    if (clarity >= 80) riskFlags.push('High clarity can reduce curiosity, causing scroll-through in fast feeds.');
+    if (clarity >= 80) riskFlags.push('High clarity reduces curiosity, increasing scroll-through in fast feeds.');
     if (attention < 82 || distinction < 72) riskFlags.push('If the first frame does not differentiate, the structure is never reached.');
-    if (reelsScore < metaFeedScore || tiktokScore < metaFeedScore) riskFlags.push('Platform adaptation is required; direct reuse will underperform on short-form video.');
+    if (reelsScore < metaFeedScore || tiktokScore < metaFeedScore) riskFlags.push('Direct reuse across platforms will underperform without adaptation.');
     if (riskFlags.length === 0) {
         riskFlags.push('The asset remains usable, but direct cross-platform reuse still risks feed inefficiency.');
     }
@@ -791,7 +795,7 @@ const deriveSocialContext = ({
         },
         {
             platform: 'Instagram Reels',
-            move: 'Increase contrast in the first second and tighten crop around the subject.',
+            move: 'Front-load contrast in the first second or the message will not land.',
         },
         {
             platform: 'TikTok',
@@ -811,6 +815,7 @@ const deriveSocialContext = ({
         platformScores,
         socialInterpretation,
         tradeOff,
+        executionVerdict,
         feedMechanics,
         riskFlags: compactRiskFlags,
         adaptationMoves,

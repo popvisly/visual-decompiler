@@ -24,6 +24,7 @@ export interface SocialContextModel {
     platformScores: SocialPlatformScore[];
     socialInterpretation: string;
     tradeOff: string;
+    executionVerdict: string;
     feedMechanics: {
         title: 'First-Frame Clarity' | 'Scroll Stop Power' | 'Retention Stability' | 'Readability at Speed';
         signal: 'Strong' | 'Moderate' | 'Weak';

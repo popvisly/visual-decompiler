@@ -36,6 +36,12 @@ export default function SocialContextTab({
                                     {socialContext.socialInterpretation}
                                 </p>
                                 <div>
+                                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8B6A3D]">Execution Verdict</p>
+                                    <p className="mt-3 max-w-[64ch] text-[15px] font-medium leading-relaxed text-[#515151]">
+                                        {socialContext.executionVerdict}
+                                    </p>
+                                </div>
+                                <div>
                                     <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8B6A3D]">Trade-Off</p>
                                     <p className="mt-3 max-w-[64ch] text-[15px] font-medium leading-relaxed text-[#515151]">
                                         {socialContext.tradeOff}
@@ -138,36 +144,6 @@ export default function SocialContextTab({
                     </div>
                 </section>
 
-                <section className="rounded-[2.5rem] border border-black/5 bg-white p-10 text-[#141414] shadow-sm">
-                    <div className="flex items-center justify-between gap-6 mb-8 border-b border-black/5 pb-6">
-                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#8B6A3D]">Top Score</p>
-                        <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#141414]/45">
-                            {strongestSocialPlatform.platform}
-                        </span>
-                    </div>
-                    <p className="max-w-[68ch] text-[14px] font-medium leading-relaxed text-[#515151]">
-                        The strongest platform lane is the one that requires the least adaptation before posting.
-                    </p>
-                    <div className="mt-10 flex items-end justify-between gap-6">
-                        <div className="text-[84px] font-black leading-none tracking-tight text-[#141414] tabular-nums">
-                            <CountUpPercent value={strongestSocialPlatform.score} />%
-                        </div>
-                        <p className="pb-2 text-[11px] font-black uppercase tracking-[0.16em] text-[#8B6A3D]">
-                            {strongestSocialPlatform.signal === 'Usable' ? 'Moderate' : strongestSocialPlatform.signal}
-                        </p>
-                    </div>
-                    <div className="mt-8">
-                        <div className="h-2 w-full overflow-hidden rounded-full bg-black/5">
-                            <motion.div
-                                className="h-full bg-[#8B6A3D]"
-                                initial={{ width: 0 }}
-                                whileInView={{ width: `${Math.max(0, Math.min(100, strongestSocialPlatform.score))}%` }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 1.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                            />
-                        </div>
-                    </div>
-                </section>
             </div>
         </div>
     );
