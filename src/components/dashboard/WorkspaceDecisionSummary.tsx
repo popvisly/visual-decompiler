@@ -37,9 +37,9 @@ export default function WorkspaceDecisionSummary({
                     {actions.length > 0 ? (
                         <div className="mt-10 rounded-[2rem] border border-black/5 bg-[#FBFBF6] p-8">
                             <p className="mb-7 text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">Operational Next Actions</p>
-                            <div className="space-y-5">
+                            <div className="grid gap-5">
                                 {actions.map((action, index) => (
-                                    <div key={`${action}-${index}`} className="flex items-start gap-4">
+                                    <div key={`${action}-${index}`} className="grid min-h-[56px] grid-cols-[24px_minmax(0,1fr)] items-start gap-4">
                                         <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white text-[11px] font-bold text-[#141414] shadow-sm">
                                             {index + 1}
                                         </span>
@@ -85,7 +85,7 @@ export default function WorkspaceDecisionSummary({
                                                     ? isMechanic
                                                         ? 'max-w-[20ch] text-[16px] font-semibold leading-[1.45] tracking-[-0.01em] text-[#2A2A26]'
                                                         : isConfidence
-                                                            ? 'text-[16px] font-semibold leading-[1.3] tracking-[-0.01em] text-[#2A2A26]'
+                                                            ? 'text-[18px] font-black leading-[1.2] tracking-[-0.02em] text-[#1E1E1A]'
                                                             : 'text-[40px] font-black uppercase leading-[0.92] tracking-[-0.05em] text-white'
                                                     : 'text-[18px] font-black uppercase leading-tight tracking-tight text-[#141414] transition-colors group-hover:text-[#8B6A3D]'
                                             }
