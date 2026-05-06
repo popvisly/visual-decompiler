@@ -1,5 +1,7 @@
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import ContainerScrollHero from '@/components/marketing/ContainerScrollHero';
+import HomepageProblemSection from '@/components/marketing/HomepageProblemSection';
+import HomepageSystemSection from '@/components/marketing/HomepageSystemSection';
 import PremiumDossierShowcase from '@/components/marketing/PremiumDossierShowcase';
 import RepeatableWorkflowSection from '@/components/marketing/RepeatableWorkflowSection';
 import HowItWorks from '@/components/marketing/HowItWorks';
@@ -16,7 +18,9 @@ export default function HomePage() {
         <main>
             <UnifiedSovereignHeader primaryCta={{ label: 'Start Free', href: '/ingest' }} />
             <ContainerScrollHero />
+            <HomepageProblemSection />
             <PremiumDossierShowcase />
+            <HomepageSystemSection />
             <AppFeaturesSection />
             <RepeatableWorkflowSection />
             <MarketLimitationSection />

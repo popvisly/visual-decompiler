@@ -18,9 +18,12 @@ export default function PremiumDossierShowcase() {
             <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 lg:px-12">
                 <div className="grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr]">
                     <div className="max-w-xl">
+                        <p className="mb-6 text-[10px] font-semibold uppercase tracking-[0.36em] text-[#8B6A3D]/80">
+                            This is what a creative decision looks like.
+                        </p>
                         <MarketingSectionHeading
                             kicker="Proof"
-                            title="A clinical read. A definitive verdict."
+                            title="A clinical read. A decision-ready verdict."
                             description="Visual Decompiler does not return a loose AI answer. It produces a structured forensic artifact with decision logic, evidence anchors, and language your team can defend in the room."
                         />
 
@@ -60,4 +63,3 @@ export default function PremiumDossierShowcase() {
         </section>
     );
 }
-

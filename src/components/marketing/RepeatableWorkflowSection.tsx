@@ -114,7 +114,7 @@ export default function RepeatableWorkflowSection() {
                         <MarketingSectionHeading
                             kicker="Strategic Moat"
                             title="Built for repeatability, not one-off chats."
-                            description="AI chat is a vacuum. Visual Decompiler is an operating system for creative intelligence—turning every analysis into reusable memory that compounds over time."
+                            description="AI chat is a vacuum. Visual Decompiler is an operating system for creative intelligence, not just what works but what role it plays—turning every analysis into reusable memory that compounds over time."
                         />
 
                         <div className="mt-10 flex flex-col gap-3 sm:flex-row">

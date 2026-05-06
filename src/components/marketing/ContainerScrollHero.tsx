@@ -17,12 +17,12 @@ const STEPS = [
     },
     {
         kicker: 'Step 02',
-        title: 'Run the fixed workflow.',
+        title: 'Run the decision system.',
         body: 'Quality Gate, Mechanics, Psychology, Blueprint Trace, Stress Lab, Market Pulse, and Decision Log keep the read repeatable.',
     },
     {
         kicker: 'Step 03',
-        title: 'Ship the artifact.',
+        title: 'Ship the decision artifact.',
         body: 'Export a dossier built for alignment, approval, evidence, caveats, and decision language.',
     },
 ] as const;
@@ -53,12 +53,20 @@ export default function ContainerScrollHero() {
                     titleComponent={
                         <div className="mx-auto max-w-4xl">
                             <h1 className="mx-auto max-w-[14ch] text-[clamp(52px,6.4vw,102px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]">
-                                Turn ads into
+                                Turn creative into
                                 <span className="block text-[#D4A574]">decision-grade intelligence.</span>
                             </h1>
 
+                            <p className="mx-auto mt-6 max-w-2xl text-[18px] font-medium leading-relaxed text-[#141414] md:text-[20px]">
+                                Most content doesn't fail because it's bad.
+                            </p>
+
+                            <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
+                                It fails because it has no role.
+                            </p>
+
                             <p className="mx-auto mt-6 max-w-2xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
-                                Decompile any asset into a saved, comparable dossier. Get mechanics, psychology, blueprint trace, stress tests, market context, and a decision log structured for teams, clients, and fast iteration.
+                                Decompile any asset into a saved, comparable dossier. Understand what it does, how it performs in the feed, and where it fits in a content system.
                             </p>
 
                             <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:items-center">

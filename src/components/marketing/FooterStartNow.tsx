@@ -92,8 +92,13 @@ export default function FooterStartNow() {
                     <h2 className="font-black leading-[0.88] tracking-[-0.05em] text-[#141414] uppercase mb-10"
                         style={{ fontSize: 'clamp(44px, 8vw, 86px)' }}
                     >
-                        Don't just show the work.<br />
-                        <span className="mt-3 block text-[#D4A574] tracking-[0.01em]" style={{ wordSpacing: '0.14em' }}>Defend it.</span>
+                        Don&apos;t just show the work.<br />
+                        <span className="mt-3 block text-[#D4A574] tracking-[0.01em]" style={{ wordSpacing: '0.14em' }}>
+                            Know what it&apos;s doing
+                        </span>
+                        <span className="mt-3 block text-[#141414] tracking-[0.01em]" style={{ wordSpacing: '0.08em' }}>
+                            and defend it.
+                        </span>
                     </h2>
                     <p className="text-[18px] leading-[1.7] text-[#6B6B6B] max-w-[480px]">
                         Decompile your next ad before the room starts asking questions.
