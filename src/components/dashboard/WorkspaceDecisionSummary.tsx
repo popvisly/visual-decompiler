@@ -37,9 +37,9 @@ export default function WorkspaceDecisionSummary({
                     {actions.length > 0 ? (
                         <div className="mt-10 rounded-[2rem] border border-black/5 bg-[#FBFBF6] p-8">
                             <p className="mb-7 text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">Operational Next Actions</p>
-                            <div className="grid gap-5">
+                            <div className="grid gap-3.5">
                                 {actions.map((action, index) => (
-                                    <div key={`${action}-${index}`} className="grid min-h-[56px] grid-cols-[24px_minmax(0,1fr)] items-start gap-4">
+                                    <div key={`${action}-${index}`} className="grid min-h-[48px] grid-cols-[24px_minmax(0,1fr)] items-start gap-4">
                                         <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white text-[11px] font-bold text-[#141414] shadow-sm">
                                             {index + 1}
                                         </span>
