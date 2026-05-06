@@ -388,12 +388,13 @@ type SocialPlatformScore = {
 
 type SocialContextModel = {
     platformScores: SocialPlatformScore[];
-    hookHoldDiagnostics: {
-        first2sClarity: string;
-        thumbStopStrength: string;
-        readabilityAtSpeed: string;
-        messageRetention: string;
-    };
+    socialInterpretation: string;
+    tradeOff: string;
+    feedMechanics: {
+        title: 'First-Frame Clarity' | 'Scroll Stop Power' | 'Retention Stability' | 'Readability at Speed';
+        signal: 'Strong' | 'Moderate' | 'Weak';
+        detail: string;
+    }[];
     riskFlags: string[];
     adaptationMoves: {
         platform: SocialPlatformKey;
@@ -408,8 +409,9 @@ type ContentCadence = 'Daily' | 'Weekly' | 'Campaign-only';
 
 type ContentSystemModel = {
     primaryRole: ContentRole;
-    secondaryRole: ContentRole | null;
+    secondaryRole: string | null;
     systemInterpretation: string;
+    tradeOff: string;
     overallScore: number;
     overallSignal: ContentSystemSignal;
     creatorFitMode: CreatorFitMode;
@@ -691,12 +693,12 @@ const deriveSocialContext = ({
     };
 
     const metaFeedScore = clamp(clarity * 0.36 + intent * 0.26 + cohesion * 0.2 + attention * 0.18);
-    const reelsScore = clamp(attention * 0.34 + distinction * 0.24 + clarity * 0.22 + density * 0.2);
-    const tiktokScore = clamp(attention * 0.38 + distinction * 0.24 + density * 0.2 + clarity * 0.18);
+    let reelsScore = clamp(attention * 0.34 + distinction * 0.24 + clarity * 0.22 + density * 0.2 - (clarity >= 80 ? 10 : 5));
+    let tiktokScore = clamp(attention * 0.38 + distinction * 0.24 + density * 0.2 + clarity * 0.18 - (clarity >= 80 ? 12 : 6));
     const shortsScore = clamp(attention * 0.3 + clarity * 0.27 + intent * 0.23 + distinction * 0.2);
     const linkedinScore = clamp(clarity * 0.38 + intent * 0.32 + cohesion * 0.2 + confidence * 0.1);
 
-    const platformScores: SocialPlatformScore[] = [
+    let platformScores: SocialPlatformScore[] = [
         { platform: 'Meta Feed', score: metaFeedScore, signal: toSignal(metaFeedScore) },
         { platform: 'Instagram Reels', score: reelsScore, signal: toSignal(reelsScore) },
         { platform: 'TikTok', score: tiktokScore, signal: toSignal(tiktokScore) },
@@ -704,41 +706,80 @@ const deriveSocialContext = ({
         { platform: 'LinkedIn', score: linkedinScore, signal: toSignal(linkedinScore) },
     ];
 
-    const hookHoldDiagnostics = {
-        first2sClarity:
-            clarity >= 80
-                ? 'Strong entry. Hook clarity lands inside the first two seconds.'
-                : clarity >= 65
-                  ? 'Usable entry. Clarify the first-frame value cue for faster recognition.'
-                  : 'At risk. The opening cue is too soft for social-speed scanning.',
-        thumbStopStrength:
-            attention >= 80
-                ? 'High stop power. The frame captures attention quickly.'
-                : attention >= 65
-                  ? 'Moderate stop power. Increase contrast around the primary focal object.'
-                  : 'Low stop power. The frame can pass by without immediate capture.',
-        readabilityAtSpeed:
-            cohesion >= 78 && friction <= 20
-                ? 'Reading path is stable at scroll speed.'
-                : cohesion >= 65
-                  ? 'Reading path is serviceable. Tighten hierarchy to reduce scan drop-off.'
-                  : 'Reading path is fragmented. Compress copy and simplify visual competition.',
-        messageRetention:
-            intent >= 78 && density >= 75
-                ? 'Message retention is strong after first exposure.'
-                : intent >= 65
-                  ? 'Retention is moderate. Strengthen one clear memory anchor.'
-                  : 'Retention is weak. Core claim is not locking fast enough.',
-    };
+    const strongPlatformCount = platformScores.filter((row) => row.signal === 'Strong').length;
+    if (strongPlatformCount >= 4) {
+        platformScores = platformScores.map((row) => {
+            if (row.platform === 'Instagram Reels' || row.platform === 'TikTok') {
+                const score = Math.min(row.score, row.platform === 'Instagram Reels' ? 78 : 75);
+                return { ...row, score, signal: toSignal(score) };
+            }
+            return row;
+        });
+    }
+
+    const socialInterpretation =
+        clarity >= 78 && attention >= 75
+            ? 'The asset stops effectively and holds through clear message delivery, but depends on a clean opening to prevent early drop-off.'
+            : attention >= 75
+                ? 'The asset can stop the scroll, but it does not hold long enough unless the first claim lands immediately.'
+                : 'The asset needs a stronger first-frame proposition before feed behavior works in its favor.';
+
+    const tradeOff =
+        clarity >= 80
+            ? 'High clarity supports retention, but reduces raw scroll curiosity in fast feeds.'
+            : attention >= 78
+                ? 'Higher stop power improves entry, but can weaken message retention if the reveal comes too late.'
+                : 'The asset can either protect clarity or increase stop power, but not both without adaptation.';
+
+    const feedMechanics: SocialContextModel['feedMechanics'] = [
+        {
+            title: 'First-Frame Clarity',
+            signal: clarity >= 80 ? 'Strong' : clarity >= 65 ? 'Moderate' : 'Weak',
+            detail:
+                clarity >= 80
+                    ? 'The core message is legible immediately.'
+                    : clarity >= 65
+                        ? 'The message lands, but not fast enough for every feed environment.'
+                        : 'The message arrives too late to protect the first second.',
+        },
+        {
+            title: 'Scroll Stop Power',
+            signal: attention >= 80 ? 'Strong' : attention >= 65 ? 'Moderate' : 'Weak',
+            detail:
+                attention >= 80
+                    ? 'The asset interrupts passive scrolling quickly.'
+                    : attention >= 65
+                        ? 'The asset can interrupt the scroll, but not with enough consistency.'
+                        : 'The asset does not create enough interruption to win the first glance.',
+        },
+        {
+            title: 'Retention Stability',
+            signal: intent >= 80 && friction <= 20 ? 'Strong' : intent >= 65 ? 'Moderate' : 'Weak',
+            detail:
+                intent >= 80 && friction <= 20
+                    ? 'The message holds once the user stops.'
+                    : intent >= 65
+                        ? 'Clarity holds attention, but lacks enough tension to deepen engagement.'
+                        : 'The asset loses momentum before the message fully settles.',
+        },
+        {
+            title: 'Readability at Speed',
+            signal: cohesion >= 78 && friction <= 20 ? 'Strong' : cohesion >= 65 ? 'Moderate' : 'Weak',
+            detail:
+                cohesion >= 78 && friction <= 20
+                    ? 'The reading path remains stable under fast scroll conditions.'
+                    : cohesion >= 65
+                        ? 'The reading path holds, but only if the user slows down.'
+                        : 'The reading path breaks under feed-speed scanning.',
+        },
+    ];
 
     const riskFlags: string[] = [];
-    if (clarity < 65) riskFlags.push('First-frame value signal is underdefined for feed environments.');
-    if (attention < 65) riskFlags.push('Thumb-stop pressure is below social benchmark.');
-    if (friction > 25) riskFlags.push('Message friction may reduce completion and response confidence.');
-    if (density < 68) riskFlags.push('Information compression is low for short-form decision windows.');
-    if (distinction < 62) riskFlags.push('Execution risks blending into category-native creative patterns.');
+    if (clarity >= 80) riskFlags.push('High clarity can reduce curiosity, causing scroll-through in fast feeds.');
+    if (attention < 82 || distinction < 72) riskFlags.push('If the first frame does not differentiate, the structure is never reached.');
+    if (reelsScore < metaFeedScore || tiktokScore < metaFeedScore) riskFlags.push('Platform adaptation is required; direct reuse will underperform on short-form video.');
     if (riskFlags.length === 0) {
-        riskFlags.push('No critical social execution risk detected at first pass.');
+        riskFlags.push('The asset remains usable, but direct cross-platform reuse still risks feed inefficiency.');
     }
 
     const compactRiskFlags = riskFlags.slice(0, 3);
@@ -746,29 +787,31 @@ const deriveSocialContext = ({
     const adaptationMoves: SocialContextModel['adaptationMoves'] = [
         {
             platform: 'Meta Feed',
-            move: 'Lead with one explicit value line in frame one; keep supporting copy secondary.',
+            move: 'Keep structure, but reduce copy density in frame one.',
         },
         {
             platform: 'Instagram Reels',
-            move: 'Strengthen opening contrast and crop safety around the primary subject lock.',
+            move: 'Increase contrast in the first second and tighten crop around the subject.',
         },
         {
             platform: 'TikTok',
-            move: 'Increase first-second visual tension and shorten copy to one hard-working line.',
+            move: 'Replace the structured entry with a tension-first hook before revealing the message.',
         },
         {
             platform: 'YouTube Shorts',
-            move: 'Front-load brand cue earlier so recognition occurs before mid-sequence drop-off.',
+            move: 'Introduce the brand cue earlier to avoid mid-scroll recognition loss.',
         },
         {
             platform: 'LinkedIn',
-            move: 'Prioritize strategic clarity and outcome framing over stylistic ambiguity.',
+            move: 'Lead with outcome clarity and remove stylistic ambiguity from the opening claim.',
         },
     ];
 
     return {
         platformScores,
-        hookHoldDiagnostics,
+        socialInterpretation,
+        tradeOff,
+        feedMechanics,
         riskFlags: compactRiskFlags,
         adaptationMoves,
     };
@@ -818,7 +861,9 @@ const deriveContentSystemContext = ({
     const primaryRole = rankedRoles[0]?.[0] || 'Authority Asset';
     const secondaryRole =
         rankedRoles[1] && rankedRoles[1][1] >= 74 && rankedRoles[0] && rankedRoles[0][1] - rankedRoles[1][1] <= 6
-            ? rankedRoles[1][0]
+            ? rankedRoles[1][0] === 'Conversion Asset'
+                ? 'Conversion Support'
+                : rankedRoles[1][0]
             : null;
 
     const polishPenalty = clarity >= 82 && cohesion >= 78 ? 8 : clarity >= 76 && cohesion >= 72 ? 4 : 0;
@@ -875,6 +920,13 @@ const deriveContentSystemContext = ({
             : audienceConditioningScore >= 68
                 ? 'Creates expectation, but not enough to lock a repeat habit on its own.'
                 : 'Does not establish a reliable reason to return for the next post.';
+
+    const tradeOffByRole: Record<ContentRole, string> = {
+        'Hook Asset': 'Creates entry pressure, but sacrifices proof depth and sequence stability.',
+        'Authority Asset': 'Builds clarity and trust, but sacrifices immediacy and creator-native pull.',
+        'Conversion Asset': 'Sharpens the ask, but depends on prior belief to do its job.',
+        'Retention Asset': 'Supports continuity, but does not carry the main decision on its own.',
+    };
 
     const sequenceRecommendation =
         primaryRole === 'Hook Asset'
@@ -958,28 +1010,6 @@ const deriveContentSystemContext = ({
                         : 'Can cross into creator channels, but not without calibration.',
         },
         {
-            title: 'Audience Conditioning',
-            signal: toSignal(audienceConditioningScore),
-            heading: audienceConditioningScore >= 80 ? 'Strong' : audienceConditioningScore >= 65 ? 'Moderate' : 'Weak',
-            detail:
-                audienceConditioningScore >= 80
-                    ? 'Builds a reason to return because the payoff pattern is legible.'
-                    : audienceConditioningScore >= 65
-                        ? 'Sets expectation, but not enough to create habit by itself.'
-                        : 'Leaves the next expected payoff too unclear to create return behavior.',
-        },
-        {
-            title: 'Frequency Viability',
-            signal: toSignal(frequencyViabilityScore),
-            heading: frequencyCadence,
-            detail:
-                frequencyCadence === 'Daily'
-                    ? 'Can run frequently if the opening proposition changes each time.'
-                    : frequencyCadence === 'Weekly'
-                        ? 'Best used as a recurring anchor, not daily inventory.'
-                        : 'Best reserved for campaign beats, not ongoing cadence.',
-        },
-        {
             title: 'Sequence Utility',
             signal: toSignal(sequenceUtilityScore),
             heading: sequenceRecommendation.bestFit,
@@ -1024,6 +1054,7 @@ const deriveContentSystemContext = ({
         primaryRole,
         secondaryRole,
         systemInterpretation: systemInterpretationByRole[primaryRole],
+        tradeOff: tradeOffByRole[primaryRole],
         overallScore,
         overallSignal: toSignal(overallScore),
         creatorFitMode,

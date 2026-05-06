@@ -35,7 +35,6 @@ export default function ContentSystemContextTab({
                             { label: 'Signal', value: contentSystemContext.overallSignal },
                             { label: 'Best Fit', value: contentSystemContext.sequenceRecommendation.bestFit },
                         ]}
-                        actions={contentSystemContext.operationalNextActions}
                     />
                 </div>
 
@@ -58,6 +57,12 @@ export default function ContentSystemContextTab({
                                     <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8B6A3D]">System Interpretation</p>
                                     <p className="mt-3 max-w-[70ch] text-[15px] font-medium leading-relaxed text-[#515151]">
                                         {contentSystemContext.systemInterpretation}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8B6A3D]">Trade-Off</p>
+                                    <p className="mt-3 max-w-[70ch] text-[15px] font-medium leading-relaxed text-[#515151]">
+                                        {contentSystemContext.tradeOff}
                                     </p>
                                 </div>
                             </div>
@@ -95,7 +100,7 @@ export default function ContentSystemContextTab({
 
                 <section className="rounded-[2.5rem] border border-black/5 bg-white p-10 text-[#141414] shadow-sm">
                     <p className="mb-8 border-b border-black/5 pb-6 text-[11px] font-black uppercase tracking-[0.3em] text-[#8B6A3D]">Diagnostic Cards</p>
-                    <div className="grid gap-4 xl:grid-cols-2">
+                    <div className="grid gap-4 xl:grid-cols-3">
                         {contentSystemContext.diagnostics.map((card) => (
                             <div key={card.title} className="rounded-[1.8rem] border border-black/5 bg-[#FBFBF6] p-7 transition-all hover:bg-white hover:shadow-md">
                                 <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8B6A3D]">{card.title}</p>

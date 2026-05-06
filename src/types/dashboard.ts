@@ -22,12 +22,13 @@ export interface SocialPlatformScore {
 
 export interface SocialContextModel {
     platformScores: SocialPlatformScore[];
-    hookHoldDiagnostics: {
-        first2sClarity: string;
-        thumbStopStrength: string;
-        readabilityAtSpeed: string;
-        messageRetention: string;
-    };
+    socialInterpretation: string;
+    tradeOff: string;
+    feedMechanics: {
+        title: 'First-Frame Clarity' | 'Scroll Stop Power' | 'Retention Stability' | 'Readability at Speed';
+        signal: 'Strong' | 'Moderate' | 'Weak';
+        detail: string;
+    }[];
     riskFlags: string[];
     adaptationMoves: {
         platform: SocialPlatformKey;
@@ -55,8 +56,9 @@ export interface ContentSystemDiagnostic {
 
 export interface ContentSystemModel {
     primaryRole: ContentRole;
-    secondaryRole: ContentRole | null;
+    secondaryRole: string | null;
     systemInterpretation: string;
+    tradeOff: string;
     overallScore: number;
     overallSignal: ContentSystemSignal;
     creatorFitMode: CreatorFitMode;
