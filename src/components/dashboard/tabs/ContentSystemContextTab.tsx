@@ -24,8 +24,12 @@ export default function ContentSystemContextTab({
                     />
                     <WorkspaceDecisionSummary
                         eyebrow="System Active"
-                        title={`${contentSystemContext.primaryRole} with ${contentSystemContext.secondaryRole.toLowerCase()} support.`}
-                        body="This module reads the asset as part of a broader creator, campaign, or content pipeline. The question is not only whether the execution works once, but whether it can condition an audience, sustain repetition, and hold a clear role across a sequence."
+                        title={
+                            contentSystemContext.secondaryRole
+                                ? `${contentSystemContext.primaryRole} with ${contentSystemContext.secondaryRole.toLowerCase()} support.`
+                                : `${contentSystemContext.primaryRole}.`
+                        }
+                        body="Use this module to decide sequence role, repeatability, and creator compatibility before scaling distribution."
                         metrics={[
                             { label: 'System Score', value: `${contentSystemContext.overallScore}/100` },
                             { label: 'Signal', value: contentSystemContext.overallSignal },
@@ -44,10 +48,12 @@ export default function ContentSystemContextTab({
                                     <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8B6A3D]">Primary Role</p>
                                     <p className="mt-3 text-[28px] font-black tracking-tight text-[#141414]">{contentSystemContext.primaryRole}</p>
                                 </div>
-                                <div>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8B6A3D]">Secondary Role</p>
-                                    <p className="mt-3 text-[18px] font-semibold tracking-tight text-[#141414]">{contentSystemContext.secondaryRole}</p>
-                                </div>
+                                {contentSystemContext.secondaryRole ? (
+                                    <div>
+                                        <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8B6A3D]">Secondary Role</p>
+                                        <p className="mt-3 text-[18px] font-semibold tracking-tight text-[#141414]">{contentSystemContext.secondaryRole}</p>
+                                    </div>
+                                ) : null}
                                 <div>
                                     <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8B6A3D]">System Interpretation</p>
                                     <p className="mt-3 max-w-[70ch] text-[15px] font-medium leading-relaxed text-[#515151]">
@@ -93,7 +99,8 @@ export default function ContentSystemContextTab({
                         {contentSystemContext.diagnostics.map((card) => (
                             <div key={card.title} className="rounded-[1.8rem] border border-black/5 bg-[#FBFBF6] p-7 transition-all hover:bg-white hover:shadow-md">
                                 <p className="text-[10px] font-black uppercase tracking-[0.16em] text-[#8B6A3D]">{card.title}</p>
-                                <p className="mt-4 text-[26px] font-black tracking-tight text-[#141414]">{card.signal === 'Moderate' ? card.heading : `${card.signal}`}</p>
+                                <p className="mt-4 text-[26px] font-black tracking-tight text-[#141414]">{card.heading}</p>
+                                <p className="mt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-[#8B6A3D]">{card.signal}</p>
                                 <p className="mt-4 text-[14px] font-medium leading-relaxed text-[#515151]">{card.detail}</p>
                             </div>
                         ))}

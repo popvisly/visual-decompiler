@@ -408,7 +408,7 @@ type ContentCadence = 'Daily' | 'Weekly' | 'Campaign-only';
 
 type ContentSystemModel = {
     primaryRole: ContentRole;
-    secondaryRole: ContentRole;
+    secondaryRole: ContentRole | null;
     systemInterpretation: string;
     overallScore: number;
     overallSignal: ContentSystemSignal;
@@ -816,14 +816,19 @@ const deriveContentSystemContext = ({
         .sort((a, b) => b[1] - a[1]);
 
     const primaryRole = rankedRoles[0]?.[0] || 'Authority Asset';
-    const secondaryRole = rankedRoles[1]?.[0] || 'Hook Asset';
+    const secondaryRole =
+        rankedRoles[1] && rankedRoles[1][1] >= 74 && rankedRoles[0] && rankedRoles[0][1] - rankedRoles[1][1] <= 6
+            ? rankedRoles[1][0]
+            : null;
 
-    const seriesPotentialScore = clamp(cohesion * 0.34 + clarity * 0.28 + distinction * 0.2 + (100 - friction) * 0.18);
-    const creatorFitScore = clamp(attention * 0.24 + distinction * 0.18 + cohesion * 0.18 + (100 - friction) * 0.18 + intent * 0.12 + clarity * 0.1);
-    const audienceConditioningScore = clamp(intent * 0.28 + clarity * 0.27 + cohesion * 0.25 + density * 0.2);
-    const frequencyViabilityScore = clamp(seriesPotentialScore * 0.35 + audienceConditioningScore * 0.25 + creatorFitScore * 0.2 + (100 - friction) * 0.2);
+    const polishPenalty = clarity >= 82 && cohesion >= 78 ? 8 : clarity >= 76 && cohesion >= 72 ? 4 : 0;
+    const repetitionPenalty = friction >= 24 ? 10 : friction >= 18 ? 6 : friction >= 12 ? 3 : 0;
+    const seriesPotentialScore = clamp(cohesion * 0.34 + clarity * 0.28 + distinction * 0.2 + (100 - friction) * 0.18 - repetitionPenalty);
+    const creatorFitScore = clamp(attention * 0.24 + distinction * 0.18 + cohesion * 0.18 + (100 - friction) * 0.18 + intent * 0.12 + clarity * 0.1 - polishPenalty);
+    const audienceConditioningScore = clamp(intent * 0.28 + clarity * 0.27 + cohesion * 0.25 + density * 0.2 - (friction >= 20 ? 4 : 0));
+    let frequencyViabilityScore = clamp(seriesPotentialScore * 0.35 + audienceConditioningScore * 0.25 + creatorFitScore * 0.2 + (100 - friction) * 0.2 - repetitionPenalty);
     const sequenceUtilityScore = clamp(intent * 0.3 + attention * 0.28 + clarity * 0.22 + cohesion * 0.2);
-    const overallScore = clamp(
+    let overallScore = clamp(
         seriesPotentialScore * 0.22 +
         creatorFitScore * 0.16 +
         audienceConditioningScore * 0.22 +
@@ -841,15 +846,33 @@ const deriveContentSystemContext = ({
     const frequencyCadence: ContentCadence =
         frequencyViabilityScore >= 84
             ? 'Daily'
-            : frequencyViabilityScore >= 68
+        : frequencyViabilityScore >= 68
                 ? 'Weekly'
                 : 'Campaign-only';
 
+    if (friction > 0) {
+        const candidateScores = [
+            ['Series Potential', seriesPotentialScore],
+            ['Creator Fit', creatorFitScore],
+            ['Audience Conditioning', audienceConditioningScore],
+            ['Frequency Viability', frequencyViabilityScore],
+            ['Sequence Utility', sequenceUtilityScore],
+        ] as const;
+        const strongCount = candidateScores.filter(([, score]) => score >= 80).length;
+
+        if (strongCount >= 5) {
+            frequencyViabilityScore = Math.min(frequencyViabilityScore, 78);
+            overallScore = clamp(overallScore - 3);
+        } else if (strongCount >= 4) {
+            frequencyViabilityScore = Math.min(frequencyViabilityScore, 79);
+        }
+    }
+
     const systemInterpretationByRole: Record<ContentRole, string> = {
-        'Hook Asset': 'This asset is strongest as an entry-point piece: it captures attention quickly, then relies on follow-up structure to convert that attention into understanding.',
-        'Authority Asset': 'This asset is strongest as a credibility-building piece: it frames meaning clearly, then reinforces trust through orderly visual control.',
-        'Conversion Asset': 'This asset is strongest when the audience is already warm: it translates clarity and intent into a stronger action-ready prompt.',
-        'Retention Asset': 'This asset is strongest as a continuity piece: it keeps the audience inside a repeatable system by rewarding recognition and familiarity.',
+        'Hook Asset': 'This asset should open the system, then hand off to a second asset that explains or converts.',
+        'Authority Asset': 'This asset should sit mid-sequence, where it stabilizes trust and makes the next ask feel earned.',
+        'Conversion Asset': 'This asset should appear late in sequence, after interest is already established and the audience is ready to act.',
+        'Retention Asset': 'This asset should maintain continuity between larger campaign beats rather than carry the first decision moment.',
     };
 
     const creatorFitHeadingByMode: Record<CreatorFitMode, string> = {
@@ -866,34 +889,34 @@ const deriveContentSystemContext = ({
 
     const audienceConditioningSummary =
         audienceConditioningScore >= 82
-            ? 'Builds expectation of structured value and supports repeat engagement when deployed in a consistent sequence.'
+            ? 'Trains the audience to expect a recurring value exchange rather than a one-off post.'
             : audienceConditioningScore >= 68
-                ? 'Builds partial expectation of value, but needs clearer sequencing to train repeat behavior consistently.'
-                : 'Does not yet teach a reliable repeat behavior pattern without stronger structural continuity.';
+                ? 'Creates some continuity, but not enough to teach a reliable repeat behavior on its own.'
+                : 'Does not yet train a clear audience expectation across multiple posts.';
 
     const sequenceRecommendation =
         primaryRole === 'Hook Asset'
             ? {
                   sequence: 'Hook -> Value -> Conversion',
                   bestFit: 'Hook Post',
-                  why: 'The asset is best used to open the sequence. Its strongest contribution is attention capture, with credibility and conversion better handled by the following post.',
+                  why: 'Use it first when the job is to trigger entry. It should be followed quickly by a post that deepens proof or carries the ask.',
               }
             : primaryRole === 'Authority Asset'
                 ? {
                       sequence: 'Hook -> Value -> Conversion',
                       bestFit: 'Value / Authority Post',
-                      why: 'The asset is strongest at explaining and defending meaning, making it more useful as a credibility-building piece than a pure direct-response unit.',
+                      why: 'Use it after the hook, once attention already exists. Its value is in organizing belief before the conversion move arrives.',
                   }
                 : primaryRole === 'Conversion Asset'
                     ? {
                           sequence: 'Hook -> Value -> Conversion',
                           bestFit: 'Conversion Post',
-                          why: 'The asset works best after the audience already understands the offer. Its structure supports decision pressure more than initial discovery.',
+                          why: 'Use it when the audience is already warmed. It closes the sequence better than it opens it.',
                       }
                     : {
                           sequence: 'Hook -> Value -> Conversion',
                           bestFit: 'Retention / Follow-up Post',
-                          why: 'The asset is more useful for maintaining continuity than for carrying the first or final decision moment alone.',
+                          why: 'Use it to keep the system coherent between bigger campaign beats, not to carry the main pitch alone.',
                       };
 
     const breakdown: ContentSystemModel['breakdown'] = [
@@ -911,10 +934,10 @@ const deriveContentSystemContext = ({
             heading: seriesPotentialScore >= 80 ? 'Strong' : seriesPotentialScore >= 65 ? 'Moderate' : 'Limited',
             detail:
                 seriesPotentialScore >= 80
-                    ? 'The structure can be reused across multiple posts or campaign beats without losing clarity.'
+                    ? 'The logic survives repetition, so the format can scale without needing a full creative reset each time.'
                     : seriesPotentialScore >= 65
-                        ? 'The format can repeat with variation, but needs tighter input control to avoid flattening into sameness.'
-                        : 'The execution behaves more like a one-off asset than a reusable content format.',
+                        ? 'The format can repeat, but only if each iteration introduces a new opening angle.'
+                        : 'The asset behaves like a one-off. Repetition would expose the lack of format depth.',
         },
         {
             title: 'Creator Fit',
@@ -926,7 +949,12 @@ const deriveContentSystemContext = ({
             title: 'Audience Conditioning',
             signal: toSignal(audienceConditioningScore),
             heading: audienceConditioningScore >= 80 ? 'Strong' : audienceConditioningScore >= 65 ? 'Moderate' : 'Weak',
-            detail: audienceConditioningSummary,
+            detail:
+                audienceConditioningScore >= 80
+                    ? 'It teaches the audience to return expecting a specific kind of value, which supports sequence memory.'
+                    : audienceConditioningScore >= 65
+                        ? 'It sets partial expectation, but not a strong enough ritual to carry habitual return on its own.'
+                        : 'It does not yet teach the audience what recurring payoff to expect next.',
         },
         {
             title: 'Frequency Viability',
@@ -934,43 +962,50 @@ const deriveContentSystemContext = ({
             heading: frequencyCadence,
             detail:
                 frequencyCadence === 'Daily'
-                    ? 'The format can sustain high-frequency posting if the opening frame changes enough to preserve freshness.'
+                    ? 'The system can support frequent use, provided the first claim changes each time.'
                     : frequencyCadence === 'Weekly'
-                        ? 'Best deployed as a weekly or campaign-anchor format, rather than a daily repetition pattern.'
-                        : 'Best used for campaign moments or anchor posts rather than frequent repetition.',
+                        ? 'Run it as a recurring anchor, not as a daily repetition unit.'
+                        : 'Reserve it for campaign moments or planned sequence beats, not steady-state posting.',
         },
         {
             title: 'Sequence Utility',
             signal: toSignal(sequenceUtilityScore),
             heading: sequenceRecommendation.bestFit,
-            detail: sequenceRecommendation.why,
+            detail:
+                primaryRole === 'Hook Asset'
+                    ? 'It is useful only if the next post resolves the curiosity it creates.'
+                    : primaryRole === 'Authority Asset'
+                        ? 'It works when attention already exists and the system needs proof, not novelty.'
+                        : primaryRole === 'Conversion Asset'
+                            ? 'It should arrive after the premise is already accepted.'
+                            : 'It keeps the system coherent after the main decision moment has passed.',
         },
     ];
 
     const riskFlags: string[] = [];
     if (creatorFitMode === 'Produced') {
-        riskFlags.push('May feel too polished for casual creator feeds without a more human entry cue.');
+        riskFlags.push('Creator-led distribution may reject it before the value lands if the tone stays too controlled.');
     }
     if (seriesPotentialScore < 80 || frequencyCadence !== 'Daily') {
-        riskFlags.push('Repeat use requires variation in the opening frame to avoid format fatigue.');
+        riskFlags.push('Repeat use will decay quickly if the opening claim stays fixed across iterations.');
     }
     if (primaryRole !== 'Conversion Asset') {
-        riskFlags.push('If used alone, the asset may perform as insight or attention but not as a full conversion path.');
+        riskFlags.push('Used alone, it can create attention or trust without advancing the audience to the next step.');
     }
     if (riskFlags.length < 3 && attention < 70) {
-        riskFlags.push('The format needs a sharper hook layer before it can reliably carry sequence entry duties.');
+        riskFlags.push('If it is forced into the first slot, the sequence may stall before it establishes momentum.');
     }
 
     const operationalNextActions: string[] = [
-        'Build 2-3 format variations before repeating this structure.',
+        'Build 2-3 opening variants before repeating the format.',
         primaryRole === 'Authority Asset' || primaryRole === 'Retention Asset'
-            ? `Use this asset as a ${sequenceRecommendation.bestFit.toLowerCase()}, not a daily filler post.`
-            : `Define where this sits in a 3-post sequence before broad deployment: ${sequenceRecommendation.sequence}.`,
+            ? `Place this in the ${sequenceRecommendation.bestFit.toLowerCase()} slot, not in daily rotation.`
+            : `Lock its sequence role before rollout: ${sequenceRecommendation.sequence}.`,
         creatorFitMode === 'Produced'
-            ? 'Introduce one human or creator-native cue if adapting for influencer-led distribution.'
+            ? 'Introduce one creator-native cue before adapting it for influencer-led distribution.'
             : creatorFitMode === 'Hybrid'
-                ? 'Preserve the strategic structure, but reduce polish slightly for creator-led distribution.'
-                : 'Protect the informal entry feel while keeping the underlying value signal intact.',
+                ? 'Reduce polish at the entry point without changing the core content logic.'
+                : 'Keep the human tone, but add one clearer payoff signal in frame one.',
     ];
 
     return {

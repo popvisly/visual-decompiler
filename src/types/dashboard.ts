@@ -55,7 +55,7 @@ export interface ContentSystemDiagnostic {
 
 export interface ContentSystemModel {
     primaryRole: ContentRole;
-    secondaryRole: ContentRole;
+    secondaryRole: ContentRole | null;
     systemInterpretation: string;
     overallScore: number;
     overallSignal: ContentSystemSignal;
