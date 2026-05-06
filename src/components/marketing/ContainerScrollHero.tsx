@@ -42,7 +42,7 @@ export default function ContainerScrollHero() {
     }, [prefersReducedMotion]);
 
     return (
-        <section className="relative overflow-hidden bg-[#FBFBF6] px-6 pt-44 pb-28 md:px-10 md:pt-52 md:pb-40">
+        <section className="relative overflow-hidden bg-[#FBFBF6] px-6 pt-52 pb-28 md:px-10 md:pt-60 md:pb-40">
             <div
                 className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]"
                 aria-hidden="true"
@@ -57,19 +57,20 @@ export default function ContainerScrollHero() {
                                 <span className="block text-[#D4A574]">decision-grade intelligence.</span>
                             </h1>
 
-                            <p className="mx-auto mt-6 max-w-2xl text-[18px] font-medium leading-relaxed text-[#141414] md:text-[20px]">
-                                Most content doesn't fail because it's bad.
-                            </p>
+                            <div className="mx-auto mt-8 max-w-2xl space-y-1 text-center">
+                                <p className="text-[18px] font-medium leading-relaxed text-[#141414] md:text-[20px]">
+                                    Most content doesn&apos;t fail because it&apos;s bad.
+                                </p>
+                                <p className="text-[18px] font-medium leading-relaxed text-[#141414] md:text-[20px]">
+                                    It fails because it has no role.
+                                </p>
+                            </div>
 
-                            <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
-                                It fails because it has no role.
-                            </p>
-
-                            <p className="mx-auto mt-6 max-w-2xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
+                            <p className="mx-auto mt-7 max-w-2xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
                                 Decompile any asset into a saved, comparable dossier. Understand what it does, how it performs in the feed, and where it fits in a content system.
                             </p>
 
-                            <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:items-center">
+                            <div className="mt-11 flex flex-col justify-center gap-3 sm:flex-row sm:items-center">
                                 <Link
                                     href="/ingest"
                                     className={MARKETING_PRIMARY_CTA_LG}
@@ -86,7 +87,7 @@ export default function ContainerScrollHero() {
                                 </Link>
                             </div>
 
-                            <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
+                            <div className="mt-16 grid gap-4 text-left sm:grid-cols-3">
                                 {STEPS.map((item) => (
                                     <div key={item.kicker} className={MARKETING_CARD_PADDED}>
                                         <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">{item.kicker}</p>
