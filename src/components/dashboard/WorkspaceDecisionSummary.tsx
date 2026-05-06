@@ -36,14 +36,14 @@ export default function WorkspaceDecisionSummary({
 
                     {actions.length > 0 ? (
                         <div className="mt-10 rounded-[2rem] border border-black/5 bg-[#FBFBF6] p-8">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D] mb-6">Operational Next Actions</p>
-                            <div className="space-y-4">
+                            <p className="mb-7 text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">Operational Next Actions</p>
+                            <div className="space-y-5">
                                 {actions.map((action, index) => (
                                     <div key={`${action}-${index}`} className="flex items-start gap-4">
-                                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white border border-black/10 text-[11px] font-bold text-[#141414] shadow-sm">
+                                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white text-[11px] font-bold text-[#141414] shadow-sm">
                                             {index + 1}
                                         </span>
-                                        <p className="text-[13px] font-semibold leading-relaxed text-[#515151]">{action}</p>
+                                        <p className="pr-2 text-[13px] font-medium leading-[1.75] text-[#5A5A55]">{action}</p>
                                     </div>
                                 ))}
                             </div>
