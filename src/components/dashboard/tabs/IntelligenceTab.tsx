@@ -79,13 +79,13 @@ export default function IntelligenceTab({
             ) : (
                 <div className="flex flex-col gap-6">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div className="lg:col-span-2 rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm flex flex-col justify-center">
+                        <div className="lg:col-span-2 rounded-[2.5rem] border border-black/5 bg-[#1B1B19] p-10 shadow-[0_18px_40px_rgba(20,20,20,0.12)] flex flex-col justify-center text-white">
                             <div className="flex items-center gap-3 mb-6">
-                                <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Campaign Identity</p>
-                                <div className="h-px w-8 bg-black/10" />
+                                <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-[#D9B07A]">Campaign Identity</p>
+                                <div className="h-px w-8 bg-white/12" />
                             </div>
-                            <h2 className="text-[32px] font-black tracking-tight text-[#141414] leading-none mb-2 uppercase">{dossierCampaignBrand}</h2>
-                            <p className="text-[16px] font-bold tracking-[0.1em] text-[#6B6B6B] leading-none uppercase">{dossierCampaignCode}</p>
+                            <h2 className="text-[32px] font-black tracking-tight text-white leading-none mb-2 uppercase">{dossierCampaignBrand}</h2>
+                            <p className="text-[16px] font-semibold tracking-[0.1em] text-white/55 leading-none uppercase">{dossierCampaignCode}</p>
                         </div>
                         <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm flex flex-col justify-center">
                             <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D] mb-6">Prepared For</p>
