@@ -55,33 +55,38 @@ export default function WorkspaceDecisionSummary({
                     <div className="grid gap-4">
                         {metrics.map((metric) => {
                             const isMechanic = metric.label.toLowerCase() === 'mechanic';
-                            const isExecutivePriority = executiveMetrics && !isMechanic;
+                            const isDecision = metric.label.toLowerCase() === 'decision';
+                            const isConfidence = metric.label.toLowerCase() === 'confidence';
 
                             return (
                                 <div
                                     key={metric.label}
                                     className={
                                         executiveMetrics
-                                            ? 'flex min-h-[176px] flex-col justify-between rounded-[2rem] border border-black/5 bg-[#1C1C1B] p-7 text-white shadow-[0_18px_40px_rgba(20,20,20,0.08)] transition-all hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(20,20,20,0.12)]'
+                                            ? isDecision
+                                                ? 'flex min-h-[138px] flex-col justify-between rounded-[2rem] border border-black/5 bg-[#1C1C1B] p-6 text-white shadow-[0_18px_40px_rgba(20,20,20,0.08)] transition-all hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(20,20,20,0.12)]'
+                                                : 'flex min-h-[138px] flex-col justify-between rounded-[2rem] border border-black/5 bg-[#FCFBF9] p-6 text-[#141414] transition-all hover:border-[#D4A574]/20 hover:bg-white hover:shadow-md'
                                             : 'group rounded-[1.8rem] border border-black/5 bg-[#FCFBF9] p-6 transition-all hover:border-[#D4A574]/30 hover:bg-white hover:shadow-md'
                                     }
                                 >
                                     <p
                                         className={
                                             executiveMetrics
-                                                ? 'mb-5 text-[10px] font-medium uppercase tracking-[0.34em] text-[#D9B07A]'
+                                                ? 'mb-4 text-[10px] font-medium uppercase tracking-[0.34em] text-[#D9B07A]'
                                                 : 'mb-4 text-[9px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]'
                                         }
                                     >
                                         {metric.label}
                                     </p>
-                                    <div className="space-y-4">
+                                    <div className="space-y-3">
                                         <div
                                             className={
                                                 executiveMetrics
                                                     ? isMechanic
-                                                        ? 'max-w-[15ch] text-[28px] font-black uppercase leading-[0.98] tracking-[-0.03em] text-white'
-                                                        : 'text-[54px] font-black uppercase leading-[0.9] tracking-[-0.05em] text-white'
+                                                        ? 'max-w-[20ch] text-[16px] font-semibold leading-[1.45] tracking-[-0.01em] text-[#2A2A26]'
+                                                        : isConfidence
+                                                            ? 'text-[16px] font-semibold leading-[1.3] tracking-[-0.01em] text-[#2A2A26]'
+                                                            : 'text-[40px] font-black uppercase leading-[0.92] tracking-[-0.05em] text-white'
                                                     : 'text-[18px] font-black uppercase leading-tight tracking-tight text-[#141414] transition-colors group-hover:text-[#8B6A3D]'
                                             }
                                         >
@@ -89,10 +94,10 @@ export default function WorkspaceDecisionSummary({
                                         </div>
 
                                         {executiveMetrics ? (
-                                            <p className="max-w-[28ch] text-[15px] leading-[1.6] text-[#B7B7B2]">
+                                            <p className={`max-w-[28ch] text-[14px] leading-[1.55] ${isDecision ? 'text-[#B7B7B2]' : 'text-[#5F5F5A]'}`}>
                                                 {isMechanic
                                                     ? 'Primary strategic transfer pattern identified in the current asset.'
-                                                    : isExecutivePriority && metric.label.toLowerCase() === 'confidence'
+                                                    : isConfidence
                                                         ? 'Signal strength remains high across clarity, hierarchy, and category fit.'
                                                         : 'Final deployment call based on the current quality gate read.'}
                                             </p>
