@@ -24,6 +24,7 @@ import DecisionLogTab from '@/components/dashboard/tabs/DecisionLogTab';
 import IntelligenceTab from '@/components/dashboard/tabs/IntelligenceTab';
 import SignalsTab from '@/components/dashboard/tabs/SignalsTab';
 import SocialContextTab from '@/components/dashboard/tabs/SocialContextTab';
+import ContentSystemContextTab from '@/components/dashboard/tabs/ContentSystemContextTab';
 import ConstraintMapTab from '@/components/dashboard/tabs/ConstraintMapTab';
 import { 
     ANALYSIS_STEPS, 
@@ -165,6 +166,7 @@ type DossierTab =
     | 'SIGNALS'
     | 'PSYCHOLOGY'
     | 'SOCIAL CONTEXT'
+    | 'CONTENT SYSTEM CONTEXT'
     | 'CONSTRAINT MAP'
     | 'BLUEPRINT'
     | 'STRESS LAB'
@@ -178,6 +180,7 @@ const FULL_DOSSIER_TABS: readonly DossierTab[] = [
     'SIGNALS',
     'PSYCHOLOGY',
     'SOCIAL CONTEXT',
+    'CONTENT SYSTEM CONTEXT',
     'CONSTRAINT MAP',
     'BLUEPRINT',
     'STRESS LAB',
@@ -192,6 +195,7 @@ const SAMPLE_DOSSIER_TABS: readonly DossierTab[] = [
     'SIGNALS',
     'PSYCHOLOGY',
     'SOCIAL CONTEXT',
+    'CONTENT SYSTEM CONTEXT',
     'CONSTRAINT MAP',
     'BLUEPRINT',
     'DECISION LOG',
@@ -204,6 +208,7 @@ const DOSSIER_TAB_LABELS: Record<DossierTab, string> = {
     'SIGNALS': 'MECHANICS',
     'PSYCHOLOGY': 'PSYCHOLOGY',
     'SOCIAL CONTEXT': 'SOCIAL CONTEXT',
+    'CONTENT SYSTEM CONTEXT': 'CONTENT SYSTEM',
     'CONSTRAINT MAP': 'CONSTRAINT MAP',
     'BLUEPRINT': 'BLUEPRINT TRACE',
     'STRESS LAB': 'STRESS LAB',
@@ -212,9 +217,9 @@ const DOSSIER_TAB_LABELS: Record<DossierTab, string> = {
 };
 
 const DOSSIER_TAB_PHASES: readonly { label: string; tabs: readonly DossierTab[] }[] = [
-    { label: 'Input', tabs: ['ASSET CONTEXT', 'QUALITY GATE'] },
-    { label: 'Read', tabs: ['INTELLIGENCE', 'SIGNALS', 'PSYCHOLOGY'] },
-    { label: 'Context', tabs: ['SOCIAL CONTEXT', 'CONSTRAINT MAP', 'BLUEPRINT'] },
+    { label: 'Input', tabs: ['ASSET CONTEXT', 'QUALITY GATE', 'INTELLIGENCE'] },
+    { label: 'Read', tabs: ['SIGNALS', 'PSYCHOLOGY', 'SOCIAL CONTEXT'] },
+    { label: 'Context', tabs: ['CONTENT SYSTEM CONTEXT', 'CONSTRAINT MAP', 'BLUEPRINT'] },
     { label: 'Decision', tabs: ['STRESS LAB', 'MARKET PULSE', 'DECISION LOG'] },
 ] as const;
 
@@ -394,6 +399,40 @@ type SocialContextModel = {
         platform: SocialPlatformKey;
         move: string;
     }[];
+};
+
+type ContentRole = 'Hook Asset' | 'Authority Asset' | 'Conversion Asset' | 'Retention Asset';
+type ContentSystemSignal = 'Strong' | 'Moderate' | 'Weak';
+type CreatorFitMode = 'Personal' | 'Produced' | 'Hybrid';
+type ContentCadence = 'Daily' | 'Weekly' | 'Campaign-only';
+
+type ContentSystemModel = {
+    primaryRole: ContentRole;
+    secondaryRole: ContentRole;
+    systemInterpretation: string;
+    overallScore: number;
+    overallSignal: ContentSystemSignal;
+    creatorFitMode: CreatorFitMode;
+    audienceConditioningSummary: string;
+    frequencyCadence: ContentCadence;
+    breakdown: {
+        label: 'Series Potential' | 'Creator Fit' | 'Audience Conditioning' | 'Frequency Viability' | 'Sequence Utility';
+        score: number;
+        signal: ContentSystemSignal;
+    }[];
+    diagnostics: {
+        title: 'Series Potential' | 'Creator Fit' | 'Audience Conditioning' | 'Frequency Viability' | 'Sequence Utility';
+        signal: ContentSystemSignal;
+        heading: string;
+        detail: string;
+    }[];
+    riskFlags: string[];
+    operationalNextActions: string[];
+    sequenceRecommendation: {
+        sequence: string;
+        bestFit: string;
+        why: string;
+    };
 };
 
 const parseBlueprint = (value: BlueprintData | string | null | undefined): BlueprintData | null => {
@@ -732,6 +771,222 @@ const deriveSocialContext = ({
         hookHoldDiagnostics,
         riskFlags: compactRiskFlags,
         adaptationMoves,
+    };
+};
+
+const deriveContentSystemContext = ({
+    analysisLanguage,
+    confidenceScore,
+    frictionScore,
+    persuasionDensity,
+}: {
+    analysisLanguage: AnalysisLanguageSystem;
+    confidenceScore: number | null;
+    frictionScore: number | null;
+    persuasionDensity: number | null;
+}): ContentSystemModel => {
+    const byLabel = Object.fromEntries(
+        analysisLanguage.primaryScores.map((score) => [score.label, score.value]),
+    ) as Record<PrimaryScoreLabel, number>;
+
+    const clarity = byLabel.Clarity ?? 60;
+    const attention = byLabel.Attention ?? 60;
+    const cohesion = byLabel.Cohesion ?? 60;
+    const intent = byLabel.Intent ?? 60;
+    const distinction = byLabel.Distinction ?? 60;
+    const density = persuasionDensity ?? 68;
+    const friction = frictionScore ?? 24;
+    const confidence = confidenceScore ?? 72;
+
+    const clamp = (value: number) => Math.max(0, Math.min(100, Math.round(value)));
+    const toSignal = (score: number): ContentSystemSignal => {
+        if (score >= 80) return 'Strong';
+        if (score >= 65) return 'Moderate';
+        return 'Weak';
+    };
+
+    const roleScores: Record<ContentRole, number> = {
+        'Hook Asset': clamp(attention * 0.42 + distinction * 0.22 + clarity * 0.18 + density * 0.18),
+        'Authority Asset': clamp(clarity * 0.34 + cohesion * 0.24 + intent * 0.2 + confidence * 0.22),
+        'Conversion Asset': clamp(intent * 0.38 + clarity * 0.24 + attention * 0.18 + (100 - friction) * 0.2),
+        'Retention Asset': clamp(cohesion * 0.3 + density * 0.22 + distinction * 0.18 + (100 - friction) * 0.18 + intent * 0.12),
+    };
+
+    const rankedRoles = (Object.entries(roleScores) as [ContentRole, number][])
+        .sort((a, b) => b[1] - a[1]);
+
+    const primaryRole = rankedRoles[0]?.[0] || 'Authority Asset';
+    const secondaryRole = rankedRoles[1]?.[0] || 'Hook Asset';
+
+    const seriesPotentialScore = clamp(cohesion * 0.34 + clarity * 0.28 + distinction * 0.2 + (100 - friction) * 0.18);
+    const creatorFitScore = clamp(attention * 0.24 + distinction * 0.18 + cohesion * 0.18 + (100 - friction) * 0.18 + intent * 0.12 + clarity * 0.1);
+    const audienceConditioningScore = clamp(intent * 0.28 + clarity * 0.27 + cohesion * 0.25 + density * 0.2);
+    const frequencyViabilityScore = clamp(seriesPotentialScore * 0.35 + audienceConditioningScore * 0.25 + creatorFitScore * 0.2 + (100 - friction) * 0.2);
+    const sequenceUtilityScore = clamp(intent * 0.3 + attention * 0.28 + clarity * 0.22 + cohesion * 0.2);
+    const overallScore = clamp(
+        seriesPotentialScore * 0.22 +
+        creatorFitScore * 0.16 +
+        audienceConditioningScore * 0.22 +
+        frequencyViabilityScore * 0.16 +
+        sequenceUtilityScore * 0.24
+    );
+
+    const creatorFitMode: CreatorFitMode =
+        clarity >= 82 && cohesion >= 78 && friction <= 22
+            ? 'Produced'
+            : attention >= 78 && distinction >= 74 && cohesion < 74
+                ? 'Personal'
+                : 'Hybrid';
+
+    const frequencyCadence: ContentCadence =
+        frequencyViabilityScore >= 84
+            ? 'Daily'
+            : frequencyViabilityScore >= 68
+                ? 'Weekly'
+                : 'Campaign-only';
+
+    const systemInterpretationByRole: Record<ContentRole, string> = {
+        'Hook Asset': 'This asset is strongest as an entry-point piece: it captures attention quickly, then relies on follow-up structure to convert that attention into understanding.',
+        'Authority Asset': 'This asset is strongest as a credibility-building piece: it frames meaning clearly, then reinforces trust through orderly visual control.',
+        'Conversion Asset': 'This asset is strongest when the audience is already warm: it translates clarity and intent into a stronger action-ready prompt.',
+        'Retention Asset': 'This asset is strongest as a continuity piece: it keeps the audience inside a repeatable system by rewarding recognition and familiarity.',
+    };
+
+    const creatorFitHeadingByMode: Record<CreatorFitMode, string> = {
+        Personal: 'Personal',
+        Produced: 'Produced',
+        Hybrid: 'Hybrid',
+    };
+
+    const creatorFitDetailByMode: Record<CreatorFitMode, string> = {
+        Personal: 'The asset feels creator-native and immediate, with enough looseness to sit naturally in personality-led feeds.',
+        Produced: 'The asset feels polished and brand-controlled, which supports campaign deployment but can read formal in creator-led environments.',
+        Hybrid: 'The asset balances strategic polish with enough immediacy to adapt into creator-led and brand-led environments.',
+    };
+
+    const audienceConditioningSummary =
+        audienceConditioningScore >= 82
+            ? 'Builds expectation of structured value and supports repeat engagement when deployed in a consistent sequence.'
+            : audienceConditioningScore >= 68
+                ? 'Builds partial expectation of value, but needs clearer sequencing to train repeat behavior consistently.'
+                : 'Does not yet teach a reliable repeat behavior pattern without stronger structural continuity.';
+
+    const sequenceRecommendation =
+        primaryRole === 'Hook Asset'
+            ? {
+                  sequence: 'Hook -> Value -> Conversion',
+                  bestFit: 'Hook Post',
+                  why: 'The asset is best used to open the sequence. Its strongest contribution is attention capture, with credibility and conversion better handled by the following post.',
+              }
+            : primaryRole === 'Authority Asset'
+                ? {
+                      sequence: 'Hook -> Value -> Conversion',
+                      bestFit: 'Value / Authority Post',
+                      why: 'The asset is strongest at explaining and defending meaning, making it more useful as a credibility-building piece than a pure direct-response unit.',
+                  }
+                : primaryRole === 'Conversion Asset'
+                    ? {
+                          sequence: 'Hook -> Value -> Conversion',
+                          bestFit: 'Conversion Post',
+                          why: 'The asset works best after the audience already understands the offer. Its structure supports decision pressure more than initial discovery.',
+                      }
+                    : {
+                          sequence: 'Hook -> Value -> Conversion',
+                          bestFit: 'Retention / Follow-up Post',
+                          why: 'The asset is more useful for maintaining continuity than for carrying the first or final decision moment alone.',
+                      };
+
+    const breakdown: ContentSystemModel['breakdown'] = [
+        { label: 'Series Potential', score: seriesPotentialScore, signal: toSignal(seriesPotentialScore) },
+        { label: 'Creator Fit', score: creatorFitScore, signal: toSignal(creatorFitScore) },
+        { label: 'Audience Conditioning', score: audienceConditioningScore, signal: toSignal(audienceConditioningScore) },
+        { label: 'Frequency Viability', score: frequencyViabilityScore, signal: toSignal(frequencyViabilityScore) },
+        { label: 'Sequence Utility', score: sequenceUtilityScore, signal: toSignal(sequenceUtilityScore) },
+    ];
+
+    const diagnostics: ContentSystemModel['diagnostics'] = [
+        {
+            title: 'Series Potential',
+            signal: toSignal(seriesPotentialScore),
+            heading: seriesPotentialScore >= 80 ? 'Strong' : seriesPotentialScore >= 65 ? 'Moderate' : 'Limited',
+            detail:
+                seriesPotentialScore >= 80
+                    ? 'The structure can be reused across multiple posts or campaign beats without losing clarity.'
+                    : seriesPotentialScore >= 65
+                        ? 'The format can repeat with variation, but needs tighter input control to avoid flattening into sameness.'
+                        : 'The execution behaves more like a one-off asset than a reusable content format.',
+        },
+        {
+            title: 'Creator Fit',
+            signal: toSignal(creatorFitScore),
+            heading: creatorFitHeadingByMode[creatorFitMode],
+            detail: creatorFitDetailByMode[creatorFitMode],
+        },
+        {
+            title: 'Audience Conditioning',
+            signal: toSignal(audienceConditioningScore),
+            heading: audienceConditioningScore >= 80 ? 'Strong' : audienceConditioningScore >= 65 ? 'Moderate' : 'Weak',
+            detail: audienceConditioningSummary,
+        },
+        {
+            title: 'Frequency Viability',
+            signal: toSignal(frequencyViabilityScore),
+            heading: frequencyCadence,
+            detail:
+                frequencyCadence === 'Daily'
+                    ? 'The format can sustain high-frequency posting if the opening frame changes enough to preserve freshness.'
+                    : frequencyCadence === 'Weekly'
+                        ? 'Best deployed as a weekly or campaign-anchor format, rather than a daily repetition pattern.'
+                        : 'Best used for campaign moments or anchor posts rather than frequent repetition.',
+        },
+        {
+            title: 'Sequence Utility',
+            signal: toSignal(sequenceUtilityScore),
+            heading: sequenceRecommendation.bestFit,
+            detail: sequenceRecommendation.why,
+        },
+    ];
+
+    const riskFlags: string[] = [];
+    if (creatorFitMode === 'Produced') {
+        riskFlags.push('May feel too polished for casual creator feeds without a more human entry cue.');
+    }
+    if (seriesPotentialScore < 80 || frequencyCadence !== 'Daily') {
+        riskFlags.push('Repeat use requires variation in the opening frame to avoid format fatigue.');
+    }
+    if (primaryRole !== 'Conversion Asset') {
+        riskFlags.push('If used alone, the asset may perform as insight or attention but not as a full conversion path.');
+    }
+    if (riskFlags.length < 3 && attention < 70) {
+        riskFlags.push('The format needs a sharper hook layer before it can reliably carry sequence entry duties.');
+    }
+
+    const operationalNextActions: string[] = [
+        'Build 2-3 format variations before repeating this structure.',
+        primaryRole === 'Authority Asset' || primaryRole === 'Retention Asset'
+            ? `Use this asset as a ${sequenceRecommendation.bestFit.toLowerCase()}, not a daily filler post.`
+            : `Define where this sits in a 3-post sequence before broad deployment: ${sequenceRecommendation.sequence}.`,
+        creatorFitMode === 'Produced'
+            ? 'Introduce one human or creator-native cue if adapting for influencer-led distribution.'
+            : creatorFitMode === 'Hybrid'
+                ? 'Preserve the strategic structure, but reduce polish slightly for creator-led distribution.'
+                : 'Protect the informal entry feel while keeping the underlying value signal intact.',
+    ];
+
+    return {
+        primaryRole,
+        secondaryRole,
+        systemInterpretation: systemInterpretationByRole[primaryRole],
+        overallScore,
+        overallSignal: toSignal(overallScore),
+        creatorFitMode,
+        audienceConditioningSummary,
+        frequencyCadence,
+        breakdown,
+        diagnostics,
+        riskFlags: riskFlags.slice(0, 3),
+        operationalNextActions,
+        sequenceRecommendation,
     };
 };
 
@@ -1419,6 +1674,12 @@ export default function AssetWorkspace({
         marketPulseData,
     });
     const socialContext = deriveSocialContext({
+        analysisLanguage,
+        confidenceScore,
+        frictionScore,
+        persuasionDensity,
+    });
+    const contentSystemContext = deriveContentSystemContext({
         analysisLanguage,
         confidenceScore,
         frictionScore,
@@ -2448,7 +2709,7 @@ export default function AssetWorkspace({
                                     {tabPhaseGroups.map((phase) => (
                                         <div key={phase.label} className="rounded-xl border border-black/5 bg-white/70 p-2">
                                             <p className="px-2 pb-2 text-[9px] font-bold uppercase tracking-[0.26em] text-[#8B6A3D]/70">{phase.label}</p>
-                                            <div className={`grid gap-1 ${phase.tabs.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+                                            <div className={`grid gap-1 ${phase.tabs.length === 2 ? 'grid-cols-2' : phase.tabs.length === 4 ? 'grid-cols-2' : 'grid-cols-3'}`}>
                                                 {phase.tabs.map((tab) => (
                                                     <button
                                                         key={tab}
@@ -2548,6 +2809,12 @@ export default function AssetWorkspace({
                                             socialContext={socialContext}
                                             strongestSocialPlatform={strongestSocialPlatform}
                                             socialRiskCount={socialRiskCount}
+                                        />
+                                    );
+                                case 'CONTENT SYSTEM CONTEXT':
+                                    return (
+                                        <ContentSystemContextTab
+                                            contentSystemContext={contentSystemContext}
                                         />
                                     );
                                 case 'CONSTRAINT MAP':

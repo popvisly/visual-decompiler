@@ -5,6 +5,7 @@ export type DossierTab =
     | 'SIGNALS'
     | 'PSYCHOLOGY'
     | 'SOCIAL CONTEXT'
+    | 'CONTENT SYSTEM CONTEXT'
     | 'CONSTRAINT MAP'
     | 'BLUEPRINT'
     | 'STRESS LAB'
@@ -32,6 +33,44 @@ export interface SocialContextModel {
         platform: SocialPlatformKey;
         move: string;
     }[];
+}
+
+export type ContentRole = 'Hook Asset' | 'Authority Asset' | 'Conversion Asset' | 'Retention Asset';
+export type ContentSystemSignal = 'Strong' | 'Moderate' | 'Weak';
+export type CreatorFitMode = 'Personal' | 'Produced' | 'Hybrid';
+export type ContentCadence = 'Daily' | 'Weekly' | 'Campaign-only';
+
+export interface ContentSystemBreakdownRow {
+    label: 'Series Potential' | 'Creator Fit' | 'Audience Conditioning' | 'Frequency Viability' | 'Sequence Utility';
+    score: number;
+    signal: ContentSystemSignal;
+}
+
+export interface ContentSystemDiagnostic {
+    title: 'Series Potential' | 'Creator Fit' | 'Audience Conditioning' | 'Frequency Viability' | 'Sequence Utility';
+    signal: ContentSystemSignal;
+    heading: string;
+    detail: string;
+}
+
+export interface ContentSystemModel {
+    primaryRole: ContentRole;
+    secondaryRole: ContentRole;
+    systemInterpretation: string;
+    overallScore: number;
+    overallSignal: ContentSystemSignal;
+    creatorFitMode: CreatorFitMode;
+    audienceConditioningSummary: string;
+    frequencyCadence: ContentCadence;
+    breakdown: ContentSystemBreakdownRow[];
+    diagnostics: ContentSystemDiagnostic[];
+    riskFlags: string[];
+    operationalNextActions: string[];
+    sequenceRecommendation: {
+        sequence: string;
+        bestFit: string;
+        why: string;
+    };
 }
 
 export const SOCIAL_PLATFORM_GLYPHS: Record<SocialPlatformKey, string> = {
