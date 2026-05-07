@@ -6,6 +6,7 @@ import { getAnthropic, getClaudeModel } from '@/lib/anthropic';
 import { getServerSession } from '@/lib/auth-server';
 import { assertUsageAvailable } from '@/lib/usage';
 import { normalizeSector } from '@/lib/sector-taxonomy';
+import { safeJsonParseWithOptionalModelRepair } from '@/lib/safe-json';
 
 export const maxDuration = 300; // 5 minutes max function duration for Pro/Enterprise tier
 export const dynamic = 'force-dynamic';
@@ -396,6 +397,7 @@ QUALITY GATE WRITING RULES (MANDATORY):
         const response = await anthropic.messages.create({
             model,
             max_tokens: 8192,
+            temperature: 0,
             system: systemPrompt,
             messages: [{ role: 'user', content: userContent }],
         });
@@ -403,28 +405,39 @@ QUALITY GATE WRITING RULES (MANDATORY):
         const contentBlock = response.content.find((block) => block.type === 'text');
         if (!contentBlock) throw new Error("Claude returned no text response");
 
-        let text = contentBlock.text;
+        const text = contentBlock.text;
         const responseLength = text.length;
         const stopReason = response.stop_reason;
 
         console.log(`[Ingest] Claude Response Length: ${responseLength}, Stop Reason: ${stopReason}`);
 
-        if (text.includes('```json')) {
-            text = text.split('```json')[1];
-            if (text.includes('```')) {
-                text = text.split('```')[0];
-            }
-        } else if (text.includes('```')) {
-            text = text.split('```')[1];
-            if (text.includes('```')) {
-                text = text.split('```')[0];
-            }
-        }
-        text = text.trim();
-
         let extractionResult;
         try {
-            extractionResult = JSON.parse(text);
+            const parsed = await safeJsonParseWithOptionalModelRepair({
+                text,
+                logPrefix: 'Ingest',
+                repair: async ({ candidate, errorMessage }) => {
+                    const fixResponse = await anthropic.messages.create({
+                        model,
+                        max_tokens: 2048,
+                        temperature: 0,
+                        system:
+                            "You are a strict JSON repair utility. Return ONLY valid JSON (no markdown, no commentary). Preserve the original structure and keys. Do not add new keys unless necessary to make JSON valid.",
+                        messages: [
+                            {
+                                role: 'user',
+                                content: `Fix the following invalid JSON so it parses. Parse error: ${errorMessage}\n\nINVALID_JSON:\n${candidate}`,
+                            },
+                        ],
+                    });
+
+                    const block = fixResponse.content.find((b) => b.type === 'text');
+                    return block?.text || '';
+                },
+            });
+
+            if (!parsed.ok) throw parsed.error;
+            extractionResult = parsed.value;
             extractionResult = {
                 ...extractionResult,
                 primary_mechanic: cleanStrategyLine(String(extractionResult?.primary_mechanic || '')),

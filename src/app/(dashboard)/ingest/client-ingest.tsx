@@ -251,7 +251,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                 <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center">
                     <div className="w-full text-center">
                         <p className="text-[11px] font-bold uppercase tracking-[0.35em] text-[#C1A67B]">Forensic Extraction System</p>
-                        <h1 className="mt-4 text-[40px] font-semibold uppercase tracking-tight text-[#1A1A1A] md:text-[64px] md:leading-[0.94]">
+                        <h1 className="mt-4 text-[40px] font-bold uppercase tracking-tight text-[#1A1A1A] md:text-[64px] md:leading-[0.94]">
                             Analyze Ad Asset
                         </h1>
                         <p className="mt-3 text-[12px] font-medium uppercase tracking-[0.24em] text-[#4A4A4A] md:text-[13px]">
