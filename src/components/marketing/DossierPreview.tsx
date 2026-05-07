@@ -1,7 +1,6 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import CanonicalDossierArtifact from '@/components/marketing/CanonicalDossierArtifact';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 function DossierFlowMapCard() {
@@ -76,8 +75,51 @@ export default function DossierPreview() {
                     className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-12"
                 >
                     <div className="min-w-0">
-                        <div className="overflow-hidden rounded-[24px] border border-black/5 bg-white shadow-sm">
-                            <CanonicalDossierArtifact mode="attention-zoom" />
+                        <div className="rounded-[24px] border border-black/5 bg-white p-10 shadow-sm">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">New Analysis</p>
+                            <h3 className="mt-6 text-[26px] font-black uppercase leading-[1.05] tracking-tight text-[#141414]">
+                                Multi-frame reads for modern social ads.
+                            </h3>
+                            <p className="mt-5 max-w-[68ch] text-[15px] font-medium leading-[1.75] text-[#515151]">
+                                Upload a sequence and get a hook → proof → CTA diagnosis with prioritized fixes. Built for TikTok, Instagram, Facebook, X, and YouTube workflows.
+                            </p>
+
+                            <div className="mt-10 grid gap-4 sm:grid-cols-2">
+                                {[
+                                    {
+                                        title: 'Up to 5 frames',
+                                        body: 'Drop a carousel or keyframes instead of guessing from one still.',
+                                    },
+                                    {
+                                        title: 'Platform target',
+                                        body: 'Shape critique to channel norms (hook speed, caption reliance, CTA timing).',
+                                    },
+                                    {
+                                        title: 'Sequence coherence',
+                                        body: 'Detect when the hook promises one thing and the CTA pays off another.',
+                                    },
+                                    {
+                                        title: 'Gaze overlay',
+                                        body: 'A fast heuristic read of entry, vector, and endpoint attention routing.',
+                                    },
+                                    {
+                                        title: 'Micro-clarifiers',
+                                        body: 'Inline “what is this?” pills so non-specialists don’t get lost.',
+                                    },
+                                    {
+                                        title: 'Vault-ready storage',
+                                        body: 'Multi-frame assets render cleanly in the Vault and dossier context.',
+                                    },
+                                ].map((item) => (
+                                    <div
+                                        key={item.title}
+                                        className="rounded-2xl border border-black/5 bg-[#FBFBF6] p-6 transition-all hover:bg-white hover:shadow-md"
+                                    >
+                                        <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#8B6A3D]">{item.title}</p>
+                                        <p className="mt-3 text-[13px] font-medium leading-relaxed text-[#515151]">{item.body}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     <DossierFlowMapCard />
