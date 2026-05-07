@@ -30,6 +30,7 @@ export default function StressLabTab({
     const gazeRef = React.useRef<HTMLDivElement | null>(null);
     const [focusedVariable, setFocusedVariable] = React.useState<string | null>(null);
     const [showGazeOverlay, setShowGazeOverlay] = React.useState(true);
+    const [showHeuristicInfo, setShowHeuristicInfo] = React.useState(false);
 
     const focusVariable = React.useCallback((variable: string) => {
         setFocusedVariable(variable);
@@ -46,9 +47,30 @@ export default function StressLabTab({
                     <h3 className="mt-5 text-[22px] font-black uppercase leading-[1.05] tracking-tight text-[#141414] md:text-[28px]">
                         Where the eye likely enters, travels, and lands.
                     </h3>
-                    <p className="mt-4 text-[13px] font-medium leading-relaxed text-[#515151]">
-                        This overlay is a heuristic guide (not pixel-perfect tracking). Use it to sanity-check whether the composition routes attention toward the intended endpoint.
-                    </p>
+                    <div className="mt-4 space-y-3">
+                        <p className="text-[13px] font-medium leading-relaxed text-[#515151]">
+                            A <span className="font-black text-[#141414]">heuristic guide</span> is a best-practice reading of how attention usually behaves (faces, contrast, size, edges, and reading order) — not literal eye-tracking.
+                        </p>
+                        <div className="flex flex-wrap items-center gap-3">
+                            <button
+                                type="button"
+                                onClick={() => setShowHeuristicInfo((value) => !value)}
+                                className="rounded-full border border-black/10 bg-[#FBFBF6] px-4 py-2 text-[9px] font-black uppercase tracking-[0.28em] text-[#6B6B6B] transition-all hover:border-[#D4A574]/25 hover:bg-white hover:text-[#141414]"
+                            >
+                                {showHeuristicInfo ? 'Hide Definition' : "What's a heuristic?"}
+                            </button>
+                            <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/80">
+                                Use for routing, not proof
+                            </span>
+                        </div>
+                        {showHeuristicInfo ? (
+                            <div className="rounded-2xl border border-black/5 bg-[#FBFBF6] px-6 py-5">
+                                <p className="text-[12px] font-medium leading-relaxed text-[#515151]">
+                                    Think of this as “creative triage”: it helps you spot likely entry points and whether the frame pushes attention toward product, message, and brand marks. Human attention can still diverge — especially with faces, novelty, or strong personal bias.
+                                </p>
+                            </div>
+                        ) : null}
+                    </div>
                 </div>
 
                 <button
@@ -182,29 +204,17 @@ export default function StressLabTab({
                                             </span>
                                         </td>
                                         <td className="px-8 py-6 text-center align-top">
-                                            {row.recommendation === 'Test' ? (
-                                                <button
-                                                    type="button"
-                                                    onClick={() => focusVariable(row.variable)}
-                                                    className={`inline-flex items-center justify-center border px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:shadow-sm hover:-translate-y-[1px] ${
-                                                        focusedVariable === row.variable
-                                                            ? 'border-[#D4A574]/50 text-[#8B6A3D] bg-[#D4A574]/10'
-                                                            : 'border-[#D4A574]/30 text-[#8B6A3D] bg-[#D4A574]/5'
-                                                    }`}
-                                                >
-                                                    Test
-                                                </button>
-                                            ) : (
-                                                <span
-                                                    className={`inline-block border px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] ${
-                                                        row.recommendation === 'Avoid'
+                                            <span
+                                                className={`inline-block border px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] ${
+                                                    row.recommendation === 'Test'
+                                                        ? 'border-[#D4A574]/30 text-[#8B6A3D] bg-[#D4A574]/5'
+                                                        : row.recommendation === 'Avoid'
                                                             ? 'border-red-500/20 text-red-600 bg-red-50'
                                                             : 'border-black/5 text-[#6B6B6B] bg-[#FBFBF6]'
-                                                    }`}
-                                                >
-                                                    {row.recommendation}
-                                                </span>
-                                            )}
+                                                }`}
+                                            >
+                                                {row.recommendation}
+                                            </span>
                                         </td>
                                     </tr>
                                 ))}
