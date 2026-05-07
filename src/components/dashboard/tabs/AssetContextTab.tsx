@@ -18,6 +18,7 @@ interface AssetContextTabProps {
     setIsExecutiveSummary: (val: boolean) => void;
     agency?: any;
     firstFrameUrl?: string | null;
+    frameUrls?: string[] | null;
 }
 
 export default function AssetContextTab({
@@ -30,11 +31,20 @@ export default function AssetContextTab({
     isExecutiveSummary,
     setIsExecutiveSummary,
     agency,
-    firstFrameUrl
+    firstFrameUrl,
+    frameUrls,
 }: AssetContextTabProps) {
     if (!extraction) {
         return <SovereignProcessingView assetId={asset.id} agency={agency} />;
     }
+
+    const resolvedFrames = (frameUrls && frameUrls.length > 0
+        ? frameUrls
+        : (firstFrameUrl || asset.file_url)
+            ? [firstFrameUrl || asset.file_url]
+            : []).filter(Boolean);
+    const [activeFrameIndex, setActiveFrameIndex] = React.useState(0);
+    const activeFrameUrl = resolvedFrames[activeFrameIndex] || resolvedFrames[0];
 
     return (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -48,17 +58,44 @@ export default function AssetContextTab({
                 </div>
 
                 {/* ── Asset Dossier Panel ── */}
-                {(firstFrameUrl || asset.file_url) && (
+                {activeFrameUrl && (
                     <div className="overflow-hidden rounded-[2.5rem] border border-black/5 bg-[#0c0c0c] shadow-sm">
                         <div className="flex min-h-[480px] flex-col lg:flex-row">
 
                             {/* Left — Full Ad, uncropped */}
                             <div className="relative flex shrink-0 items-center justify-center bg-[#0c0c0c] p-5 lg:w-[55%] lg:p-10">
-                                <img
-                                    src={firstFrameUrl || asset.file_url}
-                                    alt={asset.brand?.name ? `${asset.brand.name} creative asset` : 'Creative asset'}
-                                    className="max-w-full max-h-[560px] w-auto h-auto object-contain rounded-[1.2rem]"
-                                />
+                                <div className="w-full">
+                                    <img
+                                        src={activeFrameUrl}
+                                        alt={asset.brand?.name ? `${asset.brand.name} creative asset` : 'Creative asset'}
+                                        className="mx-auto max-w-full max-h-[560px] w-auto h-auto object-contain rounded-[1.2rem]"
+                                    />
+
+                                    {resolvedFrames.length > 1 ? (
+                                        <div className="mt-6 flex items-center justify-center gap-3">
+                                            {resolvedFrames.slice(0, 5).map((url, idx) => (
+                                                <button
+                                                    key={`${url}-${idx}`}
+                                                    type="button"
+                                                    onClick={() => setActiveFrameIndex(idx)}
+                                                    className={`relative h-16 w-12 overflow-hidden rounded-xl border transition-all ${
+                                                        idx === activeFrameIndex
+                                                            ? 'border-[#D4A574]/60 bg-white/10'
+                                                            : 'border-white/10 bg-black/20 hover:border-white/25'
+                                                    }`}
+                                                    aria-label={`View frame ${idx + 1}`}
+                                                >
+                                                    <img src={url} alt="" className="h-full w-full object-cover" />
+                                                </button>
+                                            ))}
+                                            {resolvedFrames.length > 5 ? (
+                                                <div className="text-[10px] font-black uppercase tracking-[0.28em] text-white/45">
+                                                    +{resolvedFrames.length - 5}
+                                                </div>
+                                            ) : null}
+                                        </div>
+                                    ) : null}
+                                </div>
                                 {/* Subtle corner pin */}
                                 <div className="absolute left-5 top-5 flex items-center gap-2 lg:left-7 lg:top-7">
                                     <div className="h-1.5 w-1.5 rounded-full bg-[#D4A574]/90" />

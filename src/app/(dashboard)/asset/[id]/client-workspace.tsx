@@ -2836,6 +2836,7 @@ export default function AssetWorkspace({
                                             setIsExecutiveSummary={setIsExecutiveSummary}
                                             agency={agency}
                                             firstFrameUrl={firstFrameUrl}
+                                            frameUrls={fileUrls}
                                         />
                                     );
                                 case 'INTELLIGENCE':
