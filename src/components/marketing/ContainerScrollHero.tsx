@@ -42,7 +42,7 @@ export default function ContainerScrollHero() {
     }, [prefersReducedMotion]);
 
     return (
-        <section className="relative min-h-screen overflow-hidden bg-[#FBFBF6] px-6 pt-[110px] pb-24 md:px-10 md:pt-[125px] md:pb-32">
+        <section className="relative min-h-screen overflow-hidden bg-[#FBFBF6] px-6 pt-[155px] pb-24 md:px-10 md:pt-[170px] md:pb-32">
             <div
                 className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]"
                 aria-hidden="true"
@@ -91,21 +91,30 @@ export default function ContainerScrollHero() {
                                         { src: '/images/examples/Nike.jpg', alt: 'Nike ad' },
                                         { src: '/images/examples/Ulyses.jpg', alt: 'Ulysse Nardin ad' },
                                         { src: '/images/examples/Crocs.jpg', alt: 'Crocs ad' },
-                                        { src: '/images/examples/Sony.jpg', alt: 'Ray-ban ad' },
-                                        { src: '/images/examples/Chanelad.jpg', alt: 'Chanel ad' },
+                                        { src: null, alt: 'Ray-ban ad' },
+                                        { src: '/images/examples/Chanel_No5.webp', alt: 'Chanel No. 5 ad' },
                                     ].map((card, idx) => (
                                         <div
-                                            key={card.src}
+                                            key={card.src ?? card.alt}
                                             className="relative shrink-0"
                                         >
                                             <div className="relative overflow-hidden border border-black/10 bg-white shadow-[0_30px_90px_rgba(20,20,20,0.14)]">
-                                                <Image
-                                                    src={card.src}
-                                                    alt={card.alt}
-                                                    width={240}
-                                                    height={310}
-                                                    className="h-[260px] w-[210px] object-cover md:h-[310px] md:w-[240px]"
-                                                />
+                                                {card.src ? (
+                                                    <Image
+                                                        src={card.src}
+                                                        alt={card.alt}
+                                                        width={240}
+                                                        height={310}
+                                                        className="h-[260px] w-[210px] object-cover md:h-[310px] md:w-[240px]"
+                                                    />
+                                                ) : (
+                                                    <div className="flex h-[260px] w-[210px] items-center justify-center bg-[#F7F5EE] md:h-[310px] md:w-[240px]">
+                                                        <div className="text-center">
+                                                            <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/70">Ray-ban</p>
+                                                            <p className="mt-2 text-[12px] font-medium text-[#6B6B6B]">Add asset</p>
+                                                        </div>
+                                                    </div>
+                                                )}
 
                                                 {idx === 0 && !prefersReducedMotion ? (
                                                     <motion.div
