@@ -52,8 +52,10 @@ export default function ContainerScrollHero() {
                 <ContainerScroll
                     titleComponent={
                         <div className="mx-auto max-w-[1100px]">
-                            <div className="relative grid items-start gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
-                                <div className="relative text-left">
+                            <div className="relative">
+                                <div className="pointer-events-none absolute inset-x-0 -top-10 mx-auto h-40 max-w-4xl bg-gradient-to-b from-[#D4A574]/12 to-transparent blur-2xl" aria-hidden="true" />
+
+                                <div className="mx-auto max-w-4xl text-center">
                                     <div className="pointer-events-none absolute -left-12 top-6 h-60 w-60 rounded-full bg-[#D4A574]/10 blur-3xl" aria-hidden="true" />
                                     <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">
                                         Forensic Extraction System
@@ -79,7 +81,7 @@ export default function ContainerScrollHero() {
                                         Decompile single frames or sequences into a saved, comparable dossier. Understand what it does, how it performs in the feed, and where it fits in a content system.
                                     </p>
 
-                                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                                    <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:items-center">
                                         <Link href="/ingest" className={MARKETING_PRIMARY_CTA_LG}>
                                             Start Free
                                             <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
@@ -91,68 +93,61 @@ export default function ContainerScrollHero() {
                                     </div>
                                 </div>
 
-                                <aside className="min-w-0">
-                                    <div className="relative">
-                                        <div className="pointer-events-none absolute inset-x-0 -top-10 h-40 bg-gradient-to-b from-[#D4A574]/14 to-transparent blur-2xl" aria-hidden="true" />
+                                <div className="mt-14">
+                                <div className="relative mx-auto flex max-w-[1100px] items-end justify-center">
+                                    {[
+                                        { src: '/images/examples/Sony.jpg', alt: 'Example ad 1', rotate: -10 },
+                                        { src: '/images/examples/Watch.png', alt: 'Example ad 2', rotate: -4 },
+                                        { src: '/images/examples/ACNE.png', alt: 'Example ad 3', rotate: 4 },
+                                        { src: '/images/examples/Chanelad.jpg', alt: 'Example ad 4', rotate: 10 },
+                                    ].map((card, idx) => (
+                                        <div
+                                            key={card.src}
+                                            className={`relative ${idx === 0 ? '' : '-ml-20 sm:-ml-24'}`}
+                                            style={{ transform: `rotate(${card.rotate}deg)`, zIndex: 40 - idx }}
+                                        >
+                                            <div className="relative overflow-hidden rounded-[1.4rem] border border-black/10 bg-white shadow-[0_30px_90px_rgba(20,20,20,0.16)]">
+                                                <Image
+                                                    src={card.src}
+                                                    alt={card.alt}
+                                                    width={280}
+                                                    height={350}
+                                                    className="h-[320px] w-[260px] object-cover sm:h-[350px] sm:w-[280px]"
+                                                />
 
-                                        <div className="relative mx-auto flex h-[420px] max-w-[520px] items-end justify-center">
-                                            {[
-                                                { src: '/images/examples/Sony.jpg', alt: 'Example ad 1', x: -90, r: -8, z: 30, s: 1 },
-                                                { src: '/images/examples/Watch.png', alt: 'Example ad 2', x: -20, r: -2, z: 20, s: 0.98 },
-                                                { src: '/images/examples/ACNE.png', alt: 'Example ad 3', x: 55, r: 4, z: 10, s: 0.96 },
-                                                { src: '/images/examples/Chanelad.jpg', alt: 'Example ad 4', x: 120, r: 10, z: 0, s: 0.94 },
-                                            ].map((card, idx) => (
-                                                <div
-                                                    key={card.src}
-                                                    className="absolute bottom-0"
-                                                    style={{
-                                                        transform: `translateX(${card.x}px) rotate(${card.r}deg) scale(${card.s})`,
-                                                        zIndex: card.z,
-                                                    }}
-                                                >
-                                                    <div className="relative overflow-hidden rounded-[1.4rem] border border-black/10 bg-white shadow-[0_28px_80px_rgba(20,20,20,0.16)]">
-                                                        <Image
-                                                            src={card.src}
-                                                            alt={card.alt}
-                                                            width={280}
-                                                            height={350}
-                                                            className="h-[350px] w-[280px] object-cover"
-                                                        />
-
-                                                        {idx === 0 && !prefersReducedMotion ? (
-                                                            <motion.div
-                                                                aria-hidden="true"
-                                                                initial={{ y: -40, opacity: 0 }}
-                                                                animate={{ y: [ -40, 390, -40 ], opacity: [0, 1, 0] }}
-                                                                transition={{ duration: 3.6, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
-                                                                className="pointer-events-none absolute left-0 right-0 h-12 bg-gradient-to-b from-transparent via-[#D4A574]/25 to-transparent"
-                                                            />
-                                                        ) : null}
-                                                    </div>
-                                                </div>
-                                            ))}
+                                                {idx === 0 && !prefersReducedMotion ? (
+                                                    <motion.div
+                                                        aria-hidden="true"
+                                                        initial={{ y: -40, opacity: 0 }}
+                                                        animate={{ y: [-40, 390, -40], opacity: [0, 1, 0] }}
+                                                        transition={{ duration: 3.6, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
+                                                        className="pointer-events-none absolute left-0 right-0 h-12 bg-gradient-to-b from-transparent via-[#D4A574]/25 to-transparent"
+                                                    />
+                                                ) : null}
+                                            </div>
                                         </div>
+                                    ))}
+                                </div>
 
-                                        <div className="mt-6 text-center">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">
-                                                Intelligence Vault Preview
-                                            </p>
-                                            <p className="mt-3 text-[14px] font-medium leading-relaxed text-[#6B6B6B]">
-                                                Every decompile becomes a comparable artifact in your Vault.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </aside>
+                                <div className="mt-8 text-center">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">
+                                        Intelligence Vault Preview
+                                    </p>
+                                    <p className="mt-3 text-[14px] font-medium leading-relaxed text-[#6B6B6B]">
+                                        Every decompile becomes a comparable artifact in your Vault.
+                                    </p>
+                                </div>
                             </div>
 
-                            <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
-                                {STEPS.map((item) => (
-                                    <div key={item.kicker} className={MARKETING_CARD_PADDED}>
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">{item.kicker}</p>
-                                        <p className="mt-3 text-[13px] font-semibold leading-snug text-[#141414]">{item.title}</p>
-                                        <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{item.body}</p>
-                                    </div>
-                                ))}
+                                <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
+                                    {STEPS.map((item) => (
+                                        <div key={item.kicker} className={MARKETING_CARD_PADDED}>
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">{item.kicker}</p>
+                                            <p className="mt-3 text-[13px] font-semibold leading-snug text-[#141414]">{item.title}</p>
+                                            <p className="mt-2 text-[13px] font-medium leading-relaxed text-[#6B6B6B]">{item.body}</p>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     }
