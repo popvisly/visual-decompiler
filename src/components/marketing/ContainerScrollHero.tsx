@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, Layers3, BadgeInfo, Orbit, Archive } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ContainerScroll } from '@/components/marketing/ContainerScroll';
 import { HOMEPAGE_CTA_ICON, MARKETING_PRIMARY_CTA_LG, MARKETING_SECONDARY_CTA_LG } from '@/components/marketing/ctaStyles';
@@ -55,30 +55,28 @@ export default function ContainerScrollHero() {
                             <div className="relative grid items-start gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
                                 <div className="relative text-left">
                                     <div className="pointer-events-none absolute -left-12 top-6 h-60 w-60 rounded-full bg-[#D4A574]/10 blur-3xl" aria-hidden="true" />
-                                    <div className="flex flex-wrap items-center gap-3">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]">
-                                            Forensic Extraction System
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">
+                                        Forensic Extraction System
+                                    </p>
+
+                                    <h1 className="mt-7 max-w-[18ch] text-[clamp(50px,6.1vw,100px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]">
+                                        Turn creative
+                                        <span className="block">into</span>
+                                        <span className="block text-[#D4A574]">decision-grade</span>
+                                        <span className="block text-[#D4A574]">intelligence.</span>
+                                    </h1>
+
+                                    <div className="mt-8 max-w-xl space-y-1">
+                                        <p className="text-[18px] font-medium leading-relaxed text-[#141414] md:text-[20px]">
+                                            Most content doesn&apos;t fail because it&apos;s bad.
                                         </p>
-                                        <span className="h-1.5 w-1.5 rounded-full bg-[#D4A574]" aria-hidden="true" />
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#6B6B6B]">
-                                            Built for the room
+                                        <p className="text-[18px] font-medium leading-relaxed text-[#141414] md:text-[20px]">
+                                            It fails because it has no role.
                                         </p>
                                     </div>
 
-                                    <h1 className="mt-7 max-w-[22ch] text-[clamp(44px,5.4vw,88px)] font-black uppercase leading-[0.92] tracking-[-0.045em] text-[#141414]">
-                                        Creative intelligence
-                                        <span className="block">
-                                            for{' '}
-                                            <span className="relative inline-block text-[#D4A574]">
-                                                decisions
-                                                <span className="absolute -bottom-2 left-0 h-[10px] w-full rounded-full bg-[#D4A574]/22" aria-hidden="true" />
-                                            </span>
-                                            .
-                                        </span>
-                                    </h1>
-
-                                    <p className="mt-6 max-w-xl text-[16px] font-medium leading-relaxed text-[#141414] md:text-[18px]">
-                                        Stop guessing. Decompile an ad into a dossier you can defend — with evidence, constraints, and a clear next move.
+                                    <p className="mt-7 max-w-xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
+                                        Decompile single frames or sequences into a saved, comparable dossier. Understand what it does, how it performs in the feed, and where it fits in a content system.
                                     </p>
 
                                     <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -91,78 +89,57 @@ export default function ContainerScrollHero() {
                                             <ArrowUpRight className={HOMEPAGE_CTA_ICON + ' text-[#8B6A3D]'} />
                                         </Link>
                                     </div>
-
-                                    <div className="mt-10 flex flex-wrap items-center gap-2">
-                                        {[
-                                            { icon: Layers3, label: 'Multi-frame' },
-                                            { icon: Orbit, label: 'Gaze overlay' },
-                                            { icon: BadgeInfo, label: 'Micro-clarifiers' },
-                                            { icon: Archive, label: 'Vault memory' },
-                                        ].map((pill) => {
-                                            const Icon = pill.icon;
-                                            return (
-                                                <span
-                                                    key={pill.label}
-                                                    className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.28em] text-[#6B6B6B] shadow-sm backdrop-blur"
-                                                >
-                                                    <Icon className="h-3.5 w-3.5 text-[#8B6A3D]" />
-                                                    {pill.label}
-                                                </span>
-                                            );
-                                        })}
-                                    </div>
                                 </div>
 
                                 <aside className="min-w-0">
-                                    <div className="overflow-hidden rounded-[28px] border border-black/10 bg-[#0c0c0c] text-white shadow-[0_30px_90px_rgba(0,0,0,0.20)]">
-                                        <div className="border-b border-white/10 px-7 py-6">
-                                            <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">
-                                                Dossier Snapshot
-                                            </p>
-                                            <p className="mt-3 text-[14px] font-medium leading-relaxed text-white/70">
-                                                What you get back is structured, not vibes — designed to travel into approvals, briefs, and client rooms.
-                                            </p>
+                                    <div className="relative">
+                                        <div className="pointer-events-none absolute inset-x-0 -top-10 h-40 bg-gradient-to-b from-[#D4A574]/14 to-transparent blur-2xl" aria-hidden="true" />
+
+                                        <div className="relative mx-auto flex h-[420px] max-w-[520px] items-end justify-center">
+                                            {[
+                                                { src: '/images/examples/Sony.jpg', alt: 'Example ad 1', x: -90, r: -8, z: 30, s: 1 },
+                                                { src: '/images/examples/Watch.png', alt: 'Example ad 2', x: -20, r: -2, z: 20, s: 0.98 },
+                                                { src: '/images/examples/ACNE.png', alt: 'Example ad 3', x: 55, r: 4, z: 10, s: 0.96 },
+                                                { src: '/images/examples/Chanelad.jpg', alt: 'Example ad 4', x: 120, r: 10, z: 0, s: 0.94 },
+                                            ].map((card, idx) => (
+                                                <div
+                                                    key={card.src}
+                                                    className="absolute bottom-0"
+                                                    style={{
+                                                        transform: `translateX(${card.x}px) rotate(${card.r}deg) scale(${card.s})`,
+                                                        zIndex: card.z,
+                                                    }}
+                                                >
+                                                    <div className="relative overflow-hidden rounded-[1.4rem] border border-black/10 bg-white shadow-[0_28px_80px_rgba(20,20,20,0.16)]">
+                                                        <Image
+                                                            src={card.src}
+                                                            alt={card.alt}
+                                                            width={280}
+                                                            height={350}
+                                                            className="h-[350px] w-[280px] object-cover"
+                                                        />
+
+                                                        {idx === 0 && !prefersReducedMotion ? (
+                                                            <motion.div
+                                                                aria-hidden="true"
+                                                                initial={{ y: -40, opacity: 0 }}
+                                                                animate={{ y: [ -40, 390, -40 ], opacity: [0, 1, 0] }}
+                                                                transition={{ duration: 3.6, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
+                                                                className="pointer-events-none absolute left-0 right-0 h-12 bg-gradient-to-b from-transparent via-[#D4A574]/25 to-transparent"
+                                                            />
+                                                        ) : null}
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
 
-                                        <div className="grid gap-4 px-7 py-7">
-                                            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                                                <p className="text-[9px] font-black uppercase tracking-[0.34em] text-white/55">Sequence Verdict</p>
-                                                <p className="mt-3 text-[14px] font-semibold leading-relaxed text-white/85">
-                                                    Hook and CTA disagree — tighten the promise and route attention back to the endpoint.
-                                                </p>
-                                                <div className="mt-5 flex flex-wrap gap-2">
-                                                    {['Hook', 'Proof', 'CTA'].map((tag) => (
-                                                        <span key={tag} className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[9px] font-black uppercase tracking-[0.26em] text-white/70">
-                                                            {tag}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                                                <div className="flex items-center justify-between gap-4">
-                                                    <p className="text-[9px] font-black uppercase tracking-[0.34em] text-white/55">Gaze Route</p>
-                                                    <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[9px] font-black uppercase tracking-[0.26em] text-[#D4A574]/90">
-                                                        heuristic
-                                                    </span>
-                                                </div>
-                                                <svg viewBox="0 0 320 116" className="mt-5 h-[90px] w-full" aria-hidden="true">
-                                                    <defs>
-                                                        <linearGradient id="vdHeroGaze" x1="0%" y1="0%" x2="100%" y2="0%">
-                                                            <stop offset="0%" stopColor="#8B6A3D" />
-                                                            <stop offset="50%" stopColor="#D4A574" />
-                                                            <stop offset="100%" stopColor="#E0B882" />
-                                                        </linearGradient>
-                                                    </defs>
-                                                    <path d="M 34 84 C 78 30, 132 30, 170 54 C 216 82, 260 90, 288 46" fill="none" stroke="url(#vdHeroGaze)" strokeWidth="3" strokeLinecap="round" />
-                                                    <circle cx="34" cy="84" r="6" fill="#8B6A3D" />
-                                                    <circle cx="170" cy="54" r="6" fill="#D4A574" />
-                                                    <circle cx="288" cy="46" r="6" fill="#E0B882" />
-                                                </svg>
-                                                <p className="mt-4 text-[12px] font-medium leading-relaxed text-white/65">
-                                                    Entry → recognition → endpoint. Useful for routing, not proof.
-                                                </p>
-                                            </div>
+                                        <div className="mt-6 text-center">
+                                            <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">
+                                                Intelligence Vault Preview
+                                            </p>
+                                            <p className="mt-3 text-[14px] font-medium leading-relaxed text-[#6B6B6B]">
+                                                Every decompile becomes a comparable artifact in your Vault.
+                                            </p>
                                         </div>
                                     </div>
                                 </aside>
