@@ -42,13 +42,13 @@ export default function ContainerScrollHero() {
     }, [prefersReducedMotion]);
 
     return (
-        <section className="relative overflow-hidden bg-[#FBFBF6] px-6 pt-52 pb-28 md:px-10 md:pt-60 md:pb-40">
+        <section className="relative min-h-screen overflow-hidden bg-[#FBFBF6] px-6 pt-[110px] pb-24 md:px-10 md:pt-[125px] md:pb-32">
             <div
                 className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]"
                 aria-hidden="true"
             />
 
-            <div className="relative z-10 mx-auto w-full max-w-[1200px]">
+            <div className="relative z-10 mx-auto w-full max-w-[1500px]">
                 <ContainerScroll
                     titleComponent={
                         <div className="mx-auto max-w-[1100px]">
@@ -68,16 +68,7 @@ export default function ContainerScrollHero() {
                                         <span className="block text-[#D4A574]">intelligence.</span>
                                     </h1>
 
-                                    <div className="mt-8 max-w-xl space-y-1">
-                                        <p className="text-[18px] font-medium leading-relaxed text-[#141414] md:text-[20px]">
-                                            Most content doesn&apos;t fail because it&apos;s bad.
-                                        </p>
-                                        <p className="text-[18px] font-medium leading-relaxed text-[#141414] md:text-[20px]">
-                                            It fails because it has no role.
-                                        </p>
-                                    </div>
-
-                                    <p className="mt-7 max-w-xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
+                                    <p className="mt-8 max-w-xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
                                         Decompile single frames or sequences into a saved, comparable dossier. Understand what it does, how it performs in the feed, and where it fits in a content system.
                                     </p>
 
@@ -94,32 +85,33 @@ export default function ContainerScrollHero() {
                                 </div>
 
                                 <div className="mt-14">
-                                <div className="relative mx-auto flex max-w-[1100px] items-end justify-center">
+                                <div className="mx-auto w-full max-w-[1500px]">
+                                    <div className="flex items-end justify-center gap-4 overflow-x-auto pb-4 md:gap-6">
                                     {[
-                                        { src: '/images/examples/Sony.jpg', alt: 'Example ad 1', rotate: -10 },
-                                        { src: '/images/examples/Watch.png', alt: 'Example ad 2', rotate: -4 },
-                                        { src: '/images/examples/ACNE.png', alt: 'Example ad 3', rotate: 4 },
-                                        { src: '/images/examples/Chanelad.jpg', alt: 'Example ad 4', rotate: 10 },
+                                        { src: '/images/examples/Nike.jpg', alt: 'Nike ad' },
+                                        { src: '/images/examples/Ulyses.jpg', alt: 'Ulysse Nardin ad' },
+                                        { src: '/images/examples/Crocs.jpg', alt: 'Crocs ad' },
+                                        { src: '/images/examples/Sony.jpg', alt: 'Ray-ban ad' },
+                                        { src: '/images/examples/Chanelad.jpg', alt: 'Chanel ad' },
                                     ].map((card, idx) => (
                                         <div
                                             key={card.src}
-                                            className={`relative ${idx === 0 ? '' : '-ml-20 sm:-ml-24'}`}
-                                            style={{ transform: `rotate(${card.rotate}deg)`, zIndex: 40 - idx }}
+                                            className="relative shrink-0"
                                         >
-                                            <div className="relative overflow-hidden rounded-[1.4rem] border border-black/10 bg-white shadow-[0_30px_90px_rgba(20,20,20,0.16)]">
+                                            <div className="relative overflow-hidden border border-black/10 bg-white shadow-[0_30px_90px_rgba(20,20,20,0.14)]">
                                                 <Image
                                                     src={card.src}
                                                     alt={card.alt}
-                                                    width={280}
-                                                    height={350}
-                                                    className="h-[320px] w-[260px] object-cover sm:h-[350px] sm:w-[280px]"
+                                                    width={240}
+                                                    height={310}
+                                                    className="h-[260px] w-[210px] object-cover md:h-[310px] md:w-[240px]"
                                                 />
 
                                                 {idx === 0 && !prefersReducedMotion ? (
                                                     <motion.div
                                                         aria-hidden="true"
                                                         initial={{ y: -40, opacity: 0 }}
-                                                        animate={{ y: [-40, 390, -40], opacity: [0, 1, 0] }}
+                                                        animate={{ y: [-40, 360, -40], opacity: [0, 1, 0] }}
                                                         transition={{ duration: 3.6, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
                                                         className="pointer-events-none absolute left-0 right-0 h-12 bg-gradient-to-b from-transparent via-[#D4A574]/25 to-transparent"
                                                     />
@@ -127,6 +119,7 @@ export default function ContainerScrollHero() {
                                             </div>
                                         </div>
                                     ))}
+                                </div>
                                 </div>
 
                                 <div className="mt-8 text-center">
@@ -139,7 +132,7 @@ export default function ContainerScrollHero() {
                                 </div>
                             </div>
 
-                                <div className="mt-14 grid gap-4 text-left sm:grid-cols-3">
+                                <div className="mt-14 grid gap-4 text-center sm:grid-cols-3">
                                     {STEPS.map((item) => (
                                         <div key={item.kicker} className={MARKETING_CARD_PADDED}>
                                             <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">{item.kicker}</p>
