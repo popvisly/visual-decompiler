@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { BarChart3, Fingerprint, FileSearch, History, Target, MousePointer2, Archive } from 'lucide-react';
+import { BarChart3, Fingerprint, FileSearch, History, Target, MousePointer2, Archive, Layers3, BadgeInfo } from 'lucide-react';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 const FEATURES = [
@@ -21,6 +21,13 @@ const FEATURES = [
         icon: MousePointer2,
     },
     {
+        id: 'sequence',
+        label: 'Sequence',
+        title: 'Multi-frame Analysis',
+        desc: 'Hook → proof → CTA coherence, role clarity, and a prioritized fix order across frames.',
+        icon: Layers3,
+    },
+    {
         id: 'strategy',
         label: 'Strategy',
         title: 'Strategic Read',
@@ -36,10 +43,17 @@ const FEATURES = [
     },
     {
         id: 'decision',
-        label: 'Decision read',
+        label: 'Decision',
         title: 'Definitive Verdict',
         desc: 'A clear recommendation, confidence signal, and risk/reward tension.',
         icon: Fingerprint,
+    },
+    {
+        id: 'clarifiers',
+        label: 'Clarity',
+        title: 'Micro-clarifiers',
+        desc: 'Inline “what is this?” pills that keep non-specialists aligned without slowing the read.',
+        icon: BadgeInfo,
     },
     {
         id: 'anchors',

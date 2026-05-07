@@ -13,7 +13,7 @@ const STEPS = [
     {
         kicker: 'Step 01',
         title: 'Upload the asset.',
-        body: 'Start with the exact creative in front of you: work in progress, competitor, or reference.',
+        body: 'Start with the exact creative in front of you: work in progress, competitor, or reference (single frame or sequence).',
     },
     {
         kicker: 'Step 02',
