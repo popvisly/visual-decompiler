@@ -65,9 +65,10 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
     const [isProcessing, setIsProcessing] = useState(false);
     const [progress, setProgress] = useState(0);
     const [showGatekeeper, setShowGatekeeper] = useState(false);
-    const [stagedFile, setStagedFile] = useState<StageFile | null>(null);
+    const [stagedFiles, setStagedFiles] = useState<StageFile[]>([]);
     const [brandName, setBrandName] = useState('');
     const [marketSector, setMarketSector] = useState<SectorTaxonomyValue>('Luxury Fashion');
+    const [platform, setPlatform] = useState<'TikTok' | 'Instagram' | 'Facebook' | 'X' | 'YouTube' | 'Other'>('TikTok');
     const [error, setError] = useState<string | null>(null);
     const [usageStatus, setUsageStatus] = useState<UsageStatus | null>(null);
 
@@ -119,35 +120,38 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
 
     useEffect(() => {
         return () => {
-            if (stagedFile) {
+            for (const stagedFile of stagedFiles) {
                 URL.revokeObjectURL(stagedFile.previewUrl);
             }
         };
-    }, [stagedFile]);
+    }, [stagedFiles]);
 
     const observerLimitReached = usageStatus?.tier === 'free' && usageStatus.reachedLimit;
-    const supportedAssetsLabel = 'Supports JPG, PNG, WEBP - max 25MB';
+    const supportedAssetsLabel = 'Supports JPG, PNG, WEBP — up to 5 frames — max 25MB each';
     const resetLabel = useMemo(
         () => formatResetDate(usageStatus?.billingCycleReset ?? null),
         [usageStatus?.billingCycleReset]
     );
 
-    const stageFile = useCallback((file: File) => {
-        if (!file.type.startsWith('image/')) {
+    const stageFiles = useCallback((files: File[]) => {
+        const onlyImages = files.filter((file) => file.type.startsWith('image/')).slice(0, 5);
+        if (!onlyImages.length) {
             setError('Only JPG, PNG, and WEBP images are supported right now.');
             return;
         }
 
-        if (stagedFile) {
+        for (const stagedFile of stagedFiles) {
             URL.revokeObjectURL(stagedFile.previewUrl);
         }
 
         setError(null);
-        setStagedFile({
-            file,
-            previewUrl: URL.createObjectURL(file),
-        });
-    }, [stagedFile]);
+        setStagedFiles(
+            onlyImages.map((file) => ({
+                file,
+                previewUrl: URL.createObjectURL(file),
+            })),
+        );
+    }, [stagedFiles]);
 
     const handleDragOver = useCallback((e: React.DragEvent) => {
         e.preventDefault();
@@ -171,11 +175,11 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
             return;
         }
 
-        stageFile(files[0]);
-    }, [stageFile]);
+        stageFiles(files);
+    }, [stageFiles]);
 
     const handleBeginExtraction = useCallback(async () => {
-        if (!stagedFile) {
+        if (!stagedFiles.length) {
             return;
         }
 
@@ -189,11 +193,14 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
 
         try {
             const formData = new FormData();
-            formData.append('file', stagedFile.file);
+            for (const stagedFile of stagedFiles) {
+                formData.append('files', stagedFile.file);
+            }
             if (brandName.trim()) {
                 formData.append('brandName', brandName.trim());
             }
             formData.append('marketSector', marketSector);
+            formData.append('platform', platform);
 
             const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
             if (sessionError) {
@@ -223,18 +230,19 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
             setError(extractionError.message || 'Unknown error occurred during ingestion.');
             setIsProcessing(false);
         }
-    }, [brandName, isSovereign, marketSector, router, stagedFile]);
+    }, [brandName, isSovereign, marketSector, platform, router, stagedFiles]);
 
     const clearStagedAsset = useCallback(() => {
-        if (stagedFile) {
+        for (const stagedFile of stagedFiles) {
             URL.revokeObjectURL(stagedFile.previewUrl);
         }
 
         setBrandName('');
         setMarketSector('Luxury Fashion');
+        setPlatform('TikTok');
         setError(null);
-        setStagedFile(null);
-    }, [stagedFile]);
+        setStagedFiles([]);
+    }, [stagedFiles]);
 
     return (
         <>
@@ -285,17 +293,18 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                             ? 'border-[#D4A574] shadow-[0_0_50px_rgba(212,165,116,0.15)]'
                                             : 'border-[#D4A574]/25'
                                     }`}
-                                    onClick={() => !isProcessing && !stagedFile && document.getElementById('file-upload')?.click()}
+                                    onClick={() => !isProcessing && stagedFiles.length === 0 && document.getElementById('file-upload')?.click()}
                                 >
                                     <input
                                         id="file-upload"
                                         type="file"
                                         accept="image/*"
+                                        multiple
                                         className="hidden"
                                         onChange={(e) => {
-                                            const file = e.target.files?.[0];
-                                            if (file) {
-                                                stageFile(file);
+                                            const files = Array.from(e.target.files || []);
+                                            if (files.length) {
+                                                stageFiles(files);
                                             }
                                         }}
                                     />
@@ -305,7 +314,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                     <div className="absolute bottom-8 left-8 h-4 w-4 border-b-2 border-l-2 border-[#D4A574]/20" />
                                     <div className="absolute bottom-8 right-8 h-4 w-4 border-b-2 border-r-2 border-[#D4A574]/20" />
 
-                                    {!isProcessing && !stagedFile && (
+                                    {!isProcessing && stagedFiles.length === 0 && (
                                         <div className="flex min-h-[340px] flex-col items-center justify-center px-4 text-center">
                                             <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl border border-[#D4A574]/20 bg-white/5">
                                                 <FileImage className="h-7 w-7 text-[#D4A574]" />
@@ -319,23 +328,30 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                         </div>
                                     )}
 
-                                    {!isProcessing && stagedFile && (
+                                    {!isProcessing && stagedFiles.length > 0 && (
                                         <div className="grid gap-8 md:grid-cols-[220px_1fr] md:items-center">
                                             <div className="relative mx-auto aspect-[4/5] w-full max-w-[220px] overflow-hidden rounded-2xl border border-[#D4A574]/20 bg-white/5">
                                                 <Image
-                                                    src={stagedFile.previewUrl}
-                                                    alt={stagedFile.file.name}
+                                                    src={stagedFiles[0].previewUrl}
+                                                    alt={stagedFiles[0].file.name}
                                                     fill
                                                     className="object-cover"
                                                     unoptimized
                                                 />
+                                                {stagedFiles.length > 1 ? (
+                                                    <div className="absolute bottom-3 right-3 rounded-full border border-white/10 bg-black/60 px-3 py-1 text-[9px] font-black uppercase tracking-[0.28em] text-white/70">
+                                                        +{stagedFiles.length - 1} frames
+                                                    </div>
+                                                ) : null}
                                             </div>
 
                                             <div className="space-y-5">
                                                 <div>
                                                     <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-[#D4A574]">Staged Asset</p>
-                                                    <h2 className="mt-3 break-all text-xl font-light text-[#F5F5DC] md:text-2xl">{stagedFile.file.name}</h2>
-                                                    <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-white/50">{formatBytes(stagedFile.file.size)}</p>
+                                                    <h2 className="mt-3 break-all text-xl font-light text-[#F5F5DC] md:text-2xl">{stagedFiles[0].file.name}</h2>
+                                                    <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-white/50">
+                                                        {stagedFiles.length === 1 ? formatBytes(stagedFiles[0].file.size) : `${stagedFiles.length} frames staged`}
+                                                    </p>
                                                 </div>
 
                                                 <div className="space-y-3">
@@ -370,6 +386,27 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                                     </select>
                                                     <p className="text-[11px] leading-relaxed text-white/45">
                                                         This locks the asset into a controlled sector taxonomy so future Mechanic Intelligence trends stay clean and comparable.
+                                                    </p>
+                                                </div>
+
+                                                <div className="space-y-3">
+                                                    <label htmlFor="platform" className="block text-[10px] font-bold uppercase tracking-[0.22em] text-[#D4A574]/80">
+                                                        Platform Target
+                                                    </label>
+                                                    <select
+                                                        id="platform"
+                                                        value={platform}
+                                                        onChange={(e) => setPlatform(e.target.value as any)}
+                                                        className="w-full rounded-full border border-[#D4A574]/20 bg-white/5 px-5 py-3 text-sm text-[#F5F5DC] outline-none transition-colors focus:border-[#D4A574]/50"
+                                                    >
+                                                        {['TikTok', 'Instagram', 'Facebook', 'X', 'YouTube', 'Other'].map((value) => (
+                                                            <option key={value} value={value} className="text-black">
+                                                                {value}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                    <p className="text-[11px] leading-relaxed text-white/45">
+                                                        For multi-frame uploads, this shapes the sequence critique around platform norms (hook speed, caption reliance, CTA timing).
                                                     </p>
                                                 </div>
 

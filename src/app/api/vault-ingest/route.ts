@@ -156,19 +156,21 @@ export async function POST(req: Request) {
             );
         }
 
-        // Handle both FormData (file) and JSON (mediaUrl)
+        // Handle both FormData (file/files) and JSON (mediaUrl)
         const contentType = req.headers.get('content-type') || '';
-        let buffer: Buffer;
+        let buffers: Buffer[] = [];
         let fileExt = 'png';
-        let mimeType = 'image/jpeg';
+        let mimeTypes: string[] = [];
         let brandHint = '';
         let sectorHint = '';
+        let platformHint = '';
 
         if (contentType.includes('application/json')) {
             const body = await req.json();
             const mediaUrl = body.mediaUrl;
             brandHint = typeof body.brandName === 'string' ? body.brandName.trim() : '';
             sectorHint = normalizeSector(typeof body.marketSector === 'string' ? body.marketSector : '');
+            platformHint = typeof body.platform === 'string' ? body.platform.trim() : '';
             if (!mediaUrl) {
                 return NextResponse.json({ error: 'No mediaUrl provided.' }, { status: 400 });
             }
@@ -191,83 +193,106 @@ export async function POST(req: Request) {
                 return NextResponse.json({ error: 'Failed to fetch media from URL.' }, { status: 400 });
             }
             
-            mimeType = fetchRes.headers.get('content-type') || 'image/jpeg';
+            const mimeType = fetchRes.headers.get('content-type') || 'image/jpeg';
             if (!mimeType.startsWith('image/')) {
                 return NextResponse.json({ error: 'Only images are supported for Ingestion currently.' }, { status: 400 });
             }
             
             const arrayBuffer = await fetchRes.arrayBuffer();
-            buffer = Buffer.from(new Uint8Array(arrayBuffer));
+            buffers = [Buffer.from(new Uint8Array(arrayBuffer))];
             fileExt = mimeType.split('/')[1] || 'png';
+            mimeTypes = [mimeType];
         } else if (contentType.includes('multipart/form-data')) {
             const formData = await req.formData();
-            const file = formData.get('file') as File | null;
+            const files = (formData.getAll('files') as unknown[])
+                .filter((value) => value instanceof File) as File[];
+            const legacyFile = formData.get('file') as File | null;
             brandHint = typeof formData.get('brandName') === 'string' ? String(formData.get('brandName')).trim() : '';
             sectorHint = normalizeSector(typeof formData.get('marketSector') === 'string' ? String(formData.get('marketSector')) : '');
+            platformHint = typeof formData.get('platform') === 'string' ? String(formData.get('platform')).trim() : '';
 
-            if (!file) {
+            const resolvedFiles = files.length > 0 ? files : legacyFile ? [legacyFile] : [];
+
+            if (!resolvedFiles.length) {
                 return NextResponse.json({ error: 'No file uploaded.' }, { status: 400 });
             }
-
-            if (!file.type.startsWith('image/')) {
-                return NextResponse.json({ error: 'Only images are supported for Ingestion currently.' }, { status: 400 });
+            if (resolvedFiles.length > 5) {
+                return NextResponse.json({ error: 'Too many files. Maximum is 5 frames.' }, { status: 400 });
             }
 
-            fileExt = file.name.split('.').pop() || 'png';
-            mimeType = file.type;
-            const arrayBuffer = await file.arrayBuffer();
-            buffer = Buffer.from(new Uint8Array(arrayBuffer));
+            buffers = [];
+            mimeTypes = [];
+            for (const file of resolvedFiles) {
+                if (!file.type.startsWith('image/')) {
+                    return NextResponse.json({ error: 'Only images are supported for Ingestion currently.' }, { status: 400 });
+                }
+                fileExt = file.name.split('.').pop() || 'png';
+                mimeTypes.push(file.type || 'image/jpeg');
+                const arrayBuffer = await file.arrayBuffer();
+                buffers.push(Buffer.from(new Uint8Array(arrayBuffer)));
+            }
         } else {
             return NextResponse.json({ error: 'Unsupported Content-Type. Use multipart/form-data or application/json.' }, { status: 400 });
         }
 
-        // Compress image to max 1024px longest side
-        buffer = await sharp(buffer)
-            .resize({ width: 1024, height: 1024, fit: 'inside', withoutEnlargement: true })
-            .toBuffer();
-
-        // 2. Semantic Hash Check (Deduplication)
-        const fileHash = crypto.createHash('sha256').update(buffer).digest('hex');
-        const fileName = `${fileHash}.${fileExt}`;
-        const filePath = `ingestions/${fileName}`;
-
-        const { data: existingAssets } = await supabaseAdmin.from('assets')
-            .select('id')
-            .eq('user_id', session.userId)
-            .ilike('file_url', `%${fileHash}%`)
-            .limit(1);
-
-        if (existingAssets && existingAssets.length > 0) {
-            const existingAsset = existingAssets[0];
-            console.log(`[Ingest] Semantic hit for hash ${fileHash}. Bypassing Claude.`);
-            
-            // Check ownership and claim if unowned (legacy/test asset)
-            const { data: assetCheck } = await supabaseAdmin.from('assets').select('user_id').eq('id', existingAsset.id).single();
-            if (assetCheck && !assetCheck.user_id) {
-                console.log(`[Ingest] Claiming unowned asset ${existingAsset.id} for user ${session.userId}`);
-                await supabaseAdmin.from('assets').update({ user_id: session.userId }).eq('id', existingAsset.id);
-            }
-            
-            return NextResponse.json({ success: true, assetId: existingAsset.id, cached: true });
+        // Compress images to max 1024px longest side
+        const compressedBuffers: Buffer[] = [];
+        for (const buf of buffers) {
+            compressedBuffers.push(
+                await sharp(buf).resize({ width: 1024, height: 1024, fit: 'inside', withoutEnlargement: true }).toBuffer(),
+            );
         }
 
-        // 3. Upload to Supabase Storage Bucket 'vault-assets'
-        // supabaseAdmin uses process.env.SUPABASE_SERVICE_ROLE_KEY
-        const { error: uploadError } = await supabaseAdmin.storage
-            .from('vault-assets')
-            .upload(filePath, buffer, { 
-                contentType: mimeType,
-                upsert: true 
-            });
+        const primaryBuffer = compressedBuffers[0];
+        const primaryMimeType = mimeTypes[0] || 'image/jpeg';
 
-        if (uploadError) throw uploadError;
+        // 2. Semantic Hash Check (Deduplication) - single-frame only
+        const primaryHash = crypto.createHash('sha256').update(primaryBuffer).digest('hex');
+        if (compressedBuffers.length === 1) {
+            const { data: existingAssets } = await supabaseAdmin
+                .from('assets')
+                .select('id')
+                .eq('user_id', session.userId)
+                .ilike('file_url', `%${primaryHash}%`)
+                .limit(1);
 
-        // 4. Retrieve Public URL
-        const { data: publicUrlData } = supabaseAdmin.storage
-            .from('vault-assets')
-            .getPublicUrl(filePath);
+            if (existingAssets && existingAssets.length > 0) {
+                const existingAsset = existingAssets[0];
+                console.log(`[Ingest] Semantic hit for hash ${primaryHash}. Bypassing Claude.`);
 
-        const publicUrl = publicUrlData.publicUrl;
+                // Check ownership and claim if unowned (legacy/test asset)
+                const { data: assetCheck } = await supabaseAdmin.from('assets').select('user_id').eq('id', existingAsset.id).single();
+                if (assetCheck && !assetCheck.user_id) {
+                    console.log(`[Ingest] Claiming unowned asset ${existingAsset.id} for user ${session.userId}`);
+                    await supabaseAdmin.from('assets').update({ user_id: session.userId }).eq('id', existingAsset.id);
+                }
+
+                return NextResponse.json({ success: true, assetId: existingAsset.id, cached: true });
+            }
+        }
+
+        // 3. Upload to Supabase Storage Bucket 'vault-assets' (all frames)
+        const uploadedUrls: string[] = [];
+        for (let i = 0; i < compressedBuffers.length; i++) {
+            const frameHash = crypto.createHash('sha256').update(compressedBuffers[i]).digest('hex');
+            const fileName = `${frameHash}.${fileExt}`;
+            const filePath = `ingestions/${fileName}`;
+
+            const { error: uploadError } = await supabaseAdmin.storage
+                .from('vault-assets')
+                .upload(filePath, compressedBuffers[i], {
+                    contentType: mimeTypes[i] || primaryMimeType,
+                    upsert: true,
+                });
+
+            if (uploadError) throw uploadError;
+
+            const { data: publicUrlData } = supabaseAdmin.storage.from('vault-assets').getPublicUrl(filePath);
+            uploadedUrls.push(publicUrlData.publicUrl);
+        }
+
+        // 4. Retrieve Public URL (string for single frame, JSON string for multi-frame)
+        const publicUrl = uploadedUrls.length === 1 ? uploadedUrls[0] : JSON.stringify(uploadedUrls);
 
         // 5. Trigger Claude Deconstruction FIRST to get Brand Intelligence
         const anthropic = getAnthropic();
@@ -372,7 +397,7 @@ QUALITY GATE WRITING RULES (MANDATORY):
 - Known Unknowns: concise and factual, no speculative flourish.
 - System Verdict: one-line verdict + one-line reason.`;
 
-        const base64Data = buffer.toString('base64');
+        const base64Data = primaryBuffer.toString('base64');
 
         type AuthImageMedia = "image/jpeg" | "image/png" | "image/webp" | "image/gif";
         type ContentBlock =
@@ -388,7 +413,7 @@ QUALITY GATE WRITING RULES (MANDATORY):
                 type: "image",
                 source: {
                     type: "base64",
-                    media_type: mimeType as AuthImageMedia,
+                    media_type: primaryMimeType as AuthImageMedia,
                     data: base64Data
                 }
             }
@@ -464,6 +489,78 @@ QUALITY GATE WRITING RULES (MANDATORY):
         const normalizedVisualStyle = coerceString(extractionResult.visual_style, 'Forensic visual style unavailable.');
         const normalizedDnaPrompt = coerceString(extractionResult.dna_prompt, 'DNA prompt unavailable.');
 
+        // Phase 1: Multi-frame sequence analysis (non-fatal, stored inside full_dossier)
+        if (compressedBuffers.length > 1) {
+            const sequenceSystem = `You are Visual Decompiler operating in Multi-Frame mode.
+Return ONLY valid JSON. No markdown. No commentary.
+
+Schema:
+{
+  "platform": "TikTok|Instagram|Facebook|X|YouTube|Other",
+  "frames": [
+    {
+      "index": 1,
+      "role": "hook|proof|cta|other",
+      "what_grabs_first": "short",
+      "where_the_eye_goes_next": "short",
+      "likely_endpoint": "short",
+      "biggest_problem": "short",
+      "single_best_fix": "short"
+    }
+  ],
+  "sequence": {
+    "hook_to_cta_coherence": "high|medium|low",
+    "main_failure_mode": "short",
+    "fix_order": ["short", "short", "short"]
+  }
+}`;
+
+            const frameBlocks: ContentBlock[] = [
+                {
+                    type: 'text',
+                    text: `Analyze this ${compressedBuffers.length}-frame ad sequence.${platformHint ? ` Platform target: ${platformHint}.` : ''} Identify hook/proof/CTA roles and a prioritized fix order. Be decisive.`,
+                },
+                ...compressedBuffers.map((buf, idx) => ({
+                    type: 'image' as const,
+                    source: {
+                        type: 'base64' as const,
+                        media_type: (mimeTypes[idx] || primaryMimeType) as AuthImageMedia,
+                        data: buf.toString('base64'),
+                    },
+                })),
+            ];
+
+            try {
+                const sequenceResp = await anthropic.messages.create({
+                    model,
+                    max_tokens: 2048,
+                    temperature: 0,
+                    system: sequenceSystem,
+                    messages: [{ role: 'user', content: frameBlocks }],
+                });
+
+                const seqText = sequenceResp.content.find((block) => block.type === 'text')?.text || '';
+                const parsedSeq = await safeJsonParseWithOptionalModelRepair({
+                    text: seqText,
+                    logPrefix: 'IngestSequence',
+                });
+
+                if (parsedSeq.ok) {
+                    extractionResult = {
+                        ...extractionResult,
+                        full_dossier: {
+                            ...(extractionResult.full_dossier as any),
+                            platform_target: platformHint || null,
+                            frames_count: compressedBuffers.length,
+                            sequence_analysis: parsedSeq.value,
+                        },
+                    };
+                }
+            } catch (err) {
+                console.warn('[Ingest] Sequence analysis failed (non-fatal):', err);
+            }
+        }
+
         // 6. Dynamic Brand Binding
         let targetBrandId = null;
         const resolvedBrandName = brandHint || extractionResult.brand_name_guess || 'Unknown Brand';
@@ -496,7 +593,7 @@ QUALITY GATE WRITING RULES (MANDATORY):
         const { data: assetData, error: insertError } = await supabaseAdmin.from('assets').insert({
             brand_id: targetBrandId,
             user_id: session.userId,
-            type: 'STATIC',
+            type: compressedBuffers.length > 1 ? 'CAROUSEL' : 'STATIC',
             file_url: publicUrl
         }).select().single();
 
