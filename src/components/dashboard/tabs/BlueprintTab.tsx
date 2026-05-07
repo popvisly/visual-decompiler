@@ -4,8 +4,10 @@ import React from 'react';
 import { Sparkles, RefreshCw } from 'lucide-react';
 import WorkspaceTabHeader from '@/components/dashboard/WorkspaceTabHeader';
 import WorkspaceDecisionSummary from '@/components/dashboard/WorkspaceDecisionSummary';
+import ClarifierPill from '@/components/ClarifierPill';
 import { BLUEPRINT_STEPS } from '@/lib/constants';
 import { firstSentence } from '@/lib/utils';
+import { CLARIFIERS } from '@/lib/clarifiers';
 
 interface BlueprintTabProps {
     blueprintData: any;
@@ -137,8 +139,14 @@ export default function BlueprintTab({
                                     <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
                                         <RefreshCw className="h-24 w-24 text-[#D4A574]" />
                                     </div>
-                                    <div className="mb-6 border-b border-white/10 pb-6">
+                                    <div className="mb-6 flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-center sm:justify-between">
                                         <p className="text-[10px] font-sans font-medium uppercase tracking-[0.14em] text-[#D9B07A]">Verified DNA Prompt</p>
+                                        <ClarifierPill
+                                            variant="dark"
+                                            label={CLARIFIERS.verified_dna_prompt.label}
+                                            title={CLARIFIERS.verified_dna_prompt.title}
+                                            body={CLARIFIERS.verified_dna_prompt.body}
+                                        />
                                     </div>
                                     <pre className="whitespace-pre-wrap text-[14px] leading-loose text-white/80 font-mono tracking-tight selection:bg-[#D4A574]/30 relative z-10">
                                         {blueprintData.verified_dna_prompt}

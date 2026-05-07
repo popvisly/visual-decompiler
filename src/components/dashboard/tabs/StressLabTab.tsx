@@ -3,8 +3,10 @@
 import React from 'react';
 import WorkspaceTabHeader from '@/components/dashboard/WorkspaceTabHeader';
 import WorkspaceDecisionSummary from '@/components/dashboard/WorkspaceDecisionSummary';
+import ClarifierPill from '@/components/ClarifierPill';
 import { IntegratedRecommendationData, StressLabRow, BlueprintData } from '@/types/dashboard';
 import { normalizeProseText, proseParagraphs, firstSentence } from '@/lib/utils';
+import { CLARIFIERS } from '@/lib/clarifiers';
 
 interface StressLabTabProps {
     integratedRecommendation: IntegratedRecommendationData;
@@ -30,7 +32,6 @@ export default function StressLabTab({
     const gazeRef = React.useRef<HTMLDivElement | null>(null);
     const [focusedVariable, setFocusedVariable] = React.useState<string | null>(null);
     const [showGazeOverlay, setShowGazeOverlay] = React.useState(true);
-    const [showHeuristicInfo, setShowHeuristicInfo] = React.useState(false);
 
     const focusVariable = React.useCallback((variable: string) => {
         setFocusedVariable(variable);
@@ -42,34 +43,25 @@ export default function StressLabTab({
     const gazeOverlayCard = assetImageUrl ? (
         <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                <div className="max-w-[60ch]">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80">Gaze Direction Overlay</p>
-                    <h3 className="mt-5 text-[22px] font-black uppercase leading-[1.05] tracking-tight text-[#141414] md:text-[28px]">
-                        Where the eye likely enters, travels, and lands.
-                    </h3>
+                    <div className="max-w-[60ch]">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80">Gaze Direction Overlay</p>
+                        <h3 className="mt-5 text-[22px] font-black uppercase leading-[1.05] tracking-tight text-[#141414] md:text-[28px]">
+                            Where the eye likely enters, travels, and lands.
+                        </h3>
                     <div className="mt-4 space-y-3">
                         <p className="text-[13px] font-medium leading-relaxed text-[#515151]">
                             A <span className="font-black text-[#141414]">heuristic guide</span> is a best-practice reading of how attention usually behaves (faces, contrast, size, edges, and reading order) — not literal eye-tracking.
                         </p>
                         <div className="flex flex-wrap items-center gap-3">
-                            <button
-                                type="button"
-                                onClick={() => setShowHeuristicInfo((value) => !value)}
-                                className="rounded-full border border-black/10 bg-[#FBFBF6] px-4 py-2 text-[9px] font-black uppercase tracking-[0.28em] text-[#6B6B6B] transition-all hover:border-[#D4A574]/25 hover:bg-white hover:text-[#141414]"
-                            >
-                                {showHeuristicInfo ? 'Hide Definition' : "What's a heuristic?"}
-                            </button>
+                            <ClarifierPill
+                                label={CLARIFIERS.heuristic_guide.label}
+                                title={CLARIFIERS.heuristic_guide.title}
+                                body={CLARIFIERS.heuristic_guide.body}
+                            />
                             <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#8B6A3D]/80">
                                 Use for routing, not proof
                             </span>
                         </div>
-                        {showHeuristicInfo ? (
-                            <div className="rounded-2xl border border-black/5 bg-[#FBFBF6] px-6 py-5">
-                                <p className="text-[12px] font-medium leading-relaxed text-[#515151]">
-                                    Think of this as “creative triage”: it helps you spot likely entry points and whether the frame pushes attention toward product, message, and brand marks. Human attention can still diverge — especially with faces, novelty, or strong personal bias.
-                                </p>
-                            </div>
-                        ) : null}
                     </div>
                 </div>
 
