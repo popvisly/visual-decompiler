@@ -2955,6 +2955,8 @@ export default function AssetWorkspace({
                                             stressTestCount={stressTestCount}
                                             blueprintData={blueprintData}
                                             dossier={dossier}
+                                            assetImageUrl={firstFrameUrl}
+                                            assetAlt={asset?.brand?.name ? `${asset.brand.name} creative asset` : 'Creative asset'}
                                         />
                                     );
                                 case 'DECISION LOG':

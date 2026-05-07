@@ -13,6 +13,8 @@ interface StressLabTabProps {
     stressTestCount: number;
     blueprintData: BlueprintData | null;
     dossier: any;
+    assetImageUrl?: string | null;
+    assetAlt?: string;
 }
 
 export default function StressLabTab({
@@ -21,8 +23,20 @@ export default function StressLabTab({
     primaryStressTest,
     stressTestCount,
     blueprintData,
-    dossier
+    dossier,
+    assetImageUrl,
+    assetAlt,
 }: StressLabTabProps) {
+    const gazeRef = React.useRef<HTMLDivElement | null>(null);
+    const [focusedVariable, setFocusedVariable] = React.useState<string | null>(null);
+
+    const focusVariable = React.useCallback((variable: string) => {
+        setFocusedVariable(variable);
+        if (variable.toLowerCase().includes('gaze')) {
+            gazeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, []);
+
     return (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex flex-col gap-8">
@@ -99,17 +113,29 @@ export default function StressLabTab({
                                             </span>
                                         </td>
                                         <td className="px-8 py-6 text-center align-top">
-                                            <span
-                                                className={`inline-block border px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] ${
-                                                    row.recommendation === 'Test'
-                                                        ? 'border-[#D4A574]/30 text-[#8B6A3D] bg-[#D4A574]/5'
-                                                        : row.recommendation === 'Avoid'
+                                            {row.recommendation === 'Test' ? (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => focusVariable(row.variable)}
+                                                    className={`inline-flex items-center justify-center border px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:shadow-sm hover:-translate-y-[1px] ${
+                                                        focusedVariable === row.variable
+                                                            ? 'border-[#D4A574]/50 text-[#8B6A3D] bg-[#D4A574]/10'
+                                                            : 'border-[#D4A574]/30 text-[#8B6A3D] bg-[#D4A574]/5'
+                                                    }`}
+                                                >
+                                                    Test
+                                                </button>
+                                            ) : (
+                                                <span
+                                                    className={`inline-block border px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] ${
+                                                        row.recommendation === 'Avoid'
                                                             ? 'border-red-500/20 text-red-600 bg-red-50'
                                                             : 'border-black/5 text-[#6B6B6B] bg-[#FBFBF6]'
-                                                }`}
-                                            >
-                                                {row.recommendation}
-                                            </span>
+                                                    }`}
+                                                >
+                                                    {row.recommendation}
+                                                </span>
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
@@ -131,8 +157,24 @@ export default function StressLabTab({
                         </div>
                     </div>
 
-                    <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-10">Gaze Direction Breakdown</p>
+                    <div ref={gazeRef} className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
+                        <div className="flex items-center justify-between gap-6 mb-10">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80">Gaze Direction Breakdown</p>
+                            {assetImageUrl ? (
+                                <span className="text-[10px] font-bold uppercase tracking-[0.32em] text-[#6B6B6B]">
+                                    Source asset attached
+                                </span>
+                            ) : null}
+                        </div>
+                        {assetImageUrl ? (
+                            <div className="mb-8 overflow-hidden rounded-2xl border border-black/5 bg-[#0c0c0c] p-5">
+                                <img
+                                    src={assetImageUrl}
+                                    alt={assetAlt || 'Creative asset'}
+                                    className="max-h-[320px] w-full object-contain"
+                                />
+                            </div>
+                        ) : null}
                         <div className="space-y-4">
                             {[
                                 ['Positioning', firstSentence(blueprintData?.technical_specs?.gaze_vector) || 'Upper-center frame priority with directional control.'],
