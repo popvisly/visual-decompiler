@@ -478,7 +478,7 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                     key={step.number}
                                     className="rounded-2xl border border-[rgba(212,165,116,0.16)] bg-[#1F1F1F] px-5 py-5"
                                 >
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex flex-col items-start gap-3">
                                         <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#4E3D2A] bg-[#171512] text-[18px] font-semibold leading-none text-[#D4A574]">
                                             {step.number}
                                         </span>
