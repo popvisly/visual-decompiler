@@ -369,6 +369,22 @@ function VaultSelect({ label, value, onChange, options }: { label: string; value
 function VaultCard({ asset, isSelected, onToggle, index }: { asset: VaultAsset, isSelected: boolean, onToggle: () => void, index: number }) {
     const rawExtraction = asset.extraction || asset.extractions;
     const extraction = Array.isArray(rawExtraction) ? rawExtraction[0] : rawExtraction;
+
+    const coverUrl = (() => {
+        const raw = asset.file_url;
+        if (typeof raw !== 'string') return '';
+        const trimmed = raw.trim();
+        if (!trimmed) return '';
+        if (trimmed.startsWith('[')) {
+            try {
+                const parsed = JSON.parse(trimmed);
+                if (Array.isArray(parsed) && typeof parsed[0] === 'string') return parsed[0];
+            } catch {
+                return '';
+            }
+        }
+        return trimmed;
+    })();
     
     return (
         <motion.div 
@@ -391,7 +407,7 @@ function VaultCard({ asset, isSelected, onToggle, index }: { asset: VaultAsset, 
             <Link href={`/asset/${asset.id}`} className="block">
                 <div className="relative aspect-[4/5] overflow-hidden transition-all duration-700 bg-[#1A1A1A] rounded-[1.4rem] border border-[#E7DED1]">
                     <img
-                        src={asset.file_url}
+                        src={coverUrl}
                         alt={asset.brand?.name || 'Vault Asset'}
                         className={`w-full h-full object-cover transition-all duration-1000 ease-out ${isSelected ? 'scale-110 opacity-40' : 'group-hover:scale-110'}`}
                     />
