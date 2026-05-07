@@ -31,29 +31,37 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
     const [isDeleting, setIsDeleting] = useState(false);
     const [query, setQuery] = useState('');
     const [sectorFilter, setSectorFilter] = useState('ALL SECTORS');
-    const [mechanicFilter, setMechanicFilter] = useState('ALL MECHANICS');
     const [tagFilter, setTagFilter] = useState('ALL TAGS');
     const [sortOrder, setSortOrder] = useState('NEWEST');
 
     const sectorOptions = useMemo(() => {
-        const sectors = new Set<string>();
-        for (const asset of assets) {
-            const sector = safeTrim(asset.brand?.market_sector);
-            if (sector) sectors.add(sector);
-        }
-        return ['ALL SECTORS', ...Array.from(sectors).sort()];
+        return [
+            'ALL SECTORS',
+            'AUTOMOBILE',
+            'FASHION',
+            'FOOD & DRINK',
+            'FOOTWEAR',
+            'FRAGRANCE',
+            'LIQUOR',
+            'OTHER',
+            'RETAIL',
+            'TECH',
+        ];
     }, [assets]);
 
-    const mechanicOptions = useMemo(() => {
-        const mechanics = new Set<string>();
-        for (const asset of assets) {
-            const rawExtraction = asset.extraction || asset.extractions;
-            const extraction = Array.isArray(rawExtraction) ? rawExtraction[0] : rawExtraction;
-            const mechanic = safeTrim(extraction?.primary_mechanic);
-            if (mechanic) mechanics.add(mechanic);
-        }
-        return ['ALL MECHANICS', ...Array.from(mechanics).sort()];
-    }, [assets]);
+    const normalizeVaultSector = (rawSector: unknown): string => {
+        const normalized = safeTrim(rawSector).toLowerCase();
+        if (!normalized) return 'OTHER';
+        if (normalized.includes('auto')) return 'AUTOMOBILE';
+        if (normalized.includes('footwear') || normalized.includes('shoe') || normalized.includes('sneaker')) return 'FOOTWEAR';
+        if (normalized.includes('fragrance') || normalized.includes('perfume')) return 'FRAGRANCE';
+        if (normalized.includes('liquor') || normalized.includes('spirit') || normalized.includes('whisky') || normalized.includes('wine') || normalized.includes('beer')) return 'LIQUOR';
+        if (normalized.includes('food') || normalized.includes('drink') || normalized.includes('beverage')) return 'FOOD & DRINK';
+        if (normalized.includes('tech') || normalized.includes('software') || normalized.includes('app') || normalized.includes('electronics')) return 'TECH';
+        if (normalized.includes('retail')) return 'RETAIL';
+        if (normalized.includes('fashion') || normalized.includes('apparel') || normalized.includes('jewellery') || normalized.includes('jewelry') || normalized.includes('watch') || normalized.includes('accessories')) return 'FASHION';
+        return 'OTHER';
+    };
 
     const tagOptions = useMemo(() => {
         const tags = new Set<string>();
@@ -88,15 +96,7 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
         }
 
         if (sectorFilter !== 'ALL SECTORS') {
-            next = next.filter((asset) => asset.brand?.market_sector === sectorFilter);
-        }
-
-        if (mechanicFilter !== 'ALL MECHANICS') {
-            next = next.filter((asset) => {
-                const rawExtraction = asset.extraction || asset.extractions;
-                const extraction = Array.isArray(rawExtraction) ? rawExtraction[0] : rawExtraction;
-                return extraction?.primary_mechanic === mechanicFilter;
-            });
+            next = next.filter((asset) => normalizeVaultSector(asset.brand?.market_sector) === sectorFilter);
         }
 
         if (tagFilter !== 'ALL TAGS') {
@@ -124,12 +124,11 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
         });
 
         return next;
-    }, [assets, query, sectorFilter, mechanicFilter, tagFilter, sortOrder]);
+    }, [assets, query, sectorFilter, tagFilter, sortOrder]);
 
     const clearFilters = () => {
         setQuery('');
         setSectorFilter('ALL SECTORS');
-        setMechanicFilter('ALL MECHANICS');
         setTagFilter('ALL TAGS');
         setSortOrder('NEWEST');
     };
@@ -292,9 +291,10 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                     )}
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 items-end">
-                    <VaultSelect label="Sector" value={sectorFilter} onChange={setSectorFilter} options={sectorOptions} />
-                    <VaultSelect label="Mechanic" value={mechanicFilter} onChange={setMechanicFilter} options={mechanicOptions} />
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 items-end">
+                    <div className="col-span-2 lg:col-span-1">
+                        <VaultSelect label="Sector" value={sectorFilter} onChange={setSectorFilter} options={sectorOptions} />
+                    </div>
                     <VaultSelect label="Sort" value={sortOrder} onChange={setSortOrder} options={['NEWEST', 'OLDEST', 'CONFIDENCE HIGH', 'CONFIDENCE LOW']} />
                     <button 
                         onClick={clearFilters}
