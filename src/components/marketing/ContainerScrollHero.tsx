@@ -91,30 +91,20 @@ export default function ContainerScrollHero() {
                                         { src: '/images/examples/Nike.jpg', alt: 'Nike ad' },
                                         { src: '/images/examples/Ulyses.jpg', alt: 'Ulysse Nardin ad' },
                                         { src: '/images/examples/Crocs.jpg', alt: 'Crocs ad' },
-                                        { src: null, alt: 'Ray-ban ad' },
                                         { src: '/images/examples/Chanel_No5.webp', alt: 'Chanel No. 5 ad' },
                                     ].map((card, idx) => (
                                         <div
-                                            key={card.src ?? card.alt}
+                                            key={card.src}
                                             className="relative shrink-0"
                                         >
                                             <div className="relative overflow-hidden border border-black/10 bg-white shadow-[0_30px_90px_rgba(20,20,20,0.14)]">
-                                                {card.src ? (
-                                                    <Image
-                                                        src={card.src}
-                                                        alt={card.alt}
-                                                        width={240}
-                                                        height={310}
-                                                        className="h-[260px] w-[210px] object-cover md:h-[310px] md:w-[240px]"
-                                                    />
-                                                ) : (
-                                                    <div className="flex h-[260px] w-[210px] items-center justify-center bg-[#F7F5EE] md:h-[310px] md:w-[240px]">
-                                                        <div className="text-center">
-                                                            <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/70">Ray-ban</p>
-                                                            <p className="mt-2 text-[12px] font-medium text-[#6B6B6B]">Add asset</p>
-                                                        </div>
-                                                    </div>
-                                                )}
+                                                <Image
+                                                    src={card.src}
+                                                    alt={card.alt}
+                                                    width={240}
+                                                    height={310}
+                                                    className="h-[260px] w-[210px] object-cover md:h-[310px] md:w-[240px]"
+                                                />
 
                                                 {idx === 0 && !prefersReducedMotion ? (
                                                     <motion.div
@@ -129,15 +119,6 @@ export default function ContainerScrollHero() {
                                         </div>
                                     ))}
                                 </div>
-                                </div>
-
-                                <div className="mt-8 text-center">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">
-                                        Intelligence Vault Preview
-                                    </p>
-                                    <p className="mt-3 text-[14px] font-medium leading-relaxed text-[#6B6B6B]">
-                                        Every decompile becomes a comparable artifact in your Vault.
-                                    </p>
                                 </div>
                             </div>
 

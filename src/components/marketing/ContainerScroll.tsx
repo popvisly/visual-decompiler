@@ -33,7 +33,10 @@ export function ContainerScroll({
     const translate = prefersReducedMotion ? (0 as any) : useTransform(scrollYProgress, [0, 1], [0, -60]);
 
     return (
-        <div ref={containerRef} className="relative flex h-[56rem] items-center justify-center p-2 md:h-[78rem] md:p-12">
+        <div
+            ref={containerRef}
+            className="relative flex h-[56rem] items-start justify-center p-2 pt-16 md:h-[78rem] md:p-12 md:pt-24"
+        >
             <div className="relative w-full py-10 md:py-36" style={{ perspective: '1100px' }}>
                 <Header translate={translate} titleComponent={titleComponent} />
                 <Card rotate={rotate} scale={scale} translate={translate}>
