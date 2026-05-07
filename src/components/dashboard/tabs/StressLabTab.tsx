@@ -38,6 +38,72 @@ export default function StressLabTab({
         }
     }, []);
 
+    const gazeOverlayCard = assetImageUrl ? (
+        <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+                <div className="max-w-[60ch]">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80">Gaze Direction Overlay</p>
+                    <h3 className="mt-5 text-[22px] font-black uppercase leading-[1.05] tracking-tight text-[#141414] md:text-[28px]">
+                        Where the eye likely enters, travels, and lands.
+                    </h3>
+                    <p className="mt-4 text-[13px] font-medium leading-relaxed text-[#515151]">
+                        This overlay is a heuristic guide (not pixel-perfect tracking). Use it to sanity-check whether the composition routes attention toward the intended endpoint.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    onClick={() => setShowGazeOverlay((value) => !value)}
+                    className="h-12 shrink-0 rounded-full border border-black/10 bg-[#FBFBF6] px-6 text-[10px] font-black uppercase tracking-[0.3em] text-[#6B6B6B] transition-all hover:border-[#D4A574]/25 hover:bg-white hover:text-[#141414]"
+                >
+                    {showGazeOverlay ? 'Hide Overlay' : 'Show Overlay'}
+                </button>
+            </div>
+
+            <div className="mt-8 overflow-hidden rounded-2xl border border-black/5 bg-[#0c0c0c] p-6">
+                <div className="relative">
+                    <img
+                        src={assetImageUrl}
+                        alt={assetAlt || 'Creative asset'}
+                        className="max-h-[640px] w-full object-contain"
+                    />
+
+                    {showGazeOverlay ? (
+                        <div className="pointer-events-none absolute inset-0">
+                            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                                <path d="M28 30 L52 44 L72 66" stroke="rgba(212,165,116,0.55)" strokeWidth="1.2" fill="none" />
+                                <path d="M28 30 L52 44 L72 66" stroke="rgba(212,165,116,0.25)" strokeWidth="3.2" fill="none" />
+                            </svg>
+
+                            {[
+                                { label: '1', title: 'Entry', top: '30%', left: '28%' },
+                                { label: '2', title: 'Vector', top: '44%', left: '52%' },
+                                { label: '3', title: 'Endpoint', top: '66%', left: '72%' },
+                            ].map((point) => (
+                                <div
+                                    key={point.label}
+                                    className="absolute -translate-x-1/2 -translate-y-1/2"
+                                    style={{ top: point.top, left: point.left }}
+                                >
+                                    <div className="relative">
+                                        <div className="h-8 w-8 rounded-full border border-[#D4A574]/55 bg-[#0c0c0c]/70 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-sm">
+                                            <div className="flex h-full w-full items-center justify-center text-[11px] font-black text-[#D4A574]">
+                                                {point.label}
+                                            </div>
+                                        </div>
+                                        <div className="absolute left-1/2 top-full mt-2 w-max -translate-x-1/2 rounded-full border border-white/10 bg-black/60 px-3 py-1 text-[9px] font-black uppercase tracking-[0.22em] text-white/70">
+                                            {point.title}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : null}
+                </div>
+            </div>
+        </div>
+    ) : null;
+
     return (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex flex-col gap-8">
@@ -63,6 +129,8 @@ export default function StressLabTab({
                         ].filter(Boolean)}
                     />
                 </div>
+
+                {gazeOverlayCard}
 
                 <div className="rounded-[2.5rem] border border-black/5 bg-white overflow-hidden shadow-sm">
                     <div className="overflow-x-auto">
@@ -167,60 +235,6 @@ export default function StressLabTab({
                                 </span>
                             ) : null}
                         </div>
-                        {assetImageUrl ? (
-                            <div className="mb-8 overflow-hidden rounded-2xl border border-black/5 bg-[#0c0c0c] p-6">
-                                <div className="mb-4 flex items-center justify-between gap-4">
-                                    <p className="text-[9px] font-black uppercase tracking-[0.32em] text-white/60">Gaze Overlay</p>
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowGazeOverlay((value) => !value)}
-                                        className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[9px] font-black uppercase tracking-[0.28em] text-white/70 transition-all hover:border-white/25 hover:bg-white/10 hover:text-white"
-                                    >
-                                        {showGazeOverlay ? 'Hide' : 'Show'}
-                                    </button>
-                                </div>
-
-                                <div className="relative">
-                                    <img
-                                        src={assetImageUrl}
-                                        alt={assetAlt || 'Creative asset'}
-                                        className="max-h-[640px] w-full object-contain"
-                                    />
-
-                                    {showGazeOverlay ? (
-                                        <div className="pointer-events-none absolute inset-0">
-                                            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                                                <path d="M28 30 L52 44 L72 66" stroke="rgba(212,165,116,0.55)" strokeWidth="1.2" fill="none" />
-                                                <path d="M28 30 L52 44 L72 66" stroke="rgba(212,165,116,0.25)" strokeWidth="3.2" fill="none" />
-                                            </svg>
-
-                                            {[
-                                                { label: '1', title: 'Entry', top: '30%', left: '28%' },
-                                                { label: '2', title: 'Vector', top: '44%', left: '52%' },
-                                                { label: '3', title: 'Endpoint', top: '66%', left: '72%' },
-                                            ].map((point) => (
-                                                <div
-                                                    key={point.label}
-                                                    className="absolute -translate-x-1/2 -translate-y-1/2"
-                                                    style={{ top: point.top, left: point.left }}
-                                                >
-                                                    <div className="relative">
-                                                        <div className="h-8 w-8 rounded-full border border-[#D4A574]/55 bg-[#0c0c0c]/70 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-sm">
-                                                            <div className="flex h-full w-full items-center justify-center text-[11px] font-black text-[#D4A574]">
-                                                                {point.label}
-                                                            </div>
-                                                        </div>
-                                                        <div className="absolute left-1/2 top-full mt-2 w-max -translate-x-1/2 rounded-full border border-white/10 bg-black/60 px-3 py-1 text-[9px] font-black uppercase tracking-[0.22em] text-white/70">
-                                                            {point.title}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    ) : null}
-                                </div>
-                            </div>
-                        ) : null}
                         <div className="space-y-4">
                             {[
                                 ['Positioning', firstSentence(blueprintData?.technical_specs?.gaze_vector) || 'Upper-center frame priority with directional control.'],
