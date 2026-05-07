@@ -292,13 +292,13 @@ export default function VaultClient({ initialAssets }: { initialAssets: VaultAss
                     )}
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                     <VaultSelect label="Sector" value={sectorFilter} onChange={setSectorFilter} options={sectorOptions} />
                     <VaultSelect label="Mechanic" value={mechanicFilter} onChange={setMechanicFilter} options={mechanicOptions} />
                     <VaultSelect label="Sort" value={sortOrder} onChange={setSortOrder} options={['NEWEST', 'OLDEST', 'CONFIDENCE HIGH', 'CONFIDENCE LOW']} />
                     <button 
                         onClick={clearFilters}
-                        className="h-full border border-[#141414]/10 flex items-center justify-center text-[9px] font-semibold uppercase tracking-[0.3em] text-[#141414]/40 hover:bg-[#141414]/5 hover:text-[#C1A674] transition-all"
+                        className="h-[46px] rounded-full border border-[#141414]/10 bg-[#FBF7EF] flex items-center justify-center text-[10px] font-semibold uppercase tracking-[0.28em] text-[#141414]/55 hover:border-[#C1A674]/35 hover:bg-white hover:text-[#C1A674] transition-all"
                     >
                         Reset
                     </button>
@@ -352,16 +352,16 @@ function VaultSelect({ label, value, onChange, options }: { label: string; value
     return (
         <div className="space-y-3">
             <span className="text-[8px] font-semibold uppercase tracking-[0.4em] text-[#9a9a94] block px-1">{label}</span>
-            <div className="relative">
-                <select
-                    value={value}
-                    onChange={(e) => onChange(e.target.value)}
-                    className="w-full bg-[#FBF7EF] border border-[#E7DED1] px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#141414] appearance-none focus:border-[#C1A674] outline-none cursor-pointer"
-                >
-                    {options.map((opt) => <option key={opt} value={opt} className="bg-[#F6F1E7] text-[#141414]">{opt}</option>)}
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 text-[#C1A674] pointer-events-none" />
-            </div>
+	            <div className="relative">
+	                <select
+	                    value={value}
+	                    onChange={(e) => onChange(e.target.value)}
+	                    className="w-full h-[46px] bg-[#FBF7EF] border border-[#E7DED1] rounded-full px-5 pr-10 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#141414] appearance-none focus:border-[#C1A674]/60 hover:border-[#C1A674]/35 outline-none cursor-pointer transition-colors"
+	                >
+	                    {options.map((opt) => <option key={opt} value={opt} className="bg-[#F6F1E7] text-[#141414]">{opt}</option>)}
+	                </select>
+	                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-3 h-3 text-[#C1A674] pointer-events-none" />
+	            </div>
         </div>
     );
 }
@@ -387,13 +387,13 @@ function VaultCard({ asset, isSelected, onToggle, index }: { asset: VaultAsset, 
     })();
     
     return (
-        <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: (index % 4) * 0.1 }}
-            className="group relative"
-        >
+	        <motion.div 
+	            initial={{ opacity: 0, y: 20 }}
+	            whileInView={{ opacity: 1, y: 0 }}
+	            viewport={{ once: true }}
+	            transition={{ duration: 0.6, delay: (index % 4) * 0.1 }}
+	            className="group relative transition-transform duration-500 will-change-transform hover:-translate-y-1"
+	        >
             {/* Selection */}
             <div 
                 onClick={(e) => { e.preventDefault(); onToggle(); }}
@@ -404,13 +404,13 @@ function VaultCard({ asset, isSelected, onToggle, index }: { asset: VaultAsset, 
                 {isSelected && <Check className="w-4 h-4 text-black stroke-[4]" />}
             </div>
 
-            <Link href={`/asset/${asset.id}`} className="block">
-                <div className="relative aspect-[4/5] overflow-hidden transition-all duration-700 bg-[#1A1A1A] rounded-[1.4rem] border border-[#E7DED1]">
-                    <img
-                        src={coverUrl}
-                        alt={asset.brand?.name || 'Vault Asset'}
-                        className={`w-full h-full object-cover transition-all duration-1000 ease-out ${isSelected ? 'scale-110 opacity-40' : 'group-hover:scale-110'}`}
-                    />
+	            <Link href={`/asset/${asset.id}`} className="block">
+	                <div className="relative aspect-[4/5] overflow-hidden transition-all duration-700 bg-[#1A1A1A] rounded-[1.4rem] border border-[#E7DED1] group-hover:border-[#C1A674]/35 group-hover:shadow-[0_28px_70px_rgba(20,20,20,0.14)]">
+	                    <img
+	                        src={coverUrl}
+	                        alt={asset.brand?.name || 'Vault Asset'}
+	                        className={`w-full h-full object-cover transition-all duration-1000 ease-out ${isSelected ? 'scale-110 opacity-40' : 'group-hover:scale-110'}`}
+	                    />
                     
                 </div>
 
@@ -422,8 +422,8 @@ function VaultCard({ asset, isSelected, onToggle, index }: { asset: VaultAsset, 
                             </h3>
                             <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-[#9a9a94]">{asset.brand?.market_sector || 'General Sector'}</p>
                         </div>
-                        <ArrowRight className="w-5 h-5 text-[#141414]/10 group-hover:text-[#C1A674] group-hover:translate-x-2 transition-all" />
-                    </div>
+	                        <ArrowRight className="w-5 h-5 text-[#141414]/20 group-hover:text-[#C1A674] group-hover:translate-x-2 transition-all" />
+	                    </div>
 
                     <div className="pt-6 border-t border-[#E7DED1]">
                         <p className="text-[8px] font-semibold uppercase tracking-[0.4em] text-[#C1A674] mb-3">Core Mechanic</p>
