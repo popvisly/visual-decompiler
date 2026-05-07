@@ -325,6 +325,9 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                             <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4A574]/70">
                                                 Drop asset or click to upload
                                             </p>
+                                            <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-[#D4A574]/50">
+                                                {supportedAssetsLabel}
+                                            </p>
                                         </div>
                                     )}
 
@@ -456,7 +459,6 @@ export default function IngestClient({ isSovereign }: { isSovereign: boolean }) 
                                     )}
                                 </div>
 
-                                <p className="mt-4 text-center text-[12px] text-[#6A6A6A]">{supportedAssetsLabel}</p>
                             </>
                         )}
 
