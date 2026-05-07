@@ -29,6 +29,7 @@ export default function StressLabTab({
 }: StressLabTabProps) {
     const gazeRef = React.useRef<HTMLDivElement | null>(null);
     const [focusedVariable, setFocusedVariable] = React.useState<string | null>(null);
+    const [showGazeOverlay, setShowGazeOverlay] = React.useState(true);
 
     const focusVariable = React.useCallback((variable: string) => {
         setFocusedVariable(variable);
@@ -167,12 +168,57 @@ export default function StressLabTab({
                             ) : null}
                         </div>
                         {assetImageUrl ? (
-                            <div className="mb-8 overflow-hidden rounded-2xl border border-black/5 bg-[#0c0c0c] p-5">
-                                <img
-                                    src={assetImageUrl}
-                                    alt={assetAlt || 'Creative asset'}
-                                    className="max-h-[320px] w-full object-contain"
-                                />
+                            <div className="mb-8 overflow-hidden rounded-2xl border border-black/5 bg-[#0c0c0c] p-6">
+                                <div className="mb-4 flex items-center justify-between gap-4">
+                                    <p className="text-[9px] font-black uppercase tracking-[0.32em] text-white/60">Gaze Overlay</p>
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowGazeOverlay((value) => !value)}
+                                        className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[9px] font-black uppercase tracking-[0.28em] text-white/70 transition-all hover:border-white/25 hover:bg-white/10 hover:text-white"
+                                    >
+                                        {showGazeOverlay ? 'Hide' : 'Show'}
+                                    </button>
+                                </div>
+
+                                <div className="relative">
+                                    <img
+                                        src={assetImageUrl}
+                                        alt={assetAlt || 'Creative asset'}
+                                        className="max-h-[640px] w-full object-contain"
+                                    />
+
+                                    {showGazeOverlay ? (
+                                        <div className="pointer-events-none absolute inset-0">
+                                            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                                                <path d="M28 30 L52 44 L72 66" stroke="rgba(212,165,116,0.55)" strokeWidth="1.2" fill="none" />
+                                                <path d="M28 30 L52 44 L72 66" stroke="rgba(212,165,116,0.25)" strokeWidth="3.2" fill="none" />
+                                            </svg>
+
+                                            {[
+                                                { label: '1', title: 'Entry', top: '30%', left: '28%' },
+                                                { label: '2', title: 'Vector', top: '44%', left: '52%' },
+                                                { label: '3', title: 'Endpoint', top: '66%', left: '72%' },
+                                            ].map((point) => (
+                                                <div
+                                                    key={point.label}
+                                                    className="absolute -translate-x-1/2 -translate-y-1/2"
+                                                    style={{ top: point.top, left: point.left }}
+                                                >
+                                                    <div className="relative">
+                                                        <div className="h-8 w-8 rounded-full border border-[#D4A574]/55 bg-[#0c0c0c]/70 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-sm">
+                                                            <div className="flex h-full w-full items-center justify-center text-[11px] font-black text-[#D4A574]">
+                                                                {point.label}
+                                                            </div>
+                                                        </div>
+                                                        <div className="absolute left-1/2 top-full mt-2 w-max -translate-x-1/2 rounded-full border border-white/10 bg-black/60 px-3 py-1 text-[9px] font-black uppercase tracking-[0.22em] text-white/70">
+                                                            {point.title}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : null}
+                                </div>
                             </div>
                         ) : null}
                         <div className="space-y-4">
