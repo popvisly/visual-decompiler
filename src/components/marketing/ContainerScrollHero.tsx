@@ -97,7 +97,7 @@ export default function ContainerScrollHero() {
                                             key={card.src}
                                             className="relative shrink-0"
                                         >
-                                            <div className="relative overflow-hidden border border-black/10 bg-white shadow-[0_30px_90px_rgba(20,20,20,0.14)]">
+                                            <div className="relative overflow-hidden rounded-[28px] border border-black/10 bg-white">
                                                 <Image
                                                     src={card.src}
                                                     alt={card.alt}
