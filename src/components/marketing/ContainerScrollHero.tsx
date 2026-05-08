@@ -101,7 +101,7 @@ export default function ContainerScrollHero() {
                                                     alt={card.alt}
                                                     width={240}
                                                     height={310}
-                                                    className="h-[260px] w-[210px] bg-white object-contain p-3 md:h-[310px] md:w-[240px]"
+                                                    className="h-[260px] w-[210px] object-cover md:h-[310px] md:w-[240px]"
                                                 />
 
                                                 {idx === 0 && !prefersReducedMotion ? (
