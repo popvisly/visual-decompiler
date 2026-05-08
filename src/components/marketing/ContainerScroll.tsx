@@ -35,9 +35,9 @@ export function ContainerScroll({
     return (
         <div
             ref={containerRef}
-            className="relative flex min-h-[calc(100vh-160px)] items-center justify-center px-2 pb-10 pt-10 md:min-h-[calc(100vh-200px)] md:px-12 md:pb-16 md:pt-14"
+            className="relative flex items-start justify-center px-2 pb-10 pt-0 md:px-12 md:pb-16 md:pt-0"
         >
-            <div className="relative w-full py-8 md:py-12" style={{ perspective: '1100px' }}>
+            <div className="relative w-full py-6 md:py-10" style={{ perspective: '1100px' }}>
                 <Header translate={translate} titleComponent={titleComponent} />
                 <Card rotate={rotate} scale={scale} translate={translate}>
                     {children}
@@ -51,7 +51,7 @@ export function Header({ translate, titleComponent }: { translate: MotionValue<n
     return (
         <motion.div
             style={{ translateY: translate }}
-            className="relative z-20 mx-auto max-w-[1200px] px-6 pt-10 text-center md:pt-12 lg:px-12"
+            className="relative z-20 mx-auto max-w-[1200px] px-6 pt-0 text-center lg:px-12"
         >
             {titleComponent}
         </motion.div>

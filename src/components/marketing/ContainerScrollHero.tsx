@@ -42,7 +42,7 @@ export default function ContainerScrollHero() {
     }, [prefersReducedMotion]);
 
     return (
-        <section className="relative min-h-screen overflow-hidden bg-[#FBFBF6] px-6 pt-[155px] pb-24 md:px-10 md:pt-[170px] md:pb-32">
+        <section className="relative min-h-screen overflow-hidden bg-[#FBFBF6] px-6 pt-[110px] pb-24 md:px-10 md:pt-[120px] md:pb-32">
             <div
                 className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]"
                 aria-hidden="true"
