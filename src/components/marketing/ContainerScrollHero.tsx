@@ -57,18 +57,16 @@ export default function ContainerScrollHero() {
 
                                 <div className="mx-auto max-w-4xl text-center">
                                     <div className="pointer-events-none absolute -left-12 top-6 h-60 w-60 rounded-full bg-[#D4A574]/10 blur-3xl" aria-hidden="true" />
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">
-                                        Forensic Extraction System
-                                    </p>
 
                                     <h1 className="mt-7 max-w-[18ch] text-[clamp(50px,6.1vw,100px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]">
-                                        Turn creative
-                                        <span className="block">into</span>
-                                        <span className="block text-[#D4A574]">decision-grade</span>
+                                        <span className="block">Turn creative</span>
+                                        <span className="block">
+                                            into <span className="text-[#D4A574]">decision-grade</span>
+                                        </span>
                                         <span className="block text-[#D4A574]">intelligence.</span>
                                     </h1>
 
-                                    <p className="mt-8 max-w-xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
+                                    <p className="mt-8 mx-auto max-w-xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
                                         Decompile single frames or sequences into a saved, comparable dossier. Understand what it does, how it performs in the feed, and where it fits in a content system.
                                     </p>
 
