@@ -36,6 +36,7 @@ export default {
             },
             fontFamily: {
                 sans: ["'Inter'", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "sans-serif"],
+                script: ["'Snell Roundhand'", "'Apple Chancery'", "'Brush Script MT'", "cursive"],
             },
             borderRadius: {
                 '2xl': '16px',

@@ -60,7 +60,7 @@ export default function ContainerScrollHero() {
 
                                     <h1 className="mt-7 text-[clamp(56px,7.2vw,112px)] font-black uppercase leading-[0.9] tracking-[-0.05em] text-[#141414]">
                                         <span className="block">Creative</span>
-                                        <span className="block text-[#D4A574]">Intelligence</span>
+                                        <span className="block font-script normal-case text-[#D4A574]">Intelligence</span>
                                     </h1>
 
                                     <p className="mt-8 mx-auto max-w-xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
