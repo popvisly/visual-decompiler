@@ -35,9 +35,9 @@ export function ContainerScroll({
     return (
         <div
             ref={containerRef}
-            className="relative flex h-[56rem] items-start justify-center p-2 pt-16 md:h-[78rem] md:p-12 md:pt-24"
+            className="relative flex min-h-[calc(100vh-160px)] items-center justify-center px-2 pb-10 pt-10 md:min-h-[calc(100vh-200px)] md:px-12 md:pb-16 md:pt-14"
         >
-            <div className="relative w-full py-10 md:py-36" style={{ perspective: '1100px' }}>
+            <div className="relative w-full py-8 md:py-12" style={{ perspective: '1100px' }}>
                 <Header translate={translate} titleComponent={titleComponent} />
                 <Card rotate={rotate} scale={scale} translate={translate}>
                     {children}
