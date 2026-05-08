@@ -58,10 +58,10 @@ export default function ContainerScrollHero() {
                                 <div className="mx-auto max-w-4xl text-center">
                                     <div className="pointer-events-none absolute -left-12 top-6 h-60 w-60 rounded-full bg-[#D4A574]/10 blur-3xl" aria-hidden="true" />
 
-                                    <h1 className="mt-7 max-w-[18ch] text-[clamp(50px,6.1vw,100px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]">
+                                    <h1 className="mt-7 max-w-[22ch] text-[clamp(46px,6.1vw,100px)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#141414]">
                                         <span className="block">Turn creative</span>
                                         <span className="block">
-                                            into <span className="text-[#D4A574]">decision-grade</span>
+                                            into <span className="whitespace-nowrap text-[#D4A574]">decision-grade</span>
                                         </span>
                                         <span className="block text-[#D4A574]">intelligence.</span>
                                     </h1>
@@ -101,7 +101,7 @@ export default function ContainerScrollHero() {
                                                     alt={card.alt}
                                                     width={240}
                                                     height={310}
-                                                    className="h-[260px] w-[210px] object-cover md:h-[310px] md:w-[240px]"
+                                                    className="h-[260px] w-[210px] bg-white object-contain p-3 md:h-[310px] md:w-[240px]"
                                                 />
 
                                                 {idx === 0 && !prefersReducedMotion ? (
