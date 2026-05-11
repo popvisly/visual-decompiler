@@ -5,18 +5,18 @@ import MarketingSectionHeading from '@/components/marketing/MarketingSectionHead
 
 const SYSTEM_ROWS = [
     {
-        title: 'Asset Intelligence',
-        body: 'What it is. Structure, hierarchy, clarity.',
+        title: 'Visual Intelligence',
+        body: 'What it is. Structure, visual hierarchy, and semiotic clarity.',
         icon: BarChart3,
     },
     {
-        title: 'Social Context',
-        body: 'How it behaves in the feed. Stop power, retention, platform fit.',
+        title: 'Dynamic Context',
+        body: 'How it behaves. Stop power, retention, and platform fit.',
         icon: MousePointerSquareDashed,
     },
     {
-        title: 'Content System Context',
-        body: 'Where it fits. Role in sequence, repeatability, creator compatibility.',
+        title: 'Structural Role',
+        body: 'Where it fits. Role in sequence, repeatability, and creator DNA.',
         icon: Layers3,
     },
 ] as const;
@@ -28,7 +28,7 @@ export default function HomepageSystemSection() {
                 <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm lg:p-12">
                     <MarketingSectionHeading
                         kicker="The System"
-                        title="Every asset is broken into three decisions."
+                        title="Every creative move is broken into three layers."
                         className="max-w-3xl"
                     />
 

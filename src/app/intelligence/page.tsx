@@ -15,9 +15,9 @@ export default async function IntelligenceIndex() {
     return (
         <>
             <MarketingPageHeader
-                kicker="Intelligence Hub"
-                title="Intelligence Briefings."
-                description="Decision-ready briefings on advertising structure, strategic signals, and approval-critical execution patterns."
+                kicker="Strategic Briefings"
+                title="The Reading Room."
+                description="Decision-ready briefings on visual DNA, structural signals, and approval-critical execution patterns."
                 sectionClassName="pt-0 pb-20 lg:pb-24"
             />
 

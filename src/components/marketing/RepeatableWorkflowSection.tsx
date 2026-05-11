@@ -15,21 +15,21 @@ const WORKFLOW_STEPS = [
         icon: Layers3,
     },
     {
-        label: 'Diagnose',
-        title: 'Read through a fixed system',
-        body: 'Quality Gate, Intelligence, Mechanics, Psychology, Stress Lab, Market Pulse, and Decision Log keep every read consistent.',
+        label: 'Decompile',
+        title: 'Map the Visual DNA',
+        body: 'Semiotic dynamics, structural signals, and market pulse keep every read clinical and defensible.',
         icon: ShieldCheck,
     },
     {
-        label: 'Compare',
-        title: 'Use the Vault as memory',
-        body: 'Each dossier becomes reusable evidence for future comparisons, boards, and category-level pattern recognition.',
+        label: 'Reference',
+        title: 'Access Studio Memory',
+        body: 'Every dossier becomes reusable evidence for future comparisons, moodboards, and category-level patterns.',
         icon: Library,
     },
     {
-        label: 'Decide',
-        title: 'Package the recommendation',
-        body: 'The final output is a client-ready artifact with rationale, caveats, and decision language your team can defend.',
+        label: 'Verdict',
+        title: 'Defend the Creative Move',
+        body: 'The final output is a client-ready artifact with the rationale and visual evidence your team needs to survive the room.',
         icon: FileText,
     },
 ] as const;
@@ -114,7 +114,7 @@ export default function RepeatableWorkflowSection() {
                         <MarketingSectionHeading
                             kicker="Strategic Moat"
                             title="Built for repeatability, not one-off chats."
-                            description="AI chat is a vacuum. Visual Decompiler is an operating system for creative intelligence, not just what works but what role it plays—turning every analysis into reusable memory that compounds over time."
+                            description="AI chat is a vacuum. Visual Decompiler is a shared grammar for creative logic—turning every analysis into studio memory that compounds over time."
                         />
 
                         <div className="mt-10 flex flex-col gap-3 sm:flex-row">

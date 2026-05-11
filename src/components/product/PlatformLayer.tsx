@@ -6,17 +6,17 @@ import { Target, Users, Briefcase, Award } from 'lucide-react';
 const OUTCOME_CARDS = [
     {
         title: 'Strategists',
-        body: 'Turn visual instinct into structured rationale, evidence anchors, and pitch-ready decision language.',
+        body: 'Translate visual instinct into structured rationale that survives the boardroom.',
         icon: Target,
     },
     {
         title: 'Creative Directors',
-        body: 'Defend bold creative decisions with clearer alignment and framing that survives the room.',
+        body: 'Frame bold creative moves with a defensible logic that aligns clients faster.',
         icon: Award,
     },
     {
         title: 'Agency Teams',
-        body: 'Reduce subjective feedback loops with a shared archive, repeatable workflow, and exportable dossier.',
+        body: 'Eliminate subjective feedback loops with a clinical, shared grammar for creative critique.',
         icon: Users,
     },
     {
@@ -36,7 +36,7 @@ export default function PlatformLayer() {
                         Built for the people defending the work.
                     </h2>
                     <div className="mt-10 max-w-[840px] space-y-6 text-[19px] leading-[1.8] text-[#515151]">
-                        <p>Whether you&apos;re a strategist preparing rationale, a creative director defending a campaign, or an agency team aligning around creative decisions, Visual Decompiler helps structure the conversation around a repeatable evidence trail.</p>
+                        <p>Whether you&apos;re a strategist building a deck, an art director defending a direction, or an agency aligning around a verdict, Visual Decompiler structures the conversation around clinical visual evidence.</p>
                     </div>
                 </div>
 

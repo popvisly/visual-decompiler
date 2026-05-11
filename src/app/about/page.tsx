@@ -10,9 +10,9 @@ export default function AboutPage() {
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader primaryCta={{ label: 'View Sample Dossier', href: '/share/sample-dossier' }} />
             <MarketingPageHeader
-                kicker="Transforming Creative Intelligence"
-                title="Better creative decisions."
-                description="Visual Decompiler simplifies the defense of creative work, accelerates alignment, and speeds up approval processes."
+                kicker="Transforming Creative Decisions"
+                title="Secure the approval."
+                description="Visual Decompiler simplifies the defense of creative work, accelerates alignment, and turns vision into an artifact your team can actually use."
             />
 
             {/* Problem + Why + What + Commercial + Positioning + Vision */}

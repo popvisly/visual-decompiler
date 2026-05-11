@@ -10,23 +10,23 @@ import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 const METHOD_PILLARS = [
     {
-        title: 'Input Integrity',
-        body: 'We analyze the exact creative asset you provide, including your own work-in-progress, competitor campaigns, and client references. No hidden prompt shortcuts, no generic template scoring.',
+        title: 'Creative Fidelity',
+        body: 'We analyze the exact visual DNA of the asset you provide—from work-in-progress to competitor campaigns. No generic template scoring, just high-fidelity diagnostic reads.',
         icon: ShieldCheck,
     },
     {
-        title: 'Fixed System Language',
-        body: 'Each extraction moves through a fixed operating sequence: source asset, quality gate, intelligence, mechanics, psychology, context, stress testing, market pulse, and decision record.',
+        title: 'Standardized Visual Grammar',
+        body: 'Every extraction moves through a clinical sequence of structural signals, semiotic dynamics, and market pulse to ensure the critique is consistent and defensible.',
         icon: Cpu,
     },
     {
-        title: 'Decision Artifact',
-        body: 'Outputs are organized for decision use: what is happening, why it matters, and what evidence supports it. The goal is not just interpretation, but execution-ready direction.',
+        title: 'Strategic Artifact',
+        body: 'Outputs are built for boardroom defense: what is happening visually, why it matters strategically, and what evidence supports the verdict.',
         icon: Share2,
     },
     {
-        title: 'Compounding Intelligence',
-        body: 'Analyses are stored in Vault, so intelligence improves over time through cross-asset comparison and pattern recall. You are not starting from zero on every brief.',
+        title: 'Studio Memory',
+        body: 'Every read is stored in your private Vault, turning one-off feedback into a cumulative intelligence layer that informs future briefs and client pitches.',
         icon: Library,
     },
     {
@@ -56,13 +56,13 @@ export default function TrustMethodPage() {
 
             <div className="relative z-10 pt-32 lg:pt-44">
                 <MarketingPageHeader
-                    kicker="Operational Protocol"
+                    kicker="Forensic Methodology"
                     title={
                         <>
-                            Intelligence you can <span className="text-[#8B6A3D]">defend.</span>
+                            Evidence you can <span className="text-[#8B6A3D]">defend.</span>
                         </>
                     }
-                    description="Visual Decompiler is designed to produce client-defensible outputs, not generic AI commentary. Every dossier is built from structured visual analysis, vault memory, and a fixed workflow your team can review."
+                    description="Visual Decompiler is built to produce defensible visual evidence, not generic commentary. Every dossier is a structured diagnostic of visual DNA and semiotic signals."
                 />
             </div>
 
@@ -117,7 +117,7 @@ export default function TrustMethodPage() {
                                 Operational <br /> Boundaries.
                             </h2>
                             <p className="mt-8 text-[18px] leading-relaxed text-white/50 max-w-md">
-                                Visual Decompiler is an analytical operating system, not a creative shortcut. We enforce strict boundaries to ensure intelligence integrity.
+                                Visual Decompiler is a creative diagnostic layer, not a shortcut. We enforce strict boundaries to protect the integrity of the read.
                             </p>
                         </div>
                         <div className="grid gap-4">
@@ -145,7 +145,7 @@ export default function TrustMethodPage() {
                         The clinical path to creative alignment.
                     </h2>
                     <p className="mt-8 text-[19px] leading-relaxed text-[#515151]">
-                        Built to defend creative decisions, align teams faster, and turn analysis into an artifact people can actually review.
+                        Built to defend creative decisions, align teams faster, and turn vision into an artifact people can actually review.
                     </p>
                     <div className="mt-12 flex justify-center">
                         <Link

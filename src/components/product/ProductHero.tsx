@@ -37,7 +37,7 @@ export default function ProductHero() {
                         <div className="space-y-6 text-[18px] leading-[1.8] text-[#515151]">
                             <p>Creative work rarely fails because it lacks quality.</p>
                             <p>It fails because teams struggle to <span className="text-[#141414] font-semibold underline decoration-[#D4A574]/30 underline-offset-4">explain, defend, and align</span> around it in the room.</p>
-                            <p>Stop guessing. Start knowing. Every creative decision becomes a saved, repeatable forensic workflow.</p>
+                            <p>Stop guessing. Start knowing. Every creative decision becomes a defensible visual logic your team can repeat.</p>
                         </div>
 
                         <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center">
