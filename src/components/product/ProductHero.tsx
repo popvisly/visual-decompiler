@@ -30,14 +30,14 @@ export default function ProductHero() {
                     </div>
 
                     <h1 className="max-w-[15ch] text-[clamp(48px,7.5vw,96px)] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#141414]">
-                        Defensible creative intelligence.
+                        Know Why<br />It Works.
                     </h1>
 
                     <div className="mt-10 max-w-[880px] rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-[0_20px_50px_rgba(0,0,0,0.03)] lg:p-12">
                         <div className="space-y-6 text-[18px] leading-[1.8] text-[#515151]">
                             <p>Creative work rarely fails because it lacks quality.</p>
                             <p>It fails because teams struggle to <span className="text-[#141414] font-semibold underline decoration-[#D4A574]/30 underline-offset-4">explain, defend, and align</span> around it in the room.</p>
-                            <p>Visual Decompiler turns instinct into a saved, repeatable forensic workflow: diagnose the asset, compare it against your vault, stress-test the route, and export the decision artifact.</p>
+                            <p>Stop guessing. Start knowing. Every creative decision becomes a saved, repeatable forensic workflow.</p>
                         </div>
 
                         <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center">

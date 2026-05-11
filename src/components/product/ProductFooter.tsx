@@ -10,7 +10,7 @@ export default function ProductFooter() {
             <section className="pt-24 pb-20 lg:pt-28 lg:pb-24">
                 <div className="mx-auto max-w-[1120px] px-6 lg:px-12">
                     <div className="max-w-[860px]">
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#8B6A3D]/80">Final CTA</p>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#8B6A3D]/80">The Decision</p>
                         <h2 className="mt-6 text-[12vw] font-semibold uppercase leading-[0.9] tracking-tight text-[#141414] sm:text-[9vw] lg:text-[68px]">
                             Don&apos;t just present the work.
                             <br />

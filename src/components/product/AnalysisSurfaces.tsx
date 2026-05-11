@@ -80,7 +80,7 @@ export default function AnalysisSurfaces() {
             {/* Workflow Sequence */}
             <section className="py-24 bg-[#141414] text-white overflow-hidden">
                 <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#D4A574] text-center">Operational Flow</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#D4A574] text-center">The Forensic Ritual</p>
                     <h2 className="mt-6 text-center text-[clamp(32px,4vw,56px)] font-black uppercase leading-[0.92] tracking-[-0.03em]">
                         From raw asset to definitive verdict.
                     </h2>
@@ -138,7 +138,7 @@ export default function AnalysisSurfaces() {
                         <div>
                             <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Intelligence Stack</p>
                             <h2 className="mt-6 text-[clamp(32px,4vw,56px)] font-black uppercase leading-[0.92] tracking-[-0.04em] text-[#141414]">
-                                What the dossier reveals.
+                                A shared language for the work.
                             </h2>
                             <p className="mt-8 text-[18px] leading-[1.8] text-[#515151]">
                                 Every asset is processed through a consistent analytical stack, ensuring your team has the same structured reasoning for every creative decision.
