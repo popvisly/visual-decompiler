@@ -39,7 +39,6 @@ export default function Logo({
             <span className="relative h-9 w-9 flex items-center justify-center">
                 <LogoMark 
                     size={34} 
-                    strokeWidth={6} 
                     className={`transition-colors duration-500 ease-out ${forceDark ? 'text-white' : 'text-black'} ${visualHoverClass}`} 
                 />
             </span>

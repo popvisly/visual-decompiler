@@ -3,56 +3,41 @@
 interface LogoMarkProps {
     className?: string;
     size?: number;
-    strokeWidth?: number;
 }
 
 export default function LogoMark({ 
     className = 'text-[#8B6A3D]', 
-    size = 40,
-    strokeWidth = 6
+    size = 40
 }: LogoMarkProps) {
     return (
         <svg 
             width={size} 
             height={size} 
-            viewBox="0 0 40 40" 
+            viewBox="0 0 100 100" 
             fill="none" 
             xmlns="http://www.w3.org/2000/svg" 
             className={className}
         >
-            <g transform="translate(20,20)">
-                <path 
-                    d="M-10,-10 C-10,-15 0,-15 5,-10 C10,-5 10,5 5,10" 
-                    stroke="currentColor" 
-                    strokeWidth={strokeWidth} 
-                    strokeLinecap="round" 
-                    fill="none" 
-                />
-                <path 
-                    d="M10,-10 C15,-10 15,0 10,5 C5,10 -5,10 -10,5" 
-                    stroke="currentColor" 
-                    strokeWidth={strokeWidth} 
-                    strokeLinecap="round" 
-                    fill="none" 
-                    transform="rotate(90)" 
-                />
-                <path 
-                    d="M10,10 C10,15 0,15 -5,10 C-10,5 -10,-5 -5,-10" 
-                    stroke="currentColor" 
-                    strokeWidth={strokeWidth} 
-                    strokeLinecap="round" 
-                    fill="none" 
-                    transform="rotate(180)" 
-                />
-                <path 
-                    d="M-10,10 C-15,10 -15,0 -10,-5 C-5,-10 5,-10 10,-5" 
-                    stroke="currentColor" 
-                    strokeWidth={strokeWidth} 
-                    strokeLinecap="round" 
-                    fill="none" 
-                    transform="rotate(270)" 
-                />
-            </g>
+            <path 
+                d="M33.5 22C33.5 15.6487 38.6487 10.5 45 10.5C51.3513 10.5 56.5 15.6487 56.5 22V45C56.5 51.3513 61.6487 56.5 68 56.5H89.5C95.8513 56.5 101 61.6487 101 68C101 74.3513 95.8513 79.5 89.5 79.5H68C55.0213 79.5 44.5 68.9787 44.5 56V33.5C44.5 27.1487 39.3513 22 33.5 22Z" 
+                fill="currentColor" 
+                transform="rotate(0 50 50)"
+            />
+            <path 
+                d="M33.5 22C33.5 15.6487 38.6487 10.5 45 10.5C51.3513 10.5 56.5 15.6487 56.5 22V45C56.5 51.3513 61.6487 56.5 68 56.5H89.5C95.8513 56.5 101 61.6487 101 68C101 74.3513 95.8513 79.5 89.5 79.5H68C55.0213 79.5 44.5 68.9787 44.5 56V33.5C44.5 27.1487 39.3513 22 33.5 22Z" 
+                fill="currentColor" 
+                transform="rotate(90 50 50)"
+            />
+            <path 
+                d="M33.5 22C33.5 15.6487 38.6487 10.5 45 10.5C51.3513 10.5 56.5 15.6487 56.5 22V45C56.5 51.3513 61.6487 56.5 68 56.5H89.5C95.8513 56.5 101 61.6487 101 68C101 74.3513 95.8513 79.5 89.5 79.5H68C55.0213 79.5 44.5 68.9787 44.5 56V33.5C44.5 27.1487 39.3513 22 33.5 22Z" 
+                fill="currentColor" 
+                transform="rotate(180 50 50)"
+            />
+            <path 
+                d="M33.5 22C33.5 15.6487 38.6487 10.5 45 10.5C51.3513 10.5 56.5 15.6487 56.5 22V45C56.5 51.3513 61.6487 56.5 68 56.5H89.5C95.8513 56.5 101 61.6487 101 68C101 74.3513 95.8513 79.5 89.5 79.5H68C55.0213 79.5 44.5 68.9787 44.5 56V33.5C44.5 27.1487 39.3513 22 33.5 22Z" 
+                fill="currentColor" 
+                transform="rotate(270 50 50)"
+            />
         </svg>
     );
 }

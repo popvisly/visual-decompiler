@@ -80,7 +80,7 @@ export default async function SharedReportPage({
                 <header className="px-6 mb-8 mt-2">
                     <div className="flex items-center gap-3">
                         <div className="h-8 w-8 flex items-center justify-center">
-                            <LogoMark size={32} strokeWidth={6} className="text-[#141414]" />
+                            <LogoMark size={32} className="text-[#141414]" />
                         </div>
                         <div className="leading-none text-left">
                             <div className="text-[12px] font-semibold tracking-[0.14em] uppercase text-[#141414]">
