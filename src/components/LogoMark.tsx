@@ -3,7 +3,7 @@ import Image from 'next/image';
 interface LogoMarkProps {
     className?: string;
     size?: number;
-    tone?: 'default' | 'white' | 'yellow';
+    tone?: 'default' | 'white' | 'yellow' | 'yellow-orange';
 }
 
 export default function LogoMark({ 
@@ -16,7 +16,9 @@ export default function LogoMark({
             ? '/vd_mini_logo_white.png' 
             : tone === 'yellow'
                 ? '/vd_mini_logo_yellow.png'
-                : '/vd_mini_logo.png';
+                : tone === 'yellow-orange'
+                    ? '/vd_mini_logo_yellow_orange.png'
+                    : '/vd_mini_logo.png';
 
     return (
         <div className={`relative shrink-0 ${className}`} style={{ width: size, height: size }}>

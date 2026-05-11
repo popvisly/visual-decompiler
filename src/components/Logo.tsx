@@ -44,7 +44,7 @@ export default function Logo({
                 />
                 <LogoMark 
                     size={44} 
-                    tone="yellow"
+                    tone={forceDark ? "yellow" : "yellow-orange"}
                     className="absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100" 
                 />
             </div>

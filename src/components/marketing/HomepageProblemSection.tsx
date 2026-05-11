@@ -4,7 +4,7 @@ import MarketingSectionHeading from '@/components/marketing/MarketingSectionHead
 
 export default function HomepageProblemSection() {
     return (
-        <section className="relative overflow-hidden bg-[#FBFBF6] py-20 text-[#141414] lg:py-24">
+        <section className="relative overflow-hidden bg-[#FBFBF6] pt-4 pb-20 text-[#141414] lg:pt-6 lg:pb-24">
             <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 lg:px-12">
                 <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm lg:p-12">
                     <MarketingSectionHeading

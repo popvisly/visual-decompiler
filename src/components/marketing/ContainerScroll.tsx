@@ -35,7 +35,7 @@ export function ContainerScroll({
     return (
         <div
             ref={containerRef}
-            className="relative flex items-start justify-center px-2 pb-10 pt-0 md:px-12 md:pb-16 md:pt-0"
+            className="relative flex items-start justify-center px-2 pb-0 pt-0 md:px-12 md:pb-0 md:pt-0"
         >
             <div className="relative w-full py-6 md:py-10" style={{ perspective: '1100px' }}>
                 <Header translate={translate} titleComponent={titleComponent} />

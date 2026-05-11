@@ -42,7 +42,7 @@ export default function ContainerScrollHero() {
     }, [prefersReducedMotion]);
 
     return (
-        <section className="relative min-h-screen overflow-hidden bg-[#FBFBF6] px-6 pt-[110px] pb-24 md:px-10 md:pt-[120px] md:pb-32">
+        <section className="relative min-h-screen overflow-hidden bg-[#FBFBF6] px-6 pt-[110px] pb-4 md:px-10 md:pt-[120px] md:pb-8">
             <div
                 className="pointer-events-none absolute inset-0 opacity-[0.025] [background-image:linear-gradient(#1A1A1A_1.5px,transparent_1.5px),linear-gradient(90deg,#1A1A1A_1.5px,transparent_1.5px)] [background-size:48px_48px]"
                 aria-hidden="true"
@@ -88,7 +88,7 @@ export default function ContainerScrollHero() {
 
                                 <div className="mt-14">
                                 <div className="mx-auto w-full max-w-[1500px]">
-                                    <div className="flex items-end justify-center gap-4 overflow-x-auto pb-4 md:gap-6">
+                                    <div className="relative flex items-start justify-center px-2 pb-0 pt-0 md:px-12 md:pb-0 md:pt-0 gap-4 overflow-x-auto md:gap-6">
                                     {[
                                         { src: '/images/examples/Nike.jpg', alt: 'Nike ad' },
                                         { src: '/images/examples/Ulyses.jpg', alt: 'Ulysse Nardin ad' },
