@@ -64,15 +64,40 @@ export const metadata: Metadata = {
             'max-snippet': -1,
         },
     },
+    icons: {
+        icon: '/logo.svg',
+        shortcut: '/logo.svg',
+        apple: '/logo.svg',
+    },
 };
+
+import Script from 'next/script';
 
 export default function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Visual Decompiler',
+        url: 'https://www.visualdecompiler.com',
+        logo: 'https://www.visualdecompiler.com/logo.svg',
+        sameAs: [
+            'https://twitter.com/visualdecompiler',
+        ],
+    };
+
     return (
         <html lang="en">
+            <head>
+                <Script
+                    id="json-ld"
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
+            </head>
             <body
                 className={`${inter.className} bg-[#FBFBF6] text-[#1A1A1A] antialiased selection:bg-[#1A1A1A] selection:text-[#FBFBF6] relative`}
             >
