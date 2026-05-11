@@ -232,7 +232,7 @@ export default function PricingPage() {
                             <div>
                                 <div className="mb-6 flex items-center justify-between">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">{PRICING.agency.name}</p>
-                                    <LogoMark size={20} className="text-[#D4A574]" />
+                                    <LogoMark size={20} tone="white" />
                                 </div>
                                 <h3 className="text-5xl font-black tracking-tightest mb-2 leading-none">Custom</h3>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-10">Annual contract</p>

@@ -39,7 +39,13 @@ export default function Logo({
             <span className="relative h-9 w-9 flex items-center justify-center">
                 <LogoMark 
                     size={34} 
-                    className={`transition-colors duration-500 ease-out ${forceDark ? 'text-white' : 'text-black'} ${visualHoverClass}`} 
+                    tone={forceDark ? 'white' : 'default'}
+                    className="transition-opacity duration-500 ease-out group-hover:opacity-0" 
+                />
+                <LogoMark 
+                    size={34} 
+                    tone="yellow"
+                    className="absolute inset-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100" 
                 />
             </span>
             <div className="flex flex-col leading-[0.9]">

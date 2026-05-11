@@ -65,9 +65,9 @@ export const metadata: Metadata = {
         },
     },
     icons: {
-        icon: '/logo.svg',
-        shortcut: '/logo.svg',
-        apple: '/logo.svg',
+        icon: '/vd_mini_logo.png',
+        shortcut: '/vd_mini_logo.png',
+        apple: '/vd_mini_logo.png',
     },
 };
 
@@ -83,7 +83,7 @@ export default function RootLayout({
         '@type': 'Organization',
         name: 'Visual Decompiler',
         url: 'https://www.visualdecompiler.com',
-        logo: 'https://www.visualdecompiler.com/logo.svg',
+        logo: 'https://www.visualdecompiler.com/vd_mini_logo.png',
         sameAs: [
             'https://twitter.com/visualdecompiler',
         ],
