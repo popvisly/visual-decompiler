@@ -7,6 +7,7 @@ import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 import { PRICING, PRICING_COMPARISON_ROWS, PRICING_POSITIONING_LINES } from '@/lib/pricing';
+import LogoMark from '@/components/LogoMark';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -119,7 +120,7 @@ export default function PricingPage() {
                             <div>
                                 <div className="mb-6 flex items-center justify-between">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">{PRICING.observer.name}</p>
-                                    <Activity className="h-4 w-4 text-black/20" />
+                                    <LogoMark size={20} strokeWidth={5} className="text-black/10" />
                                 </div>
                                 <h3 className="text-6xl font-black tracking-tightest mb-2 leading-none">{PRICING.observer.priceLabel}</h3>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A8A84] mb-10">{PRICING.observer.cadenceLabel}</p>
@@ -154,7 +155,7 @@ export default function PricingPage() {
                             <div>
                                 <div className="mb-6 flex items-center justify-between">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">{PRICING.strategic.name}</p>
-                                    <Zap className="h-4 w-4 text-[#D4A574]" />
+                                    <LogoMark size={20} strokeWidth={6} className="text-[#D4A574]" />
                                 </div>
                                 <h3 className="text-6xl font-black tracking-tightest mb-2 leading-none">${PRICING.strategic.monthlyPrice}</h3>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Per month</p>
@@ -194,7 +195,7 @@ export default function PricingPage() {
                             <div>
                                 <div className="mb-6 flex items-center justify-between">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">{PRICING.professional.name}</p>
-                                    <ShieldCheck className="h-4 w-4 text-[#D4A574]" />
+                                    <LogoMark size={20} strokeWidth={6} className="text-[#D4A574]" />
                                 </div>
                                 <h3 className="text-6xl font-black tracking-tightest mb-2 leading-none">${PRICING.professional.monthlyPrice}</h3>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Per month</p>
@@ -231,7 +232,7 @@ export default function PricingPage() {
                             <div>
                                 <div className="mb-6 flex items-center justify-between">
                                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#D4A574]">{PRICING.agency.name}</p>
-                                    <Globe className="h-4 w-4 text-[#D4A574]" />
+                                    <LogoMark size={20} strokeWidth={6} className="text-[#D4A574]" />
                                 </div>
                                 <h3 className="text-5xl font-black tracking-tightest mb-2 leading-none">Custom</h3>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-10">Annual contract</p>

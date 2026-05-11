@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { AdDigest } from '@/types/digest';
 import ResultsView from '@/components/ResultsView';
 import ViewTracker from '@/components/ViewTracker';
+import LogoMark from '@/components/LogoMark';
 import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -78,8 +79,8 @@ export default async function SharedReportPage({
                 {/* Header Strip */}
                 <header className="px-6 mb-8 mt-2">
                     <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-full border border-[#E7DED1] bg-[#141414] flex items-center justify-center font-bold text-[#FBF7EF] text-xs shadow-sm">
-                            V
+                        <div className="h-8 w-8 flex items-center justify-center">
+                            <LogoMark size={32} strokeWidth={6} className="text-[#141414]" />
                         </div>
                         <div className="leading-none text-left">
                             <div className="text-[12px] font-semibold tracking-[0.14em] uppercase text-[#141414]">

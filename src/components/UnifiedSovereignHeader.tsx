@@ -194,6 +194,9 @@ export default function UnifiedSovereignHeader({
                 {/* ── Mobile Menu ── */}
                 {mobileOpen && (
                     <div className={`pointer-events-auto lg:hidden fixed inset-0 z-40 flex flex-col justify-center px-8 ${forceDark ? 'bg-[#050505] text-white' : 'bg-[#FBFBF6] text-black'} animate-in fade-in zoom-in-95 duration-500`}>
+                        <div className="absolute top-8 left-8">
+                            <Logo href="/" sublabel="" forceDark={forceDark} onClick={() => setMobileOpen(false)} />
+                        </div>
                         <button onClick={() => setMobileOpen(false)} className="absolute top-8 right-8 p-4">
                             <X size={32} strokeWidth={1} />
                         </button>

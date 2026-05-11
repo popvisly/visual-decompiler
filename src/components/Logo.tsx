@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
+import LogoMark from './LogoMark';
 
 interface LogoProps {
     href?: string;
@@ -37,14 +37,11 @@ export default function Logo({
     const content = (
         <div className={`group flex items-center gap-3 text-left ${className}`}>
             <span className="relative h-9 w-9 flex items-center justify-center">
-                <svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={`transition-colors duration-500 ease-out ${forceDark ? 'text-white' : 'text-black'} ${visualHoverClass}`}>
-                  <g transform="translate(20,20)">
-                    <path d="M-10,-10 C-10,-15 0,-15 5,-10 C10,-5 10,5 5,10" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none" />
-                    <path d="M10,-10 C15,-10 15,0 10,5 C5,10 -5,10 -10,5" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none" transform="rotate(90)" />
-                    <path d="M10,10 C10,15 0,15 -5,10 C-10,5 -10,-5 -5,-10" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none" transform="rotate(180)" />
-                    <path d="M-10,10 C-15,10 -15,0 -10,-5 C-5,-10 5,-10 10,-5" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none" transform="rotate(270)" />
-                  </g>
-                </svg>
+                <LogoMark 
+                    size={34} 
+                    strokeWidth={6} 
+                    className={`transition-colors duration-500 ease-out ${forceDark ? 'text-white' : 'text-black'} ${visualHoverClass}`} 
+                />
             </span>
             <div className="flex flex-col leading-[0.9]">
                 <h1
