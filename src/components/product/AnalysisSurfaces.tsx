@@ -80,7 +80,7 @@ export default function AnalysisSurfaces() {
             {/* Workflow Sequence */}
             <section className="py-24 bg-[#141414] text-white overflow-hidden">
                 <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#D4A574] text-center">The Forensic Protocol</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#D4A574] text-center">The Forensic Read</p>
                     <h2 className="mt-6 text-center text-[clamp(32px,4vw,56px)] font-black uppercase leading-[0.92] tracking-[-0.03em]">
                         From raw asset to definitive verdict.
                     </h2>

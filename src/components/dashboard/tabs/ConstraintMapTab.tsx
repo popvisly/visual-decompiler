@@ -103,7 +103,7 @@ export default function ConstraintMapTab({
                             accent: 'text-[#141414]',
                         },
                         {
-                            title: 'The Adaptive Protocol',
+                            title: 'Adaptive Logic',
                             guidance: 'Safe variation zone for controlled testing and iteration.',
                             items: safeAdaptationZone,
                             accent: 'text-[#8B6A3D]',

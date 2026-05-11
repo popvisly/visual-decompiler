@@ -224,7 +224,7 @@ export default function DossierDecisionSummary({
             </div>
 
             <div className="rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:p-6">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">The Strategist’s Protocol</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Strategic Framework</p>
                 <div className="mt-5 grid items-start gap-4 xl:grid-cols-2">
                     {[
                         {

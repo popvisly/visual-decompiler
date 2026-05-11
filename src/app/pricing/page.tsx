@@ -91,10 +91,10 @@ export default function PricingPage() {
 
             <div className="pt-32 lg:pt-44">
                 <MarketingPageHeader
-                    kicker="Operational Protocols"
+                    kicker="Operational Intelligence"
                     title={
                         <>
-                            Own the protocol.
+                            Own the creative.
                             <span className="block">Defend the decision.</span>
                         </>
                     }
@@ -124,7 +124,7 @@ export default function PricingPage() {
                                 <h3 className="text-6xl font-black tracking-tightest mb-2 leading-none">{PRICING.observer.priceLabel}</h3>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A8A84] mb-10">{PRICING.observer.cadenceLabel}</p>
                                 
-                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-[#141414]">Initiate the Protocol.</p>
+                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-[#141414]">Defensible Creative.</p>
                                 <p className="text-[#6B6B6B] mb-8 leading-relaxed text-[15px]">{PRICING.observer.whoItsFor}</p>
                                 <PlanSummary items={PLAN_SUMMARIES.observer} />
                                 
@@ -189,7 +189,7 @@ export default function PricingPage() {
                             className="relative flex flex-col justify-between rounded-[2.5rem] border border-[#D4A574]/40 bg-white p-10 shadow-[0_30px_100px_rgba(212,165,116,0.1)] ring-1 ring-[#D4A574]/20"
                         >
                             <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-[#141414] px-6 py-2 text-[9px] font-bold uppercase tracking-[0.3em] text-[#FBF7EF] whitespace-nowrap shadow-xl">
-                                Standard Protocol
+                                Standard Framework
                             </div>
                             <div>
                                 <div className="mb-6 flex items-center justify-between">
@@ -309,7 +309,7 @@ export default function PricingPage() {
             <section className="bg-[#141414] py-32 lg:py-56">
                 <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
                     <div className="mb-24">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-[#D4A574]">Technical Protocol</p>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#D4A574] text-center">The Forensic Read</p>
                         <h2 className="mt-8 text-[clamp(40px,6vw,84px)] font-black leading-[0.88] tracking-[-0.04em] uppercase text-white">
                             Capability <br /> <span className="text-white/20">Matrix.</span>
                         </h2>
