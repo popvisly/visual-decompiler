@@ -35,29 +35,29 @@ export default function Logo({
               : 'group-hover:text-[#8B6A3D]';
 
     const content = (
-        <div className={`group flex items-center gap-3 text-left ${className}`}>
-            <span className="relative h-9 w-9 flex items-center justify-center">
+        <div className={`group flex items-center gap-4 text-left ${className}`}>
+            <div className="relative h-11 w-11 shrink-0 overflow-hidden">
                 <LogoMark 
-                    size={34} 
+                    size={44} 
                     tone={forceDark ? 'white' : 'default'}
-                    className="transition-opacity duration-500 ease-out group-hover:opacity-0" 
+                    className="absolute inset-0 transition-opacity duration-500 ease-in-out group-hover:opacity-0" 
                 />
                 <LogoMark 
-                    size={34} 
+                    size={44} 
                     tone="yellow"
-                    className="absolute inset-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100" 
+                    className="absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100" 
                 />
-            </span>
-            <div className="flex flex-col leading-[0.9]">
+            </div>
+            <div className="flex flex-col leading-[1.1]">
                 <h1
-                    className={`text-[16px] lg:text-[18px] uppercase tracking-[0.22em] ${forceDark ? 'text-white' : 'text-black'}`}
+                    className={`text-[17px] lg:text-[19px] uppercase tracking-[0.22em] ${forceDark ? 'text-white' : 'text-black'}`}
                 >
-                    <span className={`block font-medium transition-colors duration-500 ease-out ${visualHoverClass}`}>Visual</span>
-                    <span className={`block mt-0.5 font-black transition-colors duration-500 ease-out ${decompilerHoverClass}`}>Decompiler</span>
+                    <span className={`block font-medium transition-colors duration-500 ease-out group-hover:text-[#D4A574]`}>Visual</span>
+                    <span className={`block mt-[-2px] font-black transition-colors duration-500 ease-out group-hover:text-[#8B6A3D]`}>Decompiler</span>
                 </h1>
                 {sublabel ? (
                     <p
-                        className={`mt-1 font-bold uppercase tracking-[0.3em] transition-colors duration-500 ease-out ${forceDark ? 'text-white/40' : 'text-[#8A8A8A]'}`}
+                        className={`mt-1.5 font-bold uppercase tracking-[0.32em] transition-colors duration-500 ease-out ${forceDark ? 'text-white/40' : 'text-[#8A8A84]'}`}
                         style={{ fontSize: '9px' }}
                     >
                         {sublabel}

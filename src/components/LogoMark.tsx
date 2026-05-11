@@ -19,12 +19,12 @@ export default function LogoMark({
                 : '/vd_mini_logo.png';
 
     return (
-        <div className={`relative flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
+        <div className={`relative shrink-0 ${className}`} style={{ width: size, height: size }}>
             <Image
                 src={src}
                 alt="Visual Decompiler Mark"
-                width={size}
-                height={size}
+                fill
+                sizes={`${size}px`}
                 className="object-contain"
                 priority
             />
