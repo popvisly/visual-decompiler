@@ -146,38 +146,7 @@ export default function HowItWorks() {
                     </p>
                 </motion.div>
 
-                <motion.div
-                    initial={prefersReducedMotion ? false : { opacity: 0, y: 28 }}
-                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={prefersReducedMotion ? undefined : { duration: 0.85, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-20 rounded-[24px] border border-black/5 bg-white px-6 py-9 shadow-sm lg:mt-24 lg:px-8 lg:py-11"
-                >
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#8B6A3D]/80">Workflow</p>
-                    <h3 className="mt-4 max-w-[22ch] text-[34px] font-semibold uppercase leading-[0.96] tracking-tight text-[#141414] md:text-[44px]">
-                        From upload to approval-ready reasoning.
-                    </h3>
-                    <p className="mt-5 max-w-[66ch] text-[17px] leading-[1.75] text-[#6B6B6B]">
-                        A simple operating sequence you can run in minutes before review or presentation — consistent, repeatable, and easy to defend.
-                    </p>
 
-                    <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
-                        {STEPS.map((step, idx) => (
-                            <motion.article
-                                key={step.n}
-                                initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
-                                whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-40px' }}
-                                transition={prefersReducedMotion ? undefined : { duration: 0.65, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                                className="rounded-[24px] border border-black/5 bg-[#FBFBF6] p-6"
-                            >
-                                <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#8B6A3D]/80">Step {step.n}</p>
-                                <h4 className="mt-4 text-[22px] font-semibold leading-[1.08] tracking-[-0.015em] text-[#141414]">{step.title}</h4>
-                                <p className="mt-4 text-[15px] leading-[1.7] text-[#6B6B6B]">{step.detail}</p>
-                            </motion.article>
-                        ))}
-                    </div>
-                </motion.div>
             </div>
         </section>
     );

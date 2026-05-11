@@ -180,7 +180,7 @@ export default function RepeatableWorkflowSection() {
                                 <p className="text-[11px] font-bold uppercase tracking-[0.3em]">The Compounding Moat</p>
                             </div>
                             <p className="mt-6 text-[20px] font-light leading-relaxed text-white/90">
-                                Every análisis you run saves to your <span className="font-bold text-[#D4A574]">Vault</span>, creating a persistent memory of what works—something a one-off AI chat or agent will never provide.
+                                Every analysis you run saves to your <span className="font-bold text-[#D4A574]">Vault</span>, creating a persistent memory of what works—something a one-off AI chat or agent will never provide.
                             </p>
                         </div>
                     </div>

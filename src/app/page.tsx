@@ -26,7 +26,6 @@ export default function HomePage() {
             <MarketLimitationSection />
             <NeuralParticleHero />
             <HowItWorks />
-            <BeforeAfterContrast />
             <DossierPreview />
             <WhyDifferent />
             <FooterStartNow />

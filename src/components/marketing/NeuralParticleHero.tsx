@@ -245,7 +245,7 @@ export default function NeuralParticleHero() {
                         transition={prefersReducedMotion ? undefined : { duration: 0.7, delay: 0.15 }}
                     >
                         <h2 className="text-[26px] font-bold text-[#C1A67B] leading-[1.1] tracking-tight uppercase mb-10">
-                            Creative<br />Intelligence<br />Dossier
+                            Forensic<br />Decision<br />Dossier
                         </h2>
                     </motion.div>
 

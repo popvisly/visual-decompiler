@@ -87,7 +87,7 @@ export default function FooterStartNow() {
                     transition={prefersReducedMotion ? undefined : { duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/80 mb-8">
-                        Final CTA
+                        The Decision
                     </p>
                     <h2 className="font-black leading-[0.88] tracking-[-0.05em] text-[#141414] uppercase mb-10"
                         style={{ fontSize: 'clamp(44px, 8vw, 86px)' }}

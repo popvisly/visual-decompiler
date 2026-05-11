@@ -29,7 +29,7 @@ export default function WhyDifferent() {
     return (
         <section className="relative overflow-hidden bg-[#FBFBF6] py-24 text-[#141414] lg:py-32">
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
-                <MarketingSectionHeading kicker="Use cases" title="Where it fits" className="mb-10" />
+                <MarketingSectionHeading kicker="Strategic Edge" title="Built for the decision makers." className="mb-10" />
 
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     {FIT_BLOCKS.map((block, idx) => (
