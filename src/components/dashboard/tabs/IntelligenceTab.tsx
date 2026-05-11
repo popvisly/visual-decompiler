@@ -115,7 +115,7 @@ export default function IntelligenceTab({
                 <div className="xl:col-span-2 flex flex-col gap-6">
                     <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm flex flex-col">
                         <div className="flex items-center gap-3 mb-10">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">The Strategic Ritual</p>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">The Strategic Protocol</p>
                             <div className="h-px w-8 bg-black/10" />
                         </div>
                         <div className="grid gap-10 md:grid-cols-2">

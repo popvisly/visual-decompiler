@@ -103,7 +103,7 @@ export default function ConstraintMapTab({
                             accent: 'text-[#141414]',
                         },
                         {
-                            title: 'The Adaptive Ritual',
+                            title: 'The Adaptive Protocol',
                             guidance: 'Safe variation zone for controlled testing and iteration.',
                             items: safeAdaptationZone,
                             accent: 'text-[#8B6A3D]',

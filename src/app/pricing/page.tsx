@@ -91,10 +91,10 @@ export default function PricingPage() {
 
             <div className="pt-32 lg:pt-44">
                 <MarketingPageHeader
-                    kicker="Operational Rituals"
+                    kicker="Operational Protocols"
                     title={
                         <>
-                            Own the ritual.
+                            Own the protocol.
                             <span className="block">Defend the decision.</span>
                         </>
                     }
@@ -124,7 +124,7 @@ export default function PricingPage() {
                                 <h3 className="text-6xl font-black tracking-tightest mb-2 leading-none">{PRICING.observer.priceLabel}</h3>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A8A84] mb-10">{PRICING.observer.cadenceLabel}</p>
                                 
-                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-[#141414]">Initiate the Ritual.</p>
+                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-[#141414]">Initiate the Protocol.</p>
                                 <p className="text-[#6B6B6B] mb-8 leading-relaxed text-[15px]">{PRICING.observer.whoItsFor}</p>
                                 <PlanSummary items={PLAN_SUMMARIES.observer} />
                                 

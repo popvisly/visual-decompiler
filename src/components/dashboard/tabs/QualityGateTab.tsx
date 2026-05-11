@@ -58,7 +58,7 @@ export default function QualityGateTab({
                 <div className="px-0">
                     <WorkspaceTabHeader
                         kicker="INTELLIGENCE"
-                        title="The Strategic Ritual"
+                        title="The Strategic Protocol"
                         intro="A structured read organized into Primary Scores, Attention Path, Structural Signals, Strategic Read, and Confidence Index."
                     />
                     <WorkspaceDecisionSummary
@@ -188,7 +188,7 @@ export default function QualityGateTab({
                                 </div>
 
                                 <div className="mt-12 pt-10 border-t border-black/5">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D] mb-10">The Strategic Ritual</p>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D] mb-10">The Strategic Protocol</p>
                                     <div className="grid gap-8">
                                         {[
                                             ['Central Thesis', firstSentence(analysisLanguage.strategicRead.thesis)],

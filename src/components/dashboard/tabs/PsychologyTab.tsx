@@ -31,7 +31,7 @@ export default function PsychologyTab({
                 <div className="px-0">
                     <WorkspaceTabHeader
                         kicker="COGNITIVE DYNAMICS"
-                        title="The Semiotic Ritual"
+                        title="The Semiotic Protocol"
                         intro="How the asset encodes meaning, identity cues, and emotional triggers to shape perception and approval momentum."
                     />
                     <WorkspaceDecisionSummary

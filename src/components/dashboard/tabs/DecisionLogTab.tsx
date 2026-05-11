@@ -136,7 +136,7 @@ export default function DecisionLogTab({
 
                     <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
                         <div className="flex items-center gap-3 mb-8">
-                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]">The Purpose of the Ritual</p>
+                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]">The Purpose of the Protocol</p>
                             <div className="h-px w-8 bg-black/10" />
                         </div>
                         <div className="max-w-[78ch] space-y-4">
