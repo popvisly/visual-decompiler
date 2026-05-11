@@ -91,14 +91,14 @@ export default function PricingPage() {
 
             <div className="pt-32 lg:pt-44">
                 <MarketingPageHeader
-                    kicker="Operational Tiers"
+                    kicker="Operational Rituals"
                     title={
                         <>
-                            Start free.
-                            <span className="block">Scale when it matters.</span>
+                            Own the ritual.
+                            <span className="block">Defend the decision.</span>
                         </>
                     }
-                    description="Choose the depth your team needs to defend decisions, align faster, and get work approved without costly back-and-forth."
+                    description="Visual Decompiler is more than a tool—it's a shared language for the people who actually have to defend creative work in the room."
                 />
             </div>
 
@@ -124,7 +124,7 @@ export default function PricingPage() {
                                 <h3 className="text-6xl font-black tracking-tightest mb-2 leading-none">{PRICING.observer.priceLabel}</h3>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A8A84] mb-10">{PRICING.observer.cadenceLabel}</p>
                                 
-                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-[#141414]">Try the full dossier.</p>
+                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-[#141414]">Initiate the Ritual.</p>
                                 <p className="text-[#6B6B6B] mb-8 leading-relaxed text-[15px]">{PRICING.observer.whoItsFor}</p>
                                 <PlanSummary items={PLAN_SUMMARIES.observer} />
                                 
@@ -159,7 +159,7 @@ export default function PricingPage() {
                                 <h3 className="text-6xl font-black tracking-tightest mb-2 leading-none">${PRICING.strategic.monthlyPrice}</h3>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Per month</p>
                                 
-                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-[#141414]">For weekly operators.</p>
+                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-[#141414]">The Strategic Edge.</p>
                                 <p className="text-[#6B6B6B] mb-8 leading-relaxed text-[15px]">{PRICING.strategic.whoItsFor}</p>
                                 <PlanSummary items={PLAN_SUMMARIES.strategic} />
                                 <p className="text-[11px] font-bold text-black/30 mb-8 leading-relaxed italic border-l-2 border-[#D4A574]/20 pl-4 uppercase tracking-[0.1em]">Plus all Observer tools</p>
@@ -199,7 +199,7 @@ export default function PricingPage() {
                                 <h3 className="text-6xl font-black tracking-tightest mb-2 leading-none">${PRICING.professional.monthlyPrice}</h3>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B6A3D]/70 mb-10">Per month</p>
                                 
-                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-[#141414]">For small teams.</p>
+                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-[#141414]">Collective Memory.</p>
                                 <p className="text-[#6B6B6B] mb-8 leading-relaxed text-[15px]">{PRICING.professional.whoItsFor}</p>
                                 <PlanSummary items={PLAN_SUMMARIES.professional} />
                                 <p className="text-[11px] font-bold text-black/30 mb-8 leading-relaxed italic border-l-2 border-[#D4A574]/20 pl-4 uppercase tracking-[0.1em]">Plus all Strategic tools</p>
@@ -236,7 +236,7 @@ export default function PricingPage() {
                                 <h3 className="text-5xl font-black tracking-tightest mb-2 leading-none">Custom</h3>
                                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-10">Annual contract</p>
                                 
-                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-white">Full Infrastructure.</p>
+                                <p className="text-[18px] font-black uppercase leading-tight mb-4 text-white">Total Sovereignty.</p>
                                 <p className="text-white/60 mb-8 leading-relaxed text-[15px]">{PRICING.agency.whoItsFor}</p>
                                 <PlanSummary items={PLAN_SUMMARIES.agency} tone="dark" />
                                 

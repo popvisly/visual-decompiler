@@ -7,7 +7,7 @@ export const PRICING = {
         subline: 'No card required. Five complete analyses each cycle, with the full dossier intact.',
         ctaLabel: 'Start Free',
         ctaHref: '/ingest',
-        whoItsFor: 'For practitioners who want to see real output before committing.',
+        whoItsFor: 'For the practitioner who needs to see the machinery before they trust it.',
         features: [
             '5 full analyses each cycle',
             'Full structured dossier workflow',
@@ -28,7 +28,7 @@ export const PRICING = {
         tagline: 'For practitioners who use it every week.',
         subline: 'One seat. 250 analyses each cycle. Everything you need to work faster and present stronger.',
         ctaLabel: 'Start Strategic',
-        whoItsFor: 'Art Directors, Creative Directors, Copywriters, and Brand Managers who need analysis on demand — not five times each cycle.',
+        whoItsFor: 'The high-volume operator. The strategist who is in the room every week and needs a clinical edge.',
         checkoutPlanKey: 'strategic',
         features: [
             '250 analyses each cycle',
@@ -53,7 +53,7 @@ export const PRICING = {
         tagline: 'For strategists who present to clients and teams.',
         subline: '3-5 seats. Shared intelligence. Every tool you need to build client-ready outcomes.',
         ctaLabel: 'Start Professional',
-        whoItsFor: 'Small creative studios and in-house strategy teams (2-5 people) who need collaboration features.',
+        whoItsFor: 'The strategy team. For groups that need to align fast and move work without the subjective feedback loops.',
         checkoutPlanKey: 'professional',
         features: [
             'All Strategic features',
@@ -74,7 +74,7 @@ export const PRICING = {
         ctaLabel: 'Book Agency Demo',
         ctaHref: 'mailto:hello@visualdecompiler.com?subject=Agency%20Sovereignty%20Demo',
         contactLabel: 'Or start a conversation — hello@visualdecompiler.com',
-        whoItsFor: 'Agency strategy teams, new business leads, and creative directors who need a shared competitive intelligence layer they can bill back to clients as premium strategic IP.',
+        whoItsFor: 'The Elite Agency. For teams that need a shared competitive intelligence layer they can bill back to clients as premium strategic IP.',
         features: [
             'Up to 10 team seats',
             'Shared Intelligence Vault',
@@ -92,16 +92,16 @@ export const PRICING = {
 } as const;
 
 export const PRICING_COMPARISON_ROWS = [
-    ['Forensic Quality Score', 'Core', 'Full', 'Full', 'Full'],
-    ['Mechanic Extraction Depth', 'Core', 'Deep', 'Deep', 'Full stack'],
-    ['Execution DNA Detail', 'Core', 'Deep', 'Deep', 'Full stack'],
-    ['Stress Test Modules', '—', 'Core', 'Expanded', 'Full'],
-    ['Constraint Mapping', '—', 'Core', 'Expanded', 'Full'],
-    ['Comparative Diagnostics (A/B)', '—', 'Included', 'Included', 'Included'],
-    ['Market Pulse Context', '—', 'Snapshot', 'Included', 'Full'],
+    ['Forensic Quality Score', 'Core', 'Full Stack', 'Full Stack', 'Sovereign'],
+    ['Mechanic Extraction Depth', 'Core', 'Deep Read', 'Deep Read', 'Sovereign'],
+    ['Execution DNA Detail', 'Core', 'Deep Scan', 'Deep Scan', 'Sovereign'],
+    ['Stress Test Modules', '—', 'Core', 'Expanded', 'Sovereign'],
+    ['Constraint Mapping', '—', 'Core', 'Expanded', 'Sovereign'],
+    ['Comparative Diagnostics (A/B)', '—', 'Included', 'Included', 'Sovereign'],
+    ['Market Pulse Context', '—', 'Snapshot', 'Included', 'Sovereign'],
     ['Dossier Export Depth', 'Standard', 'Client-ready', 'Client-ready', 'Agency-grade'],
-    ['Team Collaboration', 'Solo', 'Solo', 'Shared', 'Agency operating layer'],
-    ['White-label / Agency Delivery', '—', 'Export only', 'Shared delivery', 'Full sovereignty'],
+    ['Team Collaboration', 'Solo', 'Solo', 'Shared', 'Infrastructure layer'],
+    ['White-label / Agency Delivery', '—', 'Export only', 'Shared delivery', 'Total Sovereignty'],
 ] as const;
 
 export const PRICING_POSITIONING_LINES = [
