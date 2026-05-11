@@ -88,7 +88,7 @@ export default function ContainerScrollHero() {
 
                                 <div className="mt-14">
                                 <div className="mx-auto w-full max-w-[1500px]">
-                                    <div className="relative flex items-start justify-center px-2 pb-0 pt-0 md:px-12 md:pb-0 md:pt-0 gap-4 overflow-x-auto md:gap-6">
+                                    <div className="flex items-center justify-center gap-4 md:gap-6 flex-nowrap overflow-x-auto lg:overflow-visible scrollbar-hide pb-2">
                                     {[
                                         { src: '/images/examples/Nike.jpg', alt: 'Nike ad' },
                                         { src: '/images/examples/Ulyses.jpg', alt: 'Ulysse Nardin ad' },
