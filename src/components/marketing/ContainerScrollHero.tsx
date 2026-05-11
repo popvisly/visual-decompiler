@@ -58,13 +58,20 @@ export default function ContainerScrollHero() {
                                 <div className="mx-auto max-w-4xl text-center">
                                     <div className="pointer-events-none absolute -left-12 top-6 h-60 w-60 rounded-full bg-[#D4A574]/10 blur-3xl" aria-hidden="true" />
 
-                                    <h1 className="mt-7 text-[clamp(56px,7.2vw,112px)] font-black uppercase leading-[0.9] tracking-[-0.05em] text-[#141414]">
-                                        <span className="block">Creative</span>
-                                        <span className="block font-extrabold text-[#D4A574]">Intelligence</span>
+                                    {/* Hidden Door — initiation invite */}
+                                    <p className="text-[13px] font-medium italic tracking-wide text-[#8B6A3D]/65">
+                                        How creative directors who don&apos;t get overruled actually read an ad.
+                                    </p>
+
+                                    {/* Give Them a Superpower — H1 */}
+                                    <h1 className="mt-5 text-[clamp(56px,7.2vw,112px)] font-black uppercase leading-[0.9] tracking-[-0.05em] text-[#141414]">
+                                        <span className="block">Know Why</span>
+                                        <span className="block font-extrabold text-[#D4A574]">It Works.</span>
                                     </h1>
 
+                                    {/* Give Them a Superpower — sub-headline */}
                                     <p className="mt-8 mx-auto max-w-xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
-                                        Decompile single frames or sequences into a saved, comparable dossier. Understand what it does, how it performs in the feed, and where it fits in a content system.
+                                        Upload any ad. Get a forensic breakdown of what it&apos;s doing, why it works, and how to defend the decision. Client-ready in under 60 seconds.
                                     </p>
 
                                     <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:items-center">

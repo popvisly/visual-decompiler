@@ -27,7 +27,7 @@ export default function HomepageProblemSection() {
                     </div>
 
                     <p className="mt-10 max-w-[58ch] text-[18px] leading-[1.7] text-[#6B6B6B]">
-                        Without answers, every review becomes subjective.
+                        Without answers, every review becomes subjective. The teams who fixed this stopped guessing — and started using a different system.
                     </p>
                 </div>
             </div>
