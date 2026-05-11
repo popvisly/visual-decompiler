@@ -33,11 +33,11 @@ export default function ConstraintMapTab({
                 <div className="px-0">
                     <WorkspaceTabHeader
                         kicker="Operational Guardrails"
-                        title="Operational Guardrails & Constraint Map"
+                        title="The Strategic Guardrails"
                         intro="This section defines the non-negotiables, avoidances, and safe adaptation boundaries required to preserve the working forensic logic."
                     />
                     <WorkspaceDecisionSummary
-                        eyebrow="Guardrail Map"
+                        eyebrow="Guardrail Verdict"
                         title="Protect the route before making variations."
                         body="Constraint Map separates what must be retained, what must be avoided, and where controlled adaptation is safe. Use this before remixing, testing, or briefing production changes."
                         metrics={[
@@ -91,19 +91,19 @@ export default function ConstraintMapTab({
                 <div className="flex flex-col gap-6">
                     {[
                         {
-                            title: 'Retention Protocol',
+                            title: 'The Inviolate Protocol',
                             guidance: "Preserve these elements to protect the route's strategic spine.",
                             items: mustKeepConstraints,
                             accent: 'text-[#8B6A3D]',
                         },
                         {
-                            title: 'Negation Protocol',
+                            title: 'The Prohibition Protocol',
                             guidance: 'Avoid these shifts to prevent degradation of message transfer.',
                             items: mustAvoidConstraints,
                             accent: 'text-[#141414]',
                         },
                         {
-                            title: 'Adaptive Delta',
+                            title: 'The Adaptive Ritual',
                             guidance: 'Safe variation zone for controlled testing and iteration.',
                             items: safeAdaptationZone,
                             accent: 'text-[#8B6A3D]',

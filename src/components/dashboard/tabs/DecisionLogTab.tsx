@@ -46,11 +46,11 @@ export default function DecisionLogTab({
                 <div className="px-0">
                     <WorkspaceTabHeader
                         kicker="Decision Audit"
-                        title="Decision Log & Forensic Verdict"
+                        title="The Forensic Ledger"
                         intro="A persistent ledger of asset verdicts, rationale, and mandatory P1 fixes recorded during the diagnostic process."
                     />
                     <WorkspaceDecisionSummary
-                        eyebrow="Audit Status"
+                        eyebrow="Audit Verdict"
                         title={decisionLogEntries.length > 0 ? `Vault contains ${decisionLogEntries.length} recorded diagnostic sessions.` : 'No diagnostic sessions have been committed to the vault.'}
                         body="Every verdict is captured with full rationale and evidence anchors to ensure the creative route is defensible and the strategic intent is preserved through production."
                         metrics={[
@@ -74,7 +74,7 @@ export default function DecisionLogTab({
                                     <History className="h-6 w-6" />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.34em] text-[#8B6A3D]">Latest Forensic Verdict</p>
+                                    <p className="text-[10px] font-black uppercase tracking-[0.34em] text-[#8B6A3D]">Current Verdict</p>
                                     <p className="mt-1 text-[15px] font-medium text-[#515151]">The current standing recommendation for this asset.</p>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@ export default function DecisionLogTab({
 
                     <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
                         <div className="flex items-center gap-3 mb-8">
-                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]">Audit Purpose</p>
+                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#8B6A3D]">The Purpose of the Ritual</p>
                             <div className="h-px w-8 bg-black/10" />
                         </div>
                         <div className="max-w-[78ch] space-y-4">
@@ -148,7 +148,7 @@ export default function DecisionLogTab({
 
                     <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm flex flex-col">
                         <div className="flex items-center justify-between gap-4 mb-10 border-b border-black/5 pb-6">
-                            <p className="text-[11px] font-black uppercase tracking-[0.34em] text-[#8B6A3D]">Decision History</p>
+                            <p className="text-[11px] font-black uppercase tracking-[0.34em] text-[#8B6A3D]">Audit History</p>
                             <button
                                 onClick={handleClearDecisionLog}
                                 className="p-3 text-[#515151] hover:text-[#d9a69c] transition-colors rounded-full hover:bg-red-50"

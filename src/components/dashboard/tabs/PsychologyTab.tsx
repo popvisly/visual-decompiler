@@ -31,11 +31,11 @@ export default function PsychologyTab({
                 <div className="px-0">
                     <WorkspaceTabHeader
                         kicker="COGNITIVE DYNAMICS"
-                        title="Semiotic Channel Interceptions"
+                        title="The Semiotic Ritual"
                         intro="How the asset encodes meaning, identity cues, and emotional triggers to shape perception and approval momentum."
                     />
                     <WorkspaceDecisionSummary
-                        eyebrow="Psychological Read"
+                        eyebrow="Psychological Verdict"
                         title="Clarify why the asset persuades before defending the route."
                         body={firstSentence(dossier?.archetype_mapping?.target_posture) || firstSentence(dossier?.objection_dismantling) || 'This module reads the identity posture, trigger distribution, objection logic, and possible counter-readings behind the work.'}
                         metrics={[
@@ -58,7 +58,7 @@ export default function PsychologyTab({
                         </div>
                         <div className="relative z-10 mb-10 flex min-h-[68px] items-start justify-between border-b border-white/10 pb-6">
                             <p className="text-[11px] font-black uppercase tracking-[0.4em] text-[#D4A574]">
-                                <span className="block">Trigger Distribution</span>
+                                <span className="block">Aspiration Mechanics</span>
                                 <span className="block">Surface Map</span>
                             </p>
                             <span className="text-[9px] font-mono font-black uppercase tracking-[0.2em] text-white/30">Optical Diagnostic v4.0</span>

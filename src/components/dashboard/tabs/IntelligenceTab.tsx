@@ -115,7 +115,7 @@ export default function IntelligenceTab({
                 <div className="xl:col-span-2 flex flex-col gap-6">
                     <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm flex flex-col">
                         <div className="flex items-center gap-3 mb-10">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Strategic Read</p>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">The Strategic Ritual</p>
                             <div className="h-px w-8 bg-black/10" />
                         </div>
                         <div className="grid gap-10 md:grid-cols-2">
@@ -170,7 +170,7 @@ export default function IntelligenceTab({
                             </div>
                         </div>
                         <div className="p-10 bg-[#FCFBF9]">
-                            <p className="text-[11px] font-black uppercase tracking-widest text-[#141414] mb-4">Overall Structure</p>
+                            <p className="text-[11px] font-black uppercase tracking-widest text-[#141414] mb-4">Structural Verdict</p>
                             <p className="text-[13px] leading-relaxed text-[#515151] font-medium">{structuralSummary}</p>
                         </div>
                     </div>

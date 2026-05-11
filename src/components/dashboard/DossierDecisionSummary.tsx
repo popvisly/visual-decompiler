@@ -166,7 +166,7 @@ export default function DossierDecisionSummary({
                             !isExecutiveSummary ? 'bg-[#1a1a1a] text-white shadow-sm' : 'text-[#8B6A3D]/80 hover:bg-black/5'
                         }`}
                     >
-                        Full Analysis
+                        Forensic Evidence
                     </button>
                     <button
                         type="button"
@@ -175,7 +175,7 @@ export default function DossierDecisionSummary({
                             isExecutiveSummary ? 'bg-[#1a1a1a] text-white shadow-sm' : 'text-[#8B6A3D]/80 hover:bg-black/5'
                         }`}
                     >
-                        Executive Summary
+                        The Verdict
                     </button>
                 </div>
             </div>
@@ -183,7 +183,7 @@ export default function DossierDecisionSummary({
             <div className="rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:p-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Creative Director Decision Triad</p>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">The Creative Director’s Verdict</p>
                         <p className={`mt-3 max-w-[62ch] text-[15px] font-medium leading-relaxed ${DARK_TEXT_PRIMARY}`}>
                             {decisionRationale(decision, strategicMove, confidenceScore)}
                         </p>
@@ -224,7 +224,7 @@ export default function DossierDecisionSummary({
             </div>
 
             <div className="rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:p-6">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Strategy Director Framework</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">The Strategist’s Ritual</p>
                 <div className="mt-5 grid items-start gap-4 xl:grid-cols-2">
                     {[
                         {
@@ -250,7 +250,7 @@ export default function DossierDecisionSummary({
 
             <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
                 <div className="rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:p-8">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Brief Alignment</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Strategic Fidelity</p>
                     <div className="mt-6 flex flex-col gap-6 items-start">
                         <span className="inline-flex w-fit rounded-full border border-[#D4A574]/40 bg-[#FCFBF9] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#D4A574]">
                             {briefAlignment}
@@ -262,7 +262,7 @@ export default function DossierDecisionSummary({
                 </div>
 
                 <div className="rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:p-6">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Copywriter Persuasion Alignment</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Persuasion Mechanics</p>
                     <div className="mt-5 grid items-start gap-4 xl:grid-cols-2">
                         {[
                             {
@@ -297,7 +297,7 @@ export default function DossierDecisionSummary({
 
             {isExecutiveSummary && (
                 <div className="rounded-2xl border border-black/5 bg-white shadow-sm p-5 md:p-6">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">Executive Summary</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8B6A3D]/80">The Verdict</p>
                     <div className="mt-5 grid items-start gap-4 xl:grid-cols-3">
                         {[
                             {

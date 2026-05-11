@@ -58,11 +58,11 @@ export default function QualityGateTab({
                 <div className="px-0">
                     <WorkspaceTabHeader
                         kicker="INTELLIGENCE"
-                        title="Strategic Insight Overview"
+                        title="The Strategic Ritual"
                         intro="A structured read organized into Primary Scores, Attention Path, Structural Signals, Strategic Read, and Confidence Index."
                     />
                     <WorkspaceDecisionSummary
-                        eyebrow="Executive Read"
+                        eyebrow="The Verdict"
                         title={integratedRecommendation.recommendedDirection}
                         body={analysisLanguage.strategicRead.thesis}
                         metricStyle="executive"
@@ -188,10 +188,10 @@ export default function QualityGateTab({
                                 </div>
 
                                 <div className="mt-12 pt-10 border-t border-black/5">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D] mb-10">Strategic Read</p>
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D] mb-10">The Strategic Ritual</p>
                                     <div className="grid gap-8">
                                         {[
-                                            ['Strategic Thesis', firstSentence(analysisLanguage.strategicRead.thesis)],
+                                            ['Central Thesis', firstSentence(analysisLanguage.strategicRead.thesis)],
                                             ['Trigger Mechanic', firstSentence(analysisLanguage.strategicRead.triggerMechanic)],
                                             ['Friction Points', firstSentence(analysisLanguage.strategicRead.frictionPoints)],
                                             ['Category Positioning', firstSentence(analysisLanguage.strategicRead.categoryPositioning)],
@@ -230,7 +230,7 @@ export default function QualityGateTab({
                                     ))}
                                 </div>
                                 <div className="mt-10 border-t border-black/5 pt-10">
-                                    <p className="mb-4 text-[11px] font-black uppercase tracking-widest text-[#141414]">Overall Structure</p>
+                                    <p className="mb-4 text-[11px] font-black uppercase tracking-widest text-[#141414]">Structural Verdict</p>
                                     <p className="max-w-[72ch] text-[13px] leading-relaxed text-[#515151] font-medium">{structuralSummary}</p>
                                 </div>
                             </div>
@@ -272,7 +272,7 @@ export default function QualityGateTab({
 
                                 <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm">
                                     <div className="flex items-center justify-between mb-10">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">System Confidence</p>
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Forensic Index</p>
                                         <span className="text-[10px] font-black uppercase tracking-widest text-[#141414]/20 font-mono">Forensic Index v2</span>
                                     </div>
                                     <div className="flex items-baseline gap-4">
