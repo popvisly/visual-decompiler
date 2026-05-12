@@ -64,9 +64,10 @@ export default function ContainerScrollHero() {
                                     </p>
 
                                     {/* Give Them a Superpower — H1 */}
-                                    <h1 className="mt-5 text-[clamp(56px,7.2vw,112px)] font-black uppercase leading-[0.9] tracking-[-0.05em] text-[#141414]">
-                                        <span className="block">Know Why</span>
-                                        <span className="block font-extrabold text-[#D4A574]">It Works.</span>
+                                    <h1 className="mt-5 text-[clamp(42px,6.8vw,104px)] font-black uppercase leading-[0.9] tracking-[-0.05em] text-[#141414]">
+                                        <span className="block">Decode the Ad.</span>
+                                        <span className="block text-[#6B6B6B]">See the Results.</span>
+                                        <span className="block font-extrabold text-[#D4A574]">Copy the Success.</span>
                                     </h1>
 
                                     {/* Give Them a Superpower — sub-headline */}

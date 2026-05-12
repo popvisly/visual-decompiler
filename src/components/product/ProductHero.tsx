@@ -29,8 +29,8 @@ export default function ProductHero() {
                         <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-black/30">Module: Core_Workflow</p>
                     </div>
 
-                    <h1 className="max-w-[15ch] text-[clamp(48px,7.5vw,96px)] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#141414]">
-                        Know Why<br />It Works.
+                    <h1 className="max-w-[15ch] text-[clamp(42px,7vw,96px)] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#141414]">
+                        Decode the Ad.<br />See the Results.<br />Copy the Success.
                     </h1>
 
                     <div className="mt-10 max-w-[880px] rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-[0_20px_50px_rgba(0,0,0,0.03)] lg:p-12">
