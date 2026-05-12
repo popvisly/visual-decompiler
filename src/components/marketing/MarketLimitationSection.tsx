@@ -27,13 +27,16 @@ export default function MarketLimitationSection() {
             <div className="relative z-10 mx-auto max-w-[1200px] px-6 lg:px-12">
                 
                 {/* Section Header */}
-                <div className="mb-24 text-center">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/60 mb-6">The Strategic Gap</p>
-                    <h2 className="text-[clamp(40px,6vw,80px)] font-light leading-[0.9] tracking-tightest uppercase text-[#141414]">
-                        Chat is <span className="text-[#D4A574] italic">disposable.</span><br />
-                        Logic is <span className="font-bold">permanent.</span>
-                    </h2>
-                </div>
+                <MarketingSectionHeading
+                    kicker="The Strategic Gap"
+                    title={
+                        <>
+                            Chat is disposable.<br />
+                            Logic is permanent.
+                        </>
+                    }
+                    className="mb-16 lg:mb-24"
+                />
 
                 <div className="grid gap-12 lg:grid-cols-2 lg:items-stretch">
                     
