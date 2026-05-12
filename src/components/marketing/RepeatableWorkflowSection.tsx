@@ -62,84 +62,62 @@ export default function RepeatableWorkflowSection() {
             />
 
             <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 lg:px-12">
-                <div className="grid gap-20 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-                    
-                    {/* Sticky Control Panel (Left) */}
-                    <div className="lg:sticky lg:top-32">
-                        <MarketingSectionHeading
-                            kicker="Strategic Moat"
-                            title="Built for repeatability, not unpredictable Ai chats."
-                            description="AI chat is a vacuum. Visual Decompiler is a shared grammar for creative logic—turning every analysis into studio memory that compounds over time."
-                        />
+                <div className="rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-sm lg:p-16">
+                    <MarketingSectionHeading
+                        kicker="Strategic Moat"
+                        title="Built for repeatability, not unpredictable Ai chats."
+                        description="AI chat is a vacuum. Visual Decompiler is a shared grammar for creative logic—turning every analysis into studio memory that compounds over time."
+                        align="center"
+                        className="max-w-4xl"
+                    />
 
-                        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-                            <Link
-                                href="/product"
-                                className="inline-flex items-center justify-center gap-3 rounded-full bg-[#141414] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.2em] text-[#FBF7EF] transition hover:bg-black"
-                            >
-                                Product Tour
-                                <ArrowUpRight className="h-4 w-4" />
-                            </Link>
-                            <Link
-                                href={SAMPLE_DOSSIER_HREF}
-                                className="inline-flex items-center justify-center gap-3 rounded-full border border-black/10 bg-white px-8 py-4 text-[11px] font-bold uppercase tracking-[0.2em] text-[#141414] transition hover:bg-[#FBFBF6]"
-                            >
-                                View Sample
-                            </Link>
-                        </div>
-
-
-                    </div>
-
-                    {/* Sequential Workflow (Right) */}
-                    <div className="space-y-4">
+                    {/* Sequential Workflow Grid */}
+                    <div className="mt-16 grid gap-6 md:grid-cols-2">
                         {WORKFLOW_STEPS.map((step, index) => {
                             const Icon = step.icon;
                             return (
                                 <motion.article
                                     key={step.label}
-                                    initial={prefersReducedMotion ? false : { opacity: 0, x: 20 }}
-                                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
+                                    initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+                                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                                     viewport={{ once: true, margin: '-100px' }}
                                     transition={prefersReducedMotion ? undefined : { duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                                    className="group relative grid gap-8 rounded-[2.5rem] border border-black/5 bg-white p-8 transition-all hover:border-[#D4A574]/30 hover:shadow-xl hover:shadow-[#D4A574]/5 md:grid-cols-[auto_minmax(0,1fr)]"
+                                    className="group relative flex flex-col rounded-[2rem] border border-black/5 bg-[#FBFBF6] p-8 transition-all hover:border-[#D4A574]/30 hover:bg-white hover:shadow-xl hover:shadow-[#D4A574]/5"
                                 >
-                                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FBFBF6] text-[#8B6A3D] transition-colors group-hover:bg-[#8B6A3D] group-hover:text-white">
+                                    <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-[#8B6A3D] shadow-sm transition-colors group-hover:bg-[#8B6A3D] group-hover:text-white">
                                         <Icon className="h-6 w-6" />
                                     </div>
-                                    <div>
-                                        <div className="flex items-center justify-between">
-                                            <p className="text-[12px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">
-                                                {step.label}
-                                            </p>
-                                            <span className="text-[11px] font-mono font-bold text-[#141414]/20 uppercase tracking-widest">
-                                                Sequence 0{index + 1}
-                                            </span>
-                                        </div>
-                                        <h3 className="mt-4 text-[22px] font-semibold uppercase leading-tight tracking-tight text-[#141414]">
-                                            {step.title}
-                                        </h3>
-                                        <p className="mt-4 max-w-[54ch] text-[15px] leading-[1.6] text-[#6B6B6B]">
-                                            {step.body}
+                                    
+                                    <div className="flex items-center justify-between">
+                                        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">
+                                            {step.label}
                                         </p>
+                                        <span className="text-[10px] font-mono font-bold text-[#141414]/20 uppercase tracking-widest">
+                                            Sequence 0{index + 1}
+                                        </span>
                                     </div>
+                                    <h3 className="mt-4 text-[20px] font-semibold uppercase leading-tight tracking-tight text-[#141414]">
+                                        {step.title}
+                                    </h3>
+                                    <p className="mt-4 text-[15px] leading-[1.6] text-[#6B6B6B]">
+                                        {step.body}
+                                    </p>
                                 </motion.article>
                             );
                         })}
+                    </div>
 
-                        {/* Summary / Advantage Card */}
-                        <div className="rounded-[2.5rem] bg-[#141414] p-10 text-white shadow-2xl">
-                            <div className="flex items-center gap-3 text-[#D4A574]">
-                                <GitCompare className="h-5 w-5" />
-                                <p className="text-[11px] font-bold uppercase tracking-[0.3em]">The Compounding Moat</p>
-                            </div>
-                            <p className="mt-6 text-[20px] font-light leading-relaxed text-white/90">
-                                Every analysis you run saves to your <span className="font-bold text-[#D4A574]">Vault</span>, creating a persistent memory of what works—something a one-off AI chat or agent will never provide.
-                            </p>
+                    {/* Summary / Advantage Card */}
+                    <div className="mt-8 rounded-[2rem] bg-[#141414] p-10 text-white shadow-2xl">
+                        <div className="flex items-center gap-3 text-[#D4A574]">
+                            <GitCompare className="h-5 w-5" />
+                            <p className="text-[11px] font-bold uppercase tracking-[0.3em]">The Compounding Moat</p>
                         </div>
+                        <p className="mt-6 text-[20px] font-light leading-relaxed text-white/90">
+                            Every analysis you run saves to your <span className="font-bold text-[#D4A574]">Vault</span>, creating a persistent memory of what works—something a one-off AI chat or agent will never provide.
+                        </p>
                     </div>
                 </div>
-
             </div>
         </section>
     );
