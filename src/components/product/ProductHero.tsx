@@ -30,7 +30,7 @@ export default function ProductHero() {
                     </div>
 
                     <h1 className="max-w-[15ch] text-[clamp(42px,7vw,96px)] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#141414]">
-                        Decode the Ad.<br />See the Results.<br />Copy the Success.
+                        Decode the Ad.<br />Inspect the Logic.<br />Copy the Success.
                     </h1>
 
                     <div className="mt-10 max-w-[880px] rounded-[2.5rem] border border-black/5 bg-white p-10 shadow-[0_20px_50px_rgba(0,0,0,0.03)] lg:p-12">

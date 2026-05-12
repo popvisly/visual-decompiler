@@ -66,7 +66,7 @@ export default function ContainerScrollHero() {
                                     {/* Give Them a Superpower — H1 */}
                                     <h1 className="mt-5 text-[clamp(42px,6.8vw,104px)] font-black uppercase leading-[0.9] tracking-[-0.05em] text-[#141414]">
                                         <span className="block">Decode the Ad.</span>
-                                        <span className="block text-[#6B6B6B]">See the Results.</span>
+                                        <span className="block text-[#6B6B6B]">Inspect the Logic.</span>
                                         <span className="block font-extrabold text-[#D4A574]">Copy the Success.</span>
                                     </h1>
 
