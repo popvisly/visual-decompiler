@@ -30,8 +30,8 @@ export default function MarketLimitationSection() {
                 <div className="mb-24 text-center">
                     <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]/60 mb-6">The Strategic Gap</p>
                     <h2 className="text-[clamp(40px,6vw,80px)] font-light leading-[0.9] tracking-tightest uppercase text-[#141414]">
-                        Chat is a <span className="text-[#D4A574] italic">vacuum.</span><br />
-                        VD is an <span className="font-bold">operating system.</span>
+                        Chat is <span className="text-[#D4A574] italic">disposable.</span><br />
+                        Logic is <span className="font-bold">permanent.</span>
                     </h2>
                 </div>
 
