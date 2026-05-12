@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { BarChart3, Fingerprint, FileSearch, History, Target, MousePointer2, Archive, Layers3, BadgeInfo } from 'lucide-react';
+import { BarChart3, Fingerprint, FileSearch, History, Target, MousePointer2, Archive } from 'lucide-react';
 import MarketingSectionHeading from '@/components/marketing/MarketingSectionHeading';
 
 const FEATURES = [
@@ -21,13 +21,6 @@ const FEATURES = [
         icon: MousePointer2,
     },
     {
-        id: 'sequence',
-        label: 'Sequence',
-        title: 'Multi-frame Analysis',
-        desc: 'Hook → proof → CTA coherence, role clarity, and a prioritized fix order across frames.',
-        icon: Layers3,
-    },
-    {
         id: 'strategy',
         label: 'Strategy',
         title: 'Strategic Read',
@@ -42,29 +35,15 @@ const FEATURES = [
         icon: History,
     },
     {
-        id: 'decision',
-        label: 'Decision',
-        title: 'Definitive Verdict',
-        desc: 'A clear recommendation, confidence signal, and risk/reward tension.',
-        icon: Fingerprint,
-    },
-    {
-        id: 'clarifiers',
-        label: 'Clarity',
-        title: 'Micro-clarifiers',
-        desc: 'Inline “what is this?” pills that keep non-specialists aligned without slowing the read.',
-        icon: BadgeInfo,
-    },
-    {
         id: 'anchors',
-        label: 'Evidence anchors',
+        label: 'Anchors',
         title: 'Visual Proof',
         desc: 'Specific visual claims tied back to what is actually present in the asset.',
         icon: FileSearch,
     },
     {
         id: 'vault',
-        label: 'Reusable artifact',
+        label: 'Memory',
         title: 'Compounding Vault',
         desc: 'A saved dossier your team can revisit, compare, export, and defend later.',
         icon: Archive,
@@ -82,40 +61,42 @@ export default function AppFeaturesSection() {
                     kicker="Forensic Inventory"
                     title="What’s inside the dossier."
                     description="Every analysis yields a multi-layered artifact designed to travel into decks, client rooms, and team alignment sessions."
-                    className="mb-20"
+                    className="mb-16 lg:mb-24"
                 />
 
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {FEATURES.map((feature, i) => {
-                        const Icon = feature.icon;
-                        return (
-                            <motion.article
-                                key={feature.id}
-                                initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-                                whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-50px' }}
-                                transition={prefersReducedMotion ? undefined : { duration: 0.6, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                                className="group relative flex flex-col justify-between rounded-[2rem] border border-black/5 bg-white p-7 transition-all hover:border-[#D4A574]/30 hover:shadow-xl hover:shadow-[#D4A574]/5"
-                            >
-                                <div>
-                                    <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FBFBF6] text-[#8B6A3D] transition-colors group-hover:bg-[#8B6A3D] group-hover:text-white">
+                {/* Forensic Grid Layout */}
+                <div className="overflow-hidden rounded-[2.5rem] border border-black/5 bg-black/5 shadow-sm">
+                    <div className="grid gap-[1px] sm:grid-cols-2 lg:grid-cols-3">
+                        {FEATURES.map((feature, i) => {
+                            const Icon = feature.icon;
+                            return (
+                                <motion.article
+                                    key={feature.id}
+                                    initial={prefersReducedMotion ? false : { opacity: 0, y: 15 }}
+                                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: '-50px' }}
+                                    transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+                                    className="group relative bg-white p-8 transition-colors hover:bg-[#FBFBF6] xl:p-10"
+                                >
+                                    <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FBFBF6] text-[#8B6A3D] shadow-inner transition-colors group-hover:bg-white group-hover:shadow-sm">
                                         <Icon className="h-5 w-5" />
                                     </div>
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">{feature.label}</p>
-                                    <h3 className="mt-4 text-[18px] font-semibold uppercase leading-tight tracking-tight text-[#141414]">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">{feature.label}</p>
+                                        <div className="h-px flex-1 bg-gradient-to-r from-black/5 to-transparent" />
+                                    </div>
+                                    <h3 className="text-[18px] font-semibold uppercase leading-tight tracking-tight text-[#141414]">
                                         {feature.title}
                                     </h3>
-                                    <p className="mt-4 text-[14px] leading-relaxed text-[#6B6B6B]">
+                                    <p className="mt-3 text-[15px] leading-[1.65] text-[#6B6B6B]">
                                         {feature.desc}
                                     </p>
-                                </div>
-                                <div className="mt-8 pt-6 border-t border-black/5 opacity-0 transition-opacity group-hover:opacity-100">
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#8B6A3D] italic">Forensic Module Active</p>
-                                </div>
-                            </motion.article>
-                        );
-                    })}
+                                </motion.article>
+                            );
+                        })}
+                    </div>
                 </div>
+
             </div>
         </section>
     );
