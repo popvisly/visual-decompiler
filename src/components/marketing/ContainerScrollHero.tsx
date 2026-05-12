@@ -58,11 +58,6 @@ export default function ContainerScrollHero() {
                                 <div className="mx-auto max-w-4xl text-center">
                                     <div className="pointer-events-none absolute -left-12 top-6 h-60 w-60 rounded-full bg-[#D4A574]/10 blur-3xl" aria-hidden="true" />
 
-                                    {/* Hidden Door — initiation invite */}
-                                    <p className="text-[13px] font-medium italic tracking-wide text-[#8B6A3D]/65">
-                                        How creative directors who don&apos;t get overruled actually read an ad.
-                                    </p>
-
                                     {/* Give Them a Superpower — H1 */}
                                     <h1 className="mt-5 text-[clamp(42px,6.8vw,104px)] font-black uppercase leading-[0.9] tracking-[-0.05em] text-[#141414]">
                                         <span className="block">Decode the Ad.</span>
