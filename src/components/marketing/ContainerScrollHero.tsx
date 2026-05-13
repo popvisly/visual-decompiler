@@ -59,7 +59,7 @@ export default function ContainerScrollHero() {
                                     <div className="pointer-events-none absolute -left-12 top-6 h-60 w-60 rounded-full bg-[#D4A574]/10 blur-3xl" aria-hidden="true" />
 
                                     {/* Give Them a Superpower — H1 */}
-                                    <h1 className="mt-5 text-[clamp(38px,6.1vw,92px)] font-black uppercase leading-[0.9] tracking-[-0.05em] text-[#141414]">
+                                    <h1 className="mt-5 text-[clamp(38px,6.1vw,92px)] font-black uppercase leading-[0.9] tracking-[-0.02em] text-[#141414]">
                                         <span className="block">Decode the Ad.</span>
                                         <span className="block text-[#6B6B6B]">Inspect the Logic.</span>
                                         <span className="block font-extrabold text-[#D4A574]">Copy the Success.</span>
