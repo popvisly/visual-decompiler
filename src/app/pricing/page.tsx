@@ -90,18 +90,17 @@ export default function PricingPage() {
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
             <UnifiedSovereignHeader />
 
-            <div className="pt-32 lg:pt-44">
-                <MarketingPageHeader
-                    kicker="Operational Intelligence"
-                    title={
-                        <>
-                            Own the creative.
-                            <span className="block">Defend the decision.</span>
-                        </>
-                    }
-                    description="Visual Decompiler is more than a tool—it's a shared language for the people who actually have to defend creative work in the room."
-                />
-            </div>
+            <MarketingPageHeader
+                kicker="Operational Intelligence"
+                title={
+                    <>
+                        Own the creative.
+                        <span className="block">Defend the decision.</span>
+                    </>
+                }
+                description="Visual Decompiler is more than a tool—it's a shared language for the people who actually have to defend creative work in the room."
+                sectionClassName="pt-32 pb-24 lg:pt-44 lg:pb-32"
+            />
 
             {/* Pricing Cards Grid */}
             <section className="px-6 pb-48">
@@ -347,4 +346,3 @@ export default function PricingPage() {
         </main>
     );
 }
-
