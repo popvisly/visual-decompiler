@@ -40,12 +40,7 @@ export default function Logo({
                 <LogoMark 
                     size={44} 
                     tone={forceDark ? 'white' : 'default'}
-                    className="absolute inset-0 transition-opacity duration-500 ease-in-out group-hover:opacity-0" 
-                />
-                <LogoMark 
-                    size={44} 
-                    tone={forceDark ? "yellow" : "yellow-orange"}
-                    className="absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100" 
+                    className="absolute inset-0" 
                 />
             </div>
             <div className="flex flex-col leading-[1.1]">
