@@ -13,10 +13,6 @@ const FAQS = [
         a: 'Any static ad: print, digital, social, OOH. Upload JPG, PNG, WebP, or bring in a URL. Visual Decompiler reads the creative itself, not just the media placement around it.',
     },
     {
-        q: 'Is this an AI generation tool?',
-        a: 'No. It does not generate ads or replace creative judgment. It helps you articulate why a piece holds, where it weakens, and what to change next.',
-    },
-    {
         q: 'How is this different from ad monitoring platforms?',
         a: 'Visual Decompiler is for reading what the work is doing once it is in front of you: its hierarchy, tension, identity pull, and distinctiveness.',
     },
