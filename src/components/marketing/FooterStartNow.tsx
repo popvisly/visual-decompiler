@@ -10,7 +10,7 @@ import { HOMEPAGE_CTA_ICON, MARKETING_PRIMARY_CTA_LG, MARKETING_SECONDARY_CTA_LG
 const FAQS = [
     {
         q: 'What kind of ads can I analyse?',
-        a: 'Any static or video ad: print, digital, social, OOH. Upload JPG, PNG, WebP, MP4, or bring in a URL. Visual Decompiler reads the creative itself, not just the media placement around it.',
+        a: 'Any static ad: print, digital, social, OOH. Upload JPG, PNG, WebP, or bring in a URL. Visual Decompiler reads the creative itself, not just the media placement around it.',
     },
     {
         q: 'Is this an AI generation tool?',
