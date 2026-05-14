@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from 'next/font/google';
+import { Analytics } from "@vercel/analytics/next";
 import { CSPostHogProvider } from './providers';
 import "./globals.css";
 
@@ -106,6 +107,7 @@ export default function RootLayout({
                 <div className="relative z-10 w-full min-h-screen">
                     {children}
                 </div>
+                <Analytics />
             </body>
         </html>
     );

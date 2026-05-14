@@ -16,6 +16,7 @@
         "@supabase/supabase-js": "^2.48.1",
         "@upstash/ratelimit": "^2.0.8",
         "@upstash/redis": "^1.36.3",
+        "@vercel/analytics": "^2.0.1",
         "framer-motion": "^12.34.2",
         "gray-matter": "^4.0.3",
         "lucide-react": "^0.475.0",
