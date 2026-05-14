@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight, Plus, Minus } from 'lucide-react';
+import { track } from '@vercel/analytics';
 import Logo from '@/components/Logo';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 import { HOMEPAGE_CTA_ICON, MARKETING_PRIMARY_CTA_LG, MARKETING_SECONDARY_CTA_LG } from '@/components/marketing/ctaStyles';
@@ -111,6 +112,7 @@ export default function FooterStartNow() {
                     <a
                         href="/ingest"
                         className={MARKETING_PRIMARY_CTA_LG}
+                        onClick={() => track('cta_start_free', { location: 'footer' })}
                     >
                         Start Free
                         <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
@@ -118,6 +120,7 @@ export default function FooterStartNow() {
                     <a
                         href={SAMPLE_DOSSIER_HREF}
                         className={MARKETING_SECONDARY_CTA_LG}
+                        onClick={() => track('cta_view_sample_dossier', { location: 'footer' })}
                     >
                         View Sample Dossier
                     </a>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { track } from '@vercel/analytics';
 import { ContainerScroll } from '@/components/marketing/ContainerScroll';
 import { HOMEPAGE_CTA_ICON, MARKETING_PRIMARY_CTA_LG, MARKETING_SECONDARY_CTA_LG } from '@/components/marketing/ctaStyles';
 import { MARKETING_CARD_PADDED } from '@/components/marketing/cardStyles';
@@ -71,11 +72,19 @@ export default function ContainerScrollHero() {
                                     </p>
 
                                     <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:items-center">
-                                        <Link href="/ingest" className={MARKETING_PRIMARY_CTA_LG}>
+                                        <Link
+                                            href="/ingest"
+                                            className={MARKETING_PRIMARY_CTA_LG}
+                                            onClick={() => track('cta_start_free', { location: 'home_hero' })}
+                                        >
                                             Start Free
                                             <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                                         </Link>
-                                        <Link href="/share/sample-dossier" className={MARKETING_SECONDARY_CTA_LG}>
+                                        <Link
+                                            href="/share/sample-dossier"
+                                            className={MARKETING_SECONDARY_CTA_LG}
+                                            onClick={() => track('cta_view_sample_dossier', { location: 'home_hero' })}
+                                        >
                                             View Sample Dossier
                                             <ArrowUpRight className={HOMEPAGE_CTA_ICON + ' text-[#8B6A3D]'} />
                                         </Link>

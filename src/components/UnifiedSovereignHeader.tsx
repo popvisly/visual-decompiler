@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
+import { track } from '@vercel/analytics';
 import Logo from '@/components/Logo';
 import { supabaseClient } from '@/lib/supabase-client';
 
@@ -147,6 +148,7 @@ export default function UnifiedSovereignHeader({
 	                            {primaryCta ? (
 	                                <Link
 	                                    href={primaryCta.href}
+                                        onClick={() => track('cta_primary', { label: primaryCta.label, href: primaryCta.href, location: 'header' })}
 	                                    className={`group relative overflow-hidden rounded-full px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.22em] transition-colors duration-500 ${
 	                                        forceDark 
 	                                        ? 'border border-white/10 bg-white text-black hover:bg-[#FBF7EF]'
@@ -160,6 +162,7 @@ export default function UnifiedSovereignHeader({
 	                            ) : isAuthenticated ? (
 	                                <Link
 	                                    href="/ingest"
+                                        onClick={() => track('cta_decompile_ad', { location: 'header' })}
 	                                    className={`group relative overflow-hidden rounded-full px-5 py-2.5 text-[10px] font-bold uppercase tracking-[0.22em] transition-colors duration-500 ${
 	                                        forceDark 
 	                                        ? 'border border-white/10 bg-white text-black hover:bg-[#FBF7EF]'
@@ -171,6 +174,7 @@ export default function UnifiedSovereignHeader({
 	                            ) : (
 	                                <Link
 	                                    href="/login"
+                                        onClick={() => track('cta_login', { location: 'header' })}
 	                                    className={`px-3 py-2 text-[10px] font-bold uppercase tracking-[0.22em] transition-colors ${
 	                                        forceDark ? 'text-white/60 hover:text-white' : 'text-black/60 hover:text-black'
 	                                    }`}
