@@ -22,8 +22,8 @@ export default function MarketingSectionHeading({
 
     return (
         <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
-            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+            initial={prefersReducedMotion ? false : { y: 24 }}
+            whileInView={prefersReducedMotion ? undefined : { y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={prefersReducedMotion ? undefined : { duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className={`${isCentered ? 'text-center mx-auto' : ''} ${className}`}
