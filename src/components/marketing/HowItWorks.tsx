@@ -115,35 +115,32 @@ export default function HowItWorks() {
                     whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={prefersReducedMotion ? undefined : { duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-                    className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-12"
+                    className="rounded-[28px] border border-black/5 bg-white px-7 py-10 shadow-sm md:px-10 lg:px-12"
                 >
-                    <div className="max-w-[900px]">
-                        <MarketingSectionHeading
-                            kicker="Core Value"
-                            title="Make the work easier to defend."
-                            description="Visual Decompiler breaks down hierarchy, attention flow, tone, friction, and strategic intent — in language teams and clients can actually use."
-                            className="max-w-[900px]"
-                        />
-                    </div>
-                    <div className="lg:pt-9">
-                        <DecisionRadarCard />
-                    </div>
-                </motion.div>
+                    <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-12">
+                        <div className="max-w-[900px]">
+                            <MarketingSectionHeading
+                                kicker="Core Value"
+                                title="Make the work easier to defend."
+                                description="Visual Decompiler breaks down hierarchy, attention flow, tone, friction, and strategic intent — in language teams and clients can actually use."
+                                className="max-w-[900px]"
+                            />
 
-                <motion.div
-                    initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
-                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={prefersReducedMotion ? undefined : { duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className="mt-14 rounded-[24px] border border-black/5 bg-white px-7 py-8 shadow-sm md:px-10"
-                >
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#8B6A3D]/80">Why it matters</p>
-                    <h3 className="mt-4 text-[30px] font-semibold uppercase leading-[1.02] tracking-tight text-[#141414] md:text-[38px]">
-                        Creative reviews break down when everything stays subjective.
-                    </h3>
-                    <p className="mt-5 max-w-[860px] text-[17px] leading-[1.75] text-[#6B6B6B]">
-                        Visual Decompiler gives teams a shared language for discussing the work — so stronger ideas are easier to explain, align around, and approve.
-                    </p>
+                            <div className="mt-10 border-t border-black/5 pt-8">
+                                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#8B6A3D]/80">Why it matters</p>
+                                <h3 className="mt-4 text-[28px] font-semibold uppercase leading-[1.02] tracking-tight text-[#141414] md:text-[36px]">
+                                    Creative reviews break down when everything stays subjective.
+                                </h3>
+                                <p className="mt-5 max-w-[860px] text-[17px] leading-[1.75] text-[#6B6B6B]">
+                                    Visual Decompiler gives teams a shared language for discussing the work — so stronger ideas are easier to explain, align around, and approve.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="lg:pt-9">
+                            <DecisionRadarCard />
+                        </div>
+                    </div>
                 </motion.div>
 
 
