@@ -11,9 +11,40 @@ export const metadata: Metadata = {
 
 export default async function IntelligenceIndex() {
     const posts = await getAllPosts();
+    const siteUrl = 'https://www.visualdecompiler.com';
+
+    const collectionJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: 'Intelligence Briefings',
+        description: 'Decision-ready briefings on visual DNA, structural signals, and approval-critical execution patterns.',
+        url: `${siteUrl}/intelligence`,
+        mainEntity: {
+            '@type': 'ItemList',
+            itemListOrder: 'https://schema.org/ItemListOrderDescending',
+            numberOfItems: posts.length,
+            itemListElement: posts.map((post, index) => ({
+                '@type': 'ListItem',
+                position: index + 1,
+                url: `${siteUrl}/intelligence/briefings/${post.slug}`,
+                item: {
+                    '@type': 'Article',
+                    headline: post.title,
+                    description: post.excerpt,
+                    datePublished: new Date(post.publishedAt).toISOString(),
+                    url: `${siteUrl}/intelligence/briefings/${post.slug}`,
+                },
+            })),
+        },
+    };
 
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+            />
+
             <MarketingPageHeader
                 kicker="Strategic Briefings"
                 title="The Reading Room."

@@ -43,30 +43,76 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function BriefingPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const post = await getPostBySlug(slug);
+    const allPosts = await getAllPosts();
 
     if (!post) {
         notFound();
     }
 
-    // JSON-LD schema markup for TechArticle / Review
+    const siteUrl = 'https://www.visualdecompiler.com';
+    const url = `${siteUrl}/intelligence/briefings/${post.meta.slug}`;
+    const imageUrl = post.meta.imageUrl ? `${siteUrl}${post.meta.imageUrl}` : undefined;
+
+    const related = allPosts
+        .filter((p) => p.slug !== post.meta.slug)
+        .filter((p) => p.pillar === post.meta.pillar)
+        .slice(0, 3);
+
+    const fallbackRelated =
+        related.length >= 3
+            ? related
+            : [
+                  ...related,
+                  ...allPosts.filter((p) => p.slug !== post.meta.slug && p.pillar !== post.meta.pillar).slice(0, 3 - related.length),
+              ];
+
+    // JSON-LD schema markup (Article + breadcrumbs)
     const jsonLd = {
         '@context': 'https://schema.org',
-        '@type': 'TechArticle',
+        '@type': 'Article',
+        mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': url,
+        },
         headline: post.meta.title,
         description: post.meta.excerpt,
         author: {
             '@type': 'Organization',
-            name: post.meta.author,
+            name: post.meta.author || 'Visual Decompiler',
         },
         datePublished: new Date(post.meta.publishedAt).toISOString(),
+        ...(imageUrl ? { image: [imageUrl] } : {}),
+        keywords: [post.meta.pillar].filter(Boolean).join(', '),
         publisher: {
             '@type': 'Organization',
             name: 'Visual Decompiler',
             logo: {
                 '@type': 'ImageObject',
-                url: 'https://visualdecompiler.com/logo.png', // Replace with real full URL later
+                url: `${siteUrl}/vd_mini_logo.png`,
             },
         },
+        isPartOf: {
+            '@type': 'Blog',
+            name: 'Intelligence Briefings',
+            url: `${siteUrl}/intelligence`,
+        },
+    };
+
+    const breadcrumbJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            {
+                '@type': 'ListItem',
+                position: 1,
+                item: { '@id': `${siteUrl}/intelligence`, name: 'Intelligence' },
+            },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                item: { '@id': url, name: post.meta.title },
+            },
+        ],
     };
 
     return (
@@ -74,6 +120,10 @@ export default async function BriefingPage({ params }: { params: Promise<{ slug:
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
 
             <Link
@@ -121,6 +171,68 @@ export default async function BriefingPage({ params }: { params: Promise<{ slug:
                 <main className="prose prose-lg max-w-none prose-headings:text-[#141414] prose-h2:font-semibold prose-h3:text-[#8B6A3D] prose-strong:text-[#141414]">
                     <MDXRemote source={post.content} components={components} />
                 </main>
+
+                {fallbackRelated.length ? (
+                    <aside className="mt-20">
+                        <div className="mb-8 flex items-end justify-between gap-6">
+                            <div>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.36em] text-black/40">Related briefings</p>
+                                <h2 className="mt-4 text-2xl font-semibold tracking-tight text-[#141414]">Keep reading.</h2>
+                            </div>
+                            <Link
+                                href="/intelligence"
+                                className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B6A3D] hover:text-[#141414] transition-colors"
+                            >
+                                View all
+                            </Link>
+                        </div>
+
+                        <div className="grid gap-6 md:grid-cols-3">
+                            {fallbackRelated.map((p) => (
+                                <Link
+                                    key={p.slug}
+                                    href={`/intelligence/briefings/${p.slug}`}
+                                    className="group flex h-full flex-col overflow-hidden rounded-3xl border border-black/5 bg-white shadow-sm transition-all hover:border-black/15 hover:shadow-md"
+                                >
+                                    {p.imageUrl ? (
+                                        <div className="relative aspect-[16/10] overflow-hidden bg-[#FBFBF6]">
+                                            <img
+                                                src={p.imageUrl}
+                                                alt={p.title}
+                                                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="relative flex aspect-[16/10] items-center justify-center border-b border-black/5 bg-[#FBFBF6]">
+                                            <Sparkles className="h-7 w-7 text-black/10" />
+                                        </div>
+                                    )}
+
+                                    <div className="flex flex-1 flex-col p-7">
+                                        <div className="mb-3 flex items-center justify-between gap-4">
+                                            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#8B6A3D]/80">
+                                                {p.pillar}
+                                            </span>
+                                            <span className="font-mono text-[10px] text-[#8A8A84]">
+                                                {new Date(p.publishedAt).toLocaleDateString('en-US', {
+                                                    month: 'short',
+                                                    day: 'numeric',
+                                                    year: 'numeric',
+                                                })}
+                                            </span>
+                                        </div>
+                                        <h3 className="mb-2 text-[16px] font-semibold leading-snug text-[#141414] transition-colors group-hover:text-[#8B6A3D]">
+                                            {p.title}
+                                        </h3>
+                                        <p className="text-[13px] leading-relaxed text-[#6B6B6B]">
+                                            {p.excerpt}
+                                        </p>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </aside>
+                ) : null}
 
                 <div className="mt-24 pt-10 border-t border-black/10">
                     <div className="flex items-center justify-between">
