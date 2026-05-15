@@ -18,7 +18,7 @@ export default function SovereignCTA() {
                         Decompile Your Next Ad
                     </h4>
                     <p className="text-sm text-white/50 leading-relaxed font-light">
-                        Stop guessing. Paste any YouTube, TikTok, or Instagram URL and get a full psychological X-Ray in 60 seconds.
+                        Stop guessing. Upload an ad image (JPG, PNG, WebP) or paste an image URL and get a full psychological X-Ray in under 60 seconds.
                     </p>
                 </div>
 

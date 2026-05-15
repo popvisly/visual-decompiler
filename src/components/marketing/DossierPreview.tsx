@@ -78,10 +78,10 @@ export default function DossierPreview() {
                         <div className="rounded-[24px] border border-black/5 bg-white p-10 shadow-sm">
                             <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#D4A574]">New Analysis</p>
                             <h3 className="mt-6 text-[26px] font-black uppercase leading-[1.05] tracking-tight text-[#141414]">
-                                Multi-frame reads for modern social ads.
+                                Multi-frame reads for modern ads.
                             </h3>
                             <p className="mt-5 max-w-[68ch] text-[15px] font-medium leading-[1.75] text-[#515151]">
-                                Upload a sequence and get a hook → proof → CTA diagnosis with prioritized fixes. Built for TikTok, Instagram, Facebook, X, and YouTube workflows.
+                                Upload a sequence and get a hook → proof → CTA diagnosis with prioritized fixes. Built for fast, real-world creative review workflows.
                             </p>
 
                             <div className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -92,7 +92,7 @@ export default function DossierPreview() {
                                     },
                                     {
                                         title: 'Platform target',
-                                        body: 'Shape critique to channel norms (hook speed, caption reliance, CTA timing).',
+                                        body: 'Shape critique to placement norms (safe zones, crop risk, caption reliance).',
                                     },
                                     {
                                         title: 'Sequence coherence',
