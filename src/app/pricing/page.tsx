@@ -8,11 +8,12 @@ import FooterStartNow from '@/components/marketing/FooterStartNow';
 import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 import { PRICING, PRICING_COMPARISON_ROWS, PRICING_POSITIONING_LINES } from '@/lib/pricing';
 import LogoMark from '@/components/LogoMark';
+import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const PLAN_SUMMARIES = {
-    observer: ['5 full dossiers', 'Private vault memory', 'No card required'],
+    observer: ['Sample dossier', '1 full analysis', 'No card required'],
     strategic: ['250 dossiers / cycle', 'Compare routes', 'Export decision artifacts'],
     professional: ['250 dossiers / cycle', '3-5 seats', 'Shared Vault + Boards'],
     agency: ['Custom volume', 'Up to 10 seats', 'White-label intelligence OS'],
@@ -140,6 +141,12 @@ export default function PricingPage() {
                                 className="inline-flex w-full items-center justify-center rounded-full bg-[#141414] px-8 py-5 text-[11px] font-bold uppercase tracking-[0.2em] text-[#FBF7EF] transition hover:bg-black"
                             >
                                 {PRICING.observer.ctaLabel}
+                            </a>
+                            <a
+                                href="/sample"
+                                className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-black/10 bg-[#FBFBF6] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.2em] text-[#141414] transition hover:bg-white"
+                            >
+                                View Sample Vault
                             </a>
                         </motion.article>
 

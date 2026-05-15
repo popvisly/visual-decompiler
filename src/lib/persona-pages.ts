@@ -56,7 +56,7 @@ export const ART_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
         label: 'View Sample Dossier',
         href: SAMPLE_DOSSIER_HREF,
     },
-    trustLine: 'No card required · 5 free analyses · Results in under 60 seconds',
+    trustLine: 'No card required · Sample dossier · 1 free analysis',
     firstUploadRecipe: {
         upload: 'Upload your strongest work-in-progress concept or the reference driving the route.',
         outcome: 'Look for the dominant mechanic, friction risk, and the recommended move.',
@@ -133,7 +133,7 @@ export const NEW_BUSINESS_PERSONA_PAGE: PersonaPageData = {
         label: 'View Sample Dossier',
         href: SAMPLE_DOSSIER_HREF,
     },
-    trustLine: 'No card required · 5 free analyses · White-label pitch-ready export',
+    trustLine: 'No card required · Sample dossier · 1 free analysis',
     firstUploadRecipe: {
         upload: 'Upload the client’s top competitor or the category leader you expect in the room.',
         outcome: 'Look for whitespace, strategic delta, and the story the pitch should own.',
@@ -205,7 +205,7 @@ export const CREATIVE_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
         label: 'View Sample Dossier',
         href: SAMPLE_DOSSIER_HREF,
     },
-    trustLine: 'No card required · 5 free analyses · White-label export ready',
+    trustLine: 'No card required · Sample dossier · 1 free analysis',
     firstUploadRecipe: {
         upload: 'Upload the reference the team keeps circling or the competitor ad everyone is reacting to.',
         outcome: 'Look for the mechanism, production logic, and the route worth building from.',
@@ -277,7 +277,7 @@ export const STRATEGY_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
         label: 'View Sample Dossier',
         href: SAMPLE_DOSSIER_HREF,
     },
-    trustLine: 'No card required · 5 free analyses · White-label dossier export included',
+    trustLine: 'No card required · Sample dossier · 1 free analysis',
     firstUploadRecipe: {
         upload: 'Upload the lead competitor asset your client keeps pointing at or the route you need to defend.',
         outcome: 'Look for strategic posture, market implications, and the confidence you can present.',
@@ -349,7 +349,7 @@ export const BRAND_MANAGER_PERSONA_PAGE: PersonaPageData = {
         label: 'View Sample Dossier',
         href: SAMPLE_DOSSIER_HREF,
     },
-    trustLine: 'No card required · 5 free analyses · No creative background required',
+    trustLine: 'No card required · Sample dossier · 1 free analysis',
     firstUploadRecipe: {
         upload: 'Upload the latest agency concept or the competitor ad your team is benchmarking against.',
         outcome: 'Look for brief fit, persuasion gaps, and the clearest point of pushback.',
@@ -421,7 +421,7 @@ export const COPYWRITER_PERSONA_PAGE: PersonaPageData = {
         label: 'View Sample Dossier',
         href: SAMPLE_DOSSIER_HREF,
     },
-    trustLine: 'No card required · 5 free analyses · Results in under 60 seconds',
+    trustLine: 'No card required · Sample dossier · 1 free analysis',
     firstUploadRecipe: {
         upload: 'Upload the campaign visual or reference image you need to write against.',
         outcome: 'Look for emotional register, audience posture, and message tension.',
