@@ -9,7 +9,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { cookies } from 'next/headers';
 import { Printer } from 'lucide-react';
 import AssetWorkspace from '@/app/(dashboard)/asset/[id]/client-workspace';
-import { SAMPLE_DOSSIER_ASSET_ID, SAMPLE_DOSSIER_SLUG } from '@/lib/sample-dossier';
+import { getSampleDossierBySlug } from '@/lib/sample-dossier';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -21,26 +21,27 @@ export default async function SharedPortalPage({
 }) {
     const { slug } = await params;
 
-    if (slug === SAMPLE_DOSSIER_SLUG) {
-        const { data: rawAsset, error } = await supabaseAdmin
-            .from('assets')
-            .select(`
-                *,
-                brands ( name, market_sector ),
-                extractions ( * )
-            `)
-            .eq('id', SAMPLE_DOSSIER_ASSET_ID)
-            .single();
-
-        if (error || !rawAsset) notFound();
-
+    const sample = getSampleDossierBySlug(slug);
+    if (sample) {
         const asset = {
-            id: rawAsset.id,
-            type: rawAsset.type,
-            file_url: rawAsset.file_url,
-            tags: Array.isArray(rawAsset.tags) ? rawAsset.tags : [],
-            brand: rawAsset.brands ? { name: rawAsset.brands.name, market_sector: rawAsset.brands.market_sector } : undefined,
-            extraction: rawAsset.extractions ? rawAsset.extractions : undefined,
+            id: `sample-${sample.key}`,
+            type: 'image',
+            file_url: sample.imageUrl,
+            tags: [],
+            brand: sample.brand,
+            extraction: {
+                primary_mechanic: sample.primaryMechanic,
+                confidence_score: sample.confidenceScore,
+                evidence_anchors: [
+                    'Entry point: where the eye lands first.',
+                    'Transfer: what inherits meaning through proximity and hierarchy.',
+                    'Friction: what creates resistance or ambiguity.',
+                ],
+                full_dossier: {
+                    ...sample.dossier,
+                    persuasion_metrics: sample.persuasionMetrics,
+                },
+            },
         };
 
         const sampleAgency = {
@@ -50,7 +51,7 @@ export default async function SharedPortalPage({
             tier: 'Agency Sovereignty',
         };
 
-        return <AssetWorkspace initialAsset={asset} isSovereign={true} agency={sampleAgency} sampleMode />;
+        return <AssetWorkspace initialAsset={asset as any} isSovereign={true} agency={sampleAgency} sampleMode />;
     }
 
     // Check Authorization
