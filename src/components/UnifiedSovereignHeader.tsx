@@ -67,7 +67,7 @@ export default function UnifiedSovereignHeader({
         ]
         : [
             { key: 'product', label: 'Product', href: '/product' },
-            { key: 'sample', label: 'Sample Dossier', href: '/share/sample-dossier' },
+            { key: 'sample', label: 'Sample Vault', href: '/sample' },
             { key: 'pricing', label: 'Pricing', href: '/pricing' },
             { key: 'method', label: 'Method', href: '/trust-method' },
         ];

@@ -79,7 +79,7 @@ export default function ContainerScrollHero() {
                                             <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                                         </Link>
                                         <Link
-                                            href="/share/sample-dossier"
+                                            href="/sample"
                                             className={MARKETING_SECONDARY_CTA_LG}
                                             onClick={() => track('cta_view_sample_dossier', { location: 'home_hero' })}
                                         >

@@ -228,8 +228,7 @@ export const SAMPLE_DOSSIERS: readonly SampleDossierDefinition[] = [
     }),
 ] as const;
 
-export const SAMPLE_DOSSIER_HREF = '/share/sample-dossier';
+export const SAMPLE_DOSSIER_HREF = '/sample';
 
 export const getSampleDossierBySlug = (slug: string) =>
     SAMPLE_DOSSIERS.find((entry) => entry.slug === slug) || null;
-

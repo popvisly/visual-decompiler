@@ -130,7 +130,7 @@ export default function CinematicHero() {
                                     </Link>
 
                                     <Link
-                                        href="/share/sample-dossier"
+                                        href="/sample"
                                         className="inline-flex h-12 items-center justify-center rounded-2xl border border-[#8B6A3D]/20 bg-white/[0.04] px-6 text-[14px] text-[#F3EEE3] transition-all duration-200 hover:border-[#D4A574]/35 hover:bg-white/[0.1] hover:text-white"
                                     >
                                         View Sample Dossier

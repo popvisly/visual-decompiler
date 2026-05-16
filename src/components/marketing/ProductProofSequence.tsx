@@ -81,7 +81,7 @@ function SingleAssetDeconstruction() {
                         Not a score. Not a dashboard. A close creative read of hierarchy, posture, restraint, and where the work starts to loosen.
                     </p>
                     <a
-                        href="/share/sample-dossier"
+                        href="/sample"
                         className="mt-10 inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-8 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#0E0C0A] transition hover:bg-[#E0B882]"
                     >
                         View Sample Dossier
@@ -516,7 +516,7 @@ function TrustBoundaryPanel() {
                         The rigor lives underneath the surface: in the read, the comparison, and the direction that follows. The judgment still belongs to the creative.
                     </p>
                     <a
-                        href="/share/sample-dossier"
+                        href="/sample"
                         className="inline-flex items-center gap-2.5 rounded-full bg-[#D4A574] px-8 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-[#141414] transition hover:bg-[#E0B882] hover:-translate-y-0.5"
                     >
                         View Sample Dossier

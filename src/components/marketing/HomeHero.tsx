@@ -40,7 +40,7 @@ export default function HomeHero() {
                                 <ArrowUpRight className={HOMEPAGE_CTA_ICON} />
                             </Link>
                             <Link
-                                href="/share/sample-dossier"
+                                href="/sample"
                                 className={MARKETING_SECONDARY_CTA_LG}
                             >
                                 View Sample Dossier
