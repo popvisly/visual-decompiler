@@ -10,12 +10,16 @@ import { HOMEPAGE_CTA_ICON, MARKETING_PRIMARY_CTA_LG, MARKETING_SECONDARY_CTA_LG
 
 const FAQS = [
     {
-        q: 'What kind of ads can I analyse?',
-        a: 'Any static ad: print, digital, social, OOH. Upload JPG, PNG, WebP, or bring in a URL. Visual Decompiler reads the creative itself, not just the media placement around it.',
+        q: 'What kind of ads can I review?',
+        a: 'Any static ad: print, digital, social, OOH. Upload JPG, PNG, WebP, or bring in an image URL. Visual Decompiler reads the creative itself, not the media placement around it.',
     },
     {
         q: 'How is this different from ad monitoring platforms?',
-        a: 'Visual Decompiler is for reading what the work is doing once it is in front of you: its hierarchy, tension, identity pull, and distinctiveness.',
+        a: 'Visual Decompiler is a creative review system: it turns subjective reactions into a structured read of hierarchy, tension, identity pull, and what to change next.',
+    },
+    {
+        q: 'Why pay when I can just ask an AI agent?',
+        a: 'Agents can give you a take. Visual Decompiler gives you a repeatable workflow you can use in client reviews: consistent structure, clearer next actions, and a Vault-backed trail you can revisit instead of re-prompting every time.',
     },
     {
         q: 'Who is this actually for?',
