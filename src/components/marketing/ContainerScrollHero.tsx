@@ -61,9 +61,8 @@ export default function ContainerScrollHero() {
 
                                     {/* Give Them a Superpower — H1 */}
                                     <h1 className="mt-5 text-[clamp(38px,6.1vw,92px)] font-black uppercase leading-[0.9] tracking-[-0.02em] text-[#141414]">
-                                        <span className="block">Find out</span>
-                                        <span className="block">What makes an</span>
-                                        <span className="block">ad work!</span>
+                                        <span className="block">Win the Pitch.</span>
+                                        <span className="block">Get the clicks!</span>
                                     </h1>
 
                                     {/* Give Them a Superpower — sub-headline */}
