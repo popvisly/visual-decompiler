@@ -2,7 +2,8 @@ import Stripe from 'stripe';
 
 const secretKey = process.env.STRIPE_SECRET_KEY;
 
-if (!secretKey && process.env.NODE_ENV === 'production') {
+// Avoid noisy local builds (e.g. `next build` without .env.local). Only warn when running on Vercel.
+if (!secretKey && process.env.VERCEL) {
     console.warn('⚠️ STRIPE_SECRET_KEY is missing. Billing features will be disabled at runtime.');
 }
 
