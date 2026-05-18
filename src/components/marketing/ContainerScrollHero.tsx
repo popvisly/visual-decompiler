@@ -28,71 +28,9 @@ const STEPS = [
     },
 ] as const;
 
-const HERO_TYPE_LINES = ['Read the ad.', 'Know the move.'] as const;
-
-function useTypewriter<const T extends readonly string[]>(
-    lines: T,
-    opts: { enabled: boolean; charDelayMs: number; linePauseMs: number; startDelayMs?: number },
-): { [K in keyof T]: string } {
-    const { enabled, charDelayMs, linePauseMs, startDelayMs = 0 } = opts;
-    const [typed, setTyped] = useState(() => lines.map(() => '') as unknown as { [K in keyof T]: string });
-
-    useEffect(() => {
-        if (!enabled) {
-            setTyped(lines.map((line) => line) as unknown as { [K in keyof T]: string });
-            return;
-        }
-
-        let cancelled = false;
-        let lineIndex = 0;
-        let charIndex = 0;
-        let timeoutId: number | null = null;
-
-        const tick = () => {
-            if (cancelled) return;
-            const currentLine = lines[lineIndex] ?? '';
-            const nextCharIndex = Math.min(currentLine.length, charIndex + 1);
-
-            setTyped((prev) => {
-                const next = [...(prev as unknown as string[])] as string[];
-                next[lineIndex] = currentLine.slice(0, nextCharIndex);
-                return next as unknown as { [K in keyof T]: string };
-            });
-
-            charIndex = nextCharIndex;
-
-            if (charIndex >= currentLine.length) {
-                // Move to next line after a short pause.
-                if (lineIndex >= lines.length - 1) return;
-                lineIndex += 1;
-                charIndex = 0;
-                timeoutId = window.setTimeout(tick, linePauseMs);
-                return;
-            }
-
-            timeoutId = window.setTimeout(tick, charDelayMs);
-        };
-
-        timeoutId = window.setTimeout(tick, startDelayMs);
-
-        return () => {
-            cancelled = true;
-            if (timeoutId) window.clearTimeout(timeoutId);
-        };
-    }, [enabled, charDelayMs, linePauseMs, startDelayMs, lines]);
-
-    return typed;
-}
-
 export default function ContainerScrollHero() {
     const prefersReducedMotion = useReducedMotion();
     const [showScrollHint, setShowScrollHint] = useState(true);
-    const typed = useTypewriter(HERO_TYPE_LINES, {
-        enabled: !prefersReducedMotion,
-        charDelayMs: 34,
-        linePauseMs: 420,
-        startDelayMs: 120,
-    });
 
     useEffect(() => {
         if (prefersReducedMotion) return;
@@ -123,18 +61,8 @@ export default function ContainerScrollHero() {
 
                                     {/* Give Them a Superpower — H1 */}
                                     <h1 className="mt-5 text-[clamp(38px,6.1vw,92px)] font-black uppercase leading-[0.9] tracking-[-0.02em] text-[#141414]">
-                                        <span className="sr-only">Read the ad. Know the move.</span>
-                                        {prefersReducedMotion ? (
-                                            <>
-                                                <span className="block">Read the ad.</span>
-                                                <span className="block">Know the move.</span>
-                                            </>
-                                        ) : (
-                                            <span className="inline-block text-left">
-                                                <span className="block min-h-[0.9em]">{typed[0]}</span>
-                                                <span className="block min-h-[0.9em]">{typed[1]}</span>
-                                            </span>
-                                        )}
+                                        <span className="block">READ THE AD.</span>
+                                        <span className="block">KNOW THE NEXT MOVE.</span>
                                     </h1>
 
                                     {/* Give Them a Superpower — sub-headline */}
