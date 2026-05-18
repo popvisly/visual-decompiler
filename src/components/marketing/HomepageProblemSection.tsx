@@ -18,20 +18,35 @@ export default function HomepageProblemSection() {
                                 className="max-w-2xl"
                             />
 
-                            <div className="mt-10 grid gap-5">
-                                {[
-                                    'What is this supposed to do?',
-                                    'Where does it fit?',
-                                    'Why should it work?',
-                                ].map((line) => (
-                                    <div key={line} className="rounded-[1.5rem] border border-black/5 bg-[#FBFBF6] px-6 py-5">
-                                        <p className="text-[17px] font-medium leading-snug text-[#141414]">{line}</p>
-                                    </div>
-                                ))}
+                            <div className="mt-10 rounded-[1.75rem] border border-black/5 bg-[#FBFBF6] p-8">
+                                <p className="text-[10px] font-bold uppercase tracking-[0.34em] text-[#8B6A3D]/80">
+                                    What Teams Actually Need
+                                </p>
+                                <ul className="mt-6 space-y-5">
+                                    {[
+                                        {
+                                            title: 'A repeatable creative review system',
+                                            body: 'Same structure every time — so feedback stops drifting into vibes and taste debates.',
+                                        },
+                                        {
+                                            title: 'Clear next actions',
+                                            body: 'Not “it feels off” — specific fixes for hierarchy, friction, and intent so revisions get shorter.',
+                                        },
+                                        {
+                                            title: 'A defensible trail',
+                                            body: 'Reads that live in the Vault, so you can reference what you decided and why — without re-prompting.',
+                                        },
+                                    ].map((item) => (
+                                        <li key={item.title} className="space-y-2">
+                                            <p className="text-[12px] font-black uppercase tracking-[0.22em] text-[#141414]">{item.title}</p>
+                                            <p className="text-[15px] leading-relaxed text-[#6B6B6B]">{item.body}</p>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
 
                             <p className="mt-10 text-[18px] leading-[1.7] text-[#6B6B6B]">
-                                Without answers, every review becomes subjective. The teams who fixed this stopped guessing — and started using a different system.
+                                Without this, every review becomes subjective. Visual Decompiler turns instinct into something you can place, explain, and defend — fast.
                             </p>
                         </div>
 
