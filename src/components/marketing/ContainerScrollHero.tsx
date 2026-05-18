@@ -28,6 +28,8 @@ const STEPS = [
     },
 ] as const;
 
+const HERO_TYPE_LINES = ['Read the ad.', 'Know the move.'] as const;
+
 function useTypewriter<const T extends readonly string[]>(
     lines: T,
     opts: { enabled: boolean; charDelayMs: number; linePauseMs: number; startDelayMs?: number },
@@ -85,8 +87,7 @@ function useTypewriter<const T extends readonly string[]>(
 export default function ContainerScrollHero() {
     const prefersReducedMotion = useReducedMotion();
     const [showScrollHint, setShowScrollHint] = useState(true);
-    const typeLines = ['Read the ad.', 'Know the move.'] as const;
-    const typed = useTypewriter(typeLines, {
+    const typed = useTypewriter(HERO_TYPE_LINES, {
         enabled: !prefersReducedMotion,
         charDelayMs: 34,
         linePauseMs: 420,
