@@ -82,11 +82,11 @@ export default function UnifiedSovereignHeader({
                         transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)]
                         ${isScrolled
                             ? forceDark
-                                ? 'py-2.5 lg:py-3 px-5 lg:px-8 bg-[#050505]/60 backdrop-blur-xl rounded-full border border-[#8B6A3D]/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
-                                : 'py-2.5 lg:py-3 px-5 lg:px-8 bg-white/60 backdrop-blur-xl rounded-full border border-[#8B6A3D]/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)]'
+                                ? 'py-2.5 lg:py-3 px-5 lg:px-8 bg-[#050505]/60 backdrop-blur-2xl rounded-full border border-[#8B6A3D]/20 shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.05)]'
+                                : 'py-2.5 lg:py-3 px-5 lg:px-8 bg-white/70 backdrop-blur-2xl rounded-full border border-[#8B6A3D]/15 shadow-[0_8px_32px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.8)]'
                             : forceDark
-                                ? 'py-2.5 lg:py-3 px-5 backdrop-blur-xl rounded-full border border-[#8B6A3D]/10 bg-[#050505]/30'
-                                : 'py-2.5 lg:py-3 px-5 backdrop-blur-xl rounded-full border border-[#8B6A3D]/10 bg-white/30'
+                                ? 'py-2.5 lg:py-3 px-5 backdrop-blur-md rounded-full border border-[#8B6A3D]/10 bg-[#050505]/30'
+                                : 'py-2.5 lg:py-3 px-5 backdrop-blur-md rounded-full border border-[#8B6A3D]/10 bg-white/40'
                         }
                     `}
                 >

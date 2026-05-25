@@ -56,7 +56,7 @@ export default function HomepageProblemSection() {
                                 src="/c-levels.png" 
                                 alt="Creative Review Process" 
                                 fill 
-                                className="object-cover object-center"
+                                className="object-cover object-center parallax-image"
                                 sizes="(max-width: 1024px) 100vw, 50vw"
                                 priority
                             />

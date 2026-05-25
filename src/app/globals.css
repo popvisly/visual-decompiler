@@ -580,3 +580,30 @@ select.styled-select {
         background: #FBF7EF !important;
     }
 }
+
+/* ══════════════════════════════════════════════
+   SCROLL-DRIVEN MICRO-INTERACTIONS
+   ══════════════════════════════════════════════ */
+
+@keyframes parallax-subtle {
+  from {
+    transform: translateY(40px) scale(1.05);
+  }
+  to {
+    transform: translateY(-40px) scale(1.05);
+  }
+}
+
+@supports (animation-timeline: view()) and (animation-range: entry) {
+  .parallax-image {
+    animation: parallax-subtle linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-image {
+    animation: none !important;
+  }
+}

@@ -29,7 +29,7 @@ export default function MarketingSectionHeading({
             className={`${isCentered ? 'text-center mx-auto' : ''} ${className}`}
         >
             <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#8B6A3D]/80">{kicker}</p>
-            <h2 className={`mt-5 max-w-[16ch] text-[clamp(36px,5vw,56px)] font-semibold uppercase leading-[0.9] tracking-tight text-[#141414] ${isCentered ? 'mx-auto' : ''}`}>
+            <h2 className={`mt-5 max-w-[16ch] text-[clamp(36px,5vw,56px)] font-bold uppercase leading-[0.9] tracking-tight text-[#141414] ${isCentered ? 'mx-auto' : ''}`}>
                 {title}
             </h2>
             {description ? (

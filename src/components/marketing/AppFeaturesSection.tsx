@@ -76,19 +76,22 @@ export default function AppFeaturesSection() {
                                     whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                                     viewport={{ once: true, margin: '-50px' }}
                                     transition={prefersReducedMotion ? undefined : { duration: 0.5, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                                    className="group relative bg-white p-8 transition-colors hover:bg-[#FBFBF6] xl:p-10"
+                                    className="group relative overflow-hidden bg-white p-8 transition-colors duration-500 hover:bg-[#FAFAF5] xl:p-10"
                                 >
-                                    <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FBFBF6] text-[#8B6A3D] shadow-inner transition-colors group-hover:bg-white group-hover:shadow-sm">
-                                        <Icon className="h-5 w-5" />
+                                    {/* Subtle interactive sheen */}
+                                    <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#8B6A3D]/[0.03] to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
+                                    
+                                    <div className="relative z-10 mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FBFBF6] text-[#8B6A3D] shadow-[inset_0_1px_4px_rgba(0,0,0,0.04)] transition-all duration-500 ease-out group-hover:scale-110 group-hover:bg-white group-hover:shadow-[0_8px_16px_rgba(139,106,61,0.08)]">
+                                        <Icon className="h-5 w-5 transition-transform duration-500 ease-out group-hover:scale-110" />
                                     </div>
-                                    <div className="flex items-center gap-3 mb-3">
-                                        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D]">{feature.label}</p>
-                                        <div className="h-px flex-1 bg-gradient-to-r from-black/5 to-transparent" />
+                                    <div className="relative z-10 flex items-center gap-3 mb-3">
+                                        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#8B6A3D] transition-colors duration-500">{feature.label}</p>
+                                        <div className="h-px flex-1 bg-gradient-to-r from-black/5 to-transparent transition-all duration-500 group-hover:from-[#8B6A3D]/20" />
                                     </div>
-                                    <h3 className="text-[18px] font-semibold uppercase leading-tight tracking-tight text-[#141414]">
+                                    <h3 className="relative z-10 text-[18px] font-semibold uppercase leading-tight tracking-tight text-[#141414] transition-colors duration-500">
                                         {feature.title}
                                     </h3>
-                                    <p className="mt-3 text-[15px] leading-[1.65] text-[#6B6B6B]">
+                                    <p className="relative z-10 mt-3 text-[15px] leading-[1.65] text-[#6B6B6B] transition-colors duration-500 group-hover:text-[#4A4A4A]">
                                         {feature.desc}
                                     </p>
                                 </motion.article>
