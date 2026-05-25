@@ -126,15 +126,7 @@ export default function HowItWorks() {
                                 className="max-w-[900px]"
                             />
 
-                            <div className="mt-10 border-t border-black/5 pt-8">
-                                <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-[#8B6A3D]/80">Why it matters</p>
-                                <h3 className="mt-4 text-[28px] font-semibold uppercase leading-[1.02] tracking-tight text-[#141414] md:text-[36px]">
-                                    Creative reviews break down when everything stays subjective.
-                                </h3>
-                                <p className="mt-5 max-w-[860px] text-[17px] leading-[1.75] text-[#6B6B6B]">
-                                    Visual Decompiler gives teams a shared language for discussing the work — so stronger ideas are easier to explain, align around, and approve.
-                                </p>
-                            </div>
+
                         </div>
 
                         <div className="lg:pt-9">
