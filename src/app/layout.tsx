@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://www.visualdecompiler.com'),
+    metadataBase: new URL('https://visualdecompiler.com'),
     title: {
         default: 'Visual Decompiler — Visual Judgment for Working Creatives',
         template: '%s | Visual Decompiler',
@@ -29,12 +29,12 @@ export const metadata: Metadata = {
         'visual decompiler',
         'ad teardown tool',
     ],
-    authors: [{ name: 'Visual Decompiler', url: 'https://www.visualdecompiler.com' }],
+    authors: [{ name: 'Visual Decompiler', url: 'https://visualdecompiler.com' }],
     creator: 'Visual Decompiler',
     openGraph: {
         type: 'website',
         locale: 'en_US',
-        url: 'https://www.visualdecompiler.com',
+        url: 'https://visualdecompiler.com',
         siteName: 'Visual Decompiler',
         title: 'Visual Decompiler — Visual Judgment for Working Creatives',
         description: 'Decompile any ad into a sharper read of hierarchy, tension, identity pull, and what to do next.',
@@ -83,8 +83,8 @@ export default function RootLayout({
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name: 'Visual Decompiler',
-        url: 'https://www.visualdecompiler.com',
-        logo: 'https://www.visualdecompiler.com/vd_mini_logo.png',
+        url: 'https://visualdecompiler.com',
+        logo: 'https://visualdecompiler.com/vd_mini_logo.png',
         sameAs: [
             'https://twitter.com/visualdecompiler',
         ],

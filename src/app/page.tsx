@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import ContainerScrollHero from '@/components/marketing/ContainerScrollHero';
 import HomepageProblemSection from '@/components/marketing/HomepageProblemSection';
@@ -12,6 +13,12 @@ import WhyDifferent from '@/components/marketing/WhyDifferent';
 import MarketLimitationSection from '@/components/marketing/MarketLimitationSection';
 import AppFeaturesSection from '@/components/marketing/AppFeaturesSection';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
+
+export const metadata: Metadata = {
+    title: 'Ad Analysis Software for Creative Teams',
+    description:
+        'Visual Decompiler helps creative teams analyze ads, read persuasive signals, and turn visual instinct into evidence they can present.',
+};
 
 export default function HomePage() {
     return (
