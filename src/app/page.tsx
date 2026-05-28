@@ -13,6 +13,7 @@ import WhyDifferent from '@/components/marketing/WhyDifferent';
 import MarketLimitationSection from '@/components/marketing/MarketLimitationSection';
 import AppFeaturesSection from '@/components/marketing/AppFeaturesSection';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
+import SoftwareApplicationJsonLd from '@/components/seo/SoftwareApplicationJsonLd';
 
 export const metadata: Metadata = {
     title: 'Ad Analysis Tool for Creative Teams',
@@ -23,6 +24,12 @@ export const metadata: Metadata = {
 export default function HomePage() {
     return (
         <main>
+            <SoftwareApplicationJsonLd
+                pageUrl="https://www.visualdecompiler.com/"
+                pageName="Ad Analysis Tool for Creative Teams"
+                pageDescription="Visual Decompiler is an ad analysis tool for creative teams that helps you read persuasive signals and turn visual instinct into evidence you can present."
+                pageKeywords={['ad analysis tool', 'creative analysis tool', 'ad creative analysis']}
+            />
             <UnifiedSovereignHeader primaryCta={{ label: 'Start Free', href: '/ingest' }} />
             <ContainerScrollHero />
             <HomepageProblemSection />

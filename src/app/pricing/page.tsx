@@ -9,6 +9,7 @@ import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 import { PRICING, PRICING_COMPARISON_ROWS, PRICING_POSITIONING_LINES } from '@/lib/pricing';
 import LogoMark from '@/components/LogoMark';
 import { SAMPLE_DOSSIER_HREF } from '@/lib/sample-dossier';
+import SoftwareApplicationJsonLd from '@/components/seo/SoftwareApplicationJsonLd';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -89,6 +90,12 @@ export default function PricingPage() {
 
     return (
         <main className="min-h-screen bg-[#FBFBF6] text-[#141414]">
+            <SoftwareApplicationJsonLd
+                pageUrl="https://www.visualdecompiler.com/pricing"
+                pageName="Creative Intelligence Platform Pricing"
+                pageDescription="Explore Visual Decompiler pricing for creatives, strategists, and agency teams who need structured ad analysis and defensible creative rationale."
+                pageKeywords={['creative intelligence platform pricing', 'ad analysis tool pricing', 'creative review software pricing']}
+            />
             <UnifiedSovereignHeader />
 
             <MarketingPageHeader

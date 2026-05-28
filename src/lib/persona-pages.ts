@@ -119,6 +119,83 @@ export const COMPETITOR_AD_ANALYSIS_PAGE: PersonaPageData = {
     },
 };
 
+export const CREATIVE_INTELLIGENCE_PLATFORM_PAGE: PersonaPageData = {
+    slug: 'creative-intelligence-platform',
+    eyebrow: 'Creative Intelligence Platform',
+    headlineLines: ['Turn creative', 'instinct into', 'structured proof.'],
+    subline:
+        'Visual Decompiler is a creative intelligence platform for teams that need more than taste and faster than manual strategy work. Upload an ad and get back the signal, intent, pressure points, and decision logic your team can actually use.',
+    primaryCta: {
+        label: 'Start Free',
+        href: '/ingest',
+    },
+    secondaryCta: {
+        label: 'View Sample Dossier',
+        href: SAMPLE_DOSSIER_HREF,
+    },
+    trustLine: 'No card required · Sample dossier · 1 free analysis',
+    firstUploadRecipe: {
+        upload: 'Upload the live ad, the work in progress, or the reference route your team is debating.',
+        outcome: 'Look for the dominant mechanic, friction risks, strategic posture, and the recommended next move.',
+        next: 'Save it, compare it, or export the findings into a dossier the room can work from.',
+    },
+    proofPoints: [
+        'Structured analysis across hierarchy, psychology, brand posture, and decision logic',
+        'Built for strategists, creative leads, agencies, and client-facing teams',
+        'Returns a decision artifact instead of an unstructured AI take',
+    ],
+    features: [
+        {
+            eyebrow: 'Decision Surface',
+            title: 'A creative intelligence platform, not a one-off answer',
+            body:
+                'Visual Decompiler gives teams a repeatable system for reading ad creative. Instead of one loose output, it returns structured analysis your team can inspect, challenge, and use across reviews, pitches, and client conversations.',
+        },
+        {
+            eyebrow: 'Structured Read',
+            title: 'See what the creative is really doing',
+            body:
+                'Every analysis surfaces hierarchy, attention path, emotional pressure, identity cues, and strategic posture. That helps your team move from “I like it” to a clearer explanation of what is actually carrying the result.',
+        },
+        {
+            eyebrow: 'Compounding Workflow',
+            title: 'Move from isolated reads to reusable intelligence',
+            body:
+                'A creative intelligence platform should compound. Visual Decompiler connects single-asset reads to the Vault, comparison workflows, dossiers, and ongoing category interpretation so each analysis becomes more useful over time.',
+        },
+        {
+            eyebrow: 'Client-Ready Output',
+            title: 'Leave with rationale the room can use',
+            body:
+                'The value is not only the analysis. It is the translation of that analysis into evidence anchors, recommended moves, and language that travels into decks, reviews, and strategic decisions without sounding like software output.',
+        },
+    ],
+    faqs: [
+        {
+            question: 'How is this different from an AI chat tool?',
+            answer:
+                'An AI chat tool can generate an opinion. Visual Decompiler gives you a fixed decision system with structured outputs, reusable context, and a clearer trail from observation to recommendation.',
+        },
+        {
+            question: 'Who is this platform for?',
+            answer:
+                'It is built for creative teams, strategists, agencies, consultants, and in-house brand teams that need a more precise read on what ad creative is doing before they commit to a route.',
+        },
+        {
+            question: 'Do I need a finished asset to use it?',
+            answer:
+                'No. It works on live campaigns, work in progress, competitor ads, and reference material. In many cases it is most useful before the direction is locked.',
+        },
+    ],
+    finalCta: {
+        headline: 'Use the platform on the ad in front of you.',
+        subline: 'Start with one creative asset and see how quickly instinct becomes structured proof your team can defend.',
+        label: 'Start Free',
+        href: '/ingest',
+        note: 'No card required · First 5 analyses free',
+    },
+};
+
 export const ART_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     slug: 'for-art-directors',
     eyebrow: 'For Art Directors & Creative Leads',
