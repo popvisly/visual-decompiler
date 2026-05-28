@@ -52,6 +52,16 @@ export default async function IntelligenceIndex() {
                 sectionClassName="pt-0 pb-20 lg:pb-24"
             />
 
+            <div className="mx-auto mb-10 w-full max-w-[1120px] px-6 lg:px-12">
+                <p className="max-w-3xl text-[14px] leading-relaxed text-[#6B6B6B]">
+                    If you want the direct commercial use case behind these briefings, start with our{' '}
+                    <Link href="/competitor-ad-analysis" className="font-semibold text-[#141414] underline decoration-[#C1A674]/40 underline-offset-4">
+                        competitor ad analysis landing page
+                    </Link>
+                    , which shows how teams turn competitor creative into structured strategic proof.
+                </p>
+            </div>
+
             <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                     {posts.map((post) => (

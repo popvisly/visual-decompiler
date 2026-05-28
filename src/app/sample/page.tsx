@@ -29,6 +29,13 @@ export default function SampleVaultPage() {
                         <p className="max-w-2xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
                             Browse sample dossiers to see how competitor ad analysis becomes evidence, strategic reads, and decision-ready rationale before you spend a credit.
                         </p>
+                        <p className="max-w-2xl text-[14px] leading-relaxed text-[#8A7B64] md:text-[15px]">
+                            Need the broader overview first? Visit our{' '}
+                            <Link href="/competitor-ad-analysis" className="font-semibold text-[#141414] underline decoration-[#C1A674]/40 underline-offset-4">
+                                competitor ad analysis page
+                            </Link>{' '}
+                            for the full workflow, use cases, and rationale.
+                        </p>
                         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                             <Link
                                 href="/share/sample-dossier"

@@ -150,6 +150,7 @@ export default function FooterStartNow() {
                         {[
                             { label: 'About', href: '/about' },
                             { label: 'Pricing', href: '/pricing' },
+                            { label: 'Competitor Analysis', href: '/competitor-ad-analysis' },
                             { label: 'Method', href: '/trust-method' },
                             { label: 'Vault', href: '/vault' },
                             { label: 'Help', href: '/docs/user-guide' },
