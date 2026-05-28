@@ -36,6 +36,13 @@ export default function SampleVaultPage() {
                             </Link>{' '}
                             for the full workflow, use cases, and rationale.
                         </p>
+                        <p className="max-w-2xl text-[14px] leading-relaxed text-[#8A7B64] md:text-[15px]">
+                            Want the platform-level view? Explore our{' '}
+                            <Link href="/creative-intelligence-platform" className="font-semibold text-[#141414] underline decoration-[#C1A674]/40 underline-offset-4">
+                                creative intelligence platform page
+                            </Link>{' '}
+                            to see how these dossier reads fit into a broader decision system.
+                        </p>
                         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                             <Link
                                 href="/share/sample-dossier"

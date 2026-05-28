@@ -60,6 +60,13 @@ export default async function IntelligenceIndex() {
                     </Link>
                     , which shows how teams turn competitor creative into structured strategic proof.
                 </p>
+                <p className="mt-4 max-w-3xl text-[14px] leading-relaxed text-[#6B6B6B]">
+                    For the broader operating model, visit the{' '}
+                    <Link href="/creative-intelligence-platform" className="font-semibold text-[#141414] underline decoration-[#C1A674]/40 underline-offset-4">
+                        creative intelligence platform page
+                    </Link>
+                    {' '}to see how analysis moves from isolated reads into a repeatable decision framework.
+                </p>
             </div>
 
             <div className="mx-auto w-full max-w-[1120px] px-6 lg:px-12">
