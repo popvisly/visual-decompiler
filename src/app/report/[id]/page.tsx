@@ -24,7 +24,7 @@ export async function generateMetadata(
     const brand = ad.brand || digest?.meta?.brand_guess || 'Ad';
     const headline = digest?.extraction?.on_screen_copy?.primary_headline || 'Advertising deconstructed.';
 
-    const ogUrl = new URL(`/api/og2/${id}`, process.env.NEXT_PUBLIC_APP_URL || 'https://visualdecompiler.com');
+    const ogUrl = new URL(`/api/og2/${id}`, process.env.NEXT_PUBLIC_APP_URL || 'https://www.visualdecompiler.com');
 
     return {
         title: `${brand} Deconstructed | VisualDecompiler.com`,

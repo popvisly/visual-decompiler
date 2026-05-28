@@ -4,12 +4,12 @@ Last updated: 2026-05-28
 
 ## Goal
 
-Get `https://visualdecompiler.com` reliably crawled, indexed, and positioned for commercial-intent searches around ad analysis, creative intelligence, and competitor ad research.
+Get `https://www.visualdecompiler.com` reliably crawled, indexed, and positioned for commercial-intent searches around ad analysis, creative intelligence, and competitor ad research.
 
 ## Current Status
 
 Already in place:
-- XML sitemap at `https://visualdecompiler.com/sitemap.xml`
+- XML sitemap at `https://www.visualdecompiler.com/sitemap.xml`
 - Global metadata, Open Graph, Twitter tags, and JSON-LD organization schema
 - `robots` indexing allowed in root metadata
 - Content section under `/intelligence`
@@ -17,7 +17,7 @@ Already in place:
 
 Fixed in this pass:
 - Added a real `robots.txt` endpoint via `src/app/robots.ts`
-- Unified canonical site URLs to `https://visualdecompiler.com`
+- Unified canonical site URLs to `https://www.visualdecompiler.com`
 - Added stronger search metadata to the homepage
 - Added product-page metadata
 - Added pricing-page title, description, and canonical tags
@@ -28,7 +28,7 @@ Fixed in this pass:
 
 - Add and verify the **Domain property** for `visualdecompiler.com`
 - Submit the sitemap:
-  - `https://visualdecompiler.com/sitemap.xml`
+  - `https://www.visualdecompiler.com/sitemap.xml`
 - Use URL Inspection and request indexing for:
   - `/`
   - `/product`
@@ -40,8 +40,8 @@ Fixed in this pass:
 ### 2. Confirm Crawlability
 
 Check these live URLs after deploy:
-- `https://visualdecompiler.com/robots.txt`
-- `https://visualdecompiler.com/sitemap.xml`
+- `https://www.visualdecompiler.com/robots.txt`
+- `https://www.visualdecompiler.com/sitemap.xml`
 
 Make sure:
 - homepage returns `200`

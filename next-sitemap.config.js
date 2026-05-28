@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_APP_URL || 'https://visualdecompiler.com',
+  siteUrl: process.env.NEXT_PUBLIC_APP_URL || 'https://www.visualdecompiler.com',
   generateRobotsTxt: false, // We already have a custom robots.txt
   generateIndexSitemap: false, // Single sitemap for now
   exclude: [

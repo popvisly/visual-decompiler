@@ -18,7 +18,7 @@ function getResend() {
 }
 
 function getAppUrl() {
-    return process.env.NEXT_PUBLIC_APP_URL || 'https://visualdecompiler.com';
+    return process.env.NEXT_PUBLIC_APP_URL || 'https://www.visualdecompiler.com';
 }
 
 export async function sendDeconstructionEmail(email: string, adId: string, adTitle: string) {
