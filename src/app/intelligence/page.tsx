@@ -5,8 +5,8 @@ import { Metadata } from 'next';
 import MarketingPageHeader from '@/components/marketing/MarketingPageHeader';
 
 export const metadata: Metadata = {
-    title: 'Intelligence Briefings | Visual Decompiler',
-    description: 'Technical deep dives into AI-driven advertising forensics, market pulse analysis, and agency sovereignty.',
+    title: 'Ad Creative Analysis Briefings',
+    description: 'Read ad creative analysis briefings on visual signals, persuasion mechanics, competitor creative strategy, and advertising intelligence.',
 };
 
 export default async function IntelligenceIndex() {
@@ -48,7 +48,7 @@ export default async function IntelligenceIndex() {
             <MarketingPageHeader
                 kicker="Strategic Briefings"
                 title="The Reading Room."
-                description="Decision-ready briefings on visual DNA, structural signals, and approval-critical execution patterns."
+                description="Ad creative analysis briefings on visual DNA, structural signals, persuasion mechanics, and approval-critical execution patterns."
                 sectionClassName="pt-0 pb-20 lg:pb-24"
             />
 

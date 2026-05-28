@@ -6,9 +6,9 @@ import PlatformLayer from '@/components/product/PlatformLayer';
 import ProductFooter from '@/components/product/ProductFooter';
 
 export const metadata: Metadata = {
-    title: 'Product',
+    title: 'Creative Intelligence Platform',
     description:
-        'See how Visual Decompiler turns ad creative into structured analysis, strategic proof, and client-ready decision logic.',
+        'Visual Decompiler is a creative intelligence platform that turns ad creative into structured analysis, strategic proof, and client-ready decision logic.',
 };
 
 export default function ProductPage() {

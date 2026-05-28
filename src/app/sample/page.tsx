@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import UnifiedSovereignHeader from '@/components/UnifiedSovereignHeader';
 import FooterStartNow from '@/components/marketing/FooterStartNow';
 import { SAMPLE_DOSSIERS } from '@/lib/sample-dossier';
+
+export const metadata: Metadata = {
+    title: 'Competitor Ad Analysis Examples',
+    description:
+        'Browse competitor ad analysis examples and sample dossiers that show how creative signals become evidence, strategic reads, and decision-ready rationale.',
+};
 
 export default function SampleVaultPage() {
     const vaultItems = SAMPLE_DOSSIERS.filter((entry) => entry.key !== 'chanel-no5').slice(0, 4);
@@ -15,12 +22,12 @@ export default function SampleVaultPage() {
             <section className="relative z-10 px-6 pt-32 pb-16 lg:px-12 lg:pt-44">
                 <div className="mx-auto max-w-[1500px]">
                     <div className="mb-10 flex flex-col gap-4 lg:mb-14">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-[#8B6A3D]">Forensic Archive</p>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-[#8B6A3D]">Competitor Ad Analysis Examples</p>
                         <h1 className="text-[44px] font-black uppercase leading-[0.9] tracking-[-0.04em] text-[#141414] md:text-[72px]">
-                            Intelligence <br /> Vault
+                            Competitor Ad <br /> Analysis Vault
                         </h1>
                         <p className="max-w-2xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
-                            A sample assortment so you can feel the Vault and dossier workflow before you spend a credit.
+                            Browse sample dossiers to see how competitor ad analysis becomes evidence, strategic reads, and decision-ready rationale before you spend a credit.
                         </p>
                         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                             <Link
