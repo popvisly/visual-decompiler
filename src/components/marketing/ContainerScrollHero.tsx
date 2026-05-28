@@ -34,16 +34,16 @@ const HERO_MESSAGES = [
         supportingCopy: 'Evidence you can present.',
     },
     {
-        headline: ['SEE WHAT THE CREATIVE', 'IS REALLY DOING'],
-        supportingCopy: 'The persuasive read behind the polish.',
+        headline: ['READ THE SIGNAL', 'NOT JUST THE STYLE'],
+        supportingCopy: 'See what the creative is actually doing.',
     },
     {
-        headline: ['FROM VISUAL SIGNAL', 'TO DECISION LOGIC'],
-        supportingCopy: 'Analysis built for scrutiny, alignment, and approval.',
+        headline: ['PERSUASION MADE', 'VISIBLE'],
+        supportingCopy: 'The strategic read behind the execution.',
     },
     {
-        headline: ['READ THE AD', 'DEFEND THE MOVE'],
-        supportingCopy: 'Client-ready rationale in under 60 seconds.',
+        headline: ['FROM IMAGE', 'TO INTENT'],
+        supportingCopy: 'Decision logic for every visual move.',
     },
 ] as const;
 
