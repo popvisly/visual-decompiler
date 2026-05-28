@@ -12,19 +12,19 @@ export default function ProductFooter() {
                     <div className="max-w-[860px]">
                         <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-[#8B6A3D]/80">The Decision</p>
                         <h2 className="mt-6 text-[12vw] font-semibold uppercase leading-[0.9] tracking-tight text-[#141414] sm:text-[9vw] lg:text-[68px]">
-                            Don&apos;t just present the work.
+                            Don&apos;t just show the work.
                             <br />
-                            Defend it.
+                            Prove what it&apos;s doing.
                         </h2>
                         <p className="mt-6 text-[18px] leading-[1.75] text-[#6B6B6B]">
-                            Decompile your next ad before the room starts asking questions.
+                            Bring evidence into the room before the room turns subjective.
                         </p>
                         <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
                             <Link
                                 href="/ingest"
                                 className="inline-flex items-center justify-center rounded-full bg-[#141414] px-7 py-3.5 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#FBF7EF] transition hover:bg-black"
                             >
-                                Decompile an Ad
+                                Start Free
                             </Link>
                             <Link
                                 href={SAMPLE_DOSSIER_HREF}

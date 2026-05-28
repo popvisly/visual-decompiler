@@ -6,18 +6,18 @@ import { Database, Search, Share2, ShieldCheck, Zap, Target, MousePointer2, Fing
 
 const WORKFLOW = [
     {
-        title: 'Diagnostic Ingest',
-        body: 'Bring in the work, or the references shaping it. Every frame is normalized for deep analytical reading.',
+        title: 'Ingest the asset',
+        body: 'Upload the live creative, the work in progress, or the competitor reference you need to decode.',
         icon: Database,
     },
     {
-        title: 'Structural Scan',
-        body: 'Break down hierarchy, attention flow, tone, and strategic intent through the same forensic modules every time.',
+        title: 'Read the signal',
+        body: 'Surface hierarchy, attention flow, brand posture, and strategic intent through a repeatable forensic system.',
         icon: Search,
     },
     {
-        title: 'Export the Verdict',
-        body: 'Walk into the room with a structured dossier, evidence anchors, and recommendations built for defensive alignment.',
+        title: 'Export the proof',
+        body: 'Leave with a structured dossier, evidence anchors, and decision language built for scrutiny and alignment.',
         icon: Share2,
     },
 ];
@@ -34,17 +34,19 @@ const REVEALS = [
 export default function AnalysisSurfaces() {
     return (
         <div className="bg-[#FBFBF6]">
-            {/* Main Product Showcase */}
             <section className="py-24 lg:py-32">
                 <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
                     <div className="grid gap-20 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
                         <div>
                             <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Product Interface</p>
                             <h2 className="mt-6 text-[clamp(40px,5vw,64px)] font-black uppercase leading-[0.92] tracking-[-0.04em] text-[#141414]">
-                                A workspace built for clinical precision.
+                                A decision surface built for proof.
                             </h2>
                             <p className="mt-8 text-[18px] leading-[1.8] text-[#515151]">
-                                Visual Decompiler does not return loose summaries. It produces a structured, multi-layered dossier designed for clarity, validation, and defensive reasoning.
+                                Visual Decompiler does not return loose observations. It produces a structured read you can inspect, challenge, and present with confidence.
+                            </p>
+                            <p className="mt-5 text-[15px] leading-[1.85] text-[#6B6B6B]">
+                                Every module is there to help teams move from visual impression to defended intent without losing the nuance of the work itself.
                             </p>
                         </div>
 
@@ -64,7 +66,6 @@ export default function AnalysisSurfaces() {
                                         className="object-cover opacity-90 transition-opacity hover:opacity-100"
                                         priority
                                     />
-                                    {/* Scanning Line Animation */}
                                     <motion.div 
                                         animate={{ top: ['0%', '100%', '0%'] }}
                                         transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -77,13 +78,15 @@ export default function AnalysisSurfaces() {
                 </div>
             </section>
 
-            {/* Workflow Sequence */}
             <section className="py-24 bg-[#141414] text-white overflow-hidden">
                 <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
                     <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#D4A574] text-center">The Forensic Read</p>
                     <h2 className="mt-6 text-center text-[clamp(32px,4vw,56px)] font-black uppercase leading-[0.92] tracking-[-0.03em]">
-                        From raw asset to definitive verdict.
+                        From creative surface to strategic proof.
                     </h2>
+                    <p className="mx-auto mt-6 max-w-[760px] text-center text-[16px] leading-[1.8] text-white/58">
+                        A tight sequence built for the moments when taste is not enough and the team needs a clearer read of what the asset is communicating.
+                    </p>
 
                     <div className="mt-20 grid gap-8 md:grid-cols-3">
                         {WORKFLOW.map((step, idx) => {
@@ -110,7 +113,6 @@ export default function AnalysisSurfaces() {
                 </div>
             </section>
 
-            {/* Feature Inventory (Forensic Chips) */}
             <section className="py-24 lg:py-32">
                 <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
                     <div className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
@@ -138,14 +140,14 @@ export default function AnalysisSurfaces() {
                         <div>
                             <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Intelligence Stack</p>
                             <h2 className="mt-6 text-[clamp(32px,4vw,56px)] font-black uppercase leading-[0.92] tracking-[-0.04em] text-[#141414]">
-                                A shared language for the work.
+                                A shared language for defended creative.
                             </h2>
                             <p className="mt-8 text-[18px] leading-[1.8] text-[#515151]">
-                                Every asset is processed through a consistent analytical stack, ensuring your team has the same structured reasoning for every creative decision.
+                                The stack keeps the read consistent across every asset, so strategy, design, and client-facing teams can argue from the same underlying evidence.
                             </p>
                             <div className="mt-10 h-px w-full bg-black/5" />
                             <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.25em] text-[#8B6A3D] italic">
-                                Less opinion loops. Faster approvals. Defensible results.
+                                Less opinion drift. Faster alignment. Stronger proof.
                             </p>
                         </div>
                     </div>

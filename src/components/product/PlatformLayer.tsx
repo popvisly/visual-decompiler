@@ -6,22 +6,22 @@ import { Target, Users, Briefcase, Award } from 'lucide-react';
 const OUTCOME_CARDS = [
     {
         title: 'Strategists',
-        body: 'Translate visual instinct into structured rationale that survives the boardroom.',
+        body: 'Turn visual instinct into structured rationale that can hold up in decks, reviews, and high-stakes conversations.',
         icon: Target,
     },
     {
         title: 'Creative Directors',
-        body: 'Frame bold creative moves with a defensible logic that aligns clients faster.',
+        body: 'Frame bold creative moves with a clearer logic so clients see the intelligence, not just the finish.',
         icon: Award,
     },
     {
         title: 'Agency Teams',
-        body: 'Eliminate subjective feedback loops with a clinical, shared grammar for creative critique.',
+        body: 'Replace circular opinion loops with a shared grammar for reading what the work is signaling.',
         icon: Users,
     },
     {
         title: 'Consultants',
-        body: 'Present work with stronger rationale, more client confidence, and a clinical edge over competitors.',
+        body: 'Present audits and recommendations with more authority, more proof, and a sharper edge over generic reviews.',
         icon: Briefcase,
     },
 ];
@@ -31,12 +31,13 @@ export default function PlatformLayer() {
         <section className="py-24 lg:py-32 bg-[#FBFBF6]">
             <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
                 <div className="max-w-[960px]">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Outcome Oriented</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#8B6A3D]">Who It Equips</p>
                     <h2 className="mt-6 text-[clamp(40px,5.5vw,72px)] font-black uppercase leading-[0.92] tracking-[-0.045em] text-[#141414]">
-                        Built for the people defending the work.
+                        Built for the people who have to prove the work.
                     </h2>
                     <div className="mt-10 max-w-[840px] space-y-6 text-[19px] leading-[1.8] text-[#515151]">
-                        <p>Whether you&apos;re a strategist building a deck, an art director defending a direction, or an agency aligning around a verdict, Visual Decompiler structures the conversation around clinical visual evidence.</p>
+                        <p>Whether you&apos;re shaping a strategy deck, defending a direction, or auditing a category, Visual Decompiler gives the room a more precise basis for the conversation.</p>
+                        <p>It helps teams move from “I like it” or “I don&apos;t buy it” toward a cleaner read of signal, intent, and persuasive logic.</p>
                     </div>
                 </div>
 
@@ -67,4 +68,3 @@ export default function PlatformLayer() {
         </section>
     );
 }
-
