@@ -28,9 +28,30 @@ const STEPS = [
     },
 ] as const;
 
+const HERO_MESSAGES = [
+    {
+        headline: ['AD INSIGHT', 'BEYOND THE SURFACE'],
+        supportingCopy: 'Evidence you can present.',
+    },
+    {
+        headline: ['SEE WHAT THE CREATIVE', 'IS REALLY DOING'],
+        supportingCopy: 'The persuasive read behind the polish.',
+    },
+    {
+        headline: ['FROM VISUAL SIGNAL', 'TO DECISION LOGIC'],
+        supportingCopy: 'Analysis built for scrutiny, alignment, and approval.',
+    },
+    {
+        headline: ['READ THE AD', 'DEFEND THE MOVE'],
+        supportingCopy: 'Client-ready rationale in under 60 seconds.',
+    },
+] as const;
+
 export default function ContainerScrollHero() {
     const prefersReducedMotion = useReducedMotion();
     const [showScrollHint, setShowScrollHint] = useState(true);
+    const [heroMessageIndex, setHeroMessageIndex] = useState(0);
+    const [heroMessageVisible, setHeroMessageVisible] = useState(true);
 
     useEffect(() => {
         if (prefersReducedMotion) return;
@@ -41,6 +62,38 @@ export default function ContainerScrollHero() {
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, [prefersReducedMotion]);
+
+    useEffect(() => {
+        if (prefersReducedMotion || HERO_MESSAGES.length < 2) return;
+
+        let holdTimeout = 0;
+        let fadeTimeout = 0;
+        let cancelled = false;
+
+        const scheduleCycle = () => {
+            holdTimeout = window.setTimeout(() => {
+                if (cancelled) return;
+                setHeroMessageVisible(false);
+
+                fadeTimeout = window.setTimeout(() => {
+                    if (cancelled) return;
+                    setHeroMessageIndex((current) => (current + 1) % HERO_MESSAGES.length);
+                    setHeroMessageVisible(true);
+                    scheduleCycle();
+                }, 450);
+            }, 5200);
+        };
+
+        scheduleCycle();
+
+        return () => {
+            cancelled = true;
+            window.clearTimeout(holdTimeout);
+            window.clearTimeout(fadeTimeout);
+        };
+    }, [prefersReducedMotion]);
+
+    const heroMessage = HERO_MESSAGES[heroMessageIndex];
 
     return (
         <section className="relative min-h-screen overflow-hidden bg-[#FBFBF6] px-6 pt-[110px] pb-4 md:px-10 md:pt-[120px] md:pb-8">
@@ -60,15 +113,29 @@ export default function ContainerScrollHero() {
                                     <div className="pointer-events-none absolute -left-12 top-6 h-60 w-60 rounded-full bg-[#D4A574]/10 blur-3xl" aria-hidden="true" />
 
                                     {/* Give Them a Superpower — H1 */}
-                                    <h1 className="mt-5 text-[clamp(38px,6.1vw,92px)] font-black uppercase leading-[0.9] tracking-[-0.02em] text-[#141414]">
-                                        <span className="block">READ THE AD.</span>
-                                        <span className="block">KNOW THE NEXT MOVE.</span>
-                                    </h1>
+                                    <motion.div
+                                        initial={false}
+                                        animate={
+                                            prefersReducedMotion
+                                                ? { opacity: 1, y: 0 }
+                                                : { opacity: heroMessageVisible ? 1 : 0, y: heroMessageVisible ? 0 : 8 }
+                                        }
+                                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                                        className="mx-auto"
+                                    >
+                                        <h1 className="mt-5 text-[clamp(38px,6.1vw,92px)] font-black uppercase leading-[0.9] tracking-[-0.02em] text-[#141414]">
+                                            {heroMessage.headline.map((line) => (
+                                                <span key={line} className="block">
+                                                    {line}
+                                                </span>
+                                            ))}
+                                        </h1>
 
-                                    {/* Give Them a Superpower — sub-headline */}
-                                    <p className="mt-8 mx-auto max-w-xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
-                                        Upload any ad. Get a forensic breakdown of what it&apos;s doing, why it works, and how to defend the decision. Client-ready in under 60 seconds.
-                                    </p>
+                                        {/* Give Them a Superpower — sub-headline */}
+                                        <p className="mt-8 mx-auto max-w-xl text-[15px] leading-relaxed text-[#6B6B6B] md:text-[16px]">
+                                            {heroMessage.supportingCopy}
+                                        </p>
+                                    </motion.div>
 
                                     <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:items-center">
                                         <Link
