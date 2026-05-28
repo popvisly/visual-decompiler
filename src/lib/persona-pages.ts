@@ -42,6 +42,83 @@ export type PersonaPageData = {
     };
 };
 
+export const COMPETITOR_AD_ANALYSIS_PAGE: PersonaPageData = {
+    slug: 'competitor-ad-analysis',
+    eyebrow: 'Competitor Ad Analysis',
+    headlineLines: ['See what competitor', 'creative is really', 'doing.'],
+    subline:
+        'Visual Decompiler turns competitor ads into structured analysis your team can use for pitch prep, strategy, creative direction, and client-facing rationale. Upload one ad and get back the signal, intent, and persuasive logic underneath the surface.',
+    primaryCta: {
+        label: 'Start Free',
+        href: '/ingest',
+    },
+    secondaryCta: {
+        label: 'View Sample Dossier',
+        href: SAMPLE_DOSSIER_HREF,
+    },
+    trustLine: 'No card required · Sample dossier · 1 free analysis',
+    firstUploadRecipe: {
+        upload: 'Upload the strongest competitor ad in your category or the reference everyone keeps reacting to.',
+        outcome: 'Look for the dominant mechanic, brand posture, attention flow, and the clearest strategic edge.',
+        next: 'Run a second competitor or your own route against it to sharpen the recommendation.',
+    },
+    proofPoints: [
+        'Read the persuasive logic behind a competitor ad in under 60 seconds',
+        'Turn category inspiration into structured competitive intelligence',
+        'Export findings as a presentable dossier instead of loose notes',
+    ],
+    features: [
+        {
+            eyebrow: 'Competitor Ad Analysis',
+            title: 'Know what the competitor ad is actually doing',
+            body:
+                'Visual Decompiler breaks competitor creative into hierarchy, attention path, emotional register, and strategic posture. Instead of saying the ad feels strong, you can explain why it is exerting pressure and what mechanism is carrying the response.',
+        },
+        {
+            eyebrow: 'Strategic Read',
+            title: 'See the signal beneath the style',
+            body:
+                'A polished ad can hide a weak mechanic, and a simpler ad can carry a stronger one. This page is built for teams that need to separate surface finish from persuasive structure before they copy the wrong thing.',
+        },
+        {
+            eyebrow: 'Pitch & Planning',
+            title: 'Walk into the room with sharper category proof',
+            body:
+                'Use competitor ad analysis for pitch prep, campaign planning, creative reviews, and internal alignment. Every analysis returns in language strategists, creatives, and clients can all work with.',
+        },
+        {
+            eyebrow: 'Decision Artifact',
+            title: 'Leave with a dossier, not a hunch',
+            body:
+                'Every read can become a shareable artifact with evidence anchors, recommended moves, and structural rationale. That makes it easier to defend your direction and easier to show the team what matters next.',
+        },
+    ],
+    faqs: [
+        {
+            question: 'How is this different from a swipe file or ad library?',
+            answer:
+                'A swipe file shows you the ad. Visual Decompiler explains the mechanism behind it: what is carrying attention, what emotional pressure is being applied, and what strategic logic the execution is signaling.',
+        },
+        {
+            question: 'Can I use this for my own ad as well as the competitor’s?',
+            answer:
+                'Yes. The strongest workflow is often competitor first, then your own route second. That lets you compare the category signal against the position you want to defend.',
+        },
+        {
+            question: 'Is this mainly for agencies?',
+            answer:
+                'No. It works for agencies, in-house teams, strategists, creative leads, and consultants. Anyone who needs a clearer read on competitor creative can use it.',
+        },
+    ],
+    finalCta: {
+        headline: 'Start with the ad everyone is talking about.',
+        subline: 'Upload one competitor asset and see what the creative is really doing before your team reacts to the wrong thing.',
+        label: 'Analyze a Competitor Ad',
+        href: '/ingest',
+        note: 'No card required · First 5 analyses free',
+    },
+};
+
 export const ART_DIRECTOR_PERSONA_PAGE: PersonaPageData = {
     slug: 'for-art-directors',
     eyebrow: 'For Art Directors & Creative Leads',
